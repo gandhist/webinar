@@ -1,0 +1,87 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+
+
+.title{
+    font-size: 24px;
+    font-weight: bold;
+}
+.a4 {
+    width: 793px;
+    height: 1110px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 0px 5px 0px #888;
+    box-sizing: border-box;
+
+
+}
+.header{
+    width: 773px;
+    height: 100px;
+    margin: auto;
+    background-color:darkcyan;
+    box-sizing: border-box;
+
+}
+
+.footer{
+    width: 773px;
+    height: 30px;
+    margin: auto;
+    bottom: 0;
+    background-color: #888;
+    box-sizing: border-box;
+    padding: 5px;
+    text-align: center;
+}
+
+.contents{
+    width: 773px;
+    height: 930px;
+    margin: 10px auto;
+    background-color:green;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+@media print{
+    @page{
+        size:A4;
+        margin:0;
+    }
+    
+
+    .noprint{
+    display:none;
+    }
+
+    .nobg{
+        box-shadow: 0px 0px 5px 0px rgb(255, 255, 255);
+    }
+
+    .addheader{
+    padding-top: 50px;
+    }
+
+    .pagebreak{
+        page-break-before: always;
+    }
+
+    ::-webkit-input-placeholder { /* WebKit browsers */
+    color: transparent;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: transparent;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: transparent;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: transparent;
+    }
+}
