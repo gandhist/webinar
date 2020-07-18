@@ -1,7 +1,6 @@
 @extends('templates.header')
 
 @section('content')
-
 <!-- Content Header (Page header) -->
 <style>
     span.indent{
@@ -40,11 +39,14 @@
             </div>
             <div class="box-body" style="margin:25px;">
 
-                <div class="row" style="margin:10px;">
+                <div class="row" style="margin-top:40px; margin-bottom: 25;">
                     <div class="col-12">
                         @if(session()->get('pesan'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success alert-dismissible" role="alert">
                             {{ session()->get('pesan') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         @endif
                     </div>
@@ -68,6 +70,9 @@
                             </thead>
                             <tbody>
                                 @forelse($personals as $personal)
+                                @php
+                                    $username =  preg_replace('/[^a-zA-Z0-9()]/', '_', $personal->nama);
+                                @endphp
                                 <tr>
                                     <td style='text-align:center'><input type="checkbox" data-id="{{ $personal->id }}" class="selection"
                                         id="selection[]" name="selection[]"></td>
@@ -87,7 +92,7 @@
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat.', '.$personal->kota.', '.$personal->provinsi}}"> 
                                         {{ str_limit($personal->alamat, 20) }} </td>
                                     <td class="text-center"> {{ $personal->tgl_lahir }} </td>
-                                    <td class="text-center"> <a href="{{ url($personal->foto)}}">Lihat</a></td>
+                                    <td class="text-center"> <a href="{{ url('uploads/foto/personal/'.$username.'/'.$personal->foto)}}">Lihat</a></td>
                                 </tr>
                                 @empty
                                 <td colspan="10" class="text-center">Tidak ada data...</td>
@@ -100,7 +105,6 @@
         </div>
     </div>
 </section>
-
 
 {{-- modal konfirmasi hapus --}}
 <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

@@ -56,14 +56,16 @@ Route::namespace('Iso')->group(function(){
 	Route::resource('isos', 'IsoController');
 });
 
-Route::get('personals/create/getKota/{id}','PersonalController@getKota');
 	
 Route::group(['prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
 	Route::get('/create','PersonalController@create');
 	Route::post('/store','PersonalController@store');
-	Route::get('detail/{id}','SeminarController@detail');
-	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+	Route::patch('/update','PersonalController@show');
+	Route::get('/create/getKota/{id}','PersonalController@getKota');
+	Route::get('/{id}/edit','PersonalController@edit');
+	Route::get('/{id}','PersonalController@show');
+
 });
 
 	Route::group(['middleware' => 'auth.input'], function () {

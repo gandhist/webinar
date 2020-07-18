@@ -9,4 +9,6 @@ class Personal extends Model
     //
     public $table = "personal";
     protected $guarded = ['id'];
+
+
 }

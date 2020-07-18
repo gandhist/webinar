@@ -16,4 +16,6 @@ class ProvinsiModel extends Model
         return $this->hasMany('App\KotaModel','provinsi_id');
     }
 
+
+
 }

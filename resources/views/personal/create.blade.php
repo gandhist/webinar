@@ -73,7 +73,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="alamat">Alamat*</label>
-                            <input value="{{ old('alamat') }}" id="alamat" name="almat" type="text" required class="form-control" placeholder="Alamat">
+                            <input value="{{ old('alamat') }}" id="alamat" name="alamat" type="text" required class="form-control" placeholder="Alamat">
                             <div id="alamat" class="invalid-feedback">{{ $errors->first('alamat') }}</div>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="tgl_lahir">Tanggal Lahir*</label>
-                            <input value="{{ old('tgl_lahir') }}" id="tgl_lahir" name="tgl_lahir" type="text" required class="form-control">
+                            <input value="{{ old('tgl_lahir') }}" id="tgl_lahir" name="tgl_lahir" type="text" required class="form-control" placeholder="YYYY/MM/DD">
                             <div id="tgl_lahir" class="invalid-feedback">{{ $errors->first('tgl_lahir') }}</div>
                             </div>
                         </div>
