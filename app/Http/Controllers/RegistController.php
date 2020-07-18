@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Peserta;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class RegistController extends Controller
 {
@@ -38,7 +39,6 @@ class RegistController extends Controller
      */
     public function store(Request $request)
     {
-
         // validasi form
         $request->validate([
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -58,9 +58,9 @@ class RegistController extends Controller
         $data->instansi = $request->instansi;
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        if ($files = $req->file('foto')) {
+        if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
-            $file = "Lampiran_bpjs_kes_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $file = "_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->foto = $dir_name.$file;
         }

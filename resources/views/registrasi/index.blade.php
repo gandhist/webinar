@@ -52,7 +52,7 @@
             <div class="form-group">
               <label for="instansi">Instansi*</label>
               <input value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Instansi (tempat kerja/sekolah)">
-              <div id="instansi" class="invalid-feedback">aa{{ $errors->first('instansi') }}</div>
+              <div id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</div>
             </div>
           </div>
 

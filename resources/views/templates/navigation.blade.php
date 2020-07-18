@@ -88,6 +88,13 @@
           <i class="fa fa-certificate"></i> <span>ISO</span>
         </a>
       </li>
+
+      <li class="treeview">
+        <a href="{{ url('personals') }}">
+          <i class="fa fa-user"></i> <span>Personal</span>
+        </a>
+      </li>
+
       <li class="treeview">
         <a href="{{ url('laporan') }}">
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>
