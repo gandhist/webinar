@@ -56,16 +56,16 @@ Route::namespace('Iso')->group(function(){
 	Route::resource('isos', 'IsoController');
 });
 
-	
+
 Route::group(['prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
 	Route::get('/create','PersonalController@create');
 	Route::post('/store','PersonalController@store');
-	Route::patch('/update','PersonalController@show');
+	Route::patch('/update','PersonalController@update');
 	Route::get('/create/getKota/{id}','PersonalController@getKota');
 	Route::get('/{id}/edit','PersonalController@edit');
-	Route::get('/{id}','PersonalController@show');
-
+    Route::get('/{id}','PersonalController@show');
+	Route::delete('/destroy', 'PersonalController@destroy');
 });
 
 	Route::group(['middleware' => 'auth.input'], function () {
@@ -92,7 +92,7 @@ Route::group(['prefix' => 'personals'], function () {
 // Report
 
 Route::group(['prefix' => 'report'], function () {
-	
+
 });
 
 

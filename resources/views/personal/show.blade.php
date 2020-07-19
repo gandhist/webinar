@@ -9,7 +9,7 @@
 </style>
 <section class="content-header">
     <h1>
-        Tambahkan Personal
+        Detail Personal
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -27,9 +27,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="btn-group">
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit"> 
+                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                 <i class="fa fa-edit"></i> Ubah</button>
-                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus"> 
+                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
                                 <i class="fa fa-trash"></i> Hapus</button>
                         </div>
                     </div>
@@ -70,7 +70,7 @@
                         <input value="{{ $provinsi[0]['nama'] }}" id="provinsi" name="provinsi" type="text" class="form-control" disabled>
                         </div>
                     </div>
-                    
+
 
                 </div>
                 <div class="row">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
@@ -126,11 +126,54 @@
         </div>
     </div>
 </section>
-
+{{-- modal konfirmasi hapus --}}
+<div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <form action="{{ url('personals/destroy') }}" class="form-horizontal" id="formDelete" name="formDelete"
+        method="post" enctype="multipart/form-data">
+        @method("DELETE")
+        @csrf
+        <input type="hidden" value="" name="idHapusData" id="idHapusData">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Konfirmasi</h4>
+                </div>
+                <div class="modal-body" id="konfirmasi-body">
+                    Yakin ingin menghapus data terpilih?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger" data-id=""
+                        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting..."
+                        id="confirm-delete">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{{-- end of modal konfirmasi hapus --}}
 @endsection
 @push('script')
 <script type="text/javascript">
-    
+    $('#btnHapus').on('click', function (e) {
+            e.preventDefault();
+            var id = {{ $id }};
+            $("#idHapusData").val(id);
+            if (id.length == 0) {
+                Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // Swal.fire('Tidak ada data yang terpilih');
+            } else {
+                $('#modal-konfirmasi').modal('show');
+            }
+    });
     // Button edit click
     $('#btnEdit').on('click', function (e) {
         e.preventDefault();

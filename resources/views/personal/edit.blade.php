@@ -26,6 +26,7 @@
                 <form method="POST" action="{{ url('personals/update') }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
+                    <input type="hidden" name="id" value="{{ $id }}">
                     <div class="row">
 
                         <div class="col-lg-6">
@@ -67,7 +68,7 @@
                                 </select>
                             </div>
                         </div>
-                        
+
 
                     </div>
                     <div class="row">
@@ -87,7 +88,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -117,9 +118,9 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="custom-file">
-                            <label for="instansi">Foto*</label>
+                            <label for="instansi">Foto</label>
                             <div class="custom-file">
-                                <input type="file" id="foto" name="foto" class="custom-file-input {{ $errors->first('foto') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
+                                <input type="file" id="foto" name="foto" class="custom-file-input {{ $errors->first('foto') ? 'is-invalid' : '' }}" id="validatedCustomFile">
                                 <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                                 <div id="foto" class="invalid-feedback">{{ $errors->first('foto') }}</div>
                             </div>
@@ -127,18 +128,7 @@
                             <small class="form-text text-muted">Upload Max: 2MB</small>
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-4">
-                        </div>
-                        <div class="col-4">
-                            <div class="text-center">
-                                <img id="blah" src="#" class="rounded hidden">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                        </div>
-                    </div>
+
                     <button type="submit" class="btn btn-outline-info" style="margin-top:20px;">Edit</button>
                 </form>
             </div>
@@ -175,7 +165,7 @@
             //
         });
   });
-  
+
     $('#tgl_lahir').datepicker({
         autoclose: true,
         format: 'yyyy-mm-dd'

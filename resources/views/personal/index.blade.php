@@ -27,11 +27,11 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="btn-group">
-                            <a href="{{ url('personals/create') }}" class="btn btn-info"> 
+                            <a href="{{ url('personals/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit"> 
+                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                 <i class="fa fa-edit"></i> Ubah</button>
-                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus"> 
+                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
                                 <i class="fa fa-trash"></i> Hapus</button>
                         </div>
                     </div>
@@ -85,11 +85,11 @@
                                     <td> {{ $personal->no_hp }} </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->email }}">
                                         {{ str_limit($personal->email,20) }} </td>
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->instansi }}"> 
-                                        {{ str_limit($personal->instansi,20 )}} 
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->instansi }}">
+                                        {{ str_limit($personal->instansi,20 )}}
                                     </td>
                                     <td> {{ str_limit($personal->pekerjaan, 20)}} </td>
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat.', '.$personal->kota.', '.$personal->provinsi}}"> 
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat.', '.$personal->kota.', '.$personal->provinsi}}">
                                         {{ str_limit($personal->alamat, 20) }} </td>
                                     <td class="text-center"> {{ $personal->tgl_lahir }} </td>
                                     <td class="text-center"> <a href="{{ url('uploads/foto/personal/'.$username.'/'.$personal->foto)}}">Lihat</a></td>
