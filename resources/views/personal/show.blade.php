@@ -98,12 +98,28 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                         <label for="instansi">Instansi</label>
-                        <input value="{{ $personal[0]['instansi'] }}" id="instansi" name="instansi" type="text" class="form-control" disabled>
+                        <input value="{{ $bu[0]['nama_bu'] }}" id="instansi" name="instansi" type="text" class="form-control" disabled>
                         </div>
                     </div>
 
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                        <label for="nik">Nomor NIK</label>
+                        <input value="{{ $personal[0]['no_nik'] }}" id="nik" name="nik" type="text" required class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                        <label for="npwp">Nomor NPWP</label>
+                        <input value="{{ $personal[0]['no_npwp'] }}" id="npwp" name="npwp" type="npwp" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="row">
                     <div class="col-lg-6">

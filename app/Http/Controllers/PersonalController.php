@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Personal;
 use App\ProvinsiModel;
 use App\KotaModel;
+use App\BuModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -19,23 +20,31 @@ class PersonalController extends Controller
         return view('personal.index',
             ['personals' => Personal::where('deleted_at',NULL)->get(),
             'provinsis' => ProvinsiModel::all(),
-            'kotas' => KotaModel::all()]);
+            'kotas' => KotaModel::all(),] 
+        );
     }
     public function create() {
-        return view('personal.create',['provinsis' => ProvinsiModel::all() ]);
+        return view('personal.create',['provinsis' => ProvinsiModel::all(), 
+                                        'kotas' => KotaModel::all(),
+                                        'bus' => BuModel::all()]);
     }
     public function store(Request $request) {
+        $request->nik = preg_replace('/\s+/', "",  $request->nik);
+        $request->npwp = preg_replace('/\s+/', "",  $request->npwp);
+        $request->npwp = preg_replace("/[\.-]/", "",  $request->npwp);
         $request->validate([
             'nama' => 'required|min:3|max:50',
             'no_hp' => 'required|numeric',
             'email' => 'required|email|unique:personal',
             'pekerjaan' => 'required|min:3|max:50',
-            'instansi' => 'required|min:3|max:50',
+            'instansi' => 'required|numeric',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'alamat' => 'required|min:3|max:50',
             'provinsi' => 'required',
             'kota' => 'required',
-            'tgl_lahir' => 'required'
+            'tgl_lahir' => 'required',
+            'nik' => 'required|min:16|max:16',
+            'npwp' => 'required|min:15|max:20'
         ]);
         // simpan data peserta
         $data = new Personal;
@@ -48,7 +57,8 @@ class PersonalController extends Controller
         $data->tgl_lahir = Carbon::parse($request->tgl_lahir);
         $data->pekerjaan = $request->pekerjaan;
         $data->instansi = $request->instansi;
-
+        $data->no_nik = $request->nik;
+        $data->no_npwp =  $request->npwp;
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
@@ -65,7 +75,10 @@ class PersonalController extends Controller
         $personal = Personal::where('id', $id)->get();
         $kota = KotaModel::where('id',$personal[0]['kota'])->get();
         $prov = ProvinsiModel::where('id',$personal[0]['provinsi'])->get();
-        return view('personal.show',['personal' => $personal, 'kota' => $kota, 'provinsi' => $prov, 'id' => $id]);
+        $bu = BuModel::where('id',$personal[0]['instansi'])->get();
+        return view('personal.show',['personal' => $personal, 'kota' => $kota,
+         'provinsi' => $prov, 'id' => $id,
+         'bu' => $bu]);
 
     }
     public function edit($id) {

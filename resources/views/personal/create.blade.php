@@ -50,7 +50,9 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="no_hp">No Handphone*</label>
-                            <input value="{{ old('no_hp') }}" id="no_hp" name="no_hp" type="number" required class="form-control" placeholder="No Handphone">
+                            <input value="{{ old('no_hp') }}" id="no_hp" name="no_hp" 
+                            onkeypress="return /[0-9]/i.test(event.key)"
+                            type="text" required class="form-control" placeholder="No Handphone">
                             <span id="no_hp" class="invalid-feedback">{{ $errors->first('no_hp') }}</span>
                             </div>
                         </div>
@@ -60,10 +62,13 @@
                                 <select required value="{{ old('provinsi') }}" class="form-control" id="provinsi" name="provinsi">
                                     <option value="" selected hidden>-- Pilih Provinsi --</option>
                                     @forelse($provinsis as $provinsi)
-                                        <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                        <option value="{{ $provinsi->id }}"
+                                        @if (old('provinsi') == $provinsi->id) selected="selected" @endif
+                                        >{{ $provinsi->nama }}</option>
                                     @empty
                                     @endforelse
                                 </select>
+                                <span id="nik" class="invalid-feedback">{{ $errors->first('provinsi') }}</span>
                             </div>
                         </div>
                         
@@ -82,7 +87,17 @@
                                 <label for="kota">Kota / Kabupaten*</label>
                                 <select required value="{{ old('kota') }}" class="form-control" id="kota" name="kota">
                                     <option value="" selected hidden>-- Pilih Kota / Kabupaten --</option>
+                                    @if(old('provinsi') != NULL)
+                                        @foreach($kotas as $kota)
+                                            @if($kota->provinsi_id == old('provinsi'))
+                                                <option value="{{$kota->id}}"
+                                                @if (old('kota') == $kota->id) selected="selected" @endif
+                                                >{{$kota->nama}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </select>
+                                <span id="nik" class="invalid-feedback">{{ $errors->first('kota') }}</span>
                             </div>
                         </div>
                     </div>
@@ -98,19 +113,50 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="instansi">Instansi*</label>
-                            <input value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Instansi (tempat kerja/sekolah)">
-                            <div id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</div>
+                                <select required value="{{ old('instansi') }}" class="form-control" id="instansi" name="instansi">
+                                    <option value="" selected hidden>-- Pilih Instansi --</option>
+                                    @forelse($bus as $bu)
+                                        <option value="{{ $bu->id }}"
+                                        @if (old('instansi') == $bu->id) selected="selected" @endif
+                                        >{{ $bu->nama_bu }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                                <span id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</span>
                             </div>
                         </div>
 
                     </div>
 
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                            <label for="nik">NIK* (Nomor Induk Kependudukan)</label>
+                            <input value="{{ old('nik') }}" id="nik" name="nik" type="text" 
+                            onkeypress="return /[0-9]/i.test(event.key)"
+                            required class="form-control" maxlength="16">
+                            <span id="nik" class="invalid-feedback">{{ $errors->first('nik') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                            <label for="npwp">NPWP*</label>
+                            <input value="{{ old('npwp') }}" id="npwp" name="npwp" type="text"
+                            onkeypress="return /[0-9]/i.test(event.key)"
+                            required class="form-control">
+                            <div id="npwp" class="invalid-feedback">{{ $errors->first('npwp') }}</div>
+                            </div>
+                        </div>
+
+                    </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
                             <label for="tgl_lahir">Tanggal Lahir*</label>
-                            <input value="{{ old('tgl_lahir') }}" id="tgl_lahir" name="tgl_lahir" type="text" required class="form-control" placeholder="YYYY/MM/DD">
+                            <input value="{{ old('tgl_lahir') }}" id="tgl_lahir" name="tgl_lahir" type="text" 
+                            onkeypress="return /[0-9\-]/i.test(event.key)"
+                            required class="form-control">
                             <div id="tgl_lahir" class="invalid-feedback">{{ $errors->first('tgl_lahir') }}</div>
                             </div>
                         </div>
@@ -126,7 +172,6 @@
                             <small class="form-text text-muted">Upload Max: 2MB</small>
                         </div>
                     </div>
-                    
                     <div class="row">
                         <div class="col-4">
                         </div>
@@ -145,17 +190,21 @@
     </div>
 </section>
 
+
 @endsection
 @push('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script>
+
   $(document).ready(function () {
         $("#foto").change(function(){
             readURL(this);
         });
+        $('#instansi').select2();
         $('#provinsi').select2();
         $('#provinsi').on('change', function(e){
+            $('select[name="kota"]').empty();
             var id = e.target.value;
-            console.log(id);
             //
             if(id) {
                 $.ajax({
@@ -180,8 +229,13 @@
   
     $('#tgl_lahir').datepicker({
         autoclose: true,
-        format: 'yyyy-mm-dd'
+        format: 'dd-mm-yyyy',
+        minDate: '+0D',
     });
+    $('#tgl_lahir').mask("99-99-9999",{placeholder:"HH-BB-TTTT"});
+
+    $('#no_hp').attr('maxlength','15')
+    $('#npwp').mask("99.999.999.9-999.999").attr('maxlength','20');
 
   function readURL(input) {
     if (input.files && input.files[0]) {
