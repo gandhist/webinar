@@ -56,7 +56,7 @@ Route::namespace('Iso')->group(function(){
 	Route::resource('isos', 'IsoController');
 });
 
-
+// Personal 
 Route::group(['prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
 	Route::get('/create','PersonalController@create');
@@ -67,6 +67,18 @@ Route::group(['prefix' => 'personals'], function () {
     Route::get('/{id}','PersonalController@show');
 	Route::delete('/destroy', 'PersonalController@destroy');
 });
+// End Personal
+
+// Peserta
+Route::group(['prefix' => 'pesertas'], function () {
+	Route::get('/','PesertaController@index');
+    Route::get('/{id}','PesertaController@show');
+	Route::patch('/update','PesertaController@update');
+	Route::get('/create/getKota/{id}','PesertaController@getKota');
+	Route::get('/{id}/edit','PesertaController@edit');
+	
+});
+// End Peserta
 
 	Route::group(['middleware' => 'auth.input'], function () {
 		Route::get('', 'HomeController@index');

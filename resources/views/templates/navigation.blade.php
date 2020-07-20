@@ -96,6 +96,12 @@
       </li>
 
       <li class="treeview">
+        <a href="{{ url('pesertas') }}">
+          <i class="fa fa-user"></i> <span>Peserta</span>
+        </a>
+      </li>
+
+      <li class="treeview">
         <a href="{{ url('laporan') }}">
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>
         </a>
