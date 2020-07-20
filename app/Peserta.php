@@ -3,12 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SpftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Peserta extends Model
 {
     //
-    use SpftDeletes;
+    use SoftDeletes;
     protected $table = "srtf_peserta";
     protected $guarded = ['id'];
 

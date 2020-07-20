@@ -68,6 +68,14 @@ Route::group(['prefix' => 'personals'], function () {
 	Route::delete('/destroy', 'PersonalController@destroy');
 });
 
+Route::group(['middleware' => 'auth'], function () {
+	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
+	Route::patch('profile', 'ProfileController@update')->name('profile.update');
+	Route::get('profile/change', 'ProfileController@change');
+	
+});
+
+
 	Route::group(['middleware' => 'auth.input'], function () {
 		Route::get('', 'HomeController@index');
 	});
@@ -81,6 +89,8 @@ Route::group(['prefix' => 'personals'], function () {
 		]);
 	});
 });
+
+
 
 
 

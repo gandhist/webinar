@@ -42,41 +42,48 @@ class RegistController extends Controller
         // validasi form
         $request->validate([
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'email' => 'unique:srtf_peserta'
+            'email' => 'unique:srtf_peserta',
+            'no_hp' => 'unique:srtf_peserta'
         ],[
             'foto.mimes' => 'Format Foto Harus JPG atau PNG',
             'foto.max' => 'Maksimal Ukuran Foto 2MB',
             'foto.image' => 'Hanya Upload foto',
-            'email.unique' => 'Email Sudah terdaftar!!'
+            'email.unique' => 'Email Sudah terdaftar!!',
+            'no_hp.unique' => 'No Hp Sudah terdaftar!!'
         ]);
         // simpan data peserta
-        $data = new Peserta;
-        $data->nama = $request->nama;
-        $data->no_hp = $request->no_hp;
-        $data->email = $request->email;
-        $data->pekerjaan = $request->pekerjaan;
-        $data->instansi = $request->instansi;
+        // $data = new Peserta;
+        $data['nama'] = $request->nama;
+        $data['no_hp'] = $request->no_hp;
+        $data['email'] = $request->email;
+        $data['pekerjaan'] = $request->pekerjaan;
+        $data['instansi'] = $request->instansi;
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
             $file = "_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
-            $data->foto = $dir_name.$file;
+            $data['foto'] = $dir_name."/".$file;
         }
-        $peserta = $data->save();
+        $peserta = Peserta::create($data);
         $password = str_random(8);
+      
         if ($peserta) {
-            $user = new User;
-            $user->username = strtolower($request->email);
-            $user->email = strtolower($request->email);
-            $user->password = Hash::make($password);
-            $user->name = $request->nama;
-            $user->role_id = 2;
-            $user->is_active = 1;
+            $data['username'] = strtolower($request->nama);
+            $data['email'] = strtolower($request->email);
+            $data['password'] = Hash::make($password);
+            $data['name'] = $request->nama;
+            $data['role_id'] = 2;
+            $data['is_active'] = 1;
+            $user = User::create($data);
+           
+            $peserta_id['user_id'] = $user->id;
+            
+            Peserta::find($peserta->id)->update($peserta_id);
         }
+   
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
-
     }
 
     /**
