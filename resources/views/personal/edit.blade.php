@@ -141,7 +141,7 @@
 @push('script')
 <script type="text/javascript">
     $(document).ready(function () {
-
+        $('#provinsi').select2();
         $('#provinsi').on('change', function(e){
             var id = e.target.value;
             console.log(id);
@@ -163,6 +163,7 @@
                 $('select[name="kota"]').empty();
             }
             //
+            $('#kota').select2();
         });
   });
 
