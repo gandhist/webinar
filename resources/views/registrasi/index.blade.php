@@ -2,16 +2,22 @@
 
 @section('content')
 <div class="container">
-  <h2>Halaman Registrasi Peserta Seminar P3SM</h2>
+  <h2>Registrasi Peserta Seminar P3SM</h2>
     <main role="main" class="container">
-      <form method="POST" action="{{ url('registrasi/store') }}" enctype="multipart/form-data">
+      @if(session()->get('success'))
+        <div class="alert alert-success">
+        {{ session()->get('success') }}  
+        </div>
+        <br />
+      @endif
+        <form action="{{ url('registrasi/store') }}" class="form-horizontal" id="formRegist" name="formRegist"
+                method="post" enctype="multipart/form-data">
         @csrf
         <div class="row">
-
           <div class="col-lg-6">
             <div class="form-group">
               <label for="nama">Nama Lengkap*</label>
-              <input value="{{ old('nama') }}" id="nama" name="nama" type="text" required class="form-control" placeholder="Nama Lengkap">
+              <input oninvalid="this.setCustomValidity('Masukkan Nama Lengkap')" oninput="setCustomValidity('')" value="{{ old('nama') }}" id="nama" name="nama" type="text" required class="form-control" placeholder="Nama Lengkap">
               <span id="nama" class="invalid-feedback">{{ $errors->first('nama') }}</span>
             </div>
           </div>
@@ -19,19 +25,17 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label for="email">Email*</label>
-              <input value="{{ old('email') }}" id="email" name="email" type="email" required class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" aria-describedby="emailHelp" placeholder="Alamat Email">
+              <input oninvalid="this.setCustomValidity('Masukkan Email ')" oninput="setCustomValidity('')" value="{{ old('email') }}" id="email" name="email" type="email" required class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" aria-describedby="emailHelp" placeholder="Alamat Email">
               <span id="email" class="invalid-feedback">{{ $errors->first('email') }}</span>
             </div>
           </div>
-
         </div>
 
         <div class="row">
-
           <div class="col-lg-6">
             <div class="form-group">
               <label for="no_hp">No Handphone*</label>
-              <input value="{{ old('no_hp') }}" id="no_hp" name="no_hp" type="number" required class="form-control" placeholder="No Handphone">
+              <input oninvalid="this.setCustomValidity('Masukkan No HP')" oninput="setCustomValidity('')" value="{{ old('no_hp') }}" id="no_hp" name="no_hp" type="number" required class="form-control" placeholder="No Handphone">
               <span id="no_hp" class="invalid-feedback">{{ $errors->first('no_hp') }}</span>
             </div>
           </div>
@@ -39,19 +43,17 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label for="pekerjaan">Pekerjaan*</label>
-              <input value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Pekerjaan">
+              <input oninvalid="this.setCustomValidity('Masukkan Nama Pekerjaan')" oninput="setCustomValidity('')" value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Pekerjaan">
               <span id="pekerjaan" class="invalid-feedback">{{ $errors->first('pekerjaan') }}</span>
             </div>
           </div>
-
         </div>
 
         <div class="row">
-
           <div class="col-lg-6">
             <div class="form-group">
               <label for="instansi">Instansi*</label>
-              <input value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Instansi (tempat kerja/sekolah)">
+              <input oninvalid="this.setCustomValidity('Masukkan Nama Instansi')" oninput="setCustomValidity('')" value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Instansi (tempat kerja/sekolah)">
               <div id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</div>
             </div>
           </div>
@@ -60,23 +62,16 @@
             <div class="custom-file">
               <label for="instansi">Foto*</label>
               <div class="custom-file">
-                <input type="file" id="foto" name="foto" class="custom-file-input {{ $errors->first('foto') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
+                <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto" class="custom-file-input {{ $errors->first('foto') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
                 <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                 <div id="foto" class="invalid-feedback">{{ $errors->first('foto') }}</div>
               </div>
             </div>
-              {{-- <small class="form-text text-muted">Upload Max:5MB, Format (.JPG)</small> --}}
           </div>
-          <div class="col-lg-2">
-            <div class="text-center">
-              <img id="blah" src="#" class="rounded">
-            </div>
-          </div>
-
         </div>
 
-        <button type="submit" class="btn btn-outline-info">Registrasi</button>
-
+        <button type="submit" class="btn btn-outline-info pull-center">Daftar</button>
+        <a href="{{ url('registrasi') }}" class="btn btn-outline-info">Batal</a>
       </form>
     </main>
         

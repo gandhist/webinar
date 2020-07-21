@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $table =  'users';
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
@@ -38,4 +38,10 @@ class User extends Authenticatable
     {
       return $this->belongsTo('App\Role');
     }
+
+    public function peserta()
+    {
+        return $this->belongsTo('App\Peserta', 'id', 'user_id' );
+    }
+
 }

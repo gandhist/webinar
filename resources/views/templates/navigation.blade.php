@@ -131,6 +131,16 @@
       </li>
       @endif
 
+      @if(Auth::user()->role_id==2)
+
+      <li class="treeview">
+        <a href="{{ route('profile.edit') }}">
+          <i class="fa fa-user"></i> <span>User Profile</span>
+        </a>
+      </li>
+      
+      @endif
+
 
     </ul>
   </section>
