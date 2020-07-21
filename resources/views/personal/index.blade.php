@@ -53,7 +53,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <table id="data-tables"class="table table-striped table-bordered dataTable customTable">
+                        <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>

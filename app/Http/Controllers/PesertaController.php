@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Personal;
+use App\Peserta;
 use App\ProvinsiModel;
 use App\KotaModel;
 use Illuminate\Http\Request;
@@ -12,71 +12,43 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use DB;
 
-class PersonalController extends Controller
 
+class PesertaController extends Controller
 {
+    //
     public function index() {
-        return view('personal.index',
-            ['personals' => Personal::where('deleted_at',NULL)->get(),
+        return view('peserta.index',
+            ['pesertas' => Peserta::where('deleted_at',NULL)->get(),
             'provinsis' => ProvinsiModel::all(),
             'kotas' => KotaModel::all()]);
     }
-    public function create() {
-        return view('personal.create',['provinsis' => ProvinsiModel::all() ]);
-    }
-    public function store(Request $request) {
-        $request->validate([
-            'nama' => 'required|min:3|max:50',
-            'no_hp' => 'required|numeric',
-            'email' => 'required|email|unique:personal',
-            'pekerjaan' => 'required|min:3|max:50',
-            'instansi' => 'required|min:3|max:50',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'alamat' => 'required|min:3|max:50',
-            'provinsi' => 'required',
-            'kota' => 'required',
-            'tgl_lahir' => 'required'
-        ]);
-        // simpan data peserta
-        $data = new Personal;
-        $data->nama = $request->nama;
-        $data->no_hp = $request->no_hp;
-        $data->email = $request->email;
-        $data->provinsi = $request->provinsi;
-        $data->kota = $request->kota;
-        $data->alamat = $request->alamat;
-        $data->tgl_lahir = Carbon::parse($request->tgl_lahir);
-        $data->pekerjaan = $request->pekerjaan;
-        $data->instansi = $request->instansi;
 
-        // handle upload Foto
-        $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        if ($files = $request->file('foto')) {
-            $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
-            $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
-            $data->foto = $file;
-        }
-        $peserta = $data->save();
-        return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
-        "\" berhasil ditambahkan");
-    }
     public function show($id){
-        $personal = Personal::where('id', $id)->get();
-        $kota = KotaModel::where('id',$personal[0]['kota'])->get();
-        $prov = ProvinsiModel::where('id',$personal[0]['provinsi'])->get();
-        return view('personal.show',['personal' => $personal, 'kota' => $kota, 'provinsi' => $prov, 'id' => $id]);
+        $peserta = Peserta::where('id', $id)->get();
+        if($peserta[0]['kota'] == NULL){
+            $kota[0]['nama'] ="";
+        } else {
+            $kota = KotaModel::where('id',$peserta[0]['kota'])->get();
+        }
+        if($peserta[0]['provinsi'] == NULL){
+            $prov[0]['nama'] ="";
+        } else {
+            $prov = ProvinsiModel::where('id',$peserta[0]['provinsi'])->get();
+        }
+        
+        return view('peserta.show',['peserta' => $peserta, 'kota' => $kota, 'provinsi' => $prov, 'id' => $id]);
 
     }
+
     public function edit($id) {
-        $personal = Personal::where('id', $id)->get();
-        return view('personal.edit',['id'=>$id, 'personal'=>$personal,
+        $peserta = Peserta::where('id', $id)->get();
+        return view('peserta.edit',['id'=>$id, 'peserta'=>$peserta,
         'provinsis' => ProvinsiModel::all(),
         'kotas' => KotaModel::all()]);
 
     }
     public function update(Request $request) {
-        $data = Personal::find($request->id);
+        $data = Peserta::find($request->id);
 
         // Nama
         if($request->nama != $data->nama && $request->nama != ""){
@@ -109,7 +81,7 @@ class PersonalController extends Controller
         // Email
         if($request->email != $data->email && $request->email != ""){
             $email =  Validator::make($request->all(),[
-                'no_hp' => 'required|email|unique:personal',
+                'no_hp' => 'required|email|unique:peserta',
             ]);
             if($email->fails()){
                 $data->email = $data->email;
@@ -218,7 +190,7 @@ class PersonalController extends Controller
                 // handle upload Foto
                 $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
                 if ($files = $request->file('foto')) {
-                    $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
+                    $destinationPath = 'uploads/foto/peserta/'.$dir_name; // upload path
                     $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
                     $files->move($destinationPath, $file);
                     $data->foto = $file;
@@ -242,23 +214,13 @@ class PersonalController extends Controller
         ]);
         if($request->email != $data->email) {
             $request->validate([
-                'email' => 'required|email|unique:personal',
+                'email' => 'required|email|unique:peserta',
             ]);
         }
         $data->updated_at = Carbon::now();
         $data->updated_by = Auth::id();
         $data->save();
-        return redirect('/personals')->with('pesan', 'Data '.$request->nama.' Berhasil diubah');
-    }
-    public function destroy(Request $request) {
-        $idData = explode(',', $request->idHapusData);
-        $user_data = [
-            'deleted_by' => Auth::id(),
-            'deleted_at' => Carbon::now()->toDateTimeString()
-        ];
-        Personal::whereIn('id', $idData)->update($user_data);
-        return redirect('/personals')
-        ->with('pesan',"Berhasil menghapus personal");
+        return redirect('/pesertas')->with('pesan', 'Data '.$request->nama.' Berhasil diubah');
     }
     public function getKota($id) {
         $cities = DB::table("ms_kota")
