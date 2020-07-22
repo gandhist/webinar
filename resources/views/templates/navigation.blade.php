@@ -88,7 +88,7 @@
           <i class="fa fa-certificate"></i> <span>ISO</span>
         </a>
       </li>
-
+      @if(Auth::user()->role_id==1)
       <li class="treeview">
         <a href="{{ url('personals') }}">
           <i class="fa fa-user"></i> <span>Personal</span>
@@ -100,7 +100,7 @@
           <i class="fa fa-user"></i> <span>Peserta</span>
         </a>
       </li>
-
+      @endif
       <li class="treeview">
         <a href="{{ url('laporan') }}">
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>

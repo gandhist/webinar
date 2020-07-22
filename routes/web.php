@@ -57,7 +57,7 @@ Route::namespace('Iso')->group(function(){
 });
 
 // Personal 
-Route::group(['prefix' => 'personals'], function () {
+Route::group(['middleware' => 'auth.admin','prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
 	Route::get('/create','PersonalController@create');
 	Route::post('/store','PersonalController@store');
@@ -70,7 +70,7 @@ Route::group(['prefix' => 'personals'], function () {
 // End Personal
 
 // Peserta
-Route::group(['prefix' => 'pesertas'], function () {
+Route::group(['middleware' => 'auth.admin', 'prefix' => 'pesertas'], function () {
 	Route::get('/','PesertaController@index');
     Route::get('/{id}','PesertaController@show');
 	Route::patch('/update','PesertaController@update');
