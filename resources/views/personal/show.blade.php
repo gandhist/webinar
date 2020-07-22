@@ -6,7 +6,9 @@
     span.indent{
         text-indent: 25px;
     }
+}
 </style>
+
 <section class="content-header">
     <h1>
         Detail Personal
@@ -37,111 +39,233 @@
             </div>
         </div>
         <div class="box-body" style="margin-top:45px;">
-            <h1 style="margin-top:45px; margin-bottom: 25;">Data Diri</h1>
-            <form>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="nama">Nama Lengkap</label>
-                        <input value="{{ $personal[0]['nama'] }}" id="nama" name="nama" type="text" required class="form-control" disabled>
-                        </div>
-                    </div>
+            {{-- Body --}}
+            <h1 style="margin-top:45px; margin-bottom: 25px;">Data Diri</h1>
 
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="email">Email</label>
-                        <input value="{{ $personal[0]['email'] }}" id="email" name="email" type="email" class="form-control" disabled>
-                        </div>
-                    </div>
+            <div class="row">
 
-                </div>
-
-                <div class="row">
-
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="no_hp">No Handphone</label>
-                        <input value="{{ $personal[0]['no_hp'] }}" id="no_hp" name="no_hp" type="text" class="form-control" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
+                <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="provinsi">Provinsi</label>
-                        <input value="{{ $provinsi[0]['nama'] }}" id="provinsi" name="provinsi" type="text" class="form-control" disabled>
-                        </div>
+                        <label>Nama Lengkap</label>
+                        <input value="{{ $personal[0]['nama'] }}" 
+                        type="text" class="form-control" disabled>
                     </div>
-
-
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <input value="{{ $personal[0]['alamat'] }}" id="alamat" name="alamat" type="text" class="form-control" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
+
+                <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="kota">Kota / Kabupaten</label>
-                        <input value="{{ $kota[0]['nama']}}" id="kota" name="kota" type="text" class="form-control" disabled>
-                        </div>
+                        <label>NIK</label>
+                        <input value="{{ $personal[0]['nik'] }}" 
+                        type="text" class="form-control" disabled>
                     </div>
                 </div>
 
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input value="{{ $personal[0]['email'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Nomor Telepon</label>
+                        <input value="{{ $personal[0]['no_hp'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Instansi</label>
+                        <input value="{{ $bu[0]['nama_bu'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Jabatan</label>
+                        <input value="{{ $personal[0]['jabatan'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Jenis Kelamin</label>
+                        <input value="{{ (($personal[0]['jenis_kelamin']) == 'L') ? 'Laki-laki' : 'Perempuan' }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Alamat</label>
+                        <input value="{{ $personal[0]['alamat'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Provinsi</label>
+                        <input value="{{ $provinsi[0]['nama'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Kota</label>
+                        <input value="{{ $kota[0]['nama'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Tempat Lahir</label>
+                        <input value="{{ $temp_lahir[0]['nama'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Tanggal Lahir</label>
+                        <input value="{{ $personal[0]['tgl_lahir'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Nomor Rekening</label>
+                        <input value="{{ $personal[0]['no_rek'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Bank</label>
+                        <input value="{{ $bank[0]['Nama_Bank'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Nama Pada Rekening</label>
+                        <input value="{{ $personal[0]['nama_rek'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>NPWP</label>
+                        <input value="{{ $personal[0]['npwp'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label>Referensi</label>
+                        <input value="{{ $personal[0]['reff_p'] }}" 
+                        type="text" class="form-control" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                </div>
+
+            </div>
+
+
+            <h1 style="margin-top:45px; margin-bottom: 25px;">
+                Lampiran
+            </h1>
+            @if($personal[0]['lampiran_foto'])
                 <div class="row">
+
                     <div class="col-lg-6">
                         <div class="form-group">
-                        <label for="pekerjaan">Pekerjaan</label>
-                        <input value="{{ $personal[0]['pekerjaan'] }}" id="pekerjaan" name="pekerjaan" type="text" class="form-control" disabled>
+                            <label style="margin-bottom:25px">Foto Diri</label>
+                            <div>
+                                <img src="{{ url($personal[0]['lampiran_foto']) }}" alt="Foto Diri">
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-lg-6">
+
+                    @if($personal[0]['lampiran_ktp'])
                         <div class="form-group">
-                        <label for="instansi">Instansi</label>
-                        <input value="{{ $bu[0]['nama_bu'] }}" id="instansi" name="instansi" type="text" class="form-control" disabled>
+                            <label style="margin-bottom:25px">Foto KTP</label>
+                            <div>
+                                <a href="{{ url($personal[0]['lampiran_ktp']) }}">
+                                    Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                </a>
+                            </div>
                         </div>
+                    @endif
+
+                    @if($personal[0]['lampiran_foto'])
+                        <div class="form-group">
+                            <label style="margin-bottom:25px">Foto NPWP</label>
+                            <div>
+                                <a href="{{ url($personal[0]['lampiran_npwp']) }}">
+                                    Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+
                     </div>
 
                 </div>
+            @endif
 
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="nik">Nomor NIK</label>
-                        <input value="{{ $personal[0]['no_nik'] }}" id="nik" name="nik" type="text" required class="form-control" disabled>
-                        </div>
-                    </div>
+            {{-- Akhir Body --}}
 
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="npwp">Nomor NPWP</label>
-                        <input value="{{ $personal[0]['no_npwp'] }}" id="npwp" name="npwp" type="npwp" class="form-control" disabled>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                        <label for="tgl_lahir">Tanggal Lahir</label>
-                        <input value="{{ $personal[0]['tgl_lahir']}}" id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <label for="instansi">Foto</label>
-                        @php
-                            $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $personal[0]['nama']);
-                        @endphp
-                        <div class="w-100">
-                            <img class="img-responsive" src="{{url('/uploads/foto/personal/'.$dir_name.'/'.$personal[0]['foto'])}}" alt="Foto">
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
-</section>
 {{-- modal konfirmasi hapus --}}
 <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
@@ -170,8 +294,12 @@
         </div>
     </form>
 </div>
+
+</section>
 {{-- end of modal konfirmasi hapus --}}
+
 @endsection
+
 @push('script')
 <script type="text/javascript">
     $('#btnHapus').on('click', function (e) {
