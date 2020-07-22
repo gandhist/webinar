@@ -228,7 +228,7 @@
                         <div class="form-group">
                             <label style="margin-bottom:25px">Foto Diri</label>
                             <div>
-                                <img src="{{ url($personal[0]['lampiran_foto']) }}" alt="Foto Diri">
+                                <img src="{{ url(urlencode($personal[0]['lampiran_foto'])) }}" alt="Foto Diri">
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                         <div class="form-group">
                             <label style="margin-bottom:25px">Foto KTP</label>
                             <div>
-                                <a href="{{ url($personal[0]['lampiran_ktp']) }}">
+                                <a href="{{ url(urlencode($personal[0]['lampiran_ktp'])) }}">
                                     Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -250,7 +250,7 @@
                         <div class="form-group">
                             <label style="margin-bottom:25px">Foto NPWP</label>
                             <div>
-                                <a href="{{ url($personal[0]['lampiran_npwp']) }}">
+                                <a href="{{ url(urlencode($personal[0]['lampiran_npwp'])) }}">
                                     Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                 </a>
                             </div>

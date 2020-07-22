@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
 use DB;
 
@@ -97,8 +98,19 @@ class PersonalController extends Controller
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
-            $data->lampiran_foto = $destinationPath."/".$file;
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path
+            $resize_image = Image::make($files);
+            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            // $resize_image->resize(354, 472, function($constraint){
+            //     $constraint->aspectRatio();
+            // })->save();
+            $temp = $destinationPathTemp.$file;
+            if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 777, true);
+                }
+            rename($temp, $destinationFile );
+            $data->lampiran_foto = $destinationFile;
         }
 
         if ($files = $request->file('lampiran_ktp')) {
@@ -232,8 +244,19 @@ class PersonalController extends Controller
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
-            $data->lampiran_foto = $destinationPath."/".$file;
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path
+            $resize_image = Image::make($files);
+            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            // $resize_image->resize(354, 472, function($constraint){
+            //     $constraint->aspectRatio();
+            // })->save();
+            $temp = $destinationPathTemp.$file;
+            if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 777, true);
+                }
+            rename($temp, $destinationFile );
+            $data->lampiran_foto = $destinationFile;
         }
 
         if ($files = $request->file('lampiran_ktp')) {
