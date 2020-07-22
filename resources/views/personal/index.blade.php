@@ -14,7 +14,7 @@
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
-        <li class="active"><a href="#"> Personal</a></li>
+        <li class="active"><a href="{{ url('/personals') }}"> Personal</a></li>
     </ol>
 </section>
 
@@ -23,7 +23,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="box-tools pull-right" style="margin:25px;">
+            <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
                 <div class="row">
                     <div class="col-12">
                         <div class="btn-group">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <table id="data-tables"class="table table-striped table-bordered dataTable customTable">
+                        <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
@@ -62,10 +62,10 @@
                                     <th><span class="indent">No. Hp</span></th>
                                     <th><span class="indent">Email</span></th>
                                     <th><span class="indent">Instansi</span></th>
-                                    <th><span class="indent">Pekerjaan</span></th>
+                                    <th><span class="indent">Jabatan</span></th>
                                     <th><span class="indent">Alamat</span></th>
-                                    <th><span class="indent">Tanggal Lahir</span></th>
-                                    <th><span class="indent">Foto</span></th>
+                                    <th><span class="indent">Tempat, tanggal lahir</span></th>
+                                    <th><span class="indent">Lampiran</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,14 +85,16 @@
                                     <td> {{ $personal->no_hp }} </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->email }}">
                                         {{ str_limit($personal->email,20) }} </td>
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->instansi }}">
-                                        {{ str_limit($personal->instansi,20 )}}
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $bu[$personal->instansi] }}">
+                                        {{ str_limit($bu[$personal->instansi],20 )}}
                                     </td>
-                                    <td> {{ str_limit($personal->pekerjaan, 20)}} </td>
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat.', '.$personal->kota.', '.$personal->provinsi}}">
+                                    <td> {{ str_limit($personal->jabatan, 20)}} </td>
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat }}">
                                         {{ str_limit($personal->alamat, 20) }} </td>
-                                    <td class="text-center"> {{ $personal->tgl_lahir }} </td>
-                                    <td class="text-center"> <a href="{{ url('uploads/foto/personal/'.$username.'/'.$personal->foto)}}">Lihat</a></td>
+                                    <td class="text-center"> 
+                                        {{ $kotas[$personal->temp_lahir].", ".$personal->tgl_lahir }} 
+                                    </td> 
+                                    <td class="text-center"> <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a></td>
                                 </tr>
                                 @empty
                                 <td colspan="10" class="text-center">Tidak ada data...</td>

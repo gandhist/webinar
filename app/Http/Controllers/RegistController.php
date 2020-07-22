@@ -64,7 +64,7 @@ class RegistController extends Controller
             $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
             $file = "lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
-            $data['foto'] = $dir_name."/".$file;
+          $data['foto'] = $dir_name."/".$file;
         }
         $peserta = Peserta::create($data);
         $password = str_random(8);
