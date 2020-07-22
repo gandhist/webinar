@@ -246,7 +246,7 @@
                         </div>
                     @endif
 
-                    @if($personal[0]['lampiran_foto'])
+                    @if($personal[0]['lampiran_npwp'])
                         <div class="form-group">
                             <label style="margin-bottom:25px">Foto NPWP</label>
                             <div>
