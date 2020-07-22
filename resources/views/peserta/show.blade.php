@@ -123,6 +123,28 @@
             </form>
         </div>
     </div>
+    <div class="box-body" style="margin-top:35px;">    
+                        <b>Daftar Seminar yang telah di ikuti</b>
+                        <table id="data-sekolah" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
+                            <thead>
+                                <tr role="row">
+                                    <th style="width:1%;">No</th>
+                                    <th style="width:6%;">Title</th>
+                                    <th style="width:19%;">Tema</th>
+                                    <th style="width:7%;">Tanggal</th>
+                                    <th style="width:10%;">Waktu</th>
+                                    <th style="width:5%;">n_skpk</th>
+                                    <th style="width:10%;">tambah_skpk</th>
+                                    <th style="width:6%;">No_Srtf</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td colspan="8" class="text-center">
+                                Belum Tersedia</td>  
+                                {{-- {{ dd($seminar) }}; --}}
+                            </tbody>
+                        </table>
+                    </div>
 </section>
 @endsection
 @push('script')
