@@ -62,7 +62,9 @@
                                 <select required class="form-control" id="provinsi" name="provinsi">
                                     <option value="" selected hidden>-- Pilih Provinsi --</option>
                                     @forelse($provinsis as $provinsi)
-                                        <option value="{{ $provinsi->id }}">{{ $provinsi->nama }}</option>
+                                        <option value="{{ $provinsi->id }}" {{ ( $provinsi->id == $peserta[0]['provinsi']) ? "selected" : "" }}>
+                                            {{ $provinsi->nama }}
+                                        </option>
                                     @empty
                                     @endforelse
                                 </select>
@@ -84,11 +86,17 @@
                                 <label for="kota">Kota / Kabupaten*</label>
                                 <select required class="form-control" id="kota" name="kota">
                                     <option value="" selected hidden>-- Pilih Kota / Kabupaten --</option>
+                                    @forelse($kotas as $kota)
+                                        <option value="{{ $kota->id }}" {{ ($kota->id == $peserta[0]['kota']) ? "selected" : "" }}>
+                                            {{ $kota->nama }}
+                                        </option>
+                                    @empty
+                                    @endforelse
+                                    
                                 </select>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
@@ -142,29 +150,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#provinsi').select2();
-        $('#provinsi').on('change', function(e){
-            var id = e.target.value;
-            console.log(id);
-            //
-            if(id) {
-                $.ajax({
-                    url: '/pesertas/create/getKota/'+id,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-                        console.log(data)
-                        $('select[name="kota"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="kota"]').append('<option value="'+ key +'">'+ value +'</option>');
-                        });
-                    }
-                });
-            }else{
-                $('select[name="kota"]').empty();
-            }
-            //
-            $('#kota').select2();
-        });
+        $('#kota').select2();
         $('#provinsi').on('change', function(e){
             var id = e.target.value;
             console.log(id);
