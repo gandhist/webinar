@@ -70,8 +70,8 @@ Route::group(['prefix' => 'personals'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
-	Route::patch('profile', 'ProfileController@update')->name('profile.update');
-	Route::get('profile/change', 'ProfileController@change');
+	Route::post('profile', 'ProfileController@update')->name('profile.update');
+
 	
 });
 

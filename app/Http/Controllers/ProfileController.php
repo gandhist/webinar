@@ -7,6 +7,7 @@ use App\Seminar;
 
 class ProfileController extends Controller
 {
+
     public function edit(Request $request)
     {
         $seminar = Seminar::all();
@@ -15,13 +16,12 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        dd($request);
         $request->user()->update($request->all());
 
         return redirect()->route('profile.edit');
     }
 
-    public function change(){
-        return view('profile.change');
+    public function showChangePasswordForm(){
+        return view('profile.changepassword');
     }
 }

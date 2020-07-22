@@ -29,8 +29,8 @@
                     </div>
                     <br />
                 @endif
-
-                <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd" method="post" enctype="multipart/form-data">
+                    
+                <form action="{{ route('profile.update' ) }}" class="form-horizontal" id="formAdd" name="formAdd" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="box-body">
                         <div class="row">
@@ -96,13 +96,13 @@
                                 </tr>
                             </thead>
                             <tbody>  
-                                {{-- {{ dd($seminar) }}; --}}
+                                {{-- {{ dd($user->id) }}; --}}
                             </tbody>
                         </table>
                     </div>
 
                     <div class="box-footer">
-                        <a href="{{ url('profile/change') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-edit"></i> Ubah_Password</a>
+                        <a href="{{ url('profile.changePassword') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-edit"></i> Ubah_Password</a>
                         <a href="{{ url('') }}" class="btn btn-md btn-default pull-left"><i class="fa fa-times-circle"></i> Batal</a>
                         <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Simpan</button>
                     </div>

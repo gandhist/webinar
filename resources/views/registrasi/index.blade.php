@@ -35,7 +35,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label for="no_hp">No Handphone*</label>
-              <input oninvalid="this.setCustomValidity('Masukkan No HP')" oninput="setCustomValidity('')" value="{{ old('no_hp') }}" id="no_hp" name="no_hp" type="number" required class="form-control" placeholder="No Handphone">
+              <input oninvalid="this.setCustomValidity('Masukkan No HP')" oninput="setCustomValidity('')" value="{{ old('no_hp') }}" id="no_hp" name="no_hp" type="number" required class="form-control {{ $errors->first('no_hp') ? 'is-invalid' : '' }}" placeholder="No Handphone">
               <span id="no_hp" class="invalid-feedback">{{ $errors->first('no_hp') }}</span>
             </div>
           </div>
