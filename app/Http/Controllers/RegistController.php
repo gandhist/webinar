@@ -61,13 +61,14 @@ class RegistController extends Controller
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
-            $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
-            $file = "lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+            $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
-          $data['foto'] = $dir_name."/".$file;
+            $data['foto'] = $dir_name."/".$file;
         }
         $peserta = Peserta::create($data);
-        $password = str_random(8);
+        // $password = str_random(8);
+        $password = '12345'; // masih hardcode
       
         if ($peserta) {
             $data['username'] = strtolower($request->nama);
