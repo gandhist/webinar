@@ -94,21 +94,21 @@ class PersonalController extends Controller
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         
-        if ($files = $request->file('lampiran_ktp')) {
+        if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_foto = $destinationPath."/".$file;
         }
 
-        if ($files = $request->file('lampiran_npwp')) {
+        if ($files = $request->file('lampiran_ktp')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_ktp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_ktp = $destinationPath."/".$file;
         }
 
-        if ($files = $request->file('foto')) {
+        if ($files = $request->file('lampiran_npwp')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
@@ -229,21 +229,21 @@ class PersonalController extends Controller
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         
-        if ($files = $request->file('lampiran_ktp')) {
+        if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_foto = $destinationPath."/".$file;
         }
 
-        if ($files = $request->file('lampiran_npwp')) {
+        if ($files = $request->file('lampiran_ktp')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_ktp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_ktp = $destinationPath."/".$file;
         }
 
-        if ($files = $request->file('foto')) {
+        if ($files = $request->file('lampiran_npwp')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
