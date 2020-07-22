@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\SeminarModel;
-use App\instansiModel;
+use App\InstansiModel;
 use App\ProvinsiModel;
 
 class SeminarController extends Controller
@@ -18,7 +18,7 @@ class SeminarController extends Controller
     // create seminar
     public function create(){
         $judul = "Buat Seminar";
-        $inisiator = instansiModel::all();
+        $inisiator = InstansiModel::all();
         $provinsi = ProvinsiModel::all();
         return view('seminar.create')->with(compact('judul','inisiator','provinsi'));
     }
