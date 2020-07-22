@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'last_login',
         'role_id',
-        'is_active'
+        'is_active',
+        'verified_at'
     ];
 
     /**

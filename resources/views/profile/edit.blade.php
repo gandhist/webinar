@@ -24,25 +24,24 @@
         <div class="box box-content">
             <div class="box-body">
                 @if(session()->get('success'))
-                    <div class="alert alert-success">
-                    {{ session()->get('success') }}  
+                    <div class="alert alert-success alert-dismissible fade in"> {{ session()->get('success') }}
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     </div>
-                    <br />
                 @endif
-
+                    
                 <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="box-body">
                         <div class="row">
                             <div class="col-sm-2">
-                                <img style="width:100%;" src="{{ asset('uploads/foto/member/'.$user->peserta->foto) }}" >
+                                <img style="width:100%;" src="{{ asset('uploads/peserta/'.$user->peserta->foto) }}" >
                             </div>
                             <div class="col-sm-6">
                                 <table>
                                     <tr>
                                         <th style="width:20%;text-align:left">Nama</th>
                                         <td>:</td>
-                                        <td><input name="name" id="name" type="text" class="form-control" value="{{ old('name', $user->peserta->nama) }}" placeholder=""></td>
+                                        <td><input name="nama" id="nama" type="text" class="form-control" value="{{ old('nama', $user->peserta->nama) }}" placeholder=""></td>
                                         
                                     </tr>
                                     <tr>
@@ -96,13 +95,13 @@
                                 </tr>
                             </thead>
                             <tbody>  
-                                {{-- {{ dd($seminar) }}; --}}
+                                {{-- {{ dd($user->id) }}; --}}
                             </tbody>
                         </table>
                     </div>
 
                     <div class="box-footer">
-                        <a href="{{ url('profile/change') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-edit"></i> Ubah_Password</a>
+                        <a href="{{ url('changepassword') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-edit"></i> Ubah_Password</a>
                         <a href="{{ url('') }}" class="btn btn-md btn-default pull-left"><i class="fa fa-times-circle"></i> Batal</a>
                         <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Simpan</button>
                     </div>
