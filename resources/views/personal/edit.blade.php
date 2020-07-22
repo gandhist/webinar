@@ -590,6 +590,9 @@
     $('#no_hp').attr('maxlength','15')
     $('#npwp').mask("99.999.999.9-999.999").attr('maxlength','20');
 
+    $('.form-group').on('change',function(e) {
+        $( e ).removeClass( "has-error" )
+    });
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();

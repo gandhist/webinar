@@ -474,101 +474,7 @@
                     <div class="small text-danger">*) Wajib diisi</div>
                     <button type="submit" class="btn btn-outline-info" style="margin-top:20px;">Registrasi</button>
 
-                </form>            maxlength="20">
-                                <div id="npwp" class="invalid-feedback text-danger">
-                                    {{ $errors->first('npwpClean') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir NPWP --}}
-                        
-                    </div>
-
-
-                    <div class="row">
-                        
-                        {{-- Lampiran KTP --}}
-                        <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('lampiran_ktp')) ? ' has-error' : '' }}">
-                                <div class="custom-file">
-                                    <label class="label-control" for="lampiran_ktp">Foto KTP</label>
-                                    <div class="custom-file">
-                                        <input type="file" id="lampiran_ktp" name="lampiran_ktp" class="custom-file-input" id="lampiran_ktp">
-                                        <div id="lampiran_ktp" class="invalid-feedback text-danger">
-                                            {{ $errors->first('lampiran_ktp') }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">Upload Max: 2MB</small><br/>
-                                <small class="form-text text-muted">Format: pdf, jpeg, png, jpg, gif, svg</small>
-                            </div>
-                        </div>
-                        {{-- Akhir Lampiran KTP --}}
-                        
-                        
-                        
-                        {{-- Foto Lampiran NPWP --}}
-                        <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('lampiran_npwp')) ? ' has-error' : '' }}">
-                                <div class="custom-file">
-                                    <label class="label-control" for="lampiran_npwp">Foto NPWP</label>
-                                    <div class="custom-file">
-                                        <input type="file" id="lampiran_npwp" name="lampiran_npwp" class="custom-file-input" id="lampiran_npwp">
-                                        <div id="lampiran_npwp" class="invalid-feedback text-danger">
-                                            {{ $errors->first('lampiran_npwp') }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">Upload Max: 2MB</small><br/>
-                                <small class="form-text text-muted">Format: pdf, jpeg, png, jpg, gif, svg</small>
-                            </div>
-                        </div>
-                        {{-- Akhir Lampiran NPWP --}}
-
-                    </div>
-
-
-                    <div class="row">
-
-                        {{-- Foto Diri --}}
-                        <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('foto')) ? ' has-error' : '' }}">
-                                <div class="custom-file">
-                                    <label class="label-control required" for="foto">Foto</label>
-                                    <div class="custom-file">
-                                        <input type="file" id="foto" name="foto" class="custom-file-input" id="foto" required>
-                                        <div id="foto" class="invalid-feedback text-danger">
-                                            {{ $errors->first('foto') }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">Upload Max: 2MB</small><br/>
-                                <small class="form-text text-muted">Format: jpeg, png, jpg, gif, svg</small>
-                            </div>
-                        </div>
-                        {{-- Akhir Foto Diri --}}
-                        
-                        {{-- Referensi Pendaftaran --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('reff_p')) ? ' has-error' : '' }}">
-                                <label class="label-control" for="reff_p">Referensi Pendaftaran</label>
-                                <input type="text" name="reff_p" id="reff_p"
-                                    value="{{ old('reff_p') }}"
-                                    class="form-control" 
-                                    placeholder="Referensi Pendaftaran">
-                                <div id="reff_p" class="invalid-feedback text-danger">
-                                    {{ $errors->first('reff_p') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Referensi Pendaftaran --}}
-
-                    </div>
-
-                    <div class="small text-danger">*) Wajib diisi</div>
-                    <button type="submit" class="btn btn-outline-info" style="margin-top:20px;">Registrasi</button>
-
-                </form>
+                </form>          
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
@@ -581,7 +487,9 @@
 <script>
 
     $(document).ready(function () {
-        
+        $('body').on('change', '.form-group', function() {
+            // Action goes here.
+        });
         $('#provinsi').select2(); // Select2 Provinsi
         $('#instansi').select2(); // Select2 instansi
         $('#kota').select2(); // Select2 Kota

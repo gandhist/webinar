@@ -93,8 +93,8 @@
                                         {{ str_limit($personal->alamat, 20) }} </td>
                                     <td class="text-center"> 
                                         {{ $kotas[$personal->temp_lahir].", ".$personal->tgl_lahir }} 
-                                    </td>
-                                    <td class="text-center"> <a href="{{ url($personal->lampiran_foto)}}">Lihat</a></td>
+                                    </td> 
+                                    <td class="text-center"> <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a></td>
                                 </tr>
                                 @empty
                                 <td colspan="10" class="text-center">Tidak ada data...</td>
