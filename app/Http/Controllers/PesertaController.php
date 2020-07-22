@@ -44,7 +44,7 @@ class PesertaController extends Controller
         $peserta = Peserta::where('id', $id)->get();
         return view('peserta.edit',['id'=>$id, 'peserta'=>$peserta,
         'provinsis' => ProvinsiModel::all(),
-        'kotas' => KotaModel::all()]);
+        'kotas' => KotaModel::where('provinsi_id',$peserta[0]['provinsi'])->get()]);
 
     }
     public function update(Request $request) {
@@ -190,7 +190,7 @@ class PesertaController extends Controller
                 // handle upload Foto
                 $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
                 if ($files = $request->file('foto')) {
-                    $destinationPath = 'uploads/foto/peserta/'.$dir_name; // upload path
+                    $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
                     $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
                     $files->move($destinationPath, $file);
                     $data->foto = $file;
