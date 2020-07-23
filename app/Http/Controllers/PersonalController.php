@@ -183,9 +183,9 @@ class PersonalController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'nik' => 'required|numeric|digits:16',
+            'nik' => 'required|numeric|digits:16|gt:0',
             'email' => 'required|email|max:100',
-            'no_hp' => 'required|numeric|digits_between:9,14',
+            'no_hp' => 'required|numeric|digits_between:9,14|gt:0',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
             'instansi' => 'required',
             'jabatan' => 'required|min:3,max:50',
@@ -193,9 +193,9 @@ class PersonalController extends Controller
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'nomor_rek' => 'numeric|digits_between:4,20',
+            'nomor_rek' => 'numeric|digits_between:4,20|gt:0',
             'nama_rek' => 'max:50',
-            'npwpClean' => 'numeric|digits:15',
+            'npwpClean' => 'numeric|digits:15|gt:0',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
@@ -206,7 +206,7 @@ class PersonalController extends Controller
         $data->nama = $request->nama;
         if($request->nik != $personal[0]['nik']){
             $request->validate([
-                'nik' => 'required|numeric|unique:personal|digits:16',
+                'nik' => 'required|numeric|unique:personal|digits:16|gt:0',
             ]);
             $data->nik = $request->nik;
         }
@@ -218,7 +218,7 @@ class PersonalController extends Controller
         }
         if($request->no_hp != $personal[0]['no_hp']){
             $request->validate([
-                'no_hp' => 'required|numeric|unique:no_hp|digits_between:9,14',
+                'no_hp' => 'required|numeric|unique:no_hp|digits_between:9,14|gt:0',
             ]);
             $data->no_hp = $request->no_hp;
         }

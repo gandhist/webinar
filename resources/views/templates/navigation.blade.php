@@ -76,6 +76,7 @@
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
+      @if(Auth::user()->role_id==1)
 
       <li class="treeview">
         <a href="{{ url('seminar') }}">
@@ -88,7 +89,6 @@
           <i class="fa fa-certificate"></i> <span>ISO</span>
         </a>
       </li>
-      @if(Auth::user()->role_id==1)
       <li class="treeview">
         <a href="{{ url('personals') }}">
           <i class="fa fa-user"></i> <span>Personal</span>

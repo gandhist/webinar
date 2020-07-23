@@ -86,7 +86,7 @@
                                       <input type="checkbox" name="is_free_c" id="is_free_c">
                                       <input type="hidden" name="is_free" id="is_free">
                                     </span>
-                                    <input name="biaya" id="biaya" type="number" step="100000" 
+                                    <input name="biaya" id="biaya" type="number" step="100000"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     class="form-control" value="{{old('biaya')}}" placeholder="Biaya">
                                 </div>
@@ -165,7 +165,7 @@
                             </div>
 
                         </div>
-
+                    <button type="submit">kirjm</button>
                     </div>
                 </form>
                 {{-- end of form seminar --}}
@@ -182,13 +182,13 @@
 
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script> -->
 
 <script>
 var tema = $('#tema');
 CKEDITOR.replace('tema')
 $('#biaya').prop('disabled',true)
-$('#biaya').mask('999,999,999,999,999',  {reverse: true})
+// $('#biaya').mask('0.000.000.000.000', {reverse:true})
 
 $(function(){
 

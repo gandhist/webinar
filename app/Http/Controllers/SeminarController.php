@@ -29,6 +29,10 @@ class SeminarController extends Controller
         return view('seminar.detail')->with(compact('data'));
     }
 
+    public function store(Request $request) {
+        dd($request);
+    }
+
     public function cetak_sert($id, $email){
         $data['data'] = SertModel::where('no_sertifikat',$id)->where('email', $email)->get();
         $pdf = PDF::loadview('sert.sert_v1',$data);

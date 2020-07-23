@@ -47,6 +47,7 @@ Route::get('send_email/{id}','SertController@sendEmail');
 Route::group(['prefix' => 'seminar'], function () {
 	Route::get('/','SeminarController@index');
 	Route::get('create','SeminarController@create');
+	Route::post('store','SeminarController@store');
 	Route::get('detail/{id}','SeminarController@detail');
 	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
 });
