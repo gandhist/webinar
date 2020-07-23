@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('infoseminar','InfoSeminarController@index');
+Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
+Route::get('registrasi','RegistController@index');
+Route::post('registrasi/store','RegistController@store');
+
 Route::get('sertifikat/cari','SertController@cari')->name('cari');
 Route::get('sertifikat/{no_sert}/{email}','SertController@by_sert');
 Route::get('sertifikat_v1/{no_sert}/{email}','SertController@sert_v1');
@@ -33,9 +38,6 @@ Route::namespace('Laporan')->group(function(){
 Route::namespace('Iso')->group(function(){
 	Route::get('iso/print/{id}', 'IsoController@print');
 });
-
-Route::get('registrasi','RegistController@index');
-Route::post('registrasi/store','RegistController@store');
 
 Route::auth();
 

@@ -14,6 +14,6 @@ class Seminar extends Model
 
     // relasi many to many table peserta seminar pivot
     public function seminar_r(){
-        return $this->hasMany('App\PesertaSeminar','id_seminar');
+        return $this->hasMany('App\PesertaSeminar','id_seminar')->where('status',2);
     }
 }

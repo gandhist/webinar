@@ -81,10 +81,12 @@
                     
                     <div class="box-body">    
                         <b>Daftar Seminar yang telah di ikuti</b>
+                        <a href="{{ url('changepassword') }}" class="btn btn-md btn-danger pull-right"><i class="fa fa-edit"></i> Ubah_Password</a>
                         <table id="data-sekolah" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width:1%;">No</th>
+                                    <th style="width:2%;"><i class="fa fa-check-square-o"></i></th>
+                                    <th style="width:2%;">No</th>
                                     <th style="width:6%;">Title</th>
                                     <th style="width:19%;">Tema</th>
                                     <th style="width:7%;">Tanggal</th>
@@ -101,9 +103,9 @@
                     </div>
 
                     <div class="box-footer">
-                        <a href="{{ url('changepassword') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-edit"></i> Ubah_Password</a>
+                        <a href="{{ url('#') }}" class="btn btn-primary pull-right"> Detail</a> 
                         <a href="{{ url('') }}" class="btn btn-md btn-default pull-left"><i class="fa fa-times-circle"></i> Batal</a>
-                        <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Simpan</button>
+                        <button type="submit" class="btn btn-info pull-left"> <i class="fa fa-save"></i> Simpan</button>
                     </div>
                 </form>
 
