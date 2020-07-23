@@ -81,6 +81,20 @@ Route::group(['middleware' => 'auth.admin', 'prefix' => 'pesertas'], function ()
 });
 // End Peserta
 
+// Instansi 
+Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () {
+	Route::get('/','InstansiController@index');
+	Route::get('/create','InstansiController@create');
+	Route::post('/store','InstansiController@store');
+	Route::patch('/update','InstansiController@update');
+	Route::get('/create/getKota/{id}','InstansiController@getKota');
+	Route::get('/{id}/edit','InstansiController@edit');
+    Route::get('/{id}','InstansiController@show');
+	Route::delete('/destroy','InstansiController@destroy');
+});
+// End Instansi
+
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
 	Route::post('profile', 'ProfileController@update')->name('profile.update');

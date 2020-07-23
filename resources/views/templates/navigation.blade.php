@@ -89,6 +89,13 @@
           <i class="fa fa-certificate"></i> <span>ISO</span>
         </a>
       </li>
+
+      <li class="treeview">
+        <a href="{{ url('instansi') }}">
+        <i class="fa fa-building-o" aria-hidden="true"></i></i> <span>Instansi</span>
+        </a>
+      </li>
+
       <li class="treeview">
         <a href="{{ url('personals') }}">
           <i class="fa fa-user"></i> <span>Personal</span>
