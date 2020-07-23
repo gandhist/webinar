@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
+use File;
 use DB;
 
 class PersonalController extends Controller
@@ -52,9 +53,9 @@ class PersonalController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'nik' => 'required|numeric|unique:personal|digits:16',
+            'nik' => 'required|numeric|unique:personal|digits:16|gt:0',
             'email' => 'required|email|unique:personal|max:100',
-            'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
+            'no_hp' => 'required|numeric|unique:personal|digits_between:9,14|gt:0',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
             'instansi' => 'required',
             'jabatan' => 'required|min:3,max:50',
@@ -62,9 +63,9 @@ class PersonalController extends Controller
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'nomor_rek' => 'numeric|digits_between:4,20',
+            'nomor_rek' => 'numeric|digits_between:4,20|gt:0',
             'nama_rek' => 'max:50',
-            'npwpClean' => 'numeric|digits:15',
+            'npwpClean' => 'numeric|digits:15|gt:0',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
@@ -97,6 +98,10 @@ class PersonalController extends Controller
         
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
+            if (!file_exists($destinationPath)) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                }
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
@@ -106,9 +111,6 @@ class PersonalController extends Controller
             //     $constraint->aspectRatio();
             // })->save();
             $temp = $destinationPathTemp.$file;
-            if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 777, true);
-                }
             rename($temp, $destinationFile );
             $data->lampiran_foto = $destinationFile;
         }
@@ -242,35 +244,58 @@ class PersonalController extends Controller
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         
         if ($files = $request->file('foto')) {
+            $lampiran_foto_lama = $data->lampiran_foto;
+
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
+            if (!file_exists($destinationPath)) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                }
+
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
+
             $resize_image = Image::make($files);
             $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
             // $resize_image->resize(354, 472, function($constraint){
             //     $constraint->aspectRatio();
             // })->save();
+
             $temp = $destinationPathTemp.$file;
-            if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 777, true);
-                }
             rename($temp, $destinationFile );
+
             $data->lampiran_foto = $destinationFile;
+            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
+                // mkdir($destinationPath, 777, true);
+                unlink(public_path()."/".$lampiran_foto_lama);
+            }
         }
 
         if ($files = $request->file('lampiran_ktp')) {
+            $lampiran_ktp_lama = $data->lampiran_ktp;
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_ktp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_ktp = $destinationPath."/".$file;
+            if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama)) {
+                // mkdir($destinationPath, 777, true);
+                unlink(public_path()."/".$lampiran_ktp_lama);
+            }
+
         }
 
         if ($files = $request->file('lampiran_npwp')) {
+            $lampiran_npwp_lama = $data->lampiran_npwp;
+            // dd(public_path().$lampiran_npwp_lama);
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_npwp = $destinationPath."/".$file;
+            if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama)) {
+                // mkdir($destinationPath, 777, true);
+                unlink(public_path()."/".$lampiran_npwp_lama);
+            }
         }
 
 

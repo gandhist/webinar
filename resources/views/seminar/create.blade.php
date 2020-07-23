@@ -59,15 +59,18 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                <textarea name="tema" class="form-control" id="tema" >Tulis Tema Seminar</textarea>
-                                <span id="kuota" class="help-block customspan">{{ $errors->first('kuota') }}</span>
+                                <textarea name="tema" class="form-control" id="tema" 
+                                placeholder="Tulis Tema Seminar"></textarea>
+                                <span id="tema" class="help-block customspan">{{ $errors->first('tema') }}</span>
                             </div>
                         </div>
 
                         <div class="row">
 
                             <div class="col-sm-2">
-                                <input name="kuota" id="kuota" type="number" class="form-control" value="{{old('kuota')}}" placeholder="Kuota Peserta">
+                                <input step='5' name="kuota" id="kuota" type="number" 
+                                class="form-control" value="{{old('kuota')}}" 
+                                onkeypress="return /[0-9]/i.test(event.key)" placeholder="Kuota Peserta">
                                 <span id="kuota" class="help-block customspan">{{ $errors->first('kuota') }}</span>
                             </div>
 
@@ -83,7 +86,9 @@
                                       <input type="checkbox" name="is_free_c" id="is_free_c">
                                       <input type="hidden" name="is_free" id="is_free">
                                     </span>
-                                    <input name="biaya" id="biaya" type="number" class="form-control" value="{{old('biaya')}}" placeholder="Biaya">
+                                    <input name="biaya" id="biaya" type="number" step="100000" 
+                                    onkeypress="return /[0-9]/i.test(event.key)"
+                                    class="form-control" value="{{old('biaya')}}" placeholder="Biaya">
                                 </div>
                                 <span id="biaya" class="help-block customspan"> {{ $errors->first('biaya') }}</span>
                             </div>
@@ -177,11 +182,13 @@
 
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 
 <script>
 var tema = $('#tema');
 CKEDITOR.replace('tema')
 $('#biaya').prop('disabled',true)
+$('#biaya').mask('999,999,999,999,999',  {reverse: true})
 
 $(function(){
 
