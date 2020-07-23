@@ -156,13 +156,22 @@
                             </div>
 
                             <div class="col-sm-6">
+                                <select name="kota" class="form-control select2" id="kota" style="width: 100%;">
+                                    <option></option>
+                                    @foreach($kota as $key)
+                                    <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- <div class="col-sm-6">
                                 <select name="ttd_pemangku[]" multiple="multiple" class="form-control select2" id="ttd_pemangku" style="width: 100%;">
                                     <option></option>
                                     @foreach($provinsi as $key)
                                     <option value="{{ $key->id }}">{{ $key->nama }}</option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> -->
 
                         </div>
                     <button type="submit">kirjm</button>

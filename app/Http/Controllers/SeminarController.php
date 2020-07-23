@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\SeminarModel;
 use App\InstansiModel;
 use App\ProvinsiModel;
+use App\KotaModel;
+
 
 class SeminarController extends Controller
 {
@@ -20,7 +22,8 @@ class SeminarController extends Controller
         $judul = "Buat Seminar";
         $inisiator = InstansiModel::all();
         $provinsi = ProvinsiModel::all();
-        return view('seminar.create')->with(compact('judul','inisiator','provinsi'));
+        $kota = KotaModel::all();
+        return view('seminar.create')->with(compact('judul','inisiator','provinsi','kota'));
     }
 
     //detail seminar
