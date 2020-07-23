@@ -44,8 +44,8 @@
                             <a href="#">Home 3</a>
                         </li>
                     </ul> --}}
-                {{--</li>
-                <li>
+                </li>
+                {{-- <li>
                     <a href="#">About</a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
@@ -59,11 +59,11 @@
                             <a href="#">Page 3</a>
                         </li>
                     </ul>
-                </li>
-                <li>
+                </li> --}}
+                {{-- <li>
                     <a href="#">Portfolio</a>
-                </li>
-                <li>
+                </li> --}}
+                {{-- <li>
                     <a href="#">Contact</a>
                 </li> --}}
             </ul>
@@ -88,12 +88,12 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            {{-- <li class="nav-item active">
-                                <a class="nav-link" href="#">Seminar</a>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Pencarian</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Pencarian</a>
-                            </li> --}}
+                                <a class="nav-link" href= "{{ url('infoseminar') }}">Seminar</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url('registrasi') }}">Bergabung</a>
                             </li>
