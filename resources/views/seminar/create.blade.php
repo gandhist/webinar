@@ -68,7 +68,7 @@
                         <div class="row">
 
                             <div class="col-sm-2">
-                                <input step='5' name="kuota" id="kuota" type="number" 
+                                <input name="kuota" id="kuota" type="number" 
                                 class="form-control" value="{{old('kuota')}}" 
                                 onkeypress="return /[0-9]/i.test(event.key)" placeholder="Kuota Peserta">
                                 <span id="kuota" class="help-block customspan">{{ $errors->first('kuota') }}</span>
@@ -86,7 +86,7 @@
                                       <input type="checkbox" name="is_free_c" id="is_free_c">
                                       <input type="hidden" name="is_free" id="is_free">
                                     </span>
-                                    <input name="biaya" id="biaya" type="number" step="100000"
+                                    <input name="biaya" id="biaya" type="number"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     class="form-control" value="{{old('biaya')}}" placeholder="Biaya">
                                 </div>
