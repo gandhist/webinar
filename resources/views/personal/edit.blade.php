@@ -532,7 +532,7 @@
                     </div>
                     <input type="hidden" name="id" value="{{ $id }}">
                     <div class="small text-danger">*) Wajib diisi</div>
-                    <button type="submit" class="btn btn-outline-info" style="margin-top:20px;">Edit</button>
+                    <button type="submit" class="btn btn-success" style="margin-top:20px;">Edit</button>
 
                 </form>
             </div>

@@ -472,7 +472,7 @@
                     </div>
 
                     <div class="small text-danger">*) Wajib diisi</div>
-                    <button type="submit" class="btn btn-outline-info" style="margin-top:20px;">Registrasi</button>
+                    <button type="submit" class="btn btn-success" style="margin-top:20px;">Registrasi</button>
 
                 </form>          
             </div> {{-- Jumbotron --}}

@@ -26,7 +26,7 @@
             <div class="box-tools pull-right" style="margin:25px;">
                 <div class="row">
                     <div class="col-12">
-                        <div class="btn-group">
+                        <div>
                             <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                 <i class="fa fa-edit"></i> Ubah</button>
                         </div>

@@ -1,197 +1,109 @@
 @extends('templates.header')
 
-@push('style')
-
-@endpush
-
 @section('content')
 <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Seminar P3SM
-        {{--  <small>it all starts here</small>  --}}
-      </h1>
-      <ol class="breadcrumb">
+<style>
+    span.indent{
+        text-indent: 25px;
+    }
+    .btn-bermargin {
+        margin-left: 5px;
+    }
+</style>
+<section class="content-header">
+    <h1>
+        Daftar Seminar
+    </h1>
+    <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="#">Seminar</a></li>
-      </ol>
-    </section>
+        <li><a href="#"> Daftar</a></li>
+        <li class="active"><a href="{{ url('/seminar') }}"> Seminar</a></li>
+    </ol>
+</section>
 
-    <!-- Main content -->
-    <section class="content">
-
-      <!-- Default box -->
-      <div class="box box-content">
-        <div class="box-body">
-            @if(session()->get('success'))
-            <div class="alert alert-success">
-              {{ session()->get('success') }}  
-            </div>
-            <br />
-            @endif
-
-            {{--  table data Seminar  --}}
-            <div>
-              {{-- form filter --}}
-              <form action="{{ url('seminar') }}" enctype="multipart/form-data" name="filterData"
-                id="filterData" method="post">
-                @csrf
+<!-- Main content -->
+<section class="content">
+    <!-- Default box -->
+    <div class="box box-content">
+        <div class="container-fluid">
+            <div class="box-tools" style="margin: 25px 35px;">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <!-- Table Filter -->
-                        <table class="table table-condensed table-filter">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <span class="input-group-addon customInput">Tgl Awal Seminar</span>
-                                            <input id="f_awal_terbit" name="f_awal_terbit"
-                                                value="{{ request()->get('f_awal_terbit') }}" autocomplete="off"
-                                                data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                                                class="form-control customInput" placeholder="Tgl Awal">
-                                            <span class="input-group-addon customInput">s/d</span>
-                                            <input id="f_akhir_terbit" name="f_akhir_terbit"
-                                                value="{{ request()->get('f_akhir_terbit') }}" autocomplete="off"
-                                                data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                                                class="form-control customInput" placeholder="Tgl Akhir">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {{-- <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_jenis_usaha"
-                                                id="f_jenis_usaha">
-                                                <option selected value="">Jenis Usaha</option>
-                                            </select>
-                                        </div> --}}
-                                    </td>
-                                    <td>
-                                        {{-- <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_pjk3" id="f_pjk3">
-                                                <option selected value="">PJK3</option>
-                                            </select>
-                                        </div> --}}
-                                    </td>
-                                    <td>
-                                        {{-- <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_instansi" id="f_instansi">
-                                                <option selected value="">Instansi_Reff</option>
-                                            </select>
-                                        </div> --}}
-                                    </td>
-                                    <td style="padding-right: 0px">
-                                        <button type="submit" class="btn btn-sm btn-info"> <i class="fa fa-filter"></i>
-                                            Filter</button>
-                                    </td>
-                                    <td style="padding-left: 0px">
-                                        <a href="{{ url('daftarpjk3') }}" class="btn btn-sm btn-default"> <i
-                                                class="fa fa-refresh"></i>
-                                            Reset</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="input-group">
-                                            <span class="input-group-addon customInput">Tgl Akhir Seminar &nbsp;</span>
-                                            <input id="f_awal_akhir" name="f_awal_akhir"
-                                                value="{{ request()->get('f_awal_akhir') }}" autocomplete="off"
-                                                data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                                                class="form-control customInput" placeholder="Tgl Awal">
-                                            <span class="input-group-addon customInput">s/d</span>
-                                            <input id="f_akhir_akhir" name="f_akhir_akhir"
-                                                value="{{ request()->get('f_akhir_akhir') }}" autocomplete="off"
-                                                data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                                                class="form-control customInput" placeholder="Tgl Akhir">
-                                        </div>
-                                    </td>
+                    <div class="col-12">
+                        <div class="btn-group">
+                            <span class="form-group">
+                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal">
 
-                                    <td>
-                                        {{-- <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_provinsi" id="f_provinsi">
-                                                <option value="">Provinsi PJK3</option>
-                                            </select>
-                                        </div> --}}
-                                  </td>
+                                <span style="margin: 10px;"> s/d </span>
 
-                                    <td>
-                                        {{-- <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_bidang" id="f_bidang">
-                                                <option selected value="">Bidang</option>
-                                            </select>
-                                        </div> --}}
-                                    </td>
-                                    <td>
+                                <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir">
 
-                                    </td>
-                                    <td>
+                                <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
+                                    <i class="fa fa-filter"></i> Filter
+                                </button>
 
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- End -->
-                    </div>
+                                {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
 
-                    <div class="col-sm-4">
-
-                    </div>
-
-                    <div class="col-sm-2" style='text-align:right'>
-                        <div class="row" style="margin-top:-3px;margin-bottom:3px">
-                            <div class="col-xs-12">
-                                <div class="btn-group">
-                                    <span class="btn btn-primary" id="btnDetailPjk3"><i
-                                        class="fa fa-eye"></i>
-                                        Detail</span>
-                                </div>
-                            </div>
+                            </span>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="btn-group">
-                                    <a href="{{ url('seminar/create') }}" class="btn btn-info"> <i
-                                            class="fa fa-plus"></i>
-                                        Tambah</a>
-                                    <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
-                                            class="fa fa-edit"></i>
-                                        Ubah</button>
-                                    <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i
-                                            class="fa fa-trash"></i>
-                                        Hapus</button>
-                                </div>
-                            </div>
+                        <div class="pull-right">
+                            <a href="{{ url('seminar/create') }}" class="btn btn-info">
+                                <i class="fa fa-plus"></i> Tambah</a>
+                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                                <i class="fa fa-edit"></i> Ubah</button>
+                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
+                                <i class="fa fa-trash"></i> Hapus</button>
                         </div>
                     </div>
                 </div>
-            </form>
-              {{-- end of form filter --}}
-                <table id="data-tables" class="table table-striped table-bordered dataTable customTable" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th style="text-indent: 12px;"><i class="fa fa-check-square-o"></i></th>
-                            <th style="text-indent: 22px;">No</th>
-                            <th>Nama</th>
-                            <th>Tema</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                      @foreach ($data as $key)
-                      <tr>
-                          <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                  id="selection[]" name="selection[]"></td>
-                          <td style='text-align:center'>{{ $loop->iteration }}</td>
-                          <td>{{ $key->nama_seminar }}</td>
-                          <td>{{ $key->tema }}</td>
-                          <td>
-                              <a target="_blank" href="{{ url('seminar/detail', $key->id) }}" class="btn btn-outline-primary my-2 my-sm-0"> Lihat Peserta</a>
-                          </td>
-                      </tr>
-                  @endforeach
-                    </tbody>
-                </table>
             </div>
-            {{--  end of table seminar  --}}
-            
+            <div class="box-body" style="margin:25px;">
+
+                <div class="row" style="margin-top:40px; margin-bottom: 25;">
+                    <div class="col-12">
+                        @if(session()->get('pesan'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session()->get('pesan') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
+                            <thead>
+                                <tr>
+                                    <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
+                                    <th><span class="indent">Nomor</th>
+                                    <th><span class="indent">Nama</th>
+                                    <th><span class="indent">Tema</th>
+                                    <th><span class="indent">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            @foreach ($seminar as $key)
+                                <tr>
+                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
+                                            id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center'>{{ $loop->iteration }}</td>
+                                    <td>{{ $key->nama_seminar }}</td>
+                                    <td>{{ $key->tema }}</td>
+                                    <td>
+                                        <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {{-- modal konfirmasi hapus --}}
 <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -222,43 +134,55 @@
     </form>
 </div>
 {{-- end of modal konfirmasi hapus --}}
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer"></div>
-        <!-- /.box-footer-->
-      </div>
-      <!-- /.box -->
 
-    </section>
-    <!-- /.content -->
 @endsection
-
 @push('script')
-<script>
-$(function(){
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
+<script type="text/javascript">
 
+    $("#tgl_awal").datepicker();
+    $("#tgl_akhir").datepicker();
+    $('#btnHapus').on('click', function (e) {
+            e.preventDefault();
+            var id = [];
+            $('.selection:checked').each(function () {
+                id.push($(this).data('id'));
+            });
+            $("#idHapusData").val(id);
+            if (id.length == 0) {
+                Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // Swal.fire('Tidak ada data yang terpilih');
+            } else {
+                $('#modal-konfirmasi').modal('show');
+            }
+    });
 
-  // onclick button hapus
-  $('#btnHapus').on('click', function (e) {
+    // Button edit click
+    $('#btnEdit').on('click', function (e) {
         e.preventDefault();
         var id = [];
         $('.selection:checked').each(function () {
             id.push($(this).data('id'));
         });
-        $("#idHapusData").val(id);
         if (id.length == 0) {
-            Swal.fire({
-                title: "Tidak ada data yang terpilih",
-                type: 'warning',
-                confirmButtonText: 'Close',
-                confirmButtonColor: '#AAA'
-            });
-            // Swal.fire('Tidak ada data yang terpilih');
+            alert('Tidak ada data yang terpilih');
+        } else if (id.length > 1) {
+            alert('Harap pilih satu data untuk di ubah');
         } else {
-            $('#modal-konfirmasi').modal('show');
+            url = id[0];
+            window.location.href = "{{ url('seminar') }}/" + url + "/edit";
         }
     });
-
-  });
 </script>
 @endpush

@@ -46,13 +46,30 @@ Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
 Route::get('kirim_email','SertController@kirimEmail');
 Route::get('send_email/{id}','SertController@sendEmail');
 
-Route::group(['prefix' => 'seminar'], function () {
-	Route::get('/','SeminarController@index');
-	Route::get('create','SeminarController@create');
-	Route::post('store','SeminarController@store');
-	Route::get('detail/{id}','SeminarController@detail');
-	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+// Seminar
+
+// Route::group(['prefix' => 'seminar'], function () {
+// 	Route::get('/','SeminarController@index');
+// 	Route::get('create','SeminarController@create');
+// 	Route::post('store','SeminarController@store');
+// 	Route::get('detail/{id}','SeminarController@detail');
+// 	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+// });
+
+// Route::group(['prefix' => 'temp'], function () {
+// 	Route::get('/','SeminarController2@index');
+// 	Route::get('create','SeminarController2@create');
+// 	Route::post('store','SeminarController2@store');
+// 	Route::get('detail/{id}','SeminarController2@detail');
+// 	Route::get('sertifikat/{no_sert}/{email}','SeminarController2@detail');
+// });
+
+Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
+	Route::get('/', 'SeminarController@index');
+
 });
+
+// End Seminar
 
 Route::namespace('Iso')->group(function(){
 	Route::post('iso/destroy', 'IsoController@destroy');

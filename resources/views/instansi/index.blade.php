@@ -26,7 +26,7 @@
             <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
                 <div class="row">
                     <div class="col-12">
-                        <div class="btn-group">
+                        <div>
                             <a href="{{ url('instansi/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
                             <button class="btn btn-success" id="btnEdit" name="btnEdit">
