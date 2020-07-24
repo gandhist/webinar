@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Seminar;
 use App\Peserta;
+use App\PesertaSeminar;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +17,13 @@ class ProfileController extends Controller
 
     public function edit(Request $request)
     {
-        $peserta = Peserta::all();
+        $peserta = Peserta::select('id')->where('user_id',Auth::id())->first();
         $seminar = Seminar::all();
-        return view('profile.edit', ['user' => $request->user()])->with(compact('seminar','peserta'));
+        $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
+        $jumlahdetail = PesertaSeminar::where('id_peserta','=',$peserta['id'])->count();
+        // dd($detailseminar);
+        
+        return view('profile.edit', ['user' => $request->user()])->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
     }
 
     public function update(Request $request)
