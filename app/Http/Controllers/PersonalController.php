@@ -44,7 +44,7 @@ class PersonalController extends Controller
     public function create() {
         return view('personal.create',['provinsis' => ProvinsiModel::all(), 
                                         'kotas' => KotaModel::all(),
-                                        'bus' => BuModel::all(),
+                                        'bus' => BuModel::where('deleted_at',NULL)->get(),
                                         'banks' =>  BankModel::all()]);
     }
 
@@ -162,7 +162,7 @@ class PersonalController extends Controller
         // $kota->all();
 
 
-        $bu = BuModel::all();
+        $bu = BuModel::where('deleted_at',NULL)->get();
 
         $banks = BankModel::all();
         // $banks = $banks->pluck('Nama_Bank', 'id_bank');

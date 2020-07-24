@@ -16,4 +16,12 @@ class SeminarController extends Controller
         $seminar = SeminarModel::all();
         return view('seminar.index')->with(compact('seminar'));
     }
+
+    public function create() {
+        $inisiator = InstansiModel::all();
+        $provinsi = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        $instansi = BuModel::all();
+        return view('seminar.create2')->with(compact('judul','inisiator','provinsi','kota'));
+    }
 }
