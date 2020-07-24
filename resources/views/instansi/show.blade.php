@@ -52,6 +52,17 @@
                     <h1 style="margin-bottom:50px;">Data Instansi</h1>
 
                     <div class="row">
+                        <div class="col-md-4"></div>
+
+                        <div class="col-md-4">
+                            <img src="{{url(urlencode($instansi->logo))}}" alt="Logo Perusahaan"
+                             class="img-thumbnail" style="width:100%">
+                        </div>
+
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Nama</label>
@@ -205,7 +216,7 @@
                             <div class="form-group">
                                 <label>Bank</label>
                                 <input type="text" disabled="disabled" class="form-control"
-                                value="{{$bank->Nama_Bank}}">
+                                value="{{isset($bank->Nama_Bank) ? $bank->Nama_Bank : '' }}">
                             </div>
                         </div>
                     </div>

@@ -61,11 +61,12 @@ class InstansiController extends Controller
             "jab_kontak_p" => "required|min:3|max:50",
             "email_kontak_p" => "required|email|unique:badan_usaha",
             "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
-            "no_rek" => "digits_between:5,20|unique:badan_usaha|gt:0",
+            "no_rek" => "max:20",
             "id_bank" => "",
-            "nama_rek" => "min:3|max:50",
+            "nama_rek" => "max:50",
             'npwpClean' => 'numeric|digits:15|gt:0',
-            "npwp_pdf" => "mimes:pdf,jpeg,png,jpg,gif,svg|max:2048"
+            "npwp_pdf" => "mimes:pdf,jpeg,png,jpg,gif,svg|max:2048",
+            "logo" => "mimes:jpeg,png,jpg,gif,svg|max:2048"
         ]);
         
         $data = new BuModel;
@@ -101,6 +102,15 @@ class InstansiController extends Controller
             $files->move($destinationPath, $file);
             $data->npwp_pdf = $destinationPath."/".$file;
         }
+
+        if ($files = $request->file('logo')) {
+            $destinationPath = 'uploads/lampiran/badan_usaha/'.$dir_name; // upload path
+            $file = $dir_name."_logo_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->logo = $destinationPath."/".$file;
+        }
+
+
         $instansi = $data->save();
         return redirect('/instansi')->with('pesan',"Instansi \"".$request->nama_bu.
         "\" berhasil ditambahkan");
@@ -120,6 +130,9 @@ class InstansiController extends Controller
 
         if($instansi->npwp_pdf){
             $npwp_pdf_lama = $instansi->npwp_pdf;
+        }
+        if($instansi->logo){
+            $logo_lama = $instansi->logo;
         }
 
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
@@ -141,11 +154,12 @@ class InstansiController extends Controller
             "jab_kontak_p" => "required|min:3|max:50",
             "email_kontak_p" => "required|email",
             "no_kontak_p" => "required|numeric|digits_between:6,20|gt:0",
-            "no_rek" => "digits_between:5,20|gt:0",
+            "no_rek" => "max:20",
             "id_bank" => "",
-            "nama_rek" => "min:3|max:50",
+            "nama_rek" => "max:50",
             'npwpClean' => 'numeric|digits:15|gt:0',
-            "npwp_pdf" => "mimes:pdf,jpeg,png,jpg,gif,svg|max:2048"
+            "npwp_pdf" => "mimes:pdf,jpeg,png,jpg,gif,svg|max:2048",
+            "logo" => "mimes:jpeg,png,jpg,gif,svg|max:2048"
         ]);
 
         if($request->email != $instansi->email ) {
@@ -186,7 +200,7 @@ class InstansiController extends Controller
 
         if($request->no_rek != $instansi->no_rek ) {
             $request->validate([
-                "no_rek" => "digits_between:5,20|unique:badan_usaha|gt:0",
+                "no_rek" => "max:20",
             ]);
         }
 
@@ -226,6 +240,20 @@ class InstansiController extends Controller
                 if (file_exists(public_path()."/".$data->npwp_pf) && file_exists(public_path()."/".$npwp_pdf_lama)) {
                     // mkdir($destinationPath, 777, true);
                     unlink(public_path()."/".$npwp_pdf_lama);
+                }
+            }
+            
+        }
+
+        if ($files = $request->file('logo')) {
+            $destinationPath = 'uploads/lampiran/badan_usaha/'.$dir_name; // upload path
+            $file = $dir_name."_logo_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->logo = $destinationPath."/".$file;
+            if($logo_lama) {
+                if (file_exists(public_path()."/".$data->logo) && file_exists(public_path()."/".$logo_lama)) {
+                    // mkdir($destinationPath, 777, true);
+                    unlink(public_path()."/".$logo_lama);
                 }
             }
             

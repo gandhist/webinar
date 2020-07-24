@@ -412,9 +412,10 @@
                         {{-- Bank --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('id_bank')) ? ' has-error' : '' }}">
-                                <label class="label-control" for="id_bank">Bank</label>
+                                <label class="label-control" for="id_bank" selected>Bank</label>
                                 <select
                                 class="form-control" id="id_bank" name="id_bank">
+                                    <option value=""> -- Pilih Bank -- </option>
                                     @if(old('id_bank'))
                                         @forelse($bank as $key)
                                             <option value="{{ $key->id_bank }}"
@@ -498,19 +499,23 @@
                         </div>
                         {{-- Akhir Lampiran NPWP --}}
 
-                        {{--  --}}
+                        {{-- Logo Perusahaan --}}
                         <div class="col-md-6">
-                            {{--
-                                <div class="form-group {{ ($errors->first('nama')) ? ' has-error' : '' }}">
-                                    <label for="" class="label-control"></label>
-                                    <input type="text" class="form-control">
-                                    <div class="invalid-feedback text-danger">
-                                        {{ $errors->first('nama') }}
+                            <div class="form-group  {{ ($errors->first('logo')) ? ' has-error' : '' }}">
+                                <div class="custom-file">
+                                    <label class="label-control" for="logo">Logo Instansi</label>
+                                    <div class="custom-file">
+                                        <input type="file" id="logo" name="logo" class="custom-file-input" id="logo">
+                                        <div id="logo" class="invalid-feedback text-danger">
+                                            {{ $errors->first('logo') }}
+                                        </div>
                                     </div>
                                 </div>
-                            --}}
+                                <small class="form-text text-muted">Upload Max: 2MB</small><br/>
+                                <small class="form-text text-muted">Format: jpeg, png, jpg, gif, svg</small>
+                            </div>
                         </div>
-                        {{-- Akhir --}}
+                        {{-- Akhir Logo Perusahaan --}}
 
                     </div>
 
