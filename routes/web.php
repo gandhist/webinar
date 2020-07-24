@@ -10,11 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('infoseminar','InfoSeminarController@index');
+Route::auth();
+Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
+Route::get('infoseminar/daftar/{id}','InfoSeminarController@daftar');
+Route::post('infoseminar/store/{id}','InfoSeminarController@store');
+
 Route::get('registrasi','RegistController@index');
 Route::post('registrasi/store','RegistController@store');
+
+// Route::group(['middleware' => 'auth'], function () {
+	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
+	Route::post('profile', 'ProfileController@update')->name('profile.update');
+	Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
+	Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
+// });
 
 Route::get('sertifikat/cari','SertController@cari')->name('cari');
 Route::get('sertifikat/{no_sert}/{email}','SertController@by_sert');
@@ -39,7 +49,7 @@ Route::namespace('Iso')->group(function(){
 	Route::get('iso/print/{id}', 'IsoController@print');
 });
 
-Route::auth();
+
 
 Route::group(['middleware' => 'auth'], function () {
 Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
@@ -96,15 +106,6 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 });
 // End Instansi
 
-
-Route::group(['middleware' => 'auth'], function () {
-	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
-	Route::post('profile', 'ProfileController@update')->name('profile.update');
-	Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
-	Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
-
-	
-});
 
 
 	Route::group(['middleware' => 'auth.input'], function () {
