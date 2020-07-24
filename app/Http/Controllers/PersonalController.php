@@ -238,7 +238,8 @@ class PersonalController extends Controller
         $data->npwp =  $request->npwp;
         $data->reff_p = $request->reff_p;
         
-        $data->created_by = Auth::id();
+        $data->updated_by = Auth::id();
+        $data->updated_at = Carbon::now()->toDateTimeString();
 
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);

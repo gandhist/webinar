@@ -85,15 +85,20 @@
                                     <td> {{ $personal->no_hp }} </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->email }}">
                                         {{ str_limit($personal->email,20) }} </td>
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $bu[$personal->instansi] }}">
-                                        {{ str_limit($bu[$personal->instansi],20 )}}
-                                    </td>
+                                    @if(isset($personal->instansi, $bu))
+                                        <td data-toggle="tooltip" data-placement="bottom" title="{{ $bu[$personal->instansi] }}">
+                                            {{ str_limit($bu[$personal->instansi],20 )}}
+                                        </td>
+                                    @else
+                                        <td>Tidak Bisa Menampilkan</td>
+                                    @endif
+
                                     <td> {{ str_limit($personal->jabatan, 20)}} </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat }}">
                                         {{ str_limit($personal->alamat, 20) }} </td>
                                     <td class="text-center"> 
                                         {{ $kotas[$personal->temp_lahir].", ".$personal->tgl_lahir }} 
-                                    </td> 
+                                    </td>
                                     <td class="text-center"> <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a></td>
                                 </tr>
                                 @empty
