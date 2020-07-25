@@ -22,6 +22,19 @@ class SeminarController extends Controller
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
         $instansi = BuModel::all();
-        return view('seminar.create2')->with(compact('judul','inisiator','provinsi','kota'));
+        $pendukung = BuModel::pluck('nama_bu','id');
+        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung'));
+    }
+
+    public function store(Request $request) {
+        dd($request);
+    }
+
+    public function getKota($id) {
+        $cities = DB::table("ms_kota")
+                    ->where("provinsi_id",$id)
+                    ->pluck("nama","id")
+                    ->all();
+        return json_encode($cities);
     }
 }

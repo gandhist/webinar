@@ -59,10 +59,7 @@
                                 <input type="text" name="nik" id="nik"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('nik') }}"
-                                    class="form-control 
-                                        @if($errors->first('nik'))
-                                            has-error 
-                                        @endif" 
+                                    class="form-control
                                     placeholder="Nomor Induk Kependudukan" required
                                     maxlength="16">
                                 <div id="nik" class="invalid-feedback text-danger">
@@ -99,10 +96,7 @@
                                 <input type="text" name="no_hp" id="no_hp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_hp') }}"
-                                    class="form-control 
-                                        @if($errors->first('no_hp'))
-                                            has-error 
-                                        @endif" 
+                                    class="form-control"
                                     placeholder="Nomor Telepon" required
                                     maxlength="14">
                                 <div id="no_hp" class="invalid-feedback text-danger">
@@ -312,10 +306,7 @@
                                 <input type="text" name="no_rek" id="no_rek"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_rek') }}"
-                                    class="form-control 
-                                        @if($errors->first('no_rek'))
-                                            has-error 
-                                        @endif" 
+                                    class="form-control" 
                                     placeholder="Nomor Rekening"
                                     maxlength="20">
                                 <div id="no_rek" class="invalid-feedback text-danger">
@@ -377,10 +368,7 @@
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('npwp') }}"
-                                    class="form-control 
-                                        @if($errors->first('npwpClean'))
-                                            has-error 
-                                        @endif" 
+                                    class="form-control"
                                     placeholder="Nomor Pokok Wajib Pajak"
                                     {{ $errors->first('npwpClean') }}
                                 </div>
