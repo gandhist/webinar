@@ -62,7 +62,7 @@
                 </div>	
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Waktu</label>
+                        <label class="control-label" for="inputSuccess"> Tanggal & Waktu</label>
                         <input type="text" class="form-control" id="inputSuccess" readonly value="{{ isset($data->tgl_awal) ? \Carbon\Carbon::parse($data->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} / {{ $data->jam_awal }} - {{ $data->jam_akhir }}">
                     </div>
                 </div>										
@@ -100,8 +100,8 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left" ><i class="fa fa-reply"></i> Kembali</a>
-                    <a href="{{ url('login') }}" class="btn btn-md btn-success pull-center"> Daftar</a>
+                    <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
+                    <a href="{{ url('infoseminar/daftar',$data->id) }}" class="btn btn-md btn-success pull-center"><i class="fa fa-arrow-circle-right"></i> Lanjutkan</a>
                 </div>										
             </div> 
 

@@ -48,6 +48,9 @@ class LoginController extends Controller
 
     protected function authenticated()
     {
+        if (Auth::user()->role_id == 2 ){
+            return redirect('infoseminar');
+        }
         $user = Auth::user();
         $user->last_login = date("Y-m-d H:i:s");
         $user->save();

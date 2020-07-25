@@ -21,7 +21,6 @@
 </head>
 
 <body>
-
     <div class="wrapper">
         <!-- Sidebar Holder -->
         <nav id="sidebar">
@@ -30,53 +29,23 @@
             </div>
 
             <ul class="list-unstyled components">
-                {{-- <p>Dummy Heading</p> --}}
-                 <li class="active">
+                @if(!Auth::user())
+                <li class="active">
                     <a href="{{ route('login') }}">Login</a>
-                    {{-- <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul> --}}
                 </li>
-                {{-- <li>
-                    <a href="#">About</a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li> --}}
-                {{-- <li>
-                    <a href="#">Portfolio</a>
-                </li> --}}
-                {{-- <li>
-                    <a href="#">Contact</a>
-                </li> --}}
-            </ul>
-
-         
+                @else
+                <li class="active">
+                    <a href="{{ route('infoseminar') }}">Seminar</a>
+                    <a href="{{ route('profile.edit') }}">User Profile</a>
+                </li>
+                @endif
+            </ul>    
         </nav>
 
         <!-- Page Content Holder -->
         <div id="content">
-
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #b7d0ed;">
                 <div class="container-fluid">
-
                     <button type="button" id="sidebarCollapse" class="navbar-btn active">
                         <span></span>
                         <span></span>
@@ -86,30 +55,44 @@
                         <i class="fas fa-align-justify"></i>
                     </button>
 
+                    @if(!Auth::user())
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
+                            {{-- <li class="nav-item active">
+                                <a class="nav-link" href="/">Pencarian</a>
+                            </li> --}}
                             <li class="nav-item active">
-                                <a class="nav-link" href="#">Pencarian</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href= "{{ url('infoseminar') }}">Seminar</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a class="nav-link" href="{{ url('registrasi') }}">Bergabung</a>
                             </li>
                         </ul>
                     </div>
-
+                    @else
+                    <!-- Default dropleft button -->
+                    <div class="btn-group dropleft">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                            {{ \Auth::user()->name }}
+                        </button>
+                        <div class="dropdown-menu">
+                        <!-- Dropdown menu links -->
+                        <form method="post" action="{{ url('logout') }}" style="display: inline">
+                            {{ csrf_field() }}
+                            <button class="btn btn-default" type="submit">Sign Out</button>
+                          </form>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </nav>
             {{-- content goes here --}}
             @yield('content')
             {{-- content end here --}}
 
-
         </div>
-        
-        
+              
     </div>
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
@@ -120,7 +103,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
-                $('#sidebar').toggleClass('active');
+        $('#sidebar').toggleClass('active');
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
@@ -130,5 +113,4 @@
     </script>
     @stack('script')
 </body>
-
 </html>

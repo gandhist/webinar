@@ -6,6 +6,11 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container">
+  @if(session()->get('success'))
+    <div class="alert alert-success"> {{ session()->get('success') }} 
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+    </div>   
+  @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
   <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
@@ -35,7 +40,7 @@
             {{ $select->peserta_r->nama }} 
             @endforeach
           </td>
-          <td>{{ $key->is_free }}</td>
+          <td>Rp. {{ $key->is_free }}</td>
       </tr>
       @endforeach     
     </tbody>

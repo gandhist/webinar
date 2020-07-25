@@ -6,14 +6,20 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container">
-  <h2>Registrasi Peserta Seminar P3SM</h2>
-    <main role="main" class="container">
       @if(session()->get('success'))
-        <div class="alert alert-success">
-        {{ session()->get('success') }}  
+        <div class="alert alert-success">{{ session()->get('success') }}
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
         </div>
-        <br />
       @endif
+
+      @if(session()->get('pesan'))
+        <div class="alert alert-warning">{{ session()->get('pesan') }}
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+        </div>
+      @endif
+  <h2>Registrasi Peserta Seminar P3SM</h2>
+  <hr>
+    <main role="main" class="container">
         <form action="{{ url('registrasi/store') }}" class="form-horizontal" id="formRegist" name="formRegist"
                 method="post" enctype="multipart/form-data">
         @csrf
@@ -62,7 +68,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4">
+          <div class="col-lg-6">
             <div class="custom-file">
               <label for="instansi">Foto*</label>
               <div class="custom-file">
