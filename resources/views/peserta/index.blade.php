@@ -40,7 +40,7 @@
                     <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                         <thead>
                             <tr>
-                                <th style="visibility:hidden;width:0%;"></th>
+                                <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
                                 <th><span class="indent">No.</span></th>
                                 <th><span class="indent">Nama</span></th>
                                 <th><span class="indent">No. Hp</span></th>
@@ -58,7 +58,8 @@
                                 $username =  preg_replace('/[^a-zA-Z0-9()]/', '_', $peserta->nama);
                             @endphp
                             <tr>
-                                <td style="visibility:hidden;width:0%;"></td>
+                                <td style='text-align:center'><input type="checkbox" data-id="{{ $peserta->id }}" class="selection"
+                                    id="selection[]" name="selection[]"></td>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->nama }}">
                                     <a href="{{ url('pesertas/'.$peserta->id) }}">
@@ -75,7 +76,7 @@
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->alamat.', '.$peserta->kota.', '.$peserta->provinsi}}">
                                     {{ str_limit($peserta->alamat, 20) }} </td>
                                 <td class="text-center"> {{ $peserta->tgl_lahir }} </td>
-                                <td class="text-center"> <a href="{{ url('uploads/foto/member/'.$username.'/'.$peserta->foto)}}">Lihat</a></td>
+                                <td class="text-center"> <a href="{{ url('uploads/peserta/'.$peserta->foto)}}">Lihat</a></td>
                             </tr>
                             @empty
                             <td colspan="10" class="text-center">Tidak ada data...</td>
