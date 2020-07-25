@@ -31,6 +31,7 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
+
                 <form method="POST" action="{{ url('seminar/store') }}" enctype="multipart/form-data">
                 @csrf
 
@@ -90,9 +91,7 @@
                     <div class="col-md-12">
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema Seminar</label>
-                            <textarea name="tema" class="form-control" id="tema">
-                                {{ old('tema') ? old('tema') : ""}}
-                            </textarea>
+                            <textarea name="tema" class="form-control" id="tema"></textarea>
                             <div id="tema" class="invalid-feedback text-danger">
                                 {{ $errors->first('tema') }}
                             </div>
@@ -180,17 +179,9 @@
                             <label for="inisiator" class="label-control required">Inisiator Penyelenggara</label>
                             <select name="inisiator" id="inisiator" class="form-control" multiple>
                                 <option></option>
-                                @if(old('inisiator'))
-                                    @foreach($inisiator as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('inisiator')) ? "selected" : "" }}
-                                        >{{ $key->nama }}</option>
-                                    @endforeach
-                                @else
-                                    @foreach($inisiator as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                    @endforeach
-                                @endif
+                                @foreach($inisiator as $key)
+                                    <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                @endforeach
                             </select>
                             <div id="inisiator" class="invalid-feedback text-danger">
                                 {{ $errors->first('inisiator') }}
@@ -205,17 +196,9 @@
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
                             class="form-control" multiple>
-                                @if(old('instansi_penyelenggara'))
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @else
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @endif
+                                @foreach($instansi as $key)
+                                    <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                @endforeach
                             </select>
                             <div id="instansi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_penyelenggara') }}
@@ -230,17 +213,9 @@
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
                             class="form-control" multiple>
-                                @if(old('instansi_pendukung'))
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @else
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @endif
+                                @foreach($instansi as $key)
+                                    <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                @endforeach
                             </select>
                             <div id="instansi_pendukung" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_pendukung') }}
@@ -387,8 +362,8 @@
                         <div class="form-group {{ $errors->first('lokasi_penyelenggara') ? 'has-error' : '' }}">
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
-                            placeholder="Alamat" name="lokasi_penyelenggara"
-                            value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : '' }}">
+                            placeholder="Alamat"
+                            value="{{ old('alamat') ? old('lokasi_penyelenggara') : '' }}">
                             <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('lokasi_penyelenggara') }}
                             </div>
@@ -411,7 +386,7 @@
 
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>  --}}
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>  
 <script>
@@ -492,6 +467,8 @@
             format: 'dd/mm/yyyy',
             autoclose: true
         });
+
+        $('.datepicker').timepicker();
         
         $('.datepicker').mask('00/00/0000');
 

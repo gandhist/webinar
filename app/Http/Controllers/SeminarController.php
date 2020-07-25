@@ -3,17 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use App\SeminarModel;
 use App\InstansiModel;
 use App\ProvinsiModel;
 use App\KotaModel;
 use App\BuModel;
+use DB;
 
 class SeminarController extends Controller
 {
     //
     public function index() {
-        $seminar = SeminarModel::all();
+        $seminar = SeminarModel::where('deleted_at', NULL)->get();
         return view('seminar.index')->with(compact('seminar'));
     }
 
@@ -27,7 +30,21 @@ class SeminarController extends Controller
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'nama_seminar' => 'required|max:3'
+        ]);
         dd($request);
+    }
+
+    public function destroy(Request $request) {
+        $idData = explode(',', $request->idHapusData);
+        $user_data = [
+            'deleted_by' => Auth::id(),
+            'deleted_at' => Carbon::now()->toDateTimeString()
+        ];
+        SeminarModel::whereIn('id', $idData)->update($user_data);
+        return redirect('/seminar')
+        ->with('pesan',"Berhasil menghapus personal");
     }
 
     public function getKota($id) {

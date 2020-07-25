@@ -79,6 +79,9 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('create','SeminarController@create');
 	Route::post('store','SeminarController@store');
 
+	Route::delete('destroy', 'SeminarController@destroy');
+	Route::get('create/getKota/{id}','SeminarController@getKota');
+
 });
 
 // End Seminar
