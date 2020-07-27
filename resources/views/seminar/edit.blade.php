@@ -11,16 +11,15 @@
     }
 </style>
 <!-- Content Header (Page header) -->
-
 <section class="content-header">
     <h1>
-        Tambahkan Seminar
+        Edit Seminar
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
-        <li class="active"><a href="#"> Tambah</a></li>
+        <li class="active"><a href="#"> Edit</a></li>
     </ol>
 </section>
 
@@ -31,9 +30,9 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
-                <form method="POST" action="{{ url('seminar/store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url('seminar/'.$id.'/update')}}" enctype="multipart/form-data">
+                @method('PATCH')
                 @csrf
-
                 <div class="row">
 
                     {{-- Nama Seminar --}}
@@ -42,7 +41,11 @@
                             <label for="nama_seminar" class="label-control required">Nama Seminar</label>
                             <input type="text" id="nama_seminar" class="form-control" name="nama_seminar"
                             placeholder="Nama Seminar"
-                            value="{{ old('nama_seminar') ? old('nama_seminar') : '' }}">
+                            value=
+                            "@if(old('nama_seminar')) {{old('nama_seminar')}}
+                            @else {{ $seminar->nama_seminar ? $seminar->nama_seminar : '' }}
+                            @endif
+                            ">
                             <div id="nama_seminar" class="invalid-feedback text-danger">
                                 {{ $errors->first('nama_seminar') }}
                             </div>
@@ -91,7 +94,11 @@
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema Seminar</label>
                             <textarea name="tema" class="form-control" id="tema">
-                                {{ old('tema') ? old('tema') : ""}}
+                                @if(old('tema'))
+                                    {{old('tema')}}
+                                @else
+                                    {{ $seminar->tema ? $seminar->tema : '' }}
+                                @endif
                             </textarea>
                             <div id="tema" class="invalid-feedback text-danger">
                                 {{ $errors->first('tema') }}
@@ -109,7 +116,9 @@
                             <label for="kuota" class="label-control required">Kuota Peserta</label>
                             <input type="text" class="form-control" name="kuota" id="kuota"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('kuota') }}"
+                                value="@if(old('kuota')) {{old('kuota')}}
+                                @else {{ $seminar->kuota ? $seminar->kuota : '' }}
+                                @endif"
                                 placeholder="Kuota Peserta">
                             <div id="kuota" class="invalid-feedback text-danger">
                                 {{ $errors->first('kuota') }}
@@ -125,7 +134,9 @@
                             <input type="text" class="form-control" name="skpk_nilai" id="skpk_nilai"
                                 maxlength="2"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('skpk_nilai') }}"
+                                value="@if(old('skpk_nilai')) {{old('skpk_nilai')}}
+                                @else {{ $seminar->skpk_nilai ? $seminar->skpk_nilai : '' }}
+                                @endif"
                                 placeholder="Nilai SKPK">
                             <div id="skpk_nilai" class="invalid-feedback text-danger">
                                 {{ $errors->first('skpk_nilai') }}
@@ -141,12 +152,17 @@
                             <div class="radio" style="margin-top:-5px;">
                                 <label>
                                     <input type="radio" name="is_free" id="gratis" value="0"
-                                        {{ old('is_free') == "0" ? "checked" : "" }} required>
+                                        @if(old('is_free') == "0") {{"checked"}}
+                                        @else {{ $seminar->is_free == "0" && (old('is_free') == null)? "checked" : ""}}
+                                        @endif
+                                        required>
                                     Gratis
                                 </label>
                                 <label>
                                     <input type="radio" name="is_free" id="bayar" value="1" 
-                                        {{ old('is_free') == "1" ? "checked" : "" }}>
+                                        @if(old('is_free') == "1") {{"checked"}}
+                                        @else {{ $seminar->is_free == "1" && (old('is_free') == null) ? "checked" : ""}}
+                                        @endif>
                                     Berbayar
                                 </label>
                                 
@@ -165,9 +181,14 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('biaya') }}"
+                                value="@if(old('is_free') == '1' && old('biaya')) {{old('biaya')}}
+                                @else {{ $seminar->is_free == '1' && old('is_free') ==null && $seminar->biaya ? $seminar->biaya : '' }}
+                                @endif"
                                 placeholder="Biaya"
-                                disabled
+                                @if(($seminar->is_free) == '1') required
+                                @elseif(($seminar->is_free) == '0' && old('is_free') == null) disabled
+                                @endif
+                                {{old('is_free') == '0' ? "disabled" : ''}}
                                 >
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
@@ -187,6 +208,11 @@
                                         <option value="{{ $key->id }}"
                                         {{ $key->id == old('inisiator') ? "selected" : "" }}
                                         >{{ $key->nama }}</option>
+                                    @endforeach
+                                @elseif($seminar->inisiator)
+                                    @foreach($inisiator as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ $seminar->inisiator == $key->id ? "selected='true'" : ""}}>{{ $key->nama }}</option>
                                     @endforeach
                                 @else
                                     @foreach($inisiator as $key)
@@ -213,6 +239,11 @@
                                         {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
                                         {{ $key->nama_bu }}</option>
                                     @endforeach
+                                @elseif($seminar->instansi_penyelenggara)
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, array($seminar->instansi_penyelenggara)) ? "selected='true'" : ""}}>{{ $key->nama_bu }}</option>
+                                    @endforeach
                                 @else
                                     @foreach($instansi as $key)
                                         <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
@@ -238,6 +269,11 @@
                                         {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
                                         {{ $key->nama_bu }}</option>
                                     @endforeach
+                                @elseif($seminar->instansi_pendukung)
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, array($seminar->instansi_pendukung)) ? "selected='true'" : ""}}>{{ $key->nama_bu }}</option>
+                                    @endforeach
                                 @else
                                     @foreach($instansi as $key)
                                         <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
@@ -261,7 +297,9 @@
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_awal') }}"
+                                value="@if(old('tgl_awal')) {{old('tgl_awal')}}
+                                @else {{ $seminar->tgl_awal ? (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) : '' }}
+                                @endif"
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -276,7 +314,9 @@
                             <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_akhir') }}"
+                                value="@if(old('tgl_akhir')) {{old('tgl_akhir')}}
+                                @else {{ $seminar->tgl_akhir ? (\Carbon\Carbon::parse($seminar->tgl_akhir)->format('j-m-Y')) : '' }}
+                                @endif"
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
@@ -291,7 +331,9 @@
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_awal') }}"
+                                value="@if(old('jam_awal')) {{old('jam_awal')}}
+                                @else {{ $seminar->jam_awal ? \Carbon\Carbon::parse($seminar->jam_awal)->format( 'H:i' ) : '' }}
+                                @endif"
                                 placeholder=" 00:00">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_awal') }}
@@ -306,7 +348,9 @@
                             <label for="jam_akhir" class="label-control required">Jam Akhir</label>
                             <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_akhir') }}"
+                                value="@if(old('jam_akhir')) {{old('jam_akhir')}}
+                                @else {{ $seminar->jam_akhir ? \Carbon\Carbon::parse($seminar->jam_akhir)->format( 'H:i' ) : '' }}
+                                @endif"
                                 placeholder=" 00:00">
                             <div id="jam_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_akhir') }}
@@ -349,8 +393,15 @@
                             id="prov_penyelenggara" class="form-control">
                                 @if(old('prov_penyelenggara'))
                                     @foreach($provinsi as $key)
-                                        <option value="{{ $key->id }}" {{ old('prov_penyelenggara') == $key->id ? "selected" : "" }}
+                                        <option value="{{ $key->id }}" 
+                                        {{ old('prov_penyelenggara') == $key->id ? "selected" : "" }}
                                             >{{$key->nama}}</option>
+                                    @endforeach
+                                @elseif($seminar->prov_penyelenggara)
+                                    @foreach($provinsi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ $seminar->prov_penyelenggara == $key->id ? 'selected' : ''}}
+                                        >{{$key->nama}}</option>
                                     @endforeach
                                 @else
                                     <option value="" selected hidden></option>
@@ -380,6 +431,16 @@
                                             >{{$key->nama}}</option>
                                         @endif
                                     @endforeach
+                                @elseif($seminar->kota_penyelenggara)
+                                    @if($seminar->prov_penyelenggara)
+                                        @foreach($kota as $key)
+                                            @if($key->provinsi_id == $seminar->prov_penyelenggara))
+                                            <option value="{{ $key->id }}" 
+                                            {{$seminar->kota_penyelenggara == $key->id ? "selected" : "" }}
+                                                >{{$key->nama}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 @else
                                     <option value="" selected hidden></option>
                                 @endif
@@ -398,7 +459,9 @@
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
                             placeholder="Alamat" name="lokasi_penyelenggara"
-                            value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : '' }}">
+                            value="@if(old('lokasi_penyelenggara')) {{old('lokasi_penyelenggara')}}
+                                @else {{ $seminar->lokasi_penyelenggara ? $seminar->lokasi_penyelenggara : '' }}
+                                @endif">
                             <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('lokasi_penyelenggara') }}
                             </div>
