@@ -90,7 +90,7 @@
                                             id="selection[]" name="selection[]"></td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>{{ $key->nama_seminar }}</td>
-                                    <td>{{ $key->tema }}</td>
+                                    <td>{{ strip_tags($key->tema) }}</td>
                                     <td>
                                         <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a>
                                     </td>

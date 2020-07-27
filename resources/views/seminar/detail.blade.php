@@ -41,7 +41,7 @@
             {{ csrf_field() }}
             <button class="btn btn-default" type="submit">Sign Out</button>
           </form>
-          <div class="dropdown show">
+          {{--<div class="dropdown show">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Dropdown link
             </a>
@@ -51,7 +51,7 @@
               <a class="dropdown-item" href="#">Another action</a>
               <a class="dropdown-item" href="#">Something else here</a>
             </div>
-          </div>
+          </div>--}}
           @endif
         </div>
       </nav>
@@ -61,7 +61,7 @@
           <h1>SERTIFIKAT P3SM</h1>
           <p class="lead">
               {{ $data->nama_seminar }} <br>
-              {{ $data->tema }}
+              {{ strip_tags($data->tema) }}
           </p>
           <a class="btn btn-lg btn-primary" href="{{ url('sertifikat/cari') }}" role="button">Cari Sertifikat &raquo;</a>
           <a target="_blank" class="btn btn-lg btn-outline-success my-2 my-sm-0" href="{{ url('kirim_email') }}" role="button">Send Bulk Email</a>

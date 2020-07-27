@@ -130,9 +130,6 @@ class PersonalController extends Controller
         }
 
 
-        $personal = $data->save();
-        return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
-        "\" berhasil ditambahkan");
     }
 
 

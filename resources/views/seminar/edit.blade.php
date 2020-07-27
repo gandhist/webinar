@@ -11,16 +11,15 @@
     }
 </style>
 <!-- Content Header (Page header) -->
-
 <section class="content-header">
     <h1>
-        Tambahkan Seminar
+        Edit Seminar
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
-        <li class="active"><a href="#"> Tambah</a></li>
+        <li class="active"><a href="#"> Edit</a></li>
     </ol>
 </section>
 
@@ -31,10 +30,9 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
-
-                <form method="POST" action="{{ url('seminar/store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url('seminar/'.$id.'/update')}}" enctype="multipart/form-data">
+                @method('PATCH')
                 @csrf
-
                 <div class="row">
 
                     {{-- Nama Seminar --}}
@@ -43,7 +41,11 @@
                             <label for="nama_seminar" class="label-control required">Nama Seminar</label>
                             <input type="text" id="nama_seminar" class="form-control" name="nama_seminar"
                             placeholder="Nama Seminar"
-                            value="{{ old('nama_seminar') ? old('nama_seminar') : '' }}">
+                            value=
+                            "@if(old('nama_seminar')) {{old('nama_seminar')}}
+                            @else {{ $seminar->nama_seminar ? $seminar->nama_seminar : '' }}
+                            @endif
+                            ">
                             <div id="nama_seminar" class="invalid-feedback text-danger">
                                 {{ $errors->first('nama_seminar') }}
                             </div>
@@ -91,7 +93,13 @@
                     <div class="col-md-12">
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema Seminar</label>
-                            <textarea name="tema" class="form-control" id="tema"></textarea>
+                            <textarea name="tema" class="form-control" id="tema">
+                                @if(old('tema'))
+                                    {{old('tema')}}
+                                @else
+                                    {{ $seminar->tema ? $seminar->tema : '' }}
+                                @endif
+                            </textarea>
                             <div id="tema" class="invalid-feedback text-danger">
                                 {{ $errors->first('tema') }}
                             </div>
@@ -108,7 +116,9 @@
                             <label for="kuota" class="label-control required">Kuota Peserta</label>
                             <input type="text" class="form-control" name="kuota" id="kuota"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('kuota') }}"
+                                value="@if(old('kuota')) {{old('kuota')}}
+                                @else {{ $seminar->kuota ? $seminar->kuota : '' }}
+                                @endif"
                                 placeholder="Kuota Peserta">
                             <div id="kuota" class="invalid-feedback text-danger">
                                 {{ $errors->first('kuota') }}
@@ -124,7 +134,9 @@
                             <input type="text" class="form-control" name="skpk_nilai" id="skpk_nilai"
                                 maxlength="2"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('skpk_nilai') }}"
+                                value="@if(old('skpk_nilai')) {{old('skpk_nilai')}}
+                                @else {{ $seminar->skpk_nilai ? $seminar->skpk_nilai : '' }}
+                                @endif"
                                 placeholder="Nilai SKPK">
                             <div id="skpk_nilai" class="invalid-feedback text-danger">
                                 {{ $errors->first('skpk_nilai') }}
@@ -140,12 +152,17 @@
                             <div class="radio" style="margin-top:-5px;">
                                 <label>
                                     <input type="radio" name="is_free" id="gratis" value="0"
-                                        {{ old('is_free') == "0" ? "checked" : "" }} required>
+                                        @if(old('is_free') == "0") {{"checked"}}
+                                        @else {{ $seminar->is_free == "0" && (old('is_free') == null)? "checked" : ""}}
+                                        @endif
+                                        required>
                                     Gratis
                                 </label>
                                 <label>
                                     <input type="radio" name="is_free" id="bayar" value="1" 
-                                        {{ old('is_free') == "0" ? "checked" : "" }}>
+                                        @if(old('is_free') == "1") {{"checked"}}
+                                        @else {{ $seminar->is_free == "1" && (old('is_free') == null) ? "checked" : ""}}
+                                        @endif>
                                     Berbayar
                                 </label>
                                 
@@ -164,8 +181,15 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('biaya') }}"
-                                placeholder="Biaya">
+                                value="@if(old('is_free') == '1' && old('biaya')) {{old('biaya')}}
+                                @else {{ $seminar->is_free == '1' && old('is_free') ==null && $seminar->biaya ? $seminar->biaya : '' }}
+                                @endif"
+                                placeholder="Biaya"
+                                @if(($seminar->is_free) == '1') required
+                                @elseif(($seminar->is_free) == '0' && old('is_free') == null) disabled
+                                @endif
+                                {{old('is_free') == '0' ? "disabled" : ''}}
+                                >
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
                             </div>
@@ -179,9 +203,22 @@
                             <label for="inisiator" class="label-control required">Inisiator Penyelenggara</label>
                             <select name="inisiator" id="inisiator" class="form-control" multiple>
                                 <option></option>
-                                @foreach($inisiator as $key)
-                                    <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                @endforeach
+                                @if(old('inisiator'))
+                                    @foreach($inisiator as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ $key->id == old('inisiator') ? "selected" : "" }}
+                                        >{{ $key->nama }}</option>
+                                    @endforeach
+                                @elseif($seminar->inisiator)
+                                    @foreach($inisiator as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ $seminar->inisiator == $key->id ? "selected='true'" : ""}}>{{ $key->nama }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach($inisiator as $key)
+                                        <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <div id="inisiator" class="invalid-feedback text-danger">
                                 {{ $errors->first('inisiator') }}
@@ -196,9 +233,22 @@
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
                             class="form-control" multiple>
-                                @foreach($instansi as $key)
-                                    <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                @endforeach
+                                @if(old('instansi_penyelenggara'))
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
+                                        {{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @elseif($seminar->instansi_penyelenggara)
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, array($seminar->instansi_penyelenggara)) ? "selected='true'" : ""}}>{{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <div id="instansi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_penyelenggara') }}
@@ -213,9 +263,22 @@
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
                             class="form-control" multiple>
-                                @foreach($instansi as $key)
-                                    <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                @endforeach
+                                @if(old('instansi_pendukung'))
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
+                                        {{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @elseif($seminar->instansi_pendukung)
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, array($seminar->instansi_pendukung)) ? "selected='true'" : ""}}>{{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @endif
                             </select>
                             <div id="instansi_pendukung" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_pendukung') }}
@@ -234,8 +297,10 @@
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_awal') }}"
-                                placeholder=" DD/MM/YYYY">
+                                value="@if(old('tgl_awal')) {{old('tgl_awal')}}
+                                @else {{ $seminar->tgl_awal ? (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) : '' }}
+                                @endif"
+                                placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
                             </div>
@@ -249,8 +314,10 @@
                             <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_akhir') }}"
-                                placeholder=" DD/MM/YYYY">
+                                value="@if(old('tgl_akhir')) {{old('tgl_akhir')}}
+                                @else {{ $seminar->tgl_akhir ? (\Carbon\Carbon::parse($seminar->tgl_akhir)->format('j-m-Y')) : '' }}
+                                @endif"
+                                placeholder=" HH-BB-TTTT">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
                             </div>
@@ -264,7 +331,9 @@
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_awal') }}"
+                                value="@if(old('jam_awal')) {{old('jam_awal')}}
+                                @else {{ $seminar->jam_awal ? \Carbon\Carbon::parse($seminar->jam_awal)->format( 'H:i' ) : '' }}
+                                @endif"
                                 placeholder=" 00:00">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_awal') }}
@@ -279,7 +348,9 @@
                             <label for="jam_akhir" class="label-control required">Jam Akhir</label>
                             <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_akhir') }}"
+                                value="@if(old('jam_akhir')) {{old('jam_akhir')}}
+                                @else {{ $seminar->jam_akhir ? \Carbon\Carbon::parse($seminar->jam_akhir)->format( 'H:i' ) : '' }}
+                                @endif"
                                 placeholder=" 00:00">
                             <div id="jam_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_akhir') }}
@@ -293,9 +364,17 @@
                         <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
                             <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
                             <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
-                                    @foreach($provinsi as $key)
-                                    <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                    @endforeach
+                                    @if(old('ttd_pemangku'))
+                                        @foreach($provinsi as $key)
+                                            <option value="{{ $key->id }}"
+                                            {{ in_array($key->id, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ $key->nama }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($provinsi as $key)
+                                            <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                        @endforeach
+                                    @endif
                             </select>
                             <div id="ttd_pemangku" class="invalid-feedback text-danger">
                                 {{ $errors->first('ttd_pemangku') }}
@@ -314,8 +393,15 @@
                             id="prov_penyelenggara" class="form-control">
                                 @if(old('prov_penyelenggara'))
                                     @foreach($provinsi as $key)
-                                        <option value="{{ $key->id }}" {{ old('prov_penyelenggara') == $key->id ? "selected" : "" }}
+                                        <option value="{{ $key->id }}" 
+                                        {{ old('prov_penyelenggara') == $key->id ? "selected" : "" }}
                                             >{{$key->nama}}</option>
+                                    @endforeach
+                                @elseif($seminar->prov_penyelenggara)
+                                    @foreach($provinsi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ $seminar->prov_penyelenggara == $key->id ? 'selected' : ''}}
+                                        >{{$key->nama}}</option>
                                     @endforeach
                                 @else
                                     <option value="" selected hidden></option>
@@ -345,6 +431,16 @@
                                             >{{$key->nama}}</option>
                                         @endif
                                     @endforeach
+                                @elseif($seminar->kota_penyelenggara)
+                                    @if($seminar->prov_penyelenggara)
+                                        @foreach($kota as $key)
+                                            @if($key->provinsi_id == $seminar->prov_penyelenggara))
+                                            <option value="{{ $key->id }}" 
+                                            {{$seminar->kota_penyelenggara == $key->id ? "selected" : "" }}
+                                                >{{$key->nama}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 @else
                                     <option value="" selected hidden></option>
                                 @endif
@@ -362,8 +458,10 @@
                         <div class="form-group {{ $errors->first('lokasi_penyelenggara') ? 'has-error' : '' }}">
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
-                            placeholder="Alamat"
-                            value="{{ old('alamat') ? old('lokasi_penyelenggara') : '' }}">
+                            placeholder="Alamat" name="lokasi_penyelenggara"
+                            value="@if(old('lokasi_penyelenggara')) {{old('lokasi_penyelenggara')}}
+                                @else {{ $seminar->lokasi_penyelenggara ? $seminar->lokasi_penyelenggara : '' }}
+                                @endif">
                             <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('lokasi_penyelenggara') }}
                             </div>
@@ -386,7 +484,7 @@
 
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>  --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>  
 <script>
@@ -395,6 +493,27 @@
     CKEDITOR.replace('tema');
 
     $(document).ready(function () {
+        $('#gratis').change(function() {
+            if ($(this).prop('checked')) {
+                $("#biaya").prop("disabled", true);
+                $("#biaya").prop("required", false);
+                console.log("ory")
+            }
+            // $("#biaya").removeClass("disabled");
+            // $("#no").addClass("none");
+        });
+        $('#bayar').change(function() {
+            if ($(this).prop('checked')) {
+                $("#biaya").prop("disabled", false);
+                $("#biaya").prop("required", true);
+                console.log("no ory")
+            }
+            
+            // $("#biaya").attr("disabled","disabled");
+            // $("#no").removeClass("none");
+            // $("#biaya").addClass("disabled");
+        });
+
         $('.timepicker').datetimepicker({
 
             format: 'HH:mm'
@@ -463,14 +582,9 @@
             $('#kota_penyelenggara').select2();
         });
 
-        $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
+        $('.datepicker').datetimepicker({
+            format: 'DD-MM-YYYY'
         });
-
-        $('.datepicker').timepicker();
-        
-        $('.datepicker').mask('00/00/0000');
 
     });
 </script>

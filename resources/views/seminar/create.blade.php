@@ -146,7 +146,7 @@
                                 </label>
                                 <label>
                                     <input type="radio" name="is_free" id="bayar" value="1" 
-                                        {{ old('is_free') == "0" ? "checked" : "" }}>
+                                        {{ old('is_free') == "1" ? "checked" : "" }}>
                                     Berbayar
                                 </label>
                                 
@@ -166,7 +166,9 @@
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
                                 value="{{ old('biaya') }}"
-                                placeholder="Biaya">
+                                placeholder="Biaya"
+                                disabled
+                                >
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
                             </div>
@@ -183,7 +185,7 @@
                                 @if(old('inisiator'))
                                     @foreach($inisiator as $key)
                                         <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('inisiator')) ? "selected" : "" }}
+                                        {{ $key->id == old('inisiator') ? "selected" : "" }}
                                         >{{ $key->nama }}</option>
                                     @endforeach
                                 @else
@@ -260,7 +262,7 @@
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
                                 value="{{ old('tgl_awal') }}"
-                                placeholder=" DD/MM/YYYY">
+                                placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
                             </div>
@@ -275,7 +277,7 @@
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
                                 value="{{ old('tgl_akhir') }}"
-                                placeholder=" DD/MM/YYYY">
+                                placeholder=" HH-BB-TTTT">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
                             </div>
@@ -318,9 +320,17 @@
                         <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
                             <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
                             <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
-                                    @foreach($provinsi as $key)
-                                    <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                    @endforeach
+                                    @if(old('ttd_pemangku'))
+                                        @foreach($provinsi as $key)
+                                            <option value="{{ $key->id }}"
+                                            {{ in_array($key->id, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ $key->nama }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($provinsi as $key)
+                                            <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                        @endforeach
+                                    @endif
                             </select>
                             <div id="ttd_pemangku" class="invalid-feedback text-danger">
                                 {{ $errors->first('ttd_pemangku') }}
@@ -420,6 +430,27 @@
     CKEDITOR.replace('tema');
 
     $(document).ready(function () {
+        $('#gratis').change(function() {
+            if ($(this).prop('checked')) {
+                $("#biaya").prop("disabled", true);
+                $("#biaya").prop("required", false);
+                console.log("ory")
+            }
+            // $("#biaya").removeClass("disabled");
+            // $("#no").addClass("none");
+        });
+        $('#bayar').change(function() {
+            if ($(this).prop('checked')) {
+                $("#biaya").prop("disabled", false);
+                $("#biaya").prop("required", true);
+                console.log("no ory")
+            }
+            
+            // $("#biaya").attr("disabled","disabled");
+            // $("#no").removeClass("none");
+            // $("#biaya").addClass("disabled");
+        });
+
         $('.timepicker').datetimepicker({
 
             format: 'HH:mm'
@@ -488,12 +519,9 @@
             $('#kota_penyelenggara').select2();
         });
 
-        $('.datepicker').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
+        $('.datepicker').datetimepicker({
+            format: 'DD-MM-YYYY'
         });
-        
-        $('.datepicker').mask('00/00/0000');
 
     });
 </script>
