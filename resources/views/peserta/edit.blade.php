@@ -137,7 +137,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-outline-info" style="margin-top:20px;">Edit</button>
+                    <button type="submit" class="btn btn-success" style="margin-top:20px;">Edit</button>
                 </form>
             </div>
         </div>

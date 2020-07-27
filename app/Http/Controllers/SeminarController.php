@@ -3,54 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use App\SeminarModel;
 use App\InstansiModel;
 use App\ProvinsiModel;
 use App\KotaModel;
-
+use App\BuModel;
+use DB;
 
 class SeminarController extends Controller
 {
     //
-    public function index(){
-        $data = SeminarModel::all();
-        return view('seminar.index')->with(compact('data'));
+    public function index() {
+        $seminar = SeminarModel::where('deleted_at', NULL)->get();
+        return view('seminar.index')->with(compact('seminar'));
     }
 
-    // create seminar
-    public function create(){
-        $judul = "Buat Seminar";
+    public function create() {
         $inisiator = InstansiModel::all();
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
-        return view('seminar.create')->with(compact('judul','inisiator','provinsi','kota'));
-    }
-
-    //detail seminar
-    public function detail($id){
-        $data = SeminarModel::find($id);
-        return view('seminar.detail')->with(compact('data'));
+        $instansi = BuModel::all();
+        $pendukung = BuModel::pluck('nama_bu','id');
+        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung'));
     }
 
     public function store(Request $request) {
+        $request->validate([
+            'nama_seminar' => 'required|max:3'
+        ]);
         dd($request);
     }
 
-    public function cetak_sert($id, $email){
-        $data['data'] = SertModel::where('no_sertifikat',$id)->where('email', $email)->get();
-        $pdf = PDF::loadview('sert.sert_v1',$data);
-        $pdf->setPaper('A4','landscape');
-        return $pdf->stream("Sertifikat.pdf");
-    }
-
-    // hapus data seminar
-    public function destroy(){
+    public function destroy(Request $request) {
         $idData = explode(',', $request->idHapusData);
         $user_data = [
             'deleted_by' => Auth::id(),
             'deleted_at' => Carbon::now()->toDateTimeString()
         ];
         SeminarModel::whereIn('id', $idData)->update($user_data);
-        return redirect('seminar')->with('success', 'Data terpilih berhasil dihapus');
+        return redirect('/seminar')
+        ->with('pesan',"Berhasil menghapus personal");
+    }
+
+    public function getKota($id) {
+        $cities = DB::table("ms_kota")
+                    ->where("provinsi_id",$id)
+                    ->pluck("nama","id")
+                    ->all();
+        return json_encode($cities);
     }
 }
