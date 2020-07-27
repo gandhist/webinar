@@ -82,7 +82,7 @@ class SeminarController extends Controller
             
 
         $data->created_by = Auth::id();
-        $data->is_actived = "published";
+        $data->is_actived = "1";
 
         $seminar = $data->save();
         return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
@@ -155,6 +155,7 @@ class SeminarController extends Controller
             
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
+        $data->is_actived = "1";
 
         $seminar = $data->save();
         return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
