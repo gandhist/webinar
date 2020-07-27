@@ -31,9 +31,63 @@ class SeminarController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'nama_seminar' => 'required|max:3'
+            'nama_seminar' => 'required|min:3|max:50',
+            'klasifikasi' => 'required',
+            'sub_klasifikasi' => 'required',
+            'tema' => 'required|min:5|max:200',
+            'kuota' => 'required|numeric|min:5',
+            'skpk_nilai' => 'required|numeric|min:0|max:25',
+            'is_free' => 'required',
+            'biaya' => 'required_if:is_free,==,1',
+            'inisiator' => 'required',
+            'instansi_penyelenggara' => 'required',
+            'instansi_pendukung' => 'required',
+            'tgl_awal' => 'required|date',
+            'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
+            'jam_awal' => 'required|date_format:H:i',
+            'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
+            // 'ttd_pemangku' => 'required',
+            'prov_penyelenggara' => 'required',
+            'kota_penyelenggara' => 'required',
+            'lokasi_penyelenggara' => 'required|min:3|max:50',
         ]);
-        dd($request);
+
+
+        $request->instansi_penyelenggara = implode(",", $request->instansi_penyelenggara);
+        $request->instansi_pendukung     = implode(",", $request->instansi_pendukung    );
+        // $request->klasifikasi            = implode(",", $request->klasifikasi           );
+        // $request->sub_klasifikasi        = implode(",", $request->sub_klasifikasi       );
+        $request->ttd_pemangku           = implode(",", $request->ttd_pemangku          );
+                
+        $data = new SeminarModel;
+        $data->nama_seminar              =              $request->nama_seminar           ;
+        // $data->klasifikasi               =              $request->klasifikasi            ;
+        // $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
+        $data->tema                      =              $request->tema                   ;
+        $data->kuota                     =              $request->kuota                  ;
+        $data->skpk_nilai                =              $request->skpk_nilai             ;
+        $data->is_free                   =              $request->is_free                ;
+        $data->biaya                     =              $request->biaya                  ;
+        $data->inisiator                 =              $request->inisiator              ;
+        $data->instansi_penyelenggara    =              $request->instansi_penyelenggara ;
+        $data->instansi_pendukung        =              $request->instansi_pendukung     ;
+        $data->tgl_awal                  =Carbon::parse($request->tgl_awal)              ;
+        $data->tgl_akhir                 =Carbon::parse($request->tgl_akhir)             ;
+        $data->jam_awal                  =              $request->jam_awal               ;
+        $data->jam_akhir                 =              $request->jam_akhir              ;
+        // $data->ttd_pemangku              =              $request->ttd_pemangku           ;
+        $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
+        $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
+        $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
+            
+
+        $data->created_by = Auth::id();
+        $data->is_actived = "published";
+
+        $seminar = $data->save();
+        return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+        "\" berhasil ditambahkan");
+
     }
 
     public function destroy(Request $request) {
