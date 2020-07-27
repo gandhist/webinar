@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
+use File;
 
 class ProfileController extends Controller
 {
@@ -21,7 +23,6 @@ class ProfileController extends Controller
         $seminar = Seminar::all();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         $jumlahdetail = PesertaSeminar::where('id_peserta','=',$peserta['id'])->count();
-        // dd($detailseminar);
         
         return view('profile.edit', ['user' => $request->user()])->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
     }
@@ -41,8 +42,16 @@ class ProfileController extends Controller
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+            if (!file_exists($destinationPath)) {
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+            $resize_image = Image::make($files);
+            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $temp = $destinationPathTemp.$file;
+            rename($temp, $destinationFile);
             $data['foto'] = $dir_name."/".$file;
         }
               

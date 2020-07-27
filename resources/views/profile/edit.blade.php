@@ -23,7 +23,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-sm-3">
-                                <img style="width:100%;" src="{{ asset('uploads/peserta/'.$user->peserta->foto) }}" >
+                                <img style="width:70%;" src="{{ asset('uploads/peserta/'.$user->peserta->foto) }}" >
                             </div>
                             <div class="col-sm-6">
                                 <table>
@@ -56,14 +56,14 @@
                                     <tr>
                                         <th style="width:24%;text-align:left">Total Nilai SKPI Pertahun</th>
                                         <td>:</td>
-                                        <td><input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control" value="{{old('nilai_skpi')}}" readonly></td>
+                                        <td><input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control" value="" readonly></td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-2">
-                                <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"  {{ $errors->first('foto') ? 'is-invalid' : '' }}" >
+                                <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"  {{ $errors->first('foto') ? 'is-invalid' : '' }} >
                             </div>
                         </div>
                     </div>
@@ -71,59 +71,46 @@
                     <div class="box-body">    
                         <b>Daftar Seminar yang telah di ikuti</b>
                         
-                        <table id="data-seminar" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
+                        <table id="data-seminar" class="table table-bordered table-hover dataTable customTable" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width:2%;"><i class="fa fa-check-square"></i></th>
-                                    <th style="width:2%;">No</th>
-                                    <th style="width:6%;">Title</th>
-                                    <th style="width:19%;">Tema</th>
-                                    <th style="width:7%;">Tanggal</th>
-                                    <th style="width:10%;">Waktu</th>
-                                    <th style="width:5%;">n_skpk</th>
-                                    <th style="width:10%;">tambah_skpk</th>
-                                    <th style="width:6%;">No_Srtf</th>
+                                    <th style="width:2%;text-align:center;"><i class="fa fa-check-square"></i></th>
+                                    <th style="width:2%;text-align:center;">No</th>
+                                    <th style="width:14%;text-align:center;">Title</th>
+                                    <th style="width:19%;text-align:center;">Tema</th>
+                                    <th style="width:10%;text-align:center;">Tanggal</th>
+                                    <th style="width:5%;text-align:center;">Waktu</th>
+                                    <th style="width:3%;text-align:center;">n_skpk</th>
+                                    <th style="width:2%;text-align:center;">tmbh_skpk</th>
+                                    <th style="width:6%;text-align:center;">No_Srtf</th>
                                 </tr>
                             </thead>
                             <tbody>  
                                 @foreach($detailseminar as $key)
                                 <tr>
-                                    <td></td>
+                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
+                                        id="selection[]" name="selection[]"></td>
                                     <td style="text-align:center;">{{$loop->iteration}}</td>
                                     <td>
-                                        <input type="text" class="form-control" 
-                                        name="title_{{$loop->iteration}}" id="title_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
+                                        {{$key->seminar_p->nama_seminar}}
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" 
-                                        name="tema_{{$loop->iteration}}" id="tema_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
+                                        {{$key->seminar_p->tema}}
+                                    </td>
+                                    <td style="text-align:center;"> 
+                                        {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
+                                    </td>
+                                    <td style="text-align:center;">
+                                        {{$key->seminar_p->jam_awal}}
+                                    </td>
+                                    <td style="text-align:center;">
+                                        {{$key->seminar_p->skpk_nilai}}
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" 
-                                        name="tanggal_{{$loop->iteration}}" id="tanggal_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
+                                        {{$key->id_seminar}}
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" 
-                                        name="waktu_{{$loop->iteration}}" id="waktu_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" 
-                                        name="nilai_{{$loop->iteration}}" id="nilai_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" 
-                                        name="tambah_{{$loop->iteration}}" id="tambah_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" 
-                                        name="no_srtf_{{$loop->iteration}}" id="no_srtf_{{$loop->iteration}}"
-                                        value="{{$key->id_seminar}}" readonly>
+                                        {{$key->id_seminar}}
                                     </td>
                                 </tr>
                                 @endforeach

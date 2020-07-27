@@ -7,6 +7,10 @@ use App\Peserta;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Intervention\Image\ImageManagerStatic as Image;
+use File;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailRegist;
 
 class RegistController extends Controller
 {
@@ -62,13 +66,21 @@ class RegistController extends Controller
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+            if (!file_exists($destinationPath)) {
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+            $resize_image = Image::make($files);
+            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $temp = $destinationPathTemp.$file;
+            rename($temp, $destinationFile);
             $data['foto'] = $dir_name."/".$file;
         }
         $peserta = Peserta::create($data);
         // $password = str_random(8);
-        $password = '12345'; // masih hardcode
+        $password = '123456'; // buat test masih hardcode
       
         if ($peserta) {
             $data['username'] = strtolower($request->nama);
@@ -82,6 +94,13 @@ class RegistController extends Controller
             $peserta_id['user_id'] = $user->id;
             
             Peserta::find($peserta->id)->update($peserta_id);
+
+            $pesan = [
+                'username' => strtolower($request->nama),
+                'password' => $password
+            ];
+            Mail::to("noernanda@gmail.com")->send(new EmailRegist($pesan)); // belum fix
+
         }
    
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');

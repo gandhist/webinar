@@ -25,9 +25,8 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
-        <div class="container-fluid">
-            <div class="box-tools" style="margin: 25px 35px;">
-                <div class="row">
+        <div class="box-body" style="margin:25px;">
+                <div class="row" style="margin-bottom:10px;">
                     <div class="col-12">
                         <div class="btn-group">
                             <span class="form-group">
@@ -40,12 +39,15 @@
                                 <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
                                     <i class="fa fa-filter"></i> Filter
                                 </button>
+                                <button type="button" class="btn btn-primary" id="btnDetail" name="btnDetail">
+                                    <i class="fa fa-eye"></i> Detail</button>
 
                                 {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
 
                             </span>
                         </div>
                         <div class="pull-right">
+                            
                             <a href="{{ url('seminar/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
                             <button class="btn btn-success" id="btnEdit" name="btnEdit">
@@ -55,10 +57,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="box-body" style="margin:25px;">
-
-                <div class="row" style="margin-top:40px; margin-bottom: 25;">
+          
+                <div class="row">
                     <div class="col-12">
                         @if(session()->get('pesan'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -76,10 +76,13 @@
                             <thead>
                                 <tr>
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
-                                    <th><span class="indent">Nomor</th>
-                                    <th><span class="indent">Nama</th>
+                                    <th><span class="indent">No</th>
+                                    <th><span class="indent">Title</th>
                                     <th><span class="indent">Tema</th>
-                                    <th><span class="indent">Aksi</th>
+                                    <th><span class="indent">Tanggal</th>
+                                    <th><span class="indent">Jml_Daftar</th>
+                                    <th><span class="indent">Jml_Bayar</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
 
@@ -91,6 +94,9 @@
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>{{ $key->nama_seminar }}</td>
                                     <td>{{ strip_tags($key->tema) }}</td>
+                                    <td>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
+                                    <td>{{ $key->seminar_r }}</td>
+                                    <td></td>
                                     <td>
                                         <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a>
                                     </td>
@@ -100,7 +106,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 </section>
@@ -176,12 +181,49 @@
             id.push($(this).data('id'));
         });
         if (id.length == 0) {
-            alert('Tidak ada data yang terpilih');
+            Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
         } else if (id.length > 1) {
-            alert('Harap pilih satu data untuk di ubah');
+            Swal.fire({
+                    title: "Harap pilih satu data untuk di ubah",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
         } else {
             url = id[0];
             window.location.href = "{{ url('seminar') }}/" + url + "/edit";
+        }
+    });
+
+    // Button Detail click
+    $('#btnDetail').on('click', function (e) {
+        e.preventDefault();
+        var id = [];
+        $('.selection:checked').each(function () {
+            id.push($(this).data('id'));
+        });
+        if (id.length == 0) {
+            Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+        } else if (id.length > 1) {
+            Swal.fire({
+                    title: "Harap pilih satu data untuk di tampilkan",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+        } else {
+            url = id[0];
+            window.location.href = "{{ url('seminar/detail') }}/" + url ;
         }
     });
 </script>
