@@ -8,7 +8,7 @@ class PesertaSeminar extends Model
 {
     //
     protected $table = "srtf_peserta_seminar";
-    protected $fillable = ['id_seminar'];
+    protected $fillable = ['id_seminar,status'];
 
     // relasi many to many table peserta 
     public function peserta_r(){

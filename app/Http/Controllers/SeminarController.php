@@ -79,14 +79,21 @@ class SeminarController extends Controller
         $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
-            
+        
+        
 
         $data->created_by = Auth::id();
-        $data->is_actived = "1";
-
-        $seminar = $data->save();
-        return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
-        "\" berhasil ditambahkan");
+        if($request->store == "draft") {
+            $data->is_actived = "0";
+            $seminar = $data->save();
+            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+            "\" berhasil disimpan sebagai draft");
+        } else {
+            $data->is_actived = "1";
+            $seminar = $data->save();
+            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+            "\" berhasil ditambahkan");
+        }
 
     }
 
@@ -102,7 +109,7 @@ class SeminarController extends Controller
     }
 
     public function update(Request $request, $id) {
-        
+        dd($request);
         $request->validate([
             'nama_seminar' => 'required|min:3|max:50',
             'klasifikasi' => 'required',
@@ -155,11 +162,18 @@ class SeminarController extends Controller
             
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
-        $data->is_actived = "1";
 
-        $seminar = $data->save();
-        return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
-        "\" berhasil diubah");
+        if($request->store == "draft") {
+            $data->is_actived = "0";
+            $seminar = $data->save();
+            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+            "\" berhasil diubah sebagai draft");
+        } else {
+            $data->is_actived = "1";
+            $seminar = $data->save();
+            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+            "\" berhasil diubah");
+        }
 
     }
 

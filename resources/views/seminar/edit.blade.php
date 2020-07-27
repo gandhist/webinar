@@ -471,6 +471,38 @@
                 </div>
 
 
+                <div class="row">
+                    {{-- Narasumber --}}
+                    <div class="col-md-6">
+                    <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
+                            <label for="narasumber" class="label-control required">Narasumber</label>
+                            <select name="narasumber[]" multiple="multiple"
+                            id="narasumber" class="form-control">
+                                <option></option>
+                            </select>
+                            <div id="narasumber" class="invalid-feedback text-danger">
+                                {{ $errors->first('narasumber') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Narasumber --}}
+
+                    {{-- Moderator --}}
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
+                            <label for="moderator" class="label-control required">Moderator</label>
+                            <input type="text" id="moderator" class="form-control" name="moderator"
+                            placeholder="Nama Moderator"
+                            value="{{ old('moderator') ? old('moderator') : '' }}">
+                            <div id="moderator" class="invalid-feedback text-danger">
+                                {{ $errors->first('moderator') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Moderator --}}
+
+                </div>
+
 
                 <button class="btn btn-success">Publish</button>
                 <button class="btn btn-info pull-right">Save</button>
@@ -493,11 +525,22 @@
     CKEDITOR.replace('tema');
 
     $(document).ready(function () {
+        $("form").children().each(function(){
+            this.value=$(this).val().trim();
+        }) // Trim semua spasi
+        $('#narasumber').select2({
+            tags: true,
+            data: @json(old('narasumber')) ,
+            tokenSeparators: [','], 
+            placeholder: "Nama Narasumber",
+            /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
+            selectOnClose: true, 
+            closeOnSelect: false
+        }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
                 $("#biaya").prop("disabled", true);
                 $("#biaya").prop("required", false);
-                console.log("ory")
             }
             // $("#biaya").removeClass("disabled");
             // $("#no").addClass("none");
@@ -506,7 +549,6 @@
             if ($(this).prop('checked')) {
                 $("#biaya").prop("disabled", false);
                 $("#biaya").prop("required", true);
-                console.log("no ory")
             }
             
             // $("#biaya").attr("disabled","disabled");
