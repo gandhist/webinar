@@ -10,6 +10,8 @@ use App\InstansiModel;
 use App\ProvinsiModel;
 use App\KotaModel;
 use App\BuModel;
+use App\Peserta;
+use App\PesertaSeminar;
 use DB;
 
 class SeminarController extends Controller
@@ -175,8 +177,15 @@ class SeminarController extends Controller
 
     //detail seminar
     public function detail($id){
-        $data = SeminarModel::find($id);
-        return view('seminar.detail')->with(compact('data'));
+        $seminar = SeminarModel::where('id',$id)->first();
+        $inisiator = InstansiModel::all();
+        $provinsi = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        $instansi = BuModel::all();
+        $pendukung = BuModel::pluck('nama_bu','id');
+        $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
+        // dd($detailseminar);
+        return view('seminar.detail')->with(compact('seminar','inisiator','provinsi','kota','instansi','pendukung','peserta','detailseminar'));
     }
 
 

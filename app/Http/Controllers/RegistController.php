@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 use File;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailRegist;
 
 class RegistController extends Controller
 {
@@ -92,6 +94,13 @@ class RegistController extends Controller
             $peserta_id['user_id'] = $user->id;
             
             Peserta::find($peserta->id)->update($peserta_id);
+
+            $pesan = [
+                'username' => strtolower($request->nama),
+                'password' => $password
+            ];
+            Mail::to("noernanda@gmail.com")->send(new EmailRegist($pesan)); // belum fix
+
         }
    
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
