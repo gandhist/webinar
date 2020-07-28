@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ModeratorModal extends Model
+class ModeratorModel extends Model
 {
     //
     protected $table = "srtf_moderator";

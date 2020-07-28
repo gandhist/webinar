@@ -409,12 +409,11 @@
                 <div class="row">
                     {{-- Narasumber --}}
                     <div class="col-md-6">
-                    <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
-                            <select name="narasumber[]" multiple="multiple"
-                            id="narasumber" class="form-control">
-                                <option></option>
-                            </select>
+                            <input type="text" id="narasumber" class="form-control" name="narasumber"
+                            placeholder="Nama Narasumber"
+                            value="{{ old('narasumber') ? old('narasumber') : '' }}">
                             <div id="narasumber" class="invalid-feedback text-danger">
                                 {{ $errors->first('narasumber') }}
                             </div>
@@ -472,15 +471,15 @@
             // $("#biaya").removeClass("disabled");
             // $("#no").addClass("none");
         });
-        $('#narasumber').select2({
-            tags: true,
-            data: @json(old('narasumber')) ,
-            tokenSeparators: [','], 
-            placeholder: "Nama Narasumber",
-            /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-            selectOnClose: true, 
-            closeOnSelect: false
-        }); // narasumber select2 multiple, tags
+        // $('#narasumber').select2({
+        //     tags: true,
+        //     data: @json(old('narasumber')) ,
+        //     tokenSeparators: [','], 
+        //     placeholder: "Nama Narasumber",
+        //     /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
+        //     selectOnClose: true, 
+        //     closeOnSelect: false
+        // }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
                 $("#biaya").prop("disabled", true);
