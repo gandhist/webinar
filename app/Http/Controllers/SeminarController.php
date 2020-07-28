@@ -30,7 +30,8 @@ class SeminarController extends Controller
         $kota = KotaModel::all();
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
-        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung'));
+        $pimpinan = BuModel::pluck('nama_pimp','id');
+        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung','pimpinan'));
     }
 
     public function store(Request $request) {
@@ -85,6 +86,7 @@ class SeminarController extends Controller
         $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
+        $data->ttd_pemangku              =              $request->ttd_pemangku           ;
         
         $narasumber = new NarasumberModel;
         $narasumber->nama = $request->narasumber;
@@ -141,12 +143,12 @@ class SeminarController extends Controller
         $kota = KotaModel::all();
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
+        $pimpinan = BuModel::pluck('nama_pimp','id');
         return view('seminar.edit')->with(compact('seminar','inisiator','provinsi',
-        'kota','instansi','pendukung','id'));
+        'kota','instansi','pendukung','id','pimpinan'));
     }
 
     public function update(Request $request, $id) {
-        dd($request);
         $request->validate([
             'nama_seminar' => 'required|min:3|max:50',
             'klasifikasi' => 'required',
@@ -196,6 +198,7 @@ class SeminarController extends Controller
         $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
+        $data->ttd_pemangku              =              $request->ttd_pemangku           ;
             
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
