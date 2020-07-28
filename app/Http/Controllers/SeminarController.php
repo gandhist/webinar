@@ -280,18 +280,12 @@ class SeminarController extends Controller
         return json_encode($cities);
     }
 
-    function filterTgl(Request $request)
-    {
-        if($request->ajax())
-            {
-                if($request->from_date != '' && $request->to_date != '') {
-                    $data = SeminarModel::whereBetween('tgl_awal', array($request->from_date, $request->to_date))
-                    ->get();
-                } else {
-                    $data = SeminarModel::all()->orderBy('tgl_awal', 'desc')->get();
-                }
-                echo json_encode($data);
-        }
+    public function publish($id) {
+        $data = SeminarModel::where('id',$id)->first();
+        $data->is_actived = "1";
+        $data->save();
+        return redirect('/seminar')
+        ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
     }
 
 }

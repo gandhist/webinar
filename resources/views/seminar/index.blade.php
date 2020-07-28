@@ -42,13 +42,15 @@
                                 <button class="btn btn-success btn-bermargin" id="btnReset" name="btnReset">
                                 <i class="fa fa-refresh" aria-hidden="true"></i> Reset
                                 </button>
-                                <button type="button" class="btn btn-primary" id="btnDetail" name="btnDetail">
-                                    <i class="fa fa-eye"></i> Detail</button>
 
                                 {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
 
                             </span>
                         </div>
+                        <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
+                            <i class="fa fa-eye"></i> Detail</button>
+                    </div>
+                    <div class="col-12" style="margin-top:10px">
                         <div class="pull-right">
                             
                             <a href="{{ url('seminar/create') }}" class="btn btn-info">
@@ -101,7 +103,16 @@
                                     <td>{{ $key->seminar_r }}</td>
                                     <td></td>
                                     <td>
-                                        <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a>
+                                        @if($key->is_actived == "0")
+                                            <button type="submit" class="btn btn-success">
+                                                <a href="{{url('seminar/'.$key->id.'/publish')}}" style="color:white">
+                                                    Publish
+                                                </a>
+                                            </button>
+                                        @else
+                                            {{" "}}
+                                        @endif
+                                        {{-- <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a> --}}
                                     </td>
                                 </tr>
                             @endforeach

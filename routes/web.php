@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('detail/{id}','SeminarController@detail');
 	Route::get('create/getKota/{id}','SeminarController@getKota');
 	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+	Route::get('{id}/publish','SeminarController@publish');
 
 });
 
