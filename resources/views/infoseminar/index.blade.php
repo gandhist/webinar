@@ -29,7 +29,7 @@
       <tr>
           <td>{{ $loop->iteration}}. {{ $key->nama_seminar }} </td>
           <td><a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-            data-placement="top" title="Lihat Detail">{{ $key->tema }}</a></td>
+            data-placement="top" title="Lihat Detail">{{ strip_tags(html_entity_decode($key->tema)) }}</a></td>
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}

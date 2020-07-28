@@ -52,9 +52,9 @@ Route::namespace('Iso')->group(function(){
 
 
 Route::group(['middleware' => 'auth'], function () {
-Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
-Route::get('kirim_email','SertController@kirimEmail');
-Route::get('send_email/{id}','SertController@sendEmail');
+// Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
+// Route::get('kirim_email','SertController@kirimEmail');
+// Route::get('send_email/{id}','SertController@sendEmail');
 
 // Seminar
 
@@ -75,9 +75,14 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::delete('destroy', 'SeminarController@destroy');
 	Route::get('detail/{id}','SeminarController@detail');
 	Route::get('create/getKota/{id}','SeminarController@getKota');
-	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+	Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat')->name('cetak_sertifikat');
+	Route::get('kirim_email','SeminarController@kirimEmail');
+	Route::get('send_email/{id}','SeminarController@sendEmail');
 
 });
+// Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
+// 	Route::get('kirim_email','SeminarController@kirimEmail');
+// 	Route::get('send_email/{id}','SeminarController@sendEmail');
 
 // End Seminar
 

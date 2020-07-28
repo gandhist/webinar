@@ -43,6 +43,10 @@
         "psr-4": {
             "App\\": "app/"
         },
+        "files": [
+            "app/Helpers/FormatUang.php",
+            "app/Helpers/AngkaTerbilang.php"
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"

@@ -98,7 +98,7 @@
                                     <td>{{ $key->seminar_r }}</td>
                                     <td></td>
                                     <td>
-                                        <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a>
+                                        {{-- <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a> --}}
                                     </td>
                                 </tr>
                             @endforeach
