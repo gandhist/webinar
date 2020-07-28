@@ -53,6 +53,7 @@ class InstansiController extends Controller
             "alamat" => "required|min:3|max:100",
             "id_prop" => "required",
             "id_kota" => "required",
+            "singkat_bu" => "required|min:3|max:50",
             "nama_pimp" => "required|min:3|max:50",
             "jab_pimp" => "required|min:3|max:50",
             "email_pimp" => "required|email|unique:badan_usaha",
@@ -76,7 +77,8 @@ class InstansiController extends Controller
         $data->web              = $request->web            ;           
         $data->alamat           = $request->alamat         ;       
         $data->id_prop          = $request->id_prop        ;       
-        $data->id_kota          = $request->id_kota        ;       
+        $data->id_kota          = $request->id_kota        ;   
+        $data->singkat_bu       = $request->singkat_bu     ;      
         $data->nama_pimp        = $request->nama_pimp      ;     
         $data->jab_pimp         = $request->jab_pimp       ;      
         $data->email_pimp       = $request->email_pimp     ;    
@@ -105,12 +107,23 @@ class InstansiController extends Controller
 
         if ($files = $request->file('logo')) {
             $destinationPath = 'uploads/lampiran/badan_usaha/'.$dir_name; // upload path
-            $file = $dir_name."_logo_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
-            $data->logo = $destinationPath."/".$file;
+            if (!file_exists($destinationPath)) {
+                // mkdir($destinationPath, 777, true);
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
+            $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path
+            $resize_image = Image::make($files);
+            // $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $resize_image->resize(250,null, function($constraint){
+                $constraint->aspectRatio();
+            })->save($destinationPathTemp.$file);
+            $temp = $destinationPathTemp.$file;
+            rename($temp, $destinationFile );
+            $data->logo = $destinationFile;
+
         }
-
-
         $instansi = $data->save();
         return redirect('/instansi')->with('pesan',"Instansi \"".$request->nama_bu.
         "\" berhasil ditambahkan");
@@ -212,6 +225,7 @@ class InstansiController extends Controller
         $data->alamat           = $request->alamat                      ;       
         $data->id_prop          = $request->id_prop                     ;       
         $data->id_kota          = $request->id_kota                     ;       
+        $data->singkat_bu       = $request->singkat_bu                  ;       
         $data->nama_pimp        = $request->nama_pimp                   ;     
         $data->jab_pimp         = $request->jab_pimp                    ;      
         $data->email_pimp       = $request->email_pimp                  ;    
@@ -247,9 +261,22 @@ class InstansiController extends Controller
 
         if ($files = $request->file('logo')) {
             $destinationPath = 'uploads/lampiran/badan_usaha/'.$dir_name; // upload path
-            $file = $dir_name."_logo_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
-            $data->logo = $destinationPath."/".$file;
+            if (!file_exists($destinationPath)) {
+                // mkdir($destinationPath, 777, true);
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
+            $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path
+            $resize_image = Image::make($files);
+            // $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $resize_image->resize(250,null, function($constraint){
+                $constraint->aspectRatio();
+            })->save($destinationPathTemp.$file);
+            $temp = $destinationPathTemp.$file;
+            rename($temp, $destinationFile );
+            $data->logo = $destinationFile;
+
             if($logo_lama) {
                 if (file_exists(public_path()."/".$data->logo) && file_exists(public_path()."/".$logo_lama)) {
                     // mkdir($destinationPath, 777, true);

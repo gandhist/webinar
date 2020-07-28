@@ -130,6 +130,18 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nama Singkat</label>
+                                <input type="text" disabled="disabled" class="form-control"
+                                value="{{$instansi->singkat_bu}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+
                     <div class="horizontal-line"></div>
 
                     <div class="row">

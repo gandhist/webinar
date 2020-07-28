@@ -229,6 +229,29 @@
 
                     </div>
 
+                    <div class="row">
+
+                        {{-- Nama Singkat --}}
+                        <div class="col-md-6">
+                            <div class="form-group {{ ($errors->first('singkat_bu')) ? ' has-error' : '' }}">
+                                <label for="singkat_bu" class="label-control required">Nama Singkat</label>
+                                <input type="text" name="singkat_bu" id="singkat_bu"
+                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
+                                    value="{{ old('singkat_bu') }}"
+                                    class="form-control" 
+                                    placeholder="Nama Singkat Instansi" 
+                                    required>
+                                <div class="invalid-feedback text-danger">
+                                    {{ $errors->first('singkat_bu') }}
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Akhir Nama Instansi --}}
+
+                        <div class="col-md-6"></div>
+
+                    </div>
+
                     <div class="horizontal-line"></div>
 
                     <div class="row">
