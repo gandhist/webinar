@@ -7,11 +7,14 @@
     <title>Sertifikat</title>
     
     <style>
+        @page {
+            margin: 0;
+        }
 
         .header{
             padding-top: 5px;
-            margin-top: 1px;
-            margin-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
         
         .paper {
@@ -20,9 +23,7 @@
             margin: 20px auto;
             background-color: white;
             box-shadow: 0px 0px 5px 0px #888;
-            padding: 5px;
-            
-            
+            padding: 5px;    
         }
     
         table {
@@ -38,49 +39,9 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 16px;
             -webkit-print-color-adjust: exact !important;
-        }
-    
-        input[type="text"] {
-            border: none;
-        }
-    
-        @media print {
-            
-            .noprint {
-                display: none;
-            }
-    
-            .nobg {
-                box-shadow: 0px 0px 5px 0px rgb(255, 255, 255);
-            }
-    
-            .addheader {
-                padding-top: 5px;
-            }
-    
-            .pagebreak {
-                page-break-before: always;
-            }
-    
-            ::-webkit-input-placeholder {
-                /* WebKit browsers */
-                color: transparent;
-            }
-    
-            :-moz-placeholder {
-                /* Mozilla Firefox 4 to 18 */
-                color: transparent;
-            }
-    
-            ::-moz-placeholder {
-                /* Mozilla Firefox 19+ */
-                color: transparent;
-            }
-    
-            :-ms-input-placeholder {
-                /* Internet Explorer 10+ */
-                color: transparent;
-            }
+            background-image: url("cerificate-bg.jpeg");
+            background-repeat: no-repeat;
+            background-position: center;
         }
     
         p {
@@ -90,23 +51,13 @@
         td {
             height: 15px;
         }
-    
-        input {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-        }
-    
-        textarea {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            resize: none;
-            border: none;
-        }
+     
         .p3sm-image {
             background-image: url("p3sm1.png");
+            /* background-image: url("{{asset('p3sm1.png')}}"); */
             background-position: center;
             background-repeat: no-repeat;
-            background-size:200px;
+            background-size:250px;
             position: relative;
         }
         .mb-image {
@@ -121,100 +72,110 @@
 </head>
 <body>
     @foreach($data as $key)
-    <div align=center>
+    <div class="">
 
         <div class="">
 
             <div class="header">
-                <table style="table-layout:fixed;" width=780  cellspacing=0 cellpadding=0>
+                <table style="table-layout:fixed;" width=780 cellspacing=0 cellpadding=0>
                     <tr>
-                        <td colspan="12"></td>                   
-                        <td colspan="10"><span style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff; padding:20px">{{ $key->no_srtf }}</span></td>
+                        <td colspan="14"></td>                   
+                        <td colspan="10"><span style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff; padding:15px">{{ $key->no_srtf }}</span></td>
                     </tr>
+                    <tr>
+                        <td colspan="14"></td>                   
+                        <td colspan="10" style="padding-left:20px;"><img src="qr.png" height=110px></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
+                    </tr>
+                    
                 </table>
             </div>
-            @if($key->seminar_p->inisiator == 1)
-                <div class="p3sm-image">
-            @else 
-                <div class="mb-image">
-            @endif
-                <table style="table-layout:fixed;" width=520  cellspacing=0 cellpadding=0>
+            
+            <div class="box-body">
+                <table style="table-layout:fixed;" width=520 cellspacing=0 cellpadding=0>
+                    
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle; color: brown;">
-                            <p style="margin-top: 20px; margin-bottom: 0px; font-size: 36px; font-weight: bold;">SERTIFIKAT</p>
+                            <p style="margin-top: -5px; margin-bottom: 4px; font-size: 54px; font-weight: bold;">SERTIFIKAT</p>
                         </td>
-                        <td colspan="6"></td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             diberikan kepada:<br>
-                            <h2 style="margin-top: 0px;margin-bottom: 3px; color:blue; text-transform: uppercase;">{{ $key->peserta_r->nama }}</h2>
-                        </td>
-                        <td colspan="6"></td>
+                            <h2 style="margin-top: 6px;margin-bottom: 6px; color:blue; text-transform: uppercase;">{{ $key->peserta_r->nama }}</h2>
+                        </td> 
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             atas partisipasinya sebagai:<br>
-                            <h3 style="margin-top: 0px;margin-bottom: 3px; ">@if ($key->status == 1) Peserta @elseif ($key->status == 2) Narasumber @elseif ($key->status == 3) Panitia @else Moderator @endif</h3>
+                            <h3 style="margin-top: 6px;margin-bottom: 6px; ">@if ($key->status == 1) Peserta @elseif ($key->status == 2) Narasumber @elseif ($key->status == 3) Panitia @else Moderator @endif</h3>
                         </td>
+                    </tr>
+                    <tr>
                         <td colspan="6"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6" style="text-align: center;"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
-                            <h1 style="margin-top: -2px; margin-bottom:-3px; color: crimson;">{{ $key->seminar_p->nama_seminar }}</h1>
+                            <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; margin-top: -2px; margin-bottom:-3px; color: crimson;">{{ $key->seminar_p->nama_seminar }}</span>
                         </td>
-                        <td colspan="6" style="text-align: center;"></td>
                     </tr>
                     <tr>
+                        <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            <p style="margin-top: -2px; margin-bottom: -10px;"><strong>dengan tema:</strong></p>
-                            <p style="margin-bottom: -3px;">
-                                <span style="font-size: 20px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; color: crimson;">{{ strip_tags(html_entity_decode($key->seminar_p->tema)) }}</span><br>
+                            <p style="margin-top: 2px; margin-bottom: -5px;"><strong>dengan tema:</strong></p>
+                            <p style="margin-bottom: -2px;">
+                                <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; color: crimson;">{{ strip_tags(html_entity_decode($key->seminar_p->tema)) }}</span><br>
                                 <strong>dengan Nilai SKPK : {{ $key->seminar_p->skpk_nilai }} ({{terbilang($key->seminar_p->skpk_nilai)}})</strong>
                             </p>
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            <p style="margin-top: 3px; margin-bottom: 0px;"><strong>Diselenggarakan bersama oleh:</strong></p>
+                            <p style="margin-top: 3px; margin-bottom: 4px;"><strong>Diselenggarakan bersama oleh:</strong></p>
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            <p style="margin-top: 2px; margin-bottom:2px ">
+                            <p style="margin-top: 2px; margin-bottom:4px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    {{-- {{ $key->seminar_p->instansi_1->nama_bu }}  - {{ $key->seminar_p->instansi_2->nama_bu }} --}}
-                                PROGRAM STUDI MAGISTER TEKNIK SIPIL UNIVERSITAS MERCU BUANA - DPP ASTEKINDO - DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3
+                                    {{-- {{ $key->seminar_p->instansi_1->nama_bu }}  - {{ in_array($key->seminar_p->instansi_2, array($key->seminar_p->instansi_2->nama_bu) ) }} --}}
+                                PROGRAM STUDI MAGISTER TEKNIK SIPIL UNIVERSITAS MERCU BUANA - DPP ASTEKINDO - DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3  DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3  DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3
                             </span>
                             </p>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="48" style="text-align: center; vertical-align: middle; margin-bottom: 3px; ">
-                            {{ $key->seminar_p->lokasi_penyelenggara }}, {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}    
+                        <td colspan="6"></td>
+                        <td colspan="48" style="text-align: center; vertical-align: middle; margin-bottom: 6px; ">
+                            <b>{{ $key->seminar_p->lokasi_penyelenggara }}, {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="8"></td>
-                        <td colspan="6"><img height="70" width="70" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar" ></td>
-                        <td colspan="6"><img height="70" width="70" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar" ></td>
-                        <td colspan="6"><img height="70" width="70" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar" ></td>
-                        <td colspan="6"><img height="70" width="70" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar" ></td>
-                        <td colspan="6"><img height="70" width="70" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar" ></td>
-                        <td colspan="6"><img height="70" width="70" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar" ></td>
-                    </tr>
-                    <tr>
-                        <td colspan="16" style="margin-top: -3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
+                        <td colspan="4">
+                        <td colspan="16" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src= "QR_adji_n.png" height=60px><br>
                             <b>Elfin Adji Nasution</b><br>
                             Pembina Asosiasi 
                         </td>
-                        <td colspan="16" style=" margin-top: -3px; text-align: center; vertical-align: top;">
-                            
+                        <td colspan="8" style=" margin-top: -3px; text-align: center; vertical-align: top;">                           
                         </td>
                         <td colspan="16" style="margin-top: -3px;text-align: center; vertical-align:top; margin-bottom: -3px;">
                             <img src= "QR_budi_susetyo.png" height=60px><br>
@@ -222,8 +183,9 @@
                             Ketua Program Studi Magister Teknik Sipil Universitas Mercu Buana
                         </td>
                     </tr>
-                      
+                    
                     <tr>
+                        <td colspan="6"></td>
                         <td colspan="48" style="font-size: small; vertical-align: bottom;"><br>
                             <b>Catatan:</b><br>
                             SKPK sebesar 25 untuk kegiatan Pembelajaran Mandiri dapat <br>
@@ -231,6 +193,7 @@
                     </tr>
                 </table>
             </div>
+
         </div>
     </div>
     @endforeach

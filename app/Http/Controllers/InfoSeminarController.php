@@ -40,12 +40,30 @@ class InfoSeminarController extends Controller
     public function store($id)
     {
         $peserta = Peserta::select('id')->where('user_id',Auth::id())->first();
+        $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
+        $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
+        $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
+        
+        // generate no sertifikat
+        $inisiator = '88';
+        $status = $status_peserta['status']; // 1 peserta 2 narasumber 3 panitia 4 moderator
+        $tahun = substr($tanggal['tgl_awal'],2,2);
+        $bulan = substr($tanggal['tgl_awal'],5,2);
+
+        $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan;
+        // dd($no_sert)
+        // end of generate
 
         $data = new PesertaSeminar;
         $data->id_seminar = $id;
         $data->id_peserta = $peserta['id'];
-        $data->is_paid = '1';
-        $data->no_srtf = '';
+        if ($statusbayar['is_paid'] == '1'){
+            $data->is_paid = $statusbayar['is_paid'];
+            $data->no_srtf = $no_sert;
+        } else {
+            $data->is_paid = $statusbayar['is_paid'];
+            $data->no_srtf = '';
+        } 
         $data->status = '1';
         $data = $data->save();
 
