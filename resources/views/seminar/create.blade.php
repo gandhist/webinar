@@ -165,7 +165,7 @@
                                 onkeypress="return /[0-9]/i.test(event.key)"
                                 value="{{ old('biaya') }}"
                                 placeholder="Biaya"
-                                disabled
+                                {{ old('is_free') == "1" ? '' : 'disabled' }}
                                 >
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
@@ -217,6 +217,7 @@
                                     @endforeach
                                 @endif
                             </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
                             <div id="instansi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_penyelenggara') }}
                             </div>
@@ -253,6 +254,8 @@
                                 @endif
                             --}}
                             </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            
                             <div id="instansi_pendukung" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_pendukung') }}
                             </div>
@@ -363,6 +366,8 @@
                                 --}}
 
                             </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            
                             <div id="ttd_pemangku" class="invalid-feedback text-danger">
                                 {{ $errors->first('ttd_pemangku') }}
                             </div>
@@ -564,7 +569,7 @@
             placeholder: " Pilih Tanda Tangan Pemangku",
             allowClear: true
         }); // Select2 Instansi Pendukung
-        
+    
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);
             // console.log(pendukung.hasOwnProperty('33'));
@@ -605,7 +610,24 @@
             }
         })
 
+        $(".to-pimpinan").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+            
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
+
         
+        $("#ttd_pemangku").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+            
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
 
         // Ajax Untuk Kota, Onchange Provinsi
         $('#prov_penyelenggara').on('change', function(e){

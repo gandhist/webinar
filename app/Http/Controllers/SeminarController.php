@@ -139,7 +139,12 @@ class SeminarController extends Controller
         $moderator = new ModeratorModel;
         $moderator->nama = $request->moderator;
         $moderator->save();
+
+        $data->narasumber = $narasumber->id;
+        $data->moderator = $moderator->id;
+        
         $data->created_by = Auth::id();
+
         if($request->store == "draft") {
             $data->is_actived = "0";
             $seminar = $data->save();
@@ -188,8 +193,10 @@ class SeminarController extends Controller
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
         $pimpinan = BuModel::pluck('nama_pimp','id');
+        $narasumber = NarasumberModel::where('id',$seminar->narasumber)->first();
+        $moderator = ModeratorModel::where('id',$seminar->moderator)->first();
         return view('seminar.edit')->with(compact('seminar','inisiator','provinsi',
-        'kota','instansi','pendukung','id','pimpinan'));
+        'kota','instansi','pendukung','id','pimpinan','moderator','narasumber'));
     }
 
     public function update(Request $request, $id) {
@@ -262,6 +269,16 @@ class SeminarController extends Controller
         ]);
 
 
+        $narasumber = new NarasumberModel;
+        $narasumber->nama = $request->narasumber;
+        $narasumber->save();
+
+        $moderator = new ModeratorModel;
+        $moderator->nama = $request->moderator;
+        $moderator->save();
+
+        $data->narasumber = $narasumber->id;
+        $data->moderator = $moderator->id;
         $request->instansi_penyelenggara = implode(",", $request->instansi_penyelenggara);
         $request->instansi_pendukung     = implode(",", $request->instansi_pendukung    );
         // $request->klasifikasi            = implode(",", $request->klasifikasi           );
@@ -289,14 +306,26 @@ class SeminarController extends Controller
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
         $data->ttd_pemangku              =              $request->ttd_pemangku           ;
-            
+        
+        
+        $narasumber = new NarasumberModel;
+        $narasumber->nama = $request->narasumber;
+        $narasumber->save();
+
+        $moderator = new ModeratorModel;
+        $moderator->nama = $request->moderator;
+        $moderator->save();
+
+        $data->narasumber = $narasumber->id;
+        $data->moderator = $moderator->id;
+
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
 
         if($request->store == "draft") {
             $data->is_actived = "0";
             $seminar = $data->save();
-        
+
             $narasumber_seminar = new PesertaSeminar;
             $narasumber_seminar->id_peserta = $narasumber->id;
             $narasumber_seminar->status = "2";
@@ -353,8 +382,11 @@ class SeminarController extends Controller
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
         $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
+        $narasumber = NarasumberModel::where('id',$seminar->narasumber)->first();
+        $moderator = ModeratorModel::where('id',$seminar->moderator)->first();
         // dd($detailseminar);
-        return view('seminar.detail')->with(compact('seminar','inisiator','provinsi','kota','instansi','pendukung','detailseminar'));
+        return view('seminar.detail')->with(compact('seminar','inisiator','provinsi','kota',
+        'instansi','pendukung','detailseminar','narasumber','moderator'));
     }
 
 

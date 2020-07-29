@@ -39,9 +39,7 @@
                         <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">
                             <label for="nama_seminar" class="label-control required">Title</label>
                             <input type="text" id="nama_seminar" class="form-control" name="nama_seminar"
-                                placeholder="Nama Seminar" value="@if(old('nama_seminar')) {{old('nama_seminar')}}
-                            @else {{ $seminar->nama_seminar ? $seminar->nama_seminar : '' }}
-                            @endif" readonly>
+                                placeholder="Nama Seminar" value="{{$seminar->nama_seminar ? $seminar->nama_seminar : ''}}"  readonly>
                             <div id="nama_seminar" class="invalid-feedback text-danger">
                                 {{ $errors->first('nama_seminar') }}
                             </div>
@@ -88,7 +86,8 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
                             <label for="tgl_awal" class="label-control required">Tanggal</label>
-                            <input type="text" class="form-control" name="tgl_awal" id="tgl_awal" value=""
+                            <input type="text" class="form-control" name="tgl_awal" id="tgl_awal" 
+                            value='{{  date("D, d F Y", strtotime($seminar->tgl_awal)) }}'
                                 placeholder="" readonly>
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -99,7 +98,7 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
                             <label for="jam_awal" class="label-control required">Jam</label>
-                            <input type="text" class="form-control" name="jam_awal" id="jam_awal" value=""
+                            <input type="text" class="form-control" name="jam_awal" id="jam_awal" value="{{ $seminar->jam_awal }}"
                                 placeholder="" readonly>
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_awal') }}
@@ -123,7 +122,7 @@
                         <div class="form-group {{ $errors->first('biaya') ? 'has-error' : '' }} ">
                             <label for="biaya" class="label-control required">Biaya Investasi</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
-                                value="{{ $seminar->biaya ? $seminar->biaya : '' }}" placeholder="" readonly>
+                                value="{{ $seminar->is_free == '1' ? $seminar->biaya : 'Gratis' }}" placeholder="" readonly>
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
                             </div>
@@ -136,7 +135,7 @@
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }} ">
                       <label for="narasumber" class="label-control required">Narasumber</label>
-                      <input type="text" class="form-control" name="narasumber" id="narasumber" value=""
+                      <input type="text" class="form-control" name="narasumber" id="narasumber" value="{{isset($narasumber->nama) ? $narasumber->nama : ''}}"
                                 placeholder="" readonly>
                       <div id="narasumber" class="invalid-feedback text-danger">
                           {{ $errors->first('narasumber') }}
@@ -147,15 +146,62 @@
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }} ">
                       <label for="moderator" class="label-control required">Moderator</label>
-                      <input type="text" class="form-control" name="moderator" id="moderator" value=""
+                      <input type="text" class="form-control" name="moderator" id="moderator" value="{{isset($moderator->nama) ? $moderator->nama : ''}}"
                                 placeholder="" readonly>
                       <div id="moderator" class="invalid-feedback text-danger">
                           {{ $errors->first('moderator') }}
                       </div>
                     </div>
                   </div>
-                </div>   
+                </div>
+                
+                @php
+                    $peny = explode(",",$seminar->instansi_penyelenggara);
+                    $pend = explode(",",$seminar->instansi_pendukung);
+                @endphp
 
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                        <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
+                            <div class="row">
+                                @foreach($peny as $key)
+                                    @if(isset($pendukung[$key]))
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control"
+                                                value="{{$pendukung[$key]}}">
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                        <label>Instansi Pendukung</label>
+                            <div class="row">
+                                @foreach($pend as $key)
+                                    @if(isset($pendukung[$key]))
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control"
+                                                value="{{$pendukung[$key]}}">
+                                            </div>
+                                        </div>
+                                    @else
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+
+
+                {{-- instansi original --}}
+                {{--
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
@@ -178,7 +224,10 @@
                       </div>
                     </div>
                   </div>
-                </div> 
+                </div>  
+                
+                --}}
+                {{-- instansi original --}}
 
                 {{-- <div class="box-body">     --}}
                   <b>Daftar Peserta</b>

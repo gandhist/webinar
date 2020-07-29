@@ -250,6 +250,8 @@
                                     @endforeach
                                 @endif
                             </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            
                             <div id="instansi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_penyelenggara') }}
                             </div>
@@ -299,6 +301,8 @@
                                 @endif
                             --}}
                             </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            
                             <div id="instansi_pendukung" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_pendukung') }}
                             </div>
@@ -430,6 +434,8 @@
                                     @endif
                                 --}}
                             </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            
                             <div id="ttd_pemangku" class="invalid-feedback text-danger">
                                 {{ $errors->first('ttd_pemangku') }}
                             </div>
@@ -528,12 +534,11 @@
                 <div class="row">
                     {{-- Narasumber --}}
                     <div class="col-md-6">
-                    <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
-                            <select name="narasumber[]" multiple="multiple"
-                            id="narasumber" class="form-control">
-                                <option></option>
-                            </select>
+                            <input type="text" id="narasumber" class="form-control" name="narasumber"
+                            placeholder="Nama Narasumber"
+                            value="{{ old('narasumber') ? old('narasumber') : $narasumber->nama }}">
                             <div id="narasumber" class="invalid-feedback text-danger">
                                 {{ $errors->first('narasumber') }}
                             </div>
@@ -547,7 +552,7 @@
                             <label for="moderator" class="label-control required">Moderator</label>
                             <input type="text" id="moderator" class="form-control" name="moderator"
                             placeholder="Nama Moderator"
-                            value="{{ old('moderator') ? old('moderator') : '' }}">
+                            value="{{ old('moderator') ? old('moderator') : $moderator->nama }}">
                             <div id="moderator" class="invalid-feedback text-danger">
                                 {{ $errors->first('moderator') }}
                             </div>
@@ -626,15 +631,15 @@
         })
 
 
-        $('#narasumber').select2({
-            tags: true,
-            data: @json(old('narasumber')) ,
-            tokenSeparators: [','], 
-            placeholder: "Nama Narasumber",
-            /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-            selectOnClose: true, 
-            closeOnSelect: false
-        }); // narasumber select2 multiple, tags
+        // $('#narasumber').select2({
+        //     tags: true,
+        //     data: @json(old('narasumber')) ,
+        //     tokenSeparators: [','], 
+        //     placeholder: "Nama Narasumber",
+        //     /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
+        //     selectOnClose: true, 
+        //     closeOnSelect: false
+        // }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
                 $("#biaya").prop("disabled", true);
@@ -692,10 +697,23 @@
             placeholder: " Pilih Tanda Tangan Pemangku",
             allowClear: true
         }); // Select2 Instansi Pendukung
-        
-        
 
-        
+        $(".to-pimpinan").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+            
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
+        $("#ttd_pemangku").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+            
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
 
         // Ajax Untuk Kota, Onchange Provinsi
         $('#prov_penyelenggara').on('change', function(e){
