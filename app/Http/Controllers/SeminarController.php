@@ -147,6 +147,7 @@ class SeminarController extends Controller
 
         if($request->store == "draft") {
             $data->is_actived = "0";
+            $data->status = "draft";
             $seminar = $data->save();
         
             $narasumber_seminar = new PesertaSeminar;
@@ -165,6 +166,7 @@ class SeminarController extends Controller
             "\" berhasil disimpan sebagai draft");
         } else {
             $data->is_actived = "1";
+            $data->status = "published";
             $seminar = $data->save();
         
             $narasumber_seminar = new PesertaSeminar;
@@ -324,6 +326,7 @@ class SeminarController extends Controller
 
         if($request->store == "draft") {
             $data->is_actived = "0";
+            $data->status = "draft";
             $seminar = $data->save();
 
             $narasumber_seminar = new PesertaSeminar;
@@ -342,6 +345,7 @@ class SeminarController extends Controller
             "\" berhasil diubah sebagai draft");
         } else {
             $data->is_actived = "1";
+            $data->status = "published";
             $seminar = $data->save();
         
             $narasumber_seminar = new PesertaSeminar;
@@ -408,6 +412,7 @@ class SeminarController extends Controller
     public function publish($id) {
         $data = SeminarModel::where('id',$id)->first();
         $data->is_actived = "1";
+        $data->status = "draft";
         $data->save();
         return redirect('/seminar')
         ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
