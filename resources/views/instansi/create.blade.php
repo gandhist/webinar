@@ -485,7 +485,7 @@
 
                         {{-- NPWP --}}
                         <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('npwp')) ? ' has-error' : '' }}">
+                            <div class="form-group {{ ($errors->first('npwpClean')) ? ' has-error' : '' }}">
                                 <label for="npwp" class="label-control">NPWP</label>
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
@@ -494,7 +494,7 @@
                                     placeholder="Nomor Pokok Wajib Pajak"
                                 >
                                 <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('npwp') }}
+                                    {{ $errors->first('npwpClean') }}
                                 </div>
                             </div>
                         </div>

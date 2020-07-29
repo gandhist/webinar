@@ -63,12 +63,62 @@ class PersonalController extends Controller
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'nomor_rek' => 'numeric|digits_between:4,20|gt:0',
-            'nama_rek' => 'max:50',
-            'npwpClean' => 'numeric|digits:15|gt:0',
+            'no_rek' => 'numeric|digits_between:4,20|gt:0',
+            'bank_id' => 'required_with:no_rek',
+            'nama_rek' => 'sometimes|nullable|required_with:no_rek|min:3|max:50',
+            'npwpClean' => 'sometimes|nullable|numeric|digits:15|gt:0',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
+            'reff_p' => 'sometimes|nullable|min:3|max:50',
+        ],[
+            'nama.required' => 'Mohon isi Nama',
+            'nama.min' => 'Nama minimal 3 karakter',
+            'nama.max' => 'Nama maksimal 50 karakter',
+            'nik.required' => 'Mohon isi NIK',
+            'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
+            'nik.unique' => 'NIK sudah terdaftar',
+            'nik.digits' => 'Mohon isi NIK dengan format yang valid',
+            'nik.gt' => 'Mohon isi NIK dengan format yang valid',
+            'email.required' => 'Mohon isi Email',
+            'email.email' => 'Mohon isi Email dengan format yang valid',
+            'email.max' => 'Email maksimal 100 karakter',
+            'email.unique' => 'Email sudah terdaftar',
+            'no_hp.required' => 'Mohon isi Nomor Telepon',
+            'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            'no_hp.unique' => 'Nomor Telepon sudah terdaftar',
+            'no_hp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            'no_hp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            'jenis_kelamin.required' => 'Mohon isi Jenis Kelamin',
+            'instansi.required' => 'Mohon isi Instansi',
+            'jabatan.required' => 'Mohon isi Jabatan',
+            'jabatan.min' => 'Jabatan minimal 3 karakter',
+            'jabatan.max' => 'Jabatan maksimal 50 karakter',
+            'alamat.required' => 'Mohon isi Alamat',
+            'alamat.min' => 'Alamat minimal 3 karakter',
+            'alamat.max' => 'Alamat maksimal 50 karakter',
+            'provinsi.required' => 'Mohon isi Provinsi',
+            'kota.required' => 'Mohon isi Kota',
+            'temp_lahir.required' => 'Mohon isi Tempat Lahir',
+            'no_rek.digits_between' => 'Mohon isi Nomor Rekening dengan format yang valid',
+            'no_rek.gt' => 'Mohon isi Nomor Rekening dengan format yang valid',
+            'bank_id.required_with' => 'Mohon lengkapi Bank',
+            'nama_rek.required_with' => 'Mohon lengkapi Nama pada Rekening',
+            'nama_rek.min' => 'Nama pada Rekening minimal 3 karakter',
+            'nama_rek.max' => 'Nama pada Rekening maksimal 50 karakter',
+            'npwpClean.numeric' => 'Mohon masukkan NPWP dengan format yang valid',
+            'npwpClean.digits' => 'Mohon masukkan NPWP dengan format yang valid',
+            'npwpClean.gt' => 'Mohon masukkan NPWP dengan format yang valid',
+            'foto.required' => 'Mohon isi Foto (3x4)',
+            'foto.image' => 'Mohon masukkan Foto dengan format yang valid',
+            'foto.mimes' => 'Mohon masukkan Foto dengan format yang valid',
+            'foto.max' => 'Foto maksimal berukuran 2MB',
+            'lampiran_npwp.mimes' => 'Mohon masukkan Lampiran NPWP dengan format yang valid (gambar / PDF)',
+            'lampiran_npwp.max' => 'Lampiran NPWP maksimal berukuran 2MB',
+            'lampiran_ktp.mimes' => 'Mohon masukkan Lampiran KTP dengan format yang valid (gambar / PDF)',
+            'lampiran_ktp.max' => 'Lampiran KTP maksimal berukuran 2MB',
+            'reff_p.min' => 'Referensi Pendaftaran minimal 3 karakter',
+            'reff_p.max' => 'Referensi Pendaftaran maksimal 50 karakter',
         ]);
 
         // simpan data peserta
@@ -128,6 +178,10 @@ class PersonalController extends Controller
             $files->move($destinationPath, $file);
             $data->lampiran_npwp = $destinationPath."/".$file;
         }
+
+        $personal = $data->save();
+        return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
+        "\" berhasil ditambahkan");
 
 
     }
@@ -190,12 +244,58 @@ class PersonalController extends Controller
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'nomor_rek' => 'numeric|digits_between:4,20|gt:0',
-            'nama_rek' => 'max:50',
-            'npwpClean' => 'numeric|digits:15|gt:0',
+            'no_rek' => 'numeric|digits_between:4,20|gt:0',
+            'bank_id' => 'required_with:no_rek',
+            'nama_rek' => 'sometimes|nullable|required_with:no_rek|min:3|max:50',
+            'npwpClean' => 'sometimes|nullable|numeric|digits:15|gt:0',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
+            'reff_p' => 'sometimes|nullable|min:3|max:50',
+        ],[
+            'nama.required' => 'Mohon isi Nama',
+            'nama.min' => 'Nama minimal 3 karakter',
+            'nama.max' => 'Nama maksimal 50 karakter',
+            'nik.required' => 'Mohon isi NIK',
+            'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
+            'nik.digits' => 'Mohon isi NIK dengan format yang valid',
+            'nik.gt' => 'Mohon isi NIK dengan format yang valid',
+            'email.required' => 'Mohon isi Email',
+            'email.email' => 'Mohon isi Email dengan format yang valid',
+            'email.max' => 'Email maksimal 100 karakter',
+            'no_hp.required' => 'Mohon isi Nomor Telepon',
+            'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            'no_hp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            'no_hp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            'jenis_kelamin.required' => 'Mohon isi Jenis Kelamin',
+            'instansi.required' => 'Mohon isi Instansi',
+            'jabatan.required' => 'Mohon isi Jabatan',
+            'jabatan.min' => 'Jabatan minimal 3 karakter',
+            'jabatan.max' => 'Jabatan maksimal 50 karakter',
+            'alamat.required' => 'Mohon isi Alamat',
+            'alamat.min' => 'Alamat minimal 3 karakter',
+            'alamat.max' => 'Alamat maksimal 50 karakter',
+            'provinsi.required' => 'Mohon isi Provinsi',
+            'kota.required' => 'Mohon isi Kota',
+            'temp_lahir.required' => 'Mohon isi Tempat Lahir',
+            'no_rek.digits_between' => 'Mohon isi Nomor Rekening dengan format yang valid',
+            'no_rek.gt' => 'Mohon isi Nomor Rekening dengan format yang valid',
+            'bank_id.required_with' => 'Mohon lengkapi Bank',
+            'nama_rek.required_with' => 'Mohon lengkapi Nama pada Rekening',
+            'nama_rek.min' => 'Nama pada Rekening minimal 3 karakter',
+            'nama_rek.max' => 'Nama pada Rekening maksimal 50 karakter',
+            'npwpClean.numeric' => 'Mohon masukkan NPWP dengan format yang valid',
+            'npwpClean.digits' => 'Mohon masukkan NPWP dengan format yang valid',
+            'npwpClean.gt' => 'Mohon masukkan NPWP dengan format yang valid',
+            'foto.image' => 'Mohon masukkan Foto dengan format yang valid',
+            'foto.mimes' => 'Mohon masukkan Foto dengan format yang valid',
+            'foto.max' => 'Foto maksimal berukuran 2MB',
+            'lampiran_npwp.mimes' => 'Mohon masukkan Lampiran NPWP dengan format yang valid (gambar / PDF)',
+            'lampiran_npwp.max' => 'Lampiran NPWP maksimal berukuran 2MB',
+            'lampiran_ktp.mimes' => 'Mohon masukkan Lampiran KTP dengan format yang valid (gambar / PDF)',
+            'lampiran_ktp.max' => 'Lampiran KTP maksimal berukuran 2MB',
+            'reff_p.min' => 'Referensi Pendaftaran minimal 3 karakter',
+            'reff_p.max' => 'Referensi Pendaftaran maksimal 50 karakter',
         ]);
 
         // simpan data peserta
@@ -204,18 +304,35 @@ class PersonalController extends Controller
         if($request->nik != $personal[0]['nik']){
             $request->validate([
                 'nik' => 'required|numeric|unique:personal|digits:16|gt:0',
+            ], [
+                'nik.required' => 'Mohon isi NIK',
+                'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
+                'nik.unique' => 'NIK sudah terdaftar',
+                'nik.digits' => 'Mohon isi NIK dengan format yang valid',
+                'nik.gt' => 'Mohon isi NIK dengan format yang valid',
             ]);
             $data->nik = $request->nik;
         }
         if($request->email != $personal[0]['email']){
             $request->validate([
                 'email' => 'required|email|unique:personal|max:100',
+            ], [
+                'email.required' => 'Mohon isi Email',
+                'email.email' => 'Mohon isi Email dengan format yang valid',
+                'email.max' => 'Email maksimal 100 karakter',
+                'email.unique' => 'Email sudah terdaftar',
             ]);
             $data->email = $request->email;
         }
         if($request->no_hp != $personal[0]['no_hp']){
             $request->validate([
                 'no_hp' => 'required|numeric|unique:no_hp|digits_between:9,14|gt:0',
+            ],[
+                'no_hp.required' => 'Mohon isi Nomor Telepon',
+                'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
+                'no_hp.unique' => 'Nomor Telepon sudah terdaftar',
+                'no_hp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
+                'no_hp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
             ]);
             $data->no_hp = $request->no_hp;
         }
@@ -301,7 +418,7 @@ class PersonalController extends Controller
         $data->updated_by = Auth::id();
         $data->save();
 
-        $personal = $data->save();
+        $instansi = $data->save();
         return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
         "\" berhasil diubah");
     }

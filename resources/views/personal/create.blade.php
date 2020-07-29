@@ -363,7 +363,7 @@
 
                         {{-- NPWP --}}
                         <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('npwp')) ? ' has-error' : '' }}">
+                            <div class="form-group  {{ ($errors->first('npwpClean')) ? ' has-error' : '' }}">
                                 <label class="label-control" for="npwp">NPWP</label>
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
@@ -428,7 +428,7 @@
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('foto')) ? ' has-error' : '' }}">
                                 <div class="custom-file">
-                                    <label class="label-control required" for="foto">Foto</label>
+                                    <label class="label-control required" for="foto">Foto Diri</label>
                                     <div class="custom-file">
                                         <input type="file" id="foto" name="foto" class="custom-file-input" id="foto" required>
                                         <div id="foto" class="invalid-feedback text-danger">
@@ -437,7 +437,8 @@
                                     </div>
                                 </div>
                                 <small class="form-text text-muted">Upload Max: 2MB</small><br/>
-                                <small class="form-text text-muted">Format: jpeg, png, jpg, gif, svg</small>
+                                <small class="form-text text-muted">Format: jpeg, png, jpg, gif, svg</small><br>
+                                <small class="form-text text-danger">Ukuran 3 x 4</small><br/>
                             </div>
                         </div>
                         {{-- Akhir Foto Diri --}}

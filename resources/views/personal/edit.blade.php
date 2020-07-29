@@ -433,7 +433,7 @@
 
                         {{-- NPWP --}}
                         <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('npwp')) ? ' has-error' : '' }}">
+                            <div class="form-group  {{ ($errors->first('npwpClean')) ? ' has-error' : '' }}">
                                 <label class="label-control" for="npwp">NPWP</label>
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
