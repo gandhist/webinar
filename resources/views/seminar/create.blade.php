@@ -448,9 +448,15 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
-                            <input type="text" id="narasumber" class="form-control" name="narasumber"
-                            placeholder="Nama Narasumber"
-                            value="{{ old('narasumber') ? old('narasumber') : '' }}">
+                            <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
+                                @foreach($personal as $key)
+                                    <option value="{{$key->id}}"
+                                    {{ in_array($key->id, array(old('narasumber'))) ? "selected" : "" }}>
+                                    {{ $key->nama }}</option>
+                                @endforeach
+                            </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            
                             <div id="narasumber" class="invalid-feedback text-danger">
                                 {{ $errors->first('narasumber') }}
                             </div>
@@ -569,6 +575,10 @@
             placeholder: " Pilih Tanda Tangan Pemangku",
             allowClear: true
         }); // Select2 Instansi Pendukung
+        $('#narasumber').select2({
+            placeholder: " Pilih Narasumber",
+            allowClear: true
+        }); // Select2 Instansi Pendukung
     
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);
@@ -621,6 +631,14 @@
 
         
         $("#ttd_pemangku").on("select2:select", function (evt) {
+            var element = evt.params.data.element;
+            var $element = $(element);
+            
+            $element.detach();
+            $(this).append($element);
+            $(this).trigger("change");
+        });
+        $("#narasumber").on("select2:select", function (evt) {
             var element = evt.params.data.element;
             var $element = $(element);
             
