@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class PesertaSeminar extends Model
 {
     //
+    public $timestamps = false;
     protected $table = "srtf_peserta_seminar";
-    protected $fillable = ['id_seminar,status'];
+    protected $fillable = ['id_seminar,id_peserta,status'];
 
     // relasi many to many table peserta 
     public function peserta_r(){

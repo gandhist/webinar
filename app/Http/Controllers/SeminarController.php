@@ -14,6 +14,8 @@ use App\Peserta;
 use App\PesertaSeminar;
 use PDF;
 use Mail;
+use App\NarasumberModel;
+use App\ModeratorModel;
 use DB;
 use App\Mail\EmailLinkSert;
 
@@ -31,7 +33,8 @@ class SeminarController extends Controller
         $kota = KotaModel::all();
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
-        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung'));
+        $pimpinan = BuModel::pluck('nama_pimp','id');
+        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung','pimpinan'));
     }
 
     public function store(Request $request) {
@@ -55,6 +58,8 @@ class SeminarController extends Controller
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:50',
+            'narasumber' => 'required|min:3|max:50',
+            'moderator' => 'required|min:3|max:50'
         ]);
 
 
@@ -84,18 +89,50 @@ class SeminarController extends Controller
         $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
+        $data->ttd_pemangku              =              $request->ttd_pemangku           ;
         
-        
+        $narasumber = new NarasumberModel;
+        $narasumber->nama = $request->narasumber;
+        $narasumber->save();
 
+        $moderator = new ModeratorModel;
+        $moderator->nama = $request->moderator;
+        $moderator->save();
         $data->created_by = Auth::id();
         if($request->store == "draft") {
             $data->is_actived = "0";
             $seminar = $data->save();
+        
+            $narasumber_seminar = new PesertaSeminar;
+            $narasumber_seminar->id_peserta = $narasumber->id;
+            $narasumber_seminar->status = "2";
+            $narasumber_seminar->id_seminar = $data->id;
+            $narasumber_seminar->save();
+    
+            $moderator_seminar = new PesertaSeminar;
+            $moderator_seminar->id_peserta = $moderator->id;
+            $moderator_seminar->status = "4";
+            $moderator_seminar->id_seminar = $data->id;
+            $moderator_seminar->save();
+    
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil disimpan sebagai draft");
         } else {
             $data->is_actived = "1";
             $seminar = $data->save();
+        
+            $narasumber_seminar = new PesertaSeminar;
+            $narasumber_seminar->id_peserta = $narasumber->id;
+            $narasumber_seminar->status = "2";
+            $narasumber_seminar->id_seminar = $data->id;
+            $narasumber_seminar->save();
+    
+            $moderator_seminar = new PesertaSeminar;
+            $moderator_seminar->id_peserta = $moderator->id;
+            $moderator_seminar->status = "4";
+            $moderator_seminar->id_seminar = $data->id;
+            $moderator_seminar->save();
+    
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil ditambahkan");
         }
@@ -109,12 +146,12 @@ class SeminarController extends Controller
         $kota = KotaModel::all();
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
+        $pimpinan = BuModel::pluck('nama_pimp','id');
         return view('seminar.edit')->with(compact('seminar','inisiator','provinsi',
-        'kota','instansi','pendukung','id'));
+        'kota','instansi','pendukung','id','pimpinan'));
     }
 
     public function update(Request $request, $id) {
-        dd($request);
         $request->validate([
             'nama_seminar' => 'required|min:3|max:50',
             'klasifikasi' => 'required',
@@ -164,6 +201,7 @@ class SeminarController extends Controller
         $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
+        $data->ttd_pemangku              =              $request->ttd_pemangku           ;
             
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
@@ -171,11 +209,37 @@ class SeminarController extends Controller
         if($request->store == "draft") {
             $data->is_actived = "0";
             $seminar = $data->save();
+        
+            $narasumber_seminar = new PesertaSeminar;
+            $narasumber_seminar->id_peserta = $narasumber->id;
+            $narasumber_seminar->status = "2";
+            $narasumber_seminar->id_seminar = $data->id;
+            $narasumber_seminar->save();
+    
+            $moderator_seminar = new PesertaSeminar;
+            $moderator_seminar->id_peserta = $moderator->id;
+            $moderator_seminar->status = "4";
+            $moderator_seminar->id_seminar = $data->id;
+            $moderator_seminar->save();
+    
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil diubah sebagai draft");
         } else {
             $data->is_actived = "1";
             $seminar = $data->save();
+        
+            $narasumber_seminar = new PesertaSeminar;
+            $narasumber_seminar->id_peserta = $narasumber->id;
+            $narasumber_seminar->status = "2";
+            $narasumber_seminar->id_seminar = $data->id;
+            $narasumber_seminar->save();
+    
+            $moderator_seminar = new PesertaSeminar;
+            $moderator_seminar->id_peserta = $moderator->id;
+            $moderator_seminar->status = "4";
+            $moderator_seminar->id_seminar = $data->id;
+            $moderator_seminar->save();
+    
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil diubah");
         }
@@ -203,7 +267,7 @@ class SeminarController extends Controller
         $pendukung = BuModel::pluck('nama_bu','id');
         $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
         // dd($detailseminar);
-        return view('seminar.detail')->with(compact('seminar','inisiator','provinsi','kota','instansi','pendukung','peserta','detailseminar'));
+        return view('seminar.detail')->with(compact('seminar','inisiator','provinsi','kota','instansi','pendukung','detailseminar'));
     }
 
 
@@ -242,4 +306,12 @@ class SeminarController extends Controller
             \Mail::to($emails->email)->send(new \App\Mail\EmailLinkSert($emails));
         return "Email berhasil Di Kirim ke $emails->email";
     }
+    public function publish($id) {
+        $data = SeminarModel::where('id',$id)->first();
+        $data->is_actived = "1";
+        $data->save();
+        return redirect('/seminar')
+        ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
+    }
+
 }

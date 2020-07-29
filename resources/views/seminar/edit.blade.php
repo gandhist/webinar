@@ -232,7 +232,7 @@
                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
-                            class="form-control" multiple>
+                            class="form-control to-pimpinan" multiple>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
                                         <option value="{{ $key->id }}"
@@ -262,7 +262,25 @@
                         <div class="form-group {{ $errors->first('instansi_pendukung') ? 'has-error' : '' }} ">
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
-                            class="form-control" multiple>
+                            class="form-control to-pimpinan" multiple>
+                            @if(old('instansi_penyelenggara'))
+                                @foreach($instansi as $key)
+                                    @if(!in_array($key->id, old('instansi_penyelenggara')))
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
+                                        {{ $key->nama_bu }}</option>
+                                    @endif
+                                @endforeach
+                            @elseif($seminar->instansi_pendukung)
+                                @foreach($instansi as $key)
+                                    @if(!in_array($key->id, array($seminar->instansi_penyelenggara)))
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, array($seminar->instansi_pendukung)) ? "selected='true'" : ""}}>{{ $key->nama_bu }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                                
+                            {{--    
                                 @if(old('instansi_pendukung'))
                                     @foreach($instansi as $key)
                                         <option value="{{ $key->id }}"
@@ -279,6 +297,7 @@
                                         <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
                                     @endforeach
                                 @endif
+                            --}}
                             </select>
                             <div id="instansi_pendukung" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_pendukung') }}
@@ -364,6 +383,40 @@
                         <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
                             <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
                             <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
+                                @foreach($pimpinan as $key => $value)
+                                    @if(in_array($key,array($seminar->instansi_penyelenggara)))
+                                        <option value="{{$key}}"
+                                        {{in_array($key,array($seminar->ttd_pemangku)) ? "selected=true" : ""}}
+                                        >{{$value}}</option>
+                                    @endif
+                                    @if(in_array($key,array($seminar->instansi_pendukung)))
+                                        <option value="{{$key}}"
+                                        {{in_array($key,array($seminar->ttd_pemangku)) ? "selected=true" : ""}}
+                                        >{{$value}}</option>
+                                    @endif
+                                @endforeach
+
+
+                                @if(old('instansi_penyelenggara'))
+                                    @foreach($pimpinan as $key => $value)
+                                        @if(in_array($key, old('instansi_penyelenggara')))
+                                            <option value="{{$key}}"
+                                            {{ in_array($key, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
+
+                                @if(old('instansi_pendukung'))
+                                    @foreach($pimpinan as $key => $value)
+                                        @if(in_array($key, old('instansi_pendukung')))
+                                            <option value="{{$key}}"
+                                            {{ in_array($key, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                {{--
                                     @if(old('ttd_pemangku'))
                                         @foreach($provinsi as $key)
                                             <option value="{{ $key->id }}"
@@ -375,6 +428,7 @@
                                             <option value="{{ $key->id }}">{{ $key->nama }}</option>
                                         @endforeach
                                     @endif
+                                --}}
                             </select>
                             <div id="ttd_pemangku" class="invalid-feedback text-danger">
                                 {{ $errors->first('ttd_pemangku') }}
@@ -528,6 +582,50 @@
         $("form").children().each(function(){
             this.value=$(this).val().trim();
         }) // Trim semua spasi
+
+        $('#instansi_penyelenggara').on('change', function() {
+            pendukung = @json($pendukung);
+            // console.log(pendukung.hasOwnProperty('33'));
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){ 
+                return elem.id
+            });
+            // console.log(data);
+            $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                if(!data.includes(key)){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                    // console.log(key);
+                }
+            }
+
+            $('#instansi_pendukung').select2();
+
+        })
+
+
+        $('.to-pimpinan').on('change', function() {
+            pimpinan =  @json($pimpinan);
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){ 
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){ 
+                return elem.id
+            });
+            // console.log('pimpinan :', pimpinan);
+            // console.log('pendukung :', pend);
+            // console.log('penyelenggara :', peny);
+            $('#ttd_pemangku').empty();
+            for(let key in pimpinan) {
+                if(peny.includes(key) || pend.includes(key)){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#ttd_pemangku').append(new Option(pimpinan[key], key));
+                    // console.log(key);
+                }
+            }
+        })
+
+
         $('#narasumber').select2({
             tags: true,
             data: @json(old('narasumber')) ,

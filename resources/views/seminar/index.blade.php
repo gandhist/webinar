@@ -39,13 +39,18 @@
                                 <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
                                     <i class="fa fa-filter"></i> Filter
                                 </button>
-                                <button type="button" class="btn btn-primary" id="btnDetail" name="btnDetail">
-                                    <i class="fa fa-eye"></i> Detail</button>
+                                <button class="btn btn-success btn-bermargin" id="btnReset" name="btnReset">
+                                <i class="fa fa-refresh" aria-hidden="true"></i> Reset
+                                </button>
 
                                 {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
 
                             </span>
                         </div>
+                        <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
+                            <i class="fa fa-eye"></i> Detail</button>
+                    </div>
+                    <div class="col-12" style="margin-top:10px">
                         <div class="pull-right">
                             
                             <a href="{{ url('seminar/create') }}" class="btn btn-info">
@@ -98,6 +103,15 @@
                                     <td>{{ $key->seminar_r }}</td>
                                     <td></td>
                                     <td>
+                                        @if($key->is_actived == "0")
+                                            <button type="submit" class="btn btn-success">
+                                                <a href="{{url('seminar/'.$key->id.'/publish')}}" style="color:white">
+                                                    Publish
+                                                </a>
+                                            </button>
+                                        @else
+                                            {{" "}}
+                                        @endif
                                         {{-- <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a> --}}
                                     </td>
                                 </tr>
@@ -172,6 +186,47 @@
                 $('#modal-konfirmasi').modal('show');
             }
     });
+    // BtnFIlterOnclick
+    $('#btnFilter').on('click', function () {
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var min = $('#tgl_awal').datepicker("getDate");
+                var max = $('#tgl_akhir').datepicker("getDate");
+
+                // need to change str order before making  date obect since it uses a new Date("mm/dd/yyyy") format for short date.
+                var d = data[4].split(" ");
+                if(d[1] != null) {d[1] = moment().month(d[1]).format("M");} 
+                // var startDate = new Date(d[1]+ "/" +  d[0] +"/" + d[2]);
+                var startDate = new Date(d[2],d[1]-1,d[0]);
+
+                if (min == null && max == null) { return true; }
+                if (min == null && startDate <= max) { return true;}
+                if(max == null && startDate >= min) {return true;}
+                if (startDate <= max && startDate >= min) { return true; }
+                return false;
+            });
+
+        
+            $("#tgl_awal").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true , dateFormat:"dd/mm/yy"});
+            $("#tgl_akhir").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true, dateFormat:"dd/mm/yy" });
+            var table = $('#data-tables').DataTable();
+
+
+            // Event listener to the two range filtering inputs to redraw on input
+            // $('#tgl_awal, #tgl_akhir').change(function () {
+            //     table.draw();
+            // });
+        table.draw();
+    });
+
+    // Button edit click
+    $('#btnReset').on('click', function (e) {
+        e.preventDefault();
+        var table = $('#data-tables').DataTable(); 
+        $.fn.dataTable.ext.search.pop();
+        table.search('').columns().search('').draw();
+    });
+    
 
     // Button edit click
     $('#btnEdit').on('click', function (e) {
