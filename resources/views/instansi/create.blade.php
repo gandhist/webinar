@@ -103,7 +103,7 @@
                             <div class="form-group {{ ($errors->first('web')) ? ' has-error' : '' }}">
                                 <label for="web" class="label-control required">Website</label>
                                 <input type="url" name="web" id="web"
-                                    value="{{ old('web') }}"
+                                    value="{{ old('web') ? old('web') : 'https://' }}"
                                     class="form-control" 
                                     placeholder="Website Instansi" 
                                     required>
