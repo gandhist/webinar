@@ -12,9 +12,12 @@ use App\KotaModel;
 use App\BuModel;
 use App\Peserta;
 use App\PesertaSeminar;
+use PDF;
+use Mail;
 use App\NarasumberModel;
 use App\ModeratorModel;
 use DB;
+use App\Mail\EmailLinkSert;
 
 class SeminarController extends Controller
 {
@@ -394,11 +397,14 @@ class SeminarController extends Controller
     }
 
 
-    public function cetak_sert($id, $email){
-        $data['data'] = SertModel::where('no_sertifikat',$id)->where('email', $email)->get();
-        $pdf = PDF::loadview('sert.sert_v1',$data);
-        $pdf->setPaper('A4','landscape');
+    public function cetakSertifikat($id){
+    
+        $data = PesertaSeminar::where('no_srtf',$id)->get();
+        // dd($data);
+        $pdf = PDF::loadview('seminar.sertifikat',compact('data'));
+        $pdf->setPaper('A4','potrait');
         return $pdf->stream("Sertifikat.pdf");
+        // return view('seminar.sertifikat')->with(compact('data'));
     }
 
     public function getKota($id) {
@@ -409,6 +415,23 @@ class SeminarController extends Controller
         return json_encode($cities);
     }
 
+    public function kirimEmail(){
+        $emails = PesertaSeminar::where('is_email_sent','0')->get(['id']);
+        foreach ($emails as $key) {
+            $data = SertModel::find($key->id);
+            \Mail::to($data->email)->queue(new \App\Mail\EmailLinkSert($data));
+        }
+        PesertaSeminar::where('is_email_sent','0')->update(['is_email_sent'=>'1']);
+        return 'job berhasil di buat';
+    }
+
+    public function sendEmail($id){
+        $emails = PesertaSeminar::find($id);
+            // dispatch(new \App\Jobs\KirimEmailJob($key->email));
+            // $data = SertModel::where('email', $key->email)->first();
+            \Mail::to($emails->email)->send(new \App\Mail\EmailLinkSert($emails));
+        return "Email berhasil Di Kirim ke $emails->email";
+    }
     public function publish($id) {
         $data = SeminarModel::where('id',$id)->first();
         $data->is_actived = "1";

@@ -234,24 +234,29 @@
                   <table id="data-peserta" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                       <thead>
                           <tr role="row">
-                              <th style="width:4%;"><i class="fa fa-check-square-o"></i></th>
-                              <th style="width:6%;">No</th>
+                              {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
+                              <th style="width:5%;">No</th>
                               <th style="width:25%;">Nama</th>
                               <th style="width:15%;">No HP</th>
                               <th style="width:15%;">Email</th>
                               <th style="width:10%;">Sts_Bayar</th>
+                              <th style="width:1%;">Aksi</th>
                           </tr>
                       </thead>
                       <tbody>
                         @foreach($detailseminar as $key)  
                          <tr>
-                          <td style='text-align:center;'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                            id="selection[]" name="selection[]"></td>
+                          {{-- <td style='text-align:center;'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
+                            id="selection[]" name="selection[]"></td> --}}
                           <td style='text-align:center;'>{{ $loop->iteration}}</td>
                             <td>{{$key->peserta_r->nama}}</td>
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == 1) Sudah Bayar @else Belum Bayar @endif </td>
+                            <td>
+                                <a target="_blank" href="{{ route('cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                <a target="_blank" href="{{ url('send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                            </td>
                          </tr>
                          @endforeach
                       </tbody>

@@ -23,7 +23,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Tema</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->tema }}">
+                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ strip_tags(html_entity_decode($data->tema)) }}">
                     </div>
                 </div>										
             </div> 
