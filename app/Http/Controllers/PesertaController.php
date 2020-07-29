@@ -202,19 +202,45 @@ class PesertaController extends Controller
 
 
         $request->validate([
-            'nama' => 'required|min:3|max:50|regex:/^[a-zA-Z ]+$/',
+            'nama' => 'required|min:3|max:50|regex:/^[a-zA-Z\s\-\.\,]+$/',
             'no_hp' => 'required|numeric',
             'pekerjaan' => 'required|min:3|max:50',
             'instansi' => 'required|min:3|max:50',
-            // 'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'foto' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'alamat' => 'required|min:3|max:50',
             'provinsi' => 'required',
             'kota' => 'required',
             'tgl_lahir' => 'required',
+        ],[
+            'nama.required' => 'Mohon isi Nama Peserta',
+            'nama.min' => 'Nama minimal 3 karakter',
+            'nama.max' => 'Nama maksimal 50 karakter',
+            'no_hp.required' =>  'Mohon isi Nomor Telepon',
+            'no_hp.numeric' => 'Mohon hanya mengisi dengan angka',
+            'pekerjaan.required' => 'Mohon isi Pekerjaan',
+            'pekerjaan.min' => 'Pekerjaan minimal 3 karakter',
+            'pekerjaan.max' => 'Pekerjaan maksimal 50 karakter',
+            'instansi.required' => 'Mohon isi Instansi',
+            'instansi.min' => 'Instansi minimal 3 karakter',
+            'instansi.max' => 'Instansi maksimal 50 karakter',
+            'foto.image' => 'Mohon isi Foto dengan format yang valid',
+            'foto.mimes' => 'Mohon isi Foto dengan format yang valid',
+            'foto.max' => 'Ukuran Foto maksimal 2MB',
+            'alamat.required' => 'Mohon isi Alamat Peserta',
+            'alamat.min' => 'Alamat minimal 3 karakter',
+            'alamat.max' => 'Alamat maksimal 50 karakter',
+            'provinsi.required' => 'Mohon isi Provinsi',
+            'kota.required' => 'Mohon isi Kota',
+            'tgl_lahir.required' => 'Mohon isi Tanggal Lahir',
+
         ]);
         if($request->email != $data->email) {
             $request->validate([
                 'email' => 'required|email|unique:peserta',
+            ], [
+                'email.required' => 'Mohon isi Email',
+                'email.email' => 'Mohon isi format email yang valid',
+                'email.unique' => 'Email sudah digunakan peserta lain',
             ]);
         }
         $data->updated_at = Carbon::now();
