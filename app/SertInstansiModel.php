@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PendModel extends Model
+class SertInstansiModel extends Model
 {
     //
     use SoftDeletes;
-    protected $table = "srtf_pendukung";
+    protected $table = "srtf_instansi";
     protected $guarded = "id";
 
 }

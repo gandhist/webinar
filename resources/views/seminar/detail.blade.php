@@ -135,8 +135,19 @@
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }} ">
                       <label for="narasumber" class="label-control required">Narasumber</label>
-                      <input type="text" class="form-control" name="narasumber" id="narasumber" value="{{isset($narasumber->nama) ? $narasumber->nama : ''}}"
-                                placeholder="" readonly>
+                        <div class="row">
+                            @foreach($narasumber as $key)
+                                @if(isset($personal[$key->id_personal]))
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" readonly class="form-control"
+                                            value="{{$personal[$key->id_personal]}}">
+                                        </div>
+                                    </div>
+                                @else
+                                @endif
+                            @endforeach
+                        </div>
                       <div id="narasumber" class="invalid-feedback text-danger">
                           {{ $errors->first('narasumber') }}
                       </div>
@@ -154,23 +165,19 @@
                     </div>
                   </div>
                 </div>
-                
-                @php
-                    $peny = explode(",",$seminar->instansi_penyelenggara);
-                    $pend = explode(",",$seminar->instansi_pendukung);
-                @endphp
+
 
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
                         <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <div class="row">
-                                @foreach($peny as $key)
-                                    @if(isset($pendukung[$key]))
+                                @foreach($instansi as $key)
+                                    @if(isset($bu[$key->id_instansi]))
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <input type="text" readonly class="form-control"
-                                                value="{{$pendukung[$key]}}">
+                                                value="{{$bu[$key->id_instansi]}}">
                                             </div>
                                         </div>
                                     @else
@@ -183,12 +190,12 @@
                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
                         <label>Instansi Pendukung</label>
                             <div class="row">
-                                @foreach($pend as $key)
-                                    @if(isset($pendukung[$key]))
+                                @foreach($pendukung as $key)
+                                    @if(isset($bu[$key->id_instansi]))
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <input type="text" readonly class="form-control"
-                                                value="{{$pendukung[$key]}}">
+                                                value="{{$bu[$key->id_instansi]}}">
                                             </div>
                                         </div>
                                     @else
@@ -198,7 +205,6 @@
                         </div>
                     </div>
                 </div>  
-
 
                 {{-- instansi original --}}
                 {{--

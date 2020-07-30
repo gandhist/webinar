@@ -565,19 +565,23 @@
         }); // Select2 Inisiator Penyelenggara
         $('#instansi_penyelenggara').select2({
             placeholder: " Pilih Instansi Penyelenggara",
-            allowClear: true
+            allowClear: true,
+            maximumSelectionLength: 2,
         }); // Select2 Instansi Penyelenggara
         $('#instansi_pendukung').select2({
             placeholder: " Pilih Instansi Pendukung",
-            allowClear: true
+            allowClear: true,
+            maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#ttd_pemangku').select2({
             placeholder: " Pilih Tanda Tangan Pemangku",
-            allowClear: true
+            allowClear: true,
+        maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#narasumber').select2({
             placeholder: " Pilih Narasumber",
-            allowClear: true
+            allowClear: true,
+            maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
 
         $('#instansi_penyelenggara').on('change', function() {
@@ -596,7 +600,9 @@
                 }
             }
 
-            $('#instansi_pendukung').select2();
+            $('#instansi_pendukung').select2({
+            allowClear: true,
+            maximumSelectionLength: 2,});
         })
 
         $('.to-pimpinan').on('change', function() {
@@ -615,6 +621,8 @@
                 if(peny.includes(key) || pend.includes(key)){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#ttd_pemangku').append(new Option(pimpinan[key], key));
+
+                    $('#ttd_pemangku').select2({maximumSelectionLength: 2,});
                     // console.log(key);
                 }
             }
