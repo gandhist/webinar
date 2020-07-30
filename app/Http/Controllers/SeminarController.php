@@ -44,73 +44,73 @@ class SeminarController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'nama_seminar' => 'required|min:3|max:50',
-            'klasifikasi' => 'required',
-            'sub_klasifikasi' => 'required',
-            'tema' => 'required|min:5|max:200',
-            'kuota' => 'required|numeric|min:5',
-            'skpk_nilai' => 'required|numeric|min:0|max:25',
-            'is_free' => 'required',
-            'biaya' => 'required_if:is_free,==,1',
-            'inisiator' => 'required',
-            'instansi_penyelenggara' => 'required',
-            'instansi_pendukung' => 'required',
-            'tgl_awal' => 'required|date',
-            'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
-            'jam_awal' => 'required|date_format:H:i',
-            'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
-            'ttd_pemangku' => 'required',
-            'prov_penyelenggara' => 'required',
-            'kota_penyelenggara' => 'required',
-            'lokasi_penyelenggara' => 'required|min:3|max:50',
-            'narasumber' => 'required',
-            'moderator' => 'required|min:3|max:50'
-        ],[
-            'nama_seminar.required' => 'Mohon isi Nama Seminar',
-            'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
-            'nama_seminar.max' => 'Nama Seminar maksimal 50 karakter',
-            'klasifikasi.required' => 'Mohon isi Klasifikasi',
-            'sub_klasifikasi.required' => 'Mohon isi Sub-klasifikasi',
-            'tema.required' => 'Mohon isi Tema Seminar',
-            'tema.min' => 'Tema Seminar minimal 3 karakter',
-            'tema.max' => 'Tema Seminar maksimal 200 karakter',
-            'kuota.required' => 'Mohon isi jumlah Kuota Peserta Seminar',
-            'kuota.numeric' => 'Mohon hanya mengisi dengan angka',
-            'kuota.min' => 'Kuota jumlah peserta minimal 5 orang',
-            'skpk_nilai.required' => 'Mohon isi Nilai SKPK',
-            'skpk_nilai.numeric' => 'Mohon mengisi dengan angka',
-            'skpk_nilai.min' => 'Nilai SKPK minimal 0',
-            'skpk_nilai.max' => 'Nilai SKPK maksimal 25',
-            'is_free' => 'Mohon pilih jenis seminar',
-            'biaya.required_if' => 'Jika seminar berbayar, mohon isi harga',
-            'inisiator.required' => 'Mohon isi Inisiator',
-            'instansi_penyelenggara' => 'Mohon isi Instansi Penyelenggara',
-            'instansi_pendukung' => 'Mohon isi Instansi Pendukung',
-            'tgl_awal.required' => 'Mohon isi Tanggal Mulai Seminar',
-            'tgl_awal.date' => 'Mohon isi tanggal yang valid',
-            'tgl_akhir.required' => 'Mohon isi Tanggal Berakhir Seminar',
-            'tgl_akhir.date' => 'Mohon isi tanggal yang valid',
-            'tgl_akhir.after_or_equal' => 'Tanggal Berakhir harus sesudah Tanggal Mulai',
-            'jam_awal.required' => 'Mohon isi Waktu Mulai Seminar',
-            'jam_awal.date_format' => 'Mohon isi dengan format Waktu yang valid',
-            'jam_akhir.required' => 'Mohon isi Jam Berakhir Seminar',
-            'jam_akhir.date_format' => 'Mohon isi dengan format waktu yang valid',
-            'jam_akhir.after' => 'Waktu Berakhir harus sesudah Waktu Mulai',
-            'ttd_pemangku.required' => 'Mohon isi Penandatangan',
-            'prov_penyelenggara.required' => 'Mohon isi Provinsi Lokasi Seminar',
-            'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
-            'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
-            'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
-            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
-            'narasumber.required' => 'Mohon isi Narasumber',
-            // 'narasumber.min' => 'Narasumber minimal 3 karakter',
-            // 'narasumber.max' => 'Narasumber maksimal 50 karakter',
-            'moderator.required' => 'Mohon isi Moderator',
-            'moderator.min' => 'Moderator minimal 3 karakter',
-            'moderator.max' => 'Moderator maksimal 50 karakter',
+        // $request->validate([
+        //     'nama_seminar' => 'required|min:3|max:50',
+        //     'klasifikasi' => 'required',
+        //     'sub_klasifikasi' => 'required',
+        //     'tema' => 'required|min:5|max:200',
+        //     'kuota' => 'required|numeric|min:5',
+        //     'skpk_nilai' => 'required|numeric|min:0|max:25',
+        //     'is_free' => 'required',
+        //     'biaya' => 'required_if:is_free,==,1',
+        //     'inisiator' => 'required',
+        //     'instansi_penyelenggara' => 'required',
+        //     'instansi_pendukung' => 'required',
+        //     'tgl_awal' => 'required|date',
+        //     'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
+        //     'jam_awal' => 'required|date_format:H:i',
+        //     'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
+        //     'ttd_pemangku' => 'required',
+        //     'prov_penyelenggara' => 'required',
+        //     'kota_penyelenggara' => 'required',
+        //     'lokasi_penyelenggara' => 'required|min:3|max:50',
+        //     'narasumber' => 'required',
+        //     'moderator' => 'required|min:3|max:50'
+        // ],[
+        //     'nama_seminar.required' => 'Mohon isi Nama Seminar',
+        //     'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
+        //     'nama_seminar.max' => 'Nama Seminar maksimal 50 karakter',
+        //     'klasifikasi.required' => 'Mohon isi Klasifikasi',
+        //     'sub_klasifikasi.required' => 'Mohon isi Sub-klasifikasi',
+        //     'tema.required' => 'Mohon isi Tema Seminar',
+        //     'tema.min' => 'Tema Seminar minimal 3 karakter',
+        //     'tema.max' => 'Tema Seminar maksimal 200 karakter',
+        //     'kuota.required' => 'Mohon isi jumlah Kuota Peserta Seminar',
+        //     'kuota.numeric' => 'Mohon hanya mengisi dengan angka',
+        //     'kuota.min' => 'Kuota jumlah peserta minimal 5 orang',
+        //     'skpk_nilai.required' => 'Mohon isi Nilai SKPK',
+        //     'skpk_nilai.numeric' => 'Mohon mengisi dengan angka',
+        //     'skpk_nilai.min' => 'Nilai SKPK minimal 0',
+        //     'skpk_nilai.max' => 'Nilai SKPK maksimal 25',
+        //     'is_free' => 'Mohon pilih jenis seminar',
+        //     'biaya.required_if' => 'Jika seminar berbayar, mohon isi harga',
+        //     'inisiator.required' => 'Mohon isi Inisiator',
+        //     'instansi_penyelenggara' => 'Mohon isi Instansi Penyelenggara',
+        //     'instansi_pendukung' => 'Mohon isi Instansi Pendukung',
+        //     'tgl_awal.required' => 'Mohon isi Tanggal Mulai Seminar',
+        //     'tgl_awal.date' => 'Mohon isi tanggal yang valid',
+        //     'tgl_akhir.required' => 'Mohon isi Tanggal Berakhir Seminar',
+        //     'tgl_akhir.date' => 'Mohon isi tanggal yang valid',
+        //     'tgl_akhir.after_or_equal' => 'Tanggal Berakhir harus sesudah Tanggal Mulai',
+        //     'jam_awal.required' => 'Mohon isi Waktu Mulai Seminar',
+        //     'jam_awal.date_format' => 'Mohon isi dengan format Waktu yang valid',
+        //     'jam_akhir.required' => 'Mohon isi Jam Berakhir Seminar',
+        //     'jam_akhir.date_format' => 'Mohon isi dengan format waktu yang valid',
+        //     'jam_akhir.after' => 'Waktu Berakhir harus sesudah Waktu Mulai',
+        //     'ttd_pemangku.required' => 'Mohon isi Penandatangan',
+        //     'prov_penyelenggara.required' => 'Mohon isi Provinsi Lokasi Seminar',
+        //     'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
+        //     'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
+        //     'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
+        //     'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
+        //     'narasumber.required' => 'Mohon isi Narasumber',
+        //     // 'narasumber.min' => 'Narasumber minimal 3 karakter',
+        //     // 'narasumber.max' => 'Narasumber maksimal 50 karakter',
+        //     'moderator.required' => 'Mohon isi Moderator',
+        //     'moderator.min' => 'Moderator minimal 3 karakter',
+        //     'moderator.max' => 'Moderator maksimal 50 karakter',
 
-        ]);
+        // ]);
 
 
         // $request->instansi_penyelenggara = implode(",", $request->instansi_penyelenggara);
@@ -223,6 +223,24 @@ class SeminarController extends Controller
             $pend->save();
 
             $narasumber_seminar = new PesertaSeminar;
+            $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->get(); //Counter nomor urut for narasumber
+            $jumlah = array();
+            if(count($c_narasumber) > 0) {
+                foreach($c_narasumber as $key) {
+                    if($key->no_urut_peserta != 0 && $key->no_urut_peserta != null){
+                        $jumlah[] = $key->no_urut_peserta;
+                    }
+                }
+                if(count($jumlah) > 0){
+                    if(max($jumlah) > 0) {
+                        $narasumber_seminar->no_urut_peserta = max($jumlah) + 1;
+                    } else {
+                        $narasumber_seminar->no_urut_peserta = 1;
+                    }
+                }
+            } else {
+                $narasumber_seminar->no_urut_peserta = 1;
+            }
             $narasumber_seminar->id_peserta = $key;
             $narasumber_seminar->status = "2";
             $narasumber_seminar->id_seminar = $data->id;
@@ -236,6 +254,24 @@ class SeminarController extends Controller
         $mode->save();
 
         $moderator_seminar = new PesertaSeminar;
+        $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->get(); //Counter nomor urut for narasumber
+            $jumlah = array();
+            if(count($c_moderator) > 0) {
+                foreach($c_moderator as $key) {
+                    if($key->no_urut_peserta != 0 && $key->no_urut_peserta != null){
+                        $jumlah[] = $key->no_urut_peserta;
+                    }
+                }
+                if(count($jumlah) > 0){
+                    if(max($jumlah) > 0) {
+                        $moderator_seminar->no_urut_peserta = max($jumlah) + 1;
+                    } else {
+                        $moderator_seminar->no_urut_peserta = 1;
+                    }
+                }
+            } else {
+                $moderator_seminar->no_urut_peserta = 1;
+            }
         $moderator_seminar->id_peserta = $mode->id;
         $moderator_seminar->status = "4";
         $moderator_seminar->id_seminar = $data->id;
