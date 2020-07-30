@@ -79,8 +79,8 @@ class RegistController extends Controller
             $data['foto'] = $dir_name."/".$file;
         }
         $peserta = Peserta::create($data);
-        // $password = str_random(8);
-        $password = '123456'; // buat test masih hardcode
+        $password = str_random(8);
+        // $password = '123456'; // buat test masih hardcode
       
         if ($peserta) {
             $data['username'] = strtolower($request->nama);
@@ -100,8 +100,8 @@ class RegistController extends Controller
                 'password' => $password
             ];
             Mail::to("noernanda@gmail.com")->send(new EmailRegist($pesan)); // belum fix
-
         }
+        // Seminar::where('id_seminar')
    
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
     }

@@ -12,4 +12,8 @@ class TtdModel extends Model
     protected $table = "srtf_ttd";
     protected $guarded = "id";
 
+    public function bu_ttd(){
+        return $this->belongsTo('App\BuModel', 'id_instansi');
+    }
+
 }

@@ -12,4 +12,7 @@ class PendModel extends Model
     protected $table = "srtf_pendukung";
     protected $guarded = "id";
 
+    public function bu_pend(){
+        return $this->belongsTo('App\BuModel', 'id_instansi');
+    }
 }

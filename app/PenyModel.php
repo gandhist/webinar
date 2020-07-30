@@ -12,4 +12,8 @@ class PenyModel extends Model
     protected $table = "srtf_penyelenggara";
     protected $guarded = "id";
 
+    public function bu_peny(){
+        return $this->belongsTo('App\BuModel', 'id_instansi');
+    }
+
 }

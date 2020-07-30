@@ -71,7 +71,6 @@
     </style>
 </head>
 <body>
-    @foreach($data as $key)
     <div class="">
 
         <div class="">
@@ -80,29 +79,23 @@
                 <table style="table-layout:fixed;" width=780 cellspacing=0 cellpadding=0>
                     <tr>
                         <td colspan="14"></td>                   
-                        <td colspan="10"><span style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff; padding:15px">{{ $key->no_srtf }}</span></td>
+                        <td colspan="10"><span style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff; padding:15px">{{ $data->no_srtf }}</span></td>
                     </tr>
                     <tr>
                         <td colspan="14"></td>                   
                         <td colspan="10" style="padding-left:20px;"><img src="qr.png" height=110px></td>
                     </tr>
                     <tr>
-                        <td colspan="5"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_1->logo  }}" alt="gambar"></td>
+                        <td colspan="6"></td>
+                        {{-- @php
+                            $jumlah = count($peny + $pend);
+                        @endphp --}}
+                        @foreach ($peny as $key)
+                        {{ $key->bu_peny->logo }}
+                        <td colspan="4"><img height="50" width="50" src="{{ public_path($key->bu_peny->logo)  }}" alt="Logo Instansi"></td>
+                        @endforeach
                     </tr>
-                    <tr>
-                        <td colspan="5"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
-                        <td colspan="2"><img height="50" width="50" src="{{ public_path('uploads/'). $key->seminar_p->instansi_2->logo  }}" alt="gambar"></td>
-                    </tr>
-                    
+                  
                 </table>
             </div>
             
@@ -119,20 +112,20 @@
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             diberikan kepada:<br>
-                            <h2 style="margin-top: 6px;margin-bottom: 6px; color:blue; text-transform: uppercase;">{{ $key->peserta_r->nama }}</h2>
+                            <h2 style="margin-top: 6px;margin-bottom: 6px; color:blue; text-transform: uppercase;">{{ $data->peserta_r->nama }}</h2>
                         </td> 
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             atas partisipasinya sebagai:<br>
-                            <h3 style="margin-top: 6px;margin-bottom: 6px; ">@if ($key->status == 1) Peserta @elseif ($key->status == 2) Narasumber @elseif ($key->status == 3) Panitia @else Moderator @endif</h3>
+                            <h3 style="margin-top: 6px;margin-bottom: 6px; ">@if ($data->status == 1) Peserta @elseif ($data->status == 2) Narasumber @elseif ($data->status == 3) Panitia @else Moderator @endif</h3>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
-                            <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; margin-top: -2px; margin-bottom:-3px; color: crimson;">{{ $key->seminar_p->nama_seminar }}</span>
+                            <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; margin-top: -2px; margin-bottom:-3px; color: crimson;">{{ $data->seminar_p->nama_seminar }} (Seminar)</span>
                         </td>
                     </tr>
                     <tr>
@@ -140,8 +133,8 @@
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
                             <p style="margin-top: 2px; margin-bottom: -5px;"><strong>dengan tema:</strong></p>
                             <p style="margin-bottom: -2px;">
-                                <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; color: crimson;">{{ strip_tags(html_entity_decode($key->seminar_p->tema)) }}</span><br>
-                                <strong>dengan Nilai SKPK : {{ $key->seminar_p->skpk_nilai }} ({{terbilang($key->seminar_p->skpk_nilai)}})</strong>
+                                <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; color: crimson;">{{ strip_tags(html_entity_decode($data->seminar_p->tema)) }}</span><br>
+                                <strong>dengan Nilai SKPK : {{ $data->seminar_p->skpk_nilai }} ({{terbilang($data->seminar_p->skpk_nilai)}})</strong>
                             </p>
                         </td>
                     </tr>
@@ -156,34 +149,33 @@
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
                             <p style="margin-top: 2px; margin-bottom:4px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    {{-- {{ $key->seminar_p->instansi_1->nama_bu }}  - {{ in_array($key->seminar_p->instansi_2, array($key->seminar_p->instansi_2->nama_bu) ) }} --}}
-                                PROGRAM STUDI MAGISTER TEKNIK SIPIL UNIVERSITAS MERCU BUANA - DPP ASTEKINDO - DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3  DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3  DPP GATAKI - DPP ASPEKNAS - DPN PPK-K3
-                            </span>
+                                    @foreach ($peny as $key)
+                                        {{ $key->bu_peny->nama_bu }} -
+                                    @endforeach
+                                    
+                                    @foreach ($pend as $key)
+                                        {{ $key->bu_pend->nama_bu }} 
+                                    @endforeach
+                                </span>
                             </p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
-                        <td colspan="48" style="text-align: center; vertical-align: middle; margin-bottom: 6px; ">
-                            <b>{{ $key->seminar_p->lokasi_penyelenggara }}, {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
+                        <td colspan="48" style="text-align: center; vertical-align: middle; padding-bottom: 25px; ">
+                            <b>{{ $data->seminar_p->lokasi_penyelenggara }}, {{ isset($data->seminar_p) ? \Carbon\Carbon::parse($data->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4">
-                        <td colspan="16" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
+                        <td colspan="6">
+                        @foreach ($ttd as $key)
+                        <td colspan="18" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src= "QR_adji_n.png" height=60px><br>
-                            <b>Elfin Adji Nasution</b><br>
-                            Pembina Asosiasi 
+                            <b>{{ $key->bu_ttd->nama_pimp }} </b><br>            
+                            {{ $key->bu_ttd->jab_pimp }} 
                         </td>
-                        <td colspan="8" style=" margin-top: -3px; text-align: center; vertical-align: top;">                           
-                        </td>
-                        <td colspan="16" style="margin-top: -3px;text-align: center; vertical-align:top; margin-bottom: -3px;">
-                            <img src= "QR_budi_susetyo.png" height=60px><br>
-                            <b>Dr. Ir. Budi Susetyo, M.T.</b><br>
-                            Ketua Program Studi Magister Teknik Sipil Universitas Mercu Buana
-                        </td>
+                        @endforeach
                     </tr>
-                    
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="48" style="font-size: small; vertical-align: bottom;"><br>
@@ -196,6 +188,5 @@
 
         </div>
     </div>
-    @endforeach
 </body>
 </html>
