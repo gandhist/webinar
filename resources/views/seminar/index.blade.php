@@ -100,8 +100,8 @@
                                     <td>{{ $key->nama_seminar }}</td>
                                     <td>{{ strip_tags($key->tema) }}</td>
                                     <td>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
-                                    <td>{{ $key->seminar_r }}</td>
-                                    <td>{{ $key->is_free == '1' ? $key->biaya : 'Gratis' }}</td>
+                                    <td style='text-align:center'>{{ $key->seminar_r }}</td>
+                                    <td style='text-align:center'>{{ $key->is_free == '1' ? $key->biaya : 'Gratis' }}</td>
                                     <td>
                                         @if($key->is_actived == "0")
                                             <button type="submit" class="btn btn-success">

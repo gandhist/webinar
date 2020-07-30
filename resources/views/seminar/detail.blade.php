@@ -260,7 +260,7 @@
                             <td>{{$key->peserta_r->email}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == 1) Sudah Bayar @else Belum Bayar @endif </td>
                             <td>
-                                <a target="_blank" href="{{ route('cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
                                 <a target="_blank" href="{{ url('send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
                             </td>
                          </tr>
