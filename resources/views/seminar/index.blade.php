@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-12" style="margin-top:10px">
                         <div class="pull-right">
-                            
+
                             <a href="{{ url('seminar/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
                             <button class="btn btn-success" id="btnEdit" name="btnEdit">
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-          
+
                 <div class="row">
                     <div class="col-12">
                         @if(session()->get('pesan'))
@@ -101,7 +101,7 @@
                                     <td>{{ strip_tags($key->tema) }}</td>
                                     <td>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
                                     <td>{{ $key->seminar_r }}</td>
-                                    <td></td>
+                                    <td>{{ $key->is_free == '1' ? $key->biaya : 'Gratis' }}</td>
                                     <td>
                                         @if($key->is_actived == "0")
                                             <button type="submit" class="btn btn-success">
@@ -195,7 +195,7 @@
 
                 // need to change str order before making  date obect since it uses a new Date("mm/dd/yyyy") format for short date.
                 var d = data[4].split(" ");
-                if(d[1] != null) {d[1] = moment().month(d[1]).format("M");} 
+                if(d[1] != null) {d[1] = moment().month(d[1]).format("M");}
                 // var startDate = new Date(d[1]+ "/" +  d[0] +"/" + d[2]);
                 var startDate = new Date(d[2],d[1]-1,d[0]);
 
@@ -206,7 +206,7 @@
                 return false;
             });
 
-        
+
             $("#tgl_awal").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true , dateFormat:"dd/mm/yy"});
             $("#tgl_akhir").datepicker({ onSelect: function () { table.draw(); }, changeMonth: true, changeYear: true, dateFormat:"dd/mm/yy" });
             var table = $('#data-tables').DataTable();
@@ -222,11 +222,11 @@
     // Button edit click
     $('#btnReset').on('click', function (e) {
         e.preventDefault();
-        var table = $('#data-tables').DataTable(); 
+        var table = $('#data-tables').DataTable();
         $.fn.dataTable.ext.search.pop();
         table.search('').columns().search('').draw();
     });
-    
+
 
     // Button edit click
     $('#btnEdit').on('click', function (e) {

@@ -12,6 +12,10 @@ use App\KotaModel;
 use App\BuModel;
 use App\Peserta;
 use App\PesertaSeminar;
+use App\Personal;
+use App\PenyModel;
+use App\PendModel;
+use App\TtdModel;
 use PDF;
 use Mail;
 use App\NarasumberModel;
@@ -34,7 +38,9 @@ class SeminarController extends Controller
         $instansi = BuModel::all();
         $pendukung = BuModel::pluck('nama_bu','id');
         $pimpinan = BuModel::pluck('nama_pimp','id');
-        return view('seminar.create')->with(compact('inisiator','provinsi','kota','instansi','pendukung','pimpinan'));
+        $personal = Personal::all();
+        return view('seminar.create')->with(compact('inisiator','provinsi','kota',
+        'personal','instansi','pendukung','pimpinan'));
     }
 
     public function store(Request $request) {
@@ -54,11 +60,11 @@ class SeminarController extends Controller
             'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
-            // 'ttd_pemangku' => 'required',
+            'ttd_pemangku' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:50',
-            'narasumber' => 'required|min:3|max:50',
+            'narasumber' => 'required',
             'moderator' => 'required|min:3|max:50'
         ],[
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
@@ -91,102 +97,150 @@ class SeminarController extends Controller
             'jam_akhir.required' => 'Mohon isi Jam Berakhir Seminar',
             'jam_akhir.date_format' => 'Mohon isi dengan format waktu yang valid',
             'jam_akhir.after' => 'Waktu Berakhir harus sesudah Waktu Mulai',
-            //ttd pemangku
+            'ttd_pemangku.required' => 'Mohon isi Penandatangan',
             'prov_penyelenggara.required' => 'Mohon isi Provinsi Lokasi Seminar',
             'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
             'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
             'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
             'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
-            'narasumber.min' => 'Narasumber minimal 3 karakter',
-            'narasumber.max' => 'Narasumber maksimal 50 karakter',
+            // 'narasumber.min' => 'Narasumber minimal 3 karakter',
+            // 'narasumber.max' => 'Narasumber maksimal 50 karakter',
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
             'moderator.max' => 'Moderator maksimal 50 karakter',
-            
+
         ]);
 
 
-        $request->instansi_penyelenggara = implode(",", $request->instansi_penyelenggara);
-        $request->instansi_pendukung     = implode(",", $request->instansi_pendukung    );
+        // $request->instansi_penyelenggara = implode(",", $request->instansi_penyelenggara);
+        // $request->instansi_pendukung     = implode(",", $request->instansi_pendukung    );
         // $request->klasifikasi            = implode(",", $request->klasifikasi           );
         // $request->sub_klasifikasi        = implode(",", $request->sub_klasifikasi       );
-        $request->ttd_pemangku           = implode(",", $request->ttd_pemangku          );
-                
-        $data = new SeminarModel;
-        $data->nama_seminar              =              $request->nama_seminar           ;
+        // $request->ttd_pemangku           = implode(",", $request->ttd_pemangku          );
         // $data->klasifikasi               =              $request->klasifikasi            ;
         // $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
+        // $data->ttd_pemangku              =              $request->ttd_pemangku           ;
+
+        // $narasumber = new NarasumberModel;
+        // $narasumber->nama = $request->narasumber;
+        // $narasumber->save();
+
+        // $moderator = new ModeratorModel;
+        // $moderator->nama = $request->moderator;
+        // $moderator->save();
+
+        // $data->narasumber = $narasumber->id;
+        // $data->moderator = $moderator->id;
+
+        // Just In Case aja, kalo masuknya string
+        is_array($request->instansi_penyelenggara) ? '' : explode(',',$request->instansi_penyelenggara);
+        is_array($request->instansi_pendukung) ? '' : explode(',',$request->instansi_pendukung);
+        is_array($request->narasumber) ? '' : explode(',',$request->narasumber);
+        is_array($request->ttd_pemangku) ? '' : explode(',',$request->ttd_pemangku);
+        // Done
+
+        $data = new SeminarModel;
+        $data->nama_seminar              =              $request->nama_seminar           ;
         $data->tema                      =              $request->tema                   ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
         $data->is_free                   =              $request->is_free                ;
         $data->biaya                     =              $request->biaya                  ;
         $data->inisiator                 =              $request->inisiator              ;
-        $data->instansi_penyelenggara    =              $request->instansi_penyelenggara ;
-        $data->instansi_pendukung        =              $request->instansi_pendukung     ;
         $data->tgl_awal                  =Carbon::parse($request->tgl_awal)              ;
         $data->tgl_akhir                 =Carbon::parse($request->tgl_akhir)             ;
         $data->jam_awal                  =              $request->jam_awal               ;
         $data->jam_akhir                 =              $request->jam_akhir              ;
-        // $data->ttd_pemangku              =              $request->ttd_pemangku           ;
         $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
-        $data->ttd_pemangku              =              $request->ttd_pemangku           ;
-        
-        $narasumber = new NarasumberModel;
-        $narasumber->nama = $request->narasumber;
-        $narasumber->save();
+        //$data->ttd_pemangku              =              $request->ttd_pemangku           ;
 
-        $moderator = new ModeratorModel;
-        $moderator->nama = $request->moderator;
-        $moderator->save();
-
-        $data->narasumber = $narasumber->id;
-        $data->moderator = $moderator->id;
-        
         $data->created_by = Auth::id();
 
         if($request->store == "draft") {
             $data->is_actived = "0";
             $data->status = "draft";
             $seminar = $data->save();
-        
-            $narasumber_seminar = new PesertaSeminar;
-            $narasumber_seminar->id_peserta = $narasumber->id;
-            $narasumber_seminar->status = "2";
-            $narasumber_seminar->id_seminar = $data->id;
-            $narasumber_seminar->save();
-    
-            $moderator_seminar = new PesertaSeminar;
-            $moderator_seminar->id_peserta = $moderator->id;
-            $moderator_seminar->status = "4";
-            $moderator_seminar->id_seminar = $data->id;
-            $moderator_seminar->save();
-    
-            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
-            "\" berhasil disimpan sebagai draft");
         } else {
             $data->is_actived = "1";
             $data->status = "published";
+
+            $counter = SeminarModel::all();
+            $jumlah = [];
+            if(count($counter) > 0) {
+                foreach($counter as $key) {
+                    if(date('m', \strtotime($key->tgl_awal)) == date('m')){
+                        $jumlah[] = $key->no_urut;
+                    }
+                }
+            }
+            if(max($jumlah) > 0) {
+                $data->no_urut = max($jumlah) + 1;
+            } else {
+                $data->no_urut = 1;
+            }
             $seminar = $data->save();
-        
+        }
+
+
+        // $data->instansi_penyelenggara    =   $request->instansi_penyelenggara ;
+        foreach($request->instansi_penyelenggara as $key){
+            $peny = new PenyModel;
+            $peny->id_seminar = $data->id;
+            $peny->id_instansi = $key;
+            $peny->created_by = Auth::id();
+            $peny->save();
+        }
+
+        // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
+        foreach($request->instansi_pendukung as $key){
+            $pend = new PendModel;
+            $pend->id_seminar = $data->id;
+            $pend->id_instansi = $key;
+            $pend->created_by = Auth::id();
+            $pend->save();
+        }
+
+        // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
+        foreach($request->ttd_pemangku as $key){
+            $pend = new TtdModel;
+            $pend->id_seminar = $data->id;
+            $pend->id_instansi = $key;
+            $pend->created_by = Auth::id();
+            $pend->save();
+        }
+
+        // $data->narasumber        =   $request->narasumber     ;
+        foreach($request->narasumber as $key){
+            $pend = new NarasumberModel;
+            $pend->id_seminar = $data->id;
+            $pend->id_personal = $key;
+            $pend->created_by = Auth::id();
+            $pend->save();
+
             $narasumber_seminar = new PesertaSeminar;
-            $narasumber_seminar->id_peserta = $narasumber->id;
+            $narasumber_seminar->id_peserta = $key;
             $narasumber_seminar->status = "2";
             $narasumber_seminar->id_seminar = $data->id;
             $narasumber_seminar->save();
-    
-            $moderator_seminar = new PesertaSeminar;
-            $moderator_seminar->id_peserta = $moderator->id;
-            $moderator_seminar->status = "4";
-            $moderator_seminar->id_seminar = $data->id;
-            $moderator_seminar->save();
-    
-            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
-            "\" berhasil ditambahkan");
         }
+
+        $mode = new ModeratorModel;
+        $mode->id_seminar = $data->id;
+        $mode->nama = $request->moderator;
+        $mode->created_by = Auth::id();
+        $mode->save();
+
+        $moderator_seminar = new PesertaSeminar;
+        $moderator_seminar->id_peserta = $mode->id;
+        $moderator_seminar->status = "4";
+        $moderator_seminar->id_seminar = $data->id;
+        $moderator_seminar->save();
+
+        return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+        "\" berhasil ditambahkan");
 
     }
 
@@ -270,7 +324,7 @@ class SeminarController extends Controller
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
             'moderator.max' => 'Moderator maksimal 50 karakter',
-            
+
         ]);
 
 
@@ -289,7 +343,7 @@ class SeminarController extends Controller
         // $request->klasifikasi            = implode(",", $request->klasifikasi           );
         // $request->sub_klasifikasi        = implode(",", $request->sub_klasifikasi       );
         $request->ttd_pemangku           = implode(",", $request->ttd_pemangku          );
-                
+
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
         // $data->klasifikasi               =              $request->klasifikasi            ;
@@ -311,8 +365,8 @@ class SeminarController extends Controller
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
         $data->ttd_pemangku              =              $request->ttd_pemangku           ;
-        
-        
+
+
         $narasumber = new NarasumberModel;
         $narasumber->nama = $request->narasumber;
         $narasumber->save();
@@ -337,32 +391,32 @@ class SeminarController extends Controller
             $narasumber_seminar->status = "2";
             $narasumber_seminar->id_seminar = $data->id;
             $narasumber_seminar->save();
-    
+
             $moderator_seminar = new PesertaSeminar;
             $moderator_seminar->id_peserta = $moderator->id;
             $moderator_seminar->status = "4";
             $moderator_seminar->id_seminar = $data->id;
             $moderator_seminar->save();
-    
+
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil diubah sebagai draft");
         } else {
             $data->is_actived = "1";
             $data->status = "published";
             $seminar = $data->save();
-        
+
             $narasumber_seminar = new PesertaSeminar;
             $narasumber_seminar->id_peserta = $narasumber->id;
             $narasumber_seminar->status = "2";
             $narasumber_seminar->id_seminar = $data->id;
             $narasumber_seminar->save();
-    
+
             $moderator_seminar = new PesertaSeminar;
             $moderator_seminar->id_peserta = $moderator->id;
             $moderator_seminar->status = "4";
             $moderator_seminar->id_seminar = $data->id;
             $moderator_seminar->save();
-    
+
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil diubah");
         }
@@ -398,7 +452,7 @@ class SeminarController extends Controller
 
 
     public function cetakSertifikat($id){
-    
+
         $data = PesertaSeminar::where('no_srtf',$id)->get();
         // dd($data);
         $pdf = PDF::loadview('seminar.sertifikat',compact('data'));
@@ -408,8 +462,7 @@ class SeminarController extends Controller
     }
 
     public function getKota($id) {
-        $cities = DB::table("ms_kota")
-                    ->where("provinsi_id",$id)
+        $cities = KotaModel::where("provinsi_id",$id)
                     ->pluck("nama","id")
                     ->all();
         return json_encode($cities);

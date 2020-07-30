@@ -82,7 +82,7 @@
                     {{-- Akhir Sub Klasifikasi --}}
 
                 </div>
-                    
+
                 <div class="row">
                     {{--Tema --}}
                     <div class="col-md-12">
@@ -143,16 +143,16 @@
                                     Gratis
                                 </label>
                                 <label>
-                                    <input type="radio" name="is_free" id="bayar" value="1" 
+                                    <input type="radio" name="is_free" id="bayar" value="1"
                                         {{ old('is_free') == "1" ? "checked" : "" }}>
                                     Berbayar
                                 </label>
-                                
+
                                 <div id="is_free" class="invalid-feedback text-danger">
                                     {{ $errors->first('is_free') }}
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                     {{-- Akhir Berbayar --}}
@@ -255,7 +255,7 @@
                             --}}
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
-                            
+
                             <div id="instansi_pendukung" class="invalid-feedback text-danger">
                                 {{ $errors->first('instansi_pendukung') }}
                             </div>
@@ -367,7 +367,7 @@
 
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
-                            
+
                             <div id="ttd_pemangku" class="invalid-feedback text-danger">
                                 {{ $errors->first('ttd_pemangku') }}
                             </div>
@@ -411,7 +411,7 @@
                                 @if(old('prov_penyelenggara'))
                                     @foreach($kota as $key)
                                         @if($key->provinsi_id == old('prov_penyelenggara'))
-                                        <option value="{{ $key->id }}" 
+                                        <option value="{{ $key->id }}"
                                         {{ old('kota_penyelenggara') == $key->id ? "selected" : "" }}
                                             >{{$key->nama}}</option>
                                         @endif
@@ -419,7 +419,7 @@
                                 @else
                                     <option value="" selected hidden></option>
                                 @endif
-                                
+
                             </select>
                             <div id="kota_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('kota_penyelenggara') }}
@@ -456,7 +456,7 @@
                                 @endforeach
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
-                            
+
                             <div id="narasumber" class="invalid-feedback text-danger">
                                 {{ $errors->first('narasumber') }}
                             </div>
@@ -484,7 +484,7 @@
 
                 <button class="btn btn-success" name="store" value="publish">Publish</button>
                 <button class="btn btn-info pull-right" name="store" value="draft">Save</button>
-                </form>          
+                </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
@@ -495,7 +495,7 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script>
     let instansi = {!! json_encode($pendukung->toArray()) !!};
     let tema = $('#tema');
@@ -517,10 +517,10 @@
         // $('#narasumber').select2({
         //     tags: true,
         //     data: @json(old('narasumber')) ,
-        //     tokenSeparators: [','], 
+        //     tokenSeparators: [','],
         //     placeholder: "Nama Narasumber",
         //     /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-        //     selectOnClose: true, 
+        //     selectOnClose: true,
         //     closeOnSelect: false
         // }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
@@ -541,7 +541,7 @@
 
             format: 'HH:mm'
 
-        }); 
+        });
         $('body').on('change', '.form-group', function() {
             // Action goes here.
         });
@@ -557,7 +557,7 @@
             allowClear: true
         }); // Select2 Klasifikasi
         $('#sub_klasifikasi').select2({
-            placeholder: " Pilih Sub-klasifikasi", 
+            placeholder: " Pilih Sub-klasifikasi",
             allowClear: true
         }); // Select2 Sub-Klasifikasi
         $('#inisiator').select2({
@@ -579,11 +579,11 @@
             placeholder: " Pilih Narasumber",
             allowClear: true
         }); // Select2 Instansi Pendukung
-    
+
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);
             // console.log(pendukung.hasOwnProperty('33'));
-            data = $('#instansi_penyelenggara').select2('data').map(function(elem){ 
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
             // console.log(data);
@@ -601,10 +601,10 @@
 
         $('.to-pimpinan').on('change', function() {
             pimpinan =  @json($pimpinan);
-            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){ 
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
-            pend = $('#instansi_pendukung').select2('data').map(function(elem){ 
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
                 return elem.id
             });
             // console.log('pimpinan :', pimpinan);
@@ -623,17 +623,17 @@
         $(".to-pimpinan").on("select2:select", function (evt) {
             var element = evt.params.data.element;
             var $element = $(element);
-            
+
             $element.detach();
             $(this).append($element);
             $(this).trigger("change");
         });
 
-        
+
         $("#ttd_pemangku").on("select2:select", function (evt) {
             var element = evt.params.data.element;
             var $element = $(element);
-            
+
             $element.detach();
             $(this).append($element);
             $(this).trigger("change");
@@ -641,7 +641,7 @@
         $("#narasumber").on("select2:select", function (evt) {
             var element = evt.params.data.element;
             var $element = $(element);
-            
+
             $element.detach();
             $(this).append($element);
             $(this).trigger("change");

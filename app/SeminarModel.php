@@ -16,4 +16,9 @@ class SeminarModel extends Model
     public function peserta(){
         return $this->hasMany('App\SertModel','id_seminar');
     }
+
+    // relasi ke instansi penyelenggara
+    public function penyelenggara(){
+        return $this->hasMany('App\SertModel','id_seminar');
+    }
 }
