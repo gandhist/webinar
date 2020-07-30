@@ -168,21 +168,23 @@ class SeminarController extends Controller
             $data->status = "published";
 
             $counter = SeminarModel::all();
-            $jumlah = [];
+            $jumlah = array();
             if(count($counter) > 0) {
                 foreach($counter as $key) {
-                    if(date('m', \strtotime($key->tgl_awal)) == date('m')){
+                    if(date('m', \strtotime($key->tgl_awal)) == date('m', \strtotime($request->tgl_awal))){
                         $jumlah[] = $key->no_urut;
                     }
                 }
             }
-            if(max($jumlah) > 0) {
-                $data->no_urut = max($jumlah) + 1;
-            } else {
-                $data->no_urut = 1;
+            if(count($jumlah) > 0){
+                if(max($jumlah) > 0) {
+                    $data->no_urut = max($jumlah) + 1;
+                } else {
+                    $data->no_urut = 1;
+                }
             }
-            $seminar = $data->save();
         }
+        $seminar = $data->save();
 
 
         // $data->instansi_penyelenggara    =   $request->instansi_penyelenggara ;
