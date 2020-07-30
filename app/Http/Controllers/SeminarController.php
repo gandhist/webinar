@@ -173,11 +173,11 @@ class SeminarController extends Controller
 
             // $data->narasumber        =   $request->narasumber     ;
             foreach($request->narasumber as $key){
-                $pend = new NarasumberModel;
-                $pend->id_seminar = $data->id;
-                $pend->id_personal = $key;
-                $pend->created_by = Auth::id();
-                $pend->save();
+                $nara = new NarasumberModel;
+                $nara->id_seminar = $data->id;
+                $nara->id_personal = $key;
+                $nara->created_by = Auth::id();
+                $nara->save();
 
                 $narasumber_seminar = new PesertaSeminar;
                 // $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
@@ -196,7 +196,7 @@ class SeminarController extends Controller
 
                 // $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
-                $narasumber_seminar->id_peserta = $key;
+                $narasumber_seminar->id_peserta = $nara->id;
                 $narasumber_seminar->status = "2";
                 // $narasumber_seminar->no_srtf = $no_sert_nara;
                 $narasumber_seminar->id_seminar = $data->id;
@@ -291,11 +291,11 @@ class SeminarController extends Controller
 
             // $data->narasumber        =   $request->narasumber     ;
             foreach($request->narasumber as $key){
-                $pend = new NarasumberModel;
-                $pend->id_seminar = $data->id;
-                $pend->id_personal = $key;
-                $pend->created_by = Auth::id();
-                $pend->save();
+                $nara = new NarasumberModel;
+                $nara->id_seminar = $data->id;
+                $nara->id_personal = $key;
+                $nara->created_by = Auth::id();
+                $nara->save();
 
                 $narasumber_seminar = new PesertaSeminar;
                 $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
@@ -314,7 +314,7 @@ class SeminarController extends Controller
 
                 $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
-                $narasumber_seminar->id_peserta = $key;
+                $narasumber_seminar->id_peserta = $nara->id;
                 $narasumber_seminar->status = "2";
                 $narasumber_seminar->no_srtf = $no_sert_nara;
                 $narasumber_seminar->id_seminar = $data->id;
@@ -620,8 +620,10 @@ class SeminarController extends Controller
         }
         $seminar = $data->update();
         $nara = NarasumberModel::where('id_seminar',$id)->get();
+        // dd($nara);
         foreach($nara as $key) {
-            $narasumber = PesertaSeminar::find($key);
+            // dd($key->id);
+            $narasumber = PesertaSeminar::where('id_peserta',$key->id)->first();
             // dd($narasumber);
             $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
                 if($c_narasumber == null) { 
@@ -638,12 +640,12 @@ class SeminarController extends Controller
 
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber->no_urut_peserta, 3, "0", STR_PAD_LEFT);
             $narasumber->no_srtf = $no_sert_nara;
-            $narasumber_seminar = $narasumber->save();
+            $narasumber->update();
         }
         $mode = ModeratorModel::where('id_seminar',$id)->get();
         // dd($mode);
         foreach($mode as $key) {
-            $moderator = PesertaSeminar::find($key);
+            $moderator = PesertaSeminar::where('id_peserta',$key->id)->first();
             // dd($narasumber);
             $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
             
@@ -663,7 +665,7 @@ class SeminarController extends Controller
 
             $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator->no_urut_peserta, 3, "0", STR_PAD_LEFT);
             $moderator->no_srtf = $no_sert_mode;
-            $moderator_seminar = $moderator->save();
+            $moderator->update();
         }
         return redirect('/seminar')
         ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
