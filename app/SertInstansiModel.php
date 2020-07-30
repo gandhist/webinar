@@ -5,15 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PenyModel extends Model
+class SertInstansiModel extends Model
 {
     //
     use SoftDeletes;
-    protected $table = "srtf_penyelenggara";
+    protected $table = "srtf_instansi";
     protected $guarded = "id";
 
-    public function bu_peny(){
+    public function bu_pend(){
         return $this->belongsTo('App\BuModel', 'id_instansi');
     }
-
 }

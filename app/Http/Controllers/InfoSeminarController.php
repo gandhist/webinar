@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Seminar;
+use App\SeminarModel;
 use App\Peserta;
 use App\PesertaSeminar;
 use App\User;
@@ -42,28 +43,51 @@ class InfoSeminarController extends Controller
         $peserta = Peserta::select('id')->where('user_id',Auth::id())->first();
         $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
-        $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
-        
+        $is_free = Seminar::select('is_free')->where('id',$id)->first();
+        // $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
+        $counter = SeminarModel::where('status','published')->get();
+        $jumlah = array();
+        if(count($counter) > 0) {
+            foreach($counter as $key) {
+                if(date('m', \strtotime($key->tgl_awal)) == date('m')){
+                    $jumlah[] = $key->no_urut;
+                }
+            }
+        }
+        if(count($jumlah) > 0){
+            if(max($jumlah) > 0) {
+                $urutan_seminar = max($jumlah) + 1;
+            } else {
+                $urutan_seminar = 1;
+            }
+        } else {
+            $urutan_seminar = 1;
+        }
+        $data = new PesertaSeminar;
+        $coba = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
+        if($coba == null) { 
+            $data->no_urut_peserta = '1';
+        } else {
+            $data->no_urut_peserta = $coba + 1;
+        }
         // generate no sertifikat
         $inisiator = '88';
-        $status = $status_peserta['status']; // 1 peserta 2 narasumber 3 panitia 4 moderator
+        $status = '1'; 
         $tahun = substr($tanggal['tgl_awal'],2,2);
         $bulan = substr($tanggal['tgl_awal'],5,2);
+    
 
-        $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan;
-        // dd($no_sert)
-        // end of generate
-
-        $data = new PesertaSeminar;
+        $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+        
         $data->id_seminar = $id;
         $data->id_peserta = $peserta['id'];
-        if ($statusbayar['is_paid'] == '1'){
-            $data->is_paid = $statusbayar['is_paid'];
+        if($is_free['is_free'] == '0'){
+            $data->is_paid = '1';
             $data->no_srtf = $no_sert;
         } else {
-            $data->is_paid = $statusbayar['is_paid'];
+            $data->is_paid = '0';
             $data->no_srtf = '';
-        } 
+        }
         $data->status = '1';
         $data = $data->save();
 

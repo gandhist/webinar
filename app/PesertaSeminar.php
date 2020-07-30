@@ -9,7 +9,7 @@ class PesertaSeminar extends Model
     //
     public $timestamps = false;
     protected $table = "srtf_peserta_seminar";
-    protected $fillable = ['id_seminar,id_peserta,status'];
+    protected $fillable = ['id_seminar,id_peserta,status,no_srtf,no_urut_peserta'];
 
     // relasi many to many table peserta 
     public function peserta_r(){
