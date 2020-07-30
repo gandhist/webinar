@@ -12,7 +12,7 @@ class SertInstansiModel extends Model
     protected $table = "srtf_instansi";
     protected $guarded = "id";
 
-    public function bu_pend(){
+    public function bu_instansi(){
         return $this->belongsTo('App\BuModel', 'id_instansi');
     }
 }

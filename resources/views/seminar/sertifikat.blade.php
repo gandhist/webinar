@@ -51,22 +51,6 @@
         td {
             height: 15px;
         }
-     
-        .p3sm-image {
-            background-image: url("p3sm1.png");
-            /* background-image: url("{{asset('p3sm1.png')}}"); */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size:250px;
-            position: relative;
-        }
-        .mb-image {
-            background-image: url("mercubuana_fade.png");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size:250px;
-            position: relative;
-        }
 
     </style>
 </head>
@@ -86,14 +70,23 @@
                         <td colspan="10" style="padding-left:20px;"><img src="qr.png" height=110px></td>
                     </tr>
                     <tr>
-                        <td colspan="6"></td>
-                        {{-- @php
-                            $jumlah = count($peny + $pend);
-                        @endphp --}}
-                        @foreach ($peny as $key)
-                        {{ $key->bu_peny->logo }}
-                        <td colspan="4"><img height="50" width="50" src="{{ public_path($key->bu_peny->logo)  }}" alt="Logo Instansi"></td>
-                        @endforeach
+                        <td colspan="19" style="text-align: center;padding:10px 0">
+                            
+                            @foreach ($instansi as $index => $key)
+                                @if ($index == 1)
+                                    <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
+                                @elseif ($index == 6) 
+                                <br><img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px; margin-top:10px">
+                                @else
+                                    <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
+                                @endif
+                            {{-- <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px"> --}}
+                            @endforeach
+                        </td>
+                        {{-- @foreach ($instansi as $key)
+                        {{ $key->bu_instansi->logo }}
+                        <td colspan="2"><img height="50" width="50" src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi"></td>
+                        @endforeach --}}
                     </tr>
                   
                 </table>
@@ -105,7 +98,7 @@
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle; color: brown;">
-                            <p style="margin-top: -5px; margin-bottom: 4px; font-size: 54px; font-weight: bold;">SERTIFIKAT</p>
+                            <p style="margin-top: -27px; margin-bottom: 4px; font-size: 54px; font-weight: bold;">SERTIFIKAT</p>
                         </td>
                     </tr>
                     <tr>
@@ -149,12 +142,8 @@
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
                             <p style="margin-top: 2px; margin-bottom:4px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    @foreach ($peny as $key)
-                                        {{ $key->bu_peny->nama_bu }} -
-                                    @endforeach
-                                    
-                                    @foreach ($pend as $key)
-                                        {{ $key->bu_pend->nama_bu }} 
+                                    @foreach ($instansi as $key)
+                                        {{ $key->bu_instansi->nama_bu }} -
                                     @endforeach
                                 </span>
                             </p>

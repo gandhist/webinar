@@ -565,14 +565,13 @@ class SeminarController extends Controller
     public function cetakSertifikat($id){
 
         $data = PesertaSeminar::where('no_srtf',$id)->first();
-        $peny = PenyModel::where('id_seminar', '=' ,$data->id_seminar)->get();
-        $pend = PendModel::where('id_seminar', '=' ,$data->id_seminar)->get();
+        $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         
-        $pdf = PDF::loadview('seminar.sertifikat',compact('data','peny','pend','ttd'));
+        $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
         $pdf->setPaper('A4','potrait');
         return $pdf->stream("Sertifikat.pdf");
-        // return view('seminar.sertifikat')->with(compact('data','peny','pend','ttd'));
+        // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
     }
 
     public function getKota($id) {
