@@ -16,7 +16,7 @@
   <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
     <thead>
       <tr>
-        <th>Title</th>
+        <th>Title </th>
         <th>Tema :</th>
         <th>Tanggal :</th>
         <th>Tempat :</th>
