@@ -99,9 +99,9 @@ class RegistController extends Controller
                 'username' => strtolower($request->nama),
                 'password' => $password
             ];
-            Mail::to("noernanda@gmail.com")->send(new EmailRegist($pesan)); // belum fix
+            $email = strtolower($request->email);
+            Mail::to($email)->send(new EmailRegist($pesan)); // belum fix
         }
-        // Seminar::where('id_seminar')
    
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
     }

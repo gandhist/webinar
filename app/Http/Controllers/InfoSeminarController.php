@@ -11,6 +11,7 @@ use App\User;
 use App\BankModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class InfoSeminarController extends Controller
 {
@@ -90,6 +91,9 @@ class InfoSeminarController extends Controller
         }
         $data->status = '1';
         $data = $data->save();
+
+        // pengurangan kuota
+        $kuota = DB::table('srtf_seminar')->update(['kuota' => DB::raw('GREATEST(kuota - 1, 0)')]);
 
         return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
     }
