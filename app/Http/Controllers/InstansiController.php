@@ -182,7 +182,7 @@ class InstansiController extends Controller
             // $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
             $resize_image->resize(250,null, function($constraint){
                 $constraint->aspectRatio();
-            })->save($destinationPathTemp.$file);
+            })->save(public_path($destinationPathTemp.$file));
             $temp = $destinationPathTemp.$file;
             rename($temp, $destinationFile );
             $data->logo = $destinationFile;
@@ -420,7 +420,7 @@ class InstansiController extends Controller
             // $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
             $resize_image->resize(250,null, function($constraint){
                 $constraint->aspectRatio();
-            })->save($destinationPathTemp.$file);
+            })->save(public_path($destinationPathTemp.$file));
             $temp = $destinationPathTemp.$file;
             rename($temp, $destinationFile );
             $data->logo = $destinationFile;

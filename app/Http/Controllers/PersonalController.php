@@ -157,7 +157,7 @@ class PersonalController extends Controller
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
             $resize_image = Image::make($files);
-            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
             // $resize_image->resize(354, 472, function($constraint){
             //     $constraint->aspectRatio();
             // })->save();
@@ -374,7 +374,7 @@ class PersonalController extends Controller
             $destinationPathTemp = 'uploads/tmp/'; // upload path
 
             $resize_image = Image::make($files);
-            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
             // $resize_image->resize(354, 472, function($constraint){
             //     $constraint->aspectRatio();
             // })->save();
