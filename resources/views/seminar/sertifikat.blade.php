@@ -159,7 +159,7 @@
                         <td colspan="6">
                         @foreach ($ttd as $key)
                         <td colspan="18" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
-                            <img src= "QR_adji_n.png" height=60px><br>
+                            {{-- <img src= "QR_adji_n.png" height=60px><br> --}}
                             <b>{{ $key->bu_ttd->nama_pimp }} </b><br>            
                             {{ $key->bu_ttd->jab_pimp }} 
                         </td>

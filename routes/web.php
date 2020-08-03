@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('detail/{id}','SeminarController@detail');
 	Route::get('/{id}/publish', 'SeminarController@publish');
 	Route::get('create/getKota/{id}','SeminarController@getKota');
-	Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat')->name('cetak_sertifikat');
+	Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
 	Route::get('kirim_email','SeminarController@kirimEmail');
 	Route::get('send_email/{id}','SeminarController@sendEmail');
 

@@ -98,10 +98,10 @@
                                             id="selection[]" name="selection[]"></td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>{{ $key->nama_seminar }}</td>
-                                    <td>{{ strip_tags($key->tema) }}</td>
+                                    <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
                                     <td>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
-                                    <td style='text-align:center'>{{ $key->seminar_r }}</td>
-                                    <td style='text-align:center'>{{ $key->is_free == '1' ? $key->biaya : 'Gratis' }}</td>
+                                    <td style='text-align:center'>{{ $key->seminar_r->count() }} Peserta</td>
+                                    <td style='text-align:center'>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
                                     <td>
                                         @if($key->is_actived == "0")
                                             <button type="submit" class="btn btn-success">
