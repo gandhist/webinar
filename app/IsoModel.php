@@ -36,4 +36,9 @@ class IsoModel extends Model
     public function lap_r(){
        return  $this->belongsTo('App\Laporan','id_laporan');
     }
+
+    // belongs to status
+    public function status_r(){
+        return $this->belongsTo('App\StatusModel','status');
+    }
 }

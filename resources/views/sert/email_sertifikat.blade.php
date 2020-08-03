@@ -271,6 +271,8 @@ a {
                           <p style="text-align:center;"><a href="{{ url('sertifikat_v2', [$details->no_sertifikat, $details->email]) }}" class="btn">Download Sertifikat</a></p>
                         @elseif($details->id_seminar == 2)
                             <p style="text-align:center;"><a href="{{ url('sertifikat_v1', [$details->no_sertifikat, $details->email]) }}" class="btn">Download Sertifikat</a></p>
+                            @elseif($details->id_seminar == 4)
+                            <p style="text-align:center;"><a href="{{ url('sertifikat_v3', [$details->no_sertifikat, $details->email]) }}" class="btn">Download Sertifikat</a></p>
                           @else
                           <p style="text-align:center;"><a href="{{ url('sertifikat', [$details->no_sertifikat, $details->email]) }}" class="btn">Download Sertifikat</a></p>
                         @endif

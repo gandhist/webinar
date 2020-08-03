@@ -8,6 +8,18 @@
     <style>
       
 
+      #watermark {
+        position: fixed;
+        top: 30%;
+        left: 20%;
+        width: 100%;
+        text-align: center;
+        opacity: .4;
+        font-size: 60px;
+        transform: rotate(25deg);
+        transform-origin: 5% 5%;
+        z-index: -1000;
+      }
       body {
         margin: 0px;
         padding: 0;
@@ -71,6 +83,11 @@
 <body>
     
       <div class="page">
+        <div id="watermark">
+          @if($data->status == 1)
+            <h1>{{ $data->status_r->nama }}</h1>
+          @endif
+        </div>
         <div style="text-align: center; margin-top: 0px;">
         <img src="{{  public_path('iso/images/') }}/logoheader.png" style="text-align: center; margin-top: 30px;" width="200px"><BR>
         {{-- <span style="color: #206f9c; font-size: 18px;"><strong>{{ $data->iso_r->kode }}</strong></span> --}}
@@ -83,7 +100,7 @@
           <br> as confirming to the requirements of :</p>
         <p style="font-size: 24px; font-weight: bold; color: #206f9c; text-transform: uppercase; text-align: center;">{{ $data->iso_r->nama_en }}</p>
         <p style="font-size: 42px; font-weight: bold; color: #206f9c; text-transform: uppercase; text-align: center; margin-top: -5PX;">{{ $data->iso_r->kode }}</p>
-        <P style="margin-top: -20px; text-align: center;">For the following Scope :</P>
+        <P style="margin-top: -10px; text-align: center;">For the following Scope :</P>
         <p style="font-size: 16px; font-weight: bold; text-align: justify; line-height: 150%;">
             "Provision of
            @foreach($data->lap_r->scope_r as $key)
@@ -118,7 +135,13 @@
           <td colspan="4"><u>{{ \Carbon\Carbon::parse($data->tgl_sert)->add('3','years')->isoFormat('DD-MM-YYYY') }}</u></td>
         </tr>
         <tr>
-          <td colspan="8" style="padding: 20px; vertical-align: bottom; text-align: left;"><img src="{{  public_path('qr/') }}/QR_{{ $data->id }}.png" height="100px"></td>
+          <td colspan="8" style="padding: 20px; vertical-align: bottom; text-align: left;">
+            @if($data->status != 1)
+              <img src="{{  public_path('qr/') }}/QR_{{ $data->id }}.png" height="100px">
+            @else
+            <span height="100px"></span>
+            @endif
+          </td>
           <td colspan="8" style="padding: 20px; vertical-align: bottom; text-align: center;"><img src="{{  public_path('iso/images/') }}/tt_dasril.png" width="140px" height="50px" ><br>Director</td>
         </tr>
         <tr>
