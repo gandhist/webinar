@@ -36,4 +36,9 @@ class Laporan extends Model
         return $this->belongsTo('App\isoStandard','iso_standard');
     }
 
+    // belongs to status
+    public function status_r(){
+        return $this->belongsTo('App\StatusModel','status');
+    }
+
 }

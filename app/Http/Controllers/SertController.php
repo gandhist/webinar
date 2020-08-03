@@ -112,6 +112,20 @@ class SertController extends Controller
         return $pdf->stream("Sertifikat.pdf");
     }
 
+
+    public function sert_v3($id, $email){
+        $url7 = url('approved/ludy18');
+        $nama7 = "QR_ludy18.png";
+        $qrcode7 = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url7, base_path("public/".$nama7));
+        $url8 = url('approved/irwin18');
+        $nama8 = "QR_irwin18.png";
+        $qrcode8 = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url8, base_path("public/".$nama8));
+        $data['data'] = SertModel::where('no_sertifikat',$id)->where('email', $email)->get();
+        $pdf = PDF::loadview('sert.sert_v3',$data);
+        $pdf->setPaper('A4','landscape');
+        return $pdf->stream("Sertifikat.pdf");
+    }
+
     // ttd 1
     public function ttd1(){
         return view('sert.ttd1');
@@ -136,6 +150,14 @@ class SertController extends Controller
 
     public function ttd_irwin(){
         return view('sert.ttd_irwin');
+    }
+
+    public function ttd_irwin18(){
+        return view('sert.ttd_irwin18');
+    }
+
+    public function ttd_ludy18(){
+        return view('sert.ttd_ludy18');
     }
 
     public function kirimEmail(){

@@ -49,6 +49,14 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
+                                            <label>Status</label>
+                                            <select name="status" id="statu" class="form-control">
+                                                @foreach($status as $key)
+                                                    <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Organization</label>
                                             <input name="nama_bu" id="nama_bu" type="text" class="form-control" placeholder="Organization">
                                             <span id="nama_bu" class="help-block" >{{ $errors->first('nama_bu') }} </span> 

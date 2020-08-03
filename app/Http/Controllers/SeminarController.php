@@ -373,6 +373,25 @@ class SeminarController extends Controller
 
     public function edit($id) {
         $seminar = SeminarModel::where('id',$id)->first();
+        if($seminar->status == 'published'){
+            $instansi = BuModel::all();
+            $personal = Personal::all();
+            $inisiator = InstansiModel::all();
+            $pendukungArr = BuModel::pluck('nama_bu','id');
+            $pimpinanArr = BuModel::pluck('nama_pimp','id');
+    
+            //
+            $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
+            $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
+            $ttd = TtdModel::where('id_seminar',$id)->get();
+            $provinsi = ProvinsiModel::all();
+            $kota = KotaModel::all();
+            $narasumber = NarasumberModel::where('id_seminar',$id)->get();
+            $moderator = ModeratorModel::where('id_seminar',$id)->first();
+            return view('seminar.edit')->with(compact('id','seminar','instansi','personal','inisiator','pendukungArr','pimpinanArr',
+                'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
+        } else {
+
         $instansi = BuModel::all();
         $personal = Personal::all();
         $inisiator = InstansiModel::all();
@@ -387,8 +406,9 @@ class SeminarController extends Controller
         $kota = KotaModel::all();
         $narasumber = NarasumberModel::where('id_seminar',$id)->get();
         $moderator = ModeratorModel::where('id_seminar',$id)->first();
-        return view('seminar.edit')->with(compact('seminar','instansi','personal','inisiator','pendukungArr','pimpinanArr',
+        return view('seminar.edit-draft')->with(compact('id','seminar','instansi','personal','inisiator','pendukungArr','pimpinanArr',
             'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
+        }
     }
 
     public function update(Request $request, $id) {
@@ -404,15 +424,15 @@ class SeminarController extends Controller
             'inisiator' => 'required',
             'instansi_penyelenggara' => 'required',
             'instansi_pendukung' => 'required',
-            'tgl_awal' => 'required|date',
+            'tgl_awal' => 'required|date',//|after:today',
             'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
-            // 'ttd_pemangku' => 'required',
+            'ttd_pemangku' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:50',
-            'narasumber' => 'required|min:3|max:50',
+            'narasumber' => 'required',
             'moderator' => 'required|min:3|max:50'
         ],[
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
@@ -437,6 +457,7 @@ class SeminarController extends Controller
             'instansi_pendukung' => 'Mohon isi Instansi Pendukung',
             'tgl_awal.required' => 'Mohon isi Tanggal Mulai Seminar',
             'tgl_awal.date' => 'Mohon isi tanggal yang valid',
+            // 'tgl_awal.after' => 'Mohon isi tanggal sesudah hari ini',
             'tgl_akhir.required' => 'Mohon isi Tanggal Berakhir Seminar',
             'tgl_akhir.date' => 'Mohon isi tanggal yang valid',
             'tgl_akhir.after_or_equal' => 'Tanggal Berakhir harus sesudah Tanggal Mulai',
@@ -445,37 +466,190 @@ class SeminarController extends Controller
             'jam_akhir.required' => 'Mohon isi Jam Berakhir Seminar',
             'jam_akhir.date_format' => 'Mohon isi dengan format waktu yang valid',
             'jam_akhir.after' => 'Waktu Berakhir harus sesudah Waktu Mulai',
-            //ttd pemangku
+            'ttd_pemangku.required' => 'Mohon isi Penandatangan',
             'prov_penyelenggara.required' => 'Mohon isi Provinsi Lokasi Seminar',
             'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
             'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
             'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
             'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
-            'narasumber.min' => 'Narasumber minimal 3 karakter',
-            'narasumber.max' => 'Narasumber maksimal 50 karakter',
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
             'moderator.max' => 'Moderator maksimal 50 karakter',
 
         ]);
 
+        $dataAwal = SeminarModel::where('id',$id)->first();
 
-        $narasumber = new NarasumberModel;
-        $narasumber->nama = $request->narasumber;
-        $narasumber->save();
+        // dd($dataAwal);
+        $naraAwal = NarasumberModel::where('id_seminar',$id)->get();
 
-        $moderator = new ModeratorModel;
-        $moderator->nama = $request->moderator;
-        $moderator->save();
+        // Dari sini, tambah ke tabel srtf_narasumber dan srtf_peserta_seminar
+        // Kalo ada narasumber baru, sekaligus bikin sertifikat
+        foreach($request->narasumber as $key) {
+            if(!$naraAwal->contains('id_personal',$key)){
+                $nara = new NarasumberModel;
+                $nara->id_seminar = $id;
+                $nara->id_personal = $key;
+                $nara->created_by = Auth::id();
+                $nara->save();
 
-        $data->narasumber = $narasumber->id;
-        $data->moderator = $moderator->id;
-        $request->instansi_penyelenggara = implode(",", $request->instansi_penyelenggara);
-        $request->instansi_pendukung     = implode(",", $request->instansi_pendukung    );
-        // $request->klasifikasi            = implode(",", $request->klasifikasi           );
-        // $request->sub_klasifikasi        = implode(",", $request->sub_klasifikasi       );
-        $request->ttd_pemangku           = implode(",", $request->ttd_pemangku          );
+                $narasumber_seminar = new PesertaSeminar;
+                $c_narasumber = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
+                if($c_narasumber == null) {
+                    $narasumber_seminar->no_urut_peserta = '1';
+                } else {
+                    $narasumber_seminar->no_urut_peserta = $c_narasumber + 1;
+                }
+                // generate no sertifikat
+                $inisiator = '88';
+                $status = '2';
+                $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
+                $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
+                $urutan_seminar = $dataAwal->no_urut;
+
+                $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                // dd($no_sert);
+                $narasumber_seminar->id_peserta = $nara->id;
+                $narasumber_seminar->status = "2";
+                $narasumber_seminar->no_srtf = $no_sert_nara;
+                $narasumber_seminar->id_seminar = $dataAwal->id;
+                $narasumber_seminar->save();
+            }
+        }
+
+        // Dari sini hapus record (cuma softdelete) dari tabel narasumber dan peserta seminar
+        // Kalo ada narasumber yang dikurangi
+        foreach($naraAwal as $key) {
+            if(!in_array($key->id_personal,$request->narasumber)){
+                $naraHapus = NarasumberModel::where('id_personal',$key->id_personal)->first();
+                $naraHapus->deleted_by = Auth::id();
+                $naraHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $naraHapus->save();
+
+                $naraHapus_peserta = PesertaSeminar::where('id_seminar',$id)
+                                        ->where('id_peserta',$key->id)->first();
+                $naraHapus_peserta->deleted_by = Auth::id();
+                $naraHapus_peserta->deleted_at = Carbon::now()->toDateTimeString();
+                $naraHapus_peserta->save();
+            }
+        }
+
+        // Dari sini cek perubahan di instansi penyelenggara
+        $penyAwal = SertInstansiModel::where('id_seminar',$id)
+                    ->where('status','1')->get();
+        foreach($request->instansi_penyelenggara as $key) {
+            if(!$penyAwal->contains('id_instansi',$key)){
+                $penyBaru = new SertInstansiModel;
+                $penyBaru->id_seminar = $id;
+                $penyBaru->id_instansi = $key;
+                $penyBaru->status = '1';
+                $penyBaru->created_by = Auth::id();
+                $penyBaru->save();
+            }
+        }
+
+        // Soft delete kalo ada Penyelenggara yang berkurang
+        foreach($penyAwal as $key) {
+            if(!in_array($key->id_instansi,$request->instansi_penyelenggara)){
+                $penyHapus = SertInstansiModel::where('id_seminar',$id)
+                ->where('id_instansi',$key->id_instansi)->first();
+                $penyHapus->deleted_by = Auth::id();
+                $penyHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $penyHapus->save();
+            }
+        }
+
+        // Dari sini cek perubahan di instansi pendukung
+        $pendAwal = SertInstansiModel::where('id_seminar',$id)
+                    ->where('status','2')->get();
+        foreach($request->instansi_pendukung as $key) {
+            if(!$pendAwal->contains('id_instansi',$key)){
+                $pendBaru = new SertInstansiModel;
+                $pendBaru->id_seminar = $id;
+                $pendBaru->id_instansi = $key;
+                $pendBaru->status = '2';
+                $pendBaru->created_by = Auth::id();
+                $pendBaru->save();
+            }
+        }
+
+        // Soft delete kalo ada Penyelenggara yang berkurang
+        foreach($pendAwal as $key) {
+            if(!in_array($key->id_instansi,$request->instansi_pendukung)){
+                $pendHapus = SertInstansiModel::where('id_seminar',$id)
+                ->where('id_instansi',$key->id_instansi)->first();
+                $pendHapus->deleted_by = Auth::id();
+                $pendHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $pendHapus->save();
+            }
+        }
+
+        // Cek apakah penandatangan ada yang tambah
+        $ttdAwal = TtdModel::where('id_seminar',$id)->get();
+        foreach($request->ttd_pemangku as $key) {
+            if(!$ttdAwal->contains('id_instansi',$key)){
+                $ttdBaru = new TtdModel;
+                $ttdBaru->id_seminar = $id;
+                $ttdBaru->id_instansi = $key;
+                $ttdBaru->created_by = Auth::id();
+                $ttdBaru->save();
+            }
+        }
+        // softdelete kalo penandatangan ada yang berkurang
+        foreach($ttdAwal as $key) {
+            if(!in_array($key->id_instansi,$request->ttd_pemangku)){
+                $ttdHapus = TtdModel::where('id_seminar',$id)
+                ->where('id_instansi',$key->id_instansi)->first();
+                $ttdHapus->deleted_by = Auth::id();
+                $ttdHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $ttdHapus->save();
+            }
+        }
+        // Dari sini pakai logika IF apakah nama moderator berubah
+
+        $modeAwal = ModeratorModel::where('id_seminar',$id)->first();
+        if($request->moderator != $modeAwal->nama){
+            $modeAwal->deleted_by = Auth::id();
+            $modeAwal->deleted_at = Carbon::now()->toDateTimeString();
+            $modeAwal->save();
+            
+            $modeHapus_peserta = PesertaSeminar::where('id_seminar',$id)
+                                    ->where('id_peserta',$modeAwal->id)->first();
+            // dd($modeHapus_peserta);
+            $modeHapus_peserta->deleted_by = Auth::id();
+            $modeHapus_peserta->deleted_at = Carbon::now()->toDateTimeString();
+            $modeHapus_peserta->save();
+
+            $modeBaru = new ModeratorModel;
+            $modeBaru->nama = $request->moderator;
+            $modeBaru->id_seminar = $id;
+            $modeBaru->created_by = Auth::id();
+            $modeBaru->save();
+
+
+            $moderator_seminar = new PesertaSeminar;
+            $c_moderator = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
+                if($c_moderator == null) {
+                    $moderator_seminar->no_urut_peserta = '1';
+                } else {
+                    $moderator_seminar->no_urut_peserta = $c_moderator + 1;
+                }
+
+            // generate no sertifikat
+            $inisiator = '88';
+            $status = '4';
+            $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
+            $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
+            $urutan_seminar = $dataAwal->no_urut;
+            $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.(str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT));
+
+            $moderator_seminar->id_peserta = $modeBaru->id;
+            $moderator_seminar->status = "4";
+            $moderator_seminar->no_srtf = $no_sert_mode;
+            $moderator_seminar->id_seminar = $id;
+            $moderator_seminar->save();
+        }
 
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
@@ -487,8 +661,6 @@ class SeminarController extends Controller
         $data->is_free                   =              $request->is_free                ;
         $data->biaya                     =              $request->biaya                  ;
         $data->inisiator                 =              $request->inisiator              ;
-        $data->instansi_penyelenggara    =              $request->instansi_penyelenggara ;
-        $data->instansi_pendukung        =              $request->instansi_pendukung     ;
         $data->tgl_awal                  =Carbon::parse($request->tgl_awal)              ;
         $data->tgl_akhir                 =Carbon::parse($request->tgl_akhir)             ;
         $data->jam_awal                  =              $request->jam_awal               ;
@@ -500,59 +672,12 @@ class SeminarController extends Controller
         $data->ttd_pemangku              =              $request->ttd_pemangku           ;
 
 
-        $narasumber = new NarasumberModel;
-        $narasumber->nama = $request->narasumber;
-        $narasumber->save();
-
-        $moderator = new ModeratorModel;
-        $moderator->nama = $request->moderator;
-        $moderator->save();
-
-        $data->narasumber = $narasumber->id;
-        $data->moderator = $moderator->id;
 
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
 
-        if($request->store == "draft") {
-            $data->is_actived = "0";
-            $data->status = "draft";
-            $seminar = $data->save();
-
-            $narasumber_seminar = new PesertaSeminar;
-            $narasumber_seminar->id_peserta = $narasumber->id;
-            $narasumber_seminar->status = "2";
-            $narasumber_seminar->id_seminar = $data->id;
-            $narasumber_seminar->save();
-
-            $moderator_seminar = new PesertaSeminar;
-            $moderator_seminar->id_peserta = $moderator->id;
-            $moderator_seminar->status = "4";
-            $moderator_seminar->id_seminar = $data->id;
-            $moderator_seminar->save();
-
-            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
-            "\" berhasil diubah sebagai draft");
-        } else {
-            $data->is_actived = "1";
-            $data->status = "published";
-            $seminar = $data->save();
-
-            $narasumber_seminar = new PesertaSeminar;
-            $narasumber_seminar->id_peserta = $narasumber->id;
-            $narasumber_seminar->status = "2";
-            $narasumber_seminar->id_seminar = $data->id;
-            $narasumber_seminar->save();
-
-            $moderator_seminar = new PesertaSeminar;
-            $moderator_seminar->id_peserta = $moderator->id;
-            $moderator_seminar->status = "4";
-            $moderator_seminar->id_seminar = $data->id;
-            $moderator_seminar->save();
-
-            return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
-            "\" berhasil diubah");
-        }
+        return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+        "\" berhasil diubah");
 
     }
 
@@ -571,11 +696,11 @@ class SeminarController extends Controller
     public function detail($id){
         $seminar = SeminarModel::where('id',$id)->first();
         $bu = BuModel::all()->pluck('nama_bu','id');
-        $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
-        $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
+        $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->where('deleted_at',NULL)->get();
+        $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
         $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
-        $narasumber = NarasumberModel::where('id_seminar',$id)->get();
-        $moderator = ModeratorModel::where('id_seminar',$id)->first();
+        $narasumber = NarasumberModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
+        $moderator = ModeratorModel::where('id_seminar',$id)->where('deleted_at',NULL)->first();
         $personal = Personal::all()->pluck('nama','id');
         // dd($instansi);
         // dd($detailseminar);
@@ -589,6 +714,263 @@ class SeminarController extends Controller
                     ->all();
         return json_encode($cities);
     }
+    public function updateDraft(Request $request) {
+        $id = $request->id;
+        $request->validate([
+            'nama_seminar' => 'required|min:3|max:50',
+            'klasifikasi' => 'required',
+            'sub_klasifikasi' => 'required',
+            'tema' => 'required|min:5|max:200',
+            'kuota' => 'required|numeric|min:5',
+            'skpk_nilai' => 'required|numeric|min:0|max:25',
+            'is_free' => 'required',
+            'biaya' => 'required_if:is_free,==,1',
+            'inisiator' => 'required',
+            'instansi_penyelenggara' => 'required',
+            'instansi_pendukung' => 'required',
+            'tgl_awal' => 'required|date|after:today',
+            'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
+            'jam_awal' => 'required|date_format:H:i',
+            'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
+            'ttd_pemangku' => 'required',
+            'prov_penyelenggara' => 'required',
+            'kota_penyelenggara' => 'required',
+            'lokasi_penyelenggara' => 'required|min:3|max:50',
+            'narasumber' => 'required',
+            'moderator' => 'required|min:3|max:50'
+        ],[
+            'nama_seminar.required' => 'Mohon isi Nama Seminar',
+            'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
+            'nama_seminar.max' => 'Nama Seminar maksimal 50 karakter',
+            'klasifikasi.required' => 'Mohon isi Klasifikasi',
+            'sub_klasifikasi.required' => 'Mohon isi Sub-klasifikasi',
+            'tema.required' => 'Mohon isi Tema Seminar',
+            'tema.min' => 'Tema Seminar minimal 3 karakter',
+            'tema.max' => 'Tema Seminar maksimal 200 karakter',
+            'kuota.required' => 'Mohon isi jumlah Kuota Peserta Seminar',
+            'kuota.numeric' => 'Mohon hanya mengisi dengan angka',
+            'kuota.min' => 'Kuota jumlah peserta minimal 5 orang',
+            'skpk_nilai.required' => 'Mohon isi Nilai SKPK',
+            'skpk_nilai.numeric' => 'Mohon mengisi dengan angka',
+            'skpk_nilai.min' => 'Nilai SKPK minimal 0',
+            'skpk_nilai.max' => 'Nilai SKPK maksimal 25',
+            'is_free' => 'Mohon pilih jenis seminar',
+            'biaya.required_if' => 'Jika seminar berbayar, mohon isi harga',
+            'inisiator.required' => 'Mohon isi Inisiator',
+            'instansi_penyelenggara' => 'Mohon isi Instansi Penyelenggara',
+            'instansi_pendukung' => 'Mohon isi Instansi Pendukung',
+            'tgl_awal.required' => 'Mohon isi Tanggal Mulai Seminar',
+            'tgl_awal.date' => 'Mohon isi tanggal yang valid',
+            'tgl_awal.after' => 'Mohon isi tanggal sesudah hari ini',
+            'tgl_akhir.required' => 'Mohon isi Tanggal Berakhir Seminar',
+            'tgl_akhir.date' => 'Mohon isi tanggal yang valid',
+            'tgl_akhir.after_or_equal' => 'Tanggal Berakhir harus sesudah Tanggal Mulai',
+            'jam_awal.required' => 'Mohon isi Waktu Mulai Seminar',
+            'jam_awal.date_format' => 'Mohon isi dengan format Waktu yang valid',
+            'jam_akhir.required' => 'Mohon isi Jam Berakhir Seminar',
+            'jam_akhir.date_format' => 'Mohon isi dengan format waktu yang valid',
+            'jam_akhir.after' => 'Waktu Berakhir harus sesudah Waktu Mulai',
+            'ttd_pemangku.required' => 'Mohon isi Penandatangan',
+            'prov_penyelenggara.required' => 'Mohon isi Provinsi Lokasi Seminar',
+            'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
+            'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
+            'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
+            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
+            'narasumber.required' => 'Mohon isi Narasumber',
+            'moderator.required' => 'Mohon isi Moderator',
+            'moderator.min' => 'Moderator minimal 3 karakter',
+            'moderator.max' => 'Moderator maksimal 50 karakter',
+
+        ]);
+
+        $dataAwal = SeminarModel::where('id',$id)->first();
+
+        $naraAwal = NarasumberModel::where('id_seminar',$id)->get();
+
+        // dd($naraAwal);
+        // Dari sini, tambah ke tabel srtf_narasumber dan srtf_peserta_seminar
+        // Kalo ada narasumber baru, sekaligus bikin sertifikat
+        foreach($request->narasumber as $key) {
+            if(!$naraAwal->contains('id_personal',$key)){
+                $nara = new NarasumberModel;
+                $nara->id_seminar = $id;
+                $nara->id_personal = $key;
+                $nara->created_by = Auth::id();
+                $nara->save();
+                // print($nara);
+
+                $narasumber_seminar = new PesertaSeminar;
+                $narasumber_seminar->id_peserta = $nara->id;
+                $narasumber_seminar->status = "2";
+                $narasumber_seminar->id_seminar = $dataAwal->id;
+                $narasumber_seminar->save();
+                // print($narasumber_seminar);
+            }
+        }
+        // dd('sip');
+
+        // Dari sini hapus record (cuma softdelete) dari tabel narasumber dan peserta seminar
+        // Kalo ada narasumber yang dikurangi
+        foreach($naraAwal as $key) {
+            if(!in_array($key->id_personal,$request->narasumber)){
+                $naraHapus = NarasumberModel::where('id_personal',$key->id_personal)->first();
+                $naraHapus->deleted_by = Auth::id();
+                $naraHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $naraHapus->save();
+
+                $naraHapus_peserta = PesertaSeminar::where('id_seminar',$id)
+                                        ->where('id_peserta',$key->id)->first();
+                $naraHapus_peserta->deleted_by = Auth::id();
+                $naraHapus_peserta->deleted_at = Carbon::now()->toDateTimeString();
+                $naraHapus_peserta->save();
+            }
+        }
+
+        // Dari sini cek perubahan di instansi penyelenggara
+        $penyAwal = SertInstansiModel::where('id_seminar',$id)
+                    ->where('status','1')->get();
+        foreach($request->instansi_penyelenggara as $key) {
+            if(!$penyAwal->contains('id_instansi',$key)){
+                $penyBaru = new SertInstansiModel;
+                $penyBaru->id_seminar = $id;
+                $penyBaru->id_instansi = $key;
+                $penyBaru->status = '1';
+                $penyBaru->created_by = Auth::id();
+                $penyBaru->save();
+            }
+        }
+
+        // Soft delete kalo ada Penyelenggara yang berkurang
+        foreach($penyAwal as $key) {
+            if(!in_array($key->id_instansi,$request->instansi_penyelenggara)){
+                $penyHapus = SertInstansiModel::where('id_seminar',$id)
+                ->where('id_instansi',$key->id_instansi)->first();
+                $penyHapus->deleted_by = Auth::id();
+                $penyHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $penyHapus->save();
+            }
+        }
+
+        // Dari sini cek perubahan di instansi pendukung
+        $pendAwal = SertInstansiModel::where('id_seminar',$id)
+                    ->where('status','2')->get();
+        foreach($request->instansi_pendukung as $key) {
+            if(!$pendAwal->contains('id_instansi',$key)){
+                $pendBaru = new SertInstansiModel;
+                $pendBaru->id_seminar = $id;
+                $pendBaru->id_instansi = $key;
+                $pendBaru->status = '2';
+                $pendBaru->created_by = Auth::id();
+                $pendBaru->save();
+            }
+        }
+
+        // Soft delete kalo ada Penyelenggara yang berkurang
+        foreach($pendAwal as $key) {
+            if(!in_array($key->id_instansi,$request->instansi_pendukung)){
+                $pendHapus = SertInstansiModel::where('id_seminar',$id)
+                ->where('id_instansi',$key->id_instansi)->first();
+                $pendHapus->deleted_by = Auth::id();
+                $pendHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $pendHapus->save();
+            }
+        }
+
+        // Cek apakah penandatangan ada yang tambah
+        $ttdAwal = TtdModel::where('id_seminar',$id)->get();
+        foreach($request->ttd_pemangku as $key) {
+            if(!$ttdAwal->contains('id_instansi',$key)){
+                $ttdBaru = new TtdModel;
+                $ttdBaru->id_seminar = $id;
+                $ttdBaru->id_instansi = $key;
+                $ttdBaru->created_by = Auth::id();
+                $ttdBaru->save();
+            }
+        }
+        // softdelete kalo penandatangan ada yang berkurang
+        foreach($ttdAwal as $key) {
+            if(!in_array($key->id_instansi,$request->ttd_pemangku)){
+                $ttdHapus = TtdModel::where('id_seminar',$id)
+                ->where('id_instansi',$key->id_instansi)->first();
+                $ttdHapus->deleted_by = Auth::id();
+                $ttdHapus->deleted_at = Carbon::now()->toDateTimeString();
+                $ttdHapus->save();
+            }
+        }
+        // Dari sini pakai logika IF apakah nama moderator berubah
+
+        $modeAwal = ModeratorModel::where('id_seminar',$id)->first();
+        if($request->moderator != $modeAwal->nama){
+            $modeAwal->deleted_by = Auth::id();
+            $modeAwal->deleted_at = Carbon::now()->toDateTimeString();
+            $modeAwal->save();
+            
+            $modeHapus_peserta = PesertaSeminar::where('id_seminar',$id)
+                                    ->where('id_peserta',$modeAwal->id)->first();
+            // dd($modeHapus_peserta);
+            $modeHapus_peserta->deleted_by = Auth::id();
+            $modeHapus_peserta->deleted_at = Carbon::now()->toDateTimeString();
+            $modeHapus_peserta->save();
+
+            $modeBaru = new ModeratorModel;
+            $modeBaru->nama = $request->moderator;
+            $modeBaru->id_seminar = $id;
+            $modeBaru->created_by = Auth::id();
+            $modeBaru->save();
+
+
+            $moderator_seminar = new PesertaSeminar;
+            // $c_moderator = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
+            //     if($c_moderator == null) {
+            //         $moderator_seminar->no_urut_peserta = '1';
+            //     } else {
+            //         $moderator_seminar->no_urut_peserta = $c_moderator + 1;
+            //     }
+
+            // // generate no sertifikat
+            // $inisiator = '88';
+            // $status = '4';
+            // $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
+            // $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
+            // $urutan_seminar = $dataAwal->no_urut;
+            // $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.(str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT));
+
+            $moderator_seminar->id_peserta = $modeBaru->id;
+            $moderator_seminar->status = "4";
+            // $moderator_seminar->no_srtf = $no_sert_mode;
+            $moderator_seminar->id_seminar = $id;
+            $moderator_seminar->save();
+        }
+
+        $data = SeminarModel::find($id);
+        $data->nama_seminar              =              $request->nama_seminar           ;
+        // $data->klasifikasi               =              $request->klasifikasi            ;
+        // $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
+        $data->tema                      =              $request->tema                   ;
+        $data->kuota                     =              $request->kuota                  ;
+        $data->skpk_nilai                =              $request->skpk_nilai             ;
+        $data->is_free                   =              $request->is_free                ;
+        $data->biaya                     =              $request->biaya                  ;
+        $data->inisiator                 =              $request->inisiator              ;
+        $data->tgl_awal                  =Carbon::parse($request->tgl_awal)              ;
+        $data->tgl_akhir                 =Carbon::parse($request->tgl_akhir)             ;
+        $data->jam_awal                  =              $request->jam_awal               ;
+        $data->jam_akhir                 =              $request->jam_akhir              ;
+        // $data->ttd_pemangku              =              $request->ttd_pemangku           ;
+        $data->prov_penyelenggara        =              $request->prov_penyelenggara     ;
+        $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
+        $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
+        $data->ttd_pemangku              =              $request->ttd_pemangku           ;
+
+
+
+        $data->updated_by = Auth::id();
+        $data->updated_at = Carbon::now()->toDateTimeString();
+
+        return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
+        "\" berhasil diubah");
+    }
+
 
     //cetak sertifikat peserta yg dipilih
     public function cetakSertifikat($id){
@@ -646,11 +1028,11 @@ class SeminarController extends Controller
             $data->no_urut = 1;
         }
         $seminar = $data->update();
-        $nara = NarasumberModel::where('id_seminar',$id)->get();
+        $nara = NarasumberModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
         // dd($nara);
         foreach($nara as $key) {
             // dd($key->id);
-            $narasumber = PesertaSeminar::where('id_peserta',$key->id)->first();
+            $narasumber = PesertaSeminar::where('id_peserta',$key->id)->where('deleted_at',NULL)->first();
             // dd($narasumber);
             $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
                 if($c_narasumber == null) {
@@ -669,10 +1051,10 @@ class SeminarController extends Controller
             $narasumber->no_srtf = $no_sert_nara;
             $narasumber->update();
         }
-        $mode = ModeratorModel::where('id_seminar',$id)->get();
+        $mode = ModeratorModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
         // dd($mode);
         foreach($mode as $key) {
-            $moderator = PesertaSeminar::where('id_peserta',$key->id)->first();
+            $moderator = PesertaSeminar::where('id_peserta',$key->id)->where('deleted_at',NULL)->first();
             // dd($narasumber);
             $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
 

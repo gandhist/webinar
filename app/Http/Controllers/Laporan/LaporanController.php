@@ -19,6 +19,7 @@ use App\IsoModel;
 use App\KotaModel;
 use App\ProvinsiModel;
 use App\NegaraModel;
+use App\StatusModel;
 use PDF;
 use Illuminate\Support\Facades\DB;
 
@@ -60,7 +61,8 @@ class LaporanController extends Controller
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
         $negara = NegaraModel::all();
-        return view('laporan.create')->with(compact('scope','standard','provinsi','kota','negara'));
+        $status = StatusModel::all();
+        return view('laporan.create')->with(compact('scope','standard','provinsi','kota','negara','status'));
     }
 
     /**
@@ -108,6 +110,7 @@ class LaporanController extends Controller
 
         $lp = new Laporan;
         $lp->id_bu = $bu->id;
+        $lp->status = $request->status;
         $lp->id_number = $request->id_number;
         $lp->iso_standard = $request->standard;
         $lp->visit_number = $request->visit_number;
@@ -210,8 +213,9 @@ class LaporanController extends Controller
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
         $negara = NegaraModel::all();
+        $status = StatusModel::all();
         $doc = IsoDoc::where('id_iso',$data->iso_standard)->get();
-        return view('laporan.edit')->with(compact('data','scope','standard','id','doc', 'provinsi','kota','negara'));
+        return view('laporan.edit')->with(compact('data','scope','standard','id','doc', 'provinsi','kota','negara','status'));
     }
 
     /**
@@ -263,6 +267,7 @@ class LaporanController extends Controller
         $lp->id_number = $request->id_number;
         
         // $lp->iso_standard = $request->standard;
+        $lp->status = $request->status;
         $lp->visit_number = $request->visit_number;
         $lp->audit_date = $request->tanggal;
         $lp->visit_type = $request->visit_type;
@@ -341,6 +346,7 @@ class LaporanController extends Controller
             $scope->save();
         }
         $iso = IsoModel::where('id_laporan',$lp->id)->first();
+        $iso->status = $request->status;
         $iso->id_laporan = $lp->id;
         $iso->no_sert = $request->id_number;
         $iso->nama_bu = $request->nama_bu;

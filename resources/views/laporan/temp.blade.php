@@ -23,6 +23,19 @@
           resize: none;
           overflow: hidden;
       }
+
+      #watermark {
+        position: fixed;
+        top: 30%;
+        left: 20%;
+        width: 100%;
+        text-align: center;
+        opacity: .4;
+        font-size: 60px;
+        transform: rotate(25deg);
+        transform-origin: 5% 5%;
+        z-index: -1000;
+      }
       
       body {
         margin: 0;
@@ -124,6 +137,11 @@
     <div class="">
 
         <div align=center >
+            <div id="watermark">
+                @if($data->status == 1)
+                  <h1>{{ $data->status_r->nama }}</h1>
+                @endif
+              </div>
             <table>
                 <tr>
                     <td><p></p></td>
