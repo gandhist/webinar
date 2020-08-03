@@ -64,8 +64,8 @@
                                             class="fa fa-plus"></i>
                                         Tambah</a>
                                     <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
-                                            class="fa fa-eye"></i>
-                                        Lihat</button>
+                                            class="fa fa-pencil"></i>
+                                        Edit</button>
                                     <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i
                                             class="fa fa-trash"></i>
                                         Hapus</button>
@@ -79,19 +79,20 @@
                 <table id="data-tables" class="table table-striped table-bordered dataTable customTable" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th style="text-indent: 12px;"><i class="fa fa-check-square-o"></i></th>
+                            <th style="text-indent: 5px;"><i class="fa fa-check-square-o"></i></th>
                             <th style="text-indent: 22px;">No</th>
                             <th>Badan Usaha</th>
                             <th>Iso</th>
                             <th>Id Number</th>
                             <th>Tanggal</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
                      @foreach($data as $key)
                      <tr>
-                         <td>
-                            <input type="checkbox" data-id="{{ $key->id }}" class="selection"
+                         <td style='text-align:center'>
+                            <input  type="checkbox" data-id="{{ $key->id }}" class="selection"
                             id="selection[]" name="selection[]">
                          </td>
                          <td>{{ $loop->iteration }}</td>
@@ -99,6 +100,13 @@
                          <td>{{ $key->iso_r->kode }}</td>
                          <td>{{ $key->id_number }}</td>
                          <td>{{ $key->audit_date }}</td>
+                         <td align='center'>
+                            @if($key->status == 1)
+                                <span class="label label-warning">{{ $key->status_r->nama }}</span>
+                            @elseif($key->status == 2)
+                                <span class="label label-success">{{ $key->status_r->nama }}</span>
+                            @endif
+                        </td>
                      </tr>
                      @endforeach
                     </tbody>

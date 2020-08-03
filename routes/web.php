@@ -15,12 +15,15 @@ Route::get('sertifikat/cari','SertController@cari')->name('cari');
 Route::get('sertifikat/{no_sert}/{email}','SertController@by_sert');
 Route::get('sertifikat_v1/{no_sert}/{email}','SertController@sert_v1');
 Route::get('sertifikat_v2/{no_sert}/{email}','SertController@sert_v2');
+Route::get('sertifikat_v3/{no_sert}/{email}','SertController@sert_v3');
 Route::get('approved/adji','SertController@ttd1');
 Route::get('approved/iman','SertController@ttd2');
 Route::get('approved/budi_susetyo','SertController@ttd3');
 Route::get('approved/adji_n','SertController@ttd4');
 Route::get('approved/viby','SertController@ttd_viby');
 Route::get('approved/irwin','SertController@ttd_irwin');
+Route::get('approved/irwin18','SertController@ttd_irwin18');
+Route::get('approved/ludy18','SertController@ttd_ludy18');
 Route::get('p3sm','SertController@p3sm');
 
 Route::namespace('Laporan')->group(function(){

@@ -94,6 +94,8 @@
                             <a target="_blank" href="{{ url('sertifikat_v2', [$key->no_sertifikat, $key->email]) }}" class="btn btn-outline-success my-2 my-sm-0"> Cetak Sertifikat</a>
                           @elseif($data->id == 2)
                             <a target="_blank" href="{{ url('sertifikat_v1', [$key->no_sertifikat, $key->email]) }}" class="btn btn-outline-success my-2 my-sm-0"> Cetak Sertifikat</a>
+                          @elseif($data->id == 4)
+                            <a target="_blank" href="{{ url('sertifikat_v3', [$key->no_sertifikat, $key->email]) }}" class="btn btn-outline-success my-2 my-sm-0"> Cetak Sertifikat</a>
                           @else
                             <a target="_blank" href="{{ url('sertifikat', [$key->no_sertifikat, $key->email]) }}" class="btn btn-outline-success my-2 my-sm-0"> Cetak Sertifikat</a>
                           @endif

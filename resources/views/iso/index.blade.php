@@ -141,7 +141,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="col-xs-12">
                             <div class="btn-group">
                                 <a href="{{ route('isos.create') }}" class="btn btn-info"> <i
@@ -155,7 +155,7 @@
                                     Hapus</button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </form>
@@ -175,6 +175,7 @@
                 <th>tgl_srtf</th>
                 <th>Tipe_ISO</th>
                 <th>Scope</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -195,6 +196,13 @@
                 <td><span style="display:none;"> {{ $key->tgl_sert }} </span>{{ \Carbon\Carbon::parse($key->tgl_sert)->isoFormat('DD MMMM YYYY') }}</td>
                 <td>{{ $key->tipe_iso }}</td>
                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->scope }}">{{ str_limit($key->scope, 20) }}</td>
+                <td align='center'>
+                    @if($key->status == 1)
+                        <span class="label label-warning">{{ $key->status_r->nama }}</span>
+                    @elseif($key->status == 2)
+                        <span class="label label-success">{{ $key->status_r->nama }}</span>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>
