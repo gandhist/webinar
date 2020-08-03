@@ -260,13 +260,16 @@ a {
                     <tbody>
                     <tr>
                         <td class="padded">
-                          <h1>Selamat!</h1>
-                          <p>Registrasi anda telah di verifikasi</p>
-                          <p>Silahkan masuk dengan data di bawah</p>
-                          <p>Username : {{ $username }}</p>
-                          <p>Password : {{ $password }}</p>
-                          <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
-                          <i>Note: Harap Langsung Ubah Password Anda!</i>
+                        <h1>Halo, {{ $details->peserta_r->nama }}!</h1>
+                        <p>Sertifikat Kamu sudah jadi.</p>
+                        <p>Informasi Tambahan <br>
+                            No Sertifikat : {{ $details->no_srtf }} <br>
+                        </p>     
+                        <p>Untuk Download Sertifikat, silahkan klik tombol di bawah ini.</p>
+                        <p style="text-align:center;"><a href="{{ url('seminar/cetak_sertifikat', $details->no_srtf) }}" class="btn">Download Sertifikat</a></p>
+                          <i>Note: <br>
+                             - Ini adalah email otomatis dari system, tidak perlu membalas email ini! <br>
+                             - Jika Ada kendala hubungi admin </i>
                         </td>
                     </tr>
                     </tbody>
@@ -279,39 +282,7 @@ a {
 
     <div class="spacer">&nbsp;</div>
 
-    <!-- <table class="footer center" width="602" border="0" cellspacing="0" cellpadding="0">
-        <tbody>
-        <tr>
-            <td class="border" colspan="2">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="signature" width="300">
-                <p>
-                    With best regards,<br>
-                    Company Name<br>
-                    +0 (000) 00-00-00, John Doe<br>
-                    </p>
-                <p>
-                    Support: <a class="strong" href="mailto:#" target="_blank">support@support.ru</a>
-                </p>
-            </td>
-            <td class="subscription" width="300">
-                <div class="logo-image">
-                    <a href="https://zavoloklom.github.io/material-design-iconic-font/" target="_blank"><img src="https://zavoloklom.github.io/material-design-iconic-font/icons/mstile-70x70.png" alt="logo-alt" width="70" height="70"></a>
-                </div>
-                <p>
-                    <a class="strong block" href="#" target="_blank">
-                        Unsubscribe
-                    </a>
-                    <span class="hide">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                    <a class="strong block" href="#" target="_blank">
-                        Account Settings
-                    </a>
-                </p>
-            </td>
-        </tr>
-        </tbody>
-    </table> -->
+   
 </center>
 </body>
 </html>

@@ -87,7 +87,7 @@
                         <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
                             <label for="tgl_awal" class="label-control required">Tanggal</label>
                             <input type="text" class="form-control" name="tgl_awal" id="tgl_awal" 
-                            value='{{  date("D, d F Y", strtotime($seminar->tgl_awal)) }}'
+                            value='{{ isset($seminar->tgl_awal) ? \Carbon\Carbon::parse($seminar->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}'
                                 placeholder="" readonly>
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -122,7 +122,7 @@
                         <div class="form-group {{ $errors->first('biaya') ? 'has-error' : '' }} ">
                             <label for="biaya" class="label-control required">Biaya Investasi</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
-                                value="{{ $seminar->is_free == '1' ? $seminar->biaya : 'Gratis' }}" placeholder="" readonly>
+                                value="@if ($seminar->is_free == '0') Gratis @else Rp {{ format_uang($seminar->biaya)}} @endif" placeholder="" readonly>
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
                             </div>
@@ -237,6 +237,7 @@
 
                 {{-- <div class="box-body">     --}}
                   <b>Daftar Peserta</b>
+                  <a href="{{ url('seminar/kirim_email') }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
                   <table id="data-peserta" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                       <thead>
                           <tr role="row">
@@ -255,13 +256,14 @@
                           {{-- <td style='text-align:center;'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                             id="selection[]" name="selection[]"></td> --}}
                           <td style='text-align:center;'>{{ $loop->iteration}}</td>
-                            <td>{{$key->peserta_r->nama}}</td>
+                            <td>{{ $key->peserta_r->nama }}                           
+                            </td>
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == 1) Sudah Bayar @else Belum Bayar @endif </td>
                             <td>
                                 <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                <a target="_blank" href="{{ url('send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
                             </td>
                          </tr>
                          @endforeach
@@ -280,10 +282,17 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script>
-
+var msg = '{{Session::get('alert')}}';
+var exist = '{{Session::has('alert')}}';
+    if(exist){
+        Swal.fire({
+            title: msg,
+            type: 'success',
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#AAA'
+            });
+        }
 </script>
 @endpush

@@ -20,13 +20,13 @@ use Mail;
 use App\NarasumberModel;
 use App\ModeratorModel;
 use DB;
-use App\Mail\EmailLinkSert;
+use App\Mail\EmailLinkSert as MailSertifikat;
 
 class SeminarController extends Controller
 {
     //
     public function index() {
-        $seminar = SeminarModel::where('deleted_at', NULL)->get();
+        $seminar = SeminarModel::all();
         return view('seminar.index')->with(compact('seminar'));
     }
 
@@ -583,9 +583,15 @@ class SeminarController extends Controller
         'instansi','pendukung','detailseminar','narasumber','moderator'));
     }
 
+    public function getKota($id) {
+        $cities = KotaModel::where("provinsi_id",$id)
+                    ->pluck("nama","id")
+                    ->all();
+        return json_encode($cities);
+    }
 
+    //cetak sertifikat peserta yg dipilih
     public function cetakSertifikat($id){
-
         $data = PesertaSeminar::where('no_srtf',$id)->first();
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
@@ -596,30 +602,27 @@ class SeminarController extends Controller
         // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
     }
 
-    public function getKota($id) {
-        $cities = KotaModel::where("provinsi_id",$id)
-                    ->pluck("nama","id")
-                    ->all();
-        return json_encode($cities);
-    }
-
+    // kirim email ke semua peserta
     public function kirimEmail(){
-        $emails = PesertaSeminar::where('is_email_sent','0')->get(['id']);
+        $emails = PesertaSeminar::where('is_email_sent','0')->get(); 
         foreach ($emails as $key) {
-            $data = SertModel::find($key->id);
-            \Mail::to($data->email)->queue(new \App\Mail\EmailLinkSert($data));
+            $data = Peserta::find($key->id_peserta);
+            \Mail::to($data->email)->send(new MailSertifikat($key));
         }
         PesertaSeminar::where('is_email_sent','0')->update(['is_email_sent'=>'1']);
-        return 'job berhasil di buat';
+        return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim");
     }
 
+    // kirim email ke peserta yg dipilih
     public function sendEmail($id){
-        $emails = PesertaSeminar::find($id);
-            // dispatch(new \App\Jobs\KirimEmailJob($key->email));
-            // $data = SertModel::where('email', $key->email)->first();
-            \Mail::to($emails->email)->send(new \App\Mail\EmailLinkSert($emails));
-        return "Email berhasil Di Kirim ke $emails->email";
+        $emails = PesertaSeminar::where('id_peserta',$id)->first();
+        $email = Peserta::where('id',$id)->first();
+   
+        \Mail::to($email->email)->send(new MailSertifikat($emails));
+
+        return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke $email->email");
     }
+
     public function publish($id) {
         $data = SeminarModel::where('id',$id)->first();
         $data->is_actived = "1";
