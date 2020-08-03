@@ -12,16 +12,15 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Tambahkan Seminar
+        Edit Seminar
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
-        <li class="active"><a href="#"> Tambah</a></li>
+        <li class="active"><a href="#"> Edit</a></li>
     </ol>
 </section>
-
 <!-- Main content -->
 <section class="content">
     <!-- Default box -->
@@ -29,7 +28,9 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
-                <form method="POST" action="{{ url('seminar/store') }}" enctype="multipart/form-data">
+
+                <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
+                @method('patch')
                 @csrf
 
                 <div class="row">
@@ -313,13 +314,11 @@
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ $seminar->tgl_awal }}"
-                                placeholder=" HH-BB-TTTT" disabled readonly>
-                            {{--
+                                value="{{ (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) }}"
+                                placeholder=" HH-BB-TTTT" readonly>
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
                             </div>
-                            --}}
                         </div>
                     </div>
                     {{-- Tanggal Mulai --}}
@@ -334,11 +333,9 @@
                                 @else {{ $seminar->tgl_akhir ? (\Carbon\Carbon::parse($seminar->tgl_akhir)->format('j-m-Y')) : '' }}
                                 @endif"
                                 placeholder=" HH-BB-TTTT">
-                            {{--
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
                             </div>
-                            --}}
                         </div>
                     </div>
                     {{-- Akhir Tanggal Akhir --}}
