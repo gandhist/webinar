@@ -32,6 +32,7 @@
                 <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
+                <input type="hidden" name="id" value="$id">
 
                 <div class="row">
 

@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::post('store','SeminarController@store');
 	Route::get('/{id}/edit', 'SeminarController@edit');
 	Route::patch('/{id}/update', 'SeminarController@update');
+	Route::patch('/{id}/update-draft', 'SeminarController@updateDraft');
 	Route::delete('destroy', 'SeminarController@destroy');
 	Route::get('detail/{id}','SeminarController@detail');
 	Route::get('/{id}/publish', 'SeminarController@publish');

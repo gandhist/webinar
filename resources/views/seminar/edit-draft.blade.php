@@ -29,7 +29,7 @@
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
 
-                <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url('seminar/'.$id.'/update-draft') }}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
 
@@ -315,7 +315,7 @@
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
                                 value="{{ (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) }}"
-                                placeholder=" HH-BB-TTTT" readonly>
+                                placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
                             </div>
@@ -553,8 +553,8 @@
 
 
 
-                <button class="btn btn-success" name="store" value="publish">Publish</button>
-                {{--<button class="btn btn-info pull-right" name="store" value="draft">Save</button>--}}
+                {{--<button class="btn btn-success" name="store" value="publish">Publish</button>--}}
+                <button class="btn btn-info pull-right" name="store" value="draft">Save</button>
                 </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
