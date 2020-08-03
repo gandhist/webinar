@@ -22,7 +22,7 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
-        <li class="active"><a href="#"> Edit</a></li>
+        <li class="active"><a href="#"> Detail</a></li>
     </ol>
 </section>
 
@@ -74,7 +74,7 @@
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema</label>
                             <input type="text" id="tema_seminar" class="form-control" name="tema_seminar" placeholder=""
-                                value="{{ $seminar->tema ? $seminar->tema : '' }}" readonly>
+                                value="{{ strip_tags(html_entity_decode($seminar->tema)) }}" readonly>
                             <div id="tema" class="invalid-feedback text-danger">
                                 {{ $errors->first('tema') }}
                             </div>
@@ -261,9 +261,17 @@
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == 1) Sudah Bayar @else Belum Bayar @endif </td>
-                            <td>
-                                <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                            <td> 
+                                @if ($key->is_paid == 1)
+                                    <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                    <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                @else
+                                    <a href="{{ url('seminar/approve', $key->id) }}" class="btn btn-success btn-sm"> Approve</a>
+                                    <button type="button" id="btnBukti"
+                                        onclick='tampilLampiran("{{ asset("$key->bukti_bayar") }}","Bukti Bayar")'
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fa fa-file-pdf-o"></i> Bukti Bayar</button>
+                                @endif
                             </td>
                          </tr>
                          @endforeach
@@ -275,6 +283,29 @@
       </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
 </section>
+
+<!-- Modal Lampiran -->
+<div class="modal fade" id="modalLampiran" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+              <h3 class="modal-title" id="lampiranTitle"></h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                  <iframe src="" id="iframeLampiran" width="100%" height="200px" frameborder="0" allowtransparency="true"></iframe>  
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <!-- End of Modal Lampiran -->
 
 @endsection
 
@@ -294,5 +325,13 @@ var exist = '{{Session::has('alert')}}';
             confirmButtonColor: '#AAA'
             });
         }
+
+// pop up pdf
+function tampilLampiran(url, title) {
+
+    $('#modalLampiran').modal('show');
+    $('#iframeLampiran').attr('src', url);
+    $('#lampiranTitle').html(` <a href="` + url + `" target="_blank" > ` + title + ` </a> `);
+}
 </script>
 @endpush

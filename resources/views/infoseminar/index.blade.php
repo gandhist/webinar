@@ -40,7 +40,7 @@
             {{ $select->peserta_r->nama }} 
             @endforeach
           </td>
-          <td>Rp. {{ $key->is_free }}</td>
+          <td>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
       </tr>
       @endforeach     
     </tbody>

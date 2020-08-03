@@ -13,7 +13,7 @@
       @endif
 
       @if(session()->get('pesan'))
-        <div class="alert alert-warning">{{ session()->get('pesan') }}
+        <div class="alert alert-warning">{!! session()->get('pesan') !!}
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
         </div>
       @endif
@@ -81,7 +81,7 @@
         </div>
 
         <button type="submit" class="btn btn-outline-info pull-center">Daftar</button>
-        <a href="{{ url('registrasi') }}" class="btn btn-outline-info">Batal</a>
+        <a href="{{ url('infoseminar') }}" class="btn btn-outline-info">Batal</a>
       </form>
     </main>
         
