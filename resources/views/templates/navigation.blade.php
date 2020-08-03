@@ -76,6 +76,7 @@
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
+      @if(Auth::user()->role_id==1)
 
       <li class="treeview">
         <a href="{{ url('seminar') }}">
@@ -88,6 +89,25 @@
           <i class="fa fa-certificate"></i> <span>ISO</span>
         </a>
       </li>
+
+      <li class="treeview">
+        <a href="{{ url('instansi') }}">
+        <i class="fa fa-building-o" aria-hidden="true"></i></i> <span>Instansi</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('personals') }}">
+          <i class="fa fa-user"></i> <span>Personal</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('pesertas') }}">
+          <i class="fa fa-user"></i> <span>Peserta</span>
+        </a>
+      </li>
+      @endif
       <li class="treeview">
         <a href="{{ url('laporan') }}">
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>
@@ -117,7 +137,6 @@
         </ul>
       </li>
       @endif
-
 
     </ul>
   </section>

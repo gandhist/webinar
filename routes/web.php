@@ -10,6 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::auth();
+Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
+Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
+Route::get('infoseminar/daftar/{id}','InfoSeminarController@daftar');
+Route::post('infoseminar/store/{id}','InfoSeminarController@store');
+
+Route::get('registrasi','RegistController@index');
+Route::post('registrasi/store','RegistController@store');
+
+// Route::group(['middleware' => 'auth'], function () {
+	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
+	Route::post('profile', 'ProfileController@update')->name('profile.update');
+	Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
+	Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
+// });
 
 Route::get('sertifikat/cari','SertController@cari')->name('cari');
 Route::get('sertifikat/{no_sert}/{email}','SertController@by_sert');
@@ -37,29 +52,88 @@ Route::namespace('Iso')->group(function(){
 	Route::get('iso/print/{id}', 'IsoController@print');
 });
 
-Route::get('registrasi','RegistController@index');
-Route::post('registrasi/store','RegistController@store');
 
-Route::auth();
 
 Route::group(['middleware' => 'auth'], function () {
-Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
-Route::get('kirim_email','SertController@kirimEmail');
-Route::get('send_email/{id}','SertController@sendEmail');
+// Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
+// Route::get('kirim_email','SertController@kirimEmail');
+// Route::get('send_email/{id}','SertController@sendEmail');
 
-Route::group(['prefix' => 'seminar'], function () {
-	Route::get('/','SeminarController@index');
+// Seminar
+
+// Route::group(['prefix' => 'seminar'], function () {
+// 	Route::get('/','SeminarController@index');
+// 	Route::get('create','SeminarController@create');
+// 	Route::post('store','SeminarController@store');
+// 	Route::get('detail/{id}','SeminarController@detail');
+// 	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+// });
+
+Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
+	Route::get('/', 'SeminarController@index');
 	Route::get('create','SeminarController@create');
+	Route::post('store','SeminarController@store');
+	Route::get('/{id}/edit', 'SeminarController@edit');
+	Route::patch('/{id}/update', 'SeminarController@update');
+	Route::delete('destroy', 'SeminarController@destroy');
 	Route::get('detail/{id}','SeminarController@detail');
-	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
+	Route::get('/{id}/publish', 'SeminarController@publish');
+	Route::get('create/getKota/{id}','SeminarController@getKota');
+	Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat')->name('cetak_sertifikat');
+	Route::get('kirim_email','SeminarController@kirimEmail');
+	Route::get('send_email/{id}','SeminarController@sendEmail');
+
 });
+// Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
+// 	Route::get('kirim_email','SeminarController@kirimEmail');
+// 	Route::get('send_email/{id}','SeminarController@sendEmail');
+
+// End Seminar
 
 Route::namespace('Iso')->group(function(){
 	Route::post('iso/destroy', 'IsoController@destroy');
 	Route::resource('isos', 'IsoController');
 });
 
+// Personal 
+Route::group(['middleware' => 'auth.admin','prefix' => 'personals'], function () {
+	Route::get('/','PersonalController@index');
+	Route::get('/create','PersonalController@create');
+	Route::post('/store','PersonalController@store');
+	Route::patch('/update','PersonalController@update');
+	Route::get('/create/getKota/{id}','PersonalController@getKota');
+	Route::get('/{id}/edit','PersonalController@edit');
+    Route::get('/{id}','PersonalController@show');
+	Route::delete('/destroy', 'PersonalController@destroy');
+});
+// End Personal
+
+// Peserta
+Route::group(['middleware' => 'auth.admin', 'prefix' => 'pesertas'], function () {
+	Route::get('/','PesertaController@index');
+    Route::get('/{id}','PesertaController@show');
+	Route::patch('/update','PesertaController@update');
+	Route::get('/create/getKota/{id}','PesertaController@getKota');
+	Route::get('/{id}/edit','PesertaController@edit');
 	
+});
+// End Peserta
+
+// Instansi 
+Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () {
+	Route::get('/','InstansiController@index');
+	Route::get('/create','InstansiController@create');
+	Route::post('/store','InstansiController@store');
+	Route::patch('/update','InstansiController@update');
+	Route::get('/create/getKota/{id}','InstansiController@getKota');
+	Route::get('/{id}/edit','InstansiController@edit');
+    Route::get('/{id}','InstansiController@show');
+	Route::delete('/destroy','InstansiController@destroy');
+});
+// End Instansi
+
+
+
 	Route::group(['middleware' => 'auth.input'], function () {
 		Route::get('', 'HomeController@index');
 	});
@@ -81,10 +155,12 @@ Route::namespace('Iso')->group(function(){
 
 
 
+
+
 // Report
 
 Route::group(['prefix' => 'report'], function () {
-	
+
 });
 
 

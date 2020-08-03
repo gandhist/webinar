@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Peserta;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Intervention\Image\ImageManagerStatic as Image;
+use File;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailRegist;
 
 class RegistController extends Controller
 {
@@ -38,45 +43,67 @@ class RegistController extends Controller
      */
     public function store(Request $request)
     {
-
         // validasi form
         $request->validate([
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'email' => 'unique:srtf_peserta'
+            'email' => 'unique:srtf_peserta',
+            'no_hp' => 'unique:srtf_peserta'
         ],[
             'foto.mimes' => 'Format Foto Harus JPG atau PNG',
             'foto.max' => 'Maksimal Ukuran Foto 2MB',
             'foto.image' => 'Hanya Upload foto',
-            'email.unique' => 'Email Sudah terdaftar!!'
+            'email.unique' => 'Email Sudah terdaftar!!',
+            'no_hp.unique' => 'No Hp Sudah terdaftar!!'
         ]);
         // simpan data peserta
-        $data = new Peserta;
-        $data->nama = $request->nama;
-        $data->no_hp = $request->no_hp;
-        $data->email = $request->email;
-        $data->pekerjaan = $request->pekerjaan;
-        $data->instansi = $request->instansi;
+        // $data = new Peserta;
+        $data['nama'] = $request->nama;
+        $data['no_hp'] = $request->no_hp;
+        $data['email'] = $request->email;
+        $data['pekerjaan'] = $request->pekerjaan;
+        $data['instansi'] = $request->instansi;
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        if ($files = $req->file('foto')) {
-            $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
-            $file = "Lampiran_bpjs_kes_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $file);
-            $data->foto = $dir_name.$file;
+        if ($files = $request->file('foto')) {
+            $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+            if (!file_exists($destinationPath)) {
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
+            $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+            $resize_image = Image::make($files);
+            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $temp = $destinationPathTemp.$file;
+            rename($temp, $destinationFile);
+            $data['foto'] = $dir_name."/".$file;
         }
-        $peserta = $data->save();
+        $peserta = Peserta::create($data);
         $password = str_random(8);
+        // $password = '123456'; // buat test masih hardcode
+      
         if ($peserta) {
-            $user = new User;
-            $user->username = strtolower($request->email);
-            $user->email = strtolower($request->email);
-            $user->password = Hash::make($password);
-            $user->name = $request->nama;
-            $user->role_id = 2;
-            $user->is_active = 1;
-        }
-        return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
+            $data['username'] = strtolower($request->nama);
+            $data['email'] = strtolower($request->email);
+            $data['password'] = Hash::make($password);
+            $data['name'] = $request->nama;
+            $data['role_id'] = 2;
+            $data['is_active'] = 1;
+            $user = User::create($data);
+           
+            $peserta_id['user_id'] = $user->id;
+            
+            Peserta::find($peserta->id)->update($peserta_id);
 
+            $pesan = [
+                'username' => strtolower($request->nama),
+                'password' => $password
+            ];
+            $email = strtolower($request->email);
+            Mail::to($email)->send(new EmailRegist($pesan)); // belum fix
+        }
+   
+        return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
     }
 
     /**

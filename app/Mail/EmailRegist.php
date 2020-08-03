@@ -11,14 +11,15 @@ class EmailRegist extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $pesan;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($pesan)
     {
-        //
+        $this->pesan = $pesan;
     }
 
     /**
@@ -28,6 +29,6 @@ class EmailRegist extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mail.signup')->with(['username' => $this->pesan['username'],'password' => $this->pesan['password'] ])->subject('Verification Email P3SM');
     }
 }
