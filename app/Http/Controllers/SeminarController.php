@@ -696,11 +696,11 @@ class SeminarController extends Controller
     public function detail($id){
         $seminar = SeminarModel::where('id',$id)->first();
         $bu = BuModel::all()->pluck('nama_bu','id');
-        $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
-        $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
+        $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->where('deleted_at',NULL)->get();
+        $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
         $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
-        $narasumber = NarasumberModel::where('id_seminar',$id)->get();
-        $moderator = ModeratorModel::where('id_seminar',$id)->first();
+        $narasumber = NarasumberModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
+        $moderator = ModeratorModel::where('id_seminar',$id)->where('deleted_at',NULL)->first();
         $personal = Personal::all()->pluck('nama','id');
         // dd($instansi);
         // dd($detailseminar);
@@ -779,9 +779,9 @@ class SeminarController extends Controller
 
         $dataAwal = SeminarModel::where('id',$id)->first();
 
-        // dd($dataAwal);
         $naraAwal = NarasumberModel::where('id_seminar',$id)->get();
 
+        // dd($naraAwal);
         // Dari sini, tambah ke tabel srtf_narasumber dan srtf_peserta_seminar
         // Kalo ada narasumber baru, sekaligus bikin sertifikat
         foreach($request->narasumber as $key) {
@@ -791,30 +791,17 @@ class SeminarController extends Controller
                 $nara->id_personal = $key;
                 $nara->created_by = Auth::id();
                 $nara->save();
+                // print($nara);
 
-                // $narasumber_seminar = new PesertaSeminar;
-                // $c_narasumber = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
-                // if($c_narasumber == null) {
-                //     $narasumber_seminar->no_urut_peserta = '1';
-                // } else {
-                //     $narasumber_seminar->no_urut_peserta = $c_narasumber + 1;
-                // }
-                // // generate no sertifikat
-                // $inisiator = '88';
-                // $status = '2';
-                // $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
-                // $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
-                // $urutan_seminar = $dataAwal->no_urut;
-
-                // $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-                // dd($no_sert);
+                $narasumber_seminar = new PesertaSeminar;
                 $narasumber_seminar->id_peserta = $nara->id;
                 $narasumber_seminar->status = "2";
-                // $narasumber_seminar->no_srtf = $no_sert_nara;
                 $narasumber_seminar->id_seminar = $dataAwal->id;
                 $narasumber_seminar->save();
+                // print($narasumber_seminar);
             }
         }
+        // dd('sip');
 
         // Dari sini hapus record (cuma softdelete) dari tabel narasumber dan peserta seminar
         // Kalo ada narasumber yang dikurangi
@@ -1038,11 +1025,11 @@ class SeminarController extends Controller
             $data->no_urut = 1;
         }
         $seminar = $data->update();
-        $nara = NarasumberModel::where('id_seminar',$id)->get();
+        $nara = NarasumberModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
         // dd($nara);
         foreach($nara as $key) {
             // dd($key->id);
-            $narasumber = PesertaSeminar::where('id_peserta',$key->id)->first();
+            $narasumber = PesertaSeminar::where('id_peserta',$key->id)->where('deleted_at',NULL)->first();
             // dd($narasumber);
             $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
                 if($c_narasumber == null) {
@@ -1061,10 +1048,10 @@ class SeminarController extends Controller
             $narasumber->no_srtf = $no_sert_nara;
             $narasumber->update();
         }
-        $mode = ModeratorModel::where('id_seminar',$id)->get();
+        $mode = ModeratorModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
         // dd($mode);
         foreach($mode as $key) {
-            $moderator = PesertaSeminar::where('id_peserta',$key->id)->first();
+            $moderator = PesertaSeminar::where('id_peserta',$key->id)->where('deleted_at',NULL)->first();
             // dd($narasumber);
             $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
 
