@@ -16,20 +16,26 @@
   <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
     <thead>
       <tr>
-        <th>Title </th>
+        <th style="width:2%;">No </th>
+        <th>Title Seminar </th>
         <th>Tema :</th>
         <th>Tanggal :</th>
         <th>Tempat :</th>
         <th>Narasumber :</th>
         <th>Biaya :</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       @foreach ($data as $key)
       <tr>
-          <td>{{ $loop->iteration}}. {{ $key->nama_seminar }} </td>
-          <td><a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-            data-placement="top" title="Lihat Detail">{{ strip_tags(html_entity_decode($key->tema)) }}</a></td>
+          <td>{{ $loop->iteration}}</td>
+          <td>{{ $key->nama_seminar }}</td>
+          {{-- <td>
+            <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+            data-placement="top" title="Lihat Detail">{{ strip_tags(html_entity_decode($key->tema)) }}</a>
+          </td> --}}
+          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}
@@ -41,6 +47,11 @@
             @endforeach
           </td>
           <td>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
+          <td>
+            <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
+            <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+              data-placement="top" title="Lihat Detail">Detail</a>
+          </td>
       </tr>
       @endforeach     
     </tbody>
