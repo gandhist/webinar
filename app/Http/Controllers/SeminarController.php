@@ -1075,14 +1075,14 @@ class SeminarController extends Controller
     }
 
     // kirim email ke semua peserta
-    public function kirimEmail(){
-        $emails = PesertaSeminar::where('is_email_sent','0')->where('is_paid','=', '1')->get(); 
+    public function kirimEmail($id){
+        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=', '1')->orWhereNull('is_paid')->get();      
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
             \Mail::to($data->email)->send(new MailSertifikat($key));
         }
         PesertaSeminar::where('is_email_sent','0')->update(['is_email_sent'=>'1']);
-        return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim");
+        return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke semua peserta");
     }
 
     // kirim email ke peserta yg dipilih
@@ -1171,6 +1171,8 @@ class SeminarController extends Controller
 
     public function approve($id){
         $seminar = PesertaSeminar::where('id',$id)->first();
+        $nama_peserta = Peserta::where('id', '=',$seminar['id_peserta'])->first();
+       
         $urutan_seminar = SeminarModel::select('no_urut')->where('id', '=',$seminar->id_seminar)->first();
         $tanggal = SeminarModel::select('tgl_awal')->where('id', '=',$seminar->id_seminar)->first();
         
@@ -1181,7 +1183,6 @@ class SeminarController extends Controller
         } else {
             $data->no_urut_peserta = $urut + 1;
         }
-        $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
 
         // generate no sertifikat
         $inisiator = '88';
@@ -1197,7 +1198,7 @@ class SeminarController extends Controller
         $data->approved_at = Carbon::now()->toDateTimeString();
         $data = $data->save();
 
-        return redirect()->back()->with('alert',"Peserta berhasil di approve");
+        return redirect()->back()->with('alert',"Peserta \"".$nama_peserta['nama']."\" berhasil di approve");
     }
 
 
