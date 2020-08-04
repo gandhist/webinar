@@ -1078,7 +1078,7 @@ class SeminarController extends Controller
             $data->no_urut = 1;
         }
         $seminar = $data->update();
-        $nara = PesertaSeminar::where('id_seminar',$id)->where('deleted_at',NULL)->get();
+        $nara = PesertaSeminar::where('id_seminar',$id)->where('deleted_at',NULL)->where('status','2')->get();
         // dd($nara);
         foreach($nara as $key) {
             // dd($key->id);
@@ -1100,6 +1100,30 @@ class SeminarController extends Controller
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber->no_urut_peserta, 3, "0", STR_PAD_LEFT);
             $narasumber->no_srtf = $no_sert_nara;
             $narasumber->update();
+        }
+        $mode = PesertaSeminar::where('id_seminar',$id)->where('status','4')->where('deleted_at',NULL)->get();
+        // dd($nara);
+        foreach($mode as $key) {
+            // dd($key->id);
+            $moderator = PesertaSeminar::where('id_peserta',$key->id_peserta)->where('deleted_at',NULL)
+                                ->where('status','4')->first();
+            $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
+            if($c_moderator == null) {
+                    $moderator->no_urut_peserta = '1';
+                } else {
+                    // dd($moderator);
+                    $moderator->no_urut_peserta = $c_moderator + 1;
+                }
+            // generate no sertifikat
+            $inisiator = '88';
+            $status = '2';
+            $tahun = date("y",strtotime($data->tgl_awal)); //substr($request->tgl_awal,2,2);
+            $bulan = date("m",strtotime($data->tgl_awal)); //substr($request->tgl_awal,5,2);
+            $urutan_seminar = $data->no_urut;
+
+            $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+            $moderator->no_srtf = $no_sert_nara;
+            $moderator->update();
         }
         // $mode = PesertaSeminar::where('id_peserta',$key->id_peserta)->where('deleted_at',NULL)
         //                 ->where('status','4')->first();
