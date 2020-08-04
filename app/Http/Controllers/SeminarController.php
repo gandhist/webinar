@@ -1165,32 +1165,6 @@ class SeminarController extends Controller
             $moderator->no_srtf = $no_sert_nara;
             $moderator->update();
         }
-        // $mode = PesertaSeminar::where('id_peserta',$key->id_peserta)->where('deleted_at',NULL)
-        //                 ->where('status','4')->first();
-        // // dd($mode);
-        // foreach($mode as $key) {
-        //     $moderator = PesertaSeminar::where('id_peserta',$key->id_peserta)->where('deleted_at',NULL)->first();
-        //     // dd($narasumber);
-        //     $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
-
-        //     // dd($c_moderator);
-        //     if($c_moderator == null) {
-        //             $moderator->no_urut_peserta = '1';
-        //         } else {
-        //             $moderator->no_urut_peserta = $c_moderator + 1;
-        //         }
-        //     // dd($moderator->no_urut_peserta);
-        //     // generate no sertifikat
-        //     $inisiator = '88';
-        //     $status = '4';
-        //     $tahun = date("y",strtotime($data->tgl_awal)); //substr($request->tgl_awal,2,2);
-        //     $bulan = date("m",strtotime($data->tgl_awal)); //substr($request->tgl_awal,5,2);
-        //     $urutan_seminar = $data->no_urut;
-
-        //     $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-        //     $moderator->no_srtf = $no_sert_mode;
-        //     $moderator->update();
-        // }
         return redirect('/seminar')
         ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
     }
