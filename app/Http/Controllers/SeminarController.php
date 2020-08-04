@@ -258,7 +258,7 @@ class SeminarController extends Controller
                 // $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
                 $moderator_seminar->id_peserta = $mode->id;
-                $moderator_seminar->status = "2";
+                $moderator_seminar->status = "4";
                 // $moderator_seminar->no_srtf = $no_sert_nara;
                 $moderator_seminar->id_seminar = $data->id;
                 $moderator_seminar->save();
@@ -745,10 +745,14 @@ class SeminarController extends Controller
         $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->where('deleted_at',NULL)->get();
         $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
         $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
-        $narasumber = NarasumberModel::where('id_seminar',$id)->where('deleted_at',NULL)->get();
-        $moderator = ModeratorModel::where('id_seminar',$id)->where('deleted_at',NULL)->first();
+
+        $nara = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
+        $mode = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');
+
+        $narasumber = Peserta::whereIn('id',$nara)->where('deleted_at',NULL)->get();
+        $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',NULL)->get();
+
         $personal = Personal::all()->pluck('nama','id');
-        // dd($instansi);
         // dd($detailseminar);
         return view('seminar.detail')->with(compact('seminar','bu','personal',
         'instansi','pendukung','detailseminar','narasumber','moderator'));

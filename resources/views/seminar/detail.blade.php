@@ -137,15 +137,12 @@
                       <label for="narasumber" class="label-control required">Narasumber</label>
                         <div class="row">
                             @foreach($narasumber as $key)
-                                @if(isset($personal[$key->id_personal]))
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" readonly class="form-control"
-                                            value="{{$personal[$key->id_personal]}}">
-                                        </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control"
+                                        value="{{$key->nama}}">
                                     </div>
-                                @else
-                                @endif
+                                </div>
                             @endforeach
                         </div>
                       <div id="narasumber" class="invalid-feedback text-danger">
@@ -157,8 +154,18 @@
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }} ">
                       <label for="moderator" class="label-control required">Moderator</label>
-                      <input type="text" class="form-control" name="moderator" id="moderator" value="{{isset($moderator->nama) ? $moderator->nama : ''}}"
-                                placeholder="" readonly>
+                      
+                        <div class="row">
+                            @foreach($moderator as $key)
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control"
+                                        value="{{$key->nama}}">
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
                       <div id="moderator" class="invalid-feedback text-danger">
                           {{ $errors->first('moderator') }}
                       </div>
