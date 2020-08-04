@@ -457,13 +457,27 @@
                         <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
-                                @foreach($personal as $key)
-                                    @if(!( $moderator->contains('id_personal',$key->id) ))
+                                @if(old('narasumber'))
+                                    @if(is_array(old('narasumber')))    
+                                        @foreach($personal as $key)
+                                            <option value="{{$key->id}}"
+                                            {{ in_array($key->id, old('narasumber')) ? 'selected=true' : "" }}>
+                                            {{ $key->nama }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($personal as $key)
+                                            <option value="{{$key->id}}"
+                                            {{ in_array($key->id, array(old('narasumber'))) ? 'selected=true' : "" }}>
+                                            {{ $key->nama }}</option>
+                                        @endforeach
+                                    @endif
+                                @else
+                                    @foreach($personal as $key)
                                         <option value="{{$key->id}}"
                                         {{ $narasumber->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
                                         {{ $key->nama }}</option>
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                @endif
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -479,13 +493,71 @@
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
                             <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
-                                @foreach($personal as $key)
-                                    @if(!( $narasumber->contains('id_personal',$key->id) ))
-                                        <option value="{{$key->id}}"
-                                        {{ $moderator->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
-                                        {{ $key->nama }}</option>
+                                @if(old('narasumber'))
+                                    @if(is_array(old('narasumber')))
+                                        @if(old('moderator'))
+                                            @if(is_array(old('moderator')))
+                                                @foreach($personal as $key) 
+                                                    @if(!( in_array($key->id, old('narasumber')) ))
+                                                        <option value="{{$key->id}}"
+                                                        {{ in_array($key->id, old('moderator')) ? 'selected=true' : "" }}>
+                                                        {{ $key->nama }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @foreach($personal as $key) 
+                                                    @if(!( in_array($key->id, old('narasumber')) ))
+                                                        <option value="{{$key->id}}"
+                                                        {{ in_array($key->id, array(old('moderator'))) ? 'selected=true' : "" }}>
+                                                        {{ $key->nama }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @else
+                                            @foreach($personal as $key) 
+                                                @if(!( in_array($key->id, old('narasumber')) ))
+                                                    <option value="{{$key->id}}" }}>
+                                                    {{ $key->nama }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    @else
+                                        @if(old('moderator'))
+                                            @if(is_array(old('moderator')))
+                                                @foreach($personal as $key) 
+                                                    @if(!( in_array($key->id, array(old('narasumber'))) ))
+                                                        <option value="{{$key->id}}"
+                                                        {{ in_array($key->id, old('moderator')) ? 'selected=true' : "" }}>
+                                                        {{ $key->nama }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @foreach($personal as $key) 
+                                                    @if(!( in_array($key->id, array(old('narasumber'))) ))
+                                                        <option value="{{$key->id}}"
+                                                        {{ in_array($key->id, array(old('moderator'))) ? 'selected=true' : "" }}>
+                                                        {{ $key->nama }}</option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @else
+                                            @foreach($personal as $key) 
+                                                @if(!( in_array($key->id, array(old('narasumber'))) ))
+                                                    <option value="{{$key->id}}" }}>
+                                                    {{ $key->nama }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                     @endif
-                                @endforeach
+                                @else
+                                    @foreach($personal as $key) 
+                                        @if(!( $narasumber->contains('id_personal',$key->id) ))
+                                            <option value="{{$key->id}}"
+                                            {{ $moderator->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
+                                            {{ $key->nama }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                             <div id="moderator" class="invalid-feedback text-danger">
                                 {{ $errors->first('moderator') }}

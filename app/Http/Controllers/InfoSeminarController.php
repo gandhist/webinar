@@ -66,24 +66,26 @@ class InfoSeminarController extends Controller
         // } else {
         //     $urutan_seminar = 1;
         // }
-        $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
         $data = new PesertaSeminar;
-        $urut = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for peserta
-        if($urut == null) {
-            $data->no_urut_peserta = '1';
-        } else {
-            $data->no_urut_peserta = $urut + 1;
+        if($is_free['is_free'] == '0'){
+            $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
+            $urut = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for peserta
+            if($urut == null) {
+                $data->no_urut_peserta = '1';
+            } else {
+                $data->no_urut_peserta = $urut + 1;
+            }
+            $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
+            // generate no sertifikat
+            $inisiator = '88';
+            $status = '1';
+            $tahun = substr($tanggal['tgl_awal'],2,2);
+            $bulan = substr($tanggal['tgl_awal'],5,2);
+
+
+            $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
         }
-        $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
-        // generate no sertifikat
-        $inisiator = '88';
-        $status = '1';
-        $tahun = substr($tanggal['tgl_awal'],2,2);
-        $bulan = substr($tanggal['tgl_awal'],5,2);
-
-
-        $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-
+        
         $data->id_seminar = $id;
         $data->id_peserta = $peserta['id'];
         if($is_free['is_free'] == '0'){
