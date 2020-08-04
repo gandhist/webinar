@@ -464,26 +464,35 @@ class SeminarController extends Controller
 
             $narasumber = Peserta::whereIn('id',$nara)->where('deleted_at',NULL)->get();
             $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',NULL)->get();
-            // dd($pers);
+            // dd($narasumber);
             return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal','inisiator','pendukungArr','pimpinanArr',
                 'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
         } else {
 
-        $instansi = BuModel::all();
-        $personal = Personal::all();
-        $inisiator = InstansiModel::all();
-        $pendukungArr = BuModel::pluck('nama_bu','id');
-        $pimpinanArr = BuModel::pluck('nama_pimp','id');
+            $instansi = BuModel::all();
+            $personal = Personal::all();
+            $pers = Personal::pluck('nama','id');
+            $inisiator = InstansiModel::all();
+            $pendukungArr = BuModel::pluck('nama_bu','id');
+            $pimpinanArr = BuModel::pluck('nama_pimp','id');
+    
+            //
+            $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
+            $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
+            $ttd = TtdModel::where('id_seminar',$id)->get();
+            $provinsi = ProvinsiModel::all();
+            $kota = KotaModel::all();
+            // $narasumber = NarasumberModel::where('id_seminar',$id)->get();
+            // $moderator = ModeratorModel::where('id_seminar',$id)->first();
 
-        //
-        $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
-        $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
-        $ttd = TtdModel::where('id_seminar',$id)->get();
-        $provinsi = ProvinsiModel::all();
-        $kota = KotaModel::all();
-        $narasumber = NarasumberModel::where('id_seminar',$id)->get();
-        $moderator = ModeratorModel::where('id_seminar',$id)->first();
-        return view('seminar.edit-draft')->with(compact('id','seminar','instansi','personal','inisiator','pendukungArr','pimpinanArr',
+
+            $nara = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
+            $mode = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');
+
+            $narasumber = Peserta::whereIn('id',$nara)->where('deleted_at',NULL)->get();
+            $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',NULL)->get();
+            
+        return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal','inisiator','pendukungArr','pimpinanArr',
             'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
         }
     }

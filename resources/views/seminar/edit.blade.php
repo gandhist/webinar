@@ -208,7 +208,9 @@
                                     @endforeach
                                 @else
                                     @foreach($inisiator as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama }}</option>
+                                        <option value="{{ $key->id }}"
+                                            selected
+                                            >{{ $key->nama }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -227,15 +229,17 @@
                             class="form-control to-pimpinan" multiple>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
-                                        @if(! (collect(old('instansi_pendukung'))->contains($key->id)) )
-                                            <option value="{{ $key->id }}"
-                                            {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "selected" : "" }}>
-                                            {{ $key->nama_bu }}</option>
-                                        @endif
+                                        <option value="{{ $key->id }}"
+                                        {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
+                                        {{ $key->nama_bu }}</option>
                                     @endforeach
                                 @else
                                     @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                        @if($penyelenggara->contains('id_instansi',$key->id))
+                                            <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
+                                        @elseif(!$pendukung->contains('id_instansi',$key->id))
+                                            <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                        @endif
                                     @endforeach
                                 @endif
                             </select>
@@ -253,12 +257,18 @@
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
                             class="form-control to-pimpinan" multiple>
-                            @if(old('instansi_penyelenggara'))
+                            @if(old('instansi_pendukung'))
                                 @foreach($instansi as $key)
-                                    @if(! (collect(old('instansi_penyelenggara'))->contains($key->id)) )
-                                        <option value="{{ $key->id }}"
-                                        {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
+                                    <option value="{{ $key->id }}"
+                                    {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
+                                    {{ $key->nama_bu }}</option>
+                                @endforeach
+                            @else
+                                @foreach($instansi as $key)
+                                    @if($pendukung->contains('id_instansi',$key->id))
+                                        <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
+                                    @elseif(!$penyelenggara->contains('id_instansi',$key->id))
+                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
                                     @endif
                                 @endforeach
                             @endif
@@ -282,7 +292,7 @@
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_awal') }}"
+                                value="{{ (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) }}"
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -297,7 +307,9 @@
                             <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_akhir') }}"
+                                value="@if(old('tgl_akhir')) {{old('tgl_akhir')}}
+                                @else {{ $seminar->tgl_akhir ? (\Carbon\Carbon::parse($seminar->tgl_akhir)->format('j-m-Y')) : '' }}
+                                @endif"
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
@@ -312,7 +324,9 @@
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_awal') }}"
+                                value="@if(old('jam_awal')) {{old('jam_awal')}}
+                                @else {{ $seminar->jam_awal ? \Carbon\Carbon::parse($seminar->jam_awal)->format( 'H:i' ) : '' }}
+                                @endif"
                                 placeholder=" 00:00">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_awal') }}
@@ -327,7 +341,9 @@
                             <label for="jam_akhir" class="label-control required">Jam Akhir</label>
                             <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_akhir') }}"
+                                value="@if(old('jam_akhir')) {{old('jam_akhir')}}
+                                @else {{ $seminar->jam_akhir ? \Carbon\Carbon::parse($seminar->jam_akhir)->format( 'H:i' ) : '' }}
+                                @endif"
                                 placeholder=" 00:00">
                             <div id="jam_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_akhir') }}
@@ -341,26 +357,13 @@
                         <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
                             <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
                             <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
-                                @if(old('instansi_penyelenggara'))
-                                    @foreach($pimpinan as $key => $value)
-                                        @if(collect(old('instansi_penyelenggara'))->contains($key))
-                                            <option value="{{$key}}"
-                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
-                                            {{ $value }}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-
-                                @if(old('instansi_pendukung'))
-                                    @foreach($pimpinan as $key => $value)
-                                        @if(collect(old('instansi_pendukung'))->contains($key))
-                                            <option value="{{$key}}"
-                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
-                                            {{ $value }}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-
+                                @foreach($instansi as $key)
+                                    @if($pendukung->contains('id_instansi',$key->id) or $penyelenggara->contains('id_instansi',$key->id))
+                                    <option value="{{$key->id}}"
+                                        {{$ttd->contains('id_instansi',$key->id) ? "selected" : ""}}
+                                        >{{$key->nama_pimp}}</option>
+                                    @endif
+                                @endforeach
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -387,7 +390,9 @@
                                 @else
                                     <option value="" selected hidden></option>
                                     @foreach($provinsi as $key)
-                                        <option value="{{ $key->id }}">{{$key->nama}}</option>
+                                        <option value="{{ $key->id }}"
+                                            {{ $key->id == $seminar->prov_penyelenggara ? 'selected=true' : '' }}
+                                            >{{$key->nama}}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -412,10 +417,17 @@
                                             >{{$key->nama}}</option>
                                         @endif
                                     @endforeach
+                                @elseif($seminar->prov_penyelenggara)
+                                    @foreach($kota as $key)
+                                        @if($key->provinsi_id == $seminar->prov_penyelenggara)
+                                        <option value="{{ $key->id }}"
+                                        {{ $seminar->kota_penyelenggara == $key->id ? "selected" : "" }}
+                                            >{{$key->nama}}</option>
+                                        @endif
+                                    @endforeach
                                 @else
                                     <option value="" selected hidden></option>
                                 @endif
-
                             </select>
                             <div id="kota_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('kota_penyelenggara') }}
@@ -430,7 +442,7 @@
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
                             placeholder="Alamat" name="lokasi_penyelenggara"
-                            value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : '' }}">
+                            value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : $seminar->lokasi_penyelenggara }}">
                             <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('lokasi_penyelenggara') }}
                             </div>
@@ -446,9 +458,9 @@
                             <label for="narasumber" class="label-control required">Narasumber</label>
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
                                 @foreach($personal as $key)
-                                    @if( !(collect(old('moderator'))->contains($key->id)) )
+                                    @if(!( $moderator->contains('id_personal',$key->id) ))
                                         <option value="{{$key->id}}"
-                                        {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}>
+                                        {{ $narasumber->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
                                         {{ $key->nama }}</option>
                                     @endif
                                 @endforeach
@@ -468,9 +480,9 @@
                             <label for="moderator" class="label-control required">Moderator</label>
                             <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
                                 @foreach($personal as $key)
-                                    @if(! ( collect(old('narasumber'))->contains($key->id) ) )
+                                    @if(!( $narasumber->contains('id_personal',$key->id) ))
                                         <option value="{{$key->id}}"
-                                        {{ (collect(old('moderator'))->contains($key->id)) ? "selected" : "" }}>
+                                        {{ $moderator->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
                                         {{ $key->nama }}</option>
                                     @endif
                                 @endforeach
@@ -487,7 +499,7 @@
 
 
                 <button class="btn btn-success" name="store" value="publish">Publish</button>
-                <button class="btn btn-info pull-right" name="store" value="draft">Save</button>
+                {{--<button class="btn btn-info pull-right" name="store" value="draft">Save</button>--}}
                 </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
@@ -508,6 +520,11 @@
     $(document).ready(function () {
         $("form").children().each(function(){
             this.value=$(this).val().trim();
+        }) // trim semua spasi
+        $("#biaya").each(function(){
+            //this.value=$(this).val().trim();
+            $(this).val($.trim($(this).val()));
+            console.log(this.textContent,' trimmed');
         }) // trim semua spasi
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
