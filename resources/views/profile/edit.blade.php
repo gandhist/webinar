@@ -95,7 +95,7 @@
                                         {{$key->seminar_p->nama_seminar}}
                                     </td>
                                     <td>
-                                        {{$key->seminar_p->tema}}
+                                        {{  strip_tags(html_entity_decode($key->seminar_p->tema))}}
                                     </td>
                                     <td style="text-align:center;"> 
                                         {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
