@@ -18,7 +18,9 @@ class InfoSeminarController extends Controller
     public function index()
     {
         $data = Seminar::where('status','=','published')->get();
-        return view('infoseminar.index')->with(compact('data'));
+        $user = Peserta::select('id')->where('user_id', Auth::id())->first();
+        
+        return view('infoseminar.index')->with(compact('data','user'));
     }
     public function detail($id)
     {

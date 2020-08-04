@@ -33,7 +33,7 @@
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Narasumber</label>
                         <input type="text" class="form-control" id="inputSuccess" readonly 
-                        value="@foreach($data->seminar_r as $key){{ $key->peserta_r->nama }} @endforeach">
+                        value="@foreach($data->seminar_r as $index => $key)@if(count($data->seminar_r) > $index + 1){{ $key->peserta_r->nama }},@else{{ $key->peserta_r->nama }}@endif @endforeach">
                     </div>
                 </div>										
             </div> 
@@ -77,7 +77,7 @@
                 </div>										
             </div> 
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Contact Person 1</label>
@@ -96,7 +96,7 @@
                         <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_3_nama }} ({{ $data->cp_3_no }})">
                     </div>
                 </div>										
-            </div> 
+            </div>  --}}
 
             <div class="row">
                 <div class="col-sm-12">
