@@ -174,8 +174,11 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="@if(old('is_free')) {{ old('is_free') == "1" ? old('biaya') : "" }}
-                                @else {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} @endif"
+                                value="@if(old('is_free')) 
+                                {{ old('is_free') == "1" ? old('biaya') : "" }}
+                                @else 
+                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} 
+                                @endif"
                                 placeholder="Biaya"
 
                                 @if(old('is_free'))
@@ -269,31 +272,6 @@
                                     @endif
                                 @endforeach
                             @endif
-
-
-                            {{--
-                            @if(old('instansi_penyelenggara'))
-                                @foreach($instansi as $key)
-                                    @if(!in_array($key->id, array(old('instansi_penyelenggara'))))
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endif
-                                @endforeach
-                            @endif--
-
-                                @if(old('instansi_pendukung'))
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @else
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @endif
-                            --}}
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -314,7 +292,9 @@
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) }}"
+                                value="@if(old('tgl_awal')) {{old('tgl_awal')}}
+                                @else {{ $seminar->tgl_awal ? (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) : '' }}
+                                @endif"
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -539,9 +519,15 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
-                            <input type="text" id="moderator" class="form-control" name="moderator"
-                            placeholder="Nama Moderator"
-                            value="{{ old('moderator') ? old('moderator') : $moderator->nama }}">
+                            <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
+                                @foreach($personal as $key)
+                                    @if(!( $narasumber->contains('id_personal',$key->id) ))
+                                        <option value="{{$key->id}}"
+                                        {{ $moderator->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
+                                        {{ $key->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                             <div id="moderator" class="invalid-feedback text-danger">
                                 {{ $errors->first('moderator') }}
                             </div>
@@ -660,6 +646,11 @@
             allowClear: true,
             maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
+        $('#moderator').select2({
+            placeholder: " Pilih Narasumber",
+            allowClear: true,
+            maximumSelectionLength: 2,
+        }); // Select2 Instansi Pendukung
 
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukungArr);
@@ -681,6 +672,27 @@
             allowClear: true,
             maximumSelectionLength: 2,});
         })
+
+        $('#narasumber').on('change', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(data.includes('27'));
+            $('#moderator').empty();
+            for(let key in personal) {
+                if(!data.includes(key)){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#moderator').append(new Option(personal[key], key));
+                    // console.log(key);
+                }
+            }
+
+            $('#moderator').select2({
+            allowClear: true,
+            maximumSelectionLength: 2,});
+        })
+
 
         $('.to-pimpinan').on('change', function() {
             pimpinan =  @json($pimpinanArr);
