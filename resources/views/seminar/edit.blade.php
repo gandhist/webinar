@@ -21,6 +21,7 @@
         <li class="active"><a href="#"> Edit</a></li>
     </ol>
 </section>
+
 <!-- Main content -->
 <section class="content">
     <!-- Default box -->
@@ -28,11 +29,9 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
-
                 <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
-                <input type="hidden" name="id" value="$id">
 
                 <div class="row">
 
@@ -86,7 +85,7 @@
                 </div>
 
                 <div class="row">
-                    {{--Tema--}}
+                    {{--Tema --}}
                     <div class="col-md-12">
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema Seminar</label>
@@ -125,7 +124,7 @@
                             <input type="text" class="form-control" name="skpk_nilai" id="skpk_nilai"
                                 maxlength="2"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('skpk_nilai') ?  old('skpk_nilai') : $seminar->skpk_nilai }}"
+                                value="{{ old('skpk_nilai') ? old('skpk_nilai') : $seminar->skpk_nilai }}"
                                 placeholder="Nilai SKPK">
                             <div id="skpk_nilai" class="invalid-feedback text-danger">
                                 {{ $errors->first('skpk_nilai') }}
@@ -160,6 +159,7 @@
                                     Berbayar
                                 </label>
 
+
                                 <div id="is_free" class="invalid-feedback text-danger">
                                     {{ $errors->first('is_free') }}
                                 </div>
@@ -175,10 +175,12 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="@if(old('is_free')) {{ old('is_free') == "1" ? old('biaya') : "" }}
-                                @else {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} @endif"
+                                value="@if(old('is_free')) 
+                                {{ old('is_free') == "1" ? old('biaya') : "" }}
+                                @else 
+                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} 
+                                @endif"
                                 placeholder="Biaya"
-
                                 @if(old('is_free'))
                                     {{ old('is_free') == "1" ? old('biaya') : 'disabled' }}
                                 @else
@@ -190,7 +192,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Akhir Biaya --}}
+                    {{-- Biaya --}}
 
                     {{-- Inisiator Penyelengara --}}
                     <div class="col-md-2">
@@ -206,9 +208,7 @@
                                     @endforeach
                                 @else
                                     @foreach($inisiator as $key)
-                                        <option value="{{ $key->id }}"
-                                            selected
-                                            >{{ $key->nama }}</option>
+                                        <option value="{{ $key->id }}">{{ $key->nama }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -227,17 +227,15 @@
                             class="form-control to-pimpinan" multiple>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
+                                        @if(! (collect(old('instansi_pendukung'))->contains($key->id)) )
+                                            <option value="{{ $key->id }}"
+                                            {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "selected" : "" }}>
+                                            {{ $key->nama_bu }}</option>
+                                        @endif
                                     @endforeach
                                 @else
                                     @foreach($instansi as $key)
-                                        @if($penyelenggara->contains('id_instansi',$key->id))
-                                            <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
-                                        @elseif(!$pendukung->contains('id_instansi',$key->id))
-                                            <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                        @endif
+                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -255,46 +253,15 @@
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
                             class="form-control to-pimpinan" multiple>
-                            @if(old('instansi_pendukung'))
+                            @if(old('instansi_penyelenggara'))
                                 @foreach($instansi as $key)
-                                    <option value="{{ $key->id }}"
-                                    {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                    {{ $key->nama_bu }}</option>
-                                @endforeach
-                            @else
-                                @foreach($instansi as $key)
-                                    @if($pendukung->contains('id_instansi',$key->id))
-                                        <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
-                                    @elseif(!$penyelenggara->contains('id_instansi',$key->id))
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                    @if(! (collect(old('instansi_penyelenggara'))->contains($key->id)) )
+                                        <option value="{{ $key->id }}"
+                                        {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}>
+                                        {{ $key->nama_bu }}</option>
                                     @endif
                                 @endforeach
                             @endif
-
-
-                            {{--
-                            @if(old('instansi_penyelenggara'))
-                                @foreach($instansi as $key)
-                                    @if(!in_array($key->id, array(old('instansi_penyelenggara'))))
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endif
-                                @endforeach
-                            @endif--
-
-                                @if(old('instansi_pendukung'))
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @else
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @endif
-                            --}}
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -311,12 +278,12 @@
                 <div class="row">
                     {{-- Tanggal Mulai --}}
                     <div class="col-md-2">
-                        <div class="form-group {{-- $errors->first('tgl_awal') ? 'has-error' : '' --}} ">
+                        <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ (\Carbon\Carbon::parse($seminar->tgl_awal)->format('j-m-Y')) }}"
-                                placeholder=" HH-BB-TTTT" readonly>
+                                value="{{ old('tgl_awal') }}"
+                                placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
                             </div>
@@ -330,9 +297,7 @@
                             <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="@if(old('tgl_akhir')) {{old('tgl_akhir')}}
-                                @else {{ $seminar->tgl_akhir ? (\Carbon\Carbon::parse($seminar->tgl_akhir)->format('j-m-Y')) : '' }}
-                                @endif"
+                                value="{{ old('tgl_akhir') }}"
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
@@ -347,9 +312,7 @@
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="@if(old('jam_awal')) {{old('jam_awal')}}
-                                @else {{ $seminar->jam_awal ? \Carbon\Carbon::parse($seminar->jam_awal)->format( 'H:i' ) : '' }}
-                                @endif"
+                                value="{{ old('jam_awal') }}"
                                 placeholder=" 00:00">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_awal') }}
@@ -364,9 +327,7 @@
                             <label for="jam_akhir" class="label-control required">Jam Akhir</label>
                             <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="@if(old('jam_akhir')) {{old('jam_akhir')}}
-                                @else {{ $seminar->jam_akhir ? \Carbon\Carbon::parse($seminar->jam_akhir)->format( 'H:i' ) : '' }}
-                                @endif"
+                                value="{{ old('jam_akhir') }}"
                                 placeholder=" 00:00">
                             <div id="jam_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_akhir') }}
@@ -380,19 +341,11 @@
                         <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
                             <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
                             <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
-                                @foreach($instansi as $key)
-                                    @if($pendukung->contains('id_instansi',$key->id) or $penyelenggara->contains('id_instansi',$key->id))
-                                    <option value="{{$key->id}}"
-                                        {{$ttd->contains('id_instansi',$key->id) ? "selected" : ""}}
-                                        >{{$key->nama_pimp}}</option>
-                                    @endif
-                                @endforeach
-                                {{--
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($pimpinan as $key => $value)
-                                        @if(in_array($key, old('instansi_penyelenggara')))
+                                        @if(collect(old('instansi_penyelenggara'))->contains($key))
                                             <option value="{{$key}}"
-                                            {{ in_array($key, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
                                             {{ $value }}</option>
                                         @endif
                                     @endforeach
@@ -400,25 +353,13 @@
 
                                 @if(old('instansi_pendukung'))
                                     @foreach($pimpinan as $key => $value)
-                                        @if(in_array($key, old('instansi_pendukung')))
+                                        @if(collect(old('instansi_pendukung'))->contains($key))
                                             <option value="{{$key}}"
-                                            {{ in_array($key, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
                                             {{ $value }}</option>
                                         @endif
                                     @endforeach
                                 @endif
-                                    @if(old('ttd_pemangku'))
-                                        @foreach($provinsi as $key)
-                                            <option value="{{ $key->id }}"
-                                            {{ in_array($key->id, old('ttd_pemangku')) ? "selected" : "" }}>
-                                            {{ $key->nama }}</option>
-                                        @endforeach
-                                    @else
-                                        @foreach($provinsi as $key)
-                                            <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                        @endforeach
-                                    @endif
-                                --}}
 
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
@@ -446,9 +387,7 @@
                                 @else
                                     <option value="" selected hidden></option>
                                     @foreach($provinsi as $key)
-                                        <option value="{{ $key->id }}"
-                                            {{ $key->id == $seminar->prov_penyelenggara ? 'selected=true' : '' }}
-                                            >{{$key->nama}}</option>
+                                        <option value="{{ $key->id }}">{{$key->nama}}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -473,14 +412,6 @@
                                             >{{$key->nama}}</option>
                                         @endif
                                     @endforeach
-                                @elseif($seminar->prov_penyelenggara)
-                                    @foreach($kota as $key)
-                                        @if($key->provinsi_id == $seminar->prov_penyelenggara)
-                                        <option value="{{ $key->id }}"
-                                        {{ $seminar->kota_penyelenggara == $key->id ? "selected" : "" }}
-                                            >{{$key->nama}}</option>
-                                        @endif
-                                    @endforeach
                                 @else
                                     <option value="" selected hidden></option>
                                 @endif
@@ -499,7 +430,7 @@
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
                             placeholder="Alamat" name="lokasi_penyelenggara"
-                            value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : $seminar->lokasi_penyelenggara }}">
+                            value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : '' }}">
                             <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('lokasi_penyelenggara') }}
                             </div>
@@ -515,17 +446,12 @@
                             <label for="narasumber" class="label-control required">Narasumber</label>
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
                                 @foreach($personal as $key)
-                                    <option value="{{$key->id}}"
-                                    {{ $narasumber->contains('id_personal',$key->id) ? 'selected=true' : "" }}>
-                                    {{ $key->nama }}</option>
+                                    @if( !(collect(old('moderator'))->contains($key->id)) )
+                                        <option value="{{$key->id}}"
+                                        {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}>
+                                        {{ $key->nama }}</option>
+                                    @endif
                                 @endforeach
-                                {{--
-                                    @foreach($personal as $key)
-                                    <option value="{{$key->id}}"
-                                    {{ in_array($key->id, array(old('narasumber'))) ? "selected" : "" }}>
-                                    {{ $key->nama }}</option>
-                                @endforeach
-                                --}}
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -540,9 +466,15 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
-                            <input type="text" id="moderator" class="form-control" name="moderator"
-                            placeholder="Nama Moderator"
-                            value="{{ old('moderator') ? old('moderator') : $moderator->nama }}">
+                            <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
+                                @foreach($personal as $key)
+                                    @if(! ( collect(old('narasumber'))->contains($key->id) ) )
+                                        <option value="{{$key->id}}"
+                                        {{ (collect(old('moderator'))->contains($key->id)) ? "selected" : "" }}>
+                                        {{ $key->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                             <div id="moderator" class="invalid-feedback text-danger">
                                 {{ $errors->first('moderator') }}
                             </div>
@@ -555,7 +487,7 @@
 
 
                 <button class="btn btn-success" name="store" value="publish">Publish</button>
-                {{--<button class="btn btn-info pull-right" name="store" value="draft">Save</button>--}}
+                <button class="btn btn-info pull-right" name="store" value="draft">Save</button>
                 </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
@@ -569,19 +501,13 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script>
-    let instansi = {!! json_encode($pendukungArr->toArray()) !!};
+    let instansi = {!! json_encode($pendukung->toArray()) !!};
     let tema = $('#tema');
     CKEDITOR.replace('tema');
 
     $(document).ready(function () {
         $("form").children().each(function(){
             this.value=$(this).val().trim();
-            console.log(this.textContent,' trimmed');
-        }) // trim semua spasi
-        $("#biaya").each(function(){
-            //this.value=$(this).val().trim();
-            $(this).val($.trim($(this).val()));
-            console.log(this.textContent,' trimmed');
         }) // trim semua spasi
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
@@ -661,6 +587,11 @@
             allowClear: true,
             maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
+        $('#moderator').select2({
+            placeholder: " Pilih Moderator",
+            allowClear: true,
+            maximumSelectionLength: 2,
+        }); // Select2 Instansi Pendukung
 
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukungArr);
@@ -679,6 +610,26 @@
             }
 
             $('#instansi_pendukung').select2({
+            allowClear: true,
+            maximumSelectionLength: 2,});
+        })
+
+        $('#narasumber').on('change', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(data.includes('27'));
+            $('#moderator').empty();
+            for(let key in personal) {
+                if(!data.includes(key)){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#moderator').append(new Option(personal[key], key));
+                    // console.log(key);
+                }
+            }
+
+            $('#moderator').select2({
             allowClear: true,
             maximumSelectionLength: 2,});
         })

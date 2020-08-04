@@ -174,8 +174,11 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="@if(old('is_free')) {{ old('is_free') == "1" ? old('biaya') : "" }}
-                                @else {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} @endif"
+                                value="@if(old('is_free')) 
+                                {{ old('is_free') == "1" ? old('biaya') : "" }}
+                                @else 
+                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} 
+                                @endif"
                                 placeholder="Biaya"
 
                                 @if(old('is_free'))
