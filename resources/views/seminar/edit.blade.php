@@ -498,7 +498,7 @@
 
 
 
-                <button class="btn btn-success" name="store" value="publish">Publish</button>
+                <button class="btn btn-success" name="store" value="publish">Save</button>
                 {{--<button class="btn btn-info pull-right" name="store" value="draft">Save</button>--}}
                 </form>
             </div> {{-- Jumbotron --}}
