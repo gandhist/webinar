@@ -30,11 +30,11 @@
                     <div class="col-12">
                         <div class="btn-group">
                             <span class="form-group">
-                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal">
+                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">                            
 
                                 <span style="margin: 10px;"> s/d </span>
 
-                                <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir">
+                                <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir" value="{{ request()->get('tgl_akhir') }}" placeholder="Tanggal Akhir">
 
                                 <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
                                     <i class="fa fa-filter"></i> Filter
@@ -42,6 +42,9 @@
                                 <button class="btn btn-success btn-bermargin" id="btnReset" name="btnReset">
                                 <i class="fa fa-refresh" aria-hidden="true"></i> Reset
                                 </button>
+                                {{-- <a href="{{ url('seminar') }}" class="btn btn-sm btn-default"> <i
+                                    class="fa fa-refresh"></i>
+                                Reset</a> --}}
 
                                 {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
 
@@ -101,7 +104,7 @@
                                     <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
                                     <td>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
                                     <td style='text-align:center'>{{ $key->seminar_r->count() }} Peserta</td>
-                                    <td style='text-align:center'>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
+                                    <td style='text-align:center'>@if ($key->is_free == '0') Gratis @else {{$key->seminar_paid->count()}} Peserta @endif</td>
                                     <td>
                                         @if($key->is_actived == "0")
                                             <button type="submit" class="btn btn-success">
@@ -165,6 +168,39 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
 
+
+    // Cache Warna Filter
+    if ("{{request()->get('tgl_awal')}}" != "") {
+            inputFilterCache("tgl_awal");
+        }
+        if ("{{request()->get('tgl_akhir')}}" != "") {
+            inputFilterCache("tgl_akhir");
+    }
+
+    // Rubah Warna Filter
+    inputFilter("tgl_awal");
+    inputFilter("tgl_akhir");
+        
+    // Fungsi Rubah warna filter
+    function inputFilter(name) {
+        $('#' + name).on('change', function () {
+            idfilter = $(this).attr('id');
+            if ($(this).val() == '') {
+                $(this).css('background-color', 'transparent');
+                $(this).css('font-weight', 'unset');
+            } else {
+                $(this).css('background-color', '#b6f38f');
+                $(this).css('font-weight', 'bold');
+            }
+        });
+    }
+
+    // Fungsi merubah Cache warna filter input biasa
+    function inputFilterCache(name){
+        $('#'+name).css('background-color', '#b6f38f');
+        $('#'+name).css('font-weight', 'bold');
+    }
+
     $("#tgl_awal").datepicker();
     $("#tgl_akhir").datepicker();
     $('#btnHapus').on('click', function (e) {
@@ -222,9 +258,10 @@
     // Button edit click
     $('#btnReset').on('click', function (e) {
         e.preventDefault();
-        var table = $('#data-tables').DataTable();
-        $.fn.dataTable.ext.search.pop();
-        table.search('').columns().search('').draw();
+        // var table = $('#data-tables').DataTable();
+        // $.fn.dataTable.ext.search.pop();
+        // table.search('').columns().search('').draw();
+        window.location.href = "{{ url('seminar') }}";
     });
 
 

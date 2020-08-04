@@ -48,7 +48,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Biaya</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->is_free }}">
+                        <input type="text" class="form-control" id="inputSuccess" readonly value="@if ($data->is_free == '0') Gratis @else Rp {{ format_uang($data->biaya)}} @endif">
                     </div>
                 </div>										
             </div> 

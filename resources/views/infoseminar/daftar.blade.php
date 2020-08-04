@@ -61,21 +61,27 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Biaya Investasi</label>
-                    <input type="text" class="form-control" id="inputSuccess" readonly value="Rp. {{ $data->is_free }}">
+                    <input type="text" class="form-control" id="inputSuccess" readonly value="@if ($data->is_free == '0') Gratis @else Rp {{ format_uang($data->biaya)}} @endif">
                     </div>
                 </div>
 
                 <div class="col-sm-6">
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Metode Pembayaran</label>
-                        {{-- <input type="text" class="form-control" id="inputSuccess" readonly value=""> --}}
                         <select class="form-control select2" name="id_nama_bank" id="id_nama_bank" style="width: 100%;" placeholder="Nama Bank">
                             <option value="" disabled selected>Nama Bank</option>
                             @foreach($bank as $key)
                             <option value="{{ $key->id_bank }}" {{ $key->id_bank == old('id_nama_bank') ? 'selected' : '' }}>{{ $key->Nama_Bank }} </option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
+                    <div class="custom-file">
+                        <label for="instansi">Upload Bukti Pembayaran</label>
+                        <div class="custom-file">
+                          <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="bukti_bayar" name="bukti_bayar" class="custom-file-input {{ $errors->first('bukti_bayar') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
+                          <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                        </div>
+                      </div>
                 </div>
             </div>
 

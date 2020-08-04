@@ -33,15 +33,17 @@ class InfoSeminarController extends Controller
         $bank = BankModel::all();
 
         if(!Auth::user()){
-            return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi atau login terlebih dahulu');
+            $login = '<a href="'.url("login").'">disini</a>';
+            return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
         } else{
             return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta'));
         }
     }
 
-    public function store($id)
+    public function store(Request $request, $id)
     {
-        $peserta = Peserta::select('id')->where('user_id',Auth::id())->first();
+        $peserta = Peserta::where('user_id',Auth::id())->first();
+        // dd($peserta);
         $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
@@ -92,6 +94,16 @@ class InfoSeminarController extends Controller
             $data->no_srtf = '';
         }
         $data->status = '1';
+
+        // handle upload bukti bayar
+        $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $peserta['nama']);
+        if ($files = $request->file('bukti_bayar')) {
+            $destinationPath = 'uploads/bukti_bayar/'.$dir_name; // upload path
+            $file = "lampiran_buktibayar_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->bukti_bayar = $destinationPath."/".$file;
+        }
+
         $data = $data->save();
 
         // pengurangan kuota

@@ -1067,7 +1067,7 @@ class SeminarController extends Controller
 
     // kirim email ke semua peserta
     public function kirimEmail(){
-        $emails = PesertaSeminar::where('is_email_sent','0')->get(); 
+        $emails = PesertaSeminar::where('is_email_sent','0')->where('is_paid','=', '1')->get(); 
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
             \Mail::to($data->email)->send(new MailSertifikat($key));
@@ -1185,5 +1185,37 @@ class SeminarController extends Controller
         return redirect('/seminar')
         ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
     }
+
+    public function approve($id){
+        $seminar = PesertaSeminar::where('id',$id)->first();
+        $urutan_seminar = SeminarModel::select('no_urut')->where('id', '=',$seminar->id_seminar)->first();
+        $tanggal = SeminarModel::select('tgl_awal')->where('id', '=',$seminar->id_seminar)->first();
+        
+        $data = PesertaSeminar::find($id);
+        $urut = PesertaSeminar::where('id_seminar',$seminar->id_seminar)->max('no_urut_peserta'); //Counter nomor urut for peserta
+        if($urut == null) {
+            $data->no_urut_peserta = '1';
+        } else {
+            $data->no_urut_peserta = $urut + 1;
+        }
+        $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
+
+        // generate no sertifikat
+        $inisiator = '88';
+        $status = '1';
+        $tahun = substr($tanggal['tgl_awal'],2,2);
+        $bulan = substr($tanggal['tgl_awal'],5,2);
+
+        $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+       
+        $data->is_paid = '1';
+        $data->no_srtf = $no_sert;
+        $data->approved_by = Auth::id();
+        $data->approved_at = Carbon::now()->toDateTimeString();
+        $data = $data->save();
+
+        return redirect()->back()->with('alert',"Peserta berhasil di approve");
+    }
+
 
 }
