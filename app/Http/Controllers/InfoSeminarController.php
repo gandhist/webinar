@@ -68,11 +68,11 @@ class InfoSeminarController extends Controller
         // }
         $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
         $data = new PesertaSeminar;
-        $coba = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for peserta
-        if($coba == null) {
+        $urut = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for peserta
+        if($urut == null) {
             $data->no_urut_peserta = '1';
         } else {
-            $data->no_urut_peserta = $coba + 1;
+            $data->no_urut_peserta = $urut + 1;
         }
         $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
         // generate no sertifikat

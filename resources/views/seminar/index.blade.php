@@ -102,7 +102,7 @@
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>{{ $key->nama_seminar }}</td>
                                     <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
-                                    <td>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
+                                    <td style='text-align:center'>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
                                     <td style='text-align:center'>{{ $key->seminar_r->count() }} Peserta</td>
                                     <td style='text-align:center'>@if ($key->is_free == '0') Gratis @else {{$key->seminar_paid->count()}} Peserta @endif</td>
                                     <td>

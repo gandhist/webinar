@@ -39,7 +39,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 16px;
             -webkit-print-color-adjust: exact !important;
-            background-image: url("cerificate-bg.jpeg");
+            background-image: url("/cerificate-bg.jpeg");
             background-repeat: no-repeat;
             background-position: center;
         }
@@ -142,8 +142,12 @@
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
                             <p style="margin-top: 2px; margin-bottom:4px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    @foreach ($instansi as $key)
+                                    @foreach ($instansi as $index => $key) 
+                                        @if(count($instansi) > $index + 1) 
                                         {{ $key->bu_instansi->nama_bu }} -
+                                        @else
+                                        {{ $key->bu_instansi->nama_bu }} 
+                                        @endif
                                     @endforeach
                                 </span>
                             </p>
