@@ -53,9 +53,9 @@ class PersonalController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'nik' => 'required|numeric|unique:personal|digits:16|gt:0',
+            'nik' => 'required|numeric|unique:personal|digits:16',
             'email' => 'required|email|unique:personal|max:100',
-            'no_hp' => 'required|numeric|unique:personal|digits_between:9,14|gt:0',
+            'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
             'instansi' => 'required',
             'jabatan' => 'required|min:3,max:50',
@@ -63,10 +63,10 @@ class PersonalController extends Controller
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'no_rek' => 'sometimes|nullable|numeric|digits_between:4,20|gt:0',
+            'no_rek' => 'sometimes|nullable|numeric|digits_between:4,20',
             'bank_id' => 'required_with:no_rek',
             'nama_rek' => 'sometimes|nullable|required_with:no_rek|min:3|max:50',
-            'npwpClean' => 'sometimes|nullable|numeric|digits:15|gt:0',
+            'npwpClean' => 'sometimes|nullable|numeric|digits:15',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
@@ -157,7 +157,7 @@ class PersonalController extends Controller
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
             $resize_image = Image::make($files);
-            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
             // $resize_image->resize(354, 472, function($constraint){
             //     $constraint->aspectRatio();
             // })->save();
@@ -235,9 +235,9 @@ class PersonalController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
             'nama' => 'required|min:3|max:50',
-            'nik' => 'required|numeric|digits:16|gt:0',
+            'nik' => 'required|numeric|digits:16',
             'email' => 'required|email|max:100',
-            'no_hp' => 'required|numeric|digits_between:9,14|gt:0',
+            'no_hp' => 'required|numeric|digits_between:9,14',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
             'instansi' => 'required',
             'jabatan' => 'required|min:3,max:50',
@@ -245,10 +245,10 @@ class PersonalController extends Controller
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'no_rek' => 'sometimes|nullable|numeric|digits_between:4,20|gt:0',
+            'no_rek' => 'sometimes|nullable|numeric|digits_between:4,20',
             'bank_id' => 'required_with:no_rek',
             'nama_rek' => 'sometimes|nullable|required_with:no_rek|min:3|max:50',
-            'npwpClean' => 'sometimes|nullable|numeric|digits:15|gt:0',
+            'npwpClean' => 'sometimes|nullable|numeric|digits:15',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
@@ -305,7 +305,7 @@ class PersonalController extends Controller
         $data->nama = $request->nama;
         if($request->nik != $personal[0]['nik']){
             $request->validate([
-                'nik' => 'required|numeric|unique:personal|digits:16|gt:0',
+                'nik' => 'required|numeric|unique:personal|digits:16',
             ], [
                 'nik.required' => 'Mohon isi NIK',
                 'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
@@ -328,7 +328,7 @@ class PersonalController extends Controller
         }
         if($request->no_hp != $personal[0]['no_hp']){
             $request->validate([
-                'no_hp' => 'required|numeric|unique:no_hp|digits_between:9,14|gt:0',
+                'no_hp' => 'required|numeric|unique:no_hp|digits_between:9,14',
             ],[
                 'no_hp.required' => 'Mohon isi Nomor Telepon',
                 'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
@@ -374,7 +374,7 @@ class PersonalController extends Controller
             $destinationPathTemp = 'uploads/tmp/'; // upload path
 
             $resize_image = Image::make($files);
-            $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
+            $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
             // $resize_image->resize(354, 472, function($constraint){
             //     $constraint->aspectRatio();
             // })->save();
