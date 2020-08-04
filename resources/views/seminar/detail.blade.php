@@ -244,13 +244,14 @@
 
                 {{-- <div class="box-body">     --}}
                   <b>Daftar Peserta</b>
-                  <a href="{{ url('seminar/kirim_email') }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
+                  <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
                   <table id="data-peserta" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                       <thead>
                           <tr role="row">
                               {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
                               <th style="width:5%;">No</th>
-                              <th style="width:25%;">Nama</th>
+                              <th style="width:10%;">Status</th>
+                              <th style="width:25%;">Nama</th>   
                               <th style="width:15%;">No HP</th>
                               <th style="width:15%;">Email</th>
                               <th style="width:10%;">Sts_Bayar</th>
@@ -262,14 +263,23 @@
                          <tr>
                           {{-- <td style='text-align:center;'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                             id="selection[]" name="selection[]"></td> --}}
-                          <td style='text-align:center;'>{{ $loop->iteration}}</td>
-                            <td>{{ $key->peserta_r->nama }}                           
+                            <td style='text-align:center;'>{{ $loop->iteration}}</td>     
+                            <td style="text-align: center">
+                                @if($key->status == '1') Peserta 
+                                @elseif($key->status == '2') Narasumber 
+                                @elseif($key->status == '4') Moderator 
+                                @else Panitia
+                                @endif
                             </td>
+                            <td>{{ $key->peserta_r->nama }}</td>
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
-                            <td style='text-align:center;'>@if ($key->is_paid == 1) Sudah Bayar @else Belum Bayar @endif </td>
+                            <td style='text-align:center;'>@if ($key->is_paid == null) - @elseif ($key->is_paid == '1') Sudah Bayar @else Belum Bayar @endif </td>
                             <td> 
-                                @if ($key->is_paid == 1)
+                                @if($key->is_paid == null)
+                                    <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                    <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                @elseif ($key->is_paid == 1)
                                     <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
                                     <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
                                 @else
