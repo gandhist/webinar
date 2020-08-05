@@ -29,7 +29,7 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom:50px;">Seminar</h1>
-                <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ url('seminar/'.$id.'/update-draft') }}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
 
