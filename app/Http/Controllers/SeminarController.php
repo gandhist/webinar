@@ -483,7 +483,7 @@ class SeminarController extends Controller
             'tema' => 'required|min:5|max:200',
             'kuota' => 'required|numeric|min:5',
             'skpk_nilai' => 'required|numeric|min:0|max:25',
-            'is_free' => 'required',
+            //'is_free' => 'required',
             'biaya' => 'required_if:is_free,==,1',
             'inisiator' => 'required',
             'instansi_penyelenggara' => 'required',
