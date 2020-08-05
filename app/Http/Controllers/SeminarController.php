@@ -1213,6 +1213,15 @@ class SeminarController extends Controller
             $urutan_seminar = $data->no_urut;
 
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+
+            // generate qr code
+            $url = url("seminar/cetak_sertifikat/$no_sert_nara");
+            $nama = "QR_".$no_sert_nara.".png";
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+         
+            $dir_name = "qr/sertifikat";
+            $narasumber->qr_code = $dir_name."/".$nama;
+
             $narasumber->no_srtf = $no_sert_nara;
             $narasumber->update();
         }
@@ -1237,6 +1246,15 @@ class SeminarController extends Controller
             $urutan_seminar = $data->no_urut;
 
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+            
+            // generate qr code
+            $url = url("seminar/cetak_sertifikat/$no_sert_nara");
+            $nama = "QR_".$no_sert_nara.".png";
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+         
+            $dir_name = "qr/sertifikat";
+            $moderator->qr_code = $dir_name."/".$nama;
+
             $moderator->no_srtf = $no_sert_nara;
             $moderator->update();
         }
