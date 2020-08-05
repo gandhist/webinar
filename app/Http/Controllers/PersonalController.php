@@ -37,12 +37,12 @@ class PersonalController extends Controller
             ['personals' => Personal::where('deleted_at',NULL)->get(),
             'provinsis' => $provinsi,
             'kotas' => $kota,
-            'bu' => $bu] 
+            'bu' => $bu]
         );
     }
 
     public function create() {
-        return view('personal.create',['provinsis' => ProvinsiModel::all(), 
+        return view('personal.create',['provinsis' => ProvinsiModel::all(),
                                         'kotas' => KotaModel::all(),
                                         'bus' => BuModel::where('deleted_at',NULL)->get(),
                                         'banks' =>  BankModel::all()]);
@@ -141,12 +141,12 @@ class PersonalController extends Controller
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
         $data->reff_p = $request->reff_p;
-        
+
         $data->created_by = Auth::id();
 
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        
+
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             if (!file_exists($destinationPath)) {
@@ -189,19 +189,19 @@ class PersonalController extends Controller
 
 
     public function show($id){
-        $personal = Personal::where('id', $id)->get();
-        $kota = KotaModel::where('id',$personal[0]['kota_id'])->get();
-        $prov = ProvinsiModel::where('id',$personal[0]['provinsi_id'])->get();
-        $bu = BuModel::where('id',$personal[0]['instansi'])->get();
-        $temp_lahir = KotaModel::where('id',$personal[0]['temp_lahir'])->get();
-        $bank = BankModel::where('id_bank',$personal[0]['instansi'])->get();
+        $personal = Personal::where('id', $id)->first();
+        $kota = KotaModel::where('id',$personal->kota_id)->get();
+        $prov = ProvinsiModel::where('id',$personal->provinsi_id)->get();
+        $bu = BuModel::where('id',$personal->instansi)->get();
+        $temp_lahir = KotaModel::where('id',$personal->temp_lahir)->get();
+        $bank = BankModel::where('id_bank',$personal->instansi)->get();
         return view('personal.show',['personal' => $personal, 'kota' => $kota,
          'provinsi' => $prov, 'id' => $id,
          'bu' => $bu, 'bank' => $bank,
          'temp_lahir' => $temp_lahir]);
 
     }
-    
+
     public function edit($id) {
 
         $personal = Personal::where('id', $id)->get();
@@ -338,7 +338,7 @@ class PersonalController extends Controller
             ]);
             $data->no_hp = $request->no_hp;
         }
-        
+
 
         $data->jenis_kelamin = $request->jenis_kelamin;
         $data->instansi = $request->instansi;
@@ -353,13 +353,13 @@ class PersonalController extends Controller
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
         $data->reff_p = $request->reff_p;
-        
+
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
 
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        
+
         if ($files = $request->file('foto')) {
             $lampiran_foto_lama = $data->lampiran_foto;
 
