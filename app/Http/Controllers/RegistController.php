@@ -83,7 +83,7 @@ class RegistController extends Controller
         // $password = '123456'; // buat test masih hardcode
       
         if ($peserta) {
-            $data['username'] = strtolower($request->nama);
+            $data['username'] = strtolower($request->email); // mengganti username menjadi email
             $data['email'] = strtolower($request->email);
             $data['password'] = Hash::make($password);
             $data['name'] = $request->nama;
@@ -96,7 +96,7 @@ class RegistController extends Controller
             Peserta::find($peserta->id)->update($peserta_id);
 
             $pesan = [
-                'username' => strtolower($request->nama),
+                'username' => strtolower($request->email),
                 'password' => $password
             ];
             $email = strtolower($request->email);

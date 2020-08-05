@@ -29,6 +29,6 @@ class EmailRegist extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.signup')->with(['username' => $this->pesan['username'],'password' => $this->pesan['password'] ])->subject('Verification Email P3SM');
+        return $this->from('info@p3sm.or.id','Registrasi Seminar')->subject('Registrasi Seminar P3SM')->view('mail.signup');
     }
 }

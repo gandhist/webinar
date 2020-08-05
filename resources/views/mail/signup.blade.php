@@ -263,8 +263,8 @@ a {
                           <h1>Selamat!</h1>
                           <p>Registrasi anda telah di verifikasi</p>
                           <p>Silahkan masuk dengan data di bawah</p>
-                          <p>Username : {{ $username }}</p>
-                          <p>Password : {{ $password }}</p>
+                          <p>Username : {{ $pesan['username'] }}</p>
+                          <p>Password : {{ $pesan['password'] }}</p>
                           <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
                           <i>Note: Harap Langsung Ubah Password Anda!</i>
                         </td>

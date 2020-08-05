@@ -21,9 +21,12 @@ use App\NarasumberModel;
 use App\ModeratorModel;
 use DB;
 use App\Mail\EmailLinkSert;
+use App\Traits\GlobalFunction;
 
 class SeminarController extends Controller
 {
+
+    use GlobalFunction;
     //
     public function index() {
         $seminar = SeminarModel::where('deleted_at', NULL)->get();
@@ -971,6 +974,10 @@ class SeminarController extends Controller
         $data = PesertaSeminar::where('no_srtf',$id)->first();
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
+        // generate qr tanda tangan
+        return $this->generateTtd($ttd);
+
+        // generate qr sertifikat
 
         $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
         $pdf->setPaper('A4','potrait');
