@@ -65,6 +65,8 @@
                     </div>
                 </div>
 
+                @if ($data->is_free == '0')
+                @else
                 <div class="col-sm-6">
                     {{-- <div class="form-group">
                         <label class="control-label" for="inputSuccess"> Metode Pembayaran</label>
@@ -83,6 +85,7 @@
                         </div>
                       </div>
                 </div>
+                @endif
             </div>
 
             <div class="row">

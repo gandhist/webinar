@@ -67,7 +67,7 @@
                     </tr>
                     <tr>
                         <td colspan="14"></td>                   
-                        <td colspan="10" style="padding-left:20px;"><img src="qr.png" height=110px></td>
+                        <td colspan="10" style="padding-left:20px;"><img src="{{ public_path($data->qr_code)}}" height=110px></td>
                     </tr>
                     <tr>
                         <td colspan="19" style="text-align: center;padding:10px 0">
