@@ -139,7 +139,7 @@
                             <label for="is-free" class="label-control required">Jenis</label>
                             <div class="radio" style="margin-top:-5px;">
                                 <label>
-                                    <input type="radio" name="is_free" id="gratis" value="0"
+                                    <input type="radio" name="is_free" id="gratis" value="0" disabled
                                     @if(old('is_free'))
                                         {{ old('is_free') == "0" ? "checked" : "" }}
                                     @else
@@ -149,7 +149,7 @@
                                     Gratis
                                 </label>
                                 <label>
-                                    <input type="radio" name="is_free" id="bayar" value="1"
+                                    <input type="radio" name="is_free" id="bayar" value="1" disabled
                                     @if(old('is_free'))
                                         {{ old('is_free') == "1" ? "checked" : "" }}
                                     @else
