@@ -93,6 +93,14 @@ class InfoSeminarController extends Controller
         if($is_free['is_free'] == '0'){
             $data->is_paid = '1';
             $data->no_srtf = $no_sert;
+
+            // generate qr code
+            $url = url("seminar/cetak_sertifikat/$no_sert");
+            $nama = "QR_".$no_sert.".png";
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+        
+            $dir_name = "qr/sertifikat";
+            $data->qr_code = $dir_name."/".$nama;
         } else {
             $data->is_paid = '0';
             $data->no_srtf = '';
