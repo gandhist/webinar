@@ -53,15 +53,23 @@
           <td>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
           <td>
             @php 
-            $cek = DB::table('srtf_peserta_seminar')->where('id_peserta',$user['id'])->where('id_seminar', $key->id)->where('deleted_at',null)->count();
+              if ($user == 'Error') {
+                $cek = 0;
+              } else {
+                $cek = DB::table('srtf_peserta_seminar')->where('id_peserta',$user['id'])->where('id_seminar', $key->id)->where('deleted_at',null)->count();
+              }
             @endphp
-            @if($cek > 0)
-            <button class="btn btn-success disabled"> Anda Sudah Mendaftar</button>
+            @if($key->kuota == 0)
+            <button class="btn btn-primary disabled"> Kuota Peserta Sudah Penuh</button>
             @else
-              <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
-            <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-              data-placement="top" title="Lihat Detail">Detail</a>
+              @if($cek > 0)
+              <button class="btn btn-success disabled"> Anda Sudah Mendaftar</button>
+              @else
+                <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
+                <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+                data-placement="top" title="Lihat Detail">Detail</a>
               @endif
+            @endif
           </td>
       </tr>
       @endforeach     

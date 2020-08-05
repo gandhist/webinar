@@ -56,7 +56,17 @@
                                     <tr>
                                         <th style="width:24%;text-align:left">Total Nilai SKPI Pertahun</th>
                                         <td>:</td>
-                                        <td><input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control" value="" readonly></td>
+                                        <td>
+                                            @php
+                                            $total = 0;
+                                            @endphp
+                                            @foreach($detailseminar as $key)
+                                                @php 
+                                                $total += $key->seminar_p->skpk_nilai;
+                                                @endphp
+                                            @endforeach
+                                            <input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control" value="{{ $total }}" readonly>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -81,8 +91,7 @@
                                     <th style="width:10%;text-align:center;">Tanggal</th>
                                     <th style="width:5%;text-align:center;">Waktu</th>
                                     <th style="width:3%;text-align:center;">n_skpk</th>
-                                    <th style="width:2%;text-align:center;">tmbh_skpk</th>
-                                    <th style="width:6%;text-align:center;">No_Srtf</th>
+                                    <th style="width:10%;text-align:center;">No_Srtf</th>
                                 </tr>
                             </thead>
                             <tbody>  
@@ -107,10 +116,7 @@
                                         {{$key->seminar_p->skpk_nilai}}
                                     </td>
                                     <td>
-                                        {{$key->id_seminar}}
-                                    </td>
-                                    <td>
-                                        {{$key->id_seminar}}
+                                        {{$key->no_srtf}}
                                     </td>
                                 </tr>
                                 @endforeach
