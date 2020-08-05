@@ -40,7 +40,7 @@
                                 <label class="label-control required" for="nama">Nama</label>
                                 <input type="text" name="nama" id="nama"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('nama') ? old('nama') : $personal[0]['nama'] }}"
+                                    value="{{ old('nama') ? old('nama') : $personal->nama }}"
                                     class="form-control" 
                                     placeholder="Nama Lengkap" required>
                                 <div id="nama" class="invalid-feedback text-danger">
@@ -56,7 +56,7 @@
                                 <label class="label-control required" for="nik">NIK</label>
                                 <input type="text" name="nik" id="nik"
                                     onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('nik') ? old('nik') : $personal[0]['nik'] }}"
+                                    value="{{ old('nik') ? old('nik') : $personal->nik }}"
                                     class="form-control 
                                         @if($errors->first('nik'))
                                             has-error 
@@ -79,7 +79,7 @@
                             <div class="form-group {{ ($errors->first('email')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="email">Email</label>
                                 <input type="email" name="email" id="email"
-                                    value="{{ old('email') ? old('email') : $personal[0]['email']}}"
+                                    value="{{ old('email') ? old('email') : $personal->email}}"
                                     class="form-control"
                                     placeholder="Email" required>
                                 <div id="email" class="invalid-feedback text-danger">
@@ -95,7 +95,7 @@
                                 <label class="label-control required" for="no_hp">Nomor Telepon</label>
                                 <input type="text" name="no_hp" id="no_hp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('no_hp') ? old('no_hp') : $personal[0]['no_hp'] }}"
+                                    value="{{ old('no_hp') ? old('no_hp') : $personal->no_hp }}"
                                     class="form-control 
                                         @if($errors->first('no_hp'))
                                             has-error 
@@ -134,7 +134,7 @@
                                     @else
                                         @forelse($bus as $bu)
                                             <option value="{{ $bu->id }}"
-                                            {{ ($personal[0]['instansi'] == $bu->id) ? "selected" : "" }}
+                                            {{ ($personal->instansi == $bu->id) ? "selected" : "" }}
                                             >{{ $bu->nama_bu }}</option>
                                         @empty
                                         @endforelse
@@ -153,7 +153,7 @@
                                 <label class="label-control required" for="jabatan">Jabatan</label>
                                 <input type="text" name="jabatan" id="jabatan"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{  old('jabatan') ? old('jabatan') : $personal[0]['jabatan'] }}"
+                                    value="{{  old('jabatan') ? old('jabatan') : $personal->jabatan }}"
                                     class="form-control" 
                                     placeholder="Jabatan" required>
                                 <div id="jabatan" class="invalid-feedback text-danger">
@@ -187,11 +187,11 @@
                                         </option>
                                     @else
                                         <option value="L"
-                                        {{ ($personal[0]['jenis_kelamin'] == 'L') ? 'selected' : '' }}>
+                                        {{ ($personal->jenis_kelamin == 'L') ? 'selected' : '' }}>
                                             Laki-laki
                                         </option>
                                         <option value="P"
-                                        {{ ($personal[0]['jenis_kelamin'] == 'P') ? 'selected' : '' }}>
+                                        {{ ($personal->jenis_kelamin == 'P') ? 'selected' : '' }}>
                                             Perempuan
                                         </option>
                                     @endif
@@ -208,7 +208,7 @@
                             <div class="form-group {{ ($errors->first('alamat')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="alamat">Alamat</label>
                                 <input type="alamat" name="alamat" id="alamat"
-                                    value="{{ old('alamat') ? old('alamat') : $personal[0]['alamat'] }}"
+                                    value="{{ old('alamat') ? old('alamat') : $personal->alamat}}"
                                     class="form-control" 
                                     placeholder="Alamat" required>
                                 <div id="email" class="invalid-feedback text-danger">
@@ -242,7 +242,7 @@
                                     @else
                                         @forelse($provinsis as $provinsi)
                                             <option value="{{ $provinsi->id }}"
-                                            {{ ( $personal[0]['provinsi_id'] == $provinsi->id) ? "selected" : "" }}
+                                            {{ ( $personal->provinsi_id == $provinsi->id) ? "selected" : "" }}
                                             >{{ $provinsi->nama }}</option>
                                         @empty
                                         @endforelse
@@ -275,9 +275,9 @@
                                         @endforeach
                                     @else
                                         @foreach($kotas as $kota)
-                                            @if($kota->provinsi_id == $personal[0]['provinsi_id'])
+                                            @if($kota->provinsi_id == $personal->provinsi_id)
                                                 <option value="{{$kota->id}}"
-                                                @if ($personal[0]['kota_id'] == $kota->id) selected="selected" @endif
+                                                @if ($personal->kota_id == $kota->id) selected="selected" @endif
                                                 >{{$kota->nama}}</option>
                                             @endif
                                         @endforeach
@@ -315,7 +315,7 @@
                                     @else
                                         @forelse($kotas as $kota)
                                             <option value="{{ $kota->id }}"
-                                            {{ ($personal[0]['temp_lahir'] == $kota->id) ? "selected" : "" }}
+                                            {{ ($personal->temp_lahir == $kota->id) ? "selected" : "" }}
                                             >{{ $kota->nama }}</option>
                                         @empty
                                         @endforelse
@@ -330,7 +330,7 @@
 
                         {{-- Tanggal Lahir --}}
                         @php
-                            $tgl_lama = explode("-",$personal[0]['tgl_lahir']);
+                            $tgl_lama = explode("-",$personal->tgl_lahir);
                             $tgl_baru = array_reverse($tgl_lama);
                             $tgl_lahir = implode("-",$tgl_baru)
                         @endphp
@@ -363,7 +363,7 @@
                                 <label class="label-control" for="no_rek">Nomor Rekening</label>
                                 <input type="text" name="no_rek" id="no_rek"
                                     onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('no_rek') ? old('no_rek') : $personal[0]['no_rek'] }}"
+                                    value="{{ old('no_rek') ? old('no_rek') : $personal->no_rek }}"
                                     class="form-control 
                                         @if($errors->first('no_rek'))
                                             has-error 
@@ -397,7 +397,7 @@
                                     @else
                                         @forelse($banks as $bank)
                                             <option value="{{ $bank->id_bank }}"
-                                            {{ ($personal[0]['id_bank'] == $bank->id_bank) ? "selected" : "" }}
+                                            {{ ($personal->id_bank == $bank->id_bank) ? "selected" : "" }}
                                             >{{ $bank->Nama_Bank }}</option>
                                         @empty
                                         @endforelse
@@ -421,7 +421,7 @@
                                 <label class="label-control" for="nama_rek">Nama Pada Rekening</label>
                                 <input type="text" name="nama_rek" id="nama_rek"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('nama_rek') ? old('nama_rek') : $personal[0]['nama_rek'] }}"
+                                    value="{{ old('nama_rek') ? old('nama_rek') : $personal->nama_rek }}"
                                     class="form-control" 
                                     placeholder="Nama Rekening">
                                 <div id="nama" class="invalid-feedback text-danger">
@@ -437,7 +437,7 @@
                                 <label class="label-control" for="npwp">NPWP</label>
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('npwp') ? old('npwp') : $personal[0]['npwp'] }}"
+                                    value="{{ old('npwp') ? old('npwp') : $personal->npwp }}"
                                     class="form-control 
                                         @if($errors->first('npwpClean'))
                                             has-error 
@@ -519,7 +519,7 @@
                             <div class="form-group {{ ($errors->first('reff_p')) ? ' has-error' : '' }}">
                                 <label class="label-control" for="reff_p">Referensi Pendaftaran</label>
                                 <input type="text" name="reff_p" id="reff_p"
-                                    value="{{ old('reff_p') ? old('reff_p') : $personal[0]['reff_p'] }}"
+                                    value="{{ old('reff_p') ? old('reff_p') : $personal->reff_p }}"
                                     class="form-control" 
                                     placeholder="Referensi Pendaftaran">
                                 <div id="reff_p" class="invalid-feedback text-danger">
@@ -530,7 +530,6 @@
                         {{-- Akhir Referensi Pendaftaran --}}
 
                     </div>
-                    <input type="hidden" name="id" value="{{ $id }}">
                     <div class="small text-danger">*) Wajib diisi</div>
                     <button type="submit" class="btn btn-success" style="margin-top:20px;">Edit</button>
 

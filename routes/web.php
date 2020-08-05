@@ -124,6 +124,7 @@ Route::group(['middleware' => 'auth.admin', 'prefix' => 'pesertas'], function ()
 // Instansi 
 Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () {
 	Route::get('/','InstansiController@index');
+	Route::get('/lengkapi/{id}/{id_personal}','InstansiController@lengkapi');
 	Route::get('/create','InstansiController@create');
 	Route::post('/store','InstansiController@store');
 	Route::patch('/update','InstansiController@update');

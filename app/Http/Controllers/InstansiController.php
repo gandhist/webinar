@@ -8,6 +8,8 @@ use App\ProvinsiModel;
 use App\KotaModel;
 use App\BuModel;
 use App\BankModel;
+use App\Personal;
+use App\Peserta;
 
 use Illuminate\Http\Request;
 
@@ -188,9 +190,36 @@ class InstansiController extends Controller
             $data->logo = $destinationFile;
 
         }
-        $instansi = $data->save();
-        return redirect('/instansi')->with('pesan',"Instansi \"".$request->nama_bu.
-        "\" berhasil ditambahkan");
+
+        $data->save();
+
+        $pimp = new Personal;
+        $pimp->instansi    = $data->id;
+        $pimp->nama        = $request->nama_pimp      ;     
+        $pimp->jabatan     = $request->jab_pimp   ;      
+        $pimp->email       = $request->email_pimp     ;    
+        $pimp->no_hp       = $request->hp_pimp     ;    
+        $pimp->is_activated  = '0';
+        $pimp->save();
+        
+        $data->id_personal_pimp = $pimp->id;
+        $data->is_actived = '0';
+        $data->save();
+        return redirect('/instansi/lengkapi/'.$data->id.'/'.$pimp->id);
+    }
+    public function lengkapi($id, $id_personal) {
+        // dump($id);
+        // dump($id_personal);
+        $instansi = BuModel::where('id',$id)->get();
+        $personal = Personal::where('id',$id_personal)->get();
+        $provinsis = ProvinsiModel::all();
+        $kotas = KotaModel::all();
+        $banks = BankModel::all();
+        $bus = BuModel::all();
+        // dump($instansi);
+        // dump($personal);
+        return view('personal.edit')->with(compact('instansi','bus','personal','provinsis','kotas','banks'));
+        
     }
     public function edit($id) {
         $instansi = BuModel::where('id',$id)->first();

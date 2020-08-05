@@ -204,7 +204,7 @@ class PersonalController extends Controller
     
     public function edit($id) {
 
-        $personal = Personal::where('id', $id)->get();
+        $personal = Personal::where('id', $id)->first();
         $prov = ProvinsiModel::all();
         // $provinsi = $prov->pluck('nama', 'id');
         // $provinsi->all();
