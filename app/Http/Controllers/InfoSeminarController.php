@@ -19,7 +19,11 @@ class InfoSeminarController extends Controller
     public function index()
     {
         $data = Seminar::where('status','=','published')->get();
-        $user = Peserta::select('id')->where('user_id', Auth::id())->first();
+        if(Auth::id() == null){
+            $user = 'Error';
+        } else{
+            $user = Peserta::select('id')->where('user_id', Auth::id())->first(); 
+        }        
         
         return view('infoseminar.index')->with(compact('data','user'));
     }
@@ -85,7 +89,6 @@ class InfoSeminarController extends Controller
             $tahun = substr($tanggal['tgl_awal'],2,2);
             $bulan = substr($tanggal['tgl_awal'],5,2);
 
-
             $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
         }
         
@@ -98,9 +101,9 @@ class InfoSeminarController extends Controller
             // generate qr code
             $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
             $nama = "QR_Sertifikat_".$no_sert.".png";
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/seminar/qr/".$nama));
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
         
-            $dir_name = "seminar/qr";
+            $dir_name = "file_seminar";
             $data->qr_code = $dir_name."/".$nama;
         } else {
             $data->is_paid = '0';
