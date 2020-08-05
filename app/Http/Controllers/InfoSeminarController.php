@@ -12,6 +12,7 @@ use App\BankModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Illuminate\Support\Facades\Crypt;
 
 class InfoSeminarController extends Controller
 {
@@ -95,11 +96,11 @@ class InfoSeminarController extends Controller
             $data->no_srtf = $no_sert;
 
             // generate qr code
-            $url = url("seminar/cetak_sertifikat/$no_sert");
-            $nama = "QR_".$no_sert.".png";
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
+            $nama = "QR_Sertifikat_".$no_sert.".png";
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/seminar/qr/".$nama));
         
-            $dir_name = "qr/sertifikat";
+            $dir_name = "seminar/qr";
             $data->qr_code = $dir_name."/".$nama;
         } else {
             $data->is_paid = '0';

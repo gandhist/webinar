@@ -23,6 +23,7 @@ use DB;
 use App\Mail\EmailLinkSert;
 use App\Traits\GlobalFunction;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Mail\EmailLinkSert as MailSertifikat;
 
 class SeminarController extends Controller
 {
@@ -1146,7 +1147,7 @@ class SeminarController extends Controller
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         // generate qr tanda tangan
-        return $this->generateTtd($ttd);
+        // return $this->generateTtd($ttd);
 
         // generate qr sertifikat
 
