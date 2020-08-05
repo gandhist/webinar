@@ -39,7 +39,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 16px;
             -webkit-print-color-adjust: exact !important;
-            background-image: url("cerificate-bg.jpeg");
+            background-image: url("/cerificate-bg.jpeg");
             background-repeat: no-repeat;
             background-position: center;
         }
@@ -67,7 +67,7 @@
                     </tr>
                     <tr>
                         <td colspan="14"></td>                   
-                        <td colspan="10" style="padding-left:20px;"><img src="qr.png" height=110px></td>
+                        <td colspan="10" style="padding-left:20px;"><img src="{{ public_path($data->qr_code)}}" height=110px></td>
                     </tr>
                     <tr>
                         <td colspan="19" style="text-align: center;padding:10px 0">
@@ -142,8 +142,12 @@
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
                             <p style="margin-top: 2px; margin-bottom:4px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    @foreach ($instansi as $key)
+                                    @foreach ($instansi as $index => $key) 
+                                        @if(count($instansi) > $index + 1) 
                                         {{ $key->bu_instansi->nama_bu }} -
+                                        @else
+                                        {{ $key->bu_instansi->nama_bu }} 
+                                        @endif
                                     @endforeach
                                 </span>
                             </p>
@@ -159,7 +163,7 @@
                         <td colspan="6">
                         @foreach ($ttd as $key)
                         <td colspan="18" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
-                            <img src= "QR_adji_n.png" height=60px><br>
+                            {{-- <img src= "QR_adji_n.png" height=60px><br> --}}
                             <b>{{ $key->bu_ttd->nama_pimp }} </b><br>            
                             {{ $key->bu_ttd->jab_pimp }} 
                         </td>

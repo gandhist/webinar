@@ -100,7 +100,7 @@ class RegistController extends Controller
                 'password' => $password
             ];
             $email = strtolower($request->email);
-            Mail::to($email)->send(new EmailRegist($pesan)); // belum fix
+            Mail::to($email)->send(new EmailRegist($pesan)); 
         }
    
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');

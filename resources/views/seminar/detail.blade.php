@@ -22,7 +22,7 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
-        <li class="active"><a href="#"> Edit</a></li>
+        <li class="active"><a href="#"> Detail</a></li>
     </ol>
 </section>
 
@@ -74,7 +74,7 @@
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema</label>
                             <input type="text" id="tema_seminar" class="form-control" name="tema_seminar" placeholder=""
-                                value="{{ $seminar->tema ? $seminar->tema : '' }}" readonly>
+                                value="{{ strip_tags(html_entity_decode($seminar->tema)) }}" readonly>
                             <div id="tema" class="invalid-feedback text-danger">
                                 {{ $errors->first('tema') }}
                             </div>
@@ -87,7 +87,7 @@
                         <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
                             <label for="tgl_awal" class="label-control required">Tanggal</label>
                             <input type="text" class="form-control" name="tgl_awal" id="tgl_awal" 
-                            value='{{  date("D, d F Y", strtotime($seminar->tgl_awal)) }}'
+                            value='{{ isset($seminar->tgl_awal) ? \Carbon\Carbon::parse($seminar->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}'
                                 placeholder="" readonly>
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -122,7 +122,7 @@
                         <div class="form-group {{ $errors->first('biaya') ? 'has-error' : '' }} ">
                             <label for="biaya" class="label-control required">Biaya Investasi</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
-                                value="{{ $seminar->is_free == '1' ? $seminar->biaya : 'Gratis' }}" placeholder="" readonly>
+                                value="@if ($seminar->is_free == '0') Gratis @else Rp {{ format_uang($seminar->biaya)}} @endif" placeholder="" readonly>
                             <div id="biaya" class="invalid-feedback text-danger">
                                 {{ $errors->first('biaya') }}
                             </div>
@@ -137,15 +137,12 @@
                       <label for="narasumber" class="label-control required">Narasumber</label>
                         <div class="row">
                             @foreach($narasumber as $key)
-                                @if(isset($personal[$key->id_personal]))
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" readonly class="form-control"
-                                            value="{{$personal[$key->id_personal]}}">
-                                        </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control"
+                                        value="{{$key->nama}}">
                                     </div>
-                                @else
-                                @endif
+                                </div>
                             @endforeach
                         </div>
                       <div id="narasumber" class="invalid-feedback text-danger">
@@ -157,8 +154,18 @@
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }} ">
                       <label for="moderator" class="label-control required">Moderator</label>
-                      <input type="text" class="form-control" name="moderator" id="moderator" value="{{isset($moderator->nama) ? $moderator->nama : ''}}"
-                                placeholder="" readonly>
+                      
+                        <div class="row">
+                            @foreach($moderator as $key)
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control"
+                                        value="{{$key->nama}}">
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
                       <div id="moderator" class="invalid-feedback text-danger">
                           {{ $errors->first('moderator') }}
                       </div>
@@ -237,12 +244,14 @@
 
                 {{-- <div class="box-body">     --}}
                   <b>Daftar Peserta</b>
+                  <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
                   <table id="data-peserta" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                       <thead>
                           <tr role="row">
                               {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
                               <th style="width:5%;">No</th>
-                              <th style="width:25%;">Nama</th>
+                              <th style="width:10%;">Status</th>
+                              <th style="width:25%;">Nama</th>   
                               <th style="width:15%;">No HP</th>
                               <th style="width:15%;">Email</th>
                               <th style="width:10%;">Sts_Bayar</th>
@@ -254,14 +263,32 @@
                          <tr>
                           {{-- <td style='text-align:center;'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                             id="selection[]" name="selection[]"></td> --}}
-                          <td style='text-align:center;'>{{ $loop->iteration}}</td>
-                            <td>{{$key->peserta_r->nama}}</td>
+                            <td style='text-align:center;'>{{ $loop->iteration}}</td>     
+                            <td style="text-align: center">
+                                @if($key->status == '1') Peserta 
+                                @elseif($key->status == '2') Narasumber 
+                                @elseif($key->status == '4') Moderator 
+                                @else Panitia
+                                @endif
+                            </td>
+                            <td>{{ $key->peserta_r->nama }}</td>
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
-                            <td style='text-align:center;'>@if ($key->is_paid == 1) Sudah Bayar @else Belum Bayar @endif </td>
-                            <td>
-                                <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                <a target="_blank" href="{{ url('send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                            <td style='text-align:center;'>@if ($key->is_paid == null) - @elseif ($key->is_paid == '1') Sudah Bayar @else Belum Bayar @endif </td>
+                            <td> 
+                                @if($key->is_paid == null)
+                                    <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                    <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                @elseif ($key->is_paid == 1)
+                                    <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                    <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                @else
+                                    <a href="{{ url('seminar/approve', $key->id) }}" class="btn btn-success btn-sm"> Approve</a>
+                                    <button type="button" id="btnBukti"
+                                        onclick='tampilLampiran("{{ asset("$key->bukti_bayar") }}","Bukti Bayar")'
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fa fa-file-pdf-o"></i> Bukti Bayar</button>
+                                @endif
                             </td>
                          </tr>
                          @endforeach
@@ -274,16 +301,54 @@
     </div> {{-- Box-Content --}}
 </section>
 
+<!-- Modal Lampiran -->
+<div class="modal fade" id="modalLampiran" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+              <h3 class="modal-title" id="lampiranTitle"></h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                  <iframe src="" id="iframeLampiran" width="100%" height="200px" frameborder="0" allowtransparency="true"></iframe>  
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <!-- End of Modal Lampiran -->
+
 @endsection
 
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script>
+var msg = '{{Session::get('alert')}}';
+var exist = '{{Session::has('alert')}}';
+    if(exist){
+        Swal.fire({
+            title: msg,
+            type: 'success',
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#AAA'
+            });
+        }
 
+// pop up pdf
+function tampilLampiran(url, title) {
+
+    $('#modalLampiran').modal('show');
+    $('#iframeLampiran').attr('src', url);
+    $('#lampiranTitle').html(` <a href="` + url + `" target="_blank" > ` + title + ` </a> `);
+}
 </script>
 @endpush

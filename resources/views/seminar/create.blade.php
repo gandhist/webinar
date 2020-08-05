@@ -207,9 +207,11 @@
                             class="form-control to-pimpinan" multiple>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
+                                        @if(! (collect(old('instansi_pendukung'))->contains($key->id)) )
+                                            <option value="{{ $key->id }}"
+                                            {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "selected" : "" }}>
+                                            {{ $key->nama_bu }}</option>
+                                        @endif
                                     @endforeach
                                 @else
                                     @foreach($instansi as $key)
@@ -233,26 +235,13 @@
                             class="form-control to-pimpinan" multiple>
                             @if(old('instansi_penyelenggara'))
                                 @foreach($instansi as $key)
-                                    @if(!in_array($key->id, array(old('instansi_penyelenggara'))))
+                                    @if(! (collect(old('instansi_penyelenggara'))->contains($key->id)) )
                                         <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
+                                        {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}>
                                         {{ $key->nama_bu }}</option>
                                     @endif
                                 @endforeach
                             @endif
-                            {{--
-                                @if(old('instansi_pendukung'))
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @else
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @endif
-                            --}}
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -334,9 +323,9 @@
                             <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($pimpinan as $key => $value)
-                                        @if(in_array($key, old('instansi_penyelenggara')))
+                                        @if(collect(old('instansi_penyelenggara'))->contains($key))
                                             <option value="{{$key}}"
-                                            {{ in_array($key, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
                                             {{ $value }}</option>
                                         @endif
                                     @endforeach
@@ -344,26 +333,13 @@
 
                                 @if(old('instansi_pendukung'))
                                     @foreach($pimpinan as $key => $value)
-                                        @if(in_array($key, old('instansi_pendukung')))
+                                        @if(collect(old('instansi_pendukung'))->contains($key))
                                             <option value="{{$key}}"
-                                            {{ in_array($key, old('ttd_pemangku')) ? "selected" : "" }}>
+                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
                                             {{ $value }}</option>
                                         @endif
                                     @endforeach
                                 @endif
-                                {{--
-                                    @if(old('ttd_pemangku'))
-                                        @foreach($provinsi as $key)
-                                            <option value="{{ $key->id }}"
-                                            {{ in_array($key->id, old('ttd_pemangku')) ? "selected" : "" }}>
-                                            {{ $key->nama }}</option>
-                                        @endforeach
-                                    @else
-                                        @foreach($provinsi as $key)
-                                            <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                        @endforeach
-                                    @endif
-                                --}}
 
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
@@ -450,9 +426,11 @@
                             <label for="narasumber" class="label-control required">Narasumber</label>
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
                                 @foreach($personal as $key)
-                                    <option value="{{$key->id}}"
-                                    {{ in_array($key->id, array(old('narasumber'))) ? "selected" : "" }}>
-                                    {{ $key->nama }}</option>
+                                    @if( !(collect(old('moderator'))->contains($key->id)) )
+                                        <option value="{{$key->id}}"
+                                        {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}>
+                                        {{ $key->nama }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
@@ -468,9 +446,15 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
-                            <input type="text" id="moderator" class="form-control" name="moderator"
-                            placeholder="Nama Moderator"
-                            value="{{ old('moderator') ? old('moderator') : '' }}">
+                            <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
+                                @foreach($personal as $key)
+                                    @if(! ( collect(old('narasumber'))->contains($key->id) ) )
+                                        <option value="{{$key->id}}"
+                                        {{ (collect(old('moderator'))->contains($key->id)) ? "selected" : "" }}>
+                                        {{ $key->nama }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                             <div id="moderator" class="invalid-feedback text-danger">
                                 {{ $errors->first('moderator') }}
                             </div>
@@ -583,6 +567,11 @@
             allowClear: true,
             maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
+        $('#moderator').select2({
+            placeholder: " Pilih Moderator",
+            allowClear: true,
+            maximumSelectionLength: 2,
+        }); // Select2 Instansi Pendukung
 
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);
@@ -601,6 +590,26 @@
             }
 
             $('#instansi_pendukung').select2({
+            allowClear: true,
+            maximumSelectionLength: 2,});
+        })
+
+        $('#narasumber').on('change', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(data.includes('27'));
+            $('#moderator').empty();
+            for(let key in personal) {
+                if(!data.includes(key)){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#moderator').append(new Option(personal[key], key));
+                    // console.log(key);
+                }
+            }
+
+            $('#moderator').select2({
             allowClear: true,
             maximumSelectionLength: 2,});
         })

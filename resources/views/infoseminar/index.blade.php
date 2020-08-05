@@ -16,31 +16,53 @@
   <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
     <thead>
       <tr>
-        <th>Title </th>
+        <th style="width:2%;">No </th>
+        <th>Title Seminar </th>
         <th>Tema :</th>
         <th>Tanggal :</th>
         <th>Tempat :</th>
         <th>Narasumber :</th>
         <th>Biaya :</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       @foreach ($data as $key)
       <tr>
-          <td>{{ $loop->iteration}}. {{ $key->nama_seminar }} </td>
-          <td><a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-            data-placement="top" title="Lihat Detail">{{ strip_tags(html_entity_decode($key->tema)) }}</a></td>
+          <td>{{ $loop->iteration}}</td>
+          <td>{{ $key->nama_seminar }}</td>
+          {{-- <td>
+            <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+            data-placement="top" title="Lihat Detail">{{ strip_tags(html_entity_decode($key->tema)) }}</a>
+          </td> --}}
+          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}
           </td>
           <td>{{ $key->lokasi_penyelenggara }}</td>
           <td>
-            @foreach($key->seminar_r as $select)
-            {{ $select->peserta_r->nama }} 
+            @foreach($key->seminar_r as $index => $select)   
+              @if(count($key->seminar_r) > $index + 1) 
+              {{ $select->peserta_r->nama }},
+              @else
+              {{ $select->peserta_r->nama }} 
+              @endif
             @endforeach
           </td>
-          <td>Rp. {{ $key->is_free }}</td>
+          <td>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
+          <td>
+            @php 
+            $cek = DB::table('srtf_peserta_seminar')->where('id_peserta',$user['id'])->where('id_seminar', $key->id)->where('deleted_at',null)->count();
+            @endphp
+            @if($cek > 0)
+            <button class="btn btn-success disabled"> Anda Sudah Mendaftar</button>
+            @else
+              <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
+            <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+              data-placement="top" title="Lihat Detail">Detail</a>
+              @endif
+          </td>
       </tr>
       @endforeach     
     </tbody>

@@ -48,7 +48,7 @@ class InstansiController extends Controller
         $request->validate([
             "nama_bu" => "required|min:3|max:50",
             "email" => "required|email|unique:badan_usaha",
-            "telp" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
+            "telp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             "web" => "required|url|min:3|max:100",
             "alamat" => "required|min:3|max:100",
             "id_prop" => "required",
@@ -57,15 +57,15 @@ class InstansiController extends Controller
             "nama_pimp" => "required|min:3|max:50",
             "jab_pimp" => "required|min:3|max:50",
             "email_pimp" => "required|email|unique:badan_usaha",
-            "hp_pimp" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
+            "hp_pimp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             "kontak_p" => "required|min:3|max:50",
             "jab_kontak_p" => "required|min:3|max:50",
             "email_kontak_p" => "required|email|unique:badan_usaha",
-            "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
+            "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             "no_rek" => "sometimes|nullable|min:4|max:20",
             "id_bank" => "sometimes|required_with:no_rek",
             "nama_rek" => "sometimes|nullable|required_with:no_rek|min:3|max:50",
-            'npwpClean' => 'sometimes|nullable|numeric|digits:15|gt:0',
+            'npwpClean' => 'sometimes|nullable|numeric|digits:15',
             "npwp_pdf" => "sometimes|mimes:pdf,jpeg,png,jpg,gif,svg|max:2048",
             "logo" => "required|mimes:jpeg,png,jpg,gif,svg|max:2048"
         ],[
@@ -218,7 +218,7 @@ class InstansiController extends Controller
         $request->validate([
             "nama_bu" => "required|min:3|max:50",
             "email" => "required|email",
-            "telp" => "required|numeric|digits_between:6,20|gt:0",
+            "telp" => "required|numeric|digits_between:6,20",
             "web" => "required|url|min:3|max:100",
             "alamat" => "required|min:3|max:100",
             "id_prop" => "required",
@@ -227,15 +227,15 @@ class InstansiController extends Controller
             "nama_pimp" => "required|min:3|max:50",
             "jab_pimp" => "required|min:3|max:50",
             "email_pimp" => "required|email",
-            "hp_pimp" => "required|numeric|digits_between:6,20|gt:0",
+            "hp_pimp" => "required|numeric|digits_between:6,20",
             "kontak_p" => "required|min:3|max:50",
             "jab_kontak_p" => "required|min:3|max:50",
             "email_kontak_p" => "required|email",
-            "no_kontak_p" => "required|numeric|digits_between:6,20|gt:0",
+            "no_kontak_p" => "required|numeric|digits_between:6,20",
             "no_rek" => "sometimes|nullable|min:4|max:20",
             "id_bank" => "sometimes|nullable|required_with:no_rek",
             "nama_rek" => "sometimes|nullable|required_with:no_rek|min:3|max:50",
-            'npwpClean' => 'sometimes|nullable|numeric|digits:15|gt:0',
+            'npwpClean' => 'sometimes|nullable|numeric|digits:15',
             "npwp_pdf" => "sometimes|nullable|mimes:pdf,jpeg,png,jpg,gif,svg|max:2048",
             "logo" => "mimes:jpeg,png,jpg,gif,svg|max:2048"
         ], [
@@ -313,7 +313,7 @@ class InstansiController extends Controller
 
         if($request->telp != $instansi->telp ) {
             $request->validate([
-                "telp" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
+                "telp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             ],[
                 'telp.required' => 'Mohon isi Nomor Telepon Instansi',
                 'telp.numeric' => 'Mohon hanya isi dengan angka',
@@ -333,7 +333,7 @@ class InstansiController extends Controller
 
         if($request->hp_pimp != $instansi->hp_pimp ) {
             $request->validate([
-                "hp_pimp" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
+                "hp_pimp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             ],[
                 'hp_pimp.required' => 'Mohon isi Nomor Telepon Pimpinan',
                 'hp_pimp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
@@ -355,7 +355,7 @@ class InstansiController extends Controller
 
         if($request->no_kontak_p != $instansi->no_kontak_p ) {
             $request->validate([
-                "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha|gt:0",
+                "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             ],[
                 'no_kontak_p.required' => 'Mohon isi Nomor Telepon Contact Person',
                 'no_kontak_p.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
