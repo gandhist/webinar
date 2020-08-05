@@ -643,7 +643,7 @@ class SeminarController extends Controller
 
                 $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
-                $moderator_seminar->id_peserta = $nara->id;
+                $moderator_seminar->id_peserta = $mode->id;
                 $moderator_seminar->status = "4";
                 $moderator_seminar->no_srtf = $no_sert_mode;
                 $moderator_seminar->id_seminar = $dataAwal->id;
