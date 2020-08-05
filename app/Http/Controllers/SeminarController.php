@@ -578,8 +578,8 @@ class SeminarController extends Controller
                 // generate no sertifikat
                 $inisiator = '88';
                 $status = '2';
-                $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
-                $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
+                $tahun = date("y",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,2,2);
+                $bulan = date("m",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,5,2);
                 $urutan_seminar = $dataAwal->no_urut;
 
                 $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
@@ -637,8 +637,8 @@ class SeminarController extends Controller
                 // generate no sertifikat
                 $inisiator = '88';
                 $status = '4';
-                $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
-                $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
+                $tahun = date("y",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,2,2);
+                $bulan = date("m",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,5,2);
                 $urutan_seminar = $dataAwal->no_urut;
 
                 $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
