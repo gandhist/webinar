@@ -192,6 +192,7 @@ class SeminarController extends Controller
                 $status = '2';
                 $narasumber_seminar->id_peserta = $narasumber->id;
                 $narasumber_seminar->status = "2";
+                // $narasumber_seminar->is_paid = "1";
                 $narasumber_seminar->id_seminar = $data->id;
                 // $narasumber_seminar->created_by = Auth::id();
                 $narasumber_seminar->save();
@@ -204,6 +205,7 @@ class SeminarController extends Controller
                 $status = '4';
                 $moderator_seminar->id_peserta = $moderator->id;
                 $moderator_seminar->status = "4";
+                // $moderator_seminar->is_paid = "1";
                 $moderator_seminar->id_seminar = $data->id;
                 // $moderator_seminar->created_by = Auth::id();
                 $moderator_seminar->save();
@@ -309,6 +311,7 @@ class SeminarController extends Controller
 
                 $narasumber_seminar->id_peserta = $narasumber->id;
                 $narasumber_seminar->status = "2";
+                $narasumber_seminar->is_paid = "1";
                 $narasumber_seminar->no_srtf = $no_sert_nara;
                 $narasumber_seminar->id_seminar = $data->id;
                 $narasumber_seminar->save();
@@ -348,6 +351,7 @@ class SeminarController extends Controller
 
                 $moderator_seminar->id_peserta = $moderator->id;
                 $moderator_seminar->status = "4";
+                $moderator_seminar->is_paid = "1";
                 $moderator_seminar->no_srtf = $no_sert_mode;
                 $moderator_seminar->id_seminar = $data->id;
                 $moderator_seminar->save();
@@ -1154,7 +1158,7 @@ class SeminarController extends Controller
          
             $dir_name = "file_seminar";
             $narasumber->qr_code = $dir_name."/".$nama;
-
+            $narasumber->is_paid = '1';
             $narasumber->no_srtf = $no_sert_nara;
             $narasumber->update();
         }
@@ -1191,7 +1195,7 @@ class SeminarController extends Controller
          
             $dir_name = "file_seminar";
             $moderator->qr_code = $dir_name."/".$nama;
-
+            $moderator->is_paid = '1';
             $moderator->no_srtf = $no_sert_nara;
             $moderator->update();
         }
