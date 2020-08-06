@@ -228,7 +228,9 @@
                         <div class="form-group">
                             <label style="margin-bottom:25px">Foto Diri</label>
                             <div>
-                                <img src="{{ url(urlencode($personal->lampiran_foto)) }}" alt="Foto Diri">
+                                <a data-toggle="modal" data-target="#myModal">
+                                    Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                </a> 
                             </div>
                         </div>
                     </div>
@@ -294,9 +296,33 @@
         </div>
     </form>
 </div>
+{{-- end of modal konfirmasi hapus --}}
+
+
+{{-- Modal Foto --}}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<center>	
+              <img src="{{ url(urlencode($personal->lampiran_foto)) }}" alt="Foto Diri">
+	        </center>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+{{-- Akhir Modal Foto --}}
 
 </section>
-{{-- end of modal konfirmasi hapus --}}
 
 @endsection
 
