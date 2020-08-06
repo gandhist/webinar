@@ -34,10 +34,21 @@
             <div class="jumbotron">
               
                 <h1 style="margin-bottom:50px;">Seminar</h1>
+
+                <div class="row" style="margin-bottom:50px;">
+                    <div class="col-md-4"></div>
+
+                    <div class="col-md-4">
+                        <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar"
+                            class="img-thumbnail" style="width:100%">
+                    </div>
+
+                    <div class="col-md-4"></div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">
-                            <label for="nama_seminar" class="label-control required">Title</label>
+                            <label for="nama_seminar" class="label-control required">Judul</label>
                             <input type="text" id="nama_seminar" class="form-control" name="nama_seminar"
                                 placeholder="Nama Seminar" value="{{$seminar->nama_seminar ? $seminar->nama_seminar : ''}}"  readonly>
                             <div id="nama_seminar" class="invalid-feedback text-danger">

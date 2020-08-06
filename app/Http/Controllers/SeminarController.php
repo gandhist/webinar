@@ -142,6 +142,16 @@ class SeminarController extends Controller
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
         //$data->ttd_pemangku              =              $request->ttd_pemangku           ;
 
+        $data->save();
+
+        // handle upload Foto
+        if ($files = $request->file('foto')) {
+            $destinationPath = 'file_seminar/'.$data->id; // upload path
+            $file = "brosur_".$request->nama_seminar."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->link = $destinationPath."/".$file;
+        }
+
         $data->created_by = Auth::id();
 
         if($request->store == "draft") {
