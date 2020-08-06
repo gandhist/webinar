@@ -472,13 +472,15 @@ class PersonalController extends Controller
         $peserta->updated_by = Auth::id();
         $peserta->updated_at = Carbon::now();
         
-        $seminar = BuModel::where('id_personal_pimp',$request->id)->first();
-        $seminar->nama_pimp = $request->nama;
-        $seminar->jab_pimp = $request->jabatan;
-        $seminar->hp_pimp = $request->no_hp;
-        $seminar->email_pimp = $request->email;
-        
-        $seminar->save();
+        if($data->is_pimpinan == '1'){
+            $instansi = BuModel::where('id_personal_pimp',$request->id)->first();
+            $instansi->nama_pimp = $request->nama;
+            $instansi->jab_pimp = $request->jabatan;
+            $instansi->hp_pimp = $request->no_hp;
+            $instansi->email_pimp = $request->email;
+            
+            $instansi->save();
+        }
         $peserta->save();
         $data->save();
 
