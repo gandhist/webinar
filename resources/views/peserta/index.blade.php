@@ -53,7 +53,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($pesertas as $peserta)
+                            @foreach($pesertas as $peserta)
                             @php
                                 $username =  preg_replace('/[^a-zA-Z0-9()]/', '_', $peserta->nama);
                             @endphp
@@ -79,12 +79,10 @@
                                 <td> {{ str_limit($peserta->pekerjaan, 20)}} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->alamat.', '.$peserta->kota.', '.$peserta->provinsi}}">
                                     {{ str_limit($peserta->alamat, 20) }} </td>
-                                <td class="text-center"> {{ $peserta->tgl_lahir }} </td>
+                                <td class="text-center">  {{ isset($peserta->tgl_lahir) ? \Carbon\Carbon::parse($peserta->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''  }} </td>
                                 <td class="text-center"> <a href="{{ url('uploads/peserta/'.$peserta->foto)}}">Lihat</a></td>
-                            </tr>
-                            @empty
-                            <td colspan="10" class="text-center">Tidak ada data...</td>
-                            @endforelse
+                            </tr>   
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
