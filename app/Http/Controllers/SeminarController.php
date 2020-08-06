@@ -172,14 +172,14 @@ class SeminarController extends Controller
 
             // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
             $ttd1 = new TtdModel;
-            $ttd1->id_instansi = $request->ttd1;
+            $ttd1->id_personal = $request->ttd1;
             $ttd1->jabatan = $request->jab_ttd1;
             $ttd1->id_seminar = $data->id;
             $ttd1->created_by = Auth::id();
             $ttd1->save();
 
             $ttd2 = new TtdModel;
-            $ttd2->id_instansi = $request->ttd2;
+            $ttd2->id_personal = $request->ttd2;
             $ttd2->jabatan = $request->jab_ttd2;
             $ttd2->id_seminar = $data->id;
             $ttd2->created_by = Auth::id();
@@ -261,14 +261,14 @@ class SeminarController extends Controller
 
             // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
             $ttd1 = new TtdModel;
-            $ttd1->id_instansi = $request->ttd1;
+            $ttd1->id_personal = $request->ttd1;
             $ttd1->jabatan = $request->jab_ttd1;
             $ttd1->id_seminar = $data->id;
             $ttd1->created_by = Auth::id();
             $ttd1->save();
 
             $ttd2 = new TtdModel;
-            $ttd2->id_instansi = $request->ttd2;
+            $ttd2->id_personal = $request->ttd2;
             $ttd2->jabatan = $request->jab_ttd2;
             $ttd2->id_seminar = $data->id;
             $ttd2->created_by = Auth::id();
