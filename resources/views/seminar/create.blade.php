@@ -261,6 +261,14 @@
                             <label for="ttd1" class="label-control required">Penandatangan 1</label>
                             <select name="ttd1" id="ttd1"
                             class="form-control to-ttd">
+                            @if(old('ttd1'))
+                                @foreach($personal as $key)
+                                    @if(old('ttd2') != $key->id)
+                                        <option value="{{$key->id}}"
+                                        {{old('ttd1') == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -291,6 +299,15 @@
                             <label for="ttd2" class="label-control required">Penandatangan 2</label>
                             <select name="ttd2" id="ttd2"
                             class="form-control to-ttd">
+                            @if(old('ttd2'))
+                                @foreach($personal as $key)
+                                    @if(old('ttd1') != $key->id)
+                                        <option value="{{$key->id}}"
+                                        {{old('ttd2') == $key->id ? 'selected' : ''}}
+                                        >{{$key->nama}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -708,6 +725,7 @@
             // console.log('pendukung :', pend);
             // console.log('penyelenggara :', peny);
             $('#ttd1').empty();
+            $('#ttd1').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
             personal.forEach(function(key) {
                 if(peny.includes(key.instansi) || pend.includes(key.instansi)){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
@@ -731,6 +749,8 @@
             // console.log('pendukung :', pend);
             // console.log('penyelenggara :', peny);
             $('#ttd2').empty();
+            $('#ttd2').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
+            
             personal.forEach(function(key) {
                 if(peny.includes(key.instansi) || pend.includes(key.instansi)){
                     if( !($('#ttd1').val() == key.id) ){

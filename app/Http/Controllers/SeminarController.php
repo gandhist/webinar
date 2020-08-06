@@ -67,6 +67,8 @@ class SeminarController extends Controller
             'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
+            'ttd1' => 'required',
+            'ttd2' => 'required',
             // 'ttd_pemangku' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
@@ -113,6 +115,8 @@ class SeminarController extends Controller
             'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
             'moderator.required' => 'Mohon isi Moderator',
+            'ttd1.required' => 'Mohon isi Penandatangan',
+            'ttd2.required' => 'Mohon isi Penandatangan',
             // 'moderator.min' => 'Moderator minimal 3 karakter',
             // 'moderator.max' => 'Moderator maksimal 50 karakter',
 
