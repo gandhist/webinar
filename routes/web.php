@@ -19,12 +19,14 @@ Route::post('infoseminar/store/{id}','InfoSeminarController@store');
 Route::get('registrasi','RegistController@index');
 Route::post('registrasi/store','RegistController@store');
 
-// Route::group(['middleware' => 'auth'], function () {
-	Route::get('profile', 'ProfileController@edit')->name('profile.edit');
-	Route::post('profile', 'ProfileController@update')->name('profile.update');
-	Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
-	Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
-// });
+Route::get('profile', 'ProfileController@edit')->name('profile.edit');
+Route::post('profile', 'ProfileController@update')->name('profile.update');
+Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
+Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
+
+Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
+Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
+
 
 Route::get('sertifikat/cari','SertController@cari')->name('cari');
 Route::get('sertifikat/{no_sert}/{email}','SertController@by_sert');

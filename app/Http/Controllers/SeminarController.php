@@ -176,6 +176,18 @@ class SeminarController extends Controller
             $ttd1->jabatan = $request->jab_ttd1;
             $ttd1->id_seminar = $data->id;
             $ttd1->created_by = Auth::id();
+
+            // generate qr code ttd 1
+            $url = url("approved/".$request->ttd1."/".$data->id);
+            
+            $nama = "QR_Validity_".$request->ttd1.".png";
+            if (!file_exists(base_path("public/file_seminar/"))) {
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            }
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+        
+            $dir_name = "file_seminar";
+            $ttd1->qr_code = $dir_name."/".$nama;
             $ttd1->save();
 
             $ttd2 = new TtdModel;
@@ -183,6 +195,18 @@ class SeminarController extends Controller
             $ttd2->jabatan = $request->jab_ttd2;
             $ttd2->id_seminar = $data->id;
             $ttd2->created_by = Auth::id();
+
+            // generate qr code ttd 2
+            $url = url("approved/".$request->ttd2."/".$data->id);
+            
+            $nama = "QR_Validity_".$request->ttd2.".png";
+            if (!file_exists(base_path("public/file_seminar/"))) {
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            }
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+        
+            $dir_name = "file_seminar";
+            $ttd2->qr_code = $dir_name."/".$nama;
             $ttd2->save();
 
             // $data->narasumber        =   $request->narasumber     ;
@@ -267,6 +291,18 @@ class SeminarController extends Controller
             $ttd1->jabatan = $request->jab_ttd1;
             $ttd1->id_seminar = $data->id;
             $ttd1->created_by = Auth::id();
+
+            // generate qr code ttd 1
+            $url = url("approved/".$request->ttd1."/".$data->id);
+            
+            $nama = "QR_Validity_".$request->ttd1.".png";
+            if (!file_exists(base_path("public/file_seminar/"))) {
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            }
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+        
+            $dir_name = "file_seminar";
+            $ttd1->qr_code = $dir_name."/".$nama;
             $ttd1->save();
 
             $ttd2 = new TtdModel;
@@ -274,6 +310,18 @@ class SeminarController extends Controller
             $ttd2->jabatan = $request->jab_ttd2;
             $ttd2->id_seminar = $data->id;
             $ttd2->created_by = Auth::id();
+            
+            // generate qr code ttd 2
+            $url = url("approved/".$request->ttd2."/".$data->id);
+            
+            $nama = "QR_Validity_".$request->ttd2.".png";
+            if (!file_exists(base_path("public/file_seminar/"))) {
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            }
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+        
+            $dir_name = "file_seminar";
+            $ttd2->qr_code = $dir_name."/".$nama;
             $ttd2->save();
 
             foreach($request->narasumber as $key){
@@ -298,7 +346,7 @@ class SeminarController extends Controller
                 // dd($no_sert);
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+                $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
                 if (!file_exists(base_path("public/file_seminar/"))) {
                     // mkdir($destinationPath, 777, true);
@@ -338,7 +386,7 @@ class SeminarController extends Controller
                 $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.(str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT));
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_mode));
+                $url = url("sertifikat/".Crypt::encrypt($no_sert_mode));
                 $nama = "QR_Sertifikat_".$no_sert_mode.".png";
                 if (!file_exists(base_path("public/file_seminar/"))) {
                     // mkdir($destinationPath, 777, true);
@@ -525,7 +573,7 @@ class SeminarController extends Controller
                 // dd($no_sert);
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+                $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
                 if (!file_exists(base_path("public/file_seminar/"))) {
                     // mkdir($destinationPath, 777, true);
@@ -597,7 +645,7 @@ class SeminarController extends Controller
                 // dd($no_sert);
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_mode));
+                $url = url("sertifikat/".Crypt::encrypt($no_sert_mode));
                 $nama = "QR_Sertifikat_".$no_sert_mode.".png";
                 if (!file_exists(base_path("public/file_seminar/"))) {
                     // mkdir($destinationPath, 777, true);
@@ -1071,10 +1119,6 @@ class SeminarController extends Controller
         $data = PesertaSeminar::where('no_srtf',$id)->first();
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
-        // generate qr tanda tangan
-        // return $this->generateTtd($ttd);
-
-        // generate qr sertifikat
 
         $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
         $pdf->setPaper('A4','potrait');
@@ -1084,7 +1128,7 @@ class SeminarController extends Controller
 
     // kirim email ke semua peserta
     public function kirimEmail($id){
-        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=','1')->orWhereNull('is_paid')->get();      
+        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=','1')->get();    
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
             \Mail::to($data->email)->send(new MailSertifikat($key));
@@ -1148,7 +1192,7 @@ class SeminarController extends Controller
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
 
             // generate qr code
-            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+            $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
             if (!file_exists(base_path("public/file_seminar/"))) {
                 // mkdir($destinationPath, 777, true);
@@ -1185,7 +1229,7 @@ class SeminarController extends Controller
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
             
             // generate qr code
-            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+            $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
             if (!file_exists(base_path("public/file_seminar/"))) {
                 // mkdir($destinationPath, 777, true);
@@ -1231,7 +1275,7 @@ class SeminarController extends Controller
         $data->approved_at = Carbon::now()->toDateTimeString();
 
         // generate qr code
-        $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
+        $url = url("sertifikat/".Crypt::encrypt($no_sert));
         $nama = "QR_Sertifikat_".$no_sert.".png";
         if (!file_exists(base_path("public/file_seminar/"))) {
             // mkdir($destinationPath, 777, true);
@@ -1245,6 +1289,26 @@ class SeminarController extends Controller
         $data = $data->save();
    
         return redirect()->back()->with('alert',"Peserta \"".$nama_peserta['nama']."\" berhasil di approve");
+    }
+
+    public function scanTTD($id_personal, $id_seminar){
+        $seminar = SeminarModel::where('id',$id_seminar)->first();
+        $nama = Personal::where('id',$id_personal)->first();
+        $ttd = TtdModel::where('id_personal',$id_personal)->where('id_seminar',$id_seminar)->first();
+  
+        return view('seminar.ttd')->with(compact('seminar','nama','ttd'));
+
+    }
+
+    public function scanSertifikat($id){
+        $data = PesertaSeminar::where('no_srtf',$id)->first();
+        $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
+        $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
+  
+        $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
+        $pdf->setPaper('A4','potrait');
+        return $pdf->stream("Sertifikat.pdf");
+       
     }
 
 
