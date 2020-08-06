@@ -481,6 +481,7 @@
         $('#provinsi').select2(); // Select2 Provinsi
         $('#instansi').select2(); // Select2 instansi
         $('#kota').select2(); // Select2 Kota
+        $('#jenis_kelamin').select2(); // Select2 JK
         $('#temp_lahir').select2(); // Select2 Tempat Lahir
         $('#bank_id').select2(); // Select2 Bank
         

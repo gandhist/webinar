@@ -554,6 +554,7 @@
         $('#kota').select2(); // Select2 Kota
         $('#temp_lahir').select2(); // Select2 Tempat Lahir
         $('#bank_id').select2(); // Select2 Bank
+        $('#jenis_kelamin').select2(); // Select2 JK
         
         $('#provinsi').on('change', function(e){
             $('select[name="kota"]').empty();
