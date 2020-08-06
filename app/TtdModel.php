@@ -13,7 +13,7 @@ class TtdModel extends Model
     protected $guarded = "id";
 
     public function bu_ttd(){
-        return $this->belongsTo('App\BuModel', 'id_instansi');
+        return $this->belongsTo('App\personal', 'id_personal');
     }
 
 }
