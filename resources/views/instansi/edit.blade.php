@@ -258,84 +258,6 @@
 
                     <div class="row">
 
-                        {{-- Nama Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('nama_pimp')) ? ' has-error' : '' }}">
-                                <label for="nama_pimp" class="label-control required">Nama Pimpinan</label>
-                                <input type="text" name="nama_pimp" id="nama_pimp"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('nama_pimp') ? old('nama_pimp') : $instansi->nama_pimp}}"
-                                    class="form-control" 
-                                    placeholder="Nama Pimpinan" 
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('nama_pimp') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Nama Pimpinan --}}
-
-                        {{-- Jabatan Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('jab_pimp')) ? ' has-error' : '' }}">
-                                <label for="jab_pimp" class="label-control required">Jabatan Pimpinan</label>
-                                <input type="text" name="jab_pimp" id="jab_pimp"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('jab_pimp') ? old('jab_pimp') : $instansi->jab_pimp }}"
-                                    class="form-control" 
-                                    placeholder="Jabatan Pimpinan" 
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('jab_pimp') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Jabatan Pimpinan --}}
-
-                    </div>
-
-                    <div class="row">
-
-                        {{-- Email Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('email_pimp')) ? ' has-error' : '' }}">
-                                <label for="email_pimp" class="label-control required">Email Pimpinan</label>
-                                <input type="email" name="email_pimp" id="email_pimp"
-                                    value="{{ old('email_pimp') ? old('email_pimp') : $instansi->email_pimp }}"
-                                    class="form-control" 
-                                    placeholder="Email Pimpinan" 
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('email_pimp') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Email Pimpinan--}}
-                        
-                        {{-- Nomor Telepon Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('hp_pimp')) ? ' has-error' : '' }}">
-                                <label for="hp_pimp" class="label-control required">Nomor Telepon Pimpinan</label>
-                                <input type="phone" name="hp_pimp" id="hp_pimp"
-                                    onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('hp_pimp') ? old('hp_pimp') : $instansi->hp_pimp }}"
-                                    class="form-control" 
-                                    placeholder="Nomor Telepon Pimpinan" 
-                                    maxlength="20"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('hp_pimp') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Nomor Telepon Pimpinan --}}
-
-                    </div>
-
-                    <div class="horizontal-line"></div>
-
-                    <div class="row">
-
                         {{-- Contact Person --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('kontak_p')) ? ' has-error' : '' }}">
@@ -544,8 +466,6 @@
 
                     <input type="text" hidden name="id" value="{{$instansi->id}}">
 
-                    <br style="margin:20px;">
-
                     <div class="small text-danger pull-right">*) Wajib diisi</div>
 
                     <br style="margin:10px;">
@@ -553,9 +473,96 @@
                     <div class="pull-right">
                         <button type="submit" class="btn btn-success">Edit</button>
                     </div>
+                    
+                    <br style="margin:20px;">
 
+                    <div class="horizontal-line"></div>
 
+                    <div class="row">
+
+                        {{-- Nama Pimpinan --}}
+                        <div class="col-md-6">
+                            <div class="form-group {{ ($errors->first('nama_pimp')) ? ' has-error' : '' }}">
+                                <label for="nama_pimp" class="label-control required">Nama Pimpinan</label>
+                                <input type="text" name="nama_pimp" id="nama_pimp"
+                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
+                                    value="{{ old('nama_pimp') ? old('nama_pimp') : $instansi->nama_pimp}}"
+                                    class="form-control" 
+                                    placeholder="Nama Pimpinan" 
+                                    disabled>
+                                <div class="invalid-feedback text-danger">
+                                    {{ $errors->first('nama_pimp') }}
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Akhir Nama Pimpinan --}}
+
+                        {{-- Jabatan Pimpinan --}}
+                        <div class="col-md-6">
+                            <div class="form-group {{ ($errors->first('jab_pimp')) ? ' has-error' : '' }}">
+                                <label for="jab_pimp" class="label-control required">Jabatan Pimpinan</label>
+                                <input type="text" name="jab_pimp" id="jab_pimp"
+                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
+                                    value="{{ old('jab_pimp') ? old('jab_pimp') : $instansi->jab_pimp }}"
+                                    class="form-control" 
+                                    placeholder="Jabatan Pimpinan" 
+                                    disabled>
+                                <div class="invalid-feedback text-danger">
+                                    {{ $errors->first('jab_pimp') }}
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Akhir Jabatan Pimpinan --}}
+
+                    </div>
+
+                    <div class="row">
+
+                        {{-- Email Pimpinan --}}
+                        <div class="col-md-6">
+                            <div class="form-group {{ ($errors->first('email_pimp')) ? ' has-error' : '' }}">
+                                <label for="email_pimp" class="label-control required">Email Pimpinan</label>
+                                <input type="email" name="email_pimp" id="email_pimp"
+                                    value="{{ old('email_pimp') ? old('email_pimp') : $instansi->email_pimp }}"
+                                    class="form-control" 
+                                    placeholder="Email Pimpinan" 
+                                    disabled>
+                                <div class="invalid-feedback text-danger">
+                                    {{ $errors->first('email_pimp') }}
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Akhir Email Pimpinan--}}
+                        
+                        {{-- Nomor Telepon Pimpinan --}}
+                        <div class="col-md-6">
+                            <div class="form-group {{ ($errors->first('hp_pimp')) ? ' has-error' : '' }}">
+                                <label for="hp_pimp" class="label-control required">Nomor Telepon Pimpinan</label>
+                                <input type="phone" name="hp_pimp" id="hp_pimp"
+                                    onkeypress="return /[0-9]/i.test(event.key)"
+                                    value="{{ old('hp_pimp') ? old('hp_pimp') : $instansi->hp_pimp }}"
+                                    class="form-control" 
+                                    placeholder="Nomor Telepon Pimpinan" 
+                                    maxlength="20"
+                                    disabled>
+                                <div class="invalid-feedback text-danger">
+                                    {{ $errors->first('hp_pimp') }}
+                                </div>
+                            </div>
+                        </div>
+                        {{-- Akhir Nomor Telepon Pimpinan --}}
+
+                    </div>
+
+                    @if($instansi->is_actived == "1")
+                        <button type="submit" class="btn btn-info pull-right">
+                            <a href="{{url('personals/'.$instansi->id_personal_pimp.'/edit')}}" style="color:white">
+                                Edit Pimpinan
+                            </a>
+                        </button>
+                    @endif
                 </form>          
+
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}

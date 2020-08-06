@@ -147,10 +147,16 @@
 @push('script')
 <script type="text/javascript">
     // Button edit click
+    let person = {{$peserta[0]['id_personal']}}
     $('#btnEdit').on('click', function (e) {
         e.preventDefault();
-        var id = "{{$id}}";
-        window.location.href = "{{ url('pesertas') }}/" + id + "/edit";
+        if(isNaN(person)){
+            var id = "{{$id}}";
+            window.location.href = "{{ url('pesertas') }}/" + id + "/edit";
+        } else {
+            var id = "{{$id}}";
+            window.location.href = "{{ url('personals') }}/" + person + "/edit";
+        }
     });
 </script>
 @endpush

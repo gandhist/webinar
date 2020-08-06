@@ -470,12 +470,17 @@ class InstansiController extends Controller
 
     public function edit($id) {
         $instansi = BuModel::where('id',$id)->first();
-        // $negara = NegaraModel::all();
-        $provinsi = ProvinsiModel::all();
-        $kota = KotaModel::all();
-        $bank = BankModel::all();
-        // return view('instansi.edit')->with(compact('negara','provinsi','kota'));
-        return view('instansi.edit')->with(compact('instansi','provinsi','kota','bank','id'));
+        if($instansi->is_actived == '1'){
+            // $negara = NegaraModel::all();
+            $provinsi = ProvinsiModel::all();
+            $kota = KotaModel::all();
+            $bank = BankModel::all();
+            // return view('instansi.edit')->with(compact('negara','provinsi','kota'));
+            return view('instansi.edit')->with(compact('instansi','provinsi','kota','bank','id'));
+        } else {
+            return redirect('/instansi/lengkapi/'.$instansi->id.'/'.$instansi->id_personal_pimp)
+                ->with('pesan',"Mohon lengkapi Data Pimpinan terlebih dulu");
+        }
     }
     public function update(Request $request) {
         $instansi = BuModel::where('id', $request->id)->first();
@@ -499,10 +504,10 @@ class InstansiController extends Controller
             "id_prop" => "required",
             "id_kota" => "required",
             "singkat_bu" => "required|min:3|max:50",
-            "nama_pimp" => "required|min:3|max:50",
-            "jab_pimp" => "required|min:3|max:50",
-            "email_pimp" => "required|email",
-            "hp_pimp" => "required|numeric|digits_between:6,20",
+            // "nama_pimp" => "required|min:3|max:50",
+            // "jab_pimp" => "required|min:3|max:50",
+            // "email_pimp" => "required|email",
+            // "hp_pimp" => "required|numeric|digits_between:6,20",
             "kontak_p" => "required|min:3|max:50",
             "jab_kontak_p" => "required|min:3|max:50",
             "email_kontak_p" => "required|email",
@@ -534,19 +539,19 @@ class InstansiController extends Controller
             'singkat_bu' => 'Mohon isi Nama Singkat Instansi',
             'singkat_bu.min' => 'Nama Singkat minimal 3 karakter',
             'singkat_bu.max' => 'Nama Singkat maksimal 50 karakter',
-            'nama_pimp.required' => 'Mohon isi Nama Pimpinan',
-            'nama_pimp.min' => 'Nama Pimpinan minimal 3 karakter',
-            'nama_pimp.max' => 'Nama Pimpinan maksimal 50 karakter',
-            'jab_pimp.required' => 'Mohon isi Jabatan Pimpinan',
-            'jab_pimp.min' => 'Jabatan Pimpinan minimal 3 karakter',
-            'jab_pimp.max' => 'Jabatan Pimpinan maksimal 50 karakter',
-            'email_pimp.required' => 'Mohon isi Email Pimpinan',
-            'email_pimp.email' => 'Mohon isi dengan format Email yang valid',
-            'hp_pimp.required' => 'Mohon isi Nomor Telepon Pimpinan',
-            'hp_pimp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
-            'hp_pimp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
-            'hp_pimp.unique' => 'Nomor Telepon sudah terdaftar',
-            'hp_pimp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            // 'nama_pimp.required' => 'Mohon isi Nama Pimpinan',
+            // 'nama_pimp.min' => 'Nama Pimpinan minimal 3 karakter',
+            // 'nama_pimp.max' => 'Nama Pimpinan maksimal 50 karakter',
+            // 'jab_pimp.required' => 'Mohon isi Jabatan Pimpinan',
+            // 'jab_pimp.min' => 'Jabatan Pimpinan minimal 3 karakter',
+            // 'jab_pimp.max' => 'Jabatan Pimpinan maksimal 50 karakter',
+            // 'email_pimp.required' => 'Mohon isi Email Pimpinan',
+            // 'email_pimp.email' => 'Mohon isi dengan format Email yang valid',
+            // 'hp_pimp.required' => 'Mohon isi Nomor Telepon Pimpinan',
+            // 'hp_pimp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            // 'hp_pimp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            // 'hp_pimp.unique' => 'Nomor Telepon sudah terdaftar',
+            // 'hp_pimp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
             'kontak_p.required' => 'Mohon isi Nama Contact Person',
             'kontak_p.min' => 'Contact Person minimal 3 karakter',
             'kontak_p.max' => 'Contact Person maksimal 50 karakter',
@@ -596,27 +601,27 @@ class InstansiController extends Controller
             ]);
         }
 
-        if($request->email_pimp != $instansi->email_pimp ) {
-            $request->validate([
-                "email_pimp" => "required|email|unique:badan_usaha",
-            ],[
-                'email_pimp.required' => 'Mohon isi Email Pimpinan',
-                'email_pimp.email' => 'Mohon isi dengan format Email yang valid',
-                'email_pimp.unique' => 'Email sudah terdaftar',
-            ]);
-        }
+        // if($request->email_pimp != $instansi->email_pimp ) {
+        //     $request->validate([
+        //         "email_pimp" => "required|email|unique:badan_usaha",
+        //     ],[
+        //         'email_pimp.required' => 'Mohon isi Email Pimpinan',
+        //         'email_pimp.email' => 'Mohon isi dengan format Email yang valid',
+        //         'email_pimp.unique' => 'Email sudah terdaftar',
+        //     ]);
+        // }
 
-        if($request->hp_pimp != $instansi->hp_pimp ) {
-            $request->validate([
-                "hp_pimp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
-            ],[
-                'hp_pimp.required' => 'Mohon isi Nomor Telepon Pimpinan',
-                'hp_pimp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
-                'hp_pimp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
-                'hp_pimp.unique' => 'Nomor Telepon sudah terdaftar',
-                'hp_pimp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
-            ]);
-        }
+        // if($request->hp_pimp != $instansi->hp_pimp ) {
+        //     $request->validate([
+        //         "hp_pimp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
+        //     ],[
+        //         'hp_pimp.required' => 'Mohon isi Nomor Telepon Pimpinan',
+        //         'hp_pimp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
+        //         'hp_pimp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
+        //         'hp_pimp.unique' => 'Nomor Telepon sudah terdaftar',
+        //         'hp_pimp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
+        //     ]);
+        // }
 
         if($request->email_kontak_p != $instansi->email_kontak_p ) {
             $request->validate([
@@ -649,10 +654,10 @@ class InstansiController extends Controller
         $data->id_prop          = $request->id_prop                     ;
         $data->id_kota          = $request->id_kota                     ;
         $data->singkat_bu       = $request->singkat_bu                  ;
-        $data->nama_pimp        = $request->nama_pimp                   ;
-        $data->jab_pimp         = $request->jab_pimp                    ;
-        $data->email_pimp       = $request->email_pimp                  ;
-        $data->hp_pimp          = $request->hp_pimp                     ;
+        // $data->nama_pimp        = $request->nama_pimp                   ;
+        // $data->jab_pimp         = $request->jab_pimp                    ;
+        // $data->email_pimp       = $request->email_pimp                  ;
+        // $data->hp_pimp          = $request->hp_pimp                     ;
         $data->kontak_p         = $request->kontak_p                    ;
         $data->jab_kontak_p     = $request->jab_kontak_p                ;
         $data->email_kontak_p   = $request->email_kontak_p              ;
