@@ -80,7 +80,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn btn-outline-info pull-center">Daftar</button>
+        <button type="submit" class="btn btn-outline-info pull-center">Registrasi</button>
         <a href="{{ url('infoseminar') }}" class="btn btn-outline-info">Batal</a>
       </form>
     </main>
