@@ -28,7 +28,7 @@
     <div class="card mb-3" style="max-width: 800px;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="{{ public_path($nama->lampiran_foto) }}" class="card-img" alt="Foto">
+            <img src="{{ url($nama->lampiran_foto) }}" class="card-img" alt="Foto">
           </div>
           <div class="col-md-8">
             <div class="p3sm-image">
