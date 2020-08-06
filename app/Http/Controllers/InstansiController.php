@@ -213,7 +213,7 @@ class InstansiController extends Controller
 
         return redirect('/instansi/lengkapi/'.$data->id.'/'.$pimp->id)
         ->with('pesan',"Instansi \"".$request->nama_bu.
-        "\" berhasil ditambahkan");
+        "\" berhasil ditambahkan, mohon lengkapi data diri pimpinan");
     }
     public function lengkapi($id, $id_personal) {
         // dump($id);

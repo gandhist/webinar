@@ -20,6 +20,7 @@ use Mail;
 use App\NarasumberModel;
 use App\ModeratorModel;
 use DB;
+use File;
 use App\Mail\EmailLinkSert;
 use App\Traits\GlobalFunction;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -40,13 +41,12 @@ class SeminarController extends Controller
         $inisiator = InstansiModel::all();
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
-        $instansi = BuModel::all();
-        $pendukung = BuModel::pluck('nama_bu','id');
-        $pimpinan = BuModel::pluck('nama_pimp','id');
-        $personal = Personal::all();
-        $pers = Personal::pluck('nama','id');
+        $instansi = BuModel::where('is_actived','1')->get();
+        $pendukung = BuModel::where('is_actived','1')->pluck('nama_bu','id');
+        $personal = Personal::where('is_activated','1')->get();
+        $pers = Personal::where('is_activated','1')->pluck('nama','id');
         return view('seminar.create')->with(compact('inisiator','provinsi','kota',
-        'personal','instansi','pendukung','pimpinan','pers'));
+        'personal','instansi','pendukung','pers'));
     }
 
     public function store(Request $request) {
@@ -67,7 +67,7 @@ class SeminarController extends Controller
             'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
-            'ttd_pemangku' => 'required',
+            // 'ttd_pemangku' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:50',
@@ -171,104 +171,41 @@ class SeminarController extends Controller
             }
 
             // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
-            foreach($request->ttd_pemangku as $key){
-                $pend = new TtdModel;
-                $pend->id_seminar = $data->id;
-                $pend->id_instansi = $key;
-                $pend->created_by = Auth::id();
-                $pend->save();
-            }
+            $ttd1 = new TtdModel;
+            $ttd1->id_instansi = $request->ttd1;
+            $ttd1->jabatan = $request->jab_ttd1;
+            $ttd1->id_seminar = $data->id;
+            $ttd1->created_by = Auth::id();
+            $ttd1->save();
+
+            $ttd2 = new TtdModel;
+            $ttd2->id_instansi = $request->ttd2;
+            $ttd2->jabatan = $request->jab_ttd2;
+            $ttd2->id_seminar = $data->id;
+            $ttd2->created_by = Auth::id();
+            $ttd2->save();
 
             // $data->narasumber        =   $request->narasumber     ;
             foreach($request->narasumber as $key){
-                $narasumber = Personal::where('id',$key)->first();
-                // $nara = new NarasumberModel;
-                // $nara->id_seminar = $data->id;
-                // $nara->id_personal = $key;
-                // $nara->created_by = Auth::id();
-                // $nara->save();
-                $nara = new Peserta;
-                $nara->id_personal      = $key;
-                $nara->nama             = $narasumber->nama     ;
-                $nara->no_hp            = $narasumber->no_hp     ;
-                $nara->email            = $narasumber->email     ;
-                $nara->pekerjaan        = $narasumber->jabatan     ;
-                $nara->instansi         = $narasumber->instansi     ;
-                $nara->foto             = $narasumber->lampiran_foto     ;
-                $nara->provinsi         = $narasumber->provinsi_id     ;
-                $nara->kota             = $narasumber->kota_id     ;
-                $nara->alamat           = $narasumber->alamat     ;
-                $nara->tgl_lahir        = $narasumber->tgl_lahir     ;
-                $nara->created_by       = Auth::id();
-                $nara->save();
-
+                $narasumber = Peserta::where('id_personal',$key)->first();
                 $narasumber_seminar = new PesertaSeminar;
-                // $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
-                // if($c_narasumber == null) {
-                //     $narasumber_seminar->no_urut_peserta = '1';
-                // } else {
-                //     $narasumber_seminar->no_urut_peserta = $c_narasumber + 1;
-                // }
-                // // generate no sertifikat
-                // $inisiator = '88';
                 $status = '2';
-                // $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
-                // $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
-                // $urutan_seminar = $data->no_urut;
-
-
-                // $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-                // dd($no_sert);
-                $narasumber_seminar->id_peserta = $nara->id;
+                $narasumber_seminar->id_peserta = $narasumber->id;
                 $narasumber_seminar->status = "2";
-                // $narasumber_seminar->no_srtf = $no_sert_nara;
                 $narasumber_seminar->id_seminar = $data->id;
+                // $narasumber_seminar->created_by = Auth::id();
                 $narasumber_seminar->save();
             }
 
             foreach($request->moderator as $key){
-                $moderator = Personal::where('id',$key)->first();
-                // $nara = new NarasumberModel;
-                // $nara->id_seminar = $data->id;
-                // $nara->id_personal = $key;
-                // $nara->created_by = Auth::id();
-                // $nara->save();
-                $mode = new Peserta;
-                $mode->id_personal      = $key;
-                $mode->nama             = $moderator->nama     ;
-                $mode->no_hp            = $moderator->no_hp     ;
-                $mode->email            = $moderator->email     ;
-                $mode->pekerjaan        = $moderator->jabatan     ;
-                $mode->instansi         = $moderator->instansi     ;
-                $mode->foto             = $moderator->lampiran_foto     ;
-                $mode->provinsi         = $moderator->provinsi_id     ;
-                $mode->kota             = $moderator->kota_id     ;
-                $mode->alamat           = $moderator->alamat     ;
-                $mode->tgl_lahir        = $moderator->tgl_lahir     ;
-                $mode->created_by       = Auth::id();
-                $mode->save();
+                $moderator = Peserta::where('id_personal',$key)->first();
 
                 $moderator_seminar = new PesertaSeminar;
-                // $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
-                // if($c_narasumber == null) {
-                //     $narasumber_seminar->no_urut_peserta = '1';
-                // } else {
-                //     $narasumber_seminar->no_urut_peserta = $c_narasumber + 1;
-                // }
-                // // generate no sertifikat
-                // $inisiator = '88';
                 $status = '4';
-                // $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
-                // $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
-                // $urutan_seminar = $data->no_urut;
-
-
-                // $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-                // dd($no_sert);
-                $moderator_seminar->id_peserta = $mode->id;
+                $moderator_seminar->id_peserta = $moderator->id;
                 $moderator_seminar->status = "4";
-                // $moderator_seminar->no_srtf = $no_sert_nara;
                 $moderator_seminar->id_seminar = $data->id;
+                // $moderator_seminar->created_by = Auth::id();
                 $moderator_seminar->save();
                 // dd($moderator_seminar);
             }
@@ -323,36 +260,22 @@ class SeminarController extends Controller
             }
 
             // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
-            foreach($request->ttd_pemangku as $key){
-                $pend = new TtdModel;
-                $pend->id_seminar = $data->id;
-                $pend->id_instansi = $key;
-                $pend->created_by = Auth::id();
-                $pend->save();
-            }
+            $ttd1 = new TtdModel;
+            $ttd1->id_instansi = $request->ttd1;
+            $ttd1->jabatan = $request->jab_ttd1;
+            $ttd1->id_seminar = $data->id;
+            $ttd1->created_by = Auth::id();
+            $ttd1->save();
 
-            // $data->narasumber        =   $request->narasumber     ;
+            $ttd2 = new TtdModel;
+            $ttd2->id_instansi = $request->ttd2;
+            $ttd2->jabatan = $request->jab_ttd2;
+            $ttd2->id_seminar = $data->id;
+            $ttd2->created_by = Auth::id();
+            $ttd2->save();
+
             foreach($request->narasumber as $key){
-                $narasumber = Personal::where('id',$key)->first();
-                // $nara = new NarasumberModel;
-                // $nara->id_seminar = $data->id;
-                // $nara->id_personal = $key;
-                // $nara->created_by = Auth::id();
-                // $nara->save();
-                $nara = new Peserta;
-                $nara->id_personal      = $key;
-                $nara->nama             = $narasumber->nama     ;
-                $nara->no_hp            = $narasumber->no_hp     ;
-                $nara->email            = $narasumber->email     ;
-                $nara->pekerjaan        = $narasumber->jabatan     ;
-                $nara->instansi         = $narasumber->instansi     ;
-                $nara->foto             = $narasumber->lampiran_foto     ;
-                $nara->provinsi         = $narasumber->provinsi_id     ;
-                $nara->kota             = $narasumber->kota_id     ;
-                $nara->alamat           = $narasumber->alamat     ;
-                $nara->tgl_lahir        = $narasumber->tgl_lahir     ;
-                $nara->created_by       = Auth::id();
-                $nara->save();
+                $narasumber = Peserta::where('id_personal',$key)->first();
 
                 $narasumber_seminar = new PesertaSeminar;
                 $c_narasumber = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
@@ -375,12 +298,16 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+                if (!file_exists(base_path("public/file_seminar/"))) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                }
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
                 $dir_name = "file_seminar";
                 $narasumber_seminar->qr_code = $dir_name."/".$nama;
 
-                $narasumber_seminar->id_peserta = $nara->id;
+                $narasumber_seminar->id_peserta = $narasumber->id;
                 $narasumber_seminar->status = "2";
                 $narasumber_seminar->no_srtf = $no_sert_nara;
                 $narasumber_seminar->id_seminar = $data->id;
@@ -388,27 +315,8 @@ class SeminarController extends Controller
             }
 
             foreach($request->moderator as $key){
-                $moderator = Personal::where('id',$key)->first();
+                $moderator = Peserta::where('id_personal',$key)->first();
 
-                // $mode = new Peserta;
-                // $mode->nama = $request->moderator;
-                // $mode->created_by = Auth::id();
-                // $mode->save();
-
-                $mode = new Peserta;
-                $mode->id_personal      = $key;
-                $mode->nama             = $moderator->nama     ;
-                $mode->no_hp            = $moderator->no_hp     ;
-                $mode->email            = $moderator->email     ;
-                $mode->pekerjaan        = $moderator->jabatan     ;
-                $mode->instansi         = $moderator->instansi     ;
-                $mode->foto             = $moderator->lampiran_foto     ;
-                $mode->provinsi         = $moderator->provinsi_id     ;
-                $mode->kota             = $moderator->kota_id     ;
-                $mode->alamat           = $moderator->alamat     ;
-                $mode->tgl_lahir        = $moderator->tgl_lahir     ;
-                $mode->created_by       = Auth::id();
-                $mode->save();
 
                 $moderator_seminar = new PesertaSeminar;
                 $c_moderator = PesertaSeminar::where('id_seminar',$data->id)->max('no_urut_peserta'); //Counter nomor urut for narasumber
@@ -429,12 +337,16 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_mode));
                 $nama = "QR_Sertifikat_".$no_sert_mode.".png";
+                if (!file_exists(base_path("public/file_seminar/"))) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
                 $dir_name = "file_seminar";
                 $moderator_seminar->qr_code = $dir_name."/".$nama;
 
-                $moderator_seminar->id_peserta = $mode->id;
+                $moderator_seminar->id_peserta = $moderator->id;
                 $moderator_seminar->status = "4";
                 $moderator_seminar->no_srtf = $no_sert_mode;
                 $moderator_seminar->id_seminar = $data->id;
@@ -611,6 +523,10 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+                if (!file_exists(base_path("public/file_seminar/"))) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
                 $dir_name = "file_seminar";
@@ -679,6 +595,10 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_mode));
                 $nama = "QR_Sertifikat_".$no_sert_mode.".png";
+                if (!file_exists(base_path("public/file_seminar/"))) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
                 $dir_name = "file_seminar";
@@ -1226,6 +1146,10 @@ class SeminarController extends Controller
             // generate qr code
             $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+            if (!file_exists(base_path("public/file_seminar/"))) {
+                // mkdir($destinationPath, 777, true);
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            };
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
          
             $dir_name = "file_seminar";
@@ -1257,8 +1181,12 @@ class SeminarController extends Controller
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator->no_urut_peserta, 3, "0", STR_PAD_LEFT);
             
             // generate qr code
-            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
+            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+            if (!file_exists(base_path("public/file_seminar/"))) {
+                // mkdir($destinationPath, 777, true);
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            };
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
          
             $dir_name = "file_seminar";
@@ -1301,6 +1229,10 @@ class SeminarController extends Controller
         // generate qr code
         $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
         $nama = "QR_Sertifikat_".$no_sert.".png";
+        if (!file_exists(base_path("public/file_seminar/"))) {
+            // mkdir($destinationPath, 777, true);
+            File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+        };
         $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
        
         $dir_name = "file_seminar";

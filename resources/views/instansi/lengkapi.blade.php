@@ -30,6 +30,20 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <h1 style="margin-bottom: 25px;">Data Diri</h1>
+
+                <div class="row">
+                    <div class="col-12">
+                        @if(session()->get('pesan'))
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session()->get('pesan') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+                
                 <form method="POST" action="{{ url('instansi/store-lengkapi') }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf

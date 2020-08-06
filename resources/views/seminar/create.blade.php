@@ -254,102 +254,66 @@
 
                 </div>
 
-
                 <div class="row">
-                    {{-- Tanggal Mulai --}}
-                    <div class="col-md-2">
-                        <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
-                            <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
-                            <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
-                                onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_awal') }}"
-                                placeholder=" HH-BB-TTTT">
-                            <div id="tgl_awal" class="invalid-feedback text-danger">
-                                {{ $errors->first('tgl_awal') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Tanggal Mulai --}}
-
-                    {{-- Tanggal Akhir --}}
-                    <div class="col-md-2">
-                        <div class="form-group {{ $errors->first('tgl_akhir') ? 'has-error' : '' }} ">
-                            <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
-                            <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
-                                onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_akhir') }}"
-                                placeholder=" HH-BB-TTTT">
-                            <div id="tgl_akhir" class="invalid-feedback text-danger">
-                                {{ $errors->first('tgl_akhir') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Akhir Tanggal Akhir --}}
-
-                    {{-- Jam Awal --}}
-                    <div class="col-md-1">
-                        <div class="form-group input-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
-                            <label for="jam_awal" class="label-control required">Jam Awal</label>
-                            <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
-                                onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_awal') }}"
-                                placeholder=" 00:00">
-                            <div id="tgl_akhir" class="invalid-feedback text-danger">
-                                {{ $errors->first('jam_awal') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Akhir Jam Awal --}}
-
-                    {{-- Jam Awal --}}
-                    <div class="col-md-1">
-                        <div class="form-group {{ $errors->first('jam_akhir') ? 'has-error' : '' }} ">
-                            <label for="jam_akhir" class="label-control required">Jam Akhir</label>
-                            <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
-                                onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_akhir') }}"
-                                placeholder=" 00:00">
-                            <div id="jam_akhir" class="invalid-feedback text-danger">
-                                {{ $errors->first('jam_akhir') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Akhir Jam Awal --}}
-
-                    {{-- Tanda Tangan --}}
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
-                            <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
-                            <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
-                                @if(old('instansi_penyelenggara'))
-                                    @foreach($pimpinan as $key => $value)
-                                        @if(collect(old('instansi_penyelenggara'))->contains($key))
-                                            <option value="{{$key}}"
-                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
-                                            {{ $value }}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-
-                                @if(old('instansi_pendukung'))
-                                    @foreach($pimpinan as $key => $value)
-                                        @if(collect(old('instansi_pendukung'))->contains($key))
-                                            <option value="{{$key}}"
-                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
-                                            {{ $value }}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-
+                    {{-- TTD 1 --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('ttd1') ? 'has-error' : '' }} ">
+                            <label for="ttd1" class="label-control required">Penandatangan 1</label>
+                            <select name="ttd1" id="ttd1"
+                            class="form-control to-ttd">
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
-                            <div id="ttd_pemangku" class="invalid-feedback text-danger">
-                                {{ $errors->first('ttd_pemangku') }}
+                            <div id="ttd1" class="invalid-feedback text-danger">
+                                {{ $errors->first('ttd1') }}
                             </div>
                         </div>
                     </div>
-                    {{-- Akhir Tanda Tangan --}}
+                    {{-- Akhir TTD 1 --}}
+
+                    {{-- Jabatan TTD 1 --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('jab_ttd1') ? 'has-error' : '' }}">
+                            <label for="jab_ttd1" class="label-control required">Jabatan Penandatangan 1</label>
+                            <input type="text" id="jab_ttd1" class="form-control" name="jab_ttd1"
+                            placeholder="Jabatan Penandatangan 1"
+                            value="{{ old('jab_ttd1') ? old('jab_ttd1') : '' }}">
+                            <div id="jab_ttd1" class="invalid-feedback text-danger">
+                                {{ $errors->first('jab_ttd1') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Jabatan TTD 1 --}}
+                    
+                    {{-- TTD 2 --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('ttd2') ? 'has-error' : '' }} ">
+                            <label for="ttd2" class="label-control required">Penandatangan 2</label>
+                            <select name="ttd2" id="ttd2"
+                            class="form-control to-ttd">
+                            </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+
+                            <div id="ttd2" class="invalid-feedback text-danger">
+                                {{ $errors->first('ttd2') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir TTD 2 --}}
+
+                    {{-- Jabatan TTD 2 --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('jab_ttd2') ? 'has-error' : '' }}">
+                            <label for="jab_ttd2" class="label-control required">Jabatan Penandatangan 2</label>
+                            <input type="text" id="jab_ttd2" class="form-control" name="jab_ttd2"
+                            placeholder="Jabatan Penandatangan 2"
+                            value="{{ old('jab_ttd2') ? old('jab_ttd2') : '' }}">
+                            <div id="jab_ttd2" class="invalid-feedback text-danger">
+                                {{ $errors->first('jab_ttd2') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Jabatan TTD 2 --}}
                 </div>
 
                 <div class="row">
@@ -464,6 +428,122 @@
 
                 </div>
 
+                <div class="row">
+                    {{-- Tanggal Mulai --}}
+                    <div class="col-md-2">
+                        <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
+                            <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
+                            <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
+                                onkeypress="return /[0-9\-]/i.test(event.key)"
+                                value="{{ old('tgl_awal') }}"
+                                placeholder=" HH-BB-TTTT">
+                            <div id="tgl_awal" class="invalid-feedback text-danger">
+                                {{ $errors->first('tgl_awal') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Tanggal Mulai --}}
+
+                    {{-- Tanggal Akhir --}}
+                    <div class="col-md-2">
+                        <div class="form-group {{ $errors->first('tgl_akhir') ? 'has-error' : '' }} ">
+                            <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
+                            <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
+                                onkeypress="return /[0-9\-]/i.test(event.key)"
+                                value="{{ old('tgl_akhir') }}"
+                                placeholder=" HH-BB-TTTT">
+                            <div id="tgl_akhir" class="invalid-feedback text-danger">
+                                {{ $errors->first('tgl_akhir') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Tanggal Akhir --}}
+
+                    {{-- Jam Awal --}}
+                    <div class="col-md-2">
+                        <div class="form-group input-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
+                            <label for="jam_awal" class="label-control required">Jam Awal</label>
+                            <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
+                                onkeypress="return /[0-9\-]/i.test(event.key)"
+                                value="{{ old('jam_awal') }}"
+                                placeholder=" 00:00">
+                            <div id="tgl_akhir" class="invalid-feedback text-danger">
+                                {{ $errors->first('jam_awal') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Jam Awal --}}
+
+                    {{-- Jam Awal --}}
+                    <div class="col-md-2">
+                        <div class="form-group {{ $errors->first('jam_akhir') ? 'has-error' : '' }} ">
+                            <label for="jam_akhir" class="label-control required">Jam Akhir</label>
+                            <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
+                                onkeypress="return /[0-9\-]/i.test(event.key)"
+                                value="{{ old('jam_akhir') }}"
+                                placeholder=" 00:00">
+                            <div id="jam_akhir" class="invalid-feedback text-danger">
+                                {{ $errors->first('jam_akhir') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Jam Awal --}}
+
+                    {{-- Brosur --}}
+                    <div class="col-md-4">
+                        <div class="form-group  {{ ($errors->first('foto')) ? ' has-error' : '' }}">
+                            <div class="custom-file">
+                                <label class="label-control required" for="foto">Brosur Seminar</label>
+                                <div class="custom-file">
+                                    <input type="file" id="foto" name="foto" class="custom-file-input" id="foto" required>
+                                    <div id="foto" class="invalid-feedback text-danger">
+                                        {{ $errors->first('foto') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted">Upload Max: 2MB</small><br/>
+                            <small class="form-text text-muted">Format: jpeg, png, jpg, gif, svg</small><br>
+                        </div>
+                    </div>
+                    {{-- Akhir Brosur --}}
+
+                    {{-- Tanda Tangan 
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
+                            <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
+                            <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
+                                @if(old('instansi_penyelenggara'))
+                                    @foreach($pimpinan as $key => $value)
+                                        @if(collect(old('instansi_penyelenggara'))->contains($key))
+                                            <option value="{{$key}}"
+                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
+                                            {{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
+
+                                @if(old('instansi_pendukung'))
+                                    @foreach($pimpinan as $key => $value)
+                                        @if(collect(old('instansi_pendukung'))->contains($key))
+                                            <option value="{{$key}}"
+                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
+                                            {{ $value }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
+
+                            </select>
+                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+
+                            <div id="ttd_pemangku" class="invalid-feedback text-danger">
+                                {{ $errors->first('ttd_pemangku') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Tanda Tangan --}}
+                </div>
+
+
 
 
                 <button class="btn btn-success" name="store" value="publish">Publish</button>
@@ -557,11 +637,12 @@
             allowClear: true,
             maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
-        $('#ttd_pemangku').select2({
-            placeholder: " Pilih Tanda Tangan Pemangku",
-            allowClear: true,
-        maximumSelectionLength: 2,
-        }); // Select2 Instansi Pendukung
+        $('#ttd1').select2({
+            placeholder: " Pilih Penandatangan"
+        }); // Select2 Provinsi
+        $('#ttd2').select2({
+            placeholder: " Pilih Penandatangan"
+        }); // Select2 Provinsi
         $('#narasumber').select2({
             placeholder: " Pilih Narasumber",
             allowClear: true,
@@ -615,26 +696,51 @@
         })
 
         $('.to-pimpinan').on('change', function() {
-            pimpinan =  @json($pimpinan);
+            personal =  @json($personal);
             peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
             pend = $('#instansi_pendukung').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log('pimpinan :', pimpinan);
+
+            // console.log('pimpinan :', personal);
             // console.log('pendukung :', pend);
             // console.log('penyelenggara :', peny);
-            $('#ttd_pemangku').empty();
-            for(let key in pimpinan) {
-                if(peny.includes(key) || pend.includes(key)){
+            $('#ttd1').empty();
+            personal.forEach(function(key) {
+                if(peny.includes(key.instansi) || pend.includes(key.instansi)){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
-                    $('#ttd_pemangku').append(new Option(pimpinan[key], key));
+                    $('#ttd1').append(new Option(key.nama, key.id));
 
-                    $('#ttd_pemangku').select2({maximumSelectionLength: 2,});
-                    // console.log(key);
+                    $('#ttd1').select2();
                 }
-            }
+            });
+        })
+
+        $('#ttd1').on('select2:select', function() {
+            personal =  @json($personal);
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            // console.log('pimpinan :', personal);
+            // console.log('pendukung :', pend);
+            // console.log('penyelenggara :', peny);
+            $('#ttd2').empty();
+            personal.forEach(function(key) {
+                if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                    if( !($('#ttd1').val() == key.id) ){
+                        //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                        $('#ttd2').append(new Option(key.nama, key.id));
+
+                        $('#ttd2').select2();
+                    }
+                }
+            });
         })
 
         $(".to-pimpinan").on("select2:select", function (evt) {
@@ -647,7 +753,7 @@
         });
 
 
-        $("#ttd_pemangku").on("select2:select", function (evt) {
+        $(".to-ttd").on("select2:select", function (evt) {
             var element = evt.params.data.element;
             var $element = $(element);
 
