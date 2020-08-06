@@ -7,6 +7,7 @@ use App\ProvinsiModel;
 use App\KotaModel;
 use App\BuModel;
 use App\BankModel;
+use App\Peserta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -37,12 +38,12 @@ class PersonalController extends Controller
             ['personals' => Personal::where('deleted_at',NULL)->get(),
             'provinsis' => $provinsi,
             'kotas' => $kota,
-            'bu' => $bu] 
+            'bu' => $bu]
         );
     }
 
     public function create() {
-        return view('personal.create',['provinsis' => ProvinsiModel::all(), 
+        return view('personal.create',['provinsis' => ProvinsiModel::all(),
                                         'kotas' => KotaModel::all(),
                                         'bus' => BuModel::where('deleted_at',NULL)->get(),
                                         'banks' =>  BankModel::all()]);
@@ -141,12 +142,15 @@ class PersonalController extends Controller
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
         $data->reff_p = $request->reff_p;
-        
+        $data->is_activated = '1';
+        $data->is_pimpinan = '0';
+
         $data->created_by = Auth::id();
+
 
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        
+
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
             if (!file_exists($destinationPath)) {
@@ -180,7 +184,39 @@ class PersonalController extends Controller
             $data->lampiran_npwp = $destinationPath."/".$file;
         }
 
-        $personal = $data->save();
+        $data->save();
+
+        $peserta = new Peserta;
+
+        $peserta->id_personal = $data->id;
+        $peserta->nama = $request->nama;
+        $peserta->email = $request->email;
+        $peserta->no_hp = $request->no_hp;
+        $peserta->instansi = $request->instansi;
+        $peserta->pekerjaan = $request->jabatan;
+        $peserta->alamat = $request->alamat;
+        $peserta->provinsi = $request->provinsi;
+        $peserta->kota = $request->kota;
+        $peserta->tgl_lahir = Carbon::parse($request->tgl_lahir);
+        $peserta->created_by = Auth::id();
+
+        if ($files = $request->file('foto')) {
+            $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+            if (!file_exists($destinationPath)) {
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
+            $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $destinationFile = $destinationPath."/".$file;
+            $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+            $resize_image = Image::make($files);
+            $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
+            $temp = $destinationPathTemp.$file;
+            rename($temp, $destinationFile);
+            $peserta->foto = $dir_name."/".$file;
+        }
+
+        $peserta->save();
+
         return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
         "\" berhasil ditambahkan");
 
@@ -189,19 +225,20 @@ class PersonalController extends Controller
 
 
     public function show($id){
-        $personal = Personal::where('id', $id)->get();
-        $kota = KotaModel::where('id',$personal[0]['kota_id'])->get();
-        $prov = ProvinsiModel::where('id',$personal[0]['provinsi_id'])->get();
-        $bu = BuModel::where('id',$personal[0]['instansi'])->get();
-        $temp_lahir = KotaModel::where('id',$personal[0]['temp_lahir'])->get();
-        $bank = BankModel::where('id_bank',$personal[0]['instansi'])->get();
+        $personal = Personal::find($id);
+        $kota = KotaModel::find($personal->kota_id);
+        $prov = ProvinsiModel::find($personal->provinsi_id);
+        $bu = BuModel::find($personal->instansi);
+        $temp_lahir = KotaModel::find($personal->temp_lahir);
+        $bank = BankModel::where('id_bank',$personal->id_bank)->first();
+        // dd($personal);
         return view('personal.show',['personal' => $personal, 'kota' => $kota,
          'provinsi' => $prov, 'id' => $id,
          'bu' => $bu, 'bank' => $bank,
          'temp_lahir' => $temp_lahir]);
 
     }
-    
+
     public function edit($id) {
 
         $personal = Personal::where('id', $id)->first();
@@ -328,7 +365,7 @@ class PersonalController extends Controller
         }
         if($request->no_hp != $personal[0]['no_hp']){
             $request->validate([
-                'no_hp' => 'required|numeric|unique:no_hp|digits_between:9,14',
+                'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
             ],[
                 'no_hp.required' => 'Mohon isi Nomor Telepon',
                 'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
@@ -338,7 +375,7 @@ class PersonalController extends Controller
             ]);
             $data->no_hp = $request->no_hp;
         }
-        
+
 
         $data->jenis_kelamin = $request->jenis_kelamin;
         $data->instansi = $request->instansi;
@@ -353,13 +390,13 @@ class PersonalController extends Controller
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
         $data->reff_p = $request->reff_p;
-        
+
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
 
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
-        
+
         if ($files = $request->file('foto')) {
             $lampiran_foto_lama = $data->lampiran_foto;
 

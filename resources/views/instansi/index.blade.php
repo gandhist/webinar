@@ -67,7 +67,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($instansi as $key)
+                                @foreach($instansi as $key)
                                 <tr>
                                     <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                                         id="selection[]" name="selection[]"></td>
@@ -80,21 +80,21 @@
                                         </a>
                                     </td>
 
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->telp      }}" 
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->telp      }}"
                                     style="text-align:center;">
                                         {{ str_limit($key->telp     ,20) }}
                                     </td>
-                                    
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->email     }}" 
+
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->email     }}"
                                     style="text-align:center;">
-                                        <a href="mailto:{{ $key->email }}">Kirim Email</a> 
+                                        <a href="mailto:{{ $key->email }}">Kirim Email</a>
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->alamat    }}" >
                                         {{ str_limit($key->alamat   ,40) }}
                                     </td>
 
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->web       }}" 
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->web       }}"
                                     style="text-align:center;">
                                     <a href="{{ url(urlencode($key->web)) }}">Kunjungi</a>
                                     </td>
@@ -104,9 +104,7 @@
                                     </td>
 
                                 </tr>
-                                @empty
-                                <td colspan="10" class="text-center">Tidak ada data...</td>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

@@ -69,7 +69,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($personals as $personal)
+                                @foreach($personals as $personal)
                                 @php
                                     $username =  preg_replace('/[^a-zA-Z0-9()]/', '_', $personal->nama);
                                 @endphp
@@ -96,14 +96,12 @@
                                     <td> {{ str_limit($personal->jabatan, 20)}} </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat }}">
                                         {{ str_limit($personal->alamat, 20) }} </td>
-                                    <td class="text-center"> 
-                                        {{ $kotas[$personal->temp_lahir].", ".$personal->tgl_lahir }} 
+                                    <td class="text-center">
+                                        {{ $kotas[$personal->temp_lahir].", ".$personal->tgl_lahir }}
                                     </td>
                                     <td class="text-center"> <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a></td>
                                 </tr>
-                                @empty
-                                <td colspan="10" class="text-center">Tidak ada data...</td>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

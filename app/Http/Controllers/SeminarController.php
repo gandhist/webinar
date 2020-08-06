@@ -23,6 +23,8 @@ use DB;
 use App\Mail\EmailLinkSert;
 use App\Traits\GlobalFunction;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Mail\EmailLinkSert as MailSertifikat;
+use Illuminate\Support\Facades\Crypt;
 
 class SeminarController extends Controller
 {
@@ -371,11 +373,11 @@ class SeminarController extends Controller
                 // dd($no_sert);
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/$no_sert_nara");
-                $nama = "QR_".$no_sert_nara.".png";
-                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+                $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
-                $dir_name = "qr/sertifikat";
+                $dir_name = "file_seminar";
                 $narasumber_seminar->qr_code = $dir_name."/".$nama;
 
                 $narasumber_seminar->id_peserta = $nara->id;
@@ -425,11 +427,11 @@ class SeminarController extends Controller
                 $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.(str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT));
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/$no_sert_mode");
-                $nama = "QR_".$no_sert_mode.".png";
-                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_mode));
+                $nama = "QR_Sertifikat_".$no_sert_mode.".png";
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
-                $dir_name = "qr/sertifikat";
+                $dir_name = "file_seminar";
                 $moderator_seminar->qr_code = $dir_name."/".$nama;
 
                 $moderator_seminar->id_peserta = $mode->id;
@@ -607,11 +609,11 @@ class SeminarController extends Controller
                 // dd($no_sert);
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/$no_sert_nara");
-                $nama = "QR_".$no_sert_nara.".png";
-                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+                $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
-                $dir_name = "qr/sertifikat";
+                $dir_name = "file_seminar";
                 $narasumber_seminar->qr_code = $dir_name."/".$nama;
 
                 $narasumber_seminar->id_peserta = $nara->id;
@@ -675,11 +677,11 @@ class SeminarController extends Controller
                 // dd($no_sert);
 
                 // generate qr code
-                $url = url("seminar/cetak_sertifikat/$no_sert_mode");
-                $nama = "QR_".$no_sert_mode.".png";
-                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+                $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_mode));
+                $nama = "QR_Sertifikat_".$no_sert_mode.".png";
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
             
-                $dir_name = "qr/sertifikat";
+                $dir_name = "file_seminar";
                 $moderator_seminar->qr_code = $dir_name."/".$nama;
 
                 $moderator_seminar->id_peserta = $mode->id;
@@ -1146,7 +1148,7 @@ class SeminarController extends Controller
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         // generate qr tanda tangan
-        return $this->generateTtd($ttd);
+        // return $this->generateTtd($ttd);
 
         // generate qr sertifikat
 
@@ -1222,11 +1224,11 @@ class SeminarController extends Controller
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber->no_urut_peserta, 3, "0", STR_PAD_LEFT);
 
             // generate qr code
-            $url = url("seminar/cetak_sertifikat/$no_sert_nara");
-            $nama = "QR_".$no_sert_nara.".png";
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert_nara));
+            $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
          
-            $dir_name = "qr/sertifikat";
+            $dir_name = "file_seminar";
             $narasumber->qr_code = $dir_name."/".$nama;
 
             $narasumber->no_srtf = $no_sert_nara;
@@ -1255,11 +1257,11 @@ class SeminarController extends Controller
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator->no_urut_peserta, 3, "0", STR_PAD_LEFT);
             
             // generate qr code
-            $url = url("seminar/cetak_sertifikat/$no_sert_nara");
-            $nama = "QR_".$no_sert_nara.".png";
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+            $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
+            $nama = "QR_Sertifikat_".$no_sert_nara.".png";
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
          
-            $dir_name = "qr/sertifikat";
+            $dir_name = "file_seminar";
             $moderator->qr_code = $dir_name."/".$nama;
 
             $moderator->no_srtf = $no_sert_nara;
@@ -1297,11 +1299,11 @@ class SeminarController extends Controller
         $data->approved_at = Carbon::now()->toDateTimeString();
 
         // generate qr code
-        $url = url("seminar/cetak_sertifikat/$no_sert");
-        $nama = "QR_".$no_sert.".png";
-        $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/qr/sertifikat/".$nama));
+        $url = url("seminar/cetak_sertifikat/".Crypt::encrypt($no_sert));
+        $nama = "QR_Sertifikat_".$no_sert.".png";
+        $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
        
-        $dir_name = "qr/sertifikat";
+        $dir_name = "file_seminar";
         $data->qr_code = $dir_name."/".$nama;
 
         $data = $data->save();
