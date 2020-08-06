@@ -267,7 +267,8 @@ class PersonalController extends Controller
     }
 
     public function update(Request $request) {
-        $personal = Personal::where('id', $request->id)->get();
+        $personal = Personal::where('id', $request->id)->first();
+        // dd($personal);
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
@@ -340,7 +341,8 @@ class PersonalController extends Controller
         // simpan data peserta
         $data = Personal::find($request->id);
         $data->nama = $request->nama;
-        if($request->nik != $personal[0]['nik']){
+        // dd($data->nama);
+        if($request->nik != $personal->nik){
             $request->validate([
                 'nik' => 'required|numeric|unique:personal|digits:16',
             ], [
@@ -352,7 +354,7 @@ class PersonalController extends Controller
             ]);
             $data->nik = $request->nik;
         }
-        if($request->email != $personal[0]['email']){
+        if($request->email != $personal->email){
             $request->validate([
                 'email' => 'required|email|unique:personal|max:100',
             ], [
@@ -363,7 +365,7 @@ class PersonalController extends Controller
             ]);
             $data->email = $request->email;
         }
-        if($request->no_hp != $personal[0]['no_hp']){
+        if($request->no_hp != $personal->no_hp){
             $request->validate([
                 'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
             ],[
@@ -455,6 +457,29 @@ class PersonalController extends Controller
 
         $data->updated_at = Carbon::now();
         $data->updated_by = Auth::id();
+
+        $peserta = Peserta::where('id_personal',$request->id)->first();
+        $peserta->id_personal = $request->id;
+        $peserta->nama = $request->nama;
+        $peserta->email = $request->email;
+        $peserta->no_hp = $request->no_hp;
+        $peserta->instansi = $request->instansi;
+        $peserta->pekerjaan = $request->jabatan;
+        $peserta->alamat = $request->alamat;
+        $peserta->provinsi = $request->provinsi;
+        $peserta->kota = $request->kota;
+        $peserta->tgl_lahir = Carbon::parse($request->tgl_lahir);
+        $peserta->updated_by = Auth::id();
+        $peserta->updated_at = Carbon::now();
+        
+        $seminar = BuModel::where('id_personal_pimp',$request->id)->first();
+        $seminar->nama_pimp = $request->nama;
+        $seminar->jab_pimp = $request->jabatan;
+        $seminar->hp_pimp = $request->no_hp;
+        $seminar->email_pimp = $request->email;
+        
+        $seminar->save();
+        $peserta->save();
         $data->save();
 
         $instansi = $data->save();

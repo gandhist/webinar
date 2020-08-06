@@ -178,6 +178,21 @@
                         </div>
                     </div>
 
+
+                    @if($instansi->is_actived == "1")
+                        <button type="submit" class="btn btn-info pull-right">
+                            <a href="{{url('personals/'.$instansi->id_personal_pimp.'/edit')}}" style="color:white">
+                                Edit Pimpinan
+                            </a>
+                        </button>
+                    @else
+                        <button type="submit" class="btn btn-info pull-right">
+                            <a href="{{url('instansi/lengkapi/'.$instansi->id.'/'.$instansi->id_personal_pimp)}}" style="color:white">
+                                Lengkapi
+                            </a>
+                        </button>
+                    @endif
+
                     <div class="horizontal-line"></div>
 
                     <div class="row">

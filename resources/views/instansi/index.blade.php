@@ -64,6 +64,7 @@
                                     <th><span class="indent">Alamat</span></th>
                                     <th><span class="indent">Website</span></th>
                                     <th><span class="indent">Nama Pimpinan</span></th>
+                                    <th><span class="indent">Aksi</span></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,7 +101,20 @@
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_pimp }}" >
-                                        {{ str_limit($key->nama_pimp,40) }}
+                                    <a href="{{ url('personals/'.$key->id_personal_pimp) }}">{{ str_limit($key->nama_pimp,40) }}</a>
+                                    </td>
+
+                                    <td>
+                                        @if($key->is_actived == "1")
+                                            {{" "}}
+                                        @else
+                                            <button type="submit" class="btn btn-success">
+                                                <a href="{{url('instansi/lengkapi/'.$key->id.'/'.$key->id_personal_pimp)}}" style="color:white">
+                                                    Lengkapi
+                                                </a>
+                                            </button>
+                                        @endif
+                                    
                                     </td>
 
                                 </tr>

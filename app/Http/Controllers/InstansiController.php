@@ -25,7 +25,7 @@ class InstansiController extends Controller
 {
     //
     public function index () {
-        $instansi = BuModel::where('deleted_at',NULL)->get();
+        $instansi = BuModel::all();
         return view('instansi.index')->with(compact('instansi'));
     }
     public function show ($id) {

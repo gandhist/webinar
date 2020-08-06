@@ -528,6 +528,7 @@
                             </div>
                         </div>
                         {{-- Akhir Referensi Pendaftaran --}}
+                        <input type="hidden" name="id" value="{{$id}}">
 
                     </div>
                     <div class="small text-danger">*) Wajib diisi</div>
