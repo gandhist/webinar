@@ -121,7 +121,9 @@ $total = 0;
                     <div class="col-lg-6">
                         <label for="instansi">Foto</label>
                         <div class="w-100">
-                            <img class="img-responsive" src="{{ url('uploads/peserta/'.$peserta[0]['foto'])}}" alt="Foto">
+                        <a data-toggle="modal" data-target="#myModal">
+                            Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                        </a>
                         </div>
                     </div>
                 </div>
@@ -133,14 +135,14 @@ $total = 0;
                         <table id="data-sekolah" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width:1%;">No</th>
-                                    <th style="width:6%;">Title</th>
-                                    <th style="width:19%;">Tema</th>
-                                    <th style="width:7%;">Tanggal</th>
-                                    <th style="width:10%;">Waktu</th>
-                                    <th style="width:5%;">n_skpk</th>
-                                    <th style="width:10%;">tambah_skpk</th>
-                                    <th style="width:6%;">No_Srtf</th>
+                                    <th style="width:1%;"><i class="fa fa-check-square-o"></i></th>
+                                    <th style="width:6%;">No</th>
+                                    <th style="width:19%;">Judul</th>
+                                    <th style="width:7%;">Tema</th>
+                                    <th style="width:10%;">Tanggal</th>
+                                    <th style="width:5%;">Waktu</th>
+                                    <th style="width:10%;">Nilai SKPK</th>
+                                    <th style="width:6%;">No. Sertifikat</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -173,6 +175,28 @@ $total = 0;
                             </tbody>
                         </table>
                     </div>
+{{-- Modal Foto --}}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<center>	
+	        	<img class="img-responsive" src="{{ url('uploads/peserta/'.$peserta[0]['foto'])}}" alt="Foto">
+	        </center>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+{{-- Akhir Modal Foto --}}
 </section>
 @endsection
 @push('script')
