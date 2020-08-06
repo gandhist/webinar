@@ -278,10 +278,10 @@
                             <td> 
                                 @if($key->is_paid == null)
                                     <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                    <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                    <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
                                 @elseif ($key->is_paid == 1)
                                     <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                    <a href="{{ url('seminar/send_email', $key->id_peserta) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                    <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
                                 @else
                                     <a href="{{ url('seminar/approve', $key->id) }}" class="btn btn-success btn-sm"> Approve</a>
                                     <button type="button" id="btnBukti"

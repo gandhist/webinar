@@ -1080,7 +1080,7 @@ class SeminarController extends Controller
 
     // kirim email ke semua peserta
     public function kirimEmail($id){
-        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=', '1')->orWhereNull('is_paid')->get();      
+        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=','1')->orWhereNull('is_paid')->get();      
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
             \Mail::to($data->email)->send(new MailSertifikat($key));
@@ -1091,8 +1091,8 @@ class SeminarController extends Controller
 
     // kirim email ke peserta yg dipilih
     public function sendEmail($id){
-        $emails = PesertaSeminar::where('id_peserta',$id)->first();
-        $email = Peserta::where('id',$id)->first();
+        $emails = PesertaSeminar::where('no_srtf',$id)->first();   
+        $email = Peserta::where('id',$emails['id_peserta'])->first();
    
         \Mail::to($email->email)->send(new MailSertifikat($emails));
 
