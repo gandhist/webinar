@@ -112,11 +112,8 @@
                     </div>
                     <div class="col-lg-6">
                         <label for="instansi">Foto</label>
-                        @php
-                            $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $peserta[0]['nama']);
-                        @endphp
                         <div class="w-100">
-                            <img class="img-responsive" src="{{ url('uploads/foto/member/'.$dir_name.'/'.$peserta[0]['foto'])}}" alt="Foto">
+                            <img class="img-responsive" src="{{ url('uploads/peserta/'.$peserta[0]['foto'])}}" alt="Foto">
                         </div>
                     </div>
                 </div>
