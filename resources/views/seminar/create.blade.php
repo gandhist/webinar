@@ -725,6 +725,7 @@
             // console.log('pendukung :', pend);
             // console.log('penyelenggara :', peny);
             $('#ttd1').empty();
+            $('#ttd2').empty();
             $('#ttd1').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
             personal.forEach(function(key) {
                 if(peny.includes(key.instansi) || pend.includes(key.instansi)){
