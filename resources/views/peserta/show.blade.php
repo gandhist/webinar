@@ -20,6 +20,14 @@
 </section>
 <!-- Main content -->
 <section class="content">
+@php
+$total = 0;
+@endphp
+@foreach($detailseminar as $key)
+    @php 
+    $total += $key->seminar_p->skpk_nilai;
+    @endphp
+@endforeach
     <!-- Default box -->
     <div class="container-fluid">
         <div class="box box-content">
@@ -136,9 +144,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <td colspan="8" class="text-center">
-                                Belum Tersedia</td>  
-                                {{-- {{ dd($seminar) }}; --}}
+                            
+                            @foreach($detailseminar as $key)
+                                <tr>
+                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
+                                        id="selection[]" name="selection[]"></td>
+                                    <td style="text-align:center;">{{$loop->iteration}}</td>
+                                    <td>
+                                        {{$key->seminar_p->nama_seminar}}
+                                    </td>
+                                    <td>
+                                        {{  strip_tags(html_entity_decode($key->seminar_p->tema))}}
+                                    </td>
+                                    <td style="text-align:center;"> 
+                                        {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
+                                    </td>
+                                    <td style="text-align:center;">
+                                        {{$key->seminar_p->jam_awal}}
+                                    </td>
+                                    <td style="text-align:center;">
+                                        {{$key->seminar_p->skpk_nilai}}
+                                    </td>
+                                    <td>
+                                        {{$key->no_srtf}}
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

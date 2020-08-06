@@ -36,14 +36,14 @@
                 <h1 style="margin-bottom:50px;">Seminar</h1>
 
                 <div class="row" style="margin-bottom:50px;">
-                    <div class="col-md-4"></div>
+                    <div class="col-md-2"></div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar"
-                            class="img-thumbnail" style="width:100%">
+                            class="img-thumbnail center" style="width:50%">
                     </div>
 
-                    <div class="col-md-4"></div>
+                    <div class="col-md-2"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">

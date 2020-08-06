@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Peserta;
 use App\ProvinsiModel;
 use App\KotaModel;
+use App\PesertaSeminar;
+use App\Seminar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -35,8 +37,18 @@ class PesertaController extends Controller
         } else {
             $prov = ProvinsiModel::where('id',$peserta[0]['provinsi'])->get();
         }
+
+        $seminar = Seminar::all();
+        $detailseminar = PesertaSeminar::where('id_peserta','=',$id)->get();
+        $jumlahdetail = PesertaSeminar::where('id_peserta','=',$id)->count();
+      
         
-        return view('peserta.show',['peserta' => $peserta, 'kota' => $kota, 'provinsi' => $prov, 'id' => $id]);
+        return view('peserta.show',
+        ['peserta' => $peserta, 
+        'kota' => $kota, 
+        'provinsi' => $prov, 
+        'id' => $id])
+        ->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
 
     }
 
