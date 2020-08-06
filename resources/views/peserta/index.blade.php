@@ -70,7 +70,11 @@
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->email }}">
                                     {{ str_limit($peserta->email,20) }} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->instansi }}">
+                                    @if($peserta->user_id != null)
                                     {{ str_limit($peserta->instansi,20 )}}
+                                    @else
+                                    {{ $peserta->badan_usaha->nama_bu}}
+                                    @endif
                                 </td>
                                 <td> {{ str_limit($peserta->pekerjaan, 20)}} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->alamat.', '.$peserta->kota.', '.$peserta->provinsi}}">

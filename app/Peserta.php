@@ -21,4 +21,9 @@ class Peserta extends Model
     public function seminar_r(){
         return $this->hasMany('App\PesertaSeminar','id_peserta');
     }
+
+    // relasi ke table badan usaha
+    public function badan_usaha(){
+        return $this->belongsTo('App\BuModel','instansi', 'id');
+    }
 }
