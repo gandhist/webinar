@@ -97,7 +97,7 @@ Route::namespace('Iso')->group(function(){
 	Route::resource('isos', 'IsoController');
 });
 
-// Personal 
+// Personal
 Route::group(['middleware' => 'auth.admin','prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
 	Route::get('/create','PersonalController@create');
@@ -117,15 +117,17 @@ Route::group(['middleware' => 'auth.admin', 'prefix' => 'pesertas'], function ()
 	Route::patch('/update','PesertaController@update');
 	Route::get('/create/getKota/{id}','PesertaController@getKota');
 	Route::get('/{id}/edit','PesertaController@edit');
-	
+
 });
 // End Peserta
 
-// Instansi 
+// Instansi
 Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () {
 	Route::get('/','InstansiController@index');
 	Route::get('/create','InstansiController@create');
 	Route::post('/store','InstansiController@store');
+	Route::get('/lengkapi/{id}/{id_personal}','InstansiController@lengkapi');
+	Route::patch('/store-lengkapi','InstansiController@storeLengkapi');
 	Route::patch('/update','InstansiController@update');
 	Route::get('/create/getKota/{id}','InstansiController@getKota');
 	Route::get('/{id}/edit','InstansiController@edit');
