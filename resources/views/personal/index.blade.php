@@ -64,7 +64,7 @@
                                     <th><span class="indent">Instansi</span></th>
                                     <th><span class="indent">Jabatan</span></th>
                                     <th><span class="indent">Alamat</span></th>
-                                    <th><span class="indent">Tempat, tanggal lahir</span></th>
+                                    <th><span class="indent">Tempat, Tanggal Lahir</span></th>
                                     <th><span class="indent">Lampiran</span></th>
                                 </tr>
                             </thead>
@@ -96,10 +96,15 @@
                                     <td> {{ str_limit($personal->jabatan, 20)}} </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $personal->alamat }}">
                                         {{ str_limit($personal->alamat, 20) }} </td>
-                                    <td class="text-center">
-                                        {{ $kotas[$personal->temp_lahir].", ".$personal->tgl_lahir }}
+                                    <td>
+                                        {{ $kotas[$personal->temp_lahir] }}, {{ isset($personal->tgl_lahir) ? \Carbon\Carbon::parse($personal->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''  }}
                                     </td>
-                                    <td class="text-center"> <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a></td>
+                                    <td class="text-center"> 
+                                        {{-- <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a> --}}
+                                        <a data-toggle="modal" data-target="#myModal">
+                                            Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                        </a> 
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -110,6 +115,27 @@
         </div>
     </div>
 </section>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Brosur Seminar</h4>
+        </div>
+        <div class="modal-body">
+            <center>	
+            <img src="{{$personal->lampiran_foto ? url(urlencode($personal->lampiran_foto)) : ''}}" alt="Brosur Seminar"
+                          class="img-thumbnail center" style="width:50%">
+          </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+        </div>
+      </div>
+    </div>
+</div>
 
 {{-- modal konfirmasi hapus --}}
 <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -179,9 +205,21 @@
             id.push($(this).data('id'));
         });
         if (id.length == 0) {
-            alert('Tidak ada data yang terpilih');
+            Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // alert('Tidak ada data yang terpilih');
         } else if (id.length > 1) {
-            alert('Harap pilih satu data untuk di ubah');
+            Swal.fire({
+                    title: "Harap pilih satu data untuk di ubah",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // alert('Harap pilih satu data untuk di ubah');
         } else {
             url = id[0];
             window.location.href = "{{ url('personals') }}/" + url + "/edit";
