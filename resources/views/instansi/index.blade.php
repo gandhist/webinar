@@ -196,9 +196,21 @@
             id.push($(this).data('id'));
         });
         if (id.length == 0) {
-            alert('Tidak ada data yang terpilih');
+            Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // alert('Tidak ada data yang terpilih');
         } else if (id.length > 1) {
-            alert('Harap pilih satu data untuk di ubah');
+            Swal.fire({
+                    title: "Harap pilih satu data untuk di ubah",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // alert('Harap pilih satu data untuk di ubah');
         } else {
             url = id[0];
             window.location.href = "{{ url('instansi') }}/" + url + "/edit";
