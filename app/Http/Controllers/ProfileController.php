@@ -79,4 +79,9 @@ class ProfileController extends Controller
         return redirect()->route('profile.edit')->with('success', 'Password berhasil diubah');;
     }
 
+    public function detail($id)
+    {
+        $data = Seminar::find($id);
+        return view('profile.detail')->with(compact('data'));
+    }
 }

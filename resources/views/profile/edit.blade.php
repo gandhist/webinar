@@ -84,7 +84,6 @@
                         <table id="data-seminar" class="table table-bordered table-hover dataTable customTable" role="grid">
                             <thead>
                                 <tr role="row">
-                                    <th style="width:2%;text-align:center;"><i class="fa fa-check-square"></i></th>
                                     <th style="width:2%;text-align:center;">No</th>
                                     <th style="width:14%;text-align:center;">Title</th>
                                     <th style="width:19%;text-align:center;">Tema</th>
@@ -97,14 +96,13 @@
                             <tbody>  
                                 @foreach($detailseminar as $key)
                                 <tr>
-                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                        id="selection[]" name="selection[]"></td>
                                     <td style="text-align:center;">{{$loop->iteration}}</td>
                                     <td>
-                                        {{$key->seminar_p->nama_seminar}}
+                                        <a href="{{ url('detail_seminar', $key->seminar_p->id) }}" data-toggle="tooltip" data-placement="bottom" title="Lihat Detail">
+                                            {{$key->seminar_p->nama_seminar}}</a>
                                     </td>
                                     <td>
-                                        {{  strip_tags(html_entity_decode($key->seminar_p->tema))}}
+                                        {{strip_tags(html_entity_decode($key->seminar_p->tema))}}
                                     </td>
                                     <td style="text-align:center;"> 
                                         {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}

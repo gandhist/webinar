@@ -23,6 +23,7 @@ Route::get('profile', 'ProfileController@edit')->name('profile.edit');
 Route::post('profile', 'ProfileController@update')->name('profile.update');
 Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
 Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
+Route::get('detail_seminar/{id}','ProfileController@detail');
 
 Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
