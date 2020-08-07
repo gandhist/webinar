@@ -32,7 +32,7 @@
     <div class="box box-content">
         <div class="container-fluid">
             <div class="jumbotron">
-              
+
                 <h1 style="margin-bottom:50px;">Seminar</h1>
 
                 <div class="row">
@@ -87,7 +87,7 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
                             <label for="tgl_awal" class="label-control required">Tanggal</label>
-                            <input type="text" class="form-control" name="tgl_awal" id="tgl_awal" 
+                            <input type="text" class="form-control" name="tgl_awal" id="tgl_awal"
                             value='{{ isset($seminar->tgl_awal) ? \Carbon\Carbon::parse($seminar->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}'
                                 placeholder="" readonly>
                             <div id="tgl_awal" class="invalid-feedback text-danger">
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-  
+
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('skpk_nilai') ? 'has-error' : '' }} ">
                             <label for="skpk_nilai" class="label-control required">SKPK</label>
@@ -118,7 +118,7 @@
                         </div>
                     </div>
 
-                 
+
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('biaya') ? 'has-error' : '' }} ">
                             <label for="biaya" class="label-control required">Biaya Investasi</label>
@@ -129,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-            
+
                 </div>
 
                 <div class="row">
@@ -151,11 +151,11 @@
                       </div>
                     </div>
                   </div>
- 
+
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }} ">
                       <label for="moderator" class="label-control required">Moderator</label>
-                      
+
                         <div class="row">
                             @foreach($moderator as $key)
                                 <div class="col-md-12">
@@ -212,7 +212,7 @@
                             </div>
                         </div>
                     </div>
-                </div>  
+                </div>
 
                 <div class="row" style="margin-bottom:50px;">
                     <div class="col-md-12">
@@ -221,40 +221,11 @@
                             <div>
                                 <a data-toggle="modal" data-target="#myModal">
                                     Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                </a> 
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                {{-- instansi original --}}
-                {{--
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
-                      <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
-                      <input type="text" class="form-control" name="instansi_penyelenggara" id="instansi_penyelenggara" value=""
-                                placeholder="" readonly>
-                      <div id="instansi_penyelenggara" class="invalid-feedback text-danger">
-                          {{ $errors->first('instansi_penyelenggara') }}
-                      </div>
-                    </div>
-                  </div>
- 
-                  <div class="col-md-6">
-                    <div class="form-group {{ $errors->first('instansi_pendukung') ? 'has-error' : '' }} ">
-                      <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
-                      <input type="text" class="form-control" name="instansi_pendukung" id="instansi_pendukung" value=""
-                                placeholder="" readonly>
-                      <div id="instansi_pendukung" class="invalid-feedback text-danger">
-                          {{ $errors->first('instansi_pendukung') }}
-                      </div>
-                    </div>
-                  </div>
-                </div>  
-                
-                --}}
-                {{-- instansi original --}}
 
                 {{-- <div class="box-body">     --}}
                   <b>Daftar Peserta</b>
@@ -265,7 +236,7 @@
                               {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
                               <th style="width:5%;">No</th>
                               <th style="width:10%;">Status</th>
-                              <th style="width:25%;">Nama</th>   
+                              <th style="width:25%;">Nama</th>
                               <th style="width:15%;">No HP</th>
                               <th style="width:15%;">Email</th>
                               <th style="width:10%;">Sts_Bayar</th>
@@ -273,15 +244,15 @@
                           </tr>
                       </thead>
                       <tbody>
-                        @foreach($detailseminar as $key)  
+                        @foreach($detailseminar as $key)
                          <tr>
                           {{-- <td style='text-align:center;'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                             id="selection[]" name="selection[]"></td> --}}
-                            <td style='text-align:center;'>{{ $loop->iteration}}</td>     
+                            <td style='text-align:center;'>{{ $loop->iteration}}</td>
                             <td style="text-align: center">
-                                @if($key->status == '1') Peserta 
-                                @elseif($key->status == '2') Narasumber 
-                                @elseif($key->status == '4') Moderator 
+                                @if($key->status == '1') Peserta
+                                @elseif($key->status == '2') Narasumber
+                                @elseif($key->status == '4') Moderator
                                 @else Panitia
                                 @endif
                             </td>
@@ -289,7 +260,7 @@
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == null) - @elseif ($key->is_paid == '1') Sudah Bayar @else Belum Bayar @endif </td>
-                            <td> 
+                            <td>
                                 @if($key->is_paid == null)
                                     <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
                                     <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
@@ -325,13 +296,13 @@
 	        <h4 class="modal-title" id="myModalLabel">Brosur Seminar</h4>
 	      </div>
 	      <div class="modal-body">
-	      	<center>	
+	      	<center>
               <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar"
                             class="img-thumbnail center" style="width:50%">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>
@@ -350,14 +321,14 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-sm-12">
-                  <iframe src="" id="iframeLampiran" width="100%" height="200px" frameborder="0" allowtransparency="true"></iframe>  
+                  <iframe src="" id="iframeLampiran" width="100%" height="200px" frameborder="0" allowtransparency="true"></iframe>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
         </div>
-  
+
       </div>
     </div>
   </div>

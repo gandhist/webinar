@@ -174,10 +174,10 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="@if(old('is_free')) 
+                                value="@if(old('is_free'))
                                 {{ old('is_free') == "1" ? old('biaya') : "" }}
-                                @else 
-                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} 
+                                @else
+                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }}
                                 @endif"
                                 placeholder="Biaya"
                                 @if(old('is_free'))
@@ -330,7 +330,7 @@
                         </div>
                     </div>
                     {{-- Akhir Jabatan TTD 1 --}}
-                    
+
                     {{-- TTD 2 --}}
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('ttd2') ? 'has-error' : '' }} ">
@@ -642,18 +642,7 @@
                 $("#biaya").prop("required", false);
                 console.log("ory")
             }
-            // $("#biaya").removeClass("disabled");
-            // $("#no").addClass("none");
         });
-        // $('#narasumber').select2({
-        //     tags: true,
-        //     data: @json(old('narasumber')) ,
-        //     tokenSeparators: [','],
-        //     placeholder: "Nama Narasumber",
-        //     /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-        //     selectOnClose: true,
-        //     closeOnSelect: false
-        // }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
                 $("#biaya").prop("disabled", true);
@@ -711,11 +700,6 @@
         $('#ttd2').select2({
             placeholder: " Pilih Penandatangan ",
         }); // Select2 Inisiator Penyelenggara
-        // $('#ttd_pemangku').select2({
-        //     placeholder: " Pilih Tanda Tangan Pemangku",
-        //     allowClear: true,
-        // maximumSelectionLength: 2,
-        // }); // Select2 Instansi Pendukung
         $('#narasumber').select2({
             placeholder: " Pilih Narasumber",
             allowClear: true,
@@ -793,7 +777,7 @@
             });
         })
 
-        
+
         $('#ttd1').on('select2:select', function() {
             personal =  @json($personal);
             peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
@@ -808,7 +792,7 @@
             // console.log('penyelenggara :', peny);
             $('#ttd2').empty();
             $('#ttd2').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
-            
+
             personal.forEach(function(key) {
                 if(peny.includes(key.instansi) || pend.includes(key.instansi)){
                     if( !($('#ttd1').val() == key.id) ){

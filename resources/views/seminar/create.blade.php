@@ -292,7 +292,7 @@
                         </div>
                     </div>
                     {{-- Akhir Jabatan TTD 1 --}}
-                    
+
                     {{-- TTD 2 --}}
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('ttd2') ? 'has-error' : '' }} ">
@@ -524,40 +524,6 @@
                     </div>
                     {{-- Akhir Brosur --}}
 
-                    {{-- Tanda Tangan 
-                    <div class="col-md-6">
-                        <div class="form-group {{ $errors->first('ttd_pemangku') ? 'has-error' : '' }}">
-                            <label for="ttd_pemangku" class="label-control required">Tanda Tangan Pemangku</label>
-                            <select name="ttd_pemangku[]" multiple="multiple" class="form-control" id="ttd_pemangku">
-                                @if(old('instansi_penyelenggara'))
-                                    @foreach($pimpinan as $key => $value)
-                                        @if(collect(old('instansi_penyelenggara'))->contains($key))
-                                            <option value="{{$key}}"
-                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
-                                            {{ $value }}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-
-                                @if(old('instansi_pendukung'))
-                                    @foreach($pimpinan as $key => $value)
-                                        @if(collect(old('instansi_pendukung'))->contains($key))
-                                            <option value="{{$key}}"
-                                            {{ collect(old('ttd_pemangku'))->contains($key) ? "selected" : "" }}>
-                                            {{ $value }}</option>
-                                        @endif
-                                    @endforeach
-                                @endif
-
-                            </select>
-                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
-
-                            <div id="ttd_pemangku" class="invalid-feedback text-danger">
-                                {{ $errors->first('ttd_pemangku') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Akhir Tanda Tangan --}}
                 </div>
 
 
@@ -595,22 +561,11 @@
             // $("#biaya").removeClass("disabled");
             // $("#no").addClass("none");
         });
-        // $('#narasumber').select2({
-        //     tags: true,
-        //     data: @json(old('narasumber')) ,
-        //     tokenSeparators: [','],
-        //     placeholder: "Nama Narasumber",
-        //     /* the next 2 lines make sure the user can click away after typing and not lose the new tag */
-        //     selectOnClose: true,
-        //     closeOnSelect: false
-        // }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
                 $("#biaya").prop("disabled", true);
                 $("#biaya").prop("required", false);
             }
-            // $("#biaya").removeClass("disabled");
-            // $("#no").addClass("none");
         });
         $('#bayar').change(function() {
             if ($(this).prop('checked')) {
@@ -751,7 +706,7 @@
             // console.log('penyelenggara :', peny);
             $('#ttd2').empty();
             $('#ttd2').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
-            
+
             personal.forEach(function(key) {
                 if(peny.includes(key.instansi) || pend.includes(key.instansi)){
                     if( !($('#ttd1').val() == key.id) ){
