@@ -422,7 +422,7 @@ class PersonalController extends Controller
             rename($temp, $destinationFile );
 
             $data->lampiran_foto = $destinationFile;
-            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_foto_lama);
             }
@@ -434,7 +434,7 @@ class PersonalController extends Controller
             $file = $dir_name."_lampiran_ktp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_ktp = $destinationPath."/".$file;
-            if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama) && $lampiran_ktp_lama != null) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_ktp_lama);
             }
@@ -448,7 +448,7 @@ class PersonalController extends Controller
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_npwp = $destinationPath."/".$file;
-            if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama) && $lampiran_npwp_lama != null) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_npwp_lama);
             }

@@ -193,13 +193,13 @@ class SeminarController extends Controller
 
             // generate qr code ttd 1
             $url = url("approved/".$request->ttd1."/".$data->id);
-            
+
             $nama = "QR_Validity_".$request->ttd1.".png";
             if (!file_exists(base_path("public/file_seminar/"))) {
                 File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
             }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-        
+
             $dir_name = "file_seminar";
             $ttd1->qr_code = $dir_name."/".$nama;
             $ttd1->save();
@@ -212,13 +212,13 @@ class SeminarController extends Controller
 
             // generate qr code ttd 2
             $url = url("approved/".$request->ttd2."/".$data->id);
-            
+
             $nama = "QR_Validity_".$request->ttd2.".png";
             if (!file_exists(base_path("public/file_seminar/"))) {
                 File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
             }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-        
+
             $dir_name = "file_seminar";
             $ttd2->qr_code = $dir_name."/".$nama;
             $ttd2->save();
@@ -308,13 +308,13 @@ class SeminarController extends Controller
 
             // generate qr code ttd 1
             $url = url("approved/".$request->ttd1."/".$data->id);
-            
+
             $nama = "QR_Validity_".$request->ttd1.".png";
             if (!file_exists(base_path("public/file_seminar/"))) {
                 File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
             }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-        
+
             $dir_name = "file_seminar";
             $ttd1->qr_code = $dir_name."/".$nama;
             $ttd1->save();
@@ -324,16 +324,16 @@ class SeminarController extends Controller
             $ttd2->jabatan = $request->jab_ttd2;
             $ttd2->id_seminar = $data->id;
             $ttd2->created_by = Auth::id();
-            
+
             // generate qr code ttd 2
             $url = url("approved/".$request->ttd2."/".$data->id);
-            
+
             $nama = "QR_Validity_".$request->ttd2.".png";
             if (!file_exists(base_path("public/file_seminar/"))) {
                 File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
             }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-        
+
             $dir_name = "file_seminar";
             $ttd2->qr_code = $dir_name."/".$nama;
             $ttd2->save();
@@ -367,7 +367,7 @@ class SeminarController extends Controller
                     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
                 }
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-            
+
                 $dir_name = "file_seminar";
                 $narasumber_seminar->qr_code = $dir_name."/".$nama;
 
@@ -407,7 +407,7 @@ class SeminarController extends Controller
                     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
                 };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-            
+
                 $dir_name = "file_seminar";
                 $moderator_seminar->qr_code = $dir_name."/".$nama;
 
@@ -434,7 +434,7 @@ class SeminarController extends Controller
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
             $pimpinanArr = BuModel::pluck('nama_pimp','id');
-    
+
             //
             $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
             $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
@@ -458,7 +458,7 @@ class SeminarController extends Controller
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
             $pimpinanArr = BuModel::pluck('nama_pimp','id');
-    
+
             //
             $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
             $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
@@ -471,7 +471,7 @@ class SeminarController extends Controller
 
             $narasumber = Peserta::whereIn('id',$nara)->where('deleted_at',NULL)->get();
             $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',NULL)->get();
-            
+
         return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal','inisiator','pendukungArr','pimpinanArr',
             'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
         }
@@ -585,7 +585,7 @@ class SeminarController extends Controller
                     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
                 };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-            
+
                 $dir_name = "file_seminar";
                 $narasumber_seminar->qr_code = $dir_name."/".$nama;
 
@@ -597,7 +597,7 @@ class SeminarController extends Controller
                 $narasumber_seminar->save();
             }
         }
-        
+
         // Dari sini hapus record (cuma softdelete) dari tabel narasumber dan peserta seminar
         // Kalo ada narasumber yang dikurangi
         foreach($naraAwal as $key) {
@@ -639,7 +639,7 @@ class SeminarController extends Controller
                     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
                 };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-            
+
                 $dir_name = "file_seminar";
                 $moderator_seminar->qr_code = $dir_name."/".$nama;
 
@@ -651,7 +651,7 @@ class SeminarController extends Controller
                 $moderator_seminar->save();
             }
         }
-        
+
         foreach($modeAwal as $key) {
             if(!in_array($key->id_personal,$request->moderator)){
                 $modeHapus = PesertaSeminar::where('id',$key->id)->first();
@@ -743,7 +743,7 @@ class SeminarController extends Controller
         $ttd1->save();
         $ttd2->save();
 
-        
+
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
         // $data->klasifikasi               =              $request->klasifikasi            ;
@@ -920,7 +920,7 @@ class SeminarController extends Controller
                 $narasumber_seminar->save();
             }
         }
-        
+
         // Dari sini hapus record (cuma softdelete) dari tabel narasumber dan peserta seminar
         // Kalo ada narasumber yang dikurangi
         foreach($naraAwal as $key) {
@@ -945,7 +945,7 @@ class SeminarController extends Controller
                 $moderator_seminar->save();
             }
         }
-        
+
         foreach($modeAwal as $key) {
             if(!in_array($key->id_personal,$request->moderator)){
                 $modeHapus = PesertaSeminar::where('id',$key->id)->first();
@@ -1005,7 +1005,7 @@ class SeminarController extends Controller
             }
         }
 
-        
+
         // Cek apakah penandatangan ada yang tambah
         $ttdAwal = TtdModel::where('id_seminar',$id)->get();
         $ttd1 = TtdModel::where('id',$ttdAwal[0]['id'])->first();
@@ -1036,7 +1036,7 @@ class SeminarController extends Controller
 
         $ttd1->save();
         $ttd2->save();
-        
+
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
         // $data->klasifikasi               =              $request->klasifikasi            ;
@@ -1071,7 +1071,7 @@ class SeminarController extends Controller
             $data->link = $destinationPath."/".$file;
 
 
-            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null ) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_foto_lama);
             }
@@ -1098,7 +1098,7 @@ class SeminarController extends Controller
 
     // kirim email ke semua peserta
     public function kirimEmail($id){
-        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=','1')->get();    
+        $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=','1')->get();
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
             \Mail::to($data->email)->send(new MailSertifikat($key));
@@ -1109,9 +1109,9 @@ class SeminarController extends Controller
 
     // kirim email ke peserta yg dipilih
     public function sendEmail($id){
-        $emails = PesertaSeminar::where('no_srtf',$id)->first();   
+        $emails = PesertaSeminar::where('no_srtf',$id)->first();
         $email = Peserta::where('id',$emails['id_peserta'])->first();
-   
+
         \Mail::to($email->email)->send(new MailSertifikat($emails));
 
         return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke $email->email");
@@ -1169,7 +1169,7 @@ class SeminarController extends Controller
                 File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
             };
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-         
+
             $dir_name = "file_seminar";
             $key->qr_code = $dir_name."/".$nama;
             $key->is_paid = '1';
@@ -1197,7 +1197,7 @@ class SeminarController extends Controller
             $urutan_seminar = $data->no_urut;
 
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-            
+
             // generate qr code
             $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
@@ -1206,7 +1206,7 @@ class SeminarController extends Controller
                 File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
             };
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-         
+
             $dir_name = "file_seminar";
             $key->qr_code = $dir_name."/".$nama;
             $key->is_paid = '1';
@@ -1222,7 +1222,7 @@ class SeminarController extends Controller
         $nama_peserta = Peserta::where('id', '=',$seminar['id_peserta'])->first();
         $urutan_seminar = SeminarModel::select('no_urut')->where('id', '=',$seminar->id_seminar)->first();
         $tanggal = SeminarModel::select('tgl_awal')->where('id', '=',$seminar->id_seminar)->first();
-        
+
         $data = PesertaSeminar::find($id);
         $urut = PesertaSeminar::where('id_seminar',$seminar->id_seminar)->max('no_urut_peserta'); //Counter nomor urut for peserta
         if($urut == null) {
@@ -1238,7 +1238,7 @@ class SeminarController extends Controller
         $bulan = substr($tanggal['tgl_awal'],5,2);
 
         $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
-       
+
         $data->is_paid = '1';
         $data->no_srtf = $no_sert;
         $data->approved_by = Auth::id();
@@ -1252,12 +1252,12 @@ class SeminarController extends Controller
             File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
         };
         $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-       
+
         $dir_name = "file_seminar";
         $data->qr_code = $dir_name."/".$nama;
 
         $data = $data->save();
-   
+
         return redirect()->back()->with('alert',"Peserta \"".$nama_peserta['nama']."\" berhasil di approve");
     }
 
@@ -1265,7 +1265,7 @@ class SeminarController extends Controller
         $seminar = SeminarModel::where('id',$id_seminar)->first();
         $nama = Personal::where('id',$id_personal)->first();
         $ttd = TtdModel::where('id_personal',$id_personal)->where('id_seminar',$id_seminar)->first();
-  
+
         return view('seminar.ttd')->with(compact('seminar','nama','ttd'));
 
     }
@@ -1274,11 +1274,11 @@ class SeminarController extends Controller
         $data = PesertaSeminar::where('no_srtf',$id)->first();
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
-  
+
         $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
         $pdf->setPaper('A4','potrait');
         return $pdf->stream("Sertifikat.pdf");
-       
+
     }
 
 
