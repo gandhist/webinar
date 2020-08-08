@@ -43,7 +43,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <form method="POST" action="{{ url('instansi/store-lengkapi') }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
@@ -496,9 +496,9 @@
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('foto')) ? ' has-error' : '' }}">
                                 <div class="custom-file">
-                                    <label class="label-control" for="foto">Foto</label>
+                                    <label class="label-control required" for="foto">Foto</label>
                                     <div class="custom-file">
-                                        <input type="file" id="foto" name="foto" class="custom-file-input" id="foto">
+                                        <input type="file" id="foto" name="foto" class="custom-file-input" id="foto" required>
                                         <div id="foto" class="invalid-feedback text-danger">
                                             {{ $errors->first('foto') }}
                                         </div>
