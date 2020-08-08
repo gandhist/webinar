@@ -155,7 +155,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Tanggal Lahir</label>
-                        <input value="{{ $personal->tgl_lahir }}"
+                        <input value="{{ $personal->tgl_lahir ? date('d F Y', strtotime($personal->tgl_lahir)) : '' }}"
                         type="text" class="form-control" disabled>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                             <div>
                                 <a data-toggle="modal" data-target="#myModal">
                                     Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                </a> 
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -309,12 +309,12 @@
 	        <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
 	      </div>
 	      <div class="modal-body">
-	      	<center>	
+	      	<center>
               <img src="{{ url(urlencode($personal->lampiran_foto)) }}" alt="Foto Diri">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>

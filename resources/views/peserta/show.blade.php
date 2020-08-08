@@ -24,7 +24,7 @@
 $total = 0;
 @endphp
 @foreach($detailseminar as $key)
-    @php 
+    @php
     $total += $key->seminar_p->skpk_nilai;
     @endphp
 @endforeach
@@ -115,7 +115,7 @@ $total = 0;
                     <div class="col-lg-6">
                         <div class="form-group">
                         <label for="tgl_lahir">Tanggal Lahir</label>
-                        <input value="{{ $peserta[0]['tgl_lahir']}}" id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" disabled>
+                        <input value="{{$peserta[0]['tgl_lahir'] ? date('d F Y', strtotime($peserta[0]['tgl_lahir'])) : '' }}" id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -130,7 +130,7 @@ $total = 0;
             </form>
         </div>
     </div>
-    <div class="box-body" style="margin-top:35px;">    
+    <div class="box-body" style="margin-top:35px;">
                         <b>Daftar Seminar yang telah di ikuti</b>
                         <table id="data-sekolah" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                             <thead>
@@ -146,7 +146,7 @@ $total = 0;
                                 </tr>
                             </thead>
                             <tbody>
-                            
+
                             @foreach($detailseminar as $key)
                                 <tr>
                                     <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
@@ -158,7 +158,7 @@ $total = 0;
                                     <td>
                                         {{  strip_tags(html_entity_decode($key->seminar_p->tema))}}
                                     </td>
-                                    <td style="text-align:center;"> 
+                                    <td style="text-align:center;">
                                         {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
                                     </td>
                                     <td style="text-align:center;">
@@ -185,12 +185,12 @@ $total = 0;
 	        <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
 	      </div>
 	      <div class="modal-body">
-	      	<center>	
+	      	<center>
 	        	<img class="img-responsive" src="{{ url('uploads/peserta/'.$peserta[0]['foto'])}}" alt="Foto">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>
