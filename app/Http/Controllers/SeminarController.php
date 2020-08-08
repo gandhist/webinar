@@ -1139,7 +1139,7 @@ class SeminarController extends Controller
         } else {
             $data->no_urut = 1;
         }
-        $seminar = $data->update();
+        $seminar = $data->save();
         $nara = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
         // dump($nara);
         foreach($nara as $key) {
@@ -1174,7 +1174,7 @@ class SeminarController extends Controller
             $key->qr_code = $dir_name."/".$nama;
             $key->is_paid = '1';
             $key->no_srtf = $no_sert_nara;
-            $key->update();
+            $key->save();
         }
         $mode = PesertaSeminar::where('id_seminar',$id)->where('status','4')->get();
         // dd($nara);
@@ -1211,7 +1211,7 @@ class SeminarController extends Controller
             $key->qr_code = $dir_name."/".$nama;
             $key->is_paid = '1';
             $key->no_srtf = $no_sert_nara;
-            $key->update();
+            $key->save();
         }
         return redirect('/seminar')
         ->with('pesan',"Berhasil mempublikasi ".$data->nama_seminar);
