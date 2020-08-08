@@ -3,9 +3,9 @@
 @section('content')
 <style>
     .horizontal-line {
-        width:30%; 
-        height:0px; 
-        border-top: 
+        width:30%;
+        height:0px;
+        border-top:
         1px solid gray;
         margin:45px auto;
     }
@@ -33,7 +33,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron"  style='padding-top:1px'>
                 <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
                     <div class="row">
                         <div class="col-12">
@@ -50,17 +50,6 @@
                 <form >
 
                     <h1 style="margin-bottom:50px;">Data Instansi</h1>
-
-                    <div class="row">
-                        <div class="col-md-4"></div>
-
-                        <div class="col-md-4">
-                            <img src="{{url(urlencode($instansi->logo))}}" alt="Logo Perusahaan"
-                             class="img-thumbnail" style="width:100%">
-                        </div>
-
-                        <div class="col-md-4"></div>
-                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -139,6 +128,14 @@
                             </div>
                         </div>
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label style="margin-bottom:10px">Logo Instansi</label>
+                                <div>
+                                    <a data-toggle="modal" data-target="#myModal">
+                                        Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -286,7 +283,7 @@
 
                     @endif
 
-                </form>          
+                </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
@@ -323,6 +320,30 @@
 
 </section>
 {{-- end of modal konfirmasi hapus --}}
+
+
+{{-- Modal Foto --}}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
+        </div>
+        <div class="modal-body">
+            <center>
+            <img src="{{url(urlencode($instansi->logo))}}" alt="Foto Diri">
+          </center>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{{-- Akhir Modal Foto --}}
 
 @endsection
 

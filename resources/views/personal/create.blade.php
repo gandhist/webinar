@@ -26,7 +26,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron"  style='padding-top:1px'>
                 <h1 style="margin-bottom:50px;">Data Diri</h1>
 
                 <form method="POST" action="{{ url('personals/store') }}" enctype="multipart/form-data">
@@ -42,7 +42,7 @@
                                 <input type="text" name="nama" id="nama"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nama Lengkap" required>
                                 <div id="nama" class="invalid-feedback text-danger">
                                     {{ $errors->first('nama') }}
@@ -79,7 +79,7 @@
                                 <label class="label-control required" for="email">Email</label>
                                 <input type="email" name="email" id="email"
                                     value="{{ old('email') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Email" required>
                                 <div id="email" class="invalid-feedback text-danger">
                                     {{ $errors->first('email') }}
@@ -104,9 +104,9 @@
                             </div>
                         </div>
                         {{-- Akhir Nomor Telepon --}}
-                        
+
                     </div>
-                    
+
                     <div class="row">
 
                         {{-- Instansi --}}
@@ -140,7 +140,7 @@
                                 <input type="text" name="jabatan" id="jabatan"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('jabatan') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Jabatan" required>
                                 <div id="jabatan" class="invalid-feedback text-danger">
                                     {{ $errors->first('jabatan') }}
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                         {{-- Akhir Jabatan --}}
-                        
+
                     </div>
 
                     <div class="row">
@@ -157,7 +157,7 @@
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('jenis_kelamin')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="jenis_kelamin">Jenis Kelamin</label>
-                                <select required 
+                                <select required
                                 class="form-control" id="jenis_kelamin" name="jenis_kelamin">
                                     <option value="" hidden
                                     {{ (old('jenis_kelamin')) ? '' : 'selected' }}>
@@ -185,7 +185,7 @@
                                 <label class="label-control required" for="alamat">Alamat</label>
                                 <input type="alamat" name="alamat" id="alamat"
                                     value="{{ old('alamat') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Alamat" required>
                                 <div id="email" class="invalid-feedback text-danger">
                                     {{ $errors->first('alamat') }}
@@ -227,7 +227,7 @@
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('kota')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="kota">Kota</label>
-                                <select required 
+                                <select required
                                 class="form-control" id="kota" name="kota">
                                     <option value="" hidden
                                     {{ (old('kota')) ? '' : 'selected' }}>
@@ -254,12 +254,12 @@
 
 
                     <div class="row">
-                        
+
                         {{-- Tempat Lahir --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('temp_lahir')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="temp_lahir">Tempat Lahir</label>
-                                <select required 
+                                <select required
                                 class="form-control" id="temp_lahir" name="temp_lahir">
                                     <option value="" hidden
                                     {{ (old('temp_lahir')) ? '' : 'selected' }}>
@@ -285,7 +285,7 @@
                                 <label class="label-control required" for="tgl_lahir">Tanggal Lahir</label>
                                 <input type="text" name="tgl_lahir" id="tgl_lahir"
                                     value="{{ old('tgl_lahir') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     required>
                                 <div id="tgl_lahir" class="invalid-feedback text-danger">
                                     {{ $errors->first('tgl_lahir') }}
@@ -297,7 +297,7 @@
 
 
                     <div class="row">
-                        
+
                         {{-- Nomor Rekening --}}
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('no_rek')) ? ' has-error' : '' }}">
@@ -305,7 +305,7 @@
                                 <input type="text" name="no_rek" id="no_rek"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_rek') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nomor Rekening"
                                     maxlength="20">
                                 <div id="no_rek" class="invalid-feedback text-danger">
@@ -351,7 +351,7 @@
                                 <input type="text" name="nama_rek" id="nama_rek"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama_rek') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nama Rekening">
                                 <div id="nama" class="invalid-feedback text-danger">
                                     {{ $errors->first('nama_rek') }}
@@ -374,12 +374,12 @@
                             </div>
                         </div>
                         {{-- Akhir NPWP --}}
-                        
+
                     </div>
 
 
                     <div class="row">
-                        
+
                         {{-- Lampiran KTP --}}
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('lampiran_ktp')) ? ' has-error' : '' }}">
@@ -397,9 +397,9 @@
                             </div>
                         </div>
                         {{-- Akhir Lampiran KTP --}}
-                        
-                        
-                        
+
+
+
                         {{-- Foto Lampiran NPWP --}}
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('lampiran_npwp')) ? ' has-error' : '' }}">
@@ -441,14 +441,14 @@
                             </div>
                         </div>
                         {{-- Akhir Foto Diri --}}
-                        
+
                         {{-- Referensi Pendaftaran --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('reff_p')) ? ' has-error' : '' }}">
                                 <label class="label-control" for="reff_p">Referensi Pendaftaran</label>
                                 <input type="text" name="reff_p" id="reff_p"
                                     value="{{ old('reff_p') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Referensi Pendaftaran">
                                 <div id="reff_p" class="invalid-feedback text-danger">
                                     {{ $errors->first('reff_p') }}
@@ -462,7 +462,7 @@
                     <div class="small text-danger">*) Wajib diisi</div>
                     <button type="submit" class="btn btn-success" style="margin-top:20px;">Registrasi</button>
 
-                </form>          
+                </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
@@ -484,7 +484,7 @@
         $('#jenis_kelamin').select2(); // Select2 JK
         $('#temp_lahir').select2(); // Select2 Tempat Lahir
         $('#bank_id').select2(); // Select2 Bank
-        
+
 
         // Ajax Untuk Kota, Onchange Provinsi
         $('#provinsi').on('change', function(e){
@@ -514,9 +514,9 @@
             autoclose: true,
             format: 'dd-mm-yyyy',
         });
-        
+
         $('#tgl_lahir').mask("99-99-9999",{placeholder:"HH-BB-TTTT"});
-        
+
         $('#npwp').mask("99.999.999.9-999.999",{placeholder:"Nomor Pokok Wajib Pajak"}).attr('maxlength','20');
     });
 </script>

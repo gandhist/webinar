@@ -7,9 +7,9 @@
         content: " *";
     }
     .horizontal-line {
-        width:30%; 
-        height:0px; 
-        border-top: 
+        width:30%;
+        height:0px;
+        border-top:
         1px solid gray;
         margin:45px auto;
     }
@@ -34,7 +34,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron"  style='padding-top:1px'>
 
                 <form method="POST" action="{{ url('instansi/store') }}" enctype="multipart/form-data">
                 @csrf
@@ -50,8 +50,8 @@
                                 <input type="text" name="nama_bu" id="nama_bu"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama_bu') }}"
-                                    class="form-control" 
-                                    placeholder="Nama Instansi" 
+                                    class="form-control"
+                                    placeholder="Nama Instansi"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('nama_bu') }}
@@ -66,8 +66,8 @@
                                 <label for="email" class="label-control required">Email</label>
                                 <input type="email" name="email" id="email"
                                     value="{{ old('email') }}"
-                                    class="form-control" 
-                                    placeholder="Email Instansi" 
+                                    class="form-control"
+                                    placeholder="Email Instansi"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('email') }}
@@ -87,7 +87,7 @@
                                 <input type="phone" name="telp" id="telp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('telp') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nomor Telepon Instansi"
                                     maxlength="20"
                                     required>
@@ -104,8 +104,8 @@
                                 <label for="web" class="label-control required">Website</label>
                                 <input type="url" name="web" id="web"
                                     value="{{ old('web') ? old('web') : 'https://' }}"
-                                    class="form-control" 
-                                    placeholder="Website Instansi" 
+                                    class="form-control"
+                                    placeholder="Website Instansi"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('web') }}
@@ -123,8 +123,8 @@
                                 <label for="alamat" class="label-control required">Alamat</label>
                                 <input type="text" name="alamat" id="alamat"
                                     value="{{ old('alamat') }}"
-                                    class="form-control" 
-                                    placeholder="Alamat Instansi" 
+                                    class="form-control"
+                                    placeholder="Alamat Instansi"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('alamat') }}
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                         {{-- Akhir Kota --}}
-                        
+
 
                     </div>
 
@@ -238,8 +238,8 @@
                                 <input type="text" name="singkat_bu" id="singkat_bu"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('singkat_bu') }}"
-                                    class="form-control" 
-                                    placeholder="Nama Singkat Instansi" 
+                                    class="form-control"
+                                    placeholder="Nama Singkat Instansi"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('singkat_bu') }}
@@ -263,8 +263,8 @@
                                 <input type="text" name="nama_pimp" id="nama_pimp"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama_pimp') }}"
-                                    class="form-control" 
-                                    placeholder="Nama Pimpinan" 
+                                    class="form-control"
+                                    placeholder="Nama Pimpinan"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('nama_pimp') }}
@@ -280,8 +280,8 @@
                                 <input type="text" name="jab_pimp" id="jab_pimp"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('jab_pimp') }}"
-                                    class="form-control" 
-                                    placeholder="Jabatan Pimpinan" 
+                                    class="form-control"
+                                    placeholder="Jabatan Pimpinan"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('jab_pimp') }}
@@ -300,8 +300,8 @@
                                 <label for="email_pimp" class="label-control required">Email Pimpinan</label>
                                 <input type="email" name="email_pimp" id="email_pimp"
                                     value="{{ old('email_pimp') }}"
-                                    class="form-control" 
-                                    placeholder="Email Pimpinan" 
+                                    class="form-control"
+                                    placeholder="Email Pimpinan"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('email_pimp') }}
@@ -309,7 +309,7 @@
                             </div>
                         </div>
                         {{-- Akhir Email Pimpinan--}}
-                        
+
                         {{-- Nomor Telepon Pimpinan --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('hp_pimp')) ? ' has-error' : '' }}">
@@ -317,8 +317,8 @@
                                 <input type="phone" name="hp_pimp" id="hp_pimp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('hp_pimp') }}"
-                                    class="form-control" 
-                                    placeholder="Nomor Telepon Pimpinan" 
+                                    class="form-control"
+                                    placeholder="Nomor Telepon Pimpinan"
                                     maxlength="20"
                                     required>
                                 <div class="invalid-feedback text-danger">
@@ -341,8 +341,8 @@
                                 <input type="text" name="kontak_p" id="kontak_p"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('kontak_p') }}"
-                                    class="form-control" 
-                                    placeholder="Contact Person Instansi" 
+                                    class="form-control"
+                                    placeholder="Contact Person Instansi"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('kontak_p') }}
@@ -358,8 +358,8 @@
                                 <input type="text" name="jab_kontak_p" id="jab_kontak_p"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('jab_kontak_p') }}"
-                                    class="form-control" 
-                                    placeholder="Jabatan Contact Person" 
+                                    class="form-control"
+                                    placeholder="Jabatan Contact Person"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('jab_kontak_p') }}
@@ -378,8 +378,8 @@
                                 <label for="email_kontak_p" class="label-control required">Email Contact Person</label>
                                 <input type="email" name="email_kontak_p" id="email_kontak_p"
                                     value="{{ old('email_kontak_p') }}"
-                                    class="form-control" 
-                                    placeholder="Email Contact Person" 
+                                    class="form-control"
+                                    placeholder="Email Contact Person"
                                     required>
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('email_kontak_p') }}
@@ -387,7 +387,7 @@
                             </div>
                         </div>
                         {{-- Akhir Email Contact Person--}}
-                        
+
                         {{-- Nomor Telepon Contact Person --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('no_kontak_p')) ? ' has-error' : '' }}">
@@ -395,8 +395,8 @@
                                 <input type="phone" name="no_kontak_p" id="no_kontak_p"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_kontak_p') }}"
-                                    class="form-control" 
-                                    placeholder="Nomor Telepon Contact Person" 
+                                    class="form-control"
+                                    placeholder="Nomor Telepon Contact Person"
                                     maxlength="20"
                                     required>
                                 <div class="invalid-feedback text-danger">
@@ -419,7 +419,7 @@
                                 <input type="text" name="no_rek" id="no_rek"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_rek') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nomor Rekening Instansi"
                                     maxlength="20"
                                 >
@@ -473,8 +473,8 @@
                                 <input type="text" name="nama_rek" id="nama_rek"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama_rek') }}"
-                                    class="form-control" 
-                                    placeholder="Nama pada Rekening" 
+                                    class="form-control"
+                                    placeholder="Nama pada Rekening"
                                 >
                                 <div class="invalid-feedback text-danger">
                                     {{ $errors->first('nama_rek') }}
@@ -490,7 +490,7 @@
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('npwp') }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nomor Pokok Wajib Pajak"
                                 >
                                 <div class="invalid-feedback text-danger">
@@ -552,7 +552,7 @@
                         <button type="submit" class="btn btn-success">Registrasi</button>
                     </div>
 
-                </form>          
+                </form>
             </div> {{-- Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
@@ -568,11 +568,11 @@
         $('body').on('change', '.form-group', function() {
             // Action goes here.
         });
-        $('#id_prop').select2(); // Select2 
-        $('#id_kota').select2(); // Select2 
-        $('#id_negara').select2(); // Select2 
+        $('#id_prop').select2(); // Select2
+        $('#id_kota').select2(); // Select2
+        $('#id_negara').select2(); // Select2
         $('#id_bank').select2(); // Select2 Bank
-        
+
 
         // Ajax Untuk Kota, Onchange Provinsi
         $('#id_prop').on('change', function(e){

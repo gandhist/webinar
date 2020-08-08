@@ -35,7 +35,7 @@ class PersonalController extends Controller
         $bu->all();
 
         return view('personal.index',
-            ['personals' => Personal::where('deleted_at',NULL)->get(),
+            ['personals' => Personal::where('is_activated','1')->get(),
             'provinsis' => $provinsi,
             'kotas' => $kota,
             'bu' => $bu]
@@ -471,14 +471,14 @@ class PersonalController extends Controller
         $peserta->tgl_lahir = Carbon::parse($request->tgl_lahir);
         $peserta->updated_by = Auth::id();
         $peserta->updated_at = Carbon::now();
-        
+
         if($data->is_pimpinan == '1'){
             $instansi = BuModel::where('id_personal_pimp',$request->id)->first();
             $instansi->nama_pimp = $request->nama;
             $instansi->jab_pimp = $request->jabatan;
             $instansi->hp_pimp = $request->no_hp;
             $instansi->email_pimp = $request->email;
-            
+
             $instansi->save();
         }
         $peserta->save();

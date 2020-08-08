@@ -28,7 +28,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron" style='padding-top:1px'>
                 <h1 style="margin-bottom: 25px;">Data Diri</h1>
                 <form method="POST" action="{{ url('personals/update') }}" enctype="multipart/form-data">
                 @method('PATCH')
@@ -41,7 +41,7 @@
                                 <input type="text" name="nama" id="nama"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama') ? old('nama') : $personal->nama }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nama Lengkap" required>
                                 <div id="nama" class="invalid-feedback text-danger">
                                     {{ $errors->first('nama') }}
@@ -57,10 +57,10 @@
                                 <input type="text" name="nik" id="nik"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('nik') ? old('nik') : $personal->nik }}"
-                                    class="form-control 
+                                    class="form-control
                                         @if($errors->first('nik'))
-                                            has-error 
-                                        @endif" 
+                                            has-error
+                                        @endif"
                                     placeholder="Nomor Induk Kependudukan" required
                                     maxlength="16">
                                 <div id="nik" class="invalid-feedback text-danger">
@@ -96,10 +96,10 @@
                                 <input type="text" name="no_hp" id="no_hp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_hp') ? old('no_hp') : $personal->no_hp }}"
-                                    class="form-control 
+                                    class="form-control
                                         @if($errors->first('no_hp'))
-                                            has-error 
-                                        @endif" 
+                                            has-error
+                                        @endif"
                                     placeholder="Nomor Telepon" required
                                     maxlength="14">
                                 <div id="no_hp" class="invalid-feedback text-danger">
@@ -108,9 +108,9 @@
                             </div>
                         </div>
                         {{-- Akhir Nomor Telepon --}}
-                        
+
                     </div>
-                    
+
                     <div class="row">
 
 
@@ -154,7 +154,7 @@
                                 <input type="text" name="jabatan" id="jabatan"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{  old('jabatan') ? old('jabatan') : $personal->jabatan }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Jabatan" required>
                                 <div id="jabatan" class="invalid-feedback text-danger">
                                     {{ $errors->first('jabatan') }}
@@ -162,7 +162,7 @@
                             </div>
                         </div>
                         {{-- Akhir Jabatan --}}
-                        
+
                     </div>
 
                     <div class="row">
@@ -171,7 +171,7 @@
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('jenis_kelamin')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="jenis_kelamin">Jenis Kelamin</label>
-                                <select required 
+                                <select required
                                 class="form-control" id="jenis_kelamin" name="jenis_kelamin">
                                     <option value="" hidden>
                                         --Pilih Jenis Kelamin--
@@ -209,7 +209,7 @@
                                 <label class="label-control required" for="alamat">Alamat</label>
                                 <input type="alamat" name="alamat" id="alamat"
                                     value="{{ old('alamat') ? old('alamat') : $personal->alamat}}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Alamat" required>
                                 <div id="email" class="invalid-feedback text-danger">
                                     {{ $errors->first('alamat') }}
@@ -259,7 +259,7 @@
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('kota')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="kota">Kota</label>
-                                <select required 
+                                <select required
                                 class="form-control" id="kota" name="kota">
                                     <option value="" hidden
                                     {{ (old('kota')) ? '' : 'selected' }}>
@@ -294,12 +294,12 @@
 
 
                     <div class="row">
-                        
+
                         {{-- Tempat Lahir --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('temp_lahir')) ? ' has-error' : '' }}">
                                 <label class="label-control required" for="temp_lahir">Tempat Lahir</label>
-                                <select required 
+                                <select required
                                 class="form-control" id="temp_lahir" name="temp_lahir">
                                     <option value="" hidden
                                     {{ (old('temp_lahir')) ? '' : 'selected' }}>
@@ -340,7 +340,7 @@
                                 <label class="label-control required" for="tgl_lahir">Tanggal Lahir</label>
                                 <input type="text" name="tgl_lahir" id="tgl_lahir"
                                     value="{{ old('tgl_lahir') ? old('tgl_lahir') : $tgl_lahir }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     required>
                                 <div id="tgl_lahir" class="invalid-feedback text-danger">
                                     {{ $errors->first('tgl_lahir') }}
@@ -351,12 +351,12 @@
                     </div>
 
 
-                    
 
-                    
+
+
 
                     <div class="row">
-                        
+
                         {{-- Nomor Rekening --}}
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('no_rek')) ? ' has-error' : '' }}">
@@ -364,10 +364,10 @@
                                 <input type="text" name="no_rek" id="no_rek"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('no_rek') ? old('no_rek') : $personal->no_rek }}"
-                                    class="form-control 
+                                    class="form-control
                                         @if($errors->first('no_rek'))
-                                            has-error 
-                                        @endif" 
+                                            has-error
+                                        @endif"
                                     placeholder="Nomor Rekening"
                                     maxlength="20">
                                 <div id="no_rek" class="invalid-feedback text-danger">
@@ -422,7 +422,7 @@
                                 <input type="text" name="nama_rek" id="nama_rek"
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama_rek') ? old('nama_rek') : $personal->nama_rek }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Nama Rekening">
                                 <div id="nama" class="invalid-feedback text-danger">
                                     {{ $errors->first('nama_rek') }}
@@ -438,21 +438,21 @@
                                 <input type="text" name="npwp" id="npwp"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('npwp') ? old('npwp') : $personal->npwp }}"
-                                    class="form-control 
+                                    class="form-control
                                         @if($errors->first('npwpClean'))
-                                            has-error 
-                                        @endif" 
+                                            has-error
+                                        @endif"
                                     placeholder="Nomor Pokok Wajib Pajak"
                                     {{ $errors->first('npwpClean') }}
                                 </div>
                             </div>
                         </div>
                         {{-- Akhir NPWP --}}
-                        
+
                     </div>
 
                     <div class="row">
-                        
+
                         {{-- Lampiran KTP --}}
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('lampiran_ktp')) ? ' has-error' : '' }}">
@@ -470,9 +470,9 @@
                             </div>
                         </div>
                         {{-- Akhir Lampiran KTP --}}
-                        
-                        
-                        
+
+
+
                         {{-- Foto Lampiran NPWP --}}
                         <div class="col-md-6">
                             <div class="form-group  {{ ($errors->first('lampiran_npwp')) ? ' has-error' : '' }}">
@@ -513,14 +513,14 @@
                             </div>
                         </div>
                         {{-- Akhir Foto Diri --}}
-                        
+
                         {{-- Referensi Pendaftaran --}}
                         <div class="col-md-6">
                             <div class="form-group {{ ($errors->first('reff_p')) ? ' has-error' : '' }}">
                                 <label class="label-control" for="reff_p">Referensi Pendaftaran</label>
                                 <input type="text" name="reff_p" id="reff_p"
                                     value="{{ old('reff_p') ? old('reff_p') : $personal->reff_p }}"
-                                    class="form-control" 
+                                    class="form-control"
                                     placeholder="Referensi Pendaftaran">
                                 <div id="reff_p" class="invalid-feedback text-danger">
                                     {{ $errors->first('reff_p') }}
@@ -556,7 +556,7 @@
         $('#temp_lahir').select2(); // Select2 Tempat Lahir
         $('#bank_id').select2(); // Select2 Bank
         $('#jenis_kelamin').select2(); // Select2 JK
-        
+
         $('#provinsi').on('change', function(e){
             $('select[name="kota"]').empty();
             var id = e.target.value;
@@ -581,7 +581,7 @@
             $('#kota').select2();
         });
   });
-  
+
     $('#tgl_lahir').datepicker({
         autoclose: true,
         format: 'dd-mm-yyyy',
@@ -597,11 +597,11 @@
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-      
+
       reader.onload = function(e) {
         $('#blah').attr('src', e.target.result);
       }
-      
+
       reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
   };
