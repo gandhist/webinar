@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="box-body" style="margin:25px;">
+            <div class="box-body" style="margin:25px 25px 25px 10px;">
 
                 <div class="row" style="margin-top:40px; margin-bottom: 25;">
                     <div class="col-12">
@@ -114,7 +114,7 @@
                                                 </a>
                                             </button>
                                         @endif
-                                    
+
                                     </td>
 
                                 </tr>
