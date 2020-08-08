@@ -751,8 +751,8 @@ class SeminarController extends Controller
         $data->tema                      =              $request->tema                   ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
-        $data->is_free                   =              $request->is_free                ;
-        $data->biaya                     =              $request->biaya                  ;
+        //$data->is_free                   =              $request->is_free                ;
+        //$data->biaya                     =              $request->biaya                  ;
         $data->inisiator                 =              $request->inisiator              ;
         // $data->tgl_awal                  =Carbon::parse($request->tgl_awal)              ;
         $data->tgl_akhir                 =Carbon::parse($request->tgl_akhir)             ;
