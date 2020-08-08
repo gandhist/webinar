@@ -115,7 +115,7 @@ $total = 0;
                     <div class="col-lg-6">
                         <div class="form-group">
                         <label for="tgl_lahir">Tanggal Lahir</label>
-                        <input value="{{$peserta[0]['tgl_lahir'] ? date('d F Y', strtotime($peserta[0]['tgl_lahir'])) : '' }}" id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" disabled>
+                        <input value="{{$peserta[0]['tgl_lahir'] ? \Carbon\Carbon::parse($peserta[0]['tgl_lahir'])->isoFormat("DD MMMM YYYY") : '' }}" id="tgl_lahir" name="tgl_lahir" type="text" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="col-lg-6">

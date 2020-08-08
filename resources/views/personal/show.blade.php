@@ -155,7 +155,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Tanggal Lahir</label>
-                        <input value="{{ $personal->tgl_lahir ? date('d F Y', strtotime($personal->tgl_lahir)) : '' }}"
+                        <input value="{{ $personal->tgl_lahir ? \Carbon\Carbon::parse($seminar->tgl_lahir)->isoFormat("DD MMMM YYYY") : '' }}"
                         type="text" class="form-control" disabled>
                     </div>
                 </div>
