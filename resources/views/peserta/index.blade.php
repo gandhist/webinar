@@ -73,17 +73,17 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->nama }}">
                                     <a href="{{ url('pesertas/'.$peserta->id) }}">
-                                        {{ str_limit($peserta->nama,20) }}
+                                        {{ str_limit($peserta->nama,40) }}
                                     </a>
                                 </td>
                                 <td> {{ $peserta->no_hp }} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->email }}">
-                                    {{ str_limit($peserta->email,20) }} </td>
+                                    {{ str_limit($peserta->email,30) }} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->instansi }}">
                                     @if($peserta->user_id != null)
                                     {{ str_limit($peserta->instansi,20 )}}
                                     @else
-                                    {{ $peserta->badan_usaha->nama_bu}}
+                                    {{ isset($peserta->badan_usaha->nama_bu) ? $peserta->badan_usaha->nama_bu : ''}}
                                     @endif
                                 </td>
                                 <td> {{ str_limit($peserta->pekerjaan, 20)}} </td>
@@ -115,9 +115,9 @@
           <h4 class="modal-title" id="myModalLabel">Brosur Seminar</h4>
         </div>
         <div class="modal-body">
-            <center>
-            <img src="{{ url('uploads/peserta/'.$peserta->foto) }}" alt="Brosur Seminar"
-                          class="img-thumbnail center" style="width:50%">
+            <center>	
+            {{-- <img src="{{ url('uploads/peserta/'.$peserta->foto) }}" alt="Brosur Seminar"
+                          class="img-thumbnail center" style="width:50%"> --}}
           </center>
         </div>
         <div class="modal-footer">
