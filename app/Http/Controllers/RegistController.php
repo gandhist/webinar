@@ -66,9 +66,9 @@ class RegistController extends Controller
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
-            if (!file_exists($destinationPath)) {
-                File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            }
+            // if (!file_exists($destinationPath)) {
+            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            // }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path temp
@@ -81,7 +81,7 @@ class RegistController extends Controller
         $peserta = Peserta::create($data);
         $password = str_random(8);
         // $password = '123456'; // buat test masih hardcode
-      
+
         if ($peserta) {
             $data['username'] = strtolower($request->email); // mengganti username menjadi email
             $data['email'] = strtolower($request->email);
@@ -90,9 +90,9 @@ class RegistController extends Controller
             $data['role_id'] = 2;
             $data['is_active'] = 1;
             $user = User::create($data);
-           
+
             $peserta_id['user_id'] = $user->id;
-            
+
             Peserta::find($peserta->id)->update($peserta_id);
 
             $pesan = [
@@ -100,9 +100,9 @@ class RegistController extends Controller
                 'password' => $password
             ];
             $email = strtolower($request->email);
-            Mail::to($email)->send(new EmailRegist($pesan)); 
+            Mail::to($email)->send(new EmailRegist($pesan));
         }
-   
+
         return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
     }
 

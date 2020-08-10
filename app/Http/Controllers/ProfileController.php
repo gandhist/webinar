@@ -23,8 +23,8 @@ class ProfileController extends Controller
         $seminar = Seminar::all();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         $jumlahdetail = PesertaSeminar::where('id_peserta','=',$peserta['id'])->count();
-      
-        
+
+
         return view('profile.edit', ['user' => $request->user()])->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
     }
 
@@ -43,9 +43,9 @@ class ProfileController extends Controller
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
-            if (!file_exists($destinationPath)) {
-                File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            }
+            // if (!file_exists($destinationPath)) {
+            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            // }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path temp
@@ -55,7 +55,7 @@ class ProfileController extends Controller
             rename($temp, $destinationFile);
             $data['foto'] = $dir_name."/".$file;
         }
-              
+
         Peserta::select('id')->where('user_id','=',Auth::id())->update($data);
 
         return redirect()->route('profile.edit')->with('success', 'Profile berhasil diubah');
@@ -73,9 +73,9 @@ class ProfileController extends Controller
             'newpassword' => ['required'],
             'confirmpassword' => ['same:newpassword'],
         ]);
-   
+
         User::find(Auth::id())->update(['password'=> Hash::make($request->newpassword)]);
-   
+
         return redirect()->route('profile.edit')->with('success', 'Password berhasil diubah');;
     }
 

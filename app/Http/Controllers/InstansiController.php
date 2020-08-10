@@ -175,10 +175,10 @@ class InstansiController extends Controller
 
         if ($files = $request->file('logo')) {
             $destinationPath = 'uploads/lampiran/badan_usaha/'.$dir_name; // upload path
-            if (!file_exists($destinationPath)) {
-                // mkdir($destinationPath, 777, true);
-                File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            }
+            // if (!file_exists($destinationPath)) {
+            //     // mkdir($destinationPath, 777, true);
+            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            // }
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
@@ -368,10 +368,10 @@ class InstansiController extends Controller
             $lampiran_foto_lama = $data->lampiran_foto;
 
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
-            if (!file_exists($destinationPath)) {
-                    // mkdir($destinationPath, 777, true);
-                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
-                }
+            // if (!file_exists($destinationPath)) {
+            //         // mkdir($destinationPath, 777, true);
+            //         File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            //     }
 
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
@@ -387,10 +387,10 @@ class InstansiController extends Controller
             rename($temp, $destinationFile );
 
             $data->lampiran_foto = $destinationFile;
-            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null) {
-                // mkdir($destinationPath, 777, true);
-                unlink(public_path()."/".$lampiran_foto_lama);
-            }
+            // if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null) {
+            //     // mkdir($destinationPath, 777, true);
+            //     unlink(public_path()."/".$lampiran_foto_lama);
+            // }
         }
 
         if ($files = $request->file('lampiran_ktp')) {
@@ -399,10 +399,10 @@ class InstansiController extends Controller
             $file = $dir_name."_lampiran_ktp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_ktp = $destinationPath."/".$file;
-            if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama)  && $lampiran_ktp_lama != null) {
-                // mkdir($destinationPath, 777, true);
-                unlink(public_path()."/".$lampiran_ktp_lama);
-            }
+            // if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama)  && $lampiran_ktp_lama != null) {
+            //     // mkdir($destinationPath, 777, true);
+            //     unlink(public_path()."/".$lampiran_ktp_lama);
+            // }
 
         }
 
@@ -413,10 +413,10 @@ class InstansiController extends Controller
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_npwp = $destinationPath."/".$file;
-            if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama)  && $lampiran_npwp_lama != null) {
-                // mkdir($destinationPath, 777, true);
-                unlink(public_path()."/".$lampiran_npwp_lama);
-            }
+            // if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama)  && $lampiran_npwp_lama != null) {
+            //     // mkdir($destinationPath, 777, true);
+            //     unlink(public_path()."/".$lampiran_npwp_lama);
+            // }
         }
 
 
@@ -449,9 +449,9 @@ class InstansiController extends Controller
 
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
-            if (!file_exists($destinationPath)) {
-                File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            }
+            // if (!file_exists($destinationPath)) {
+            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            // }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path temp
@@ -678,21 +678,21 @@ class InstansiController extends Controller
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->npwp_pdf = $destinationPath."/".$file;
-            if($npwp_pdf_lama) {
-                if (file_exists(public_path()."/".$data->npwp_pf) && file_exists(public_path()."/".$npwp_pdf_lama)) {
-                    // mkdir($destinationPath, 777, true);
-                    unlink(public_path()."/".$npwp_pdf_lama);
-                }
-            }
+            // if($npwp_pdf_lama) {
+            //     if (file_exists(public_path()."/".$data->npwp_pf) && file_exists(public_path()."/".$npwp_pdf_lama)) {
+            //         // mkdir($destinationPath, 777, true);
+            //         unlink(public_path()."/".$npwp_pdf_lama);
+            //     }
+            // }
 
         }
 
         if ($files = $request->file('logo')) {
             $destinationPath = 'uploads/lampiran/badan_usaha/'.$dir_name; // upload path
-            if (!file_exists($destinationPath)) {
-                // mkdir($destinationPath, 777, true);
-                File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            }
+            // if (!file_exists($destinationPath)) {
+            //     // mkdir($destinationPath, 777, true);
+            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            // }
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
@@ -705,12 +705,12 @@ class InstansiController extends Controller
             rename($temp, $destinationFile );
             $data->logo = $destinationFile;
 
-            if($logo_lama) {
-                if (file_exists(public_path()."/".$data->logo) && file_exists(public_path()."/".$logo_lama)) {
-                    // mkdir($destinationPath, 777, true);
-                    unlink(public_path()."/".$logo_lama);
-                }
-            }
+            // if($logo_lama) {
+            //     if (file_exists(public_path()."/".$data->logo) && file_exists(public_path()."/".$logo_lama)) {
+            //         // mkdir($destinationPath, 777, true);
+            //         unlink(public_path()."/".$logo_lama);
+            //     }
+            // }
 
         }
         $instansi = $data->save();

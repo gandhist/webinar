@@ -195,9 +195,9 @@ class SeminarController extends Controller
             $url = url("approved/".$request->ttd1."/".$data->id);
 
             $nama = "QR_Validity_".$request->ttd1.".png";
-            if (!file_exists(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-            }
+            // if (!file_exists(base_path("public/file_seminar/"))) {
+            //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            // }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
             $dir_name = "file_seminar";
@@ -214,9 +214,9 @@ class SeminarController extends Controller
             $url = url("approved/".$request->ttd2."/".$data->id);
 
             $nama = "QR_Validity_".$request->ttd2.".png";
-            if (!file_exists(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-            }
+            // if (!file_exists(base_path("public/file_seminar/"))) {
+            //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            // }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
             $dir_name = "file_seminar";
@@ -310,9 +310,9 @@ class SeminarController extends Controller
             $url = url("approved/".$request->ttd1."/".$data->id);
 
             $nama = "QR_Validity_".$request->ttd1.".png";
-            if (!file_exists(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-            }
+            // if (!file_exists(base_path("public/file_seminar/"))) {
+            //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            // }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
             $dir_name = "file_seminar";
@@ -329,9 +329,9 @@ class SeminarController extends Controller
             $url = url("approved/".$request->ttd2."/".$data->id);
 
             $nama = "QR_Validity_".$request->ttd2.".png";
-            if (!file_exists(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-            }
+            // if (!file_exists(base_path("public/file_seminar/"))) {
+            //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            // }
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
             $dir_name = "file_seminar";
@@ -362,10 +362,10 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
-                if (!file_exists(base_path("public/file_seminar/"))) {
-                    // mkdir($destinationPath, 777, true);
-                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-                }
+                // if (!file_exists(base_path("public/file_seminar/"))) {
+                //     // mkdir($destinationPath, 777, true);
+                //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                // }
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
                 $dir_name = "file_seminar";
@@ -402,10 +402,10 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_mode));
                 $nama = "QR_Sertifikat_".$no_sert_mode.".png";
-                if (!file_exists(base_path("public/file_seminar/"))) {
-                    // mkdir($destinationPath, 777, true);
-                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-                };
+                // if (!file_exists(base_path("public/file_seminar/"))) {
+                //     // mkdir($destinationPath, 777, true);
+                //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                // };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
                 $dir_name = "file_seminar";
@@ -580,10 +580,10 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
-                if (!file_exists(base_path("public/file_seminar/"))) {
-                    // mkdir($destinationPath, 777, true);
-                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-                };
+                // if (!file_exists(base_path("public/file_seminar/"))) {
+                //     // mkdir($destinationPath, 777, true);
+                //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                // };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
                 $dir_name = "file_seminar";
@@ -634,10 +634,10 @@ class SeminarController extends Controller
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_mode));
                 $nama = "QR_Sertifikat_".$no_sert_mode.".png";
-                if (!file_exists(base_path("public/file_seminar/"))) {
-                    // mkdir($destinationPath, 777, true);
-                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-                };
+                // if (!file_exists(base_path("public/file_seminar/"))) {
+                //     // mkdir($destinationPath, 777, true);
+                //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                // };
                 $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
                 $dir_name = "file_seminar";
@@ -778,10 +778,10 @@ class SeminarController extends Controller
             $data->link = $destinationPath."/".$file;
 
 
-            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
-                // mkdir($destinationPath, 777, true);
-                unlink(public_path()."/".$lampiran_foto_lama);
-            }
+            // if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
+            //     // mkdir($destinationPath, 777, true);
+            //     unlink(public_path()."/".$lampiran_foto_lama);
+            // }
         }
 
 
@@ -1071,10 +1071,10 @@ class SeminarController extends Controller
             $data->link = $destinationPath."/".$file;
 
 
-            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null ) {
-                // mkdir($destinationPath, 777, true);
-                unlink(public_path()."/".$lampiran_foto_lama);
-            }
+            // if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null ) {
+            //     // mkdir($destinationPath, 777, true);
+            //     unlink(public_path()."/".$lampiran_foto_lama);
+            // }
         }
 
         $data->save();
@@ -1164,10 +1164,10 @@ class SeminarController extends Controller
             // generate qr code
             $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
-            if (!file_exists(base_path("public/file_seminar/"))) {
-                // mkdir($destinationPath, 777, true);
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-            };
+            // if (!file_exists(base_path("public/file_seminar/"))) {
+            //     // mkdir($destinationPath, 777, true);
+            //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            // };
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
             $dir_name = "file_seminar";
@@ -1201,10 +1201,10 @@ class SeminarController extends Controller
             // generate qr code
             $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
-            if (!file_exists(base_path("public/file_seminar/"))) {
-                // mkdir($destinationPath, 777, true);
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-            };
+            // if (!file_exists(base_path("public/file_seminar/"))) {
+            //     // mkdir($destinationPath, 777, true);
+            //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            // };
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
             $dir_name = "file_seminar";
@@ -1247,10 +1247,10 @@ class SeminarController extends Controller
         // generate qr code
         $url = url("sertifikat/".Crypt::encrypt($no_sert));
         $nama = "QR_Sertifikat_".$no_sert.".png";
-        if (!file_exists(base_path("public/file_seminar/"))) {
-            // mkdir($destinationPath, 777, true);
-            File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
-        };
+        // if (!file_exists(base_path("public/file_seminar/"))) {
+        //     // mkdir($destinationPath, 777, true);
+        //     File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+        // };
         $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
         $dir_name = "file_seminar";
