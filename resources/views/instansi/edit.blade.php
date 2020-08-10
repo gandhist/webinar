@@ -588,7 +588,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{url(urlencode($instansi->logo))}}" alt="Foto Diri">
+            <img src="{{url($instansi->logo)}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">

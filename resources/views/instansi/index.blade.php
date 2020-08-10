@@ -97,7 +97,11 @@
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->web       }}"
                                     style="text-align:center;">
-                                    <a href="{{ url($key->web) }}">Kunjungi</a>
+                                    @if($key->web)
+                                        <a href="{{ url($key->web) }}">Kunjungi</a>
+                                    @else
+                                        {{''}}
+                                    @endif
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_pimp }}" >

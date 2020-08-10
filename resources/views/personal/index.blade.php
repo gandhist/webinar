@@ -126,7 +126,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{$personal->lampiran_foto ? url(urlencode($personal->lampiran_foto)) : ''}}" alt="Brosur Seminar"
+            <img src="{{$personal->lampiran_foto ? url($personal->lampiran_foto) : ''}}" alt="Brosur Seminar"
                           class="img-thumbnail center" style="width:50%">
           </center>
         </div>
