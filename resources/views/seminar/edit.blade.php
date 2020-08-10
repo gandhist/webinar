@@ -26,7 +26,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron"  style='padding-top:1px'>
                 <h1 style="margin-bottom:50px;">Seminar</h1>
                 <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
                 @method('patch')

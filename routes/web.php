@@ -156,12 +156,10 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 	});
 });
 
-
-
-
-
-
-
+Route::group(['middleware' => 'auth.admin','prefix' => 'import'], function () {
+    Route::get('/','ImportController@index');
+	Route::post('/','ImportController@import');
+});
 
 
 

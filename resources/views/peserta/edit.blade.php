@@ -21,7 +21,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron">
+            <div class="jumbotron"  style='padding-top:1px'>
                 <h1 style="margin-bottom: 25px;">Data Diri</h1>
                 <form method="POST" action="{{ url('pesertas/update') }}" enctype="multipart/form-data">
                 @csrf
@@ -92,7 +92,7 @@
                                         </option>
                                     @empty
                                     @endforelse
-                                    
+
                                 </select>
                             </div>
                         </div>

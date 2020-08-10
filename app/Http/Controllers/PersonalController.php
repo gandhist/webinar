@@ -35,7 +35,7 @@ class PersonalController extends Controller
         $bu->all();
 
         return view('personal.index',
-            ['personals' => Personal::where('deleted_at',NULL)->get(),
+            ['personals' => Personal::where('is_activated','1')->get(),
             'provinsis' => $provinsi,
             'kotas' => $kota,
             'bu' => $bu]
@@ -422,7 +422,7 @@ class PersonalController extends Controller
             rename($temp, $destinationFile );
 
             $data->lampiran_foto = $destinationFile;
-            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama) && $lampiran_foto_lama != null) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_foto_lama);
             }
@@ -434,7 +434,7 @@ class PersonalController extends Controller
             $file = $dir_name."_lampiran_ktp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_ktp = $destinationPath."/".$file;
-            if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_ktp) && file_exists(public_path()."/".$lampiran_ktp_lama) && $lampiran_ktp_lama != null) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_ktp_lama);
             }
@@ -448,7 +448,7 @@ class PersonalController extends Controller
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_npwp = $destinationPath."/".$file;
-            if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama)) {
+            if (file_exists(public_path()."/".$data->lampiran_npwp) && file_exists(public_path()."/".$lampiran_npwp_lama) && $lampiran_npwp_lama != null) {
                 // mkdir($destinationPath, 777, true);
                 unlink(public_path()."/".$lampiran_npwp_lama);
             }
@@ -471,14 +471,14 @@ class PersonalController extends Controller
         $peserta->tgl_lahir = Carbon::parse($request->tgl_lahir);
         $peserta->updated_by = Auth::id();
         $peserta->updated_at = Carbon::now();
-        
+
         if($data->is_pimpinan == '1'){
             $instansi = BuModel::where('id_personal_pimp',$request->id)->first();
             $instansi->nama_pimp = $request->nama;
             $instansi->jab_pimp = $request->jabatan;
             $instansi->hp_pimp = $request->no_hp;
             $instansi->email_pimp = $request->email;
-            
+
             $instansi->save();
         }
         $peserta->save();

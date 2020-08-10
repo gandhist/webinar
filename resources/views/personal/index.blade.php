@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="box-body" style="margin:25px;">
+            <div class="box-body" style="margin:25px 25px 25px 10px;">
 
                 <div class="row" style="margin-top:40px; margin-bottom: 25;">
                     <div class="col-12">
@@ -99,11 +99,11 @@
                                     <td>
                                         {{ $kotas[$personal->temp_lahir] }}, {{ isset($personal->tgl_lahir) ? \Carbon\Carbon::parse($personal->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''  }}
                                     </td>
-                                    <td class="text-center"> 
+                                    <td class="text-center">
                                         {{-- <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a> --}}
                                         <a data-toggle="modal" data-target="#myModal">
                                             Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                        </a> 
+                                        </a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -125,13 +125,13 @@
           <h4 class="modal-title" id="myModalLabel">Brosur Seminar</h4>
         </div>
         <div class="modal-body">
-            <center>	
+            <center>
             <img src="{{$personal->lampiran_foto ? url(urlencode($personal->lampiran_foto)) : ''}}" alt="Brosur Seminar"
                           class="img-thumbnail center" style="width:50%">
           </center>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
