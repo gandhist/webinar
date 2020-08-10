@@ -271,7 +271,7 @@
                             <div class="form-group">
                                 <label>Lampiran</label>
                                 <div style="margin-top: 10px;">
-                                    <a href="{{ url(urlencode($instansi->npwp_pdf)) }}">
+                                    <a href="{{ url($instansi->npwp_pdf) }}">
                                         Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -333,7 +333,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{url(urlencode($instansi->logo))}}" alt="Foto Diri">
+            <img src="{{url($instansi->logo)}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">
