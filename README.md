@@ -9,3 +9,9 @@
 
     *udah jelas:
         -bikin import
+
+
+    *Rafi:
+        -Fungsi hapus
+        -Handle kalau email udah ada (import)
+        
