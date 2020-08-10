@@ -22,6 +22,16 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
+        <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
+            <div class="row">
+                <div class="col-12">
+                    <div style="margin-bottom:10px">
+                        <a href="{{ url('import') }}" class="btn btn-info">
+                            <i class="fa fa-save"></i> Import Peserta</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="box-body" style="margin:25px;">
             <div class="row" style="margin-top:40px; margin-bottom: 25;">
                 <div class="col-12">
@@ -80,13 +90,13 @@
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->alamat.', '.$peserta->kota.', '.$peserta->provinsi}}">
                                     {{ str_limit($peserta->alamat, 20) }} </td>
                                 <td class="text-center">  {{ isset($peserta->tgl_lahir) ? \Carbon\Carbon::parse($peserta->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''  }} </td>
-                                <td class="text-center"> 
+                                <td class="text-center">
                                     {{-- <a href="{{ url('uploads/peserta/'.$peserta->foto)}}">Lihat</a> --}}
                                     <a data-toggle="modal" data-target="#myModal">
                                         Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                    </a> 
+                                    </a>
                                 </td>
-                            </tr>   
+                            </tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -111,7 +121,7 @@
           </center>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>	
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
