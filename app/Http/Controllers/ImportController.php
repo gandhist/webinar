@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Seminar;
+use App\Imports\ImportPeserta;
 use Illuminate\Http\Request;
+use Excel;
 
 class ImportController extends Controller
 {
@@ -17,5 +19,11 @@ class ImportController extends Controller
             'seminar' => 'required',
             'file' => 'required|mimes:xlsx|max:2048'
         ]);
+        if ($files = $request->file('file')) {
+            Excel::import(new ImportPeserta($request->seminar), $files);
+        }
+
+        return redirect('/pesertas')
+        ->with('pesan', 'Import peserta berhasil diubah');
     }
 }
