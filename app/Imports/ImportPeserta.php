@@ -28,6 +28,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
             $user->email                        = $row['email'];
             $user->password                     = Hash::make($row['nomor_handphone']);
             $user->name                         = $row['nama'];
+            $user->role_id                      = '2';
             $user->save();
 
             $peserta                            = new Peserta;
