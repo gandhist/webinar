@@ -83,7 +83,7 @@
                                     @if($peserta->user_id != null)
                                     {{ str_limit($peserta->instansi,20 )}}
                                     @else
-                                    {{ isset($peserta->badan_usaha->nama_bu) ? $peserta->badan_usaha->nama_bu : ''}}
+                                    {{ $peserta->badan_usaha ? $peserta->badan_usaha->nama_bu : ''}}
                                     @endif
                                 </td>
                                 <td> {{ str_limit($peserta->pekerjaan, 20)}} </td>

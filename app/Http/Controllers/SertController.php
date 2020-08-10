@@ -7,7 +7,7 @@ crafted by Gandhi Tabrani ¯\_(ツ)_/¯
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\SertModel;
+use App\PesertaSeminar;
 use PDF;
 use Mail;
 use App\Mail\EmailLinkSert;
@@ -92,7 +92,8 @@ class SertController extends Controller
     }
 
     public function by_sert($id, $email){
-        $data['data'] = SertModel::where('no_sertifikat',$id)->where('email', $email)->get();
+        $data['data'] = PesertaSeminar::where('no_srtf',$id)->first();
+        // return $data['data'];
         $pdf = PDF::loadview('sert.all',$data);
         $pdf->setPaper('A4','landscape');
         return $pdf->stream("Sertifikat.pdf");

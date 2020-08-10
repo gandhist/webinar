@@ -105,8 +105,8 @@
             border: none;
         }
         .p3sm-image {
-            background-image: url("{{asset('p3sm1.png')}}");
-            /* background-image: url("p3sm1.png"); */
+            /* background-image: url("{{asset('p3sm1.png')}}"); */
+            background-image: url("p3sm1.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size:250px;
@@ -116,7 +116,7 @@
     </style>
 </head>
 <body>
-    @foreach($data as $key)
+    {{-- @foreach($data as $key) --}}
 
     <div align=center>
 
@@ -126,7 +126,7 @@
                 <table style="table-layout: fixed;" width=780 border=0 cellspacing=0 cellpadding=0>
                     <tr>
                         <td colspan="42"></td>
-                        <td colspan="6" style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff;">{{ $key->no_sertifikat }}</td>
+                        <td colspan="6" style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff;">{{ $data->no_srtf }}</td>
                     </tr>
                     
                 </table>
@@ -151,7 +151,7 @@
                         </td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             diberikan kepada:<br>
-                            <h2 style="margin-top: 0px; color:blue; text-transform: uppercase;">{{ $key->nama }}</h2>
+                            <h2 style="margin-top: 0px; color:blue; text-transform: uppercase;">{{ $data->peserta_r->nama }}</h2>
                         </td>
                         <td colspan="6" style="text-align: center; vertical-align: middle;">
                             <img src="hjki.jpeg" height="60px">
@@ -163,7 +163,22 @@
                         </td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             atas partisipasinya sebagai:<br>
-                            <h2 style="margin-top: -2px; ">{{ $key->status }}</h2>
+                            @switch($data->status)
+                                @case(1)
+                                    <h2 style="margin-top: -2px; ">PESERTA</h2>
+                                    @break
+                                @case(2)
+                                    <h2 style="margin-top: -2px; ">NARASUMBER</h2>
+                                    @break
+                                    @case(3)
+                                    <h2 style="margin-top: -2px; ">PANITIA</h2>
+                                    @break
+                                    @case(4)
+                                    <h2 style="margin-top: -2px; ">MODERATOR</h2>
+                                    @break
+                                @default
+                                    
+                            @endswitch
                         </td>
                         <td colspan="6" style="text-align: center; vertical-align: middle;">
                             <img src="perkonindo - Copy.jpeg" height="60px">
@@ -235,7 +250,7 @@
 
     </div>
         
-    @endforeach
+    {{-- @endforeach --}}
     
     
 </body>
