@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-12">
                     <div style="margin-bottom:10px">
-                        <a href="{{ url('import') }}" class="btn btn-info">
+                        <a href="{{ url('import-p3sm.xlsx') }}" class="btn btn-info">
                             <i class="fa fa-save"></i> Download Template Import</a>
                     </div>
                 </div>
