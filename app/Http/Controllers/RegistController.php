@@ -66,9 +66,9 @@ class RegistController extends Controller
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
-            // if (!file_exists($destinationPath)) {
-            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            // }
+            if (!is_dir($destinationPath)) {
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path temp

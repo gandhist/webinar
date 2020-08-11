@@ -153,10 +153,10 @@ class PersonalController extends Controller
 
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
-            // if (!file_exists($destinationPath)) {
-            //         // mkdir($destinationPath, 777, true);
-            //         File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            //     }
+            if (!is_dir($destinationPath)) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                }
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path
@@ -202,9 +202,9 @@ class PersonalController extends Controller
 
         if ($files = $request->file('foto')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
-            // if (!file_exists($destinationPath)) {
-            //     File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            // }
+            if (!is_dir($destinationPath)) {
+                File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            }
             $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path temp
@@ -403,10 +403,10 @@ class PersonalController extends Controller
             $lampiran_foto_lama = $data->lampiran_foto;
 
             $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
-            // if (!file_exists($destinationPath)) {
-            //         // mkdir($destinationPath, 777, true);
-            //         File::makeDirectory($destinationPath, $mode = 0777, true, true);
-            //     }
+            if (!is_dir($destinationPath)) {
+                    // mkdir($destinationPath, 777, true);
+                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                }
 
             $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
