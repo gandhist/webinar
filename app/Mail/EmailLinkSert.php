@@ -30,7 +30,7 @@ class EmailLinkSert extends Mailable
      */
     public function build()
     {
-        return $this->from('info@p3sm.or.id')->subject('Informasi Sertifikat P3SM')
+        return $this->from('info@p3sm.or.id','Sertifikat Seminar P3SM')->subject('Informasi Sertifikat P3SM')
                     ->view('seminar.email_sertifikat');
     }
 }

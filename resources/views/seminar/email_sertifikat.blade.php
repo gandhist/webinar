@@ -266,7 +266,7 @@ a {
                             No Sertifikat : {{ $details->no_srtf }} <br>
                         </p>     
                         <p>Untuk Download Sertifikat, silahkan klik tombol di bawah ini.</p>
-                        <p style="text-align:center;"><a href="{{ url('sertifikat', $details->no_srtf) }}" class="btn">Download Sertifikat</a></p>
+                        <p style="text-align:center;"><a href="{{ url('sertifikat', $details->no_sertf) }}" class="btn">Download Sertifikat</a></p>
                           <i>Note: <br>
                              - Ini adalah email otomatis dari system, tidak perlu membalas email ini! <br>
                              - Jika Ada kendala hubungi admin </i>

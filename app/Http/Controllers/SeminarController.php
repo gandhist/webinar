@@ -1105,7 +1105,7 @@ class SeminarController extends Controller
 
         $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd','qr'));
         $pdf->setPaper('A4','potrait');
-        return $pdf->stream("Sertifikat.pdf");
+        return $pdf->stream("Sertifikat_$data->no_srtf.pdf");
         // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
     }
 
@@ -1124,7 +1124,7 @@ class SeminarController extends Controller
     public function sendEmail($id){
         $emails = PesertaSeminar::where('no_srtf',$id)->first();
         $email = Peserta::where('id',$emails['id_peserta'])->first();
-
+        $emails->no_sertf = Crypt::encrypt($id);
         \Mail::to($email->email)->send(new MailSertifikat($emails));
 
         return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke $email->email");
@@ -1284,13 +1284,14 @@ class SeminarController extends Controller
     }
 
     public function scanSertifikat($id){
-        $data = PesertaSeminar::where('no_srtf',$id)->first();
+        $no_sert = Crypt::decrypt($id);
+        $data = PesertaSeminar::where('no_srtf',$no_sert)->first();
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
 
         $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
         $pdf->setPaper('A4','potrait');
-        return $pdf->stream("Sertifikat.pdf");
+        return $pdf->stream("Sertifikat_$no_sert.pdf");
 
     }
 
