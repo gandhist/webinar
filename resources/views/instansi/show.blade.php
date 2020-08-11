@@ -333,7 +333,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{url($instansi->logo)}}" alt="Foto Diri">
+            <img src="{{isset($instansi->logo) ? url($instansi->logo) : '/'}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">

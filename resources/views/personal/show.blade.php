@@ -155,7 +155,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Tanggal Lahir</label>
-                        <input value="{{ $personal->tgl_lahir ? \Carbon\Carbon::parse($seminar->tgl_lahir)->isoFormat("DD MMMM YYYY") : '' }}"
+                        <input value="{{ isset($personal->tgl_lahir) ? \Carbon\Carbon::parse($personal->tgl_lahir)->isoFormat("DD MMMM YYYY") : '' }}"
                         type="text" class="form-control" disabled>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Bank</label>
-                        <input value="{{ $bank ? $bank->Nama_Bank : ''}}"
+                        <input value="{{ isset($bank) ? $bank->Nama_Bank : ''}}"
                         type="text" class="form-control" disabled>
                     </div>
                 </div>
@@ -320,7 +320,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-              <img src="{{ url($personal->lampiran_foto) }}" alt="Foto Diri">
+              <img src="{{ isset($personal->lampiran_foto) ? url($personal->lampiran_foto) : '/'}}" alt="Foto Diri">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
@@ -343,7 +343,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ url($personal->lampiran_ktp) }}" alt="Foto Diri">
+            <img src="{{ isset($personal->lampiran_ktp) ? url($personal->lampiran_ktp) : '/'}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">
@@ -366,7 +366,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ url($personal->lampiran_npwp) }}" alt="Foto Diri">
+            <img src="{{ isset($personal->lampiran_npwp) ? url($personal->lampiran_npwp) : '/'}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">
