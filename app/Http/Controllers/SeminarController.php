@@ -1087,10 +1087,23 @@ class SeminarController extends Controller
     //cetak sertifikat peserta yg dipilih
     public function cetakSertifikat($id){
         $data = PesertaSeminar::where('no_srtf',$id)->first();
+        
+        //generate qr code data lama
+        $qr = PesertaSeminar::find($data['id']);
+        $url = url("sertifikat/".Crypt::encrypt($id));
+        $nama = "QR_Sertifikat_".$id.".png";
+
+        $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+
+        $dir_name = "file_seminar";
+        $qr->qr_code = $dir_name."/".$nama;
+        $qr->save();
+        ///////
+
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
 
-        $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
+        $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd','qr'));
         $pdf->setPaper('A4','potrait');
         return $pdf->stream("Sertifikat.pdf");
         // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
