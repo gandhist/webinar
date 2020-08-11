@@ -31,7 +31,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Sertifikat P3SM</b>- Login</a>
+    <a href="../../index2.html"><b>Sertifikat P3SM</b> - Login</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -56,8 +56,11 @@
           </div>
         </div> -->
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-6">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <div class="col-xs-6">
+          <a href="{{url('')}}" class="btn btn-danger btn-block btn-flat">Cancel</a>
         </div>
         <!-- /.col -->
       </div>

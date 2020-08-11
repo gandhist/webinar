@@ -11,6 +11,7 @@
 |
 */
 Route::auth();
+Route::get('', 'FrontendController@index')->name('homeUI');
 Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
 Route::get('infoseminar/daftar/{id}','InfoSeminarController@daftar');
@@ -143,7 +144,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 
 
 	Route::group(['middleware' => 'auth.input'], function () {
-		Route::get('', 'HomeController@index');
+		Route::get('/dashboard', 'HomeController@index');
 	});
 
 	Route::group(['middleware' => 'auth.admin'], function () {

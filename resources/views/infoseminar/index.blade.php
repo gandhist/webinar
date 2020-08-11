@@ -40,7 +40,7 @@
           <td>
             @foreach($key->seminar_r as $index => $select)   
               @if(count($key->seminar_r) > $index + 1) 
-              {{ $select->peserta_r->nama }},
+              {{ $select->peserta_r->nama }} - 
               @else
               {{ $select->peserta_r->nama }} 
               @endif
