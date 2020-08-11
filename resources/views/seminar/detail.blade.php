@@ -51,7 +51,7 @@
                         <div class="form-group {{ $errors->first('klasifikasi') ? 'has-error' : '' }}">
                             <label for="klasifikasi" class="label-control required">Klasifikasi</label>
                             <input type="text" id="klasifikasi" class="form-control" name="klasifikasi" placeholder=""
-                                value="" readonly>
+                                value="{{ isset($seminar->klasifikasi) ? $seminar->seminar_klas->Deskripsi : ''}}" readonly>
                             <div id="klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('klasifikasi') }}
                             </div>
@@ -62,7 +62,7 @@
                         <div class="form-group {{ $errors->first('sub_klasifikasi') ? 'has-error' : '' }}">
                             <label for="sub_klasifikasi" class="label-control required">Sub-klasifikasi</label>
                             <input type="text" id="sub_klasifikasi" class="form-control" name="sub_klasifikasi"
-                                placeholder="" value="" readonly>
+                                placeholder="" value="{{ isset($seminar->sub_klasifikasi) ? $seminar->seminar_sub->Deskripsi : ''}}" readonly>
                             <div id="sub_klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('sub_klasifikasi') }}
                             </div>
@@ -284,7 +284,6 @@
         </div> {{-- Jumbotron --}}
       </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
-
 
     {{-- Modal Foto --}}
 <!-- Modal -->

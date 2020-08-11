@@ -53,10 +53,26 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('klasifikasi') ? 'has-error' : '' }}">
                             <label for="klasifikasi" class="label-control required">Klasifikasi</label>
-                            <select name="klasifikasi[]" multiple="multiple"
+                            <select name="klasifikasi"
                             id="klasifikasi" class="form-control">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
+                            @if (old('klasifikasi'))
+                                @foreach ($klasifikasi as $key)
+                                    <option value="{{$key->ID_Bidang_Profesi}}"
+                                    {{$key->ID_Bidang_Profesi == old('klasifikasi') ? 'selected' : ''}}
+                                    >
+                                        {{$key->Deskripsi}}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="" selected hidden>Pilih Klasifikasi</option>
+                                @foreach ($klasifikasi as $key)
+                                    <option value="{{$key->ID_Bidang_Profesi}}"
+                                        @if (isset($seminar->klasifikasi))
+                                            {{$seminar->klasifikasi == $key->ID_Bidang_Profesi ? 'selected' : ''}}
+                                        @endif
+                                    >{{$key->Deskripsi}}</option>
+                                @endforeach
+                            @endif
                             </select>
                             <div id="klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('klasifikasi') }}
@@ -69,10 +85,31 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('sub_klasifikasi') ? 'has-error' : '' }}">
                             <label for="sub_klasifikasi" class="label-control required">Sub-klasifikasi</label>
-                            <select name="sub_klasifikasi[]" multiple="multiple"
+                            <select name="sub_klasifikasi"
                             id="sub_klasifikasi" class="form-control">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
+                            @if (old('klasifikasi'))
+                                @foreach ($sub_klasifikasi as $key)
+                                    @if ($key->ID_Keahlian == old('klasifikasi'))
+                                        <option value="{{$key->ID_Sub_Bidang_Keahlian}}"
+                                            @if(old('sub_klasifikasi'))
+                                                {{$key->ID_Sub_Bidang_Keahlian == old('sub_klasifikasi') ? 'selected' : ''}}
+                                            @endif
+                                        >
+                                            {{$key->Deskripsi}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @elseif(isset($seminar->klasifikasi))
+                                <option value="">Pilih Sub-klasifikasi</option>
+                                @foreach ($sub_klasifikasi as $key)
+                                    @if ($key->ID_Keahlian == $seminar->klasifikasi)
+                                        <option value="{{$key->ID_Sub_Bidang_Keahlian}}"
+                                        {{$key->ID_Sub_Bidang_Keahlian == $seminar->sub_klasifikasi ? 'selected' : ''}}>
+                                            {{$key->Deskripsi}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @endif
                             </select>
                             <div id="sub_klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('sub_klasifikasi') }}
@@ -674,11 +711,9 @@
         }); // Select2 Kota
         $('#klasifikasi').select2({
             placeholder: " Pilih Klasifikasi",
-            allowClear: true
         }); // Select2 Klasifikasi
         $('#sub_klasifikasi').select2({
             placeholder: " Pilih Sub-klasifikasi",
-            allowClear: true
         }); // Select2 Sub-Klasifikasi
         $('#inisiator').select2({
             placeholder: " Pilih Inisiator Penyelenggara ",
@@ -752,6 +787,29 @@
             maximumSelectionLength: 2,});
         })
 
+
+        $('#klasifikasi').on('change', function() {
+            sub_klas = @json($sub_klasifikasi);
+            data = $('#klasifikasi').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(sub_klas);
+            // console.log(data[0]);
+            // console.log(data.includes('27'));
+            $('#sub_klasifikasi').empty();
+            for(let key in sub_klas) {
+                // console.log(sub_klas[key].ID_Keahlian);
+                if(data[0] == sub_klas[key].ID_Keahlian){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#sub_klasifikasi').append(new Option(sub_klas[key].Deskripsi, sub_klas[key].ID_Sub_Bidang_Keahlian));
+                    // console.log(sub_klas[key]);
+                }
+            }
+
+            $('#sub_klasifikasi').select2({
+            allowClear: true,
+            maximumSelectionLength: 2,});
+        });
         $('.to-pimpinan').on('change', function() {
             personal =  @json($personal);
             peny = $('#instansi_penyelenggara').select2('data').map(function(elem){

@@ -31,4 +31,13 @@ class SeminarModel extends Model
     public function seminar_paid(){
         return $this->hasMany('App\PesertaSeminar','id_seminar')->where('status',1)->where('is_paid',1);
     }
+
+    // relasi ke table peserta
+    public function seminar_klas(){
+        return $this->hasOne('App\KlasifikasiModel','ID_Bidang_Profesi','klasifikasi');
+    }
+    // relasi ke table peserta
+    public function seminar_sub(){
+        return $this->hasOne('App\SubKlasifikasiModel','ID_Sub_Bidang_Keahlian','sub_klasifikasi');
+    }
 }

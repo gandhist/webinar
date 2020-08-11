@@ -54,10 +54,26 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('klasifikasi') ? 'has-error' : '' }}">
                             <label for="klasifikasi" class="label-control required">Klasifikasi</label>
-                            <select name="klasifikasi[]" multiple="multiple"
+                            <select name="klasifikasi"
                             id="klasifikasi" class="form-control">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
+                            @if (old('klasifikasi'))
+                                @foreach ($klasifikasi as $key)
+                                    <option value="{{$key->ID_Bidang_Profesi}}"
+                                    {{$key->ID_Bidang_Profesi == old('klasifikasi') ? 'selected' : ''}}
+                                    >
+                                        {{$key->Deskripsi}}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option value="" selected hidden>Pilih Klasifikasi</option>
+                                @foreach ($klasifikasi as $key)
+                                    <option value="{{$key->ID_Bidang_Profesi}}"
+                                        @if (isset($seminar->klasifikasi))
+                                            {{$seminar->klasifikasi == $key->ID_Bidang_Profesi ? 'selected' : ''}}
+                                        @endif
+                                    >{{$key->Deskripsi}}</option>
+                                @endforeach
+                            @endif
                             </select>
                             <div id="klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('klasifikasi') }}
@@ -70,10 +86,31 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('sub_klasifikasi') ? 'has-error' : '' }}">
                             <label for="sub_klasifikasi" class="label-control required">Sub-klasifikasi</label>
-                            <select name="sub_klasifikasi[]" multiple="multiple"
+                            <select name="sub_klasifikasi"
                             id="sub_klasifikasi" class="form-control">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
+                            @if (old('klasifikasi'))
+                                @foreach ($sub_klasifikasi as $key)
+                                    @if ($key->ID_Keahlian == old('klasifikasi'))
+                                        <option value="{{$key->ID_Sub_Bidang_Keahlian}}"
+                                            @if(old('sub_klasifikasi'))
+                                                {{$key->ID_Sub_Bidang_Keahlian == old('sub_klasifikasi') ? 'selected' : ''}}
+                                            @endif
+                                        >
+                                            {{$key->Deskripsi}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @elseif(isset($seminar->klasifikasi))
+                                <option value="">Pilih Sub-klasifikasi</option>
+                                @foreach ($sub_klasifikasi as $key)
+                                    @if ($key->ID_Keahlian == $seminar->klasifikasi)
+                                        <option value="{{$key->ID_Sub_Bidang_Keahlian}}"
+                                        {{$key->ID_Sub_Bidang_Keahlian == $seminar->sub_klasifikasi ? 'selected' : ''}}>
+                                            {{$key->Deskripsi}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @endif
                             </select>
                             <div id="sub_klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('sub_klasifikasi') }}
@@ -175,10 +212,10 @@
                             <label for="biaya" class="label-control required">Biaya</label>
                             <input type="text" class="form-control" name="biaya" id="biaya"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="@if(old('is_free')) 
+                                value="@if(old('is_free'))
                                 {{ old('is_free') == "1" ? old('biaya') : "" }}
-                                @else 
-                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }} 
+                                @else
+                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }}
                                 @endif"
                                 placeholder="Biaya"
                                 @if(old('is_free'))
@@ -331,7 +368,7 @@
                         </div>
                     </div>
                     {{-- Akhir Jabatan TTD 1 --}}
-                    
+
                     {{-- TTD 2 --}}
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('ttd2') ? 'has-error' : '' }} ">
@@ -793,7 +830,7 @@
             });
         })
 
-        
+
         $('#ttd1').on('select2:select', function() {
             personal =  @json($personal);
             peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
@@ -808,7 +845,7 @@
             // console.log('penyelenggara :', peny);
             $('#ttd2').empty();
             $('#ttd2').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
-            
+
             personal.forEach(function(key) {
                 if(peny.includes(key.instansi) || pend.includes(key.instansi)){
                     if( !($('#ttd1').val() == key.id) ){

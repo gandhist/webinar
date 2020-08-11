@@ -15,6 +15,8 @@ use App\PesertaSeminar;
 use App\Personal;
 use App\SertInstansiModel;
 use App\TtdModel;
+use App\KlasifikasiModel;
+use App\SubKlasifikasiModel;
 use PDF;
 use Mail;
 use App\NarasumberModel;
@@ -45,12 +47,14 @@ class SeminarController extends Controller
         $pendukung = BuModel::where('is_actived','1')->pluck('nama_bu','id');
         $personal = Personal::where('is_activated','1')->get();
         $pers = Personal::where('is_activated','1')->pluck('nama','id');
+        $klasifikasi = KlasifikasiModel::all();
+        $sub_klasifikasi = SubKlasifikasiModel::all();
+
         return view('seminar.create')->with(compact('inisiator','provinsi','kota',
-        'personal','instansi','pendukung','pers'));
+        'personal','instansi','pendukung','pers','klasifikasi','sub_klasifikasi'));
     }
 
     public function store(Request $request) {
-        // dd($request);
         $request->validate([
             'nama_seminar' => 'required|min:3|max:50',
             'klasifikasi' => 'required',
@@ -136,6 +140,8 @@ class SeminarController extends Controller
         $data->skpk_nilai                =              $request->skpk_nilai             ;
         $data->is_free                   =              $request->is_free                ;
         $data->biaya                     =              $request->biaya                  ;
+        $data->klasifikasi               =              $request->klasifikasi            ;
+        $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
         $data->inisiator                 =              $request->inisiator              ;
         $data->tgl_awal                  =Carbon::parse($request->tgl_awal)              ;
         $data->tgl_akhir                 =Carbon::parse($request->tgl_akhir)             ;
@@ -448,8 +454,12 @@ class SeminarController extends Controller
             $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',null)->get();
             // dd($narasumber);
 
-            return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal','inisiator','pendukungArr','pimpinanArr',
-                'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
+            $klasifikasi = KlasifikasiModel::all();
+            $sub_klasifikasi = SubKlasifikasiModel::all();
+
+            return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal',
+                'inisiator','pendukungArr','pimpinanArr','penyelenggara','pendukung',
+                'ttd','provinsi','kota','narasumber','moderator','klasifikasi','sub_klasifikasi'));
         } else {
 
             $instansi = BuModel::all();
@@ -472,8 +482,13 @@ class SeminarController extends Controller
             $narasumber = Peserta::whereIn('id',$nara)->where('deleted_at',NULL)->get();
             $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',NULL)->get();
 
-        return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal','inisiator','pendukungArr','pimpinanArr',
-            'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
+
+            $klasifikasi = KlasifikasiModel::all();
+            $sub_klasifikasi = SubKlasifikasiModel::all();
+
+        return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal',
+        'inisiator','pendukungArr','pimpinanArr','klasifikasi','sub_klasifikasi',
+        'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
         }
     }
 
@@ -746,8 +761,8 @@ class SeminarController extends Controller
 
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
-        // $data->klasifikasi               =              $request->klasifikasi            ;
-        // $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
+        $data->klasifikasi               =              $request->klasifikasi            ;
+        $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
         $data->tema                      =              $request->tema                   ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
@@ -1039,8 +1054,8 @@ class SeminarController extends Controller
 
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
-        // $data->klasifikasi               =              $request->klasifikasi            ;
-        // $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
+        $data->klasifikasi               =              $request->klasifikasi            ;
+        $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
         $data->tema                      =              $request->tema                   ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
@@ -1087,7 +1102,7 @@ class SeminarController extends Controller
     //cetak sertifikat peserta yg dipilih
     public function cetakSertifikat($id){
         $data = PesertaSeminar::where('no_srtf',$id)->first();
-        
+
         //generate qr code data lama
         $qr = PesertaSeminar::find($data['id']);
         $url = url("sertifikat/".Crypt::encrypt($id));

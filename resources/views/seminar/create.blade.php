@@ -39,7 +39,7 @@
                         <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">
                             <label for="nama_seminar" class="label-control required">Nama Seminar</label>
                             <input type="text" id="nama_seminar" class="form-control" name="nama_seminar"
-                            placeholder="Nama Seminar"
+                            placeholder="Nama Seminar" required
                             value="{{ old('nama_seminar') ? old('nama_seminar') : '' }}">
                             <div id="nama_seminar" class="invalid-feedback text-danger">
                                 {{ $errors->first('nama_seminar') }}
@@ -53,10 +53,23 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('klasifikasi') ? 'has-error' : '' }}">
                             <label for="klasifikasi" class="label-control required">Klasifikasi</label>
-                            <select name="klasifikasi[]" multiple="multiple"
+                            {{-- <select name="klasifikasi[]" multiple="multiple"
+                            id="klasifikasi" class="form-control"> --}}
+                            <select name="klasifikasi"  required
                             id="klasifikasi" class="form-control">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
+                            <option value="" selected hidden>Pilih Klasifikasi</option>
+                            @if(old('klasifikasi'))
+                                @foreach($klasifikasi as $key)
+                                    <option value="{{ $key->ID_Bidang_Profesi }}"
+                                    {{ old('klasifikasi') == $key->ID_Bidang_Profesi? 'selected' : '' }}>
+                                            {{$key->Deskripsi}}
+                                    </option>
+                                @endforeach
+                            @else
+                                @foreach($klasifikasi as $key)
+                                    <option value="{{ $key->ID_Bidang_Profesi}}">{{$key->Deskripsi}}</option>
+                                @endforeach
+                            @endif
                             </select>
                             <div id="klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('klasifikasi') }}
@@ -69,10 +82,20 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('sub_klasifikasi') ? 'has-error' : '' }}">
                             <label for="sub_klasifikasi" class="label-control required">Sub-klasifikasi</label>
-                            <select name="sub_klasifikasi[]" multiple="multiple"
+                            {{-- <select name="sub_klasifikasi[]" multiple="multiple"
+                            id="sub_klasifikasi" class="form-control"> --}}
+                            <select name="sub_klasifikasi"  required
                             id="sub_klasifikasi" class="form-control">
-                                <option value="a">A</option>
-                                <option value="b">B</option>
+                                @if (old('klasifikasi'))
+                                    @foreach ($sub_klasifikasi as $key)
+                                        @if ($key->ID_Keahlian == old('klasifikasi'))
+                                            <option value="{{$key->ID_Sub_Bidang_Keahlian}}"
+                                            {{old('sub_klasifikasi') == $key->ID_Sub_Bidang_Keahlian ? 'selected' : ''}}>
+                                                {{$key->Deskripsi}}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                             <div id="sub_klasifikasi" class="invalid-feedback text-danger">
                                 {{ $errors->first('sub_klasifikasi') }}
@@ -88,7 +111,7 @@
                     <div class="col-md-12">
                         <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
                             <label for="tema" class="label-control required">Tema Seminar</label>
-                            <textarea name="tema" class="form-control" id="tema">
+                            <textarea name="tema" class="form-control" id="tema"  required>
                                 {{ old('tema') ? old('tema') : ""}}
                             </textarea>
                             <div id="tema" class="invalid-feedback text-danger">
@@ -107,7 +130,7 @@
                             <label for="kuota" class="label-control required">Kuota Peserta</label>
                             <input type="text" class="form-control" name="kuota" id="kuota"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('kuota') }}"
+                                value="{{ old('kuota') }}" required
                                 placeholder="Kuota Peserta">
                             <div id="kuota" class="invalid-feedback text-danger">
                                 {{ $errors->first('kuota') }}
@@ -121,7 +144,7 @@
                         <div class="form-group {{ $errors->first('skpk_nilai') ? 'has-error' : '' }} ">
                             <label for="skpk_nilai" class="label-control required">Nilai SKPK</label>
                             <input type="text" class="form-control" name="skpk_nilai" id="skpk_nilai"
-                                maxlength="2"
+                                maxlength="2" required
                                 onkeypress="return /[0-9]/i.test(event.key)"
                                 value="{{ old('skpk_nilai') }}"
                                 placeholder="Nilai SKPK">
@@ -178,7 +201,7 @@
                     <div class="col-md-2">
                         <div class="form-group {{ $errors->first('inisiator') ? 'has-error' : '' }} ">
                             <label for="inisiator" class="label-control required">Inisiator Penyelenggara</label>
-                            <select name="inisiator" id="inisiator" class="form-control" multiple>
+                            <select name="inisiator" id="inisiator" class="form-control" multiple  required>
                                 <option></option>
                                 @if(old('inisiator'))
                                     @foreach($inisiator as $key)
@@ -204,7 +227,7 @@
                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
-                            class="form-control to-pimpinan" multiple>
+                            class="form-control to-pimpinan" multiple required>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
                                         @if(! (collect(old('instansi_pendukung'))->contains($key->id)) )
@@ -232,7 +255,7 @@
                         <div class="form-group {{ $errors->first('instansi_pendukung') ? 'has-error' : '' }} ">
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
-                            class="form-control to-pimpinan" multiple>
+                            class="form-control to-pimpinan" multiple required>
                             @if(old('instansi_penyelenggara'))
                                 @foreach($instansi as $key)
                                     @if(! (collect(old('instansi_penyelenggara'))->contains($key->id)) )
@@ -260,7 +283,7 @@
                         <div class="form-group {{ $errors->first('ttd1') ? 'has-error' : '' }} ">
                             <label for="ttd1" class="label-control required">Penandatangan 1</label>
                             <select name="ttd1" id="ttd1"
-                            class="form-control to-ttd">
+                            class="form-control to-ttd" required>
                             @if(old('ttd1'))
                                 @foreach($personal as $key)
                                     @if(old('ttd2') != $key->id)
@@ -284,7 +307,7 @@
                         <div class="form-group {{ $errors->first('jab_ttd1') ? 'has-error' : '' }}">
                             <label for="jab_ttd1" class="label-control required">Jabatan Penandatangan 1</label>
                             <input type="text" id="jab_ttd1" class="form-control" name="jab_ttd1"
-                            placeholder="Jabatan Penandatangan 1"
+                            placeholder="Jabatan Penandatangan 1" required
                             value="{{ old('jab_ttd1') ? old('jab_ttd1') : '' }}">
                             <div id="jab_ttd1" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd1') }}
@@ -298,7 +321,7 @@
                         <div class="form-group {{ $errors->first('ttd2') ? 'has-error' : '' }} ">
                             <label for="ttd2" class="label-control required">Penandatangan 2</label>
                             <select name="ttd2" id="ttd2"
-                            class="form-control to-ttd">
+                            class="form-control to-ttd" required>
                             @if(old('ttd2'))
                                 @foreach($personal as $key)
                                     @if(old('ttd1') != $key->id)
@@ -323,7 +346,7 @@
                         <div class="form-group {{ $errors->first('jab_ttd2') ? 'has-error' : '' }}">
                             <label for="jab_ttd2" class="label-control required">Jabatan Penandatangan 2</label>
                             <input type="text" id="jab_ttd2" class="form-control" name="jab_ttd2"
-                            placeholder="Jabatan Penandatangan 2"
+                            placeholder="Jabatan Penandatangan 2" required
                             value="{{ old('jab_ttd2') ? old('jab_ttd2') : '' }}">
                             <div id="jab_ttd2" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd2') }}
@@ -390,7 +413,7 @@
                         <div class="form-group {{ $errors->first('lokasi_penyelenggara') ? 'has-error' : '' }}">
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
-                            placeholder="Alamat" name="lokasi_penyelenggara"
+                            placeholder="Alamat" name="lokasi_penyelenggara" required
                             value="{{ old('lokasi_penyelenggara') ? old('lokasi_penyelenggara') : '' }}">
                             <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
                                 {{ $errors->first('lokasi_penyelenggara') }}
@@ -405,7 +428,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
-                            <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
+                            <select name="narasumber[]" multiple="multiple" required class="form-control" id="narasumber">
                                 @foreach($personal as $key)
                                     @if( !(collect(old('moderator'))->contains($key->id)) )
                                         <option value="{{$key->id}}"
@@ -427,7 +450,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
-                            <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
+                            <select name="moderator[]" multiple="multiple" required class="form-control" id="moderator">
                                 @foreach($personal as $key)
                                     @if(! ( collect(old('narasumber'))->contains($key->id) ) )
                                         <option value="{{$key->id}}"
@@ -452,7 +475,7 @@
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_awal') }}"
+                                value="{{ old('tgl_awal') }}" required
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_awal" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_awal') }}
@@ -467,7 +490,7 @@
                             <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('tgl_akhir') }}"
+                                value="{{ old('tgl_akhir') }}" required
                                 placeholder=" HH-BB-TTTT">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('tgl_akhir') }}
@@ -482,7 +505,7 @@
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_awal') }}"
+                                value="{{ old('jam_awal') }}" required
                                 placeholder=" 00:00">
                             <div id="tgl_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_awal') }}
@@ -497,7 +520,7 @@
                             <label for="jam_akhir" class="label-control required">Jam Akhir</label>
                             <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
-                                value="{{ old('jam_akhir') }}"
+                                value="{{ old('jam_akhir') }}" required
                                 placeholder=" 00:00">
                             <div id="jam_akhir" class="invalid-feedback text-danger">
                                 {{ $errors->first('jam_akhir') }}
@@ -512,7 +535,7 @@
                             <div class="custom-file">
                                 <label class="label-control required" for="foto">Brosur Seminar</label>
                                 <div class="custom-file">
-                                    <input type="file" id="foto" name="foto" class="custom-file-input" id="foto" required>
+                                    <input type="file" id="foto" name="foto" required class="custom-file-input" id="foto" required>
                                     <div id="foto" class="invalid-feedback text-danger">
                                         {{ $errors->first('foto') }}
                                     </div>
@@ -590,11 +613,9 @@
         }); // Select2 Kota
         $('#klasifikasi').select2({
             placeholder: " Pilih Klasifikasi",
-            allowClear: true
         }); // Select2 Klasifikasi
         $('#sub_klasifikasi').select2({
             placeholder: " Pilih Sub-klasifikasi",
-            allowClear: true
         }); // Select2 Sub-Klasifikasi
         $('#inisiator').select2({
             placeholder: " Pilih Inisiator Penyelenggara ",
@@ -663,6 +684,30 @@
             }
 
             $('#moderator').select2({
+            allowClear: true,
+            maximumSelectionLength: 2,});
+        })
+
+
+        $('#klasifikasi').on('change', function() {
+            sub_klas = @json($sub_klasifikasi);
+            data = $('#klasifikasi').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(sub_klas);
+            // console.log(data[0]);
+            // console.log(data.includes('27'));
+            $('#sub_klasifikasi').empty();
+            for(let key in sub_klas) {
+                // console.log(sub_klas[key].ID_Keahlian);
+                if(data[0] == sub_klas[key].ID_Keahlian){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#sub_klasifikasi').append(new Option(sub_klas[key].Deskripsi, sub_klas[key].ID_Sub_Bidang_Keahlian));
+                    // console.log(sub_klas[key]);
+                }
+            }
+
+            $('#sub_klasifikasi').select2({
             allowClear: true,
             maximumSelectionLength: 2,});
         })
