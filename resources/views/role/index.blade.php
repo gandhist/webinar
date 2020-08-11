@@ -21,7 +21,7 @@
     <section class="content">
 
       <!-- Default box -->
-      <div class="box">
+      <div class="box box-content">
         <div class="box-body">
             @if(session()->get('success'))
             <div class="alert alert-success">
