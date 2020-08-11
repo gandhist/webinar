@@ -320,7 +320,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-              <img src="{{ url($personal->lampiran_foto) }}" alt="Foto Diri">
+              <img src="{{ isset($personal->lampiran_foto) ? url($personal->lampiran_foto) : '/'}}" alt="Foto Diri">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
@@ -343,7 +343,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ url($personal->lampiran_ktp) }}" alt="Foto Diri">
+            <img src="{{ isset($personal->lampiran_ktp) ? url($personal->lampiran_ktp) : '/'}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">
@@ -366,7 +366,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ url($personal->lampiran_npwp) }}" alt="Foto Diri">
+            <img src="{{ isset($personal->lampiran_npwp) ? url($personal->lampiran_npwp) : '/'}}" alt="Foto Diri">
           </center>
         </div>
         <div class="modal-footer">
