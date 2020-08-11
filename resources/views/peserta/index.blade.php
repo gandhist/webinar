@@ -83,7 +83,7 @@
                                     @if($peserta->user_id != null)
                                     {{ str_limit($peserta->instansi,20 )}}
                                     @else
-                                    {{ $peserta->badan_usaha ? $peserta->badan_usaha->nama_bu : ''}}
+                                    {{ isset($peserta->badan_usaha) ? $peserta->badan_usaha->nama_bu : ''}}
                                     @endif
                                 </td>
                                 <td> {{ str_limit($peserta->pekerjaan, 20)}} </td>
@@ -115,7 +115,7 @@
           <h4 class="modal-title" id="myModalLabel">Brosur Seminar</h4>
         </div>
         <div class="modal-body">
-            <center>	
+            <center>
             {{-- <img src="{{ url('uploads/peserta/'.$peserta->foto) }}" alt="Brosur Seminar"
                           class="img-thumbnail center" style="width:50%"> --}}
           </center>

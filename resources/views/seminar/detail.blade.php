@@ -297,7 +297,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-              <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar"
+              <img src="{{isset($seminar->link) ? url($seminar->link) : ''}}" alt="Brosur Seminar"
                             class="img-thumbnail center" style="width:50%">
 	        </center>
 	      </div>
