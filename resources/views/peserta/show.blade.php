@@ -20,14 +20,6 @@
 </section>
 <!-- Main content -->
 <section class="content">
-@php
-$total = 0;
-@endphp
-@foreach($detailseminar as $key)
-    @php
-    $total += $key->seminar_p->skpk_nilai;
-    @endphp
-@endforeach
     <!-- Default box -->
     <div class="container-fluid">
         <div class="box box-content">
@@ -153,19 +145,19 @@ $total = 0;
                                         id="selection[]" name="selection[]"></td>
                                     <td style="text-align:center;">{{$loop->iteration}}</td>
                                     <td>
-                                        {{$key->seminar_p->nama_seminar}}
+                                        {{ isset($key->seminar_p->nama_seminar) ? $key->seminar_p->nama_seminar : ''}}
                                     </td>
                                     <td>
-                                        {{  strip_tags(html_entity_decode($key->seminar_p->tema))}}
+                                        {{ isset($key->seminar_p->tema) ? strip_tags(html_entity_decode($key->seminar_p->tema)) :'' }}
                                     </td>
                                     <td style="text-align:center;">
                                         {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
                                     </td>
                                     <td style="text-align:center;">
-                                        {{$key->seminar_p->jam_awal}}
+                                        {{ isset($key->seminar_p->jam_awal) ? $key->seminar_p->jam_awal : '' }}
                                     </td>
                                     <td style="text-align:center;">
-                                        {{$key->seminar_p->skpk_nilai}}
+                                        {{ isset($key->seminar_p->skpk_nilai) ? $key->seminar_p->skpk_nilai : '' }}
                                     </td>
                                     <td>
                                         {{$key->no_srtf}}
@@ -186,7 +178,7 @@ $total = 0;
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-	        	<img class="img-responsive" src="{{ isset($peserta[0]['foto']) ? url('uploads/peserta/'.$peserta[0]['foto']) : '/'}}" alt="Foto">
+	        	<img class="img-responsive" src="{{ isset($peserta[0]['foto']) ? url($peserta[0]['foto']) : '/'}}" alt="Foto">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
