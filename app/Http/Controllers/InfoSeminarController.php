@@ -59,23 +59,6 @@ class InfoSeminarController extends Controller
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         // $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
         $counter = SeminarModel::where('status','published')->get();
-        // $jumlah = array();
-        // if(count($counter) > 0) {
-        //     foreach($counter as $key) {
-        //         if(date('m', \strtotime($key->tgl_awal)) == date('m')){
-        //             $jumlah[] = $key->no_urut;
-        //         }
-        //     }
-        // }
-        // if(count($jumlah) > 0){
-        //     if(max($jumlah) > 0) {
-        //         $urutan_seminar = max($jumlah) + 1;
-        //     } else {
-        //         $urutan_seminar = 1;
-        //     }
-        // } else {
-        //     $urutan_seminar = 1;
-        // }
         $data = new PesertaSeminar;
         if($is_free['is_free'] == '0'){
             $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();

@@ -77,25 +77,36 @@
                             @endforeach
                         </select>
                     </div> --}}
-                    <div class="custom-file">
+                    {{-- <div class="custom-file">
                         <label for="instansi">Upload Bukti Pembayaran</label>
                         <div class="custom-file">
                           <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="bukti_bayar" name="bukti_bayar" class="custom-file-input {{ $errors->first('bukti_bayar') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
                           <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
                         </div>
-                      </div>
+                    </div> --}}
                 </div>
                 @endif
             </div>
 
+            @if($data->is_free == '0')
             <div class="row">
                 <div class="col-sm-12">
                     <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-times-circle"></i> Batal</a>
-                    <button type="submit" class="btn btn-info pull-right"> <i class="fa fa-check-circle"></i> Daftar</button>
+                    <button type="submit" class="btn btn-info pull-right" > <i class="fa fa-check-circle"></i> Daftar</button>
                 </div>
             </div>
+            @endif
         </div>
         </form>
+            @if($data->is_free == '1')
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-times-circle"></i> Batal</a>
+                    <button type="submit" class="btn btn-info pull-right" id="btnDaftar"> <i class="fa fa-check-circle"></i> Daftar</button>
+                </div>
+            </div>
+            @endif
+        </div>
     </div>
 </div>
 
@@ -113,6 +124,13 @@
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#btnDaftar').on('click', function(e) {
+            e.preventDefault();
+            // is_free = {{$data->is_free}};
+            // console.log(is_free);
+        });
+    });
 
 </script>
 @endpush
