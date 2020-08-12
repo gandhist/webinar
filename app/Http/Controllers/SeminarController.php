@@ -56,7 +56,7 @@ class SeminarController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'nama_seminar' => 'required|min:3|max:50',
+            'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
             'sub_klasifikasi' => 'required',
             'tema' => 'required|min:5|max:200',
@@ -76,13 +76,13 @@ class SeminarController extends Controller
             // 'ttd_pemangku' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
-            'lokasi_penyelenggara' => 'required|min:3|max:50',
+            'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
             'moderator' => 'required'//|min:3|max:50'
         ],[
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
             'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
-            'nama_seminar.max' => 'Nama Seminar maksimal 50 karakter',
+            'nama_seminar.max' => 'Nama Seminar maksimal 200 karakter',
             'klasifikasi.required' => 'Mohon isi Klasifikasi',
             'sub_klasifikasi.required' => 'Mohon isi Sub-klasifikasi',
             'tema.required' => 'Mohon isi Tema Seminar',
@@ -116,7 +116,7 @@ class SeminarController extends Controller
             'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
             'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
             'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
-            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
+            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 100 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
             'moderator.required' => 'Mohon isi Moderator',
             'ttd1.required' => 'Mohon isi Penandatangan',
@@ -255,11 +255,11 @@ class SeminarController extends Controller
                 $moderator_seminar->save();
                 // dd($moderator_seminar);
             }
-            
+
             //generate qr code seminar
             $inisiator = InstansiModel::find($data->inisiator);
             $logo = "/public/".$inisiator->logo;
-            
+
             $qr = SeminarModel::find($data->id);
             $url = url("infoseminar/detail/".$data->id);
             $nama = "QR_Seminar_".$data->id.".png";
@@ -442,7 +442,7 @@ class SeminarController extends Controller
             //generate qr code seminar
             $inisiator = InstansiModel::find($data->inisiator);
             $logo = "/public/".$inisiator->logo;
-            
+
             $qr = SeminarModel::find($data->id);
             $url = url("infoseminar/detail/".$data->id);
             $nama = "QR_Seminar_".$data->id.".png";
@@ -522,7 +522,7 @@ class SeminarController extends Controller
 
     public function update(Request $request, $id) {
         $request->validate([
-            'nama_seminar' => 'required|min:3|max:50',
+            'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
             'sub_klasifikasi' => 'required',
             'tema' => 'required|min:5|max:200',
@@ -542,13 +542,13 @@ class SeminarController extends Controller
             'ttd2' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
-            'lokasi_penyelenggara' => 'required|min:3|max:50',
+            'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
             'moderator' => 'required',//|min:3|max:50'
         ],[
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
             'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
-            'nama_seminar.max' => 'Nama Seminar maksimal 50 karakter',
+            'nama_seminar.max' => 'Nama Seminar maksimal 200 karakter',
             'klasifikasi.required' => 'Mohon isi Klasifikasi',
             'sub_klasifikasi.required' => 'Mohon isi Sub-klasifikasi',
             'tema.required' => 'Mohon isi Tema Seminar',
@@ -584,7 +584,7 @@ class SeminarController extends Controller
             'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
             'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
             'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
-            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
+            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 100 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
@@ -876,7 +876,7 @@ class SeminarController extends Controller
         // dd($request);
         $id = $request->id;
         $request->validate([
-            'nama_seminar' => 'required|min:3|max:50',
+            'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
             'sub_klasifikasi' => 'required',
             'tema' => 'required|min:5|max:200',
@@ -895,7 +895,7 @@ class SeminarController extends Controller
             'ttd2' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
-            'lokasi_penyelenggara' => 'required|min:3|max:50',
+            'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
             'moderator' => 'required',//|min:3|max:50'
         ],[
@@ -903,7 +903,7 @@ class SeminarController extends Controller
             'ttd2.required' => 'Mohon isi Penandatangan',
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
             'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
-            'nama_seminar.max' => 'Nama Seminar maksimal 50 karakter',
+            'nama_seminar.max' => 'Nama Seminar maksimal 200 karakter',
             'klasifikasi.required' => 'Mohon isi Klasifikasi',
             'sub_klasifikasi.required' => 'Mohon isi Sub-klasifikasi',
             'tema.required' => 'Mohon isi Tema Seminar',
@@ -937,7 +937,7 @@ class SeminarController extends Controller
             'kota_penyelenggara.required' => 'Mohon isi Kota Lokasi Seminar',
             'lokasi_penyelenggara.required' => 'Mohon isi Alamat Lokasi Seminar',
             'lokasi_penyelenggara.min' => 'Alamat Lokasi Seminar minimal 3 karakter',
-            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 50 karakter',
+            'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 100 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
