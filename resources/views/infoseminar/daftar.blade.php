@@ -133,14 +133,17 @@
             snap.pay('{{$snapToken}}', {
                 // Optional
                 onSuccess: function(result){
+                    console.log('sukses :'+result)
                     /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 },
                 // Optional
                 onPending: function(result){
+                    console.log('pending :'+result)
                     /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 },
                 // Optional
                 onError: function(result){
+                    console.log('werror :'+result)
                     /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                 }
             });

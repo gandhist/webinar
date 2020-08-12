@@ -136,6 +136,7 @@ class SeminarController extends Controller
         $data = new SeminarModel;
         $data->nama_seminar              =              $request->nama_seminar           ;
         $data->tema                      =              $request->tema                   ;
+        $data->kuota_temp                =              $request->kuota                  ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
         $data->is_free                   =              $request->is_free                ;
@@ -792,6 +793,7 @@ class SeminarController extends Controller
         $data->klasifikasi               =              $request->klasifikasi            ;
         $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
         $data->tema                      =              $request->tema                   ;
+        $data->kuota_temp                =              $request->kuota                  ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
         //$data->is_free                   =              $request->is_free                ;
@@ -1085,6 +1087,7 @@ class SeminarController extends Controller
         $data->klasifikasi               =              $request->klasifikasi            ;
         $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
         $data->tema                      =              $request->tema                   ;
+        $data->kuota_temp                =              $request->kuota                  ;
         $data->kuota                     =              $request->kuota                  ;
         $data->skpk_nilai                =              $request->skpk_nilai             ;
         $data->is_free                   =              $request->is_free                ;
