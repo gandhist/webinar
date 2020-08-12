@@ -25,9 +25,9 @@ class InfoSeminarController extends Controller
         if(Auth::id() == null){
             $user = 'Error';
         } else{
-            $user = Peserta::select('id')->where('user_id', Auth::id())->first(); 
-        }        
-        
+            $user = Peserta::select('id')->where('user_id', Auth::id())->first();
+        }
+
         return view('infoseminar.index')->with(compact('data','user'));
     }
     public function detail($id)
@@ -94,7 +94,7 @@ class InfoSeminarController extends Controller
 
             $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
         }
-        
+
         $data->id_seminar = $id;
         $data->id_peserta = $peserta['id'];
         if($is_free['is_free'] == '0'){
@@ -105,7 +105,7 @@ class InfoSeminarController extends Controller
             $url = url("sertifikat/".Crypt::encrypt($no_sert));
             $nama = "QR_Sertifikat_".$no_sert.".png";
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-        
+
             $dir_name = "file_seminar";
             $data->qr_code = $dir_name."/".$nama;
         } else {
@@ -125,8 +125,14 @@ class InfoSeminarController extends Controller
 
         $data = $data->save();
 
-        // pengurangan kuota
-        $kuota = DB::table('srtf_seminar')->update(['kuota' => DB::raw('GREATEST(kuota - 1, 0)')]);
+
+        if($is_free['is_free'] == '0'){
+            // pengurangan kuota
+            // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
+            $kuota = Seminar::find($id);
+            $kuota->kuota_temp = $kuota->kuota_temp - 1;
+            $kuota->update();
+        }
 
         return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
     }

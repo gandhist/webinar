@@ -17,7 +17,7 @@ class CreateTableTransaksi extends Migration
             $table->increments('id');
             $table->string('id_peserta')->nullable();
             $table->string('id_seminar')->nullable();
-            $table->decimal('jumlah', 20, 2)->default(0);
+            $table->decimal('jumlah', 20, 0)->default(0);
             $table->string('status')->default('pending');
             $table->timestamps();
         });

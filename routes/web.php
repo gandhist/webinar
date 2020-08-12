@@ -59,19 +59,8 @@ Route::namespace('Iso')->group(function(){
 
 
 Route::group(['middleware' => 'auth'], function () {
-// Route::get('sertifikat','SertController@dashboard')->name('sertifikat');
-// Route::get('kirim_email','SertController@kirimEmail');
-// Route::get('send_email/{id}','SertController@sendEmail');
 
 // Seminar
-
-// Route::group(['prefix' => 'seminar'], function () {
-// 	Route::get('/','SeminarController@index');
-// 	Route::get('create','SeminarController@create');
-// 	Route::post('store','SeminarController@store');
-// 	Route::get('detail/{id}','SeminarController@detail');
-// 	Route::get('sertifikat/{no_sert}/{email}','SeminarController@detail');
-// });
 
 Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('/', 'SeminarController@index');
@@ -172,3 +161,18 @@ Route::group(['prefix' => 'report'], function () {
 
 
 // end of Report
+
+
+Route::group(['middleware' => 'auth'], function () {
+    // Pembayaran
+
+    // For User
+
+    // End For User
+
+    // For Midtrans
+
+    // End For Midtrans
+
+    // End Pembayaran
+});
