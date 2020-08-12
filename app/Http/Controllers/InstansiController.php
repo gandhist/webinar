@@ -50,7 +50,7 @@ class InstansiController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
 
         $request->validate([
-            "nama_bu" => "required|min:3|max:50",
+            "nama_bu" => "required|min:3|max:500",
             "email" => "required|email|unique:badan_usaha",
             "telp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
             "web" => "required|url|min:3|max:100",
@@ -75,7 +75,7 @@ class InstansiController extends Controller
         ],[
             'nama_bu.required' => 'Mohon isi Nama Instansi',
             'nama_bu.min' => 'Nama Instansi minimal 3 karakter',
-            'nama_bu.max' => 'Nama Instansi maksimal 50 karakter',
+            'nama_bu.max' => 'Nama Instansi maksimal 500 karakter',
             'email.required' => 'Mohon isi Email Instansi',
             'email.email' => 'Mohon isi dengan format email yang valid',
             'email.unique' => 'Email sudah terdaftar',
@@ -496,7 +496,7 @@ class InstansiController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
 
         $request->validate([
-            "nama_bu" => "required|min:3|max:50",
+            "nama_bu" => "required|min:3|max:500",
             "email" => "required|email",
             "telp" => "required|numeric|digits_between:6,20",
             "web" => "required|url|min:3|max:100",

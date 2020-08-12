@@ -50,7 +50,7 @@
                             <div class="form-group {{ ($errors->first('nama_bu')) ? ' has-error' : '' }}">
                                 <label for="nama_bu" class="label-control required">Nama Instansi</label>
                                 <input type="text" name="nama_bu" id="nama_bu"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
+                                    {{-- onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)" --}}
                                     value="{{ old('nama_bu') ? old('nama_bu') : $instansi->nama_bu }}"
                                     class="form-control"
                                     placeholder="Nama Instansi"

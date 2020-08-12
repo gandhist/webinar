@@ -721,12 +721,12 @@
         $('#instansi_penyelenggara').select2({
             placeholder: " Pilih Instansi Penyelenggara",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Penyelenggara
         $('#instansi_pendukung').select2({
             placeholder: " Pilih Instansi Pendukung",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
 
         $('#ttd1').select2({
@@ -738,12 +738,12 @@
         $('#narasumber').select2({
             placeholder: " Pilih Narasumber",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#moderator').select2({
             placeholder: " Pilih Moderator",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
 
         $('#instansi_penyelenggara').on('change', function() {

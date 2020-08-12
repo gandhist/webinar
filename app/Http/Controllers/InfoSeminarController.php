@@ -21,7 +21,7 @@ class InfoSeminarController extends Controller
         $date = Carbon::now()->toDateTimeString();
 
         // $data = Seminar::where('status','=','published')->whereDate('tgl_akhir','>',$date)->get(); //live
-        $data = Seminar::where('status','=','published')->get();
+        $data = Seminar::where('status','=','published')->orderBy('id','desc')->get();
         if(Auth::id() == null){
             $user = 'Error';
         } else{

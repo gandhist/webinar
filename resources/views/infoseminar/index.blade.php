@@ -17,8 +17,8 @@
     <thead>
       <tr>
         <th style="width:2%;">No </th>
-        <th>Title Seminar </th>
-        <th>Tema :</th>
+        <th>Tema </th>
+        <th>Judul Seminar </th>
         <th>Tanggal :</th>
         <th>Tempat :</th>
         <th>Narasumber :</th>
@@ -30,8 +30,8 @@
       @foreach ($data as $key)
       <tr>
           <td>{{ $loop->iteration}}</td>
-          <td>{{ $key->nama_seminar }}</td>
-          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
+          <td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td>
+          <td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}
