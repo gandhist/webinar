@@ -255,6 +255,20 @@ class SeminarController extends Controller
                 $moderator_seminar->save();
                 // dd($moderator_seminar);
             }
+            
+            //generate qr code seminar
+            $inisiator = InstansiModel::find($data->inisiator);
+            $logo = "/public/".$inisiator->logo;
+            
+            $qr = SeminarModel::find($data->id);
+            $url = url("infoseminar/detail/".$data->id);
+            $nama = "QR_Seminar_".$data->id.".png";
+
+            $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
+
+            $dir_name = "file_seminar";
+            $qr->qr_code = $dir_name."/".$nama;
+            $qr->save();
 
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil ditambahkan sebagai draft");
@@ -424,6 +438,20 @@ class SeminarController extends Controller
                 $moderator_seminar->id_seminar = $data->id;
                 $moderator_seminar->save();
             }
+
+            //generate qr code seminar
+            $inisiator = InstansiModel::find($data->inisiator);
+            $logo = "/public/".$inisiator->logo;
+            
+            $qr = SeminarModel::find($data->id);
+            $url = url("infoseminar/detail/".$data->id);
+            $nama = "QR_Seminar_".$data->id.".png";
+
+            $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
+
+            $dir_name = "file_seminar";
+            $qr->qr_code = $dir_name."/".$nama;
+            $qr->save();
 
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil ditambahkan");
