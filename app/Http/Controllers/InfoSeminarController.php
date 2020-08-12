@@ -42,7 +42,7 @@ class InfoSeminarController extends Controller
         $data = Seminar::find($id);
         $peserta = Peserta::all();
         $bank = BankModel::all();
-
+        
         //Set Your server key
         \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
 
@@ -63,6 +63,9 @@ class InfoSeminarController extends Controller
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
         } else{
+
+           
+
             return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta','snapToken','clientKey'));
         }
     }
@@ -70,6 +73,7 @@ class InfoSeminarController extends Controller
     public function store(Request $request, $id)
     {
         $peserta = Peserta::where('user_id',Auth::id())->first();
+        $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         // dd($peserta);
         $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
@@ -125,13 +129,21 @@ class InfoSeminarController extends Controller
 
         $data = $data->save();
 
-
         if($is_free['is_free'] == '0'){
             // pengurangan kuota
             // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
             $kuota = Seminar::find($id);
             $kuota->kuota_temp = $kuota->kuota_temp - 1;
             $kuota->update();
+
+            // Hitung Total Nilai SKPK lalu save
+            $total = 0;
+            foreach($detailseminar as $key) {
+                $total += $key->seminar_p->skpk_nilai;
+            }
+            $total_nilai = Peserta::find($peserta['id']);
+            $total_nilai->skpk_total = $total;
+            $total_nilai->update();
         }
 
         return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');

@@ -19,11 +19,10 @@ class ProfileController extends Controller
 
     public function edit(Request $request)
     {
-        $peserta = Peserta::select('id')->where('user_id',Auth::id())->first();
+        $peserta = Peserta::where('user_id',Auth::id())->first();
         $seminar = Seminar::all();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         $jumlahdetail = PesertaSeminar::where('id_peserta','=',$peserta['id'])->count();
-
 
         return view('profile.edit', ['user' => $request->user()])->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
     }
