@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
 use DB;
 
@@ -41,12 +42,12 @@ class PesertaController extends Controller
         $seminar = Seminar::all();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$id)->get();
         $jumlahdetail = PesertaSeminar::where('id_peserta','=',$id)->count();
-      
-        
+
+
         return view('peserta.show',
-        ['peserta' => $peserta, 
-        'kota' => $kota, 
-        'provinsi' => $prov, 
+        ['peserta' => $peserta,
+        'kota' => $kota,
+        'provinsi' => $prov,
         'id' => $id])
         ->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
 
@@ -93,7 +94,7 @@ class PesertaController extends Controller
         // Email
         if($request->email != $data->email && $request->email != ""){
             $email =  Validator::make($request->all(),[
-                'no_hp' => 'required|email|unique:peserta',
+                'email' => 'required|email|unique:srtf_peserta',
             ]);
             if($email->fails()){
                 $data->email = $data->email;
@@ -202,10 +203,18 @@ class PesertaController extends Controller
                 // handle upload Foto
                 $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama);
                 if ($files = $request->file('foto')) {
-                    $destinationPath = 'uploads/foto/member/'.$dir_name; // upload path
-                    $file = $dir_name."_lampiran_foto_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
-                    $files->move($destinationPath, $file);
-                    $data->foto = $file;
+                    $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+                    if (!is_dir($destinationPath)) {
+                        File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                    }
+                    $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                    $destinationFile = $destinationPath."/".$file;
+                    $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+                    $resize_image = Image::make($files);
+                    $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
+                    $temp = $destinationPathTemp.$file;
+                    rename($temp, $destinationFile);
+                    $data['foto'] = $destinationPath.'/'.$file;
                 }
             }
         } else {
@@ -214,33 +223,33 @@ class PesertaController extends Controller
 
 
         $request->validate([
-            'nama' => 'required|min:3|max:50|regex:/^[a-zA-Z\s\-\.\,]+$/',
+            'nama' => 'required|min:3|max:100|regex:/^[a-zA-Z\s\-\.\,]+$/',
             'no_hp' => 'required|numeric',
-            'pekerjaan' => 'required|min:3|max:50',
-            'instansi' => 'required|min:3|max:50',
-            'foto' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'alamat' => 'required|min:3|max:50',
+            'pekerjaan' => 'required|min:3|max:100',
+            'instansi' => 'required|min:3|max:100',
+            // 'foto' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'alamat' => 'required|min:3|max:100',
             'provinsi' => 'required',
             'kota' => 'required',
             'tgl_lahir' => 'required',
         ],[
             'nama.required' => 'Mohon isi Nama Peserta',
             'nama.min' => 'Nama minimal 3 karakter',
-            'nama.max' => 'Nama maksimal 50 karakter',
+            'nama.max' => 'Nama maksimal 100 karakter',
             'no_hp.required' =>  'Mohon isi Nomor Telepon',
             'no_hp.numeric' => 'Mohon hanya mengisi dengan angka',
             'pekerjaan.required' => 'Mohon isi Pekerjaan',
             'pekerjaan.min' => 'Pekerjaan minimal 3 karakter',
-            'pekerjaan.max' => 'Pekerjaan maksimal 50 karakter',
+            'pekerjaan.max' => 'Pekerjaan maksimal 100 karakter',
             'instansi.required' => 'Mohon isi Instansi',
             'instansi.min' => 'Instansi minimal 3 karakter',
-            'instansi.max' => 'Instansi maksimal 50 karakter',
+            'instansi.max' => 'Instansi maksimal 100 karakter',
             'foto.image' => 'Mohon isi Foto dengan format yang valid',
             'foto.mimes' => 'Mohon isi Foto dengan format yang valid',
             'foto.max' => 'Ukuran Foto maksimal 2MB',
             'alamat.required' => 'Mohon isi Alamat Peserta',
             'alamat.min' => 'Alamat minimal 3 karakter',
-            'alamat.max' => 'Alamat maksimal 50 karakter',
+            'alamat.max' => 'Alamat maksimal 100 karakter',
             'provinsi.required' => 'Mohon isi Provinsi',
             'kota.required' => 'Mohon isi Kota',
             'tgl_lahir.required' => 'Mohon isi Tanggal Lahir',
@@ -248,12 +257,13 @@ class PesertaController extends Controller
         ]);
         if($request->email != $data->email) {
             $request->validate([
-                'email' => 'required|email|unique:peserta',
+                'email' => 'required|email|unique:srtf_peserta',
             ], [
                 'email.required' => 'Mohon isi Email',
                 'email.email' => 'Mohon isi format email yang valid',
                 'email.unique' => 'Email sudah digunakan peserta lain',
             ]);
+            $data->email = $request->email;
         }
         $data->updated_at = Carbon::now();
         $data->updated_by = Auth::id();

@@ -19,11 +19,10 @@ class ProfileController extends Controller
 
     public function edit(Request $request)
     {
-        $peserta = Peserta::select('id')->where('user_id',Auth::id())->first();
+        $peserta = Peserta::where('user_id',Auth::id())->first();
         $seminar = Seminar::all();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         $jumlahdetail = PesertaSeminar::where('id_peserta','=',$peserta['id'])->count();
-
 
         return view('profile.edit', ['user' => $request->user()])->with(compact('seminar','peserta','detailseminar','jumlahdetail'));
     }
@@ -36,6 +35,7 @@ class ProfileController extends Controller
         $data['email'] = $request->email;
         $data['pekerjaan'] = $request->pekerjaan;
         $data['instansi'] = $request->instansi;
+        $data['nrska'] = $request->nrska;
         $data['created_by'] = Auth::id();
         $data['created_at'] = Carbon::now()->toDateTimeString();
         $data['updated_by'] = Auth::id();
@@ -46,14 +46,26 @@ class ProfileController extends Controller
             if (!is_dir($destinationPath)) {
                 File::makeDirectory($destinationPath, $mode = 0777, true, true);
             }
-            $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $file = "foto_".$dir_name."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $destinationFile = $destinationPath."/".$file;
             $destinationPathTemp = 'uploads/tmp/'; // upload path temp
             $resize_image = Image::make($files);
             $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
             $temp = $destinationPathTemp.$file;
             rename($temp, $destinationFile);
-            $data['foto'] = $dir_name."/".$file;
+            $data['foto'] = $destinationPath."/".$file;
+        }
+        if ($files = $request->file('ktp')) {
+            $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+            $file = "ktp_".$dir_name."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data['ktp'] = $destinationPath."/".$file;
+
+
+            // if (file_exists(public_path()."/".$data->lampiran_foto) && file_exists(public_path()."/".$lampiran_foto_lama)) {
+            //     // mkdir($destinationPath, 777, true);
+            //     unlink(public_path()."/".$lampiran_foto_lama);
+            // }
         }
 
         Peserta::select('id')->where('user_id','=',Auth::id())->update($data);

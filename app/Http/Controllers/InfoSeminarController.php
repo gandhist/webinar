@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Crypt;
+use Config;
 
 class InfoSeminarController extends Controller
 {
@@ -25,9 +26,9 @@ class InfoSeminarController extends Controller
         if(Auth::id() == null){
             $user = 'Error';
         } else{
-            $user = Peserta::select('id')->where('user_id', Auth::id())->first(); 
-        }        
-        
+            $user = Peserta::select('id')->where('user_id', Auth::id())->first();
+        }
+
         return view('infoseminar.index')->with(compact('data','user'));
     }
     public function detail($id)
@@ -41,41 +42,44 @@ class InfoSeminarController extends Controller
         $data = Seminar::find($id);
         $peserta = Peserta::all();
         $bank = BankModel::all();
+        
+        //Set Your server key
+        \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
 
+        // Uncomment for production environment
+        // \Midtrans\Config::$isProduction = true;
+
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(),
+                'gross_amount' => 10000,
+            )
+        );
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        $clientKey = config('services.midtrans.clientKey');
         if(!Auth::user()){
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
         } else{
-            return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta'));
+
+           
+
+            return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta','snapToken','clientKey'));
         }
     }
 
     public function store(Request $request, $id)
     {
         $peserta = Peserta::where('user_id',Auth::id())->first();
+        $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         // dd($peserta);
         $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         // $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
         $counter = SeminarModel::where('status','published')->get();
-        // $jumlah = array();
-        // if(count($counter) > 0) {
-        //     foreach($counter as $key) {
-        //         if(date('m', \strtotime($key->tgl_awal)) == date('m')){
-        //             $jumlah[] = $key->no_urut;
-        //         }
-        //     }
-        // }
-        // if(count($jumlah) > 0){
-        //     if(max($jumlah) > 0) {
-        //         $urutan_seminar = max($jumlah) + 1;
-        //     } else {
-        //         $urutan_seminar = 1;
-        //     }
-        // } else {
-        //     $urutan_seminar = 1;
-        // }
         $data = new PesertaSeminar;
         if($is_free['is_free'] == '0'){
             $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
@@ -94,7 +98,7 @@ class InfoSeminarController extends Controller
 
             $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
         }
-        
+
         $data->id_seminar = $id;
         $data->id_peserta = $peserta['id'];
         if($is_free['is_free'] == '0'){
@@ -105,7 +109,7 @@ class InfoSeminarController extends Controller
             $url = url("sertifikat/".Crypt::encrypt($no_sert));
             $nama = "QR_Sertifikat_".$no_sert.".png";
             $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-        
+
             $dir_name = "file_seminar";
             $data->qr_code = $dir_name."/".$nama;
         } else {
@@ -125,8 +129,22 @@ class InfoSeminarController extends Controller
 
         $data = $data->save();
 
-        // pengurangan kuota
-        $kuota = DB::table('srtf_seminar')->update(['kuota' => DB::raw('GREATEST(kuota - 1, 0)')]);
+        if($is_free['is_free'] == '0'){
+            // pengurangan kuota
+            // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
+            $kuota = Seminar::find($id);
+            $kuota->kuota_temp = $kuota->kuota_temp - 1;
+            $kuota->update();
+
+            // Hitung Total Nilai SKPK lalu save
+            $total = 0;
+            foreach($detailseminar as $key) {
+                $total += $key->seminar_p->skpk_nilai;
+            }
+            $total_nilai = Peserta::find($peserta['id']);
+            $total_nilai->skpk_total = $total;
+            $total_nilai->update();
+        }
 
         return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
     }

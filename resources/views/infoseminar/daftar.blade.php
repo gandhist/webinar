@@ -108,6 +108,7 @@
                     <img src="{{ url($data->link) }}" onclick="location.href='{{ url($data->link) }}'" class="rounded img-fluid" alt="Brosur"> 
                 </div>
             </div>
+            @endif
         </div>
         
     </div>
@@ -126,7 +127,32 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{$clientKey}}"></script>
 <script>
+    $(document).ready(function() {
+        $('#btnDaftar').on('click', function(e) {
+            e.preventDefault();
+            // is_free = {{$data->is_free}};
+            // console.log(is_free);
+            snap.pay('{{$snapToken}}', {
+                // Optional
+                onSuccess: function(result){
+                    console.log('sukses :'+result)
+                    /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                // Optional
+                onPending: function(result){
+                    console.log('pending :'+result)
+                    /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                },
+                // Optional
+                onError: function(result){
+                    console.log('werror :'+result)
+                    /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                }
+            });
+        });
+    });
 
 </script>
 @endpush

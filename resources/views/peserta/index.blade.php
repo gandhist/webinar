@@ -116,7 +116,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ isset($peserta->foto) ? url('uploads/peserta/'.$peserta->foto) : '/' }}" alt="Brosur Seminar"
+            <img src="{{ isset($peserta->foto) ? url($peserta->foto) : '/' }}" alt="Foto Diri"
                           class="img-thumbnail center" style="width:50%">
           </center>
         </div>

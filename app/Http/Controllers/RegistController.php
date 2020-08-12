@@ -77,7 +77,7 @@ class RegistController extends Controller
             $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
             $temp = $destinationPathTemp.$file;
             rename($temp, $destinationFile);
-            $data['foto'] = $dir_name."/".$file;
+            $data['foto'] = $destinationPath."/".$file;
         }
         $peserta = Peserta::create($data);
         $password = str_random(8);

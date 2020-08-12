@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container">
   @if(session()->get('success'))
-    <div class="alert alert-success"> {{ session()->get('success') }} 
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
-    </div>   
+    <div class="alert alert-success"> {{ session()->get('success') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
   @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
@@ -38,24 +38,24 @@
           </td>
           <td>{{ $key->lokasi_penyelenggara }}</td>
           <td>
-            @foreach($key->seminar_r as $index => $select)   
-              @if(count($key->seminar_r) > $index + 1) 
-              {{ $select->peserta_r->nama }},
+            @foreach($key->seminar_r as $index => $select)
+              @if(count($key->seminar_r) > $index + 1)
+              {{ $select->peserta_r->nama }} -
               @else
-              {{ $select->peserta_r->nama }} 
+              {{ $select->peserta_r->nama }}
               @endif
             @endforeach
           </td>
           <td>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
           <td>
-            @php 
+            @php
               if ($user == 'Error') {
                 $cek = 0;
               } else {
                 $cek = DB::table('srtf_peserta_seminar')->where('id_peserta',$user['id'])->where('id_seminar', $key->id)->where('deleted_at',null)->count();
               }
             @endphp
-            @if($key->kuota == 0)
+            @if($key->kuota_temp == 0)
             <button class="btn btn-primary disabled"> Kuota Peserta Sudah Penuh</button>
             @else
               @if($cek > 0)
@@ -70,7 +70,7 @@
             @endif
           </td>
       </tr>
-      @endforeach     
+      @endforeach
     </tbody>
   </table>
 </div>

@@ -81,7 +81,7 @@
         </div>
 
         <button type="submit" class="btn btn-outline-info pull-center">Registrasi</button>
-        <a href="{{ url('infoseminar') }}" class="btn btn-outline-info">Batal</a>
+        <a href="{{ url('') }}" class="btn btn-outline-info">Batal</a>
       </form>
     </main>
         
