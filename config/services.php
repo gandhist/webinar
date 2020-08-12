@@ -13,7 +13,7 @@ return [
     | to have a conventional place to find your various credentials.
     |
     */
-    
+
     'midtrans' => [
         // Midtrans server key
         'serverKey'     => env('MIDTRANS_SERVERKEY'),
@@ -22,7 +22,7 @@ return [
         // Isi false jika masih tahap development dan true jika sudah di production, default false (development)
         'isProduction'  => env('MIDTRANS_IS_PRODUCTION', false),
         'isSanitized'   => env('MIDTRANS_IS_SANITIZED', true),
-        'is3ds'         => env('MIDTRANS_IS_3DS', true),                
+        'is3ds'         => env('MIDTRANS_IS_3DS', true),
     ],
 
     'mailgun' => [
@@ -49,17 +49,6 @@ return [
             'secret' => env('STRIPE_WEBHOOK_SECRET'),
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
-    ],
-
-    'midtrans' => [
-        // Midtrans server key
-        'serverKey'     => env('Mid-server-a7_8tRlPGbfRlkuD5ShSvZ9q'),
-        // Midtrans client key
-        'clientKey'     => env('Mid-client-IrQzXnUUPyF8kcei'),
-        // Isi false jika masih tahap development dan true jika sudah di production, default false (development)
-        'isProduction'  => env('MIDTRANS_IS_PRODUCTION', false),
-        'isSanitized'   => env('MIDTRANS_IS_SANITIZED', true),
-        'is3ds'         => env('MIDTRANS_IS_3DS', true),
     ],
 
 ];
