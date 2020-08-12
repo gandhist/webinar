@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Donation;
 use Veritrans_Config;
 use Veritrans_Snap;
@@ -27,6 +28,7 @@ class DonationController extends Controller
     public function __construct(Request $request)
     {
         $this->request = $request;
+        dd(config('services.midtrans.serverKey'));
  
         // Set midtrans configuration
         Veritrans_Config::$serverKey = config('services.midtrans.serverKey');
@@ -41,9 +43,9 @@ class DonationController extends Controller
      * @return \Illuminate\View\View
      */
     public function index()
-    {
+    {  
         $data['donations'] = Donation::orderBy('id', 'desc')->paginate(8);
- 
+
         return view('welcome', $data);
     }
  

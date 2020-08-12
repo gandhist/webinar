@@ -136,7 +136,7 @@
  
         <table class="table table-striped" id="list">
             <tr>
-                <th>ID</th>
+                <th>ID </th>
                 <th>Donor Name</th>
                 <th>Amount</th>
                 <th>Donation Type</th>
@@ -175,13 +175,14 @@
         {
             _method: 'POST',
             _token: '{{ csrf_token() }}',
-            amount: $('input#amount').val(),
-            note: $('textarea#note').val(),
-            donation_type: $('select#donation_type').val(),
-            donor_name: $('input#donor_name').val(),
-            donor_email: $('input#donor_email').val(),
+            amount: $('#amount').val(),
+            note: $('#note').val(),
+            donation_type: $('#donation_type').val(),
+            donor_name: $('#donor_name').val(),
+            donor_email: $('#donor_email').val(),
         },
         function (data, status) {
+            console.log(data)
             snap.pay(data.snap_token, {
                 // Optional
                 onSuccess: function (result) {
