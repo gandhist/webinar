@@ -154,12 +154,9 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'import'], function () {
 
 
 // Report
-
 Route::group(['prefix' => 'report'], function () {
 
 });
-
-
 // end of Report
 
 
@@ -176,3 +173,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     // End Pembayaran
 });
+
+Route::get('/tes', 'DonationController@index')->name('welcome');
+Route::post('/finish', function(){
+    return redirect()->route('welcome');
+})->name('donation.finish');
+
+Route::post('/donation/store', 'DonationController@submitDonation')->name('donation.store');
+Route::post('/notification/handler', 'DonationController@notificationHandler')->name('notification.handler');
