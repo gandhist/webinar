@@ -9,6 +9,7 @@ use App\Peserta;
 use App\PesertaSeminar;
 use App\User;
 use App\BankModel;
+use App\InstansiModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -40,32 +41,33 @@ class InfoSeminarController extends Controller
     public function daftar(Request $request, $id)
     {
         $data = Seminar::find($id);
-        $peserta = Peserta::all();
+        $peserta = Peserta::where('user_id',Auth::user()->id)->first();
         $bank = BankModel::all();
-        
-        //Set Your server key
-        \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
 
-        // Uncomment for production environment
-        // \Midtrans\Config::$isProduction = true;
+        if(isset($peserta)){
+            //Set Your server key
+            \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
 
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
-        $params = array(
-            'transaction_details' => array(
-                'order_id' => rand(),
-                'gross_amount' => 10000,
-            )
-        );
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
-        $clientKey = config('services.midtrans.clientKey');
+            // Uncomment for production environment
+            // \Midtrans\Config::$isProduction = true;
+
+            \Midtrans\Config::$isSanitized = true;
+            \Midtrans\Config::$is3ds = true;
+            $params = array(
+                'transaction_details' => array(
+                    'order_id' => $data->id.$peserta->id.$peserta->user_id.time(),
+                    'gross_amount' => 10000,
+                )
+            );
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+            $clientKey = config('services.midtrans.clientKey');
+        }
         if(!Auth::user()){
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
-        } else{
-
-           
-
+        } elseif(!isset($peserta)) {
+            return redirect('/')->with('success', 'Anda tidak terdaftar sebagai peserta');
+        }else{
             return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta','snapToken','clientKey'));
         }
     }
@@ -74,8 +76,8 @@ class InfoSeminarController extends Controller
     {
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
-        // dd($peserta);
-        $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
+        $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         // $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
@@ -91,7 +93,7 @@ class InfoSeminarController extends Controller
             }
             $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
             // generate no sertifikat
-            $inisiator = '88';
+            $inisiator = $kode_instansi['kode_instansi'];
             $status = '1';
             $tahun = substr($tanggal['tgl_awal'],2,2);
             $bulan = substr($tanggal['tgl_awal'],5,2);

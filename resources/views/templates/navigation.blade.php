@@ -7,7 +7,7 @@
 <!-- jika sudah login -->
 <header class="main-header">
   <!-- Logo -->
-  <a href="{{ url('') }}" class="logo">
+  <a href="{{ url('/dashboard') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini">P3SM</span>
     <!-- logo for regular state and mobile devices -->
@@ -70,9 +70,9 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       {{-- <li class="header">MAIN NAVIGATION</li> --}}
-      
+
       <li class="treeview">
-        <a href="{{ url('') }}">
+        <a href="{{ url('/dashboard') }}">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
@@ -84,11 +84,17 @@
         </a>
       </li>
 
-      
+
 
       <li class="treeview">
         <a href="{{ url('instansi') }}">
         <i class="fa fa-building-o" aria-hidden="true"></i></i> <span>Instansi</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('tuk') }}">
+        <i class="fa fa-map-marker" aria-hidden="true"></i></i> <span>TUK</span>
         </a>
       </li>
 
@@ -146,4 +152,4 @@
   </section>
   <!-- /.sidebar -->
 </aside>
-@endif 
+@endif

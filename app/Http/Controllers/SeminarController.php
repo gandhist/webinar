@@ -165,6 +165,10 @@ class SeminarController extends Controller
 
         $data->created_by = Auth::id();
 
+        // get kode_instansi inisiator
+        $kode_inisiator = SeminarModel::select('inisiator')->where('id',$data->id)->first();
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
+
         if($request->store == "draft") {
             $data->is_actived = "0";
             $data->status = "draft";
@@ -370,7 +374,7 @@ class SeminarController extends Controller
                     $narasumber_seminar->no_urut_peserta = $c_narasumber + 1;
                 }
                 // generate no sertifikat
-                $inisiator = '88';
+                $inisiator = $kode_instansi['kode_instansi'];
                 $status = '2';
                 $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
                 $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
@@ -413,7 +417,7 @@ class SeminarController extends Controller
                     }
 
                 // generate no sertifikat
-                $inisiator = '88';
+                $inisiator = $kode_instansi['kode_instansi'];
                 $status = '4';
                 $tahun = date("y",strtotime($request->tgl_awal)); //substr($request->tgl_awal,2,2);
                 $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
@@ -597,6 +601,9 @@ class SeminarController extends Controller
         $naraAwal = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
         $modeAwal = PesertaSeminar::where('id_seminar',$id)->where('status','4')->get();
         // dd($dataAwal);
+        // get kode_instansi inisiator
+        $kode_inisiator = SeminarModel::select('inisiator')->where('id',$id)->first();
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
         // Dari sini, tambah ke tabel srtf_narasumber dan srtf_peserta_seminar
         // Kalo ada narasumber baru, sekaligus bikin sertifikat
@@ -612,7 +619,7 @@ class SeminarController extends Controller
                     $narasumber_seminar->no_urut_peserta = $c_narasumber + 1;
                 }
                 // generate no sertifikat
-                $inisiator = '88';
+                $inisiator = $kode_instansi['kode_instansi'];
                 $status = '2';
                 $tahun = date("y",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,2,2);
                 $bulan = date("m",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,5,2);
@@ -666,7 +673,7 @@ class SeminarController extends Controller
                     $moderator_seminar->no_urut_peserta = $c_moderator + 1;
                 }
                 // generate no sertifikat
-                $inisiator = '88';
+                $inisiator = $kode_instansi['kode_instansi'];
                 $status = '4';
                 $tahun = date("y",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,2,2);
                 $bulan = date("m",strtotime($dataAwal->tgl_awal)); //substr($request->tgl_awal,5,2);
@@ -1201,6 +1208,10 @@ class SeminarController extends Controller
         $seminar = $data->save();
         $nara = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
         // dump($nara);
+        
+        // get kode_instansi inisiator
+        $kode_inisiator = SeminarModel::select('inisiator')->where('id',$id)->first();
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
         foreach($nara as $key) {
             // dump($key);
             // $narasumber = PesertaSeminar::where('id_peserta',$key->id_peserta)
@@ -1212,7 +1223,7 @@ class SeminarController extends Controller
                     $key->no_urut_peserta = $c_narasumber + 1;
                 }
             // generate no sertifikat
-            $inisiator = '88';
+            $inisiator = $kode_instansi['kode_instansi'];
             $status = '2';
             $tahun = date("y",strtotime($data->tgl_awal)); //substr($request->tgl_awal,2,2);
             $bulan = date("m",strtotime($data->tgl_awal)); //substr($request->tgl_awal,5,2);
@@ -1249,7 +1260,7 @@ class SeminarController extends Controller
                     $key->no_urut_peserta = $c_moderator + 1;
                 }
             // generate no sertifikat
-            $inisiator = '88';
+            $inisiator = $kode_instansi['kode_instansi'];
             $status = '4';
             $tahun = date("y",strtotime($data->tgl_awal)); //substr($request->tgl_awal,2,2);
             $bulan = date("m",strtotime($data->tgl_awal)); //substr($request->tgl_awal,5,2);
@@ -1281,6 +1292,8 @@ class SeminarController extends Controller
         $nama_peserta = Peserta::where('id', '=',$seminar['id_peserta'])->first();
         $urutan_seminar = SeminarModel::select('no_urut')->where('id', '=',$seminar->id_seminar)->first();
         $tanggal = SeminarModel::select('tgl_awal')->where('id', '=',$seminar->id_seminar)->first();
+        $kode_inisiator = SeminarModel::select('inisiator')->where('id',$seminar->id_seminar)->first();
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
         $data = PesertaSeminar::find($id);
         $urut = PesertaSeminar::where('id_seminar',$seminar->id_seminar)->max('no_urut_peserta'); //Counter nomor urut for peserta
@@ -1291,7 +1304,7 @@ class SeminarController extends Controller
         }
 
         // generate no sertifikat
-        $inisiator = '88';
+        $inisiator = $kode_instansi['kode_instansi'];
         $status = '1';
         $tahun = substr($tanggal['tgl_awal'],2,2);
         $bulan = substr($tanggal['tgl_awal'],5,2);
