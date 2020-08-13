@@ -24,54 +24,54 @@
                 @csrf
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-3 custom">
                             <img style="width:70%;" src="{{ asset($user->peserta->foto) }}">
                             <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"
                                 {{ $errors->first('foto') ? 'is-invalid' : '' }} style="
-                                padding-top: 5px;">
+                                padding-top: 5px;padding-bottom:5px;" class="img">
                         </div>
-                        <div class=" col-sm-6">
+                        <div class="col-sm-6">
                             <table>
                                 <tr>
                                     <th style="width:20%;text-align:left">Nama</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td><input name="nama" id="nama" type="text" class="form-control"
                                             value="{{ old('nama', $user->peserta->nama) }}"></td>
                                 </tr>
                                 <tr>
                                     <th style="width:20%;text-align:left">Email</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td><input name="email" id="email" type="text" class="form-control"
                                             value="{{old('email', $user->peserta->email)}}"></td>
                                 </tr>
                                 <tr>
                                     <th style="width:20%;text-align:left">No_HP</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td><input name="no_hp" id="no_hp" type="text" class="form-control"
                                             value="{{old('no_hp', $user->peserta->no_hp)}}"></td>
                                 </tr>
                                 <tr>
                                     <th style="width:20%;text-align:left">Pekerjaan</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td><input name="pekerjaan" id="pekerjaan" type="text" class="form-control"
                                             value="{{old('pekerjaan', $user->peserta->pekerjaan)}}"></td>
                                 </tr>
                                 <tr>
                                     <th style="width:20%;text-align:left">Instansi</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td><input name="instansi" id="instansi" type="text" class="form-control"
                                             value="{{old('instansi', $user->peserta->instansi)}}"></td>
                                 </tr>
                                 <tr>
                                     <th style="width:20%;text-align:left">No Regist SKA</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td><input name="nrska" id="nrska" type="text" class="form-control"
                                             value="{{old('nrska', $user->peserta->nrska)}}"></td>
                                 </tr>
                                 
                                 <tr>
                                     <th style="width:24%;text-align:left">Total Nilai SKPI Pertahun</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td>
                                         <input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control"
                                     value="{{ $user->peserta->skpk_total }}" readonly>
@@ -79,7 +79,7 @@
                                 </tr>
                                 <tr>
                                     <th style="width:20%;text-align:left">File KTP</th>
-                                    <td>:</td>
+                                    {{-- <td>:</td> --}}
                                     <td>
                                         @if (isset($user->peserta->ktp))
                                         <a target="_blank" href="{{ $user->peserta->ktp }}" data-toggle="tooltip"
@@ -102,11 +102,19 @@
                 </div>
         </div> --}}
     </div>
+    <div class="box-footer">
+        {{-- <a href="{{ url('#') }}" class="btn btn-primary pull-left"> Detail</a> --}}
+        <a href="{{ url('changepassword') }}" class="btn btn-md btn-warning pull-left"><i class="fa fa-edit"></i>
+            Ubah_Password</a>
+        <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-right"><i class="fa fa-times-circle"></i>
+            Batal</a>
+        <button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
+    </div>
     <br>
     <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
 
-        <table id="data-seminar" class="table table-bordered table-hover dataTable customTable" role="grid">
+        <table id="data-seminar" class="table table-bordered table-hover dataTable" role="grid">
             <thead>
                 <tr role="row">
                     <th style="width:2%;text-align:center;">No</th>
@@ -139,7 +147,7 @@
                     <td style="text-align:center;">
                         {{$key->seminar_p->skpk_nilai}}
                     </td>
-                    <td>
+                    <td style="text-align:center;">
                         {{$key->no_srtf}}
                     </td>
                 </tr>
@@ -148,14 +156,7 @@
         </table>
     </div>
 
-    <div class="box-footer">
-        {{-- <a href="{{ url('#') }}" class="btn btn-primary pull-left"> Detail</a> --}}
-        <a href="{{ url('changepassword') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-edit"></i>
-            Ubah_Password</a>
-        <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-right"><i class="fa fa-times-circle"></i>
-            Batal</a>
-        <button type="submit" class="btn btn-info pull-right"> <i class="fa fa-save"></i> Simpan</button>
-    </div>
+    
     </form>
 
     <div>
