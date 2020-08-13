@@ -108,9 +108,7 @@
                     <img src="{{ url($data->link) }}" onclick="location.href='{{ url($data->link) }}'" class="rounded img-fluid" alt="Brosur"> 
                 </div>
             </div>
-            @endif
-        </div>
-        
+        </div>   
     </div>
 </div>
 
