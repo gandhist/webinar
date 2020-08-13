@@ -92,7 +92,7 @@
                                 <td class="text-center">  {{ isset($peserta->tgl_lahir) ? \Carbon\Carbon::parse($peserta->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''  }} </td>
                                 <td class="text-center">
                                     {{-- <a href="{{ url('uploads/peserta/'.$peserta->foto)}}">Lihat</a> --}}
-                                    <a data-toggle="modal" data-target="#myModal">
+                                    <a data-toggle="modal" data-target="#myModal" data-link="{{isset($peserta->foto) ? url('uploads/peserta/'.$peserta->foto) : '' }}">
                                         Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                     </a>
                                 </td>
@@ -128,3 +128,12 @@
 </div>
 
 @endsection
+
+@push('script')
+<script>
+    $('#myModal').on('show.bs.modal', function(e) {
+        let link = $(e.relatedTarget).data('link');
+        $(e.currentTarget).find('img').attr('src',link);
+    });
+</script>
+@endpush
