@@ -13,7 +13,13 @@ use App\SertModel;
 class HomeController extends Controller
 {
     public function index(){
-        return view('home');
+        // handle sementara aja biar user ga kesini 
+        if(Auth::user()->role_id == 2){
+            return redirect(url('infoseminar'));
+        }
+        else {
+            return view('home');
+        }
         return view('sert.dashboard')->with(compact('data'));
     }
 }

@@ -144,9 +144,9 @@
                                 <span style="font-size: 24px;font-weight: bold;">
                                     @foreach ($instansi as $index => $key) 
                                         @if(count($instansi) > $index + 1) 
-                                        {{ $key->bu_instansi->nama_bu }} -
+                                        {{ $key->bu_instansi->singkat_bu }} -
                                         @else
-                                        {{ $key->bu_instansi->nama_bu }} 
+                                        {{ $key->bu_instansi->singkat_bu }} 
                                         @endif
                                     @endforeach
                                 </span>
