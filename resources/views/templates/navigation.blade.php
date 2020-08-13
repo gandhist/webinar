@@ -7,7 +7,7 @@
 <!-- jika sudah login -->
 <header class="main-header">
   <!-- Logo -->
-  <a href="{{ url('') }}" class="logo">
+  <a href="{{ url('/dashboard') }}" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini">P3SM</span>
     <!-- logo for regular state and mobile devices -->
@@ -72,7 +72,7 @@
       {{-- <li class="header">MAIN NAVIGATION</li> --}}
 
       <li class="treeview">
-        <a href="{{ url('') }}">
+        <a href="{{ url('/dashboard') }}">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
