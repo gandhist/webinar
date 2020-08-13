@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<div class="container">
+<div class="container-fluid">
   @if(session()->get('success'))
     <div class="alert alert-success"> {{ session()->get('success') }}
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -13,16 +13,16 @@
   @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
-  <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+  <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
     <thead>
       <tr>
-        <th style="width:2%;">No </th>
-        <th>Tema </th>
-        <th>Judul Seminar </th>
-        <th>Tanggal :</th>
-        <th>Tempat :</th>
-        <th>Narasumber :</th>
-        <th>Biaya :</th>
+        <th style="width:2%;">No. </th>
+        <th>Tema</th>
+        <th>Judul Seminar</th>
+        <th>Tanggal</th>
+        <th>Tempat</th>
+        <th>Narasumber</th>
+        <th>Biaya</th>
         <th></th>
       </tr>
     </thead>
