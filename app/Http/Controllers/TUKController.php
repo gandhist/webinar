@@ -7,13 +7,16 @@ use Illuminate\Http\Request;
 use App\TUKModel;
 use App\ProvinsiModel;
 use App\KotaModel;
+use Carbon\Carbon;
 
 class TUKController extends Controller
 {
     //
     public function index() {
         $tuk = TUKModel::all();
-        return view('tuk.index')->with(compact('tuk'));
+        $prov = ProvinsiModel::pluck('nama','id');
+        $kota = KotaModel::pluck('nama','id');
+        return view('tuk.index')->with(compact('tuk','prov','kota'));
     }
 
     public function create() {
@@ -47,6 +50,9 @@ class TUKController extends Controller
         $data->created_by = Auth::id();
 
         $data->save();
+
+        return redirect('/tuk')
+        ->with('pesan',"Berhasil menambahkan TUK");
     }
 
 
@@ -84,5 +90,26 @@ class TUKController extends Controller
         $data->updated_by = Auth::id();
 
         $data->update();
+        return redirect('/tuk')
+        ->with('pesan',"Berhasil mengubah TUK");
     }
+
+    public function show($id) {
+        $tuk = TUKModel::find($id);
+        $prov = ProvinsiModel::find($tuk->prov)->nama;
+        $kota = KotaModel::find($tuk->kota)->nama;
+        return view('tuk.detail')->with(compact('tuk','prov','kota','id'));
+    }
+
+    public function destroy(Request $request) {
+        $idData = explode(',', $request->idHapusData);
+        $user_data = [
+            'deleted_by' => Auth::id(),
+            'deleted_at' => Carbon::now()->toDateTimeString()
+        ];
+        TUKModel::whereIn('id', $idData)->update($user_data);
+        return redirect('/tuk')
+        ->with('pesan',"Berhasil menghapus TUK");
+    }
+
 }
