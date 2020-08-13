@@ -90,6 +90,19 @@ Route::namespace('Iso')->group(function(){
 	Route::resource('isos', 'IsoController');
 });
 
+// TUK
+Route::group(['middleware' => 'auth.admin','prefix' => 'tuk'], function () {
+	Route::get('/','TUKController@index');
+	Route::get('/create','TUKController@create');
+	Route::post('/store','TUKController@store');
+	Route::patch('/update','TUKController@update');
+	Route::get('/create/getKota/{id}','TUKController@getKota');
+	Route::get('/{id}/edit','TUKController@edit');
+    Route::get('/{id}','TUKController@show');
+	Route::delete('/destroy', 'TUKController@destroy');
+});
+// END TUK
+
 // Personal
 Route::group(['middleware' => 'auth.admin','prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
