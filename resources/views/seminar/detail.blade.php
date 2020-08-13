@@ -236,6 +236,7 @@
                               {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
                               <th style="width:5%;">No</th>
                               <th style="width:10%;">Status</th>
+                              <th style="width:10%;">No_srtf</th>
                               <th style="width:25%;">Nama</th>
                               <th style="width:15%;">No HP</th>
                               <th style="width:15%;">Email</th>
@@ -256,6 +257,7 @@
                                 @else Panitia
                                 @endif
                             </td>
+                            <td>{{ $key->no_srtf }}</td>
                             <td>{{ $key->peserta_r->nama }}</td>
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
