@@ -48,4 +48,41 @@ class TUKController extends Controller
 
         $data->save();
     }
+
+
+    public function edit($id) {
+        $tuk = TUKModel::find($id);
+        $provinsi = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        return view('tuk.edit')->with(compact('tuk','provinsi','kota','id'));
+    }
+
+    public function update(Request $request) {
+        // dd($request);
+        $request->validate([
+            'nama_tuk'  => 'required|min:3|max:100',
+            'alamat'    => 'required|min:3|max:100',
+            'provinsi'  => 'required',
+            'kota'      => 'required',
+            'pengelola' => 'sometimes|nullable|min:3|max:100',
+            'email'     => 'sometimes|nullable|email',
+            'no_hp'     => 'sometimes|nullable|',
+            'website'   => 'sometimes|nullable|'
+        ]);
+
+        $data = TUKModel::find($request->id);
+        // dd($request->id);
+        $data->nama_tuk  = $request->nama_tuk       ;
+        $data->alamat    = $request->alamat         ;
+        $data->prov      = $request->provinsi       ;
+        $data->kota      = $request->kota           ;
+        $data->pengelola = $request->pengelola      ;
+        $data->email     = $request->email          ;
+        $data->no_hp     = $request->no_hp          ;
+        $data->web       = $request->website        ;
+
+        $data->updated_by = Auth::id();
+
+        $data->update();
+    }
 }
