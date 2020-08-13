@@ -9,6 +9,7 @@ use App\Peserta;
 use App\PesertaSeminar;
 use App\User;
 use App\BankModel;
+use App\InstansiModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -74,8 +75,8 @@ class InfoSeminarController extends Controller
     {
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
-        // dd($peserta);
-        $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
+        $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         // $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
@@ -91,7 +92,7 @@ class InfoSeminarController extends Controller
             }
             $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
             // generate no sertifikat
-            $inisiator = '88';
+            $inisiator = $kode_instansi['kode_instansi'];
             $status = '1';
             $tahun = substr($tanggal['tgl_awal'],2,2);
             $bulan = substr($tanggal['tgl_awal'],5,2);

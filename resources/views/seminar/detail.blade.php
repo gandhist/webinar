@@ -260,19 +260,21 @@
                             <td>{{$key->peserta_r->no_hp}}</td>
                             <td>{{$key->peserta_r->email}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == null) - @elseif ($key->is_paid == '1') Sudah Bayar @else Belum Bayar @endif </td>
-                            <td>
-                                @if($key->is_paid == null)
-                                    <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                    <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
-                                @elseif ($key->is_paid == 1)
-                                    <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
-                                    <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                            <td>@if($key->seminar_p->is_actived == 0)
                                 @else
-                                    <a href="{{ url('seminar/approve', $key->id) }}" class="btn btn-success btn-sm"> Approve</a>
-                                    <button type="button" id="btnBukti"
-                                        onclick='tampilLampiran("{{ asset("$key->bukti_bayar") }}","Bukti Bayar")'
-                                        class="btn btn-primary btn-sm">
-                                    <i class="fa fa-file-pdf-o"></i> Bukti Bayar</button>
+                                    @if($key->is_paid == null)
+                                        <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                        <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                    @elseif ($key->is_paid == 1)
+                                        <a target="_blank" href="{{ url('seminar/cetak_sertifikat', $key->no_srtf) }}" class="btn btn-success btn-sm"> Cetak Sertifikat</a>
+                                        <a href="{{ url('seminar/send_email', $key->no_srtf) }}" class="btn btn-primary btn-sm"> Kirim Email</a>
+                                    @else
+                                        <a href="{{ url('seminar/approve', $key->id) }}" class="btn btn-success btn-sm"> Approve</a>
+                                        <button type="button" id="btnBukti"
+                                            onclick='tampilLampiran("{{ asset("$key->bukti_bayar") }}","Bukti Bayar")'
+                                            class="btn btn-primary btn-sm">
+                                        <i class="fa fa-file-pdf-o"></i> Bukti Bayar</button>
+                                    @endif
                                 @endif
                             </td>
                          </tr>
