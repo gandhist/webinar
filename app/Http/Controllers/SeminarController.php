@@ -261,19 +261,19 @@ class SeminarController extends Controller
                 // dd($moderator_seminar);
             }
 
-            //generate qr code seminar
-            $inisiator = InstansiModel::find($data->inisiator);
-            $logo = "/public/".$inisiator->logo;
+            // //generate qr code seminar
+            // $inisiator = InstansiModel::find($data->inisiator);
+            // $logo = "/public/".$inisiator->logo;
 
-            $qr = SeminarModel::find($data->id);
-            $url = url("infoseminar/detail/".$data->id);
-            $nama = "QR_Seminar_".$data->id.".png";
+            // $qr = SeminarModel::find($data->id);
+            // $url = url("infoseminar/detail/".$data->id);
+            // $nama = "QR_Seminar_".$data->id.".png";
 
-            $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
+            // $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
 
-            $dir_name = "file_seminar";
-            $qr->qr_code = $dir_name."/".$nama;
-            $qr->save();
+            // $dir_name = "file_seminar";
+            // $qr->qr_code = $dir_name."/".$nama;
+            // $qr->save();
 
             return redirect('/seminar')->with('pesan',"Seminar \"".$request->nama_seminar.
             "\" berhasil ditambahkan sebagai draft");
@@ -1187,6 +1187,23 @@ class SeminarController extends Controller
         $data = SeminarModel::where('id',$id)->first();
         $data->is_actived = "1";
         $data->status = "published";
+
+
+        //generate qr code seminar
+        $inisiator = InstansiModel::find($data->inisiator);
+        $logo = "/public/".$inisiator->logo;
+
+        $qr = SeminarModel::find($data->id);
+        $url = url("infoseminar/detail/".$data->id);
+        $nama = "QR_Seminar_".$data->id.".png";
+
+        $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
+
+        $dir_name = "file_seminar";
+        $qr->qr_code = $dir_name."/".$nama;
+        $qr->save();
+        //end qr
+
         $counter = SeminarModel::all();
         $jumlah = array();
         if(count($counter) > 0) {
@@ -1208,7 +1225,7 @@ class SeminarController extends Controller
         $seminar = $data->save();
         $nara = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
         // dump($nara);
-        
+
         // get kode_instansi inisiator
         $kode_inisiator = SeminarModel::select('inisiator')->where('id',$id)->first();
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
