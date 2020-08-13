@@ -73,16 +73,8 @@
                                     <th style="width:24%;text-align:left">Total Nilai SKPI Pertahun</th>
                                     <td>:</td>
                                     <td>
-                                        @php
-                                        $total = 0;
-                                        @endphp
-                                        @foreach($detailseminar as $key)
-                                            @php
-                                            $total += $key->seminar_p->skpk_nilai;
-                                            @endphp
-                                        @endforeach
                                         <input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control"
-                                            value="{{ $total }}" readonly>
+                                    value="{{ $user->peserta->skpk_total }}" readonly>
                                     </td>
                                 </tr>
                                 <tr>

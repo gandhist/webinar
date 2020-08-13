@@ -22,7 +22,7 @@ class InfoSeminarController extends Controller
         $date = Carbon::now()->toDateTimeString();
 
         // $data = Seminar::where('status','=','published')->whereDate('tgl_akhir','>',$date)->get(); //live
-        $data = Seminar::where('status','=','published')->get();
+        $data = Seminar::where('status','=','published')->orderBy('id','desc')->get();
         if(Auth::id() == null){
             $user = 'Error';
         } else{
@@ -74,6 +74,7 @@ class InfoSeminarController extends Controller
     public function store(Request $request, $id)
     {
         $peserta = Peserta::where('user_id',Auth::id())->first();
+        $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
         // dd($peserta);
         $status_peserta = PesertaSeminar::select('status')->where('id_peserta',$peserta['id'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
@@ -129,13 +130,21 @@ class InfoSeminarController extends Controller
 
         $data = $data->save();
 
-
         if($is_free['is_free'] == '0'){
             // pengurangan kuota
             // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
             $kuota = Seminar::find($id);
             $kuota->kuota_temp = $kuota->kuota_temp - 1;
             $kuota->update();
+
+            // Hitung Total Nilai SKPK lalu save
+            $total = 0;
+            foreach($detailseminar as $key) {
+                $total += $key->seminar_p->skpk_nilai;
+            }
+            $total_nilai = Peserta::find($peserta['id']);
+            $total_nilai->skpk_total = $total;
+            $total_nilai->update();
         }
 
         return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');

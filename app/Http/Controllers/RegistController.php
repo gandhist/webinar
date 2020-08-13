@@ -46,8 +46,9 @@ class RegistController extends Controller
         // validasi form
         $request->validate([
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'email' => 'unique:srtf_peserta',
-            'no_hp' => 'unique:srtf_peserta'
+            // 'email' => 'unique:srtf_peserta',
+            // 'no_hp' => 'unique:srtf_peserta',
+            'email' => 'unique:users',
         ],[
             'foto.mimes' => 'Format Foto Harus JPG atau PNG',
             'foto.max' => 'Maksimal Ukuran Foto 2MB',
