@@ -291,7 +291,7 @@
                             <label for="logo" class="label-control required">Logo pada Sertifikat</label>
                             <select name="logo[]" multiple="multiple" required class="form-control" id="logo">
                             </select>
-                            <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
+                            <div class="small text-muted">Urutan pilihan tidak berpengaruh pada urutan di sertifikat</div>
 
                             <div id="logo" class="invalid-feedback text-danger">
                                 {{ $errors->first('logo') }}
@@ -306,7 +306,7 @@
                             <label for="is_online" class="label-control required">Jenis Acara</label>
                             <select name="is_online" id="is_online"  data-minimum-results-for-search="Infinity"
                             class="form-control" required>
-                                <option value="" selected hidden>Plih Jenis Seminar</option>
+                                <option value="" selected hidden>Pilih Jenis Seminar</option>
                                 <option value="0">Offline</option>
                                 <option value="1">Online (Webinar)</option>
                             </select>
@@ -713,13 +713,13 @@
             maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#ttd1').select2({
-            placeholder: " Pilih Penandatangan"
+            placeholder: " Pilih Penandatangan",
         }); // Select2 Provinsi
         $('#ttd2').select2({
-            placeholder: " Pilih Penandatangan"
+            placeholder: " Pilih Penandatangan",
         }); // Select2 Provinsi
         $('#tuk').select2({
-            placeholder: " Pilih Tempat Uji Kompetensi"
+            placeholder: " Pilih Tempat Uji Kompetensi",
         }); // Select2 Provinsi
         $('#narasumber').select2({
             placeholder: " Pilih Narasumber",
@@ -734,9 +734,6 @@
         $('#logo').select2({
             placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
             allowClear: true,
-        }); // Select2
-        $('#link').select2({
-            placeholder: "(Hanya untuk Webinar)"
         }); // Select2
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);

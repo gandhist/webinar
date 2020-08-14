@@ -59,9 +59,7 @@
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
                                     <th><span class="indent">No.</span></th>
                                     <th><span class="indent">Nama</span></th>
-                                    <th><span class="indent">No. Hp</span></th>
-                                    <th><span class="indent">Email</span></th>
-                                    <th><span class="indent">Website</span></th>
+                                    <th><span class="indent">Status</span></th>
                                     <th><span class="indent">Pengelola</span></th>
                                     <th><span class="indent">Provinsi</span></th>
                                     <th><span class="indent">Kota</span></th>
@@ -79,16 +77,11 @@
                                             {{ str_limit($key->nama_tuk,20) }}
                                         </a>
                                     </td>
-                                    <td> {{ isset($key->no_hp) ? $key->no_hp : 'Tidak Tersedia' }} </td>
-
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->email) ? $key->email : 'Tidak Tersedia' }}">
-                                        {{ isset($key->email) ? str_limit($key->email,20) : 'Tidak Tersedia' }} </td>
-
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->web) ? $key->web : 'Tidak Tersedia' }}">
-                                        @if(isset($key->web))
-                                            <a href="{{url($key->web)}}">Kunjungi</a>
+                                    <td>
+                                        @if($key->is_online == '0')
+                                            <span class="label label-pill label-default">Offline</span>
                                         @else
-                                            {{'Tidak Tersedia'}}
+                                            <span class="label label-pill label-primary">Online</span>
                                         @endif
                                     </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->pengelola) ? $key->pengelola : 'Tidak Tersedia' }}">
