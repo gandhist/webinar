@@ -41,8 +41,9 @@ class InfoSeminarController extends Controller
     public function daftar(Request $request, $id)
     {
         $data = Seminar::find($id);
-        $peserta = Peserta::where('user_id',Auth::user()->id)->first();
+        $peserta = Peserta::where('user_id',Auth::id())->first();
         $bank = BankModel::all();
+        
 
         if(isset($peserta)){
             //Set Your server key
@@ -56,7 +57,7 @@ class InfoSeminarController extends Controller
             $params = array(
                 'transaction_details' => array(
                     'order_id' => $data->id.$peserta->id.$peserta->user_id.time(),
-                    'gross_amount' => 10000,
+                    'gross_amount' => $data->biaya,
                 )
             );
             $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -75,12 +76,11 @@ class InfoSeminarController extends Controller
     public function store(Request $request, $id)
     {
         $peserta = Peserta::where('user_id',Auth::id())->first();
-        $detailseminar = PesertaSeminar::where('id_peserta','=',$peserta['id'])->get();
+        $detailseminar = Seminar::where('id',$id)->first();
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
-        // $statusbayar = PesertaSeminar::select('is_paid')->where('id_peserta',$peserta['id'])->first();
         $counter = SeminarModel::where('status','published')->get();
         $data = new PesertaSeminar;
         if($is_free['is_free'] == '0'){
@@ -103,6 +103,7 @@ class InfoSeminarController extends Controller
 
         $data->id_seminar = $id;
         $data->id_peserta = $peserta['id'];
+        $data->skpk_nilai = $detailseminar['skpk_nilai'];
         if($is_free['is_free'] == '0'){
             $data->is_paid = '1';
             $data->no_srtf = $no_sert;
@@ -138,16 +139,13 @@ class InfoSeminarController extends Controller
             $kuota->kuota_temp = $kuota->kuota_temp - 1;
             $kuota->update();
 
-            // Hitung Total Nilai SKPK lalu save
-            $total = 0;
-            foreach($detailseminar as $key) {
-                $total += $key->seminar_p->skpk_nilai;
-            }
+            // get nilai_skpk dari lalu di total
             $total_nilai = Peserta::find($peserta['id']);
-            $total_nilai->skpk_total = $total;
+            $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
             $total_nilai->update();
+            
         }
-
+        
         return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
     }
 }

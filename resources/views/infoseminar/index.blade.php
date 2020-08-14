@@ -5,6 +5,15 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<style>
+  @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
+    table.dataTable>tbody>tr.child {
+        padding: 0px 0px;
+    }
+  }
+</style>
+
 <div class="container-fluid">
   @if(session()->get('success'))
     <div class="alert alert-success"> {{ session()->get('success') }}
@@ -16,13 +25,13 @@
   <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
     <thead>
       <tr>
-        <th style="width:2%;">No. </th>
+        <th style="width:2%;">No</th>
         <th>Tema</th>
         <th>Judul Seminar</th>
         <th>Tanggal</th>
         <th>Tempat</th>
         <th>Narasumber</th>
-        <th>Biaya</th>
+        <th style="width:7%;">Biaya</th>
         <th></th>
       </tr>
     </thead>
@@ -38,15 +47,17 @@
           </td>
           <td>{{ $key->lokasi_penyelenggara }}</td>
           <td>
+            <ul>
             @foreach($key->seminar_r as $index => $select)
               @if(count($key->seminar_r) > $index + 1)
-              {{ $select->peserta_r->nama }} -
+              <li>{{ $select->peserta_r->nama }} </li>
               @else
-              {{ $select->peserta_r->nama }}
+              <li>{{ $select->peserta_r->nama }} </li>
               @endif
             @endforeach
+            </ul>
           </td>
-          <td>@if ($key->is_free == '0') Gratis @else Rp {{ format_uang($key->biaya)}} @endif</td>
+          <td>@if ($key->is_free == '0') Gratis @else Rp. {{ format_uang($key->biaya)}} @endif</td>
           <td>
             @php
               if ($user == 'Error') {
