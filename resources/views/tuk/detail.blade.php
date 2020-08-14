@@ -54,33 +54,44 @@
 
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label>Alamat</label>
-                        <input value="{{ $tuk->alamat }}"
+                        <label>Jenis TUK</label>
+                        <input value="{{ $tuk->is_online == '0' ? 'Offline' : 'Online' }}"
                         type="text" class="form-control" disabled>
                     </div>
                 </div>
 
             </div>
 
-            <div class="row">
+            @if($tuk->is_online == '0')
 
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Provinsi</label>
-                        <input value="{{ $prov }}"
-                        type="text" class="form-control" disabled>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Provinsi</label>
+                            <input value="{{ isset($provinsi) ? $provinsi->nama : '' }}"
+                            type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Kota</label>
+                            <input value="{{ isset($kota) ? $kota->nama : '' }}"
+                            type="text" class="form-control" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Alamat</label>
+                            <input value="{{ isset($tuk->alamat) ? $tuk->alamat : '' }}"
+                            type="text" class="form-control" disabled>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="form-group">
-                        <label>Kota</label>
-                        <input value="{{ $kota }}"
-                        type="text" class="form-control" disabled>
-                    </div>
-                </div>
-
-            </div>
+            @endif
 
             <div class="row">
 

@@ -16,6 +16,7 @@ use App\Personal;
 use App\SertInstansiModel;
 use App\TtdModel;
 use App\KlasifikasiModel;
+use App\TUKModel;
 use App\SubKlasifikasiModel;
 use PDF;
 use Mail;
@@ -49,9 +50,10 @@ class SeminarController extends Controller
         $pers = Personal::where('is_activated','1')->pluck('nama','id');
         $klasifikasi = KlasifikasiModel::all();
         $sub_klasifikasi = SubKlasifikasiModel::all();
+        $tuk = TUKModel::all();
 
         return view('seminar.create')->with(compact('inisiator','provinsi','kota',
-        'personal','instansi','pendukung','pers','klasifikasi','sub_klasifikasi'));
+        'personal','instansi','pendukung','pers','klasifikasi','sub_klasifikasi','tuk'));
     }
 
     public function store(Request $request) {
@@ -73,7 +75,10 @@ class SeminarController extends Controller
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
             'ttd1' => 'required',
             'ttd2' => 'required',
-            // 'ttd_pemangku' => 'required',
+            'jab_ttd1' => 'required|min:3|max:100',
+            'jab_ttd2' => 'required|min:3|max:100',
+            'is_online' => 'required',
+            'link' => 'required_if:is_online,==,1',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:100',

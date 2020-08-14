@@ -47,87 +47,104 @@
                         </div>
                         {{-- Akhir Nama TUK --}}
 
-                        {{-- Alamat TUK --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ $errors->first('alamat') ? 'has-error' : '' }}">
-                                <label for="alamat" class="label-control required">Alamat</label>
-                                <input type="text" id="alamat" class="form-control" name="alamat"
-                                placeholder="Alamat Tempat Uji Kompetensi" required
-                                value="{{ old('alamat') ? old('alamat') : $tuk->alamat }}">
-                                <div id="alamat" class="invalid-feedback text-danger">
-                                    {{ $errors->first('alamat') }}
+                    @if($tuk->is_online == '0')
+                            {{-- Alamat TUK --}}
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->first('alamat') ? 'has-error' : '' }}">
+                                    <label for="alamat" class="label-control required">Alamat</label>
+                                    <input type="text" id="alamat" class="form-control" name="alamat"
+                                    placeholder="Alamat Tempat Uji Kompetensi" required
+                                    value="{{ old('alamat') ? old('alamat') : $tuk->alamat }}">
+                                    <div id="alamat" class="invalid-feedback text-danger">
+                                        {{ $errors->first('alamat') }}
+                                    </div>
                                 </div>
                             </div>
+                            {{-- Akhir Nama TUK --}}
+
                         </div>
-                        {{-- Akhir Nama TUK --}}
-
-                    </div>
-
-                    <div class="row">
-
-                        {{-- Provinsi --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ $errors->first('provinsi') ? 'has-error' : '' }}">
-                                <label for="provinsi" class="label-control required">Provinsi</label>
-                                {{-- <select name="klasifikasi[]" multiple="multiple"
-                                id="klasifikasi" class="form-control"> --}}
-                                <select name="provinsi"  required
-                                id="provinsi" class="form-control">
-                                    <option value="" selected hidden>Pilih Provinsi</option>
-                                    @foreach ($provinsi as $key)
-                                        <option value="{{$key->id}}"
-                                        @if(old('provinsi'))
-                                            {{ old('provinsi') == $key->id ? 'selected' : '' }}
-                                        @else
-                                            {{ $tuk->prov == $key->id ? 'selected' : '' }}
-                                        @endif
-                                        >
-                                            {{$key->nama}}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <div id="provinsi" class="invalid-feedback text-danger">
-                                    {{ $errors->first('provinsi') }}
+                    @else
+                            {{-- Jenis --}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="is_online" class="label-control required">Jenis TUK</label>
+                                    <input type="text" id="is_online" class="form-control" name="is_online"
+                                    placeholder="Jenis TUK" disabled
+                                    value="{{ $tuk->is_online == '0' ? 'Online' : 'Offline' }}">
                                 </div>
                             </div>
+                            {{-- Akhir Jenis --}}
                         </div>
-                        {{-- Akhir Provinsi --}}
+                    @endif
 
-                        {{-- Kota --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ $errors->first('kota') ? 'has-error' : '' }}">
-                                <label for="kota" class="label-control required">Kota</label>
-                                {{-- <select name="klasifikasi[]" multiple="multiple"
-                                id="klasifikasi" class="form-control"> --}}
-                                <select name="kota"  required
-                                id="kota" class="form-control">
-                                    <option value="" selected hidden>Pilih Kota</option>
-                                    @foreach ($kota as $key)
-                                        @if (old('provinsi'))
-                                            @if (old('provinsi') == $key->provinsi_id)
-                                                <option value="{{$key->id}}"
-                                                {{ old('kota') == $key->id ? 'selected' : '' }}>
-                                                    {{$key->nama}}
-                                                </option>
+
+                    @if($tuk->is_online == '0')
+                        <div class="row">
+
+                            {{-- Provinsi --}}
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->first('provinsi') ? 'has-error' : '' }}">
+                                    <label for="provinsi" class="label-control required">Provinsi</label>
+                                    {{-- <select name="klasifikasi[]" multiple="multiple"
+                                    id="klasifikasi" class="form-control"> --}}
+                                    <select name="provinsi"  required
+                                    id="provinsi" class="form-control">
+                                        <option value="" selected hidden>Pilih Provinsi</option>
+                                        @foreach ($provinsi as $key)
+                                            <option value="{{$key->id}}"
+                                            @if(old('provinsi'))
+                                                {{ old('provinsi') == $key->id ? 'selected' : '' }}
+                                            @else
+                                                {{ $tuk->prov == $key->id ? 'selected' : '' }}
                                             @endif
-                                        @else
-                                            @if ($tuk->prov == $key->provinsi_id)
-                                                <option value="{{$key->id}}"
-                                                {{ $tuk->kota == $key->id ? 'selected' : '' }}>
-                                                    {{$key->nama}}
-                                                </option>
-                                            @endif
-                                        @endif
-                                    @endforeach
-                                </select>
-                                <div id="kota" class="invalid-feedback text-danger">
-                                    {{ $errors->first('kota') }}
+                                            >
+                                                {{$key->nama}}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div id="provinsi" class="invalid-feedback text-danger">
+                                        {{ $errors->first('provinsi') }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {{-- Akhir Kota --}}
+                            {{-- Akhir Provinsi --}}
 
-                    </div>
+                            {{-- Kota --}}
+                            <div class="col-md-6">
+                                <div class="form-group {{ $errors->first('kota') ? 'has-error' : '' }}">
+                                    <label for="kota" class="label-control required">Kota</label>
+                                    {{-- <select name="klasifikasi[]" multiple="multiple"
+                                    id="klasifikasi" class="form-control"> --}}
+                                    <select name="kota"  required
+                                    id="kota" class="form-control">
+                                        <option value="" selected hidden>Pilih Kota</option>
+                                        @foreach ($kota as $key)
+                                            @if (old('provinsi'))
+                                                @if (old('provinsi') == $key->provinsi_id)
+                                                    <option value="{{$key->id}}"
+                                                    {{ old('kota') == $key->id ? 'selected' : '' }}>
+                                                        {{$key->nama}}
+                                                    </option>
+                                                @endif
+                                            @else
+                                                @if ($tuk->prov == $key->provinsi_id)
+                                                    <option value="{{$key->id}}"
+                                                    {{ $tuk->kota == $key->id ? 'selected' : '' }}>
+                                                        {{$key->nama}}
+                                                    </option>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    <div id="kota" class="invalid-feedback text-danger">
+                                        {{ $errors->first('kota') }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Akhir Kota --}}
+
+                        </div>
+                    @endif
 
                     <div class="row">
 

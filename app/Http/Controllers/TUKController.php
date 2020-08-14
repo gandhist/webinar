@@ -28,9 +28,9 @@ class TUKController extends Controller
     public function store(Request $request) {
         $request->validate([
             'nama_tuk'  => 'required|min:3|max:100',
-            'alamat'    => 'required|min:3|max:100',
-            'provinsi'  => 'required',
-            'kota'      => 'required',
+            'alamat'    => 'required_if:is_online,==,0|min:3|max:100',
+            'provinsi'  => 'required_if:is_online,==,0',
+            'kota'      => 'required_if:is_online,==,0',
             'pengelola' => 'sometimes|nullable|min:3|max:100',
             'email'     => 'sometimes|nullable|email',
             'no_hp'     => 'sometimes|nullable|',
@@ -39,6 +39,7 @@ class TUKController extends Controller
 
         $data   = new TUKModel;
         $data->nama_tuk  = $request->nama_tuk       ;
+        $data->is_online = $request->is_online        ;
         $data->alamat    = $request->alamat         ;
         $data->prov      = $request->provinsi       ;
         $data->kota      = $request->kota           ;
@@ -58,18 +59,22 @@ class TUKController extends Controller
 
     public function edit($id) {
         $tuk = TUKModel::find($id);
-        $provinsi = ProvinsiModel::all();
-        $kota = KotaModel::all();
-        return view('tuk.edit')->with(compact('tuk','provinsi','kota','id'));
+        if($tuk->is_online == '0') {
+            $provinsi = ProvinsiModel::all();
+            $kota = KotaModel::all();
+            return view('tuk.edit')->with(compact('tuk','provinsi','kota','id'));
+        } else {
+            return view('tuk.edit')->with(compact('tuk','id'));
+        }
     }
 
     public function update(Request $request) {
         // dd($request);
         $request->validate([
             'nama_tuk'  => 'required|min:3|max:100',
-            'alamat'    => 'required|min:3|max:100',
-            'provinsi'  => 'required',
-            'kota'      => 'required',
+            'alamat'    => 'required_if:is_online,==,0|min:3|max:100',
+            'provinsi'  => 'required_if:is_online,==,0',
+            'kota'      => 'required_if:is_online,==,0',
             'pengelola' => 'sometimes|nullable|min:3|max:100',
             'email'     => 'sometimes|nullable|email',
             'no_hp'     => 'sometimes|nullable|',
@@ -96,9 +101,14 @@ class TUKController extends Controller
 
     public function show($id) {
         $tuk = TUKModel::find($id);
-        $prov = ProvinsiModel::find($tuk->prov)->nama;
-        $kota = KotaModel::find($tuk->kota)->nama;
-        return view('tuk.detail')->with(compact('tuk','prov','kota','id'));
+
+        if($tuk->is_online == '0'){
+            $provinsi = ProvinsiModel::find($tuk->prov);
+            $kota = KotaModel::find($tuk->kota);
+            return view('tuk.detail')->with(compact('tuk','provinsi','kota','id'));
+        } else {
+            return view('tuk.detail')->with(compact('tuk','id'));
+        }
     }
 
     public function destroy(Request $request) {

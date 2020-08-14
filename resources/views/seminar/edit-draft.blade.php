@@ -673,15 +673,14 @@
             $(this).val($.trim($(this).val()));
             console.log(this.textContent,' trimmed');
         }) // trim semua spasi
-        $('#gratis').change(function() {
-            if ($(this).prop('checked')) {
-                $("#biaya").prop("disabled", true);
-                $("#biaya").prop("required", false);
-                console.log("ory")
-            }
-            // $("#biaya").removeClass("disabled");
-            // $("#no").addClass("none");
-        });
+        // $('#gratis').change(function() {
+        //     if ($(this).prop('checked')) {
+        //         $("#biaya").prop("disabled", true);
+        //         $("#biaya").prop("required", false);
+        //     }
+        //     // $("#biaya").removeClass("disabled");
+        //     // $("#no").addClass("none");
+        // });
         // $('#narasumber').select2({
         //     tags: true,
         //     data: @json(old('narasumber')) ,
@@ -693,6 +692,7 @@
         // }); // narasumber select2 multiple, tags
         $('#gratis').change(function() {
             if ($(this).prop('checked')) {
+                $("#biaya").val("");
                 $("#biaya").prop("disabled", true);
                 $("#biaya").prop("required", false);
             }
