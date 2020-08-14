@@ -154,7 +154,7 @@
                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
-                            class="form-control to-pimpinan" multiple required>
+                            class="form-control to-pimpinan to-logo" multiple required>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
                                         @if(! (collect(old('instansi_pendukung'))->contains($key->id)) )
@@ -182,7 +182,7 @@
                         <div class="form-group {{ $errors->first('instansi_pendukung') ? 'has-error' : '' }} ">
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
-                            class="form-control to-pimpinan" multiple required>
+                            class="form-control to-pimpinan to-logo" multiple required>
                             @if(old('instansi_penyelenggara'))
                                 @foreach($instansi as $key)
                                     @if(! (collect(old('instansi_penyelenggara'))->contains($key->id)) )
@@ -663,10 +663,66 @@
         $("#is_online").on('change', function() {
             let pilihan = $("#is_online").val();
             if(pilihan == "0") {
+
+                // to tuk
+
+                kota = $('#kota_penyelenggara').select2('data').map(function(elem){
+                    return elem.id
+                });
+
+                tuk = @json($tuk);
+
+                $('#tuk').empty();
+
+                $('#tuk').append(new Option('Pilih Tempat Uji Kompetensi', '')).attr('selected',true);
+
+                tuk.forEach(function(key) {
+
+                    if( key.is_online == '0' ){
+                        if( kota.includes(key.kota.toString()) ){
+                            //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                            $('#tuk').append(new Option(key.nama_tuk, key.id));
+
+                        }
+                    }
+
+                });
+
+                $('#tuk').select2({
+                    placeholder: " Pilih Tempat Uji Kompetensi",
+                });
+
+                // end to tuk
+
                 $("#link").val("");
                 $("#link").prop("disabled", true);
                 $("#link").prop("required", false);
             } else if(pilihan == '1') {
+
+                // to tuk
+
+                tuk = @json($tuk);
+
+                $('#tuk').empty();
+
+                $('#tuk').append(new Option('Pilih Tempat Uji Kompetensi', '')).attr('selected',true);
+
+                tuk.forEach(function(key) {
+
+                    if( key.is_online == '1' ){
+                        //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                        $('#tuk').append(new Option(key.nama_tuk, key.id));
+
+                    }
+
+                });
+
+                $('#tuk').select2({
+                    placeholder: " Pilih Tempat Uji Kompetensi",
+                });
+
+                // end to tuk
+
                 $("#link").val("https://");
                 $("#link").prop("disabled", false);
                 $("#link").prop("required", true);
@@ -677,6 +733,66 @@
                 $("#link").prop("required", true);
             }
         });
+
+        // onchange kota
+        $('#kota_penyelenggara').on('select2:select', function() {
+            is_online = $('#is_online').val();
+
+            if(is_online == '0') {
+
+                kota = $('#kota_penyelenggara').select2('data').map(function(elem){
+                    return elem.id
+                });
+
+                tuk = @json($tuk);
+
+                $('#tuk').empty();
+
+                $('#tuk').append(new Option('Pilih Tempat Uji Kompetensi', '')).attr('selected',true);
+
+                tuk.forEach(function(key) {
+
+                    if( key.is_online == '0' ){
+                        if( kota.includes(key.kota.toString()) ){
+                            //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                            $('#tuk').append(new Option(key.nama_tuk, key.id));
+                        }
+                    }
+                });
+            }
+        });
+        // end onchange kota
+
+        // onchange tuk
+        $('#tuk').on('select2:select', function() {
+
+            tukval = $('#tuk').val();
+
+            tuk = @json($tuk);
+
+            $('#lokasi_penyelenggara').val('');
+
+            tuk.forEach(function(key) {
+                if(tukval == key.id) {
+
+                    // console.log(key);
+                    if( key.is_online == '0' ){
+                        $('#lokasi_penyelenggara').val(key.alamat);
+                    }
+
+                    if( key.is_online == '1' ){
+                        $('#lokasi_penyelenggara').val(key.nama_tuk);
+                    }
+
+                }
+
+            });
+
+            $('#alamat').select2();
+        });
+        // end tuk
+
+
 
         $('.timepicker').datetimepicker({
 
@@ -735,6 +851,38 @@
             placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
             allowClear: true,
         }); // Select2
+
+        // to logo
+        $('.to-logo').on('select2:select', function() {
+            instansi = @json($instansi);
+            // console.log(instansi);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(peny);
+            // console.log(pend);
+
+            $('#logo').empty();
+
+            instansi.forEach(function(key) {
+
+                if(peny.includes((key.id).toString()) || pend.includes((key.id).toString())){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#logo').append(new Option(key.nama_bu, key.id));
+
+                }
+            });
+
+            $('#logo').select2({
+                placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
+            });
+        });
+        // end to logo
+
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);
             // console.log(pendukung.hasOwnProperty('33'));
@@ -752,8 +900,10 @@
             }
 
             $('#instansi_pendukung').select2({
-            allowClear: true,
-            maximumSelectionLength: 2,});
+                placeholder: " Pilih Instansi Pendukung",
+                allowClear: true,
+                maximumSelectionLength: 2,
+            });
         })
 
         $('#narasumber').on('change', function() {
@@ -772,8 +922,10 @@
             }
 
             $('#moderator').select2({
-            allowClear: true,
-            maximumSelectionLength: 2,});
+                placeholder: " Pilih Moderator",
+                allowClear: true,
+                maximumSelectionLength: 2,
+            });
         })
 
 

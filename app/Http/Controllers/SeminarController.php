@@ -57,6 +57,7 @@ class SeminarController extends Controller
     }
 
     public function store(Request $request) {
+        // dd(collect($request->logo)->contains(65));
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
@@ -77,13 +78,16 @@ class SeminarController extends Controller
             'ttd2' => 'required',
             'jab_ttd1' => 'required|min:3|max:100',
             'jab_ttd2' => 'required|min:3|max:100',
-            'is_online' => 'required',
-            'link' => 'required_if:is_online,==,1',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
-            'moderator' => 'required'//|min:3|max:50'
+            'moderator' => 'required',//|min:3|max:50'
+
+            'logo' => 'required',
+            'is_online' => 'required',
+            'link' => 'required_if:is_online,==,1',
+            'tuk' => 'required',
         ],[
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
             'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
@@ -128,7 +132,10 @@ class SeminarController extends Controller
             'ttd2.required' => 'Mohon isi Penandatangan',
             // 'moderator.min' => 'Moderator minimal 3 karakter',
             // 'moderator.max' => 'Moderator maksimal 50 karakter',
-
+            'logo.required' => 'Mohon pilih logop yang akan ditampilkan pada sertifikat',
+            'is_online.required' => 'Mohon pilih jenis acara',
+            'link.required_if' => 'Untuk seminar online (webinar), mohon isi link seminar',
+            'tuk' => 'Mohon isi Tempat Uji Komptensi'
         ]);
 
         // Just In Case aja, kalo masuknya string
@@ -157,6 +164,11 @@ class SeminarController extends Controller
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
         //$data->ttd_pemangku              =              $request->ttd_pemangku           ;
+
+
+        $data->is_online                 =              $request->is_online              ;
+        $data->link                      =              $request->link                   ;
+        $data->tuk                       =              $request->tuk                    ;
 
         $data->save();
 
@@ -187,6 +199,11 @@ class SeminarController extends Controller
                 $peny->id_instansi = $key;
                 $peny->created_by = Auth::id();
                 $peny->status = '1';
+                if(collect($request->logo)->contains($key)){
+                    $peny->is_tampil = '1';
+                } else {
+                    $peny->is_tampil = '0';
+                }
                 $peny->save();
             }
 
@@ -197,6 +214,11 @@ class SeminarController extends Controller
                 $pend->id_instansi = $key;
                 $pend->created_by = Auth::id();
                 $pend->status = '2';
+                if(collect($request->logo)->contains($key)){
+                    $pend->is_tampil = '1';
+                } else {
+                    $pend->is_tampil = '0';
+                }
                 $pend->save();
             }
 
