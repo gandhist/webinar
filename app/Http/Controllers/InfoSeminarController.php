@@ -57,12 +57,15 @@ class InfoSeminarController extends Controller
         //     $params = array(
         //         'transaction_details' => array(
         //             'order_id' => $data->id.$peserta->id.$peserta->user_id.time(),
-        //             'gross_amount' => $data->biaya,
+        //             'gross_amount' => 10000,
         //         )
         //     );
         //     $snapToken = \Midtrans\Snap::getSnapToken($params);
         //     $clientKey = config('services.midtrans.clientKey');
         // }
+            $snapToken = "";
+            $clientKey = "";
+
         if(!Auth::user()){
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
