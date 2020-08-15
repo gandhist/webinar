@@ -57,7 +57,9 @@ class SeminarController extends Controller
     }
 
     public function store(Request $request) {
-        // dd(collect($request->logo)->contains(65));
+        $request->validate([
+            'nama_seminar' => 'required|max:2']);
+        dd($request);
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
