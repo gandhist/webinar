@@ -53,7 +53,8 @@ class ProfileController extends Controller
             $resize_image->resize(354, 472)->save($destinationPathTemp.$file);
             $temp = $destinationPathTemp.$file;
             rename($temp, $destinationFile);
-            $data['foto'] = $destinationPath."/".$file;
+            // $data['foto'] = $destinationPath."/".$file;
+            $data['foto'] = $dir_name."/".$file;
         }
         if ($files = $request->file('ktp')) {
             $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
