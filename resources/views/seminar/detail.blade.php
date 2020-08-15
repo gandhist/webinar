@@ -132,6 +132,36 @@
 
                 </div>
 
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('lokasi_penyelenggara') ? 'has-error' : '' }} ">
+                            <label for="lokasi_penyelenggara" class="label-control required">Lokasi Penyelenggara</label>
+                                <input type="text" readonly class="form-control"
+                                value="{{isset($seminar->lokasi_penyelenggara) ? $seminar->lokasi_penyelenggara : ''}}">
+                            <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
+                                {{ $errors->first('lokasi_penyelenggara') }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group {{ $errors->first('is_online') ? 'has-error' : '' }} ">
+                        <label for="is_online" class="label-control required">Jenis Acara</label>
+                            <input type="text" readonly class="form-control"
+                            value="@if(isset($seminar->is_online)){{$seminar->is_online == '0' ? 'Offline' : 'Online (Webinar)'}}
+                                @else{{''}}
+                                @endif
+                            ">
+                        <div id="is_online" class="invalid-feedback text-danger">
+                            {{ $errors->first('is_online') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }} ">

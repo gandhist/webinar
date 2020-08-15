@@ -338,6 +338,11 @@ class SeminarController extends Controller
                 $peny->id_instansi = $key;
                 $peny->created_by = Auth::id();
                 $peny->status = '1';
+                if(collect($request->logo)->contains($key)){
+                    $peny->is_tampil = '1';
+                } else {
+                    $peny->is_tampil = '0';
+                }
                 $peny->save();
             }
 
@@ -348,6 +353,11 @@ class SeminarController extends Controller
                 $pend->id_instansi = $key;
                 $pend->created_by = Auth::id();
                 $pend->status = '2';
+                if(collect($request->logo)->contains($key)){
+                    $pend->is_tampil = '1';
+                } else {
+                    $pend->is_tampil = '0';
+                }
                 $pend->save();
             }
 
