@@ -44,24 +44,27 @@ class InfoSeminarController extends Controller
         $peserta = Peserta::where('user_id',Auth::user()->id)->first();
         $bank = BankModel::all();
 
-        if(isset($peserta)){
-            //Set Your server key
-            \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
+        // if(isset($peserta)){
+        //     //Set Your server key
+        //     \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
 
-            // Uncomment for production environment
-            // \Midtrans\Config::$isProduction = true;
+        //     // Uncomment for production environment
+        //     // \Midtrans\Config::$isProduction = true;
 
-            \Midtrans\Config::$isSanitized = true;
-            \Midtrans\Config::$is3ds = true;
-            $params = array(
-                'transaction_details' => array(
-                    'order_id' => $data->id.$peserta->id.$peserta->user_id.time(),
-                    'gross_amount' => 10000,
-                )
-            );
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
-            $clientKey = config('services.midtrans.clientKey');
-        }
+        //     \Midtrans\Config::$isSanitized = true;
+        //     \Midtrans\Config::$is3ds = true;
+        //     $params = array(
+        //         'transaction_details' => array(
+        //             'order_id' => $data->id.$peserta->id.$peserta->user_id.time(),
+        //             'gross_amount' => 10000,
+        //         )
+        //     );
+        //     $snapToken = \Midtrans\Snap::getSnapToken($params);
+        //     $clientKey = config('services.midtrans.clientKey');
+        // }
+            $snapToken = "";
+            $clientKey = "";
+
         if(!Auth::user()){
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');

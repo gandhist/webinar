@@ -821,12 +821,12 @@
         $('#instansi_penyelenggara').select2({
             placeholder: " Pilih Instansi Penyelenggara",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Penyelenggara
         $('#instansi_pendukung').select2({
             placeholder: " Pilih Instansi Pendukung",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#ttd1').select2({
             placeholder: " Pilih Penandatangan",
@@ -840,12 +840,12 @@
         $('#narasumber').select2({
             placeholder: " Pilih Narasumber",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#moderator').select2({
             placeholder: " Pilih Moderator",
             allowClear: true,
-            maximumSelectionLength: 2,
+            // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
         $('#logo').select2({
             placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
@@ -902,7 +902,7 @@
             $('#instansi_pendukung').select2({
                 placeholder: " Pilih Instansi Pendukung",
                 allowClear: true,
-                maximumSelectionLength: 2,
+                // maximumSelectionLength: 2,
             });
         })
 
