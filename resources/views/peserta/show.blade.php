@@ -178,7 +178,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-	        	<img class="img-responsive" src="{{ isset($peserta[0]['foto']) ? url($peserta[0]['foto']) : '/'}}" alt="Foto">
+	        	<img class="img-responsive" src="{{ isset($peserta[0]['foto']) ? url('uploads/peserta/'.$peserta[0]['foto']) : '/'}}" alt="Foto">
 	        </center>
 	      </div>
 	      <div class="modal-footer">
