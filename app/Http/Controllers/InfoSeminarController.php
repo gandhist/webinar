@@ -44,6 +44,7 @@ class InfoSeminarController extends Controller
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $bank = BankModel::all();
         
+        // dd($cek);
 
         // if(isset($peserta)){
         //     //Set Your server key
@@ -70,11 +71,11 @@ class InfoSeminarController extends Controller
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
         } 
-        // elseif(!isset($peserta)) {
-        //     return redirect('/')->with('success', 'Anda tidak terdaftar sebagai peserta');
-        // }
+        elseif(!isset($peserta)) {
+            return redirect('/')->with('success', 'Anda tidak terdaftar sebagai peserta');
+        }
         else{
-            return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta'));
+            return view('infoseminar.daftar',['user' => $request->user()])->with(compact('data','bank','peserta','snapToken','clientKey'));
         }
     }
 
@@ -87,6 +88,8 @@ class InfoSeminarController extends Controller
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         $counter = SeminarModel::where('status','published')->get();
+        $cek = PesertaSeminar::where('id_peserta',$peserta['id'])->where('id_seminar', $id)->count();
+
         $data = new PesertaSeminar;
         if($is_free['is_free'] == '0'){
             $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
@@ -135,22 +138,30 @@ class InfoSeminarController extends Controller
             $data->bukti_bayar = $destinationPath."/".$file;
         }
 
-        $data = $data->save();
+        $data->created_by = Auth::id();
+        $data->created_at = Carbon::now()->toDateTimeString();
 
-        if($is_free['is_free'] == '0'){
-            // pengurangan kuota
-            // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
-            $kuota = Seminar::find($id);
-            $kuota->kuota_temp = $kuota->kuota_temp - 1;
-            $kuota->update();
+        // validasi jika sudah pernah terdaftar
+        if($cek > 0){
+            return redirect('infoseminar')->with('warning', 'Anda Sudah Mendaftar Seminar ini');
+        } else{
+            $data = $data->save();
 
-            // get nilai_skpk dari lalu di total
-            $total_nilai = Peserta::find($peserta['id']);
-            $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
-            $total_nilai->update();
+            if($is_free['is_free'] == '0'){
+                // pengurangan kuota
+                // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
+                $kuota = Seminar::find($id);
+                $kuota->kuota_temp = $kuota->kuota_temp - 1;
+                $kuota->update();
+
+                // get nilai_skpk dari lalu di total
+                $total_nilai = Peserta::find($peserta['id']);
+                $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
+                $total_nilai->update();
             
+            }
+ 
+            return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
         }
-        
-        return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
     }
 }
