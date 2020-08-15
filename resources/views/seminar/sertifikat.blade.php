@@ -73,12 +73,15 @@
                         <td colspan="19" style="text-align: center;padding:10px 0">
                             
                             @foreach ($instansi as $index => $key)
-                                @if ($index == 1)
-                                    <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
-                                @elseif ($index == 6) 
-                                <br><img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px; margin-top:10px">
+                                @if($key->is_tampil == 1)
+                                    @if ($index == 1)
+                                        <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
+                                    @elseif ($index == 6) 
+                                    <br><img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px; margin-top:10px">
+                                    @else
+                                        <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
+                                    @endif
                                 @else
-                                    <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
                                 @endif
                             {{-- <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px"> --}}
                             @endforeach
