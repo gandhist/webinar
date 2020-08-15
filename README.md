@@ -28,3 +28,17 @@
         
 
 
+NOTE
+    .env buat midtrans
+
+        MIDTRANS_CLIENTKEY='SB-Mid-client-5gCnj0pfWsUX6sDH'
+        MIDTRANS_SERVERKEY='SB-Mid-server-shaJKNWpA0EGWMwex5Veag8s'
+        MIDTRANS_IS_PRODUCTION= false
+        MIDTRANS_IS_SANITIZED= true
+        MIDTRANS_IS3DS= true
+        
+    kalau masih error, coba:
+        -composer install
+        -php artisan config:cache
+        
+        -restart serve
