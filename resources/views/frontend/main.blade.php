@@ -31,39 +31,42 @@
         }
 
         @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
+            /* Force table to not be like tables anymore */
+            table, thead, tbody, th, td, tr { 
+                display: block; 
+            }
+            /* Hide table headers (but not display: none;, for accessibility) */
+            thead tr { 
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr { 
+                border: 1px solid #ccc; 
+            }
+            td { 
+                /* Behave  like a "row" */
+                border: none;
+                border-bottom: 1px solid #eee; 
+                position: relative;
+            }  
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            input[type=file] {
+                width: 100%;
+                padding: 12px 70px;
+                margin: 8px 0;
+                box-sizing: border-box;
+            }
 
-        /* Force table to not be like tables anymore */
-        table, thead, tbody, th, td, tr { 
-            display: block; 
+            table.dataTable>tbody>tr.child {
+                padding: 0px 0px;
+            }
         }
-        /* Hide table headers (but not display: none;, for accessibility) */
-        thead tr { 
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-        }
-        tr { 
-            border: 1px solid #ccc; 
-        }
-        td { 
-            /* Behave  like a "row" */
-            border: none;
-            border-bottom: 1px solid #eee; 
-            position: relative;
-        }  
-        img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        input[type=file] {
-            width: 100%;
-            padding: 12px 70px;
-            margin: 8px 0;
-            box-sizing: border-box;
-        }
-    }
-    </style>
+      </style>
 </head>
 
 <body>
@@ -128,10 +131,16 @@
                                 <a class="nav-link" href="{{ route('profile.edit') }}">User Profile</a>
                             </li>
                             <li class="nav-item active">
-                                <form method="post" action="{{ url('logout') }}" style="display: inline">
+                                <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
+                                    Sign Out
+                                </a>
+                                <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                                {{-- <form method="post" action="{{ url('logout') }}" style="display: inline">
                                     {{ csrf_field() }}
                                     <button class="btn btn-primary" type="submit">Sign Out</button>
-                                  </form>
+                                  </form> --}}
                             </li>
                         </ul>
                     </div>
@@ -158,6 +167,33 @@
         </div>
               
     </div>
+
+    <!-- Footer Section Start -->
+    <footer>
+        <!-- Footer Area Start -->
+        <section class="footer-Content">
+        {{-- <div class="container">
+        
+        </div> --}}
+        <!-- Copyright Start  -->
+        <div class="copyright">
+            <div class="container">
+                <div class="row" align="center">
+                    <div class="col-md-12">
+                        <div class="site-info">
+                            &copy; {{ \Carbon\Carbon::now()->isoFormat('YYYY') }} - All Rights Reserved
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+        </section>
+        <!-- Footer area End -->
+        
+    </footer>
+     <!-- Footer Section End --> 
+
 
     <!-- jQuery CDN - Slim version (=without AJAX) -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

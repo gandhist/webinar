@@ -24,7 +24,7 @@
                 @csrf
                 <div class="box-body">
                     <div class="row">
-                        <div class="col-sm-3 custom">
+                        <div class="col-sm-3">
                             <img style="width:70%;" src="{{ asset($user->peserta->foto) }}">
                             <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"
                                 {{ $errors->first('foto') ? 'is-invalid' : '' }} style="
@@ -33,44 +33,44 @@
                         <div class="col-sm-6">
                             <table>
                                 <tr>
-                                    <th style="width:20%;text-align:left">Nama</th>
+                                    <th style="width:10%;text-align:left">Nama</th>
                                     {{-- <td>:</td> --}}
                                     <td><input name="nama" id="nama" type="text" class="form-control"
                                             value="{{ old('nama', $user->peserta->nama) }}"></td>
                                 </tr>
                                 <tr>
-                                    <th style="width:20%;text-align:left">Email</th>
+                                    <th style="width:10%;text-align:left">Email</th>
                                     {{-- <td>:</td> --}}
                                     <td><input name="email" id="email" type="text" class="form-control"
                                             value="{{old('email', $user->peserta->email)}}"></td>
                                 </tr>
                                 <tr>
-                                    <th style="width:20%;text-align:left">No_HP</th>
+                                    <th style="width:10%;text-align:left">No_HP</th>
                                     {{-- <td>:</td> --}}
                                     <td><input name="no_hp" id="no_hp" type="text" class="form-control"
                                             value="{{old('no_hp', $user->peserta->no_hp)}}"></td>
                                 </tr>
                                 <tr>
-                                    <th style="width:20%;text-align:left">Pekerjaan</th>
+                                    <th style="width:10%;text-align:left">Pekerjaan</th>
                                     {{-- <td>:</td> --}}
                                     <td><input name="pekerjaan" id="pekerjaan" type="text" class="form-control"
                                             value="{{old('pekerjaan', $user->peserta->pekerjaan)}}"></td>
                                 </tr>
                                 <tr>
-                                    <th style="width:20%;text-align:left">Instansi</th>
+                                    <th style="width:10%;text-align:left">Instansi</th>
                                     {{-- <td>:</td> --}}
                                     <td><input name="instansi" id="instansi" type="text" class="form-control"
                                             value="{{old('instansi', $user->peserta->instansi)}}"></td>
                                 </tr>
                                 <tr>
-                                    <th style="width:20%;text-align:left">No Regist SKA</th>
+                                    <th style="width:40%;text-align:left">No Regist SKA</th>
                                     {{-- <td>:</td> --}}
                                     <td><input name="nrska" id="nrska" type="text" class="form-control"
                                             value="{{old('nrska', $user->peserta->nrska)}}"></td>
                                 </tr>
                                 
                                 <tr>
-                                    <th style="width:24%;text-align:left">Total Nilai SKPI Pertahun</th>
+                                    <th style="width:40%;text-align:left">Total Nilai SKPI Pertahun</th>
                                     {{-- <td>:</td> --}}
                                     <td>
                                         <input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control"
@@ -78,7 +78,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th style="width:20%;text-align:left">File KTP</th>
+                                    <th style="width:30%;text-align:left">File KTP</th>
                                     {{-- <td>:</td> --}}
                                     <td>
                                         @if (isset($user->peserta->ktp))
@@ -99,17 +99,21 @@
                             <div class="col-sm-2">
                                 <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"  {{ $errors->first('foto') ? 'is-invalid' : '' }}
                     >
+                         </div>
+                    </div> --}}
                 </div>
-        </div> --}}
+                <br>
+                <div class="box-footer">
+                    <a href="{{ url('changepassword') }}" class="btn btn-md btn-warning pull-left"><i class="fa fa-edit"></i>
+                        Ubah_Password</a>
+                    <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-right"><i class="fa fa-times-circle"></i>
+                        Batal</a>
+                    <button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
+                </div>
+            </form>
+        </div> 
     </div>
-    <div class="box-footer">
-        {{-- <a href="{{ url('#') }}" class="btn btn-primary pull-left"> Detail</a> --}}
-        <a href="{{ url('changepassword') }}" class="btn btn-md btn-warning pull-left"><i class="fa fa-edit"></i>
-            Ubah_Password</a>
-        <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-right"><i class="fa fa-times-circle"></i>
-            Batal</a>
-        <button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
-    </div>
+    
     <br>
     <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
@@ -130,12 +134,12 @@
                 @foreach($detailseminar as $key)
                 <tr>
                     <td style="text-align:center;">{{$loop->iteration}}</td>
-                    <td>
+                    <td style="text-align:center;">
                         <a href="{{ url('detail_seminar', $key->seminar_p->id) }}" data-toggle="tooltip"
                             data-placement="bottom" title="Lihat Detail">
                             {{$key->seminar_p->nama_seminar}}</a>
                     </td>
-                    <td>
+                    <td style="text-align:center;">
                         {{strip_tags(html_entity_decode($key->seminar_p->tema))}}
                     </td>
                     <td style="text-align:center;">
@@ -157,12 +161,12 @@
     </div>
 
     
-    </form>
 
-    <div>
-    </div>
+
     <!-- /.box-body -->
-    <div class="box-footer"></div>
+    <div class="box-footer">
+
+    </div>
 </div>
 
 <!-- Modal -->
