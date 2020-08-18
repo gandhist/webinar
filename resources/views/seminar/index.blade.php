@@ -148,7 +148,7 @@
           </center>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-success"><a href="" class="download-link" download="">Download</a></button>
+            <button type="button" class="btn btn-success" id="qrBtn"><a href="" class="download-link" download="">Download</a></button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
       </div>
@@ -200,7 +200,11 @@
         let link = $(e.relatedTarget).data('link');
         let filename = $(e.relatedTarget).data('filename');
         $(e.currentTarget).find('img').attr('src',link);
-        $(e.currentTarget).find('.download-link').attr('href',link).attr('download',filename);
+        if(link === '') {
+            $(e.currentTarget).find('#qrBtn').hide();
+        } else {
+            $(e.currentTarget).find('.download-link').attr('href',link).attr('download',filename);
+        }
     });
 
     // Cache Warna Filter
