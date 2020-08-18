@@ -3,12 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubKlasifikasiModel extends Model
 {
     //
-    use SoftDeletes;
+    // use SoftDeletes;
     protected $table = "ms_sub_bidang_keahlian_kbli";
 
 

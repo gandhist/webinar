@@ -49,7 +49,7 @@ class SeminarController extends Controller
         $personal = Personal::where('is_activated','1')->get();
         $pers = Personal::where('is_activated','1')->pluck('nama','id');
         $klasifikasi = KlasifikasiModel::all();
-        $sub_klasifikasi = SubKlasifikasiModel::all();
+        $sub_klasifikasi = SubKlasifikasiModel::where('aktif','1')->get();
         $tuk = TUKModel::all();
 
         return view('seminar.create')->with(compact('inisiator','provinsi','kota',
@@ -527,11 +527,13 @@ class SeminarController extends Controller
             $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',null)->get();
             // dd($narasumber);
 
+            $tuk = TUKModel::all();
+
             $klasifikasi = KlasifikasiModel::all();
-            $sub_klasifikasi = SubKlasifikasiModel::all();
+            $sub_klasifikasi = SubKlasifikasiModel::where('aktif','1')->get();
             // dd($logo);
             return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal',
-                'inisiator','pendukungArr','pimpinanArr','penyelenggara','pendukung', 'logo',
+                'inisiator','pendukungArr','pimpinanArr','penyelenggara','pendukung', 'logo', 'tuk',
                 'ttd','provinsi','kota','narasumber','moderator','klasifikasi','sub_klasifikasi'));
         } else {
 
@@ -557,7 +559,7 @@ class SeminarController extends Controller
 
 
             $klasifikasi = KlasifikasiModel::all();
-            $sub_klasifikasi = SubKlasifikasiModel::all();
+            $sub_klasifikasi = SubKlasifikasiModel::where('aktif','1')->get();
 
         return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal',
         'inisiator','pendukungArr','pimpinanArr','klasifikasi','sub_klasifikasi',
@@ -571,8 +573,8 @@ class SeminarController extends Controller
             'klasifikasi' => 'required',
             'sub_klasifikasi' => 'required',
             'tema' => 'required|min:5|max:200',
-            'kuota' => 'required|numeric|min:5',
-            'skpk_nilai' => 'required|numeric|min:0|max:25',
+            // 'kuota' => 'required|numeric|min:5',
+            // 'skpk_nilai' => 'required|numeric|min:0|max:25',
             //'is_free' => 'required',
             'biaya' => 'required_if:is_free,==,1',
             'inisiator' => 'required',
@@ -590,6 +592,9 @@ class SeminarController extends Controller
             'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
             'moderator' => 'required',//|min:3|max:50'
+            'logo' => 'required',
+            'tuk' => 'required',
+            'link' => 'nullable|url'
         ],[
             'nama_seminar.required' => 'Mohon isi Nama Seminar',
             'nama_seminar.min' => 'Nama Seminar minimal 3 karakter',
@@ -634,6 +639,9 @@ class SeminarController extends Controller
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
             'moderator.max' => 'Moderator maksimal 50 karakter',
+            'logo.required' => 'Mohon pilih logo yang akan ditampilkan pada sertifikat',
+            'tuk.required' => 'Mohon isi Tempat Uji Komptensi',
+            'link.url' => 'Mohon isi URL dengan format yang valid (diawali http:// atau https://)'
 
         ]);
         // dd($request);
@@ -763,6 +771,12 @@ class SeminarController extends Controller
                 $penyBaru->id_instansi = $key;
                 $penyBaru->status = '1';
                 $penyBaru->created_by = Auth::id();
+
+                if(collect($request->logo)->contains($key)){
+                    $penyBaru->is_tampil = '1';
+                } else {
+                    $penyBaru->is_tampil = '0';
+                }
                 $penyBaru->save();
             }
         }
@@ -788,6 +802,12 @@ class SeminarController extends Controller
                 $pendBaru->id_instansi = $key;
                 $pendBaru->status = '2';
                 $pendBaru->created_by = Auth::id();
+
+                if(collect($request->logo)->contains($key)){
+                    $pendBaru->is_tampil = '1';
+                } else {
+                    $pendBaru->is_tampil = '0';
+                }
                 $pendBaru->save();
             }
         }
@@ -802,6 +822,7 @@ class SeminarController extends Controller
                 $pendHapus->save();
             }
         }
+
 
         // Cek apakah penandatangan ada yang tambah
         $ttdAwal = TtdModel::where('id_seminar',$id)->get();
@@ -834,15 +855,31 @@ class SeminarController extends Controller
         $ttd1->save();
         $ttd2->save();
 
+        // Cek Is tampil
+        $ins =  SertInstansiModel::where('id_seminar',$id)->get();
+        foreach($ins as $key){
+            if(collect($request->logo)->contains($key->id)){
+                $tampil = SertInstansiModel::find($key->id);
+                $tampil->is_tampil = '1';
+                $tampil->save();
+            } else {
+                $notTampil = SertInstansiModel::find($key->id);
+                $notTampil->is_tampil = '0';
+                $notTampil->save();
+            }
+        }
+        // end is tampil
 
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
         $data->klasifikasi               =              $request->klasifikasi            ;
         $data->sub_klasifikasi           =              $request->sub_klasifikasi        ;
         $data->tema                      =              $request->tema                   ;
-        $data->kuota_temp                =              $request->kuota                  ;
-        $data->kuota                     =              $request->kuota                  ;
-        $data->skpk_nilai                =              $request->skpk_nilai             ;
+        $data->url                       =              $request->link                   ;
+        $data->tuk                       =              $request->tuk                    ;
+        // $data->kuota_temp                =              $request->kuota                  ;
+        // $data->kuota                     =              $request->kuota                  ;
+        // $data->skpk_nilai                =              $request->skpk_nilai             ;
         //$data->is_free                   =              $request->is_free                ;
         //$data->biaya                     =              $request->biaya                  ;
         $data->inisiator                 =              $request->inisiator              ;
@@ -901,7 +938,7 @@ class SeminarController extends Controller
         $bu = BuModel::all()->pluck('nama_bu','id');
         $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->where('deleted_at',NULL)->get();
         $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
-        $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->get();
+        $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->orderBy('id','asc')->get();
 
         $nara = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
         $mode = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');

@@ -8,6 +8,7 @@
         content: " *";
     }
 </style>
+{{-- {{dd($klasifikasi)}} --}}
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -331,13 +332,22 @@
                         <div class="form-group {{ $errors->first('logo') ? 'has-error' : '' }}">
                             <label for="logo" class="label-control required">Logo pada Sertifikat</label>
                             <select name="logo[]" multiple="multiple" required class="form-control" id="logo">
-                                @if(old('instansi_penyelenggara') || old('instansi_pendukung'))
-                                    @foreach ($instansi as $key)
-                                        @if((collect(old('instansi_penyelenggara'))->contains($key->id)) || (collect(old('instansi_pendukung'))->contains($key->id)))
-                                            <option value="{{$key->id}}"
-                                                {{(collect(old('logo'))->contains($key->id)) ? 'selected' : ''}}
-                                            >{{$key->nama_bu}}</option>
-                                        @endif
+                                @if(old('logo'))
+                                    @if(old('instansi_penyelenggara') || old('instansi_pendukung'))
+                                        @foreach ($instansi as $key)
+                                            @if((collect(old('instansi_penyelenggara'))->contains($key->id)) || (collect(old('instansi_pendukung'))->contains($key->id)))
+                                                <option value="{{$key->id}}"
+                                                    {{(collect(old('logo'))->contains($key->id)) ? 'selected' : ''}}
+                                                >{{$key->nama_bu}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @elseif($pendukung || $penyelenggara)
+                                    @foreach ($logo as $key)
+                                        <option value="{{$key->id}}"
+                                            {{$key->is_tampil == '1' ? 'selected' : ''}}
+                                        >
+                                        {{$pendukungArr[$key->id_instansi]}}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -373,9 +383,9 @@
                         <div class="form-group {{ $errors->first('link') ? 'has-error' : '' }} ">
                             <label for="link" class="label-control required">Link</label>
                             <input type="text" class="form-control" name="link" id="link"
-                                value="{{ old('is_online') == '1' ? old('link') : ($seminar->is_online == '1' ? $seminar->url : '') }}"
+                                value="{{ $seminar->is_online == '1' ? (old('link') ? old('link') : $seminar->url ) : '' }}"
                                 placeholder="Hanya untuk Webinar"
-                                {{ $seminar->is_online == "0" ? 'disabled' : '' }}
+                                {{ $seminar->is_online == "1" ? '' : 'disabled' }}
                                 >
                             <div id="link" class="invalid-feedback text-danger">
                                 {{ $errors->first('link') }}
@@ -454,6 +464,45 @@
                             <label for="tuk" class="label-control required">Tempat Uji Kompetensi (TUK)</label>
                             <select name="tuk" id="tuk"
                             class="form-control" required>
+                            @if(old('tuk'))
+                                @if($seminar->is_online == '1')
+                                    @foreach($tuk as $key)
+                                        @if($key->is_online == '1')
+                                            <option value="{{$key->id}}" {{old('tuk') == $key->id ? 'selected' : ''}}>
+                                                {{$key->nama_tuk}}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @elseif($seminar->is_online == '0' && old('kota_penyelenggara'))
+                                    @foreach($tuk as $key)
+                                        @if($key->kota == old('kota_penyelenggara'))
+                                            <option value="{{$key->id}}" {{old('tuk') == $key->id ? 'selected' : ''}}>
+                                                {{$key->nama_tuk}}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @elseif($seminar->is_online == '1')
+                                <option value="" {{isset($seminar->tuk) ? '' : 'selected'}} hidden>Pilih Tempat Uji Kompetensi</option>
+                                @foreach ($tuk as $key)
+                                    @if ($key->is_online == '1')
+                                        <option value="{{$key->id}}"
+                                            {{($seminar->tuk ==$key->id) ? 'selected' : ''}}
+                                        >
+                                        {{$key->nama_tuk}}</option>
+                                    @endif
+                                @endforeach
+                            @else
+                                <option value="" {{isset($seminar->tuk) ? '' : 'selected'}} hidden>Pilih Tempat Uji Kompetensi</option>
+                                @foreach ($tuk as $key)
+                                    @if ($key->kota == $seminar->kota_penyelenggara)
+                                        <option value="{{$key->id}}"
+                                            {{($seminar->tuk ==$key->id) ? 'selected' : ''}}
+                                        >
+                                        {{$key->nama_tuk}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
                             </select>
 
                             <div id="tuk" class="invalid-feedback text-danger">
@@ -648,7 +697,7 @@
 
                     {{-- Jam Awal --}}
                     <div class="col-md-3">
-                        <div class="form-group input-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
+                        <div class="form-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
@@ -738,6 +787,95 @@
         }); // Select2
 
 
+        // onchange kota
+        $('#kota_penyelenggara').on('select2:select', function() {
+            is_online = {{$seminar->is_online}};
+
+            if(is_online == '0') {
+
+                kota = $('#kota_penyelenggara').select2('data').map(function(elem){
+                    return elem.id
+                });
+
+                tuk = @json($tuk);
+
+                $('#tuk').empty();
+
+                $('#tuk').append(new Option('Pilih Tempat Uji Kompetensi', '')).attr('selected',true);
+
+                tuk.forEach(function(key) {
+
+                    if( key.is_online == '0' ){
+                        if( kota.includes(key.kota.toString()) ){
+                            //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                            $('#tuk').append(new Option(key.nama_tuk, key.id));
+                        }
+                    }
+                });
+            }
+        });
+        // end onchange kota
+
+        // onchange tuk
+        $('#tuk').on('select2:select', function() {
+
+            tukval = $('#tuk').val();
+
+            tuk = @json($tuk);
+
+            $('#lokasi_penyelenggara').val('');
+
+            tuk.forEach(function(key) {
+                if(tukval == key.id) {
+
+                    // console.log(key);
+                    if( key.is_online == '0' ){
+                        $('#lokasi_penyelenggara').val(key.alamat);
+                    }
+
+                    if( key.is_online == '1' ){
+                        $('#lokasi_penyelenggara').val(key.nama_tuk);
+                    }
+
+                }
+
+            });
+
+            $('#alamat').select2();
+        });
+        // end tuk
+
+
+        // to logo
+        $('.to-logo').on('select2:select', function() {
+            instansi = @json($instansi);
+            // console.log(instansi);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(peny);
+            // console.log(pend);
+
+            $('#logo').empty();
+
+            instansi.forEach(function(key) {
+
+                if(peny.includes((key.id).toString()) || pend.includes((key.id).toString())){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#logo').append(new Option(key.nama_bu, key.id));
+
+                }
+            });
+
+            $('#logo').select2({
+                placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
+            });
+        });
+        // end to logo
 
         $("#biaya").each(function(){
             //this.value=$(this).val().trim();
