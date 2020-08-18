@@ -117,8 +117,8 @@
     <br>
     <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
-
-        <table id="data-seminar" class="table table-bordered table-hover dataTable" role="grid">
+        <br>
+        <table id="example" class="table table-bordered table-hover dataTable" role="grid">
             <thead>
                 <tr role="row">
                     <th style="width:2%;text-align:center;">No</th>
@@ -205,7 +205,9 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
-<script>
-
+<script type="text/javascript" >
+$(document).ready(function() {
+		$('#example').DataTable();
+} );
 </script>
 @endpush
