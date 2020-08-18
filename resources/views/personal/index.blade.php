@@ -101,7 +101,7 @@
                                     </td>
                                     <td class="text-center">
                                         {{-- <a href="{{ url(urlencode($personal->lampiran_foto))}}">Lihat</a> --}}
-                                        <a data-toggle="modal" data-target="#myModal">
+                                        <a data-toggle="modal" data-target="#myModal" data-link="{{isset($personal->lampiran_foto) ? url($personal->lampiran_foto) : '' }}">
                                             Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -126,8 +126,7 @@
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{isset($personal->lampiran_foto) ? url($personal->lampiran_foto) : ''}}" alt="Brosur Seminar"
-                          class="img-thumbnail center" style="width:50%">
+            <img alt="Brosur Seminar" class="img-thumbnail center" style="width:50%">
           </center>
         </div>
         <div class="modal-footer">
@@ -195,6 +194,11 @@
             } else {
                 $('#modal-konfirmasi').modal('show');
             }
+    });
+
+    $('#myModal').on('show.bs.modal', function(e) {
+        let link = $(e.relatedTarget).data('link');
+        $(e.currentTarget).find('img').attr('src',link);
     });
 
     // Button edit click

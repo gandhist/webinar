@@ -9,6 +9,7 @@
     .btn-bermargin {
         margin-left: 5px;
     }
+    a { color: inherit; }
 </style>
 <section class="content-header">
     <h1>
@@ -114,7 +115,9 @@
                                             </button>
                                         @else
                                             <button type="submit" class="btn btn-info">
-                                                QR Code
+                                                <a data-toggle="modal" data-target="#myModal"  data-link="{{isset($key->qr_code) ? url($key->qr_code) : '' }}">
+                                                    QR Code
+                                                </a>
                                             </button>
                                         @endif
                                         {{-- <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a> --}}
@@ -128,6 +131,28 @@
         </div>
     </div>
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">QR Code Seminar</h4>
+        </div>
+        <div class="modal-body">
+            <center>
+            <img alt="QR Code Seminar" class="img-thumbnail center" style="width:50%">
+          </center>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success"><a href="" class="download-link" download="">Download</a></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
 
 {{-- modal konfirmasi hapus --}}
 <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -170,6 +195,11 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
 
+    $('#myModal').on('show.bs.modal', function(e) {
+        let link = $(e.relatedTarget).data('link');
+        $(e.currentTarget).find('img').attr('src',link);
+        $(e.currentTarget).find('.download-link').attr('href',link).attr('download',link);
+    });
 
     // Cache Warna Filter
     if ("{{request()->get('tgl_awal')}}" != "") {
