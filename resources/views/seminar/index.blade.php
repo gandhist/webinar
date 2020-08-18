@@ -195,7 +195,6 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
-
     $('#myModal').on('show.bs.modal', function(e) {
         let link = $(e.relatedTarget).data('link');
         let filename = $(e.relatedTarget).data('filename');
