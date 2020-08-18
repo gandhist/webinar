@@ -57,9 +57,9 @@ class SeminarController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'nama_seminar' => 'required|max:2']);
-        dd($request);
+        // $request->validate([
+        //     'nama_seminar' => 'required|max:2']);
+        // dd($request);
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
@@ -169,7 +169,7 @@ class SeminarController extends Controller
 
 
         $data->is_online                 =              $request->is_online              ;
-        $data->link                      =              $request->link                   ;
+        $data->url                      =              $request->link                   ;
         $data->tuk                       =              $request->tuk                    ;
 
         $data->save();
@@ -516,6 +516,7 @@ class SeminarController extends Controller
             //
             $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
             $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
+            $logo = SertInstansiModel::where('id_seminar',$id)->get();
             $ttd = TtdModel::where('id_seminar',$id)->get();
             $provinsi = ProvinsiModel::all();
             $kota = KotaModel::all();
@@ -528,9 +529,9 @@ class SeminarController extends Controller
 
             $klasifikasi = KlasifikasiModel::all();
             $sub_klasifikasi = SubKlasifikasiModel::all();
-
+            // dd($logo);
             return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal',
-                'inisiator','pendukungArr','pimpinanArr','penyelenggara','pendukung',
+                'inisiator','pendukungArr','pimpinanArr','penyelenggara','pendukung', 'logo',
                 'ttd','provinsi','kota','narasumber','moderator','klasifikasi','sub_klasifikasi'));
         } else {
 
