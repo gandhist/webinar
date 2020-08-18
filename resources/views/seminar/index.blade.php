@@ -30,7 +30,7 @@
                     <div class="col-12">
                         <div class="btn-group">
                             <span class="form-group">
-                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">                            
+                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">
 
                                 <span style="margin: 10px;"> s/d </span>
 
@@ -113,7 +113,9 @@
                                                 </a>
                                             </button>
                                         @else
-                                            {{" "}}
+                                            <button type="submit" class="btn btn-info">
+                                                QR Code
+                                            </button>
                                         @endif
                                         {{-- <a target="_blank" href="{{ url('seminar/detail', $key->id) }}"> Lihat Peserta</a> --}}
                                     </td>
@@ -180,7 +182,7 @@
     // Rubah Warna Filter
     inputFilter("tgl_awal");
     inputFilter("tgl_akhir");
-        
+
     // Fungsi Rubah warna filter
     function inputFilter(name) {
         $('#' + name).on('change', function () {
