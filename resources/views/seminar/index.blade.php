@@ -115,7 +115,8 @@
                                             </button>
                                         @else
                                             <button type="submit" class="btn btn-info">
-                                                <a data-toggle="modal" data-target="#myModal"  data-link="{{isset($key->qr_code) ? url($key->qr_code) : '' }}">
+                                                <a data-toggle="modal" data-target="#myModal"  data-link="{{isset($key->qr_code) ? url($key->qr_code) : '' }}"
+                                                data-filename="{{'QR_Code-'.$key->id.'-'.$key->nama_seminar}}">
                                                     QR Code
                                                 </a>
                                             </button>
@@ -197,8 +198,9 @@
 
     $('#myModal').on('show.bs.modal', function(e) {
         let link = $(e.relatedTarget).data('link');
+        let filename = $(e.relatedTarget).data('filename');
         $(e.currentTarget).find('img').attr('src',link);
-        $(e.currentTarget).find('.download-link').attr('href',link).attr('download',link);
+        $(e.currentTarget).find('.download-link').attr('href',link).attr('download',filename);
     });
 
     // Cache Warna Filter
