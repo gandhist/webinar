@@ -18,6 +18,8 @@
         3. narasumber
         4. moderator
         kesan dan pesan untuk semua
+        
+        tambah field/column 'url' di srtf_seminar (varchar)
 
         *nanda
         profile peserta 
