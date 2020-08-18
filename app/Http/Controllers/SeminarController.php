@@ -134,7 +134,7 @@ class SeminarController extends Controller
             'ttd2.required' => 'Mohon isi Penandatangan',
             // 'moderator.min' => 'Moderator minimal 3 karakter',
             // 'moderator.max' => 'Moderator maksimal 50 karakter',
-            'logo.required' => 'Mohon pilih logop yang akan ditampilkan pada sertifikat',
+            'logo.required' => 'Mohon pilih logo yang akan ditampilkan pada sertifikat',
             'is_online.required' => 'Mohon pilih jenis acara',
             'link.required_if' => 'Untuk seminar online (webinar), mohon isi link seminar',
             'tuk' => 'Mohon isi Tempat Uji Komptensi'
@@ -545,6 +545,7 @@ class SeminarController extends Controller
             $pimpinanArr = BuModel::pluck('nama_pimp','id');
 
             //
+            $logo = SertInstansiModel::where('id_seminar',$id)->get();
             $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
             $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
             $ttd = TtdModel::where('id_seminar',$id)->get();
@@ -557,12 +558,13 @@ class SeminarController extends Controller
             $narasumber = Peserta::whereIn('id',$nara)->where('deleted_at',NULL)->get();
             $moderator = Peserta::whereIn('id',$mode)->where('deleted_at',NULL)->get();
 
+            $tuk = TUKModel::all();
 
             $klasifikasi = KlasifikasiModel::all();
             $sub_klasifikasi = SubKlasifikasiModel::where('aktif','1')->get();
 
         return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal',
-        'inisiator','pendukungArr','pimpinanArr','klasifikasi','sub_klasifikasi',
+        'inisiator','pendukungArr','pimpinanArr','klasifikasi','sub_klasifikasi', 'tuk', 'logo',
         'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
         }
     }
@@ -984,6 +986,10 @@ class SeminarController extends Controller
             'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
             'moderator' => 'required',//|min:3|max:50'
+            'is_online' => 'required',
+            'logo' => 'required',
+            'tuk' => 'required',
+            'link' => 'nullable|url'
         ],[
             'ttd1.required' => 'Mohon isi Penandatangan',
             'ttd2.required' => 'Mohon isi Penandatangan',
@@ -1028,6 +1034,10 @@ class SeminarController extends Controller
             'moderator.required' => 'Mohon isi Moderator',
             'moderator.min' => 'Moderator minimal 3 karakter',
             'moderator.max' => 'Moderator maksimal 50 karakter',
+            'logo.required' => 'Mohon pilih logo yang akan ditampilkan pada sertifikat',
+            'is_online.required' => 'Mohon pilih jenis acara',
+            'link.required_if' => 'Untuk seminar online (webinar), mohon isi link seminar',
+            'tuk' => 'Mohon isi Tempat Uji Komptensi'
 
         ]);
 
@@ -1094,6 +1104,12 @@ class SeminarController extends Controller
                 $penyBaru->id_instansi = $key;
                 $penyBaru->status = '1';
                 $penyBaru->created_by = Auth::id();
+
+                if(collect($request->logo)->contains($key)){
+                    $penyBaru->is_tampil = '1';
+                } else {
+                    $penyBaru->is_tampil = '0';
+                }
                 $penyBaru->save();
             }
         }
@@ -1119,6 +1135,12 @@ class SeminarController extends Controller
                 $pendBaru->id_instansi = $key;
                 $pendBaru->status = '2';
                 $pendBaru->created_by = Auth::id();
+
+                if(collect($request->logo)->contains($key)){
+                    $pendBaru->is_tampil = '1';
+                } else {
+                    $pendBaru->is_tampil = '0';
+                }
                 $pendBaru->save();
             }
         }
@@ -1166,6 +1188,23 @@ class SeminarController extends Controller
         $ttd1->save();
         $ttd2->save();
 
+
+        // Cek Is tampil
+        $ins =  SertInstansiModel::where('id_seminar',$id)->get();
+        foreach($ins as $key){
+            if(collect($request->logo)->contains($key->id)){
+                $tampil = SertInstansiModel::find($key->id);
+                $tampil->is_tampil = '1';
+                $tampil->save();
+            } else {
+                $notTampil = SertInstansiModel::find($key->id);
+                $notTampil->is_tampil = '0';
+                $notTampil->save();
+            }
+        }
+        // end is tampil
+
+
         $data = SeminarModel::find($id);
         $data->nama_seminar              =              $request->nama_seminar           ;
         $data->klasifikasi               =              $request->klasifikasi            ;
@@ -1186,6 +1225,11 @@ class SeminarController extends Controller
         $data->kota_penyelenggara        =              $request->kota_penyelenggara     ;
         $data->lokasi_penyelenggara      =              $request->lokasi_penyelenggara   ;
         // $data->ttd_pemangku              =              $request->ttd_pemangku           ;
+
+        $data->is_online                 =              $request->is_online              ;
+        $data->url                       =              $request->url                    ;
+        $data->tuk                       =              $request->tuk                    ;
+
 
 
 
