@@ -114,6 +114,7 @@ class LaporanController extends Controller
         $lp = new Laporan;
         $lp->id_bu = $bu->id;
         $lp->status = $request->status;
+        $lp->is_reseller = $request->reseller;
         // $lp->id_number = $request->id_number;
         $lp->iso_standard = $request->standard;
         $lp->visit_number = $request->visit_number;
@@ -176,6 +177,8 @@ class LaporanController extends Controller
         }
         $iso = new IsoModel;
         $iso->id_laporan = $lp->id;
+        $iso->status = $request->status;
+        $iso->is_reseller = $request->reseller;
         $iso->no_sert = $request->id_number;
         $iso->nama_bu = $request->nama_bu;
         $iso->alamat = $request->alamat;
@@ -240,7 +243,7 @@ class LaporanController extends Controller
             [
                 "nama_bu" => "required",
                 "alamat" => "required",
-                "id_number" => "required",
+                // "id_number" => "required",
                 "visit_number" => "required",
                 "tanggal" => "required",
                 "visit_type" => "required",
@@ -275,6 +278,7 @@ class LaporanController extends Controller
         
         // $lp->iso_standard = $request->standard;
         $lp->status = $request->status;
+        $lp->is_reseller = $request->reseller;
         $lp->visit_number = $request->visit_number;
         $lp->audit_date = $request->tanggal;
         $lp->visit_type = $request->visit_type;
@@ -364,6 +368,7 @@ class LaporanController extends Controller
         }
         $iso = IsoModel::where('id_laporan',$lp->id)->first();
         $iso->status = $request->status;
+        $iso->is_reseller = $request->reseller;
         $iso->id_laporan = $lp->id;
         $iso->no_sert = $request->id_number;
         $iso->nama_bu = $request->nama_bu;

@@ -13,6 +13,8 @@ use App\ProvinsiModel;
 use App\NegaraModel;
 use PDF;
 use App\Traits\GlobalFunction;
+use Illuminate\Support\Facades\Crypt;
+use Vinkla\Hashids\Facades\Hashids;
 
 
 class IsoController extends Controller
@@ -174,7 +176,8 @@ class IsoController extends Controller
 
     public function print($id){
         // generate qr first
-        $url4 = url("iso/print/$id");
+        $idc = Hashids::encode($id);
+        $url4 = url("iso/validity/$idc");
         $nama4 = "QR_".$id.".png";
         $qrcode4 = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url4, base_path("public/qr/".$nama4));
 
@@ -187,8 +190,10 @@ class IsoController extends Controller
 
     // print blanko
     public function print_blanko($id){
+        $id = Crypt::encrypt($id);
+        $idc = Hashids::encode($id);
         // generate qr first
-        $url4 = url("iso/print/$id");
+        $url4 = url("iso/validity/$idc");
         $nama4 = "QR_".$id.".png";
         $qrcode4 = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url4, base_path("public/qr/".$nama4));
 
@@ -200,7 +205,9 @@ class IsoController extends Controller
 
     // validity iso
     public function validity($id){
-        return 'test valid';
+        $idc = Hashids::decode($id);
+        $data = IsoModel::find($idc[0]);
+        return view('iso.validity')->with(compact('data'));
     }
 
     // generate iso number
@@ -213,6 +220,12 @@ class IsoController extends Controller
         $lp->id_number = $no_iso;
         $simpan = $lp->save();
         $iso = IsoModel::where('id_laporan',$lp->id)->first();
+        if(!$iso){
+            return response()->json([
+                'status' => false,
+                'message' => 'No Iso Tidak ada'
+            ], 200);
+        }
         $iso->no_sert = $no_iso;
         $iso->status = $lp->status;
         $iso->save();

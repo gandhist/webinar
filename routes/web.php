@@ -28,6 +28,7 @@ Route::get('detail_seminar/{id}','ProfileController@detail');
 
 Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
+Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 
 
 Route::get('sertifikat/cari','SertController@cari')->name('cari');
@@ -56,7 +57,7 @@ Route::namespace('Laporan')->group(function(){
 Route::namespace('Iso')->group(function(){
 	Route::get('iso/print/{id}', 'IsoController@print');
 	Route::get('iso/print_blanko/{id}', 'IsoController@print_blanko');
-	Route::get('iso/validity/{id}', 'IsoController@validity');
+
 	Route::post('iso/bentuk_no', 'IsoController@bentukNo')->name('bentukNoIso');
 });
 

@@ -50,10 +50,17 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Status</label>
-                                            <select name="status" id="statu" class="form-control">
+                                            <select name="status" id="status" class="form-control">
                                                 @foreach($status as $key)
                                                     <option value="{{ $key->id }}">{{ $key->nama }}</option>
                                                 @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Reseller?</label>
+                                            <select name="reseller" id="reseller" class="form-control">
+                                                    <option value="0">Tidak </option>
+                                                    <option value="1">Ya </option>
                                             </select>
                                         </div>
                                         <div class="form-group">

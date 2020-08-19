@@ -167,7 +167,7 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
+        Vinkla\Hashids\HashidsServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -235,7 +235,8 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Hasids' => Vinkla\Hashids\Facades\Hashids::class
     ],
 
 ];

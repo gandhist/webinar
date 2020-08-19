@@ -44,7 +44,7 @@
           border-radius: 0px;
           
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-          background-image: url("/iso/images/blanko_iso.png");
+          
           background-size: contain;
           background-repeat: no-repeat;
       }
@@ -81,8 +81,11 @@
 
 </head>
 <body>
-    
-      <div class="page">
+      @if($data->is_reseller == 0)
+      <div class="page" style="background-image: url('/iso/images/blanko_iso.png');">
+        @else
+        <div class="page" style="background-image: url('/iso/images/blanko_iso_nopo.png');">
+      @endif
         <div id="watermark">
           @if($data->status == 1)
             <h1>{{ $data->status_r->nama }}</h1>

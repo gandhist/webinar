@@ -224,7 +224,7 @@
                 </tr>
                 <tr>
                     <td colspan="6" style="vertical-align: top; padding:10px;">Address</td>
-                    <td colspan="14" style="vertical-align: top; padding:10px;"><textarea  class="auto_height" oninput="auto_height(this)" rows="1" style="width: 450px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">{{ $data->bu_r->alamat }}</textarea></td>
+                    <td colspan="14" style="vertical-align: top; padding:10px;">{{ $data->bu_r->alamat }}</td>
                 </tr>
                 <tr>
                     <td colspan="6" style="vertical-align: top; padding:10px;">Standard</td>

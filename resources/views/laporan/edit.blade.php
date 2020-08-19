@@ -57,6 +57,13 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
+                                            <label>Reseller?</label>
+                                            <select name="reseller" id="reseller" class="form-control">
+                                                    <option {{ $data->is_reseller == 0 ? 'selected' : '' }} value="0">Tidak </option>
+                                                    <option {{ $data->is_reseller == 1 ? 'selected' : '' }} value="1">Ya </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Organization</label>
                                             <input value="{{ $data->bu_r->nama_bu }}" name="nama_bu" id="nama_bu" type="text" class="form-control" placeholder="Organization">
                                             <span id="nama_bu" class="help-block" >{{ $errors->first('nama_bu') }} </span> 
