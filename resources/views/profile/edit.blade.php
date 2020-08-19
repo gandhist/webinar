@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<div class="container">
+<div class="container" id="content">
     <!-- Default box -->
     <div class="box box-content">
         <div class="box-body">
@@ -104,11 +104,11 @@
                 </div>
                 <br>
                 <div class="box-footer">
-                    <a href="{{ url('changepassword') }}" class="btn btn-md btn-warning pull-left"><i class="fa fa-edit"></i>
+                    <a href="{{ url('changepassword') }}" class="btn btn-sm btn-warning pull-left"><i class="fa fa-edit"></i>
                         Ubah_Password</a>
-                    <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-right"><i class="fa fa-times-circle"></i>
+                    <a href="{{ url('infoseminar') }}" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i>
                         Batal</a>
-                    <button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
+                    <button type="submit" class="btn btn-sm btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
                 </div>
             </form>
         </div>
