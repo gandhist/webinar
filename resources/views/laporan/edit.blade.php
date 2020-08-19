@@ -107,14 +107,24 @@
                                                     <option {{ $data->iso_standard == $key->id ? 'selected' : '' }} value="{{ $key->id }}">{{ $key->kode }}</option>
                                                 @endforeach
                                             </select>
-                                            <span id="id_number" class="help-block" >{{ $errors->first('id_number') }} </span> 
+                                            <span id="standard" class="help-block" >{{ $errors->first('standard') }} </span> 
 
                                         </div>
                                           
                                           <div class="form-group">
-                                              <label>Id Number</label>
+                                            <label>Id Number</label>
+
+                                            <div class="input-group">
+                                              <input value="{{ $data->id_number }}" name="id_number" readonly id="id_number" type="text" class="form-control" placeholder="Id Number">
+                                                <div class="input-group-addon">
+                                                    @if($data->id_number == null)
+                                                        <button data-noreg="s" data-id="{{ $data->id }}" type="button" id="bentuknoiso" onclick='bentukNoIso(this)' class="btn btn-primary btn-xs" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Prosess..." > Bentuk No ISO</button>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                              {{-- <label>Id Number</label>
                                               <input value="{{ $data->id_number }}" name="id_number" id="id_number" type="text" class="form-control" placeholder="Id Number">
-                                                <span id="id_number" class="help-block" >{{ $errors->first('id_number') }} </span> 
+                                                <span id="id_number" class="help-block" >{{ $errors->first('id_number') }} </span>  --}}
 
                                           </div>
           
@@ -300,12 +310,12 @@
                                                     <tr>
                                                         <td colspan="2" style=" border:1px solid black; padding:2px; vertical-align: top; text-align: center; line-height: normal;"><input {{ $data->tikor == 'major' ? 'checked' : '' }} type="radio" class="Radio" name="tikor" value="major"></td>
                                                         <td colspan="22" style=" border:1px solid black; padding: 2px; text-align: justify; vertical-align: top;line-height: normal;">
-                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MAJOR</b> diidentifikasi harus segera dilakukan dan <b>ACI CERTIFICATION diberitahu tentang tindakan yang diambil dalam waktu 30 hari.</b> Auditor ACI CERTIFICATION akan melakukan <b>tindak lanjut kunjungan</b> dalam waktu 90 hari untuk mengkonfirmasi tindakan yang diambil, evaluasi terhadap keefektifan mereka, dan menentukan apakah sertifikasi dapat diberikan atau dilanjutkan.</td>
+                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MAJOR</b> diidentifikasi harus segera dilakukan dan <b>MANDIRI CERTIFICATION diberitahu tentang tindakan yang diambil dalam waktu 30 hari.</b> Auditor MANDIRI CERTIFICATION akan melakukan <b>tindak lanjut kunjungan</b> dalam waktu 90 hari untuk mengkonfirmasi tindakan yang diambil, evaluasi terhadap keefektifan mereka, dan menentukan apakah sertifikasi dapat diberikan atau dilanjutkan.</td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2" style=" border:1px solid black; padding:2px; vertical-align: top; text-align: center; line-height: normal;"><input {{ $data->tikor == 'minor' ? 'checked' : '' }} type="radio" class="Radio" name="tikor" value="minor"></td>
                                                         <td colspan="22" style=" border:1px solid black; padding: 2px; text-align: justify; vertical-align: top; line-height: normal;">
-                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MINOR</b> harus segera dilakukan dan diidentifikasi dan <b>catatan dengan bukti pendukung yang dikirim ke auditor ACI CERTIFICATION untuk close-out dalam waktu 90 hari.</b> Pada kunjungan Audit jadwal berikutnya, tim audit ACI CERTIFICATION akan menindaklanjuti semua ketidaksesuaian diidentifikasi untuk mengkonfirmasi efektifitas tindakan perbaikan dan pencegahan yang diambil.</td>
+                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MINOR</b> harus segera dilakukan dan diidentifikasi dan <b>catatan dengan bukti pendukung yang dikirim ke auditor MANDIRI CERTIFICATION untuk close-out dalam waktu 90 hari.</b> Pada kunjungan Audit jadwal berikutnya, tim audit MANDIRI CERTIFICATION akan menindaklanjuti semua ketidaksesuaian diidentifikasi untuk mengkonfirmasi efektifitas tindakan perbaikan dan pencegahan yang diambil.</td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -334,7 +344,7 @@
                                                                     <input type="hidden" name="id_satf_{{ $loop->iteration }}" id="id_satf_{{ $loop->iteration }}" value="{{ $key->id }}" class="form-control">
                                                                 </td>
                                                                 <td>
-                                                                    <button type='button' onclick="$(this).closest('tr').remove(); removeItem();" class="btn btn-danger btn-xs" ><span class="fa fa-times-circle" ></span></button> 
+                                                                    <button type='button' onclick="removeItemObs('{{ $key->id }}');" class="btn btn-danger btn-xs" ><span class="fa fa-times-circle" ></span></button> 
                                                                 </td>
                                                             </tr>
                                                             @endforeach
@@ -483,6 +493,24 @@
 
     </section>
     <!-- /.content -->
+
+    <!-- modal delete confirmation -->
+<div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Konfirmasi</h4>
+      </div>
+      <div class="modal-body" id="konfirmasi-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+        <button type="button" class="btn btn-danger" data-id="" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting..." id="confirm-delete">Hapus</button>
+      </div>
+      </div>
+    </div>
+  </div>
+<!-- end of modal konfirmais -->
 @endsection
 
 @push('script')
@@ -690,6 +718,96 @@ function chained_scope(iso){
         });
     }
   });
+}
+
+// function bentuk no registr
+function bentukNoIso(data){
+    $(data).button('loading')
+    var url = "{{ route('bentukNoIso') }}";
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    $.ajax({
+        url: url,
+        type: 'POST',
+        dataType: "JSON",
+        data: {
+            "id" : $(data).data('id'),
+            "id_kota" : $('#id_kota').val(),
+            'id_std' : "{{ $data->iso_standard }}"
+        },
+        success: function (response)
+        {   
+            console.log(response)   
+
+            if(response.status){
+                Swal.fire({
+                title: response.message,
+                type: 'success',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA',
+                onClose: function(){
+                    $(data).button('reset')
+                }
+            })
+            $('#id_number').val(response.noiso);
+            $('#bentuknoiso').hide();
+
+            }
+            
+        },
+        error: function(xhr) {
+            $(data).button('reset')
+            alert('terjadi error saat membentuk no registrasi');
+        }
+    });
+// console.log($(data).data('noreg'));
+}
+
+// remove item observasi
+function removeItemObs(idobs){
+    $("#modal-konfirmasi").modal('show');
+    $("#modal-konfirmasi").find("#confirm-delete").data("id", $(this).data('id'));
+    $("#konfirmasi-body").text("Hapus Observasi ?");
+    $('#confirm-delete').click(function(){
+        var url = "{{ route('hapusObs') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+                "id" : idobs,
+            },
+            success: function (response)
+            {      
+                $("#modal-konfirmasi").modal('hide');
+                Swal.fire({
+                    title: response.message,
+                    text: response.message,
+                    type: 'success',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA',
+                    onClose: function(){
+                        // $(this).closest('tr').remove();
+                        location.reload();
+                        // $('#tr_item_'+running_number).remove();
+                    }
+                })
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+                alert('terjadi error saat menghapus item observasi')
+            }
+        });
+
+    });
 }
 
 

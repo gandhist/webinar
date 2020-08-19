@@ -47,6 +47,7 @@ Route::get('p3sm','SertController@p3sm');
 
 Route::namespace('Laporan')->group(function(){
 	Route::post('laporan/chain','LaporanController@chained_prov')->name('chained_prov');
+	Route::post('laporan/hapus_obs','LaporanController@hapusObs')->name('hapusObs');
 	Route::resource('laporan','LaporanController');
 	Route::get('laporan/chained_scope/{id}','LaporanController@chained_scope');
 	Route::get('laporan/print/{id}','LaporanController@print');
@@ -54,6 +55,9 @@ Route::namespace('Laporan')->group(function(){
 
 Route::namespace('Iso')->group(function(){
 	Route::get('iso/print/{id}', 'IsoController@print');
+	Route::get('iso/print_blanko/{id}', 'IsoController@print_blanko');
+	Route::get('iso/validity/{id}', 'IsoController@validity');
+	Route::post('iso/bentuk_no', 'IsoController@bentukNo')->name('bentukNoIso');
 });
 
 

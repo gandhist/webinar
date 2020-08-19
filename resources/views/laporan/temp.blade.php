@@ -73,7 +73,7 @@
           margin: 0cm auto;
           border: 0px #D3D3D3 solid;
           border-radius: 0px;
-
+          margin-top:20px;
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
           background-image: url("/iso/images/wm_iso_biru_2.png");
           /* background-image: url("/iso/images/logo_iso.png"); */
@@ -210,13 +210,8 @@
             </table> 
             <div style="  text-align: justify;">
                 <p style="text-align: center; font-size: 20px; font-weight:bolder; text-decoration: underline;">LAPORAN AUDIT</p>
-                <p style="font-weight: bold; font-size: 20px;">
-                    <label for="sistem_iso">Sertifikasi</label>
-                    <select name="sistem_iso" id="sistem_iso">
-                        <option value="Mutu">Sistem Manajemen Mutu</option>
-                        <option value="Lingkungan">Sistem Manajemen Lingkungan</option>
-                        <option value="K3">Sistem Manajemen K3</option>
-                    </select>
+                <p style="font-weight: bold; font-size: 20px; text-align:'left'">
+                    <label for="sistem_iso">{{ $data->iso_r->nama_id }}</label>
                 </p>
                 <p style="margin-top:-10px; margin-bottom: 10px; font-weight: bold; font-size: 30px;">Audit Report</p>
             </div>        

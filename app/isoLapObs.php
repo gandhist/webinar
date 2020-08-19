@@ -10,6 +10,7 @@ class isoLapObs extends Model
     //
     use SoftDeletes;
     protected $table = "iso_lap_obs";
+    protected $guarded = ['id'];
 
     // belongsto observasi
     public function observasi_r(){

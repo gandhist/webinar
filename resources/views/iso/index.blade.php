@@ -135,9 +135,10 @@
                             <div class="btn-group">
                                 <span class="btn btn-primary" id="printIso"><i
                                     class="fa fa-print"></i>
-                                    Print_Iso</span>
-                                {{-- <span class="btn btn-warning" id="btnTenagaAhli"></i>
-                                    Tenaga Ahli</span> --}}
+                                    Iso Digital</span>
+                                <span class="btn btn-warning" id="printIso_blanko"><i
+                                    class="fa fa-file"></i>
+                                    Blanko Iso</span>
                             </div>
                         </div>
                     </div>
@@ -168,6 +169,7 @@
             <tr>
                 <th style="text-indent: 12px;"><i class="fa fa-check-square-o"></i></th>
                 <th style="text-indent: 22px;">No.</th>
+                <th>Status</th>
                 <th>Nama_Bu</th>
                 <th>Alamat</th>
                 {{-- <th>Prov</th> --}}
@@ -175,7 +177,6 @@
                 <th>tgl_srtf</th>
                 <th>Tipe_ISO</th>
                 <th>Scope</th>
-                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -184,6 +185,13 @@
                 <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                     id="selection[]" name="selection[]"></td>
                 <td>{{ $loop->iteration }}</td>
+                <td align='center'>
+                    @if($key->status == "1")
+                        <span class="label label-warning">{{ $key->status_r->nama }}</span>
+                    @elseif($key->status == 2)
+                        <span class="label label-success">{{ $key->status_r->nama }}</span>
+                    @endif
+                </td>
                 <td>{{ $key->nama_bu }}</td>
                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->alamat }}">{{ str_limit($key->alamat,20) }}</td>
                 {{-- <td
@@ -194,15 +202,21 @@
                  >{{ $key->prov_r->nama_singkat }}</td> --}}
                 <td>{{ $key->no_sert }}</td>
                 <td><span style="display:none;"> {{ $key->tgl_sert }} </span>{{ \Carbon\Carbon::parse($key->tgl_sert)->isoFormat('DD MMMM YYYY') }}</td>
-                <td>{{ $key->tipe_iso }}</td>
-                <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->scope }}">{{ str_limit($key->scope, 20) }}</td>
-                <td align='center'>
-                    @if($key->status == 1)
-                        <span class="label label-warning">{{ $key->status_r->nama }}</span>
-                    @elseif($key->status == 2)
-                        <span class="label label-success">{{ $key->status_r->nama }}</span>
+                <td>{{ $key->iso_r->kode }}</td>
+                <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->scope }}">
+                    @if($key->lap_r)
+                        @foreach($key->lap_r->scope_r as $key)
+                            {{-- {{ $key->scope_r->nama_en }},  --}}
+                            @if($loop->last)
+                                {{ $key->scope_r->nama_en }}
+                            @else
+                                {{ $key->scope_r->nama_en }}, 
+                            @endif
+                        @endforeach
                     @endif
+                    {{-- {{ str_limit($key->scope, 20) }} --}}
                 </td>
+                
             </tr>
             @endforeach
         </tbody>
@@ -482,6 +496,23 @@
             } else {
                 url = id[0];
                 window.open("{{ url('iso/print') }}/" + url,'_blank');
+            }
+        });
+
+        // Button print iso click
+        $('#printIso_blanko').on('click', function (e) {
+            e.preventDefault();
+            var id = [];
+            $('.selection:checked').each(function () {
+                id.push($(this).data('id'));
+            });
+            if (id.length == 0) {
+                alert('Tidak ada data yang terpilih');
+            } else if (id.length > 1) {
+                alert('Harap pilih satu data untuk di ubah');
+            } else {
+                url = id[0];
+                window.open("{{ url('iso/print_blanko') }}/" + url,'_blank');
             }
         });
 
