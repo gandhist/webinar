@@ -957,7 +957,7 @@
 
         $('#narasumber').on('change', function() {
             personal = @json($pers);
-            data = $('#narasumber').select2('data').map(function(elem){
+            data = $('#moderator').select2('data').map(function(elem){
                 return elem.id
             });
             // console.log(data.includes('27'));

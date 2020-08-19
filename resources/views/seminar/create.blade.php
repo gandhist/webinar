@@ -925,21 +925,55 @@
             pend = $('#instansi_pendukung').select2('val');
 
             // console.log($('#instansi_penyelenggara').select2('val'));
+            // Instansi Penyelenggara
+
+            $('#instansi_penyelenggara').empty();
+            if( !!pend ) {
+                for(let key in pendukung) {
+                    if(!pend.includes(key)){
+                        $('#instansi_penyelenggara').append(new Option(pendukung[key], key));
+                    }
+                }
+                console.log('1');
+            } else {
+                for(let key in pendukung) {
+                    $('#instansi_penyelenggara').append(new Option(pendukung[key], key));
+                }
+                console.log('2');
+            }
+
+            if( !!peny ) {
+                $('#instansi_penyelenggara').select2('val',peny,{
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+                console.log(peny);
+            } else {
+                $('#instansi_penyelenggara').select2({
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+                console.log('4');
+            }
+            // Instansi Pendukung
             $('#instansi_pendukung').empty();
             for(let key in pendukung) {
                 if(!data.includes(key)){
-                    if( ( !!pend ? pend.includes(key) : false ) ) {
-                        $('#instansi_pendukung').append(new Option(pendukung[key], key)).prop('selected',true);
-                    } else {
-                        $('#instansi_pendukung').append(new Option(pendukung[key], key));
-                    }
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
                 }
             }
 
-            $('#instansi_pendukung').select2({
-                placeholder: " Pilih Instansi Pendukung",
-                allowClear: true,
-            });
+            if( !!pend ) {
+                $('#instansi_pendukung').select2('val',pend,{
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+            } else {
+                $('#instansi_pendukung').select2({
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+            }
         });
             // END Select Penyelenggara
 
