@@ -8,6 +8,7 @@
         content: " *";
     }
 </style>
+{{-- {{dd($klasifikasi)}} --}}
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -138,100 +139,8 @@
 
                 <div class="row">
 
-                    {{-- Kuota Peserta --}}
-                    <div class="col-md-2">
-                        <div class="form-group {{ $errors->first('kuota') ? 'has-error' : '' }} ">
-                            <label for="kuota" class="label-control required">Kuota Peserta</label>
-                            <input type="text" class="form-control" name="kuota" id="kuota"
-                                onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('kuota') ? old('kuota') : $seminar->kuota }}"
-                                placeholder="Kuota Peserta">
-                            <div id="kuota" class="invalid-feedback text-danger">
-                                {{ $errors->first('kuota') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Akhir Kuota Peserta --}}
-
-                    {{-- Nilai SKPK --}}
-                    <div class="col-md-1">
-                        <div class="form-group {{ $errors->first('skpk_nilai') ? 'has-error' : '' }} ">
-                            <label for="skpk_nilai" class="label-control required">Nilai SKPK</label>
-                            <input type="text" class="form-control" name="skpk_nilai" id="skpk_nilai"
-                                maxlength="2"
-                                onkeypress="return /[0-9]/i.test(event.key)"
-                                value="{{ old('skpk_nilai') ? old('skpk_nilai') : $seminar->skpk_nilai }}"
-                                placeholder="Nilai SKPK">
-                            <div id="skpk_nilai" class="invalid-feedback text-danger">
-                                {{ $errors->first('skpk_nilai') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Akhir Nilai SKPK --}}
-
-                    {{-- Berbayar --}}
-                    <div class="col-md-1">
-                        <div class="form-group {{ $errors->first('is_free') ? 'has-error' : '' }} ">
-                            <label for="is-free" class="label-control required">Jenis</label>
-                            <div class="radio" style="margin-top:-5px;">
-                                <label>
-                                    <input type="radio" name="is_free" id="gratis" value="0" disabled
-                                    @if(old('is_free'))
-                                        {{ old('is_free') == "0" ? "checked" : "" }}
-                                    @else
-                                        {{ $seminar->is_free == "0" ? "checked" : "" }}
-                                    @endif
-                                    required>
-                                    Gratis
-                                </label>
-                                <label>
-                                    <input type="radio" name="is_free" id="bayar" value="1" disabled
-                                    @if(old('is_free'))
-                                        {{ old('is_free') == "1" ? "checked" : "" }}
-                                    @else
-                                        {{ $seminar->is_free == "1" ? "checked" : "" }}
-                                    @endif
-                                        >
-                                    Berbayar
-                                </label>
-
-
-                                <div id="is_free" class="invalid-feedback text-danger">
-                                    {{ $errors->first('is_free') }}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    {{-- Akhir Berbayar --}}
-
-                    {{-- Biaya --}}
-                    <div class="col-md-2">
-                        <div class="form-group {{ $errors->first('biaya') ? 'has-error' : '' }} ">
-                            <label for="biaya" class="label-control required">Biaya</label>
-                            <input type="text" class="form-control" name="biaya" id="biaya"
-                                onkeypress="return /[0-9]/i.test(event.key)"
-                                value="@if(old('is_free'))
-                                {{ old('is_free') == "1" ? old('biaya') : "" }}
-                                @else
-                                {{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "" }}
-                                @endif"
-                                placeholder="Biaya"
-                                @if(old('is_free'))
-                                    {{ old('is_free') == "1" ? old('biaya') : 'disabled' }}
-                                @else
-                                    {{ $seminar->is_free == "1" ? $seminar->biaya : 'disabled' }}
-                                @endif
-                                >
-                            <div id="biaya" class="invalid-feedback text-danger">
-                                {{ $errors->first('biaya') }}
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Biaya --}}
-
                     {{-- Inisiator Penyelengara --}}
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group {{ $errors->first('inisiator') ? 'has-error' : '' }} ">
                             <label for="inisiator" class="label-control required">Inisiator Penyelenggara</label>
                             <select name="inisiator" id="inisiator" class="form-control" multiple>
@@ -258,11 +167,11 @@
                     {{-- Akhir Inisiator Penyelengara --}}
 
                     {{-- Instansi Penyelengara --}}
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
-                            class="form-control to-pimpinan" multiple>
+                            class="form-control to-pimpinan to-logo" multiple>
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
                                         <option value="{{ $key->id }}"
@@ -273,7 +182,7 @@
                                     @foreach($instansi as $key)
                                         @if($penyelenggara->contains('id_instansi',$key->id))
                                             <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
-                                        @elseif(!$pendukung->contains('id_instansi',$key->id))
+                                        @else {{-- if(!$pendukung->contains('id_instansi',$key->id)) --}}
                                             <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
                                         @endif
                                     @endforeach
@@ -288,11 +197,11 @@
                     {{-- Akhir Instansi Penyelengara --}}
 
                     {{-- Instansi Pendukung --}}
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group {{ $errors->first('instansi_pendukung') ? 'has-error' : '' }} ">
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
-                            class="form-control to-pimpinan" multiple>
+                            class="form-control to-pimpinan to-logo" multiple>
                             @if(old('instansi_pendukung'))
                                 @foreach($instansi as $key)
                                     <option value="{{ $key->id }}"
@@ -338,7 +247,7 @@
                                 @endforeach
                             @else
                                 @foreach($personal as $key)
-                                    @if($ttd[1]['id_personal']) != $key->id)
+                                    @if(isset($ttd[1]['id_personal']) ? ($ttd[1]['id_personal'] != $key->id) : '')
                                         <option value="{{$key->id}}"
                                         {{$ttd[0]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
                                     @endif
@@ -360,7 +269,7 @@
                             <label for="jab_ttd1" class="label-control required">Jabatan Penandatangan 1</label>
                             <input type="text" id="jab_ttd1" class="form-control" name="jab_ttd1"
                             placeholder="Jabatan Penandatangan 1"
-                            value="{{ old('jab_ttd1') ? old('jab_ttd1') : $ttd[0]['jabatan'] }}">
+                            value="{{ old('jab_ttd1') ? old('jab_ttd1') : (isset($ttd[0]['jabatan']) ? $ttd[0]['jabatan'] : '') }}">
                             <div id="jab_ttd1" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd1') }}
                             </div>
@@ -384,7 +293,7 @@
                                 @endforeach
                             @else
                                 @foreach($personal as $key)
-                                    @if($ttd[0]['id_personal']) != $key->id)
+                                    @if(isset($ttd[0]['id_personal']) ? ($ttd[0]['id_personal'] != $key->id) : '')
                                         <option value="{{$key->id}}"
                                         {{ $ttd[1]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
                                     @endif
@@ -406,13 +315,85 @@
                             <label for="jab_ttd2" class="label-control required">Jabatan Penandatangan 2</label>
                             <input type="text" id="jab_ttd2" class="form-control" name="jab_ttd2"
                             placeholder="Jabatan Penandatangan 2"
-                            value="{{ old('jab_ttd2') ? old('jab_ttd2') : $ttd[1]['jabatan'] }}">
+                            value="{{ old('jab_ttd2') ? old('jab_ttd2') : (isset($ttd[1]['jabatan']) ? $ttd[1]['jabatan'] : '') }}">
                             <div id="jab_ttd2" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd2') }}
                             </div>
                         </div>
                     </div>
                     {{-- Akhir Jabatan TTD 2 --}}
+                </div>
+
+
+                <div class="row">
+
+                    {{-- Logo --}}
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('logo') ? 'has-error' : '' }}">
+                            <label for="logo" class="label-control required">Logo pada Sertifikat</label>
+                            <select name="logo[]" multiple="multiple" required class="form-control" id="logo">
+                                @if(old('logo'))
+                                    @if(old('instansi_penyelenggara') || old('instansi_pendukung'))
+                                        @foreach ($instansi as $key)
+                                            @if((collect(old('instansi_penyelenggara'))->contains($key->id)) || (collect(old('instansi_pendukung'))->contains($key->id)))
+                                                <option value="{{$key->id}}"
+                                                    {{(collect(old('logo'))->contains($key->id)) ? 'selected' : ''}}
+                                                >{{$key->nama_bu}}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @elseif($pendukung || $penyelenggara)
+                                    @foreach ($logo as $key)
+                                        <option value="{{$key->id}}"
+                                            {{$key->is_tampil == '1' ? 'selected' : ''}}
+                                        >
+                                        {{$pendukungArr[$key->id_instansi]}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                            <div class="small text-muted">Urutan pilihan tidak berpengaruh pada urutan di sertifikat</div>
+
+                            <div id="logo" class="invalid-feedback text-danger">
+                                {{ $errors->first('logo') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- End Logo --}}
+
+                    {{-- Is Online --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('is_online') ? 'has-error' : '' }} ">
+                            <label for="is_online" class="label-control required">Jenis Acara</label>
+                            <select name="is_online" id="is_online"  data-minimum-results-for-search="Infinity"
+                            class="form-control" disabled >
+                                <option value="" {{ !isset($seminar->is_online) ? 'selected' : ''}}>Pilih Jenis Seminar</option>
+                                <option value="0" {{ $seminar->is_online == '0' ? 'selected' : ''}}>Offline</option>
+                                <option value="1" {{ $seminar->is_online == '1' ? 'selected' : ''}}>Online (Webinar)</option>
+                            </select>
+
+                            <div id="is_online" class="invalid-feedback text-danger">
+                                {{ $errors->first('is_online') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- End is online --}}
+
+                    {{-- Link --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('link') ? 'has-error' : '' }} ">
+                            <label for="link" class="label-control required">Link</label>
+                            <input type="text" class="form-control" name="link" id="link"
+                                value="{{ $seminar->is_online == '1' ? (old('link') ? old('link') : $seminar->url ) : '' }}"
+                                placeholder="Hanya untuk Webinar"
+                                {{ $seminar->is_online == "1" ? '' : 'disabled' }}
+                                >
+                            <div id="link" class="invalid-feedback text-danger">
+                                {{ $errors->first('link') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- End link --}}
+
                 </div>
 
                 <div class="row">
@@ -476,8 +457,64 @@
                     </div>
                     {{-- Akhir Kota --}}
 
+
+                    {{-- TUK --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('tuk') ? 'has-error' : '' }} ">
+                            <label for="tuk" class="label-control required">Tempat Uji Kompetensi (TUK)</label>
+                            <select name="tuk" id="tuk"
+                            class="form-control" required>
+                            @if(old('tuk'))
+                                @if($seminar->is_online == '1')
+                                    @foreach($tuk as $key)
+                                        @if($key->is_online == '1')
+                                            <option value="{{$key->id}}" {{old('tuk') == $key->id ? 'selected' : ''}}>
+                                                {{$key->nama_tuk}}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @elseif($seminar->is_online == '0' && old('kota_penyelenggara'))
+                                    @foreach($tuk as $key)
+                                        @if($key->kota == old('kota_penyelenggara'))
+                                            <option value="{{$key->id}}" {{old('tuk') == $key->id ? 'selected' : ''}}>
+                                                {{$key->nama_tuk}}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @elseif($seminar->is_online == '1')
+                                <option value="" {{isset($seminar->tuk) ? '' : 'selected'}} hidden>Pilih Tempat Uji Kompetensi</option>
+                                @foreach ($tuk as $key)
+                                    @if ($key->is_online == '1')
+                                        <option value="{{$key->id}}"
+                                            {{($seminar->tuk ==$key->id) ? 'selected' : ''}}
+                                        >
+                                        {{$key->nama_tuk}}</option>
+                                    @endif
+                                @endforeach
+                            @else
+                                <option value="" {{isset($seminar->tuk) ? '' : 'selected'}} hidden>Pilih Tempat Uji Kompetensi</option>
+                                @foreach ($tuk as $key)
+                                    @if ($key->kota == $seminar->kota_penyelenggara)
+                                        <option value="{{$key->id}}"
+                                            {{($seminar->tuk ==$key->id) ? 'selected' : ''}}
+                                        >
+                                        {{$key->nama_tuk}}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                            </select>
+
+                            <div id="tuk" class="invalid-feedback text-danger">
+                                {{ $errors->first('tuk') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- End TUK --}}
+
+
                     {{-- Alamat --}}
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group {{ $errors->first('lokasi_penyelenggara') ? 'has-error' : '' }}">
                             <label for="lokasi_penyelenggara" class="label-control required">Alamat Penyelenggara</label>
                             <input type="text" id="lokasi_penyelenggara" class="form-control"
@@ -558,8 +595,76 @@
 
 
                 <div class="row">
+
+                    {{-- Kuota Peserta --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('kuota') ? 'has-error' : '' }} ">
+                            <label for="kuota" class="label-control required">Kuota Peserta</label>
+                            <input type="text" class="form-control" name="kuota" id="kuota"
+                                onkeypress="return /[0-9]/i.test(event.key)"
+                                value="{{ old('kuota') ? old('kuota') : $seminar->kuota }}"
+                                placeholder="Kuota Peserta"  disabled>
+                            <div id="kuota" class="invalid-feedback text-danger">
+                                {{ $errors->first('kuota') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Kuota Peserta --}}
+
+                    {{-- Nilai SKPK --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('skpk_nilai') ? 'has-error' : '' }} ">
+                            <label for="skpk_nilai" class="label-control required">Nilai SKPK</label>
+                            <input type="text" class="form-control" name="skpk_nilai" id="skpk_nilai"
+                                maxlength="2"
+                                onkeypress="return /[0-9]/i.test(event.key)"
+                                value="{{ old('skpk_nilai') ? old('skpk_nilai') : $seminar->skpk_nilai }}"
+                                placeholder="Nilai SKPK" disabled>
+                            <div id="skpk_nilai" class="invalid-feedback text-danger">
+                                {{ $errors->first('skpk_nilai') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Akhir Nilai SKPK --}}
+
+                    {{-- Berbayar --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('is_free') ? 'has-error' : '' }} ">
+                            <label for="is-free" class="label-control required">Jenis</label>
+                            <select class="form-control" id="is_free" id="is_free" disabled>
+                                <option value="0" {{$seminar->is_free == '0' ? 'selected' : ''}}>Gratis</option>
+                                <option value="1" {{$seminar->is_free == '1' ? 'selected' : ''}}>Berbayar</option>
+                            </select>
+
+                            <div id="is_free" class="invalid-feedback text-danger">
+                                {{ $errors->first('is_free') }}
+                            </div>
+
+                        </div>
+                    </div>
+                    {{-- Akhir Berbayar --}}
+
+                    {{-- Biaya --}}
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('biaya') ? 'has-error' : '' }} ">
+                            <label for="biaya" class="label-control required">Biaya</label>
+                            <input type="text" class="form-control" name="biaya" id="biaya"
+                                onkeypress="return /[0-9]/i.test(event.key)"
+                                value="{{ $seminar->is_free == "1" ? trim($seminar->biaya,'\s') : "Gratis" }}"
+                                placeholder="Biaya" disabled
+                                >
+                            <div id="biaya" class="invalid-feedback text-danger">
+                                {{ $errors->first('biaya') }}
+                            </div>
+                        </div>
+                    </div>
+                    {{-- Biaya --}}
+
+                </div>
+
+                <div class="row">
                     {{-- Tanggal Mulai --}}
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group {{ $errors->first('tgl_awal') ? 'has-error' : '' }} ">
                             <label for="tgl_awal" class="label-control required">Tanggal Awal</label>
                             <input type="text" class="form-control datepicker" name="tgl_awal" id="tgl_awal"
@@ -574,7 +679,7 @@
                     {{-- Tanggal Mulai --}}
 
                     {{-- Tanggal Akhir --}}
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group {{ $errors->first('tgl_akhir') ? 'has-error' : '' }} ">
                             <label for="tgl_akhir" class="label-control required">Tanggal Akhir</label>
                             <input type="text" class="form-control datepicker" name="tgl_akhir" id="tgl_akhir"
@@ -591,8 +696,8 @@
                     {{-- Akhir Tanggal Akhir --}}
 
                     {{-- Jam Awal --}}
-                    <div class="col-md-2">
-                        <div class="form-group input-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
+                    <div class="col-md-3">
+                        <div class="form-group {{ $errors->first('jam_awal') ? 'has-error' : '' }} ">
                             <label for="jam_awal" class="label-control required">Jam Awal</label>
                             <input type="text" class="form-control timepicker" name="jam_awal" id="jam_awal"
                                 onkeypress="return /[0-9\-]/i.test(event.key)"
@@ -608,7 +713,7 @@
                     {{-- Akhir Jam Awal --}}
 
                     {{-- Jam Awal --}}
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group {{ $errors->first('jam_akhir') ? 'has-error' : '' }} ">
                             <label for="jam_akhir" class="label-control required">Jam Akhir</label>
                             <input type="text" class="form-control timepicker" name="jam_akhir" id="jam_akhir"
@@ -624,6 +729,9 @@
                     </div>
                     {{-- Akhir Jam Awal --}}
 
+                </div>
+
+                <div class="row">
 
                     {{-- Brosur --}}
                     <div class="col-md-4">
@@ -668,32 +776,112 @@
         $("form").children().each(function(){
             this.value=$(this).val().trim();
         }) // trim semua spasi
+
+        $("#is_free").select2();
+        $("#tuk").select2();
+        $("#is_online").select2();
+
+        $('#logo').select2({
+            placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
+            allowClear: true,
+        }); // Select2
+
+
+        // onchange kota
+        $('#kota_penyelenggara').on('select2:select', function() {
+            is_online = {{$seminar->is_online}};
+
+            if(is_online == '0') {
+
+                kota = $('#kota_penyelenggara').select2('data').map(function(elem){
+                    return elem.id
+                });
+
+                tuk = @json($tuk);
+
+                $('#tuk').empty();
+
+                $('#tuk').append(new Option('Pilih Tempat Uji Kompetensi', '')).attr('selected',true);
+
+                tuk.forEach(function(key) {
+
+                    if( key.is_online == '0' ){
+                        if( kota.includes(key.kota.toString()) ){
+                            //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                            $('#tuk').append(new Option(key.nama_tuk, key.id));
+                        }
+                    }
+                });
+            }
+        });
+        // end onchange kota
+
+        // onchange tuk
+        $('#tuk').on('select2:select', function() {
+
+            tukval = $('#tuk').val();
+
+            tuk = @json($tuk);
+
+            $('#lokasi_penyelenggara').val('');
+
+            tuk.forEach(function(key) {
+                if(tukval == key.id) {
+
+                    // console.log(key);
+                    if( key.is_online == '0' ){
+                        $('#lokasi_penyelenggara').val(key.alamat);
+                    }
+
+                    if( key.is_online == '1' ){
+                        $('#lokasi_penyelenggara').val(key.nama_tuk);
+                    }
+
+                }
+
+            });
+
+            $('#alamat').select2();
+        });
+        // end tuk
+
+
+        // to logo
+        $('.to-logo').on('select2:select', function() {
+            instansi = @json($instansi);
+            // console.log(instansi);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(peny);
+            // console.log(pend);
+
+            $('#logo').empty();
+
+            instansi.forEach(function(key) {
+
+                if(peny.includes((key.id).toString()) || pend.includes((key.id).toString())){
+                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    $('#logo').append(new Option(key.nama_bu, key.id));
+
+                }
+            });
+
+            $('#logo').select2({
+                placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
+            });
+        });
+        // end to logo
+
         $("#biaya").each(function(){
             //this.value=$(this).val().trim();
             $(this).val($.trim($(this).val()));
-            console.log(this.textContent,' trimmed');
+            // console.log(this.textContent,' trimmed');
         }) // trim semua spasi
-        $('#gratis').change(function() {
-            if ($(this).prop('checked')) {
-                $("#biaya").prop("disabled", true);
-                $("#biaya").prop("required", false);
-                console.log("ory")
-            }
-        });
-        $('#gratis').change(function() {
-            if ($(this).prop('checked')) {
-                $("#biaya").prop("disabled", true);
-                $("#biaya").prop("required", false);
-            }
-            // $("#biaya").removeClass("disabled");
-            // $("#no").addClass("none");
-        });
-        $('#bayar').change(function() {
-            if ($(this).prop('checked')) {
-                $("#biaya").prop("disabled", false);
-                $("#biaya").prop("required", true);
-            }
-        });
         $('.timepicker').datetimepicker({
 
             format: 'HH:mm'

@@ -25,7 +25,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img style="width:70%;" src="{{ asset($user->peserta->foto) }}">
+                            <img style="width:70%;" src="{{ url('uploads/peserta/'.$user->peserta->foto) }}">
                             <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"
                                 {{ $errors->first('foto') ? 'is-invalid' : '' }} style="
                                 padding-top: 5px;padding-bottom:5px;" class="img">
@@ -68,7 +68,7 @@
                                     <td><input name="nrska" id="nrska" type="text" class="form-control"
                                             value="{{old('nrska', $user->peserta->nrska)}}"></td>
                                 </tr>
-                                
+
                                 <tr>
                                     <th style="width:40%;text-align:left">Total Nilai SKPI Pertahun</th>
                                     {{-- <td>:</td> --}}
@@ -111,14 +111,14 @@
                     <button type="submit" class="btn btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
                 </div>
             </form>
-        </div> 
+        </div>
     </div>
-    
+
     <br>
     <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
-
-        <table id="data-seminar" class="table table-bordered table-hover dataTable" role="grid">
+        <br>
+        <table id="example" class="table table-bordered table-hover dataTable" role="grid">
             <thead>
                 <tr role="row">
                     <th style="width:2%;text-align:center;">No</th>
@@ -160,7 +160,7 @@
         </table>
     </div>
 
-    
+
 
 
     <!-- /.box-body -->
@@ -205,7 +205,9 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
-<script>
-
+<script type="text/javascript" >
+$(document).ready(function() {
+		$('#example').DataTable();
+} );
 </script>
 @endpush

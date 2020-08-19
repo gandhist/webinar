@@ -132,6 +132,36 @@
 
                 </div>
 
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group {{ $errors->first('lokasi_penyelenggara') ? 'has-error' : '' }} ">
+                            <label for="lokasi_penyelenggara" class="label-control required">Lokasi Penyelenggara</label>
+                                <input type="text" readonly class="form-control"
+                                value="{{isset($seminar->lokasi_penyelenggara) ? $seminar->lokasi_penyelenggara : ''}}">
+                            <div id="lokasi_penyelenggara" class="invalid-feedback text-danger">
+                                {{ $errors->first('lokasi_penyelenggara') }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group {{ $errors->first('is_online') ? 'has-error' : '' }} ">
+                        <label for="is_online" class="label-control required">Jenis Acara</label>
+                            <input type="text" readonly class="form-control"
+                            value="@if(isset($seminar->is_online)){{$seminar->is_online == '0' ? 'Offline' : 'Online (Webinar)'}}
+                                @else{{''}}
+                                @endif
+                            ">
+                        <div id="is_online" class="invalid-feedback text-danger">
+                            {{ $errors->first('is_online') }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }} ">
@@ -230,7 +260,9 @@
                 {{-- <div class="box-body">     --}}
                   <b>Daftar Peserta</b>
                   <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
-                  <table id="data-peserta" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
+                  <br>
+                  <br>
+                  <table id="example" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                       <thead>
                           <tr role="row">
                               {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
@@ -345,6 +377,9 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script>
+    $(document).ready(function() {
+		$('#example').DataTable();
+	} );
 var msg = '{{Session::get('alert')}}';
 var exist = '{{Session::has('alert')}}';
     if(exist){

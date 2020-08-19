@@ -20,6 +20,11 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     </div>
   @endif
+  @if(session()->get('warning'))
+    <div class="alert alert-warning"> {{ session()->get('warning') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+  @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
   <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">

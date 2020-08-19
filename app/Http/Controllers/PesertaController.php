@@ -214,7 +214,8 @@ class PesertaController extends Controller
                     $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
                     $temp = $destinationPathTemp.$file;
                     rename($temp, $destinationFile);
-                    $data['foto'] = $destinationPath.'/'.$file;
+                    // $data['foto'] = $destinationPath.'/'.$file;
+                    $data['foto'] = $dir_name.'/'.$file;
                 }
             }
         } else {

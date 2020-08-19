@@ -29,6 +29,21 @@
             border: 0px solid #ccc; 
             text-align: left; 
         }
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #b7d0ed;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 20px;
+            line-height: 1.2;
+        }        
 
         @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
             /* Force table to not be like tables anymore */
@@ -61,15 +76,33 @@
                 margin: 8px 0;
                 box-sizing: border-box;
             }
-
             table.dataTable>tbody>tr.child {
                 padding: 0px 0px;
+            }
+            .customTable td{
+                text-align: left !important;
+            }
+            #myBtn {
+                display: none;
+                position: fixed;
+                bottom: 90px;
+                right: 30px;
+                z-index: 99;
+                border: none;
+                outline: none;
+                background-color: #b7d0ed;
+                color: white;
+                cursor: pointer;
+                padding: 10px;
+                border-radius: 20px;
+                line-height: 1.2;
             }
         }
       </style>
 </head>
 
 <body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button> 
     <div class="wrapper">
         
         <!-- Sidebar Holder -->
@@ -98,15 +131,10 @@
                 
                 <div class="container-fluid">
                     <h4>P3SM</h4>
-                    {{-- <button type="button" id="sidebarCollapse" class="navbar-btn active">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </button> --}}
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
                     </button>
-
+                    
                     @if(!Auth::user())
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
@@ -118,6 +146,9 @@
                             </li>
                             <li class="nav-item active">
                                 <a class="nav-link" href="{{ url('registrasi') }}">Bergabung</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link" href="{{ url('login') }}">Login</a>
                             </li>
                         </ul>
                     </div>
@@ -202,16 +233,27 @@
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-        // $('#sidebar').toggleClass('active');
-        $(document).ready(function () {
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-                $(this).toggleClass('active');
-            });
-        });
-    </script>
     <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+            if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
         function initFreshChat() {
           window.fcWidget.init({
             token: "4a307164-690f-44ea-b930-f31ee9d818e3",

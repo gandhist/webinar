@@ -9,6 +9,7 @@
         content: " *";
     }
 </style>
+{{-- {{old('tuk') ? dd(old('tuk')) : ''}} --}}
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -290,6 +291,15 @@
                         <div class="form-group {{ $errors->first('logo') ? 'has-error' : '' }}">
                             <label for="logo" class="label-control required">Logo pada Sertifikat</label>
                             <select name="logo[]" multiple="multiple" required class="form-control" id="logo">
+                                @if(old('instansi_penyelenggara') || old('instansi_pendukung'))
+                                    @foreach ($instansi as $key)
+                                        @if((collect(old('instansi_penyelenggara'))->contains($key->id)) || (collect(old('instansi_pendukung'))->contains($key->id)))
+                                            <option value="{{$key->id}}"
+                                                {{(collect(old('logo'))->contains($key->id)) ? 'selected' : ''}}
+                                            >{{$key->nama_bu}}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                             <div class="small text-muted">Urutan pilihan tidak berpengaruh pada urutan di sertifikat</div>
 
@@ -306,9 +316,9 @@
                             <label for="is_online" class="label-control required">Jenis Acara</label>
                             <select name="is_online" id="is_online"  data-minimum-results-for-search="Infinity"
                             class="form-control" required>
-                                <option value="" selected hidden>Pilih Jenis Seminar</option>
-                                <option value="0">Offline</option>
-                                <option value="1">Online (Webinar)</option>
+                                <option value="" {{ !old('is_online') ? 'selected' : ''}} hidden>Pilih Jenis Seminar</option>
+                                <option value="0" {{ old('is_online') == '0' ? 'selected' : ''}}>Offline</option>
+                                <option value="1" {{ old('is_online') == '1' ? 'selected' : ''}}>Online (Webinar)</option>
                             </select>
 
                             <div id="is_online" class="invalid-feedback text-danger">
@@ -323,9 +333,9 @@
                         <div class="form-group {{ $errors->first('link') ? 'has-error' : '' }} ">
                             <label for="link" class="label-control required">Link</label>
                             <input type="text" class="form-control" name="link" id="link"
-                                value="{{ old('link') }}"
+                                value="{{ old('is_online') == '1' ? old('link') : '' }}"
                                 placeholder="Hanya untuk Webinar"
-                                {{ old('is_online') == "1" ? 'disabled' : '' }}
+                                {{ old('is_online') == "0" ? 'disabled' : '' }}
                                 >
                             <div id="link" class="invalid-feedback text-danger">
                                 {{ $errors->first('link') }}
@@ -394,6 +404,23 @@
                             <label for="tuk" class="label-control required">Tempat Uji Kompetensi (TUK)</label>
                             <select name="tuk" id="tuk"
                             class="form-control" required>
+                            @if(old('is_online') == '1')
+                                @foreach($tuk as $key)
+                                    @if($key->is_online == '1')
+                                        <option value="{{$key->id}}" {{old('tuk') == $key->id ? 'selected' : ''}}>
+                                            {{$key->nama_tuk}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @elseif(old('is_online') == '0' && old('kota_penyelenggara'))
+                                @foreach($tuk as $key)
+                                    @if($key->kota == old('kota_penyelenggara'))
+                                        <option value="{{$key->id}}" {{old('tuk') == $key->id ? 'selected' : ''}}>
+                                            {{$key->nama_tuk}}
+                                        </option>
+                                    @endif
+                                @endforeach
+                            @endif
                             </select>
 
                             <div id="tuk" class="invalid-feedback text-danger">
