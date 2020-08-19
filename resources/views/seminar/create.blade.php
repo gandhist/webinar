@@ -910,32 +910,28 @@
         });
         // end to logo
 
-        $('#instansi_penyelenggara').on('change', function() {
-            pendukung = @json($pendukung);
+        // Instansi Penyelenggara dan Instansi Pendukung
 
-            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
-                return elem.id
-            });
-            pend = $('#instansi_pendukung').select2('data').map(function(elem){
-                return elem.id
-            });
+            // Yang Select Penyelenggara
+        $('#instansi_penyelenggara').on('select2:select', function() {
+            pendukung = @json($pendukung);
 
             // console.log(pendukung.hasOwnProperty('33'));
             data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(data);
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+            // console.log($('#instansi_penyelenggara').select2('val'));
             $('#instansi_pendukung').empty();
             for(let key in pendukung) {
                 if(!data.includes(key)){
-                    if(pend.includes((key).toString())) {
-                        //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    if( ( !!pend ? pend.includes(key) : false ) ) {
                         $('#instansi_pendukung').append(new Option(pendukung[key], key)).prop('selected',true);
-                        // console.log(key);
-                    }else{
-                        //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                    } else {
                         $('#instansi_pendukung').append(new Option(pendukung[key], key));
-                        // console.log(key);
                     }
                 }
             }
@@ -943,19 +939,47 @@
             $('#instansi_pendukung').select2({
                 placeholder: " Pilih Instansi Pendukung",
                 allowClear: true,
-                // maximumSelectionLength: 2,
             });
-        })
+        });
+            // END Select Penyelenggara
+
+            // Yang unselect Penyelenggara
+        $('#instansi_penyelenggara').on('select2:unselect', function() {
+            pendukung = @json($pendukung);
+
+            // console.log(pendukung.hasOwnProperty('33'));
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(pend);
+            $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                if(!data.includes(key)){
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+            }
+
+            $('#instansi_pendukung').select2({
+                placeholder: " Pilih Instansi Pendukung",
+                allowClear: true,
+            });
+        });
+            // END unselect Penyelenggara
+
+        // End Instansi Penyelenggara dan Instansi Pendukung
 
         $('#narasumber').on('change', function() {
             personal = @json($pers);
-            data = $('#narasumber').select2('data').map(function(elem){
+            nara = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            mode = $('#moderator').select2('data').map(function(elem){
                 return elem.id
             });
             // console.log(data.includes('27'));
             $('#moderator').empty();
             for(let key in personal) {
-                if(!data.includes(key)){
+                if(!nara.includes(key)){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#moderator').append(new Option(personal[key], key));
                     // console.log(key);
