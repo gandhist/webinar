@@ -339,11 +339,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
+          <h4 class="modal-title" id="myModalLabel">KTP</h4>
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ isset($personal->lampiran_ktp) ? url($personal->lampiran_ktp) : '/'}}" alt="Foto Diri">
+            <img src="{{ isset($personal->lampiran_ktp) ? url($personal->lampiran_ktp) : '/'}}" alt="KTP">
           </center>
         </div>
         <div class="modal-footer">
@@ -362,11 +362,11 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Foto Diri</h4>
+          <h4 class="modal-title" id="myModalLabel">NPWP</h4>
         </div>
         <div class="modal-body">
             <center>
-            <img src="{{ isset($personal->lampiran_npwp) ? url($personal->lampiran_npwp) : '/'}}" alt="Foto Diri">
+            <img src="{{ isset($personal->lampiran_npwp) ? url($personal->lampiran_npwp) : '/'}}" alt="NPWP">
           </center>
         </div>
         <div class="modal-footer">

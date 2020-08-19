@@ -506,8 +506,8 @@ class SeminarController extends Controller
     public function edit($id) {
         $seminar = SeminarModel::where('id',$id)->first();
         if($seminar->status == 'published'){
-            $instansi = BuModel::all();
-            $personal = Personal::all();
+            $instansi = BuModel::where('is_actived','1')->get();
+            $personal = Personal::where('is_activated','1')->get();
             $pers = Personal::pluck('nama','id');
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
@@ -537,8 +537,8 @@ class SeminarController extends Controller
                 'ttd','provinsi','kota','narasumber','moderator','klasifikasi','sub_klasifikasi'));
         } else {
 
-            $instansi = BuModel::all();
-            $personal = Personal::all();
+            $instansi = BuModel::where('is_actived','1')->get();
+            $personal = Personal::where('is_activated','1')->get();
             $pers = Personal::pluck('nama','id');
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
@@ -570,30 +570,49 @@ class SeminarController extends Controller
     }
 
     public function update(Request $request, $id) {
+        // foreach($request->narasumber as $key) {
+        //     print($key);
+        //     print('<br>');
+
+        //     $narasumber = Peserta::where('id_personal',$key)->first();
+        //     print('<br>');
+        //     print($narasumbers);
+        //     print('<br>');
+        // }
+        // dd('done');
+
+        // $naraAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
+        // $modeAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');
+
+        // // dump($naraAwalAsPeserta);
+        // // dd($modeAwalAsPeserta);
+
+        // $naraAwal = Peserta::Wherein('id',$naraAwalAsPeserta)->get();
+        // $modeAwal = Peserta::Wherein('id',$modeAwalAsPeserta)->get();
+
+
+        // dump($naraAwal);
+        // dd($modeAwal);
+
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
             'sub_klasifikasi' => 'required',
             'tema' => 'required|min:5|max:200',
-            // 'kuota' => 'required|numeric|min:5',
-            // 'skpk_nilai' => 'required|numeric|min:0|max:25',
-            //'is_free' => 'required',
             'biaya' => 'required_if:is_free,==,1',
             'inisiator' => 'required',
             'instansi_penyelenggara' => 'required',
             'instansi_pendukung' => 'required',
-            //'tgl_awal' => 'required|date',//|after:today',
             'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
-            // 'ttd_pemangku' => 'required',
             'ttd1' => 'required',
             'ttd2' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:100',
             'narasumber' => 'required',
-            'moderator' => 'required',//|min:3|max:50'
+            'moderator' => 'required',
             'logo' => 'required',
             'tuk' => 'required',
             'link' => 'nullable|url'
@@ -618,9 +637,6 @@ class SeminarController extends Controller
             'inisiator.required' => 'Mohon isi Inisiator',
             'instansi_penyelenggara' => 'Mohon isi Instansi Penyelenggara',
             'instansi_pendukung' => 'Mohon isi Instansi Pendukung',
-            // 'tgl_awal.required' => 'Mohon isi Tanggal Mulai Seminar',
-            // 'tgl_awal.date' => 'Mohon isi tanggal yang valid',
-            // 'tgl_awal.after' => 'Mohon isi tanggal sesudah hari ini',
             'tgl_akhir.required' => 'Mohon isi Tanggal Berakhir Seminar',
             'tgl_akhir.date' => 'Mohon isi tanggal yang valid',
             'tgl_akhir.after_or_equal' => 'Tanggal Berakhir harus sesudah Tanggal Mulai',
@@ -629,7 +645,6 @@ class SeminarController extends Controller
             'jam_akhir.required' => 'Mohon isi Jam Berakhir Seminar',
             'jam_akhir.date_format' => 'Mohon isi dengan format waktu yang valid',
             'jam_akhir.after' => 'Waktu Berakhir harus sesudah Waktu Mulai',
-            // 'ttd_pemangku.required' => 'Mohon isi Penandatangan',
             'ttd1.required' => 'Mohon isi Penandatangan',
             'ttd2.required' => 'Mohon isi Penandatangan',
             'prov_penyelenggara.required' => 'Mohon isi Provinsi Lokasi Seminar',
@@ -648,8 +663,11 @@ class SeminarController extends Controller
         ]);
         // dd($request);
         $dataAwal = SeminarModel::where('id',$id)->first();
-        $naraAwal = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
-        $modeAwal = PesertaSeminar::where('id_seminar',$id)->where('status','4')->get();
+        $naraAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
+        $modeAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');
+        $naraAwal = Peserta::Wherein('id',$naraAwalAsPeserta)->get();
+        $modeAwal = Peserta::Wherein('id',$modeAwalAsPeserta)->get();
+
         // dd($dataAwal);
         // get kode_instansi inisiator
         $kode_inisiator = SeminarModel::select('inisiator')->where('id',$id)->first();

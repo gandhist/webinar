@@ -910,38 +910,110 @@
         });
         // end to logo
 
-        $('#instansi_penyelenggara').on('change', function() {
+        // Instansi Penyelenggara dan Instansi Pendukung
+
+            // Yang Select Penyelenggara
+        $('#instansi_penyelenggara').on('select2:select', function() {
             pendukung = @json($pendukung);
+
             // console.log(pendukung.hasOwnProperty('33'));
             data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(data);
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+            // console.log($('#instansi_penyelenggara').select2('val'));
+            // Instansi Penyelenggara
+
+            $('#instansi_penyelenggara').empty();
+            if( !!pend ) {
+                for(let key in pendukung) {
+                    if(!pend.includes(key)){
+                        $('#instansi_penyelenggara').append(new Option(pendukung[key], key));
+                    }
+                }
+                console.log('1');
+            } else {
+                for(let key in pendukung) {
+                    $('#instansi_penyelenggara').append(new Option(pendukung[key], key));
+                }
+                console.log('2');
+            }
+
+            if( !!peny ) {
+                $('#instansi_penyelenggara').select2('val',peny,{
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+                console.log(peny);
+            } else {
+                $('#instansi_penyelenggara').select2({
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+                console.log('4');
+            }
+            // Instansi Pendukung
             $('#instansi_pendukung').empty();
             for(let key in pendukung) {
                 if(!data.includes(key)){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#instansi_pendukung').append(new Option(pendukung[key], key));
-                    // console.log(key);
+                }
+            }
+
+            if( !!pend ) {
+                $('#instansi_pendukung').select2('val',pend,{
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+            } else {
+                $('#instansi_pendukung').select2({
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+            }
+        });
+            // END Select Penyelenggara
+
+            // Yang unselect Penyelenggara
+        $('#instansi_penyelenggara').on('select2:unselect', function() {
+            pendukung = @json($pendukung);
+
+            // console.log(pendukung.hasOwnProperty('33'));
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(pend);
+            $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                if(!data.includes(key)){
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
                 }
             }
 
             $('#instansi_pendukung').select2({
                 placeholder: " Pilih Instansi Pendukung",
                 allowClear: true,
-                // maximumSelectionLength: 2,
             });
-        })
+        });
+            // END unselect Penyelenggara
+
+        // End Instansi Penyelenggara dan Instansi Pendukung
 
         $('#narasumber').on('change', function() {
             personal = @json($pers);
-            data = $('#narasumber').select2('data').map(function(elem){
+            nara = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            mode = $('#moderator').select2('data').map(function(elem){
                 return elem.id
             });
             // console.log(data.includes('27'));
             $('#moderator').empty();
             for(let key in personal) {
-                if(!data.includes(key)){
+                if(!nara.includes(key)){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#moderator').append(new Option(personal[key], key));
                     // console.log(key);
@@ -951,7 +1023,7 @@
             $('#moderator').select2({
                 placeholder: " Pilih Moderator",
                 allowClear: true,
-                maximumSelectionLength: 2,
+                // maximumSelectionLength: 2,
             });
         })
 
@@ -965,8 +1037,9 @@
             // console.log(data[0]);
             // console.log(data.includes('27'));
             $('#sub_klasifikasi').empty();
-            for(let key in sub_klas) {
-                // console.log(sub_klas[key].ID_Keahlian);
+            $('#sub_klasifikasi').append(new Option('Pilih Sub-Klasifikasi','')).prop('selected',true).prop('hidden',true);
+
+            for(let key in sub_klas) {// console.log(sub_klas[key].ID_Keahlian);
                 if(data[0] == sub_klas[key].ID_Keahlian){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#sub_klasifikasi').append(new Option(sub_klas[key].Deskripsi, sub_klas[key].ID_Sub_Bidang_Keahlian));

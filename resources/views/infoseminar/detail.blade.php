@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container-fluid">
-    <div class="box box-content">
+    <div class="box box-content" id="content">
         <div class="box-body">
             <h2 text-align="center">Detail Seminar P3SM</h2>
             <hr>
