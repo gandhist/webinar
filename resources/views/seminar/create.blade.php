@@ -951,7 +951,7 @@
             $('#moderator').select2({
                 placeholder: " Pilih Moderator",
                 allowClear: true,
-                maximumSelectionLength: 2,
+                // maximumSelectionLength: 2,
             });
         })
 

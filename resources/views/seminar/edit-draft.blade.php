@@ -1086,8 +1086,9 @@
             }
 
             $('#moderator').select2({
-            allowClear: true,
-            maximumSelectionLength: 2,});
+                allowClear: true,
+                // maximumSelectionLength: 2
+                });
         })
 
         $('.to-pimpinan').on('change', function() {
