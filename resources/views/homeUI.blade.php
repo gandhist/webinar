@@ -6,9 +6,16 @@
 		background-image: url("p3sm.jpeg");
   		background-size: 100%;
 		background-repeat:no-repeat;
+		height: 350px
 	}
 	
-	
+	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
+		.jumbotron {
+            background-image: url("p3sm.jpeg");
+            background-size: 100%;
+            background-repeat:no-repeat;
+        }
+	}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
@@ -16,39 +23,32 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container">
 	<div class="jumbotron">
-		{{-- <h1 style="margin-bottom:50px;">Selamat Datang di Website Sertifikat P3SM</h1> --}}
-		{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
-		{{-- <button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button> --}}
-		{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
-		{{-- <button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button> --}}
-	
-	<div class="welcome">
-		<h1 style="margin-bottom:50px;">Selamat Datang di Website Sertifikat P3SM</h1>
-		{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
-		<button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button>
-		{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
-		<button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button>
-	</div>
-
-	<div class="login">
-		<h2 class="head-title">Login</h2>
-		<p>Silahkan Login dengan email dan password yang sudah terverifikasi.</p>
-		<div class="col-sm-4">
-		  	<form action="{{ url('login') }}" method="post">
-				{{ csrf_field() }}
-				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Username" name="username">
-					<span class="glyphicon glyphicon-user form-control-feedback"></span>
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control" placeholder="Password" name="password">
-					<span class="glyphicon glyphicon-lock"></span>
-				</div>
-				<button type="submit" class="btn btn-primary">Sign In</button>
-			{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
-		  	</form>
+		<div class="welcome">
+			<h1 style="margin-bottom:50px;">Selamat Datang di Website Sertifikat P3SM</h1>
+			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
+			<button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button>
+			{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
+			<button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button>
 		</div>
-	</div>
+		<div class="login">
+			<h2 class="head-title">Login</h2>
+			<p>Silahkan Login dengan email dan password yang sudah terverifikasi.</p>
+			<div class="col-sm-4">
+				<form action="{{ url('login') }}" method="post">
+					{{ csrf_field() }}
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Username" name="username">
+						<span class="glyphicon glyphicon-user form-control-feedback"></span>
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="Password" name="password">
+						<span class="glyphicon glyphicon-lock"></span>
+					</div>
+					<button type="submit" class="btn btn-primary">Sign In</button>
+				{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
+				</form>
+			</div>
+		</div>
 	</div>
 	<div class="seminar">
         <b>Daftar Seminar</b>
@@ -83,7 +83,6 @@
             </tbody>
         </table>
 	</div>
-
 </div>
 
 @endsection

@@ -14,7 +14,7 @@
   }
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid" id="content">
   @if(session()->get('success'))
     <div class="alert alert-success"> {{ session()->get('success') }}
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

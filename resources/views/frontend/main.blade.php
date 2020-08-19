@@ -20,6 +20,20 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <style>
+        #navbar {
+            position: fixed;
+            width: 100%;
+            z-index: 999;
+        }
+        .navbar {
+            background-color: #b7d0ed;   
+        }
+        #cont{
+            padding-top: 60px;
+        } 
+        #content{
+            padding-top: 55px;
+        } 
         table { 
             width: 100%; 
             border-collapse: collapse; 
@@ -43,7 +57,16 @@
             padding: 15px;
             border-radius: 20px;
             line-height: 1.2;
-        }        
+        } 
+        .footer {
+            background-color: #b7d0ed;
+            width:100%;
+            color: #black;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 14px;
+        }
 
         @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
             /* Force table to not be like tables anymore */
@@ -100,168 +123,9 @@
         }
       </style>
 </head>
-
 <body>
-    <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button> 
-    <div class="wrapper">
-        
-        <!-- Sidebar Holder -->
-        {{-- <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>P3SM</h3>
-            </div>
-
-            <ul class="list-unstyled components">
-                @if(!Auth::user())
-                <li class="active">
-                    <a href="{{ route('login') }}">Login</a>
-                </li>
-                @else
-                <li class="active">
-                    <a href="{{ route('infoseminar') }}">Seminar</a>
-                    <a href="{{ route('profile.edit') }}">User Profile</a>
-                </li>
-                @endif
-            </ul>    
-        </nav> --}}
-
-        <!-- Page Content Holder -->
-        <div id="content">
-            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #b7d0ed;">
-                
-                <div class="container-fluid">
-                    <h4>P3SM</h4>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button>
-                    
-                    @if(!Auth::user())
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('') }}">Beranda</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href= "{{ url('infoseminar') }}">Seminar</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('registrasi') }}">Bergabung</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ url('login') }}">Login</a>
-                            </li>
-                        </ul>
-                    </div>
-                    @else
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href= "{{ url('infoseminar') }}">Seminar</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">User Profile</a>
-                            </li>
-                            <li class="nav-item active">
-                                <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
-                                    Sign Out
-                                </a>
-                                <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                                {{-- <form method="post" action="{{ url('logout') }}" style="display: inline">
-                                    {{ csrf_field() }}
-                                    <button class="btn btn-primary" type="submit">Sign Out</button>
-                                  </form> --}}
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Default dropleft button -->
-                    {{-- <div class="btn-group dropleft">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                            {{ \Auth::user()->name }}
-                        </button>
-                        <div class="dropdown-menu">
-                        <form method="post" action="{{ url('logout') }}" style="display: inline">
-                            {{ csrf_field() }}
-                            <button class="btn btn-default" type="submit">Sign Out</button>
-                          </form>
-                        </div>
-                    </div> --}}
-                    @endif
-                </div>
-            </nav>
-            {{-- content goes here --}}
-            @yield('content')
-            {{-- content end here --}}
-
-        </div>
-              
-    </div>
-
-    <!-- Footer Section Start -->
-    <footer>
-        <!-- Footer Area Start -->
-        <section class="footer-Content">
-        {{-- <div class="container">
-        
-        </div> --}}
-        <!-- Copyright Start  -->
-        <div class="copyright">
-            <div class="container">
-                <div class="row" align="center">
-                    <div class="col-md-12">
-                        <div class="site-info">
-                            &copy; {{ \Carbon\Carbon::now()->isoFormat('YYYY') }} - All Rights Reserved
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Copyright End -->
-        </section>
-        <!-- Footer area End -->
-        
-    </footer>
-     <!-- Footer Section End --> 
-
-
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-    <script>
-        //Get the button
-        var mybutton = document.getElementById("myBtn");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
-        
-        function scrollFunction() {
-            if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        }
-
-        function initFreshChat() {
-          window.fcWidget.init({
-            token: "4a307164-690f-44ea-b930-f31ee9d818e3",
-            host: "https://wchat.freshchat.com"
-          });
-        }
-        function initialize(i,t){var e;i.getElementById(t)?initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,e.src="https://wchat.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}function initiateCall(){initialize(document,"freshchat-js-sdk")}window.addEventListener?window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
-      </script>
-    @stack('script')
-</body>
-</html>
+    @include('frontend.navigation')
+    <div id="content">
+        @yield('content')
+    </div> 
+    @include('frontend.footer')
