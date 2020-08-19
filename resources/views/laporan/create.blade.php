@@ -110,12 +110,12 @@
 
                                         </div>
                                           
-                                          <div class="form-group">
+                                          {{-- <div class="form-group">
                                               <label>Id Number</label>
                                               <input name="id_number" id="id_number" type="text" class="form-control" placeholder="Id Number">
                                                 <span id="id_number" class="help-block" >{{ $errors->first('id_number') }} </span> 
 
-                                          </div>
+                                          </div> --}}
           
                                           <div class="form-group">
                                               <label>Visit Number</label>
@@ -298,12 +298,12 @@
                                                     <tr>
                                                         <td colspan="2" style=" border:1px solid black; padding:2px; vertical-align: top; text-align: center; line-height: normal;"><input type="radio" class="Radio" name="tikor" value="major"></td>
                                                         <td colspan="22" style=" border:1px solid black; padding: 2px; text-align: justify; vertical-align: top;line-height: normal;">
-                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MAJOR</b> diidentifikasi harus segera dilakukan dan <b>ACI CERTIFICATION diberitahu tentang tindakan yang diambil dalam waktu 30 hari.</b> Auditor ACI CERTIFICATION akan melakukan <b>tindak lanjut kunjungan</b> dalam waktu 90 hari untuk mengkonfirmasi tindakan yang diambil, evaluasi terhadap keefektifan mereka, dan menentukan apakah sertifikasi dapat diberikan atau dilanjutkan.</td>
+                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MAJOR</b> diidentifikasi harus segera dilakukan dan <b>MANDIRI CERTIFICATION diberitahu tentang tindakan yang diambil dalam waktu 30 hari.</b> Auditor MANDIRI CERTIFICATION akan melakukan <b>tindak lanjut kunjungan</b> dalam waktu 90 hari untuk mengkonfirmasi tindakan yang diambil, evaluasi terhadap keefektifan mereka, dan menentukan apakah sertifikasi dapat diberikan atau dilanjutkan.</td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="2" style=" border:1px solid black; padding:2px; vertical-align: top; text-align: center; line-height: normal;"><input type="radio" class="Radio" name="tikor" value="minor"></td>
                                                         <td colspan="22" style=" border:1px solid black; padding: 2px; text-align: justify; vertical-align: top; line-height: normal;">
-                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MINOR</b> harus segera dilakukan dan diidentifikasi dan <b>catatan dengan bukti pendukung yang dikirim ke auditor ACI CERTIFICATION untuk close-out dalam waktu 90 hari.</b> Pada kunjungan Audit jadwal berikutnya, tim audit ACI CERTIFICATION akan menindaklanjuti semua ketidaksesuaian diidentifikasi untuk mengkonfirmasi efektifitas tindakan perbaikan dan pencegahan yang diambil.</td>
+                                                        Tindakan korektif untuk mengatasi ketidaksesuaian <b>MINOR</b> harus segera dilakukan dan diidentifikasi dan <b>catatan dengan bukti pendukung yang dikirim ke auditor MANDIRI CERTIFICATION untuk close-out dalam waktu 90 hari.</b> Pada kunjungan Audit jadwal berikutnya, tim audit MANDIRI CERTIFICATION akan menindaklanjuti semua ketidaksesuaian diidentifikasi untuk mengkonfirmasi efektifitas tindakan perbaikan dan pencegahan yang diambil.</td>
                                                     </tr>
                                                 </table>
                                             </div>

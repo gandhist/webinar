@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\isoScope;
 use App\isoStandard;
 use App\Laporan;
-use App\BuModel;
-use App\BuKontakP;
+use App\IsoBuModel;
+use App\IsoBuKontakP;
 use App\isoLapScope;
 use App\isoDoc;
 use App\isoLapObs;
@@ -22,10 +22,12 @@ use App\NegaraModel;
 use App\StatusModel;
 use PDF;
 use Illuminate\Support\Facades\DB;
+use App\Traits\GlobalFunction;
 
 
 class LaporanController extends Controller
 {
+    use GlobalFunction;
     /**
      * Display a listing of the resource.
      *
@@ -56,6 +58,7 @@ class LaporanController extends Controller
     public function create()
     {
         //
+        
         $scope = isoScope::all();
         $standard = isoStandard::all();
         $provinsi = ProvinsiModel::all();
@@ -79,7 +82,7 @@ class LaporanController extends Controller
             [
                 "nama_bu" => "required",
                 "alamat" => "required",
-                "id_number" => "required",
+                // "id_number" => "required",
                 "visit_number" => "required",
                 "tanggal" => "required",
                 "visit_type" => "required",
@@ -94,7 +97,7 @@ class LaporanController extends Controller
                 "alamat.required" => "Alamat Harus di isi!",
             ]
         );
-        $bu = new BuModel;
+        $bu = new IsoBuModel;
         $bu->id_negara = $request->id_negara;
         $bu->id_prop = $request->id_prov;
         $bu->id_kota = $request->id_kota;
@@ -102,7 +105,7 @@ class LaporanController extends Controller
         $bu->alamat = $request->alamat;
         $simpan_bu = $bu->save();
 
-        $cp = new BuKontakP;
+        $cp = new IsoBuKontakP;
         $cp->id_bu = $bu->id;
         $cp->nama_pimp = $request->comp_rep;
         $cp->jab_pimp = $request->jab_pimp;
@@ -111,7 +114,7 @@ class LaporanController extends Controller
         $lp = new Laporan;
         $lp->id_bu = $bu->id;
         $lp->status = $request->status;
-        $lp->id_number = $request->id_number;
+        // $lp->id_number = $request->id_number;
         $lp->iso_standard = $request->standard;
         $lp->visit_number = $request->visit_number;
         $lp->audit_date = $request->tanggal;
@@ -179,6 +182,10 @@ class LaporanController extends Controller
         $iso->tipe_iso = $request->standard;
         $iso->no_sert = $request->standard;
         $iso->tgl_sert = $request->tanggal;
+        $iso->valid_date = Carbon::parse($request->tanggal)->addYear(3)->isoFormat("YYYY-MM-DD"); 
+        $iso->first_surv = Carbon::parse($request->tanggal)->addYear(1)->isoFormat("YYYY-MM-DD"); 
+        $iso->second_surv = Carbon::parse($request->tanggal)->addYear(2)->isoFormat("YYYY-MM-DD"); 
+        $iso->recertification = Carbon::parse($request->tanggal)->addYear(3)->isoFormat("YYYY-MM-DD"); 
         $iso->save();
         return response()->json([
             'status' => true,
@@ -248,7 +255,7 @@ class LaporanController extends Controller
                 "alamat.required" => "Alamat Harus di isi!",
             ]
         );
-        $bu = BuModel::find($lp->id_bu);
+        $bu = IsoBuModel::find($lp->id_bu);
         $bu->id_negara = $request->id_negara;
         $bu->id_prop = $request->id_prov;
         $bu->id_kota = $request->id_kota;
@@ -256,7 +263,7 @@ class LaporanController extends Controller
         $bu->alamat = $request->alamat;
         $simpan_bu = $bu->save();
 
-        $cp = BuKontakP::where('id_bu',$lp->id_bu)->first();
+        $cp = IsoBuKontakP::where('id_bu',$lp->id_bu)->first();
         $cp->id_bu = $bu->id;
         $cp->nama_pimp = $request->comp_rep;
         $cp->jab_pimp = $request->jab_pimp;
@@ -306,6 +313,7 @@ class LaporanController extends Controller
         $lp_save = $lp->save();
         $px_nama = "satf_";
         $px_val = "satf_val_";
+        $id_obs_delete = [];
         for ($i=0; $i < 100 ; $i++) { 
             if ($request->has($px_nama.$i)) {
                 // add new data
@@ -317,6 +325,7 @@ class LaporanController extends Controller
                     $obs->created_by = Auth::id();
                     $obs->created_at = Carbon::now()->toDateTimeString();
                     $obs->save();
+                    $id_obs_delete[] = $obs->id;
                 }
                 // update
                 else {
@@ -328,10 +337,18 @@ class LaporanController extends Controller
                     $obs->updated_by = Auth::id();
                     $obs->updated_at = Carbon::now()->toDateTimeString();
                     $obs->save();
+                    $id_obs_delete[] = $obs->id;
                 }
                 
             }
         }
+        // $obs_del = isoLapObs::whereNotIn('id',$id_obs_delete)->update(
+        //     [
+        //         'deleted_by' => Auth::id(),
+        //         'deleted_at' => Carbon::now()->toDateTimeString(),
+        //     ]
+        // );
+        // di delete dengan ajax
         $del = isoLapScope::where('id_laporan',$lp->id)->update(
             [
                 'deleted_by' => Auth::id(),
@@ -354,6 +371,10 @@ class LaporanController extends Controller
         $iso->tipe_iso = $lp->iso_standard;
         $iso->no_sert = $request->id_number;
         $iso->tgl_sert = $request->tanggal;
+        $iso->valid_date = Carbon::parse($request->tanggal)->addYear(3)->isoFormat("YYYY-MM-DD"); 
+        $iso->first_surv = Carbon::parse($request->tanggal)->addYear(1)->isoFormat("YYYY-MM-DD"); 
+        $iso->second_surv = Carbon::parse($request->tanggal)->addYear(2)->isoFormat("YYYY-MM-DD"); 
+        $iso->recertification = Carbon::parse($request->tanggal)->addYear(3)->isoFormat("YYYY-MM-DD"); 
         $iso->updated_by = Auth::id();
         $iso->updated_at =  Carbon::now()->toDateTimeString();
         $iso->save();
@@ -404,6 +425,27 @@ class LaporanController extends Controller
             return $data = DB::table('ms_kota')
                 ->where('id', '=', $req->kota)
                 ->get(['provinsi_id']);
+        }
+    }
+
+    // ajax hapus observasi
+    public function  hapusObs(Request $request){
+        $data = isoLapObs::find($request->id);
+        $save = $data->update([
+            'deleted_at' => Carbon::now()->toDateTimeString(),
+            'deleted_by' => Auth::id(),
+        ]);
+        if($save){
+            return response()->json([
+                'status' => true,
+                'message' => "Item Observasi berhasil di hapus!"
+            ],200);
+        }
+        else{
+            return response()->json([
+            'status' => false,
+            'message' => "gagal dalam menghapus item observasi!"
+        ],200);
         }
     }
 }

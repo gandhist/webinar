@@ -18,7 +18,7 @@ class Laporan extends Model
 
     // relasi belongs to badan usaha
     public function bu_r(){
-        return $this->belongsTo('App\BuModel','id_bu');
+        return $this->belongsTo('App\IsoBuModel','id_bu');
     }
 
     // has many satf

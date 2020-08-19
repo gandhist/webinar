@@ -7,13 +7,17 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\IsoModel;
+use App\Laporan;
 use App\KotaModel;
 use App\ProvinsiModel;
 use App\NegaraModel;
 use PDF;
+use App\Traits\GlobalFunction;
+
 
 class IsoController extends Controller
 {
+    use GlobalFunction;
     /**
      * Display a listing of the resource.
      *
@@ -180,4 +184,54 @@ class IsoController extends Controller
         return $pdf->stream("Sertifikat.pdf");
         return view('iso.iso_temp');
     }
+
+    // print blanko
+    public function print_blanko($id){
+        // generate qr first
+        $url4 = url("iso/print/$id");
+        $nama4 = "QR_".$id.".png";
+        $qrcode4 = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url4, base_path("public/qr/".$nama4));
+
+        $data['data'] = IsoModel::find($id);
+        $pdf = PDF::loadview('iso.iso_temp2', $data);
+        $pdf->setPaper('A4','portrait');
+        return $pdf->stream("Sertifikat.pdf");
+    }
+
+    // validity iso
+    public function validity($id){
+        return 'test valid';
+    }
+
+    // generate iso number
+    public function bentukNo(Request $request){
+        $id = $request->id;
+        $id_iso = $request->id_std;
+        $id_kokab = $request->id_kota;
+        $no_iso = $this->generate_iso_number($id_iso, $id_kokab);
+        $lp = Laporan::find($id);
+        $lp->id_number = $no_iso;
+        $simpan = $lp->save();
+        $iso = IsoModel::where('id_laporan',$lp->id)->first();
+        $iso->no_sert = $no_iso;
+        $iso->status = $lp->status;
+        $iso->save();
+        if($simpan){
+            return response()->json([
+                'status' => true,
+                'message' => 'No Iso Berhasil di bentuk',
+                'noiso' => $lp->id_number
+            ], 200);
+        }
+        else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No Iso gagal di bentuk'
+            ], 200);
+        }
+
+
+    }
+
+    
 }

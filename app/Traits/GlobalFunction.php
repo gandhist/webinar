@@ -21,4 +21,29 @@ trait GlobalFunction {
          ->errorCorrection('L')->size(150)->generate($url, base_path("seminar/qr/$dir_name/baru/$nama"));
     }
 
+    // generate iso number
+    public function generate_iso_number($id_iso, $id_kota){
+        $code = 'ISO';
+        $rn = DB::table('running_number')->where('code',$code)->first();
+        $tahun = Carbon::now()->isoFormat('YY');
+        if ($tahun == substr($rn->tahun,2,2)) {
+            DB::table('running_number')->where('code',$code)->update(
+                [
+                "rn"=>$rn->rn+1,
+                ]);
+        }
+        else {
+            DB::table('running_number')->where('code',$code)->update(
+                [
+                    "rn"=>'1',
+                    'tahun' =>  Carbon::now()->isoFormat('YYYY')
+                ]
+            );
+            $rn = DB::table('running_number')->where('code','ISO')->first();
+        }
+        $rn = sprintf('%03d', $rn->rn);
+        $no_iso = $id_iso.'.'.$id_kota.'.'.$rn.'.'.$tahun;
+        return $no_iso;
+    }
+
 }

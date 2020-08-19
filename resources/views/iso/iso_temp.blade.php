@@ -44,7 +44,7 @@
           border-radius: 0px;
           
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-          background-image: url("/iso/images/bg_sertf_2.png");
+          background-image: url("/iso/images/blanko_iso.png");
           background-size: contain;
           background-repeat: no-repeat;
       }
@@ -89,7 +89,16 @@
           @endif
         </div>
         <div style="text-align: center; margin-top: 0px;">
-        <img src="{{  public_path('iso/images/') }}/logoheader.png" style="text-align: center; margin-top: 30px;" width="200px"><BR>
+        {{-- <img src="{{  public_path('iso/images/') }}/logoheader.png" style="text-align: center; margin-top: 30px;" width="200px"> --}}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         {{-- <span style="color: #206f9c; font-size: 18px;"><strong>{{ $data->iso_r->kode }}</strong></span> --}}
       </div>
       <div style="margin-top: 90px; margin-left: 115px; margin-right: 120px; text-align: justify;">
@@ -144,7 +153,7 @@
           </td>
           <td colspan="8" style="padding: 20px; vertical-align: bottom; text-align: center;"><img src="{{  public_path('iso/images/') }}/tt_dasril.png" width="140px" height="50px" ><br>Director</td>
         </tr>
-        <tr>
+        {{-- <tr>
           <td colspan="8" style="text-align: left;">
             <p style="font-size: 12px;">
               Mandiri Certification presented by :<br>
@@ -157,7 +166,7 @@
           </td>
           <td colspan="8" style="padding: 20px; text-align: center;"></td>
 
-        </tr>
+        </tr> --}}
       </table>  
       
       
