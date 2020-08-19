@@ -986,6 +986,8 @@
             // console.log(data[0]);
             // console.log(data.includes('27'));
             $('#sub_klasifikasi').empty();
+            $('#sub_klasifikasi').append(new Option('Pilih Sub-Klasifikasi','')).prop('selected',true).prop('hidden',true);
+
             for(let key in sub_klas) {
                 // console.log(sub_klas[key].ID_Keahlian);
                 if(data[0] == sub_klas[key].ID_Keahlian){

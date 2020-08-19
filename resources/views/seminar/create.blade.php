@@ -912,6 +912,14 @@
 
         $('#instansi_penyelenggara').on('change', function() {
             pendukung = @json($pendukung);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
             // console.log(pendukung.hasOwnProperty('33'));
             data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
@@ -920,9 +928,15 @@
             $('#instansi_pendukung').empty();
             for(let key in pendukung) {
                 if(!data.includes(key)){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
-                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
-                    // console.log(key);
+                    if(pend.includes((key).toString())) {
+                        //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                        $('#instansi_pendukung').append(new Option(pendukung[key], key)).prop('selected',true);
+                        // console.log(key);
+                    }else{
+                        //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
+                        $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                        // console.log(key);
+                    }
                 }
             }
 
@@ -965,8 +979,9 @@
             // console.log(data[0]);
             // console.log(data.includes('27'));
             $('#sub_klasifikasi').empty();
-            for(let key in sub_klas) {
-                // console.log(sub_klas[key].ID_Keahlian);
+            $('#sub_klasifikasi').append(new Option('Pilih Sub-Klasifikasi','')).prop('selected',true).prop('hidden',true);
+
+            for(let key in sub_klas) {// console.log(sub_klas[key].ID_Keahlian);
                 if(data[0] == sub_klas[key].ID_Keahlian){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#sub_klasifikasi').append(new Option(sub_klas[key].Deskripsi, sub_klas[key].ID_Sub_Bidang_Keahlian));
