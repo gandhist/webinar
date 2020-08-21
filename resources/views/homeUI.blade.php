@@ -22,13 +22,15 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container">
+	
 	<div class="jumbotron">
 		<div class="welcome">
-			<h1 style="margin-bottom:50px;">Selamat Datang di Website Sertifikat P3SM</h1>
+			<h1 style="margin-bottom:50px;">Selamat Datang di Website Sertifikat</h1>
+			<p>P3S Mandiri</p>
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
 			<button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button>
 			{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
-			<button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button>
+			{{-- <button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button> --}}
 		</div>
 		<div class="login">
 			<h2 class="head-title">Login</h2>
@@ -50,6 +52,11 @@
 			</div>
 		</div>
 	</div>
+	@if(session()->get('success'))
+        <div class="alert alert-success">{{ session()->get('success') }}
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+        </div>
+    @endif
 	<div class="seminar">
         <b>Daftar Seminar</b>
 		<br>
@@ -75,8 +82,8 @@
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
 					<td>@if ($key->is_free == '0') Gratis @else Rp. {{ format_uang($key->biaya)}} @endif</td></td>
 					<td style="text-align:center;">
-						<a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-						data-placement="top" title="Lihat Detail">Detail</a>
+						<a href="{{ url('registrasi/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+						data-placement="top" title="Ikut Seminar">IKUT</a>
 					</td>
                 </tr>
                 @endforeach
@@ -97,7 +104,7 @@
 <script type="text/javascript" >
 	$('.login').hide();
 	$('.welcome').fadeIn('slow');
-	$('.seminar').hide();
+	// $('.seminar').hide();
 	$(function() {
 		$('#login').on('click', function(){
 			$('.welcome').fadeOut('slow', function(){

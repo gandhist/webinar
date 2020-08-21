@@ -19,4 +19,8 @@ class FrontendController extends Controller
         }
         return view('homeUI')->with(compact('data'));
     }
+    public function reset()
+    {
+        return view('reset');
+    }
 }
