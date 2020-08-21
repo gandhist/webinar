@@ -20,7 +20,8 @@
         "nesbot/carbon": "2.27.0 as 1.39.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "tymon/jwt-auth": "^0.5.12",
-        "yajra/laravel-datatables-oracle": "~8.0"
+        "yajra/laravel-datatables-oracle": "~8.0",
+        "vinkla/hashids": "5.1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
