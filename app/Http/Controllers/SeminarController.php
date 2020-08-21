@@ -1312,6 +1312,14 @@ class SeminarController extends Controller
         return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke semua peserta");
     }
 
+    // kirim wa
+    public function kirimWA(){
+        $nohp = '081240353913';
+        $pesan = "youre awesome";
+        return $this->kirimPesanWA($nohp,$pesan);
+        
+    }
+
     // kirim email ke peserta yg dipilih
     public function sendEmail($id){
         $emails = PesertaSeminar::where('no_srtf',$id)->first();
