@@ -16,6 +16,7 @@ Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
 Route::get('infoseminar/daftar/{id}','InfoSeminarController@daftar');
 Route::post('infoseminar/store/{id}','InfoSeminarController@store');
+Route::get('kirimwa','SeminarController@kirimWA');
 
 Route::get('registrasi','RegistController@index');
 Route::post('registrasi/store','RegistController@store');
