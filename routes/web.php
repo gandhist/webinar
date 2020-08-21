@@ -12,6 +12,7 @@
 */
 Route::auth();
 Route::get('', 'FrontendController@index')->name('homeUI');
+Route::get('reset', 'FrontendController@reset');
 Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
 Route::get('infoseminar/daftar/{id}','InfoSeminarController@daftar');
@@ -19,6 +20,8 @@ Route::post('infoseminar/store/{id}','InfoSeminarController@store');
 
 Route::get('registrasi','RegistController@index');
 Route::post('registrasi/store','RegistController@store');
+Route::get('registrasi/daftar/{id}','RegistController@daftar');
+Route::post('registrasi/save/{id}','RegistController@save');
 
 Route::get('profile', 'ProfileController@edit')->name('profile.edit');
 Route::post('profile', 'ProfileController@update')->name('profile.update');
@@ -158,6 +161,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 		Route::resources([
 			'users' => 'UserController',
 		]);
+		
 		Route::resources([
 			'user_role' => 'UserRoleController',
 		]);
