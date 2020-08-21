@@ -27,6 +27,12 @@
         no registrasi ska di profile
         tambah field nilai sktk di srtf_peserta_seminar
         tambah field total nilai sktk di table peserta
+        ENV : 
+        untuk api whatsapp tambahkan env nya
+        USER_ZZ=43c6df9a2fb6
+        PASS_ZZ=bry8ntb4y5
+        URL_WA_ZZ=https://gsm.zenziva.net/api/sendWA/
+        function nya ada di traist globalFunction
         
 
 
