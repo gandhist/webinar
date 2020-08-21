@@ -916,64 +916,53 @@
         $('#instansi_penyelenggara').on('select2:select', function() {
             pendukung = @json($pendukung);
 
-            // console.log(pendukung.hasOwnProperty('33'));
+            // console.log(e.currentTarget.value);
             data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
 
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
             peny = $('#instansi_penyelenggara').select2('val');
             pend = $('#instansi_pendukung').select2('val');
 
-            // console.log($('#instansi_penyelenggara').select2('val'));
-            // Instansi Penyelenggara
 
-            $('#instansi_penyelenggara').empty();
-            if( !!pend ) {
-                for(let key in pendukung) {
-                    if(!pend.includes(key)){
-                        $('#instansi_penyelenggara').append(new Option(pendukung[key], key));
-                    }
-                }
-                console.log('1');
-            } else {
-                for(let key in pendukung) {
-                    $('#instansi_penyelenggara').append(new Option(pendukung[key], key));
-                }
-                console.log('2');
-            }
-
-            if( !!peny ) {
-                $('#instansi_penyelenggara').select2('val',peny,{
-                    placeholder: " Pilih Instansi Pendukung",
-                    allowClear: true,
-                });
-                console.log(peny);
-            } else {
-                $('#instansi_penyelenggara').select2({
-                    placeholder: " Pilih Instansi Pendukung",
-                    allowClear: true,
-                });
-                console.log('4');
-            }
-            // Instansi Pendukung
-            $('#instansi_pendukung').empty();
             for(let key in pendukung) {
-                if(!data.includes(key)){
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
                     $('#instansi_pendukung').append(new Option(pendukung[key], key));
                 }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
             }
 
-            if( !!pend ) {
-                $('#instansi_pendukung').select2('val',pend,{
-                    placeholder: " Pilih Instansi Pendukung",
-                    allowClear: true,
-                });
-            } else {
+            // if( !!pend ) {
+            //     $('#instansi_pendukung').select2('val',pend,{
+            //         placeholder: " Pilih Instansi Pendukung",
+            //         allowClear: true,
+            //     });
+            // } else {
                 $('#instansi_pendukung').select2({
                     placeholder: " Pilih Instansi Pendukung",
                     allowClear: true,
                 });
-            }
+            // }
         });
             // END Select Penyelenggara
 
@@ -981,15 +970,53 @@
         $('#instansi_penyelenggara').on('select2:unselect', function() {
             pendukung = @json($pendukung);
 
-            // console.log(pendukung.hasOwnProperty('33'));
+            // console.log(e.currentTarget.value);
             data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(pend);
-            $('#instansi_pendukung').empty();
+
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
             for(let key in pendukung) {
-                if(!data.includes(key)){
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+                if(!data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
                     $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
                 }
             }
 
@@ -997,8 +1024,128 @@
                 placeholder: " Pilih Instansi Pendukung",
                 allowClear: true,
             });
+
         });
             // END unselect Penyelenggara
+
+            // Instansi Pendukung
+
+        $('#instansi_pendukung').on('select2:select', function() {
+            pendukung = @json($pendukung);
+
+            // console.log(e.currentTarget.value);
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
+            for(let key in pendukung) {
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+            }
+
+            // if( !!pend ) {
+            //     $('#instansi_pendukung').select2('val',pend,{
+            //         placeholder: " Pilih Instansi Pendukung",
+            //         allowClear: true,
+            //     });
+            // } else {
+                $('#instansi_pendukung').select2({
+                    placeholder: " Pilih Instansi Pendukung",
+                    allowClear: true,
+                });
+            // }
+        });
+            // END Instansi Pendukung
+
+            // Pendukung unselect
+
+        $('#instansi_pendukung').on('select2:unselect', function() {
+            pendukung = @json($pendukung);
+
+            // console.log(e.currentTarget.value);
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
+            for(let key in pendukung) {
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+                if(!data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            $('#instansi_pendukung').select2({
+                placeholder: " Pilih Instansi Pendukung",
+                allowClear: true,
+            });
+
+        });
+
+            // End pendukung unselect
 
         // End Instansi Penyelenggara dan Instansi Pendukung
 
@@ -1010,22 +1157,26 @@
             mode = $('#moderator').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(data.includes('27'));
+            // Instansi Pendukung
             $('#moderator').empty();
             for(let key in personal) {
                 if(!nara.includes(key)){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#moderator').append(new Option(personal[key], key));
-                    // console.log(key);
                 }
             }
 
-            $('#moderator').select2({
-                placeholder: " Pilih Moderator",
-                allowClear: true,
-                // maximumSelectionLength: 2,
-            });
-        })
+            if( !!mode ) {
+                $('#moderator').select2('val',pend,{
+                    placeholder: " Pilih Moderator",
+                    allowClear: true,
+                });
+            } else {
+                $('#moderator').select2({
+                    placeholder: " Pilih Moderator",
+                    allowClear: true,
+                });
+            }
+        });
 
 
         $('#klasifikasi').on('change', function() {
