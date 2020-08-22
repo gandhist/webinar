@@ -509,7 +509,8 @@ class SeminarController extends Controller
             $instansi = BuModel::where('is_actived','1')->get();
             $ins = BuModel::where('is_actived','1')->pluck('nama_bu','id');
             $personal = Personal::where('is_activated','1')->get();
-            $pers = Personal::pluck('nama','id');
+            // $pers = Personal::pluck('nama','id');
+            $pers = Personal::where('is_activated','1')->pluck('nama','id');
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
             $pimpinanArr = BuModel::pluck('nama_pimp','id');
@@ -541,7 +542,8 @@ class SeminarController extends Controller
             $instansi = BuModel::where('is_actived','1')->get();
             $ins = BuModel::where('is_actived','1')->pluck('nama_bu','id');
             $personal = Personal::where('is_activated','1')->get();
-            $pers = Personal::pluck('nama','id');
+            // $pers = Personal::pluck('nama','id');
+            $pers = Personal::where('is_activated','1')->pluck('nama','id');
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
             $pimpinanArr = BuModel::pluck('nama_pimp','id');

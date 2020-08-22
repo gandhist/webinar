@@ -205,24 +205,24 @@
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
                             class="form-control to-pimpinan to-logo" multiple>
-                            @if(old('instansi_pendukung'))
-                                @foreach($instansi as $key)
-                                    <option value="{{ $key->id }}"
-                                    {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}
-                                    {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "disabled" : "" }}
-                                    >{{ $key->nama_bu }}</option>
-                                @endforeach
-                            @else
-                                @foreach($instansi as $key)
-                                    @if($pendukung->contains('id_instansi',$key->id))
-                                        <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
-                                    @elseif($penyelenggara->contains('id_instansi',$key->id))
-                                        <option value="{{ $key->id }}" disabled>{{ $key->nama_bu }}</option>
-                                    @else
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endif
-                                @endforeach
-                            @endif
+                                @if(old('instansi_pendukung'))
+                                    @foreach($instansi as $key)
+                                        <option value="{{ $key->id }}"
+                                        {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}
+                                        {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "disabled" : "" }}
+                                        >{{ $key->nama_bu }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach($instansi as $key)
+                                        @if($pendukung->contains('id_instansi',$key->id))
+                                            <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
+                                        @elseif($penyelenggara->contains('id_instansi',$key->id))
+                                            <option value="{{ $key->id }}" disabled>{{ $key->nama_bu }}</option>
+                                        @else
+                                            <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -542,19 +542,18 @@
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
                                 @if(old('narasumber'))
                                     @foreach($personal as $key)
-                                        @if( !(collect(old('moderator'))->contains($key->id)) )
-                                            <option value="{{$key->id}}"
-                                            {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}>
-                                            {{ $key->nama }}</option>
-                                        @endif
+                                        <option value="{{$key->id}}"
+                                        {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}
+                                        {{ ( collect(old('moderator'))->contains($key->id) ) ? "disabled" : "" }}>
+                                        {{ $key->nama }}</option>
                                     @endforeach
                                 @else
                                     @foreach($personal as $key)
-                                        @if( !($moderator->contains('id_personal',$key->id)) )
-                                            <option value="{{$key->id}}"
-                                            {{ $narasumber->contains('id_personal',$key->id)  ? "selected" : "" }}>
-                                            {{ $key->nama }}</option>
-                                        @endif
+                                        <option value="{{$key->id}}"
+                                        {{ $narasumber->contains('id_personal',$key->id)  ? "selected" : "" }}
+                                        {{ $moderator->contains('id_personal',$key->id) ? "disabled" : "" }}
+                                        >
+                                        {{ $key->nama }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -572,21 +571,20 @@
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
                             <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
-                                @if(old('narasumber'))
+                                @if(old('narasumber') || old('moderator'))
                                     @foreach($personal as $key)
-                                        @if(! ( collect(old('narasumber'))->contains($key->id) ) )
-                                            <option value="{{$key->id}}"
-                                            {{ (collect(old('moderator'))->contains($key->id)) ? "selected" : "" }}>
-                                            {{ $key->nama }}</option>
-                                        @endif
+                                        <option value="{{$key->id}}"
+                                        {{ ( collect(old('narasumber'))->contains($key->id) ) ? "disabled" : "" }}
+                                        {{ ( collect(old('moderator'))->contains($key->id) ) ? "selected" : "" }}>
+                                        {{ $key->nama }}</option>
                                     @endforeach
                                 @else
                                     @foreach($personal as $key)
-                                        @if( !($narasumber->contains('id_personal',$key->id)) )
-                                            <option value="{{$key->id}}"
-                                            {{ $moderator->contains('id_personal',$key->id)  ? "selected" : "" }}>
-                                            {{ $key->nama }}</option>
-                                        @endif
+                                        <option value="{{$key->id}}"
+                                        {{ $narasumber->contains('id_personal',$key->id)  ? "disabled" : "" }}
+                                        {{ $moderator->contains('id_personal',$key->id) ? "selected" : "" }}
+                                        >
+                                        {{ $key->nama }}</option>
                                     @endforeach
                                 @endif
                             </select>
