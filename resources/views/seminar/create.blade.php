@@ -935,7 +935,6 @@
                     el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
                     // console.log(el)
                     el.setAttribute('disabled','');
-                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
                 }
             }
 
@@ -952,17 +951,10 @@
                 }
             }
 
-            // if( !!pend ) {
-            //     $('#instansi_pendukung').select2('val',pend,{
-            //         placeholder: " Pilih Instansi Pendukung",
-            //         allowClear: true,
-            //     });
-            // } else {
-                $('#instansi_pendukung').select2({
-                    placeholder: " Pilih Instansi Pendukung",
-                    allowClear: true,
-                });
-            // }
+            $('#instansi_pendukung').select2({
+                placeholder: " Pilih Instansi Pendukung",
+                allowClear: true,
+            });
         });
             // END Select Penyelenggara
 
@@ -1069,17 +1061,10 @@
                 }
             }
 
-            // if( !!pend ) {
-            //     $('#instansi_pendukung').select2('val',pend,{
-            //         placeholder: " Pilih Instansi Pendukung",
-            //         allowClear: true,
-            //     });
-            // } else {
-                $('#instansi_pendukung').select2({
-                    placeholder: " Pilih Instansi Pendukung",
-                    allowClear: true,
-                });
-            // }
+            $('#instansi_pendukung').select2({
+                placeholder: " Pilih Instansi Pendukung",
+                allowClear: true,
+            });
         });
             // END Instansi Pendukung
 
@@ -1106,9 +1091,7 @@
                 if(data2.includes(key)){
                     el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
                     // console.log(el)
-                    el.setAttribute('disabled','');
-                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
-                }
+                    el.setAttribute('disabled','');}
                 if(!data2.includes(key)){
                     el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
                     // console.log(el);
@@ -1149,33 +1132,195 @@
 
         // End Instansi Penyelenggara dan Instansi Pendukung
 
-        $('#narasumber').on('change', function() {
+        $('#narasumber').on('select2:select', function() {
             personal = @json($pers);
-            nara = $('#narasumber').select2('data').map(function(elem){
+            data = $('#narasumber').select2('data').map(function(elem){
                 return elem.id
             });
-            mode = $('#moderator').select2('data').map(function(elem){
+            data2 = $('#moderator').select2('data').map(function(elem){
                 return elem.id
             });
-            // Instansi Pendukung
-            $('#moderator').empty();
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+
             for(let key in personal) {
-                if(!nara.includes(key)){
-                    $('#moderator').append(new Option(personal[key], key));
+                if(data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');}
+            }
+
+            // Instansi Pendukung
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
                 }
             }
 
-            if( !!mode ) {
-                $('#moderator').select2('val',pend,{
-                    placeholder: " Pilih Moderator",
-                    allowClear: true,
-                });
-            } else {
-                $('#moderator').select2({
-                    placeholder: " Pilih Moderator",
-                    allowClear: true,
-                });
+            $('#moderator').select2({
+                placeholder: " Pilih Moderator",
+                allowClear: true,
+            });
+
+        });
+
+        $('#narasumber').on('select2:unselect', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+                if(!data2.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
             }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            $('#moderator').select2({
+                placeholder: " Pilih Moderator",
+                allowClear: true,
+            });
+
+        });
+
+        $('#moderator').on('select2:select', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+            }
+
+            $('#moderator').select2({
+                placeholder: " Pilih Moderator",
+                allowClear: true,
+            });
+
+
+        });
+
+        $('#moderator').on('select2:unselect', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');}
+                if(!data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            $('#moderator').select2({
+                placeholder: " Pilih Moderator",
+                allowClear: true,
+            });
+
+
         });
 
 
