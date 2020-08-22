@@ -156,19 +156,12 @@
                             <label for="instansi_penyelenggara" class="label-control required">Instansi Penyelengara</label>
                             <select name="instansi_penyelenggara[]" id="instansi_penyelenggara"
                             class="form-control to-pimpinan to-logo" multiple required>
-                                @if(old('instansi_penyelenggara'))
-                                    @foreach($instansi as $key)
-                                        @if(! (collect(old('instansi_pendukung'))->contains($key->id)) )
-                                            <option value="{{ $key->id }}"
-                                            {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "selected" : "" }}>
-                                            {{ $key->nama_bu }}</option>
-                                        @endif
-                                    @endforeach
-                                @else
-                                    @foreach($instansi as $key)
-                                        <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
-                                    @endforeach
-                                @endif
+                                @foreach($instansi as $key)
+                                    <option value="{{ $key->id }}"
+                                    {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "selected" : "" }}
+                                    {{ collect(old('instansi_pendukung'))->contains($key->id) ? "disabled" : "" }}
+                                    >{{ $key->nama_bu }}</option>
+                                @endforeach
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
                             <div id="instansi_penyelenggara" class="invalid-feedback text-danger">
@@ -184,15 +177,12 @@
                             <label for="instansi_pendukung" class="label-control required">Instansi Pendukung</label>
                             <select name="instansi_pendukung[]" id="instansi_pendukung"
                             class="form-control to-pimpinan to-logo" multiple required>
-                            @if(old('instansi_penyelenggara'))
                                 @foreach($instansi as $key)
-                                    @if(! (collect(old('instansi_penyelenggara'))->contains($key->id)) )
-                                        <option value="{{ $key->id }}"
-                                        {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
-                                    @endif
+                                    <option value="{{ $key->id }}"
+                                    {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}
+                                    {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "disabled" : "" }}
+                                    >{{ $key->nama_bu }}</option>
                                 @endforeach
-                            @endif
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
 
@@ -452,11 +442,10 @@
                             <label for="narasumber" class="label-control required">Narasumber</label>
                             <select name="narasumber[]" multiple="multiple" required class="form-control" id="narasumber">
                                 @foreach($personal as $key)
-                                    @if( !(collect(old('moderator'))->contains($key->id)) )
-                                        <option value="{{$key->id}}"
-                                        {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}>
-                                        {{ $key->nama }}</option>
-                                    @endif
+                                    <option value="{{$key->id}}"
+                                    {{ ( collect(old('narasumber'))->contains($key->id) ) ? "selected" : "" }}
+                                    {{ ( collect(old('moderator'))->contains($key->id) ) ? "disabled" : "" }}>
+                                    {{ $key->nama }}</option>
                                 @endforeach
                             </select>
                             <div class="small text-muted">Mohon perhatikan urutan, karena akan menentukan urutan pada sertifikat</div>
@@ -474,11 +463,10 @@
                             <label for="moderator" class="label-control required">Moderator</label>
                             <select name="moderator[]" multiple="multiple" required class="form-control" id="moderator">
                                 @foreach($personal as $key)
-                                    @if(! ( collect(old('narasumber'))->contains($key->id) ) )
-                                        <option value="{{$key->id}}"
-                                        {{ (collect(old('moderator'))->contains($key->id)) ? "selected" : "" }}>
-                                        {{ $key->nama }}</option>
-                                    @endif
+                                    <option value="{{$key->id}}"
+                                    {{ ( collect(old('narasumber'))->contains($key->id) ) ? "disabled" : "" }}
+                                    {{ ( collect(old('moderator'))->contains($key->id) ) ? "selected" : "" }}>
+                                    {{ $key->nama }}</option>
                                 @endforeach
                             </select>
                             <div id="moderator" class="invalid-feedback text-danger">
@@ -528,9 +516,9 @@
                         <div class="form-group {{ $errors->first('is_free') ? 'has-error' : '' }} ">
                             <label for="is-free" class="label-control required">Jenis</label>
                             <select name="is_free" id="is_free" class="form-control"  data-minimum-results-for-search="Infinity">
-                                <option value="" selected hidden>Pilih Jenis</option>
-                                <option value="0">Gratis</option>
-                                <option value="1">Berbayar</option>
+                                <option value="" {{old('is_free') ? '' : 'selected' }} hidden>Pilih Jenis</option>
+                                <option value="0" {{old('is_free') == '0' ? 'selected' : '' }}>Gratis</option>
+                                <option value="1" {{old('is_free') == '0' ? 'selected' : '' }}>Berbayar</option>
                             </select>
 
                             <div id="is_free" class="invalid-feedback text-danger">
@@ -822,9 +810,7 @@
 
 
         $('.timepicker').datetimepicker({
-
             format: 'HH:mm'
-
         });
         $('body').on('change', '.form-group', function() {
             // Action goes here.
@@ -893,15 +879,51 @@
             // console.log(peny);
             // console.log(pend);
 
-            $('#logo').empty();
+            // $('#logo').empty();
 
             instansi.forEach(function(key) {
 
                 if(peny.includes((key.id).toString()) || pend.includes((key.id).toString())){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
-                    $('#logo').append(new Option(key.nama_bu, key.id));
-
+                    // console.log(key);
+                    cari = $("#logo").find('option[value='+key.id+']');
+                    if(cari.length == 0) {
+                        $('#logo').append(new Option(key.nama_bu, key.id));
+                    }
                 }
+            });
+
+            $('#logo').select2({
+                placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
+            });
+        });
+
+
+        $('.to-logo').on('select2:unselect', function() {
+            instansi = @json($instansi);
+            // console.log(instansi);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(peny);
+            // console.log(pend);
+
+            // $('#logo').empty();
+
+            instansi.forEach(function(key) {
+
+                if(!( peny.includes((key.id).toString()) ) && !( pend.includes((key.id).toString()) ) ){
+                    // console.log(key);
+                    cari = $("#logo").find('option[value='+key.id+']');
+                    if(cari.length > 0) {
+                        // console.log(cari);
+                        cari.remove();
+                    }
+                }
+
             });
 
             $('#logo').select2({
