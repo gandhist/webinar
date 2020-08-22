@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\SeminarModel;
+use App\Mail\EmailLinkSert as MailSertifikat;
 
 class FrontendController extends Controller
 {
@@ -22,5 +23,16 @@ class FrontendController extends Controller
     public function reset()
     {
         return view('reset');
+    }
+
+    public function update()
+    {
+        $emails = PesertaSeminar::where('no_srtf',$id)->first();
+        $email = Peserta::where('id',$emails['id_peserta'])->first();
+        $emails->no_sertf = Crypt::encrypt($id);
+        \Mail::to($email->email)->send(new MailSertifikat($emails));
+
+        return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke $email->email");
+
     }
 }

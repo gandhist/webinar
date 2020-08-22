@@ -135,14 +135,10 @@ class RegistController extends Controller
     {
         // Create Peserta
         $request->validate([
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             // 'email' => 'unique:srtf_peserta',
             // 'no_hp' => 'unique:srtf_peserta',
-            'email' => 'unique:users',
+            // 'email' => 'unique:users',
         ],[
-            'foto.mimes' => 'Format Foto Harus JPG atau PNG',
-            'foto.max' => 'Maksimal Ukuran Foto 2MB',
-            'foto.image' => 'Hanya Upload foto',
             'email.unique' => 'Email Sudah terdaftar!!',
             'no_hp.unique' => 'No Hp Sudah terdaftar!!'
         ]);
@@ -162,7 +158,10 @@ class RegistController extends Controller
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
-        $cek = PesertaSeminar::where('id_peserta',$peserta['id'])->where('id_seminar', $id)->count();
+        $cek = PesertaSeminar::where('id_peserta',$peserta['id'])->where('id_seminar', $id)->count();  
+        // $nama_peserta = str_replace(" ","", strtolower($peserta['nama']));
+        // $cek = PesertaSeminar::where('nama',$nama_peserta)->where('id_seminar', $id)->count();
+        dd($cek);
 
         $peserta_seminar = new PesertaSeminar;
         if($is_free['is_free'] == '0'){
@@ -185,6 +184,7 @@ class RegistController extends Controller
 
         $peserta_seminar->id_seminar = $id;
         $peserta_seminar->id_peserta = $peserta['id'];
+        // $peserta_seminar->nama = $nama_peserta;
         $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
         if($is_free['is_free'] == '0'){
             $peserta_seminar->is_paid = '1';
@@ -206,7 +206,7 @@ class RegistController extends Controller
         $peserta_seminar->created_at = Carbon::now()->toDateTimeString();
         // validasi jika sudah pernah terdaftar
         if($cek > 0){
-            return redirect('')->with('warning', 'Anda Sudah Mendaftar Seminar ini');
+            return redirect('')->with('warning', 'Anda Sudah Pernah Mendaftar Seminar');
         } else{
             $peserta_seminar = $peserta_seminar->save();
 
@@ -226,9 +226,11 @@ class RegistController extends Controller
         }
         // Create User 
         $password = str_random(8);
+        $nama = str_replace(" ","", strtolower($request->nama));
+        // dd($nama);
         // $password = '123456'; // buat test masih hardcode
         if ($peserta) {
-            $data['username'] = strtolower($request->email); // mengganti username menjadi email
+            $data['username'] = $nama; 
             $data['email'] = strtolower($request->email);
             $data['password'] = Hash::make($password);
             $data['name'] = $request->nama;
@@ -241,7 +243,7 @@ class RegistController extends Controller
             Peserta::find($peserta->id)->update($peserta_id);
 
             $pesan = [
-                'username' => strtolower($request->email),
+                'username' => $nama,
                 'password' => $password
             ];
             $email = strtolower($request->email);

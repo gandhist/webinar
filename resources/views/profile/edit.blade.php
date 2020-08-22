@@ -25,10 +25,10 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-sm-3">
-                            <img style="width:70%;" src="{{ url('uploads/peserta/'.$user->peserta->foto) }}">
+                            {{-- <img style="width:70%;" src="{{ url('uploads/peserta/'.$user->peserta->foto) }}">
                             <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"
                                 {{ $errors->first('foto') ? 'is-invalid' : '' }} style="
-                                padding-top: 5px;padding-bottom:5px;" class="img">
+                                padding-top: 5px;padding-bottom:5px;" class="img"> --}}
                         </div>
                         <div class="col-sm-6">
                             <table>

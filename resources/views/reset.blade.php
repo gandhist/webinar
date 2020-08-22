@@ -37,7 +37,7 @@
   <div class="login-box-body">
     <p class="login-box-msg">Reset Password</p>
 
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('reset/update') }}">
         @csrf
         <div class="form-group row">
             <label for="email" class="col-md-2 col-form-label text-md-right">{{ __('Email') }}</label>
