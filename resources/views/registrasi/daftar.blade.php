@@ -26,8 +26,20 @@
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
         </div>
     @endif
+    
+    {{-- <div class="row">
+        <div class="col-lg-2">
+            
+        </div>
+        <div class="col-lg-8">
+            <p>tes</p>
+        </div>
+        <div class="col-lg-2">
+        </div>
+    </div> --}}
     <div class="row">
         <div class="col-lg-2">
+            
         </div>
         <div class="col-lg-8">
             <h2>{{ strip_tags(html_entity_decode($data->tema)) }}</h2>
@@ -101,7 +113,7 @@
                     <div class="form-group">
                         <br>
                         <label for="instansi" class="label-control required"><b>Institusi</b><br>Tempat Kerja dan/atau Tempat Studi (spesifik)</label>
-                        <input oninvalid="this.setCustomValidity('Masukkan Nama Instansi')" oninput="setCustomValidity('')" value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Instansi (tempat kerja/sekolah)">
+                        <input oninvalid="this.setCustomValidity('Masukkan Nama Instansi')" oninput="setCustomValidity('')" value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Institusi">
                         <span id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</span>
                     </div>
                 </div>
@@ -118,7 +130,7 @@
                     <div class="form-group">
                         <br>
                         <label for="pekerjaan" class="label-control required"><b>Jabatan pada institusi terkait</b></label>
-                        <input oninvalid="this.setCustomValidity('Masukkan Nama Pekerjaan')" oninput="setCustomValidity('')" value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Pekerjaan">
+                        <input oninvalid="this.setCustomValidity('Masukkan Nama Pekerjaan')" oninput="setCustomValidity('')" value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Jabatan">
                         <span id="pekerjaan" class="invalid-feedback">{{ $errors->first('pekerjaan') }}</span>
                     </div>
                 </div>

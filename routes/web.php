@@ -13,6 +13,8 @@
 Route::auth();
 Route::get('', 'FrontendController@index')->name('homeUI');
 Route::get('reset', 'FrontendController@reset');
+Route::post('reset/update', 'FrontendController@update');
+
 Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
 Route::get('infoseminar/daftar/{id}','InfoSeminarController@daftar');
