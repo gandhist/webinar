@@ -378,7 +378,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script>
     $(document).ready(function() {
-		$('#example').DataTable();
+		$('#example').DataTable({
+            lengthMenu: [100, 200, 500],});
 	} );
 var msg = '{{Session::get('alert')}}';
 var exist = '{{Session::has('alert')}}';
