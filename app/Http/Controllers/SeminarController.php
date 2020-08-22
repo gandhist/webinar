@@ -507,13 +507,14 @@ class SeminarController extends Controller
         $seminar = SeminarModel::where('id',$id)->first();
         if($seminar->status == 'published'){
             $instansi = BuModel::where('is_actived','1')->get();
+            $ins = BuModel::where('is_actived','1')->pluck('nama_bu','id');
             $personal = Personal::where('is_activated','1')->get();
             $pers = Personal::pluck('nama','id');
             $inisiator = InstansiModel::all();
             $pendukungArr = BuModel::pluck('nama_bu','id');
             $pimpinanArr = BuModel::pluck('nama_pimp','id');
 
-            //
+            //BuModel::where('is_actived','1')->pluck('nama_bu','id');
             $penyelenggara = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
             $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
             $logo = SertInstansiModel::where('id_seminar',$id)->get();
@@ -532,12 +533,13 @@ class SeminarController extends Controller
             $klasifikasi = KlasifikasiModel::all();
             $sub_klasifikasi = SubKlasifikasiModel::where('aktif','1')->get();
             // dd($logo);
-            return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal',
+            return view('seminar.edit')->with(compact('id','seminar','instansi','pers','personal', 'ins',
                 'inisiator','pendukungArr','pimpinanArr','penyelenggara','pendukung', 'logo', 'tuk',
                 'ttd','provinsi','kota','narasumber','moderator','klasifikasi','sub_klasifikasi'));
         } else {
 
             $instansi = BuModel::where('is_actived','1')->get();
+            $ins = BuModel::where('is_actived','1')->pluck('nama_bu','id');
             $personal = Personal::where('is_activated','1')->get();
             $pers = Personal::pluck('nama','id');
             $inisiator = InstansiModel::all();
@@ -564,7 +566,7 @@ class SeminarController extends Controller
             $sub_klasifikasi = SubKlasifikasiModel::where('aktif','1')->get();
 
         return view('seminar.edit-draft')->with(compact('id','seminar','instansi','pers','personal',
-        'inisiator','pendukungArr','pimpinanArr','klasifikasi','sub_klasifikasi', 'tuk', 'logo',
+        'inisiator','pendukungArr','pimpinanArr','klasifikasi','sub_klasifikasi', 'tuk', 'logo', 'ins',
         'penyelenggara','pendukung','ttd','provinsi','kota','narasumber','moderator'));
         }
     }
@@ -1317,7 +1319,7 @@ class SeminarController extends Controller
         $nohp = '081240353913';
         $pesan = "youre awesome";
         return $this->kirimPesanWA($nohp,$pesan);
-        
+
     }
 
     // kirim email ke peserta yg dipilih

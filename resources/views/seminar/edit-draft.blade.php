@@ -342,7 +342,7 @@
                                     @endforeach
                                 @else
                                     @foreach ($logo as $key)
-                                        <option value="{{$key->id}}"
+                                        <option value="{{$key->id_instansi}}"
                                             {{$key->is_tampil == '1' ? 'selected' : ''}}>
                                         {{$pendukungArr[$key->id_instansi]}}</option>
                                     @endforeach

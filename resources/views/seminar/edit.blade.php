@@ -175,14 +175,17 @@
                                 @if(old('instansi_penyelenggara'))
                                     @foreach($instansi as $key)
                                         <option value="{{ $key->id }}"
-                                        {{ in_array($key->id, old('instansi_penyelenggara')) ? "selected" : "" }}>
-                                        {{ $key->nama_bu }}</option>
+                                        {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "selected" : "" }}
+                                        {{ collect(old('instansi_pendukung'))->contains($key->id) ? "disabled" : "" }}
+                                        >{{ $key->nama_bu }}</option>
                                     @endforeach
                                 @else
                                     @foreach($instansi as $key)
                                         @if($penyelenggara->contains('id_instansi',$key->id))
                                             <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
-                                        @else {{-- if(!$pendukung->contains('id_instansi',$key->id)) --}}
+                                        @elseif($pendukung->contains('id_instansi',$key->id))
+                                            <option value="{{ $key->id }}" disabled>{{ $key->nama_bu }}</option>
+                                        @else
                                             <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
                                         @endif
                                     @endforeach
@@ -205,14 +208,17 @@
                             @if(old('instansi_pendukung'))
                                 @foreach($instansi as $key)
                                     <option value="{{ $key->id }}"
-                                    {{ in_array($key->id, old('instansi_pendukung')) ? "selected" : "" }}>
-                                    {{ $key->nama_bu }}</option>
+                                    {{ collect(old('instansi_pendukung'))->contains($key->id) ? "selected" : "" }}
+                                    {{ collect(old('instansi_penyelenggara'))->contains($key->id) ? "disabled" : "" }}
+                                    >{{ $key->nama_bu }}</option>
                                 @endforeach
                             @else
                                 @foreach($instansi as $key)
                                     @if($pendukung->contains('id_instansi',$key->id))
                                         <option value="{{ $key->id }}" selected>{{ $key->nama_bu }}</option>
-                                    @elseif(!$penyelenggara->contains('id_instansi',$key->id))
+                                    @elseif($penyelenggara->contains('id_instansi',$key->id))
+                                        <option value="{{ $key->id }}" disabled>{{ $key->nama_bu }}</option>
+                                    @else
                                         <option value="{{ $key->id }}">{{ $key->nama_bu }}</option>
                                     @endif
                                 @endforeach
@@ -344,7 +350,7 @@
                                     @endif
                                 @elseif($pendukung || $penyelenggara)
                                     @foreach ($logo as $key)
-                                        <option value="{{$key->id}}"
+                                        <option value="{{$key->id_instansi}}"
                                             {{$key->is_tampil == '1' ? 'selected' : ''}}
                                         >
                                         {{$pendukungArr[$key->id_instansi]}}</option>
@@ -632,8 +638,12 @@
                         <div class="form-group {{ $errors->first('is_free') ? 'has-error' : '' }} ">
                             <label for="is-free" class="label-control required">Jenis</label>
                             <select class="form-control" id="is_free" id="is_free" disabled>
-                                <option value="0" {{$seminar->is_free == '0' ? 'selected' : ''}}>Gratis</option>
-                                <option value="1" {{$seminar->is_free == '1' ? 'selected' : ''}}>Berbayar</option>
+                                <option value="0"
+                                {{old('is_free') ? (old('is_free') == '0' ? 'selected' : '') : ($seminar->is_free == '0' ? 'selected' : '') }}
+                                >Gratis</option>
+                                <option value="1"
+                                {{old('is_free') ? (old('is_free') == '1' ? 'selected' : '') : ($seminar->is_free == '1' ? 'selected' : '') }}
+                                >Berbayar</option>
                             </select>
 
                             <div id="is_free" class="invalid-feedback text-danger">
@@ -846,37 +856,6 @@
         // end tuk
 
 
-        // to logo
-        $('.to-logo').on('select2:select', function() {
-            instansi = @json($instansi);
-            // console.log(instansi);
-
-            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
-                return elem.id
-            });
-            pend = $('#instansi_pendukung').select2('data').map(function(elem){
-                return elem.id
-            });
-            // console.log(peny);
-            // console.log(pend);
-
-            $('#logo').empty();
-
-            instansi.forEach(function(key) {
-
-                if(peny.includes((key.id).toString()) || pend.includes((key.id).toString())){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
-                    $('#logo').append(new Option(key.nama_bu, key.id));
-
-                }
-            });
-
-            $('#logo').select2({
-                placeholder: " Pilih Logo yang Akan Ditampilkan pada Sertifikat",
-            });
-        });
-        // end to logo
-
         $("#biaya").each(function(){
             //this.value=$(this).val().trim();
             $(this).val($.trim($(this).val()));
@@ -934,48 +913,436 @@
             // maximumSelectionLength: 2,
         }); // Select2 Instansi Pendukung
 
-        $('#instansi_penyelenggara').on('change', function() {
-            pendukung = @json($pendukungArr);
-            // console.log(pendukung.hasOwnProperty('33'));
+        // to logo
+        $('.to-logo').on('select2:select', function() {
+            instansi = @json($instansi);
+            // console.log(instansi);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            instansi.forEach(function(key) {
+
+                if(peny.includes((key.id).toString()) || pend.includes((key.id).toString())){
+                    // console.log(key);
+                    cari = $("#logo").find('option[value='+key.id+']');
+                    if(cari.length == 0) {
+                        // console.log('bisa');
+                        // console.log(cari.length);
+                        $('#logo').append(new Option(key.nama_bu, key.id));
+                    }
+                }
+            });
+
+        });
+
+
+        $('.to-logo').on('select2:unselect', function() {
+            instansi = @json($instansi);
+            // console.log(instansi);
+
+            peny = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+            pend = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+            // console.log(peny);
+            // console.log(pend);
+
+            // $('#logo').empty();
+
+            instansi.forEach(function(key) {
+
+                if(!( peny.includes((key.id).toString()) ) && !( pend.includes((key.id).toString()) ) ){
+                    // console.log(key);
+                    cari = $("#logo").find('option[value='+key.id+']');
+                    if(cari.length > 0) {
+                        // console.log('remove');
+                        // console.log(cari);
+                        cari.remove();
+                    }
+                }
+
+            });
+
+        });
+        // end to logo
+
+        // Instansi Penyelenggara dan Instansi Pendukung
+
+            // Yang Select Penyelenggara
+        $('#instansi_penyelenggara').on('select2:select', function() {
+            pendukung = @json($ins);
+
+            // console.log(pendukung);
             data = $('#instansi_penyelenggara').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(data);
-            $('#instansi_pendukung').empty();
-            for(let key in pendukung) {
-                if(!data.includes(key)){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
-                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
-                    // console.log(key);
-                }
-            }
 
-            $('#instansi_pendukung').select2({
-            allowClear: true,
-            maximumSelectionLength: 2,});
-        })
-
-        $('#narasumber').on('change', function() {
-            personal = @json($pers);
-            data = $('#moderator').select2('data').map(function(elem){
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(data.includes('27'));
-            $('#moderator').empty();
-            for(let key in personal) {
-                if(!data.includes(key)){
-                    //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
-                    $('#moderator').append(new Option(personal[key], key));
-                    // console.log(key);
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
+            for(let key in pendukung) {
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
                 }
             }
 
-            $('#moderator').select2({
-                allowClear: true,
-                // maximumSelectionLength: 2,
-            });
-        })
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+            }
+        });
+            // END Select Penyelenggara
 
+            // Yang unselect Penyelenggara
+        $('#instansi_penyelenggara').on('select2:unselect', function() {
+            pendukung = @json($ins);
+
+            // console.log(e.currentTarget.value);
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
+            for(let key in pendukung) {
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+                if(!data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+        });
+            // END unselect Penyelenggara
+
+            // Instansi Pendukung
+
+        $('#instansi_pendukung').on('select2:select', function() {
+            pendukung = @json($ins);
+
+            // console.log(e.currentTarget.value);
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
+            for(let key in pendukung) {
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+            }
+
+        });
+            // END Instansi Pendukung
+
+            // Pendukung unselect
+
+        $('#instansi_pendukung').on('select2:unselect', function() {
+            pendukung = @json($ins);
+
+            // console.log(e.currentTarget.value);
+            data = $('#instansi_penyelenggara').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            data2 = $('#instansi_pendukung').select2('data').map(function(elem){
+                return elem.id
+            });
+
+
+            peny = $('#instansi_penyelenggara').select2('val');
+            pend = $('#instansi_pendukung').select2('val');
+
+
+            for(let key in pendukung) {
+                if(data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');}
+                if(!data2.includes(key)){
+                    el = $("#instansi_penyelenggara").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in pendukung) {
+                cari = $("#instansi_pendukung").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#instansi_pendukung').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#instansi_pendukung").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+        });
+
+            // End pendukung unselect
+
+        // End Instansi Penyelenggara dan Instansi Pendukung
+
+        $('#narasumber').on('select2:select', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');}
+            }
+
+            // Instansi Pendukung
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+            }
+
+        });
+
+        $('#narasumber').on('select2:unselect', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+                if(!data2.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+        });
+
+        $('#moderator').on('select2:select', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');
+                    //$('#instansi_penyelenggara').append( (new Option(pendukung[key], key)).setAttribute('disabled','') );
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+            }
+
+        });
+
+        $('#moderator').on('select2:unselect', function() {
+            personal = @json($pers);
+            data = $('#narasumber').select2('data').map(function(elem){
+                return elem.id
+            });
+            data2 = $('#moderator').select2('data').map(function(elem){
+                return elem.id
+            });
+
+            nara = $('narasumber').select2('val');
+            mode = $('moderator').select2('val');
+
+
+
+            for(let key in personal) {
+                if(data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    // console.log(el)
+                    el.setAttribute('disabled','');}
+                if(!data2.includes(key)){
+                    el = $("#narasumber").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+
+            // Instansi Pendukung
+            // $('#instansi_pendukung').empty();
+            for(let key in personal) {
+                cari = $("#moderator").find('option[value='+key+']');
+                if(cari.length == 0) {
+                    $('#moderator').append(new Option(pendukung[key], key));
+                }
+                if(data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    el.setAttribute('disabled','');
+                }
+                if(!data.includes(key)){
+                    el = $("#moderator").find('option[value='+key+']')[0];
+                    // console.log(el);
+                    if(el.disabled){
+                        el.removeAttribute('disabled');
+                    }
+                }
+            }
+        });
 
         $('#klasifikasi').on('change', function() {
             sub_klas = @json($sub_klasifikasi);

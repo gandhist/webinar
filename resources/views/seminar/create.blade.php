@@ -876,10 +876,6 @@
             pend = $('#instansi_pendukung').select2('data').map(function(elem){
                 return elem.id
             });
-            // console.log(peny);
-            // console.log(pend);
-
-            // $('#logo').empty();
 
             instansi.forEach(function(key) {
 
