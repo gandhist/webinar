@@ -29,6 +29,7 @@ use App\Traits\GlobalFunction;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Mail\EmailLinkSert as MailSertifikat;
 use Illuminate\Support\Facades\Crypt;
+use App\Mail\EmailLink as MailLink;
 
 class SeminarController extends Controller
 {
@@ -1522,5 +1523,17 @@ class SeminarController extends Controller
 
     }
 
+    public function kirimLink(Request $request, $id){
+        // dd($request->link);
+        // kirim email
+        $emails = PesertaSeminar::where('id_seminar',$id)->get();
+        // dd($emails);
+        foreach ($emails as $key) {
+            $data = Peserta::find($key->id_peserta);
+            \Mail::to($data->email)->send(new MailLink([$key,$request->link]));
+        }
+        
+        return redirect()->back()->with('alert',"Link Berhasil dikirim ke semua peserta");
+    }
 
 }

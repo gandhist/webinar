@@ -5,12 +5,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\SeminarModel;
 use App\Mail\EmailLinkSert as MailSertifikat;
+use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
     function index()
     {
-        $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
+        $date = Carbon::now()->toDateTimeString();
+        $data = SeminarModel::where('status','=','published')->whereDate('tgl_akhir','>',$date)->orderBy('id','desc')->get();
         if(Auth::check())
         if(Auth::user()->role_id == 2){
             return view('homeUI')->with(compact('data'));

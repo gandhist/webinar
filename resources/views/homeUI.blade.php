@@ -90,7 +90,7 @@
                 @foreach($data as $key)
                 <tr>
 					<td style="text-align:center;">{{ $loop->iteration }}</td>
-					<td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td>
+					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
 					<td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>				
 					{{-- <td style="text-align:center;">{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td> --}}
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
