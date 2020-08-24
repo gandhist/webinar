@@ -88,6 +88,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('kirim_email/{id}','SeminarController@kirimEmail');
 	Route::get('send_email/{no_srtf}','SeminarController@sendEmail');
 	Route::get('approve/{id}','SeminarController@approve');
+	Route::post('kirimlink/{id}','SeminarController@kirimLink');
 
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');

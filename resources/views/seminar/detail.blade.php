@@ -245,16 +245,42 @@
                 </div>
 
                 <div class="row" style="margin-bottom:50px;">
-                    <div class="col-md-12">
-                        <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
-                            <label>Browsur Seminar</label>
-                            <div>
-                                <a data-toggle="modal" data-target="#myModal">
-                                    Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                </a>
+                    @if($seminar->is_online == 0)
+                        <div class="col-md-12">
+                            <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                                <label>Browsur Seminar</label>
+                                <div>
+                                    <a data-toggle="modal" data-target="#myModal">
+                                        Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="col-md-6">
+                            <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                                <label>Browsur Seminar</label>
+                                <div>
+                                    <a data-toggle="modal" data-target="#myModal">
+                                        Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                            <label>Link</label>
+                                <div class="col-6">
+                                    <form action="{{ url('seminar/kirimlink',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
+                                    method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <input name="link" id="link" type="text">
+                                        <button type="submit">Kirim</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
 
                 {{-- <div class="box-body">     --}}
