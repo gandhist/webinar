@@ -165,6 +165,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
@@ -235,6 +236,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Hasids' => Vinkla\Hashids\Facades\Hashids::class
     ],
