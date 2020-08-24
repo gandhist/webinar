@@ -65,7 +65,7 @@
         <!-- /.col -->
       </div>
       <br>
-      <a href="{{url('reset')}}">Lupa Password?</a>
+      {{-- <a href="{{url('reset')}}">Lupa Password?</a> --}}
     </form>
   </div>
   <!-- /.login-box-body -->
