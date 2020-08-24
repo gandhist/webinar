@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Mail\PesertaBaru as MailPeserta;
+use App\Mail\SeminarBaru as MailSeminar;
 use App\Peserta;
 use App\PesertaSeminar;
 use App\Seminar;
@@ -33,6 +35,9 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $user->name                         = $row['nama'];
                 $user->role_id                      = '2';
                 $user->save();
+
+                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'email' => $row['email']];
+                \Mail::to($row['email'])->send(new MailPeserta($detail));
 
             }
 
@@ -87,6 +92,12 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $dir_name = "file_seminar";
                 $peserta_seminar->qr_code = $dir_name."/".$nama;
                 $peserta_seminar->save();
+
+                $nama_seminar = Seminar::select('nama_seminar')->where('id', '=',$this->id)->first();
+
+
+                $detail = ['nama' => $row['nama'], 'nama_seminar' => $nama_seminar->nama_seminar];
+                \Mail::to($row['email'])->send(new MailSeminar($detail));
 
             }
 

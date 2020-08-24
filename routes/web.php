@@ -164,7 +164,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 		Route::resources([
 			'users' => 'UserController',
 		]);
-		
+
 		Route::resources([
 			'user_role' => 'UserRoleController',
 		]);
