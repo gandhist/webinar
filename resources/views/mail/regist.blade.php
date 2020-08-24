@@ -263,12 +263,7 @@ a {
                             <h1>Selamat!</h1>
                             <p>Anda telah berhasil mendaftar di seminar</p>
                             <p>Tema : {{ strip_tags(html_entity_decode($pesan['tema'])) }}</p>
-                            <br>
-                            <p>Silahkan login dengan data di bawah</p>
-                            <p>Username : {{ $pesan['username'] }}</p>
-                            <p>Password : {{ $pesan['password'] }}</p>
-                            <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
-                            <i>Note: Harap Langsung Ubah Password Anda!</i>
+                            <p style="text-align:center;"><a href="{{ url('') }}" class="btn">Halaman Login</a></p>
                         </td>
                     </tr>
                     </tbody>
