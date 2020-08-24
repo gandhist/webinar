@@ -234,7 +234,7 @@ class RegistController extends Controller
 
             //kirim wa
             $nohp = $request->no_hp;
-            $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar '$tema'";
+            $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
             $this->kirimPesanWA($nohp,$pesan);
 
             return redirect('')->with('success', 'Pendaftaran Seminar berhasil');
@@ -311,11 +311,11 @@ class RegistController extends Controller
             }
             // Create User 
             $password = str_random(8);
-            $nama = str_replace(" ","", strtolower($request->nama));
-            $nama = preg_replace("/[^a-zA-Z]/", "", $nama);
+            // $nama = str_replace(" ","", strtolower($request->nama));
+            // $nama = preg_replace("/[^a-zA-Z]/", "", $nama);
             // $password = '123456'; // buat test masih hardcode
             if ($peserta) {
-                $data['username'] = $nama; 
+                $data['username'] = $request->nama; 
                 $data['email'] = strtolower($request->email);
                 $data['password'] = Hash::make($password);
                 $data['name'] = $request->nama;
@@ -329,7 +329,7 @@ class RegistController extends Controller
                 $tema = strip_tags(html_entity_decode($detailseminar['tema']));
                 //kirim email
                 $pesan = [
-                    'username' => $nama,
+                    'username' => $request->nama,
                     'password' => $password,
                     'tema' => $tema,
                 ];
@@ -338,7 +338,7 @@ class RegistController extends Controller
 
                 //kirim wa
                 $nohp = $request->no_hp;
-                $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar '$tema'";
+                $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
                 $this->kirimPesanWA($nohp,$pesan);
             }
             return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
