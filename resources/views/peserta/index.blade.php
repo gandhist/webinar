@@ -33,8 +33,8 @@
             </div>
         </div>
         <div class="box-body" style="margin:25px;">
-            <div class="row" style="margin-top:40px; margin-bottom: 25;">
-                <div class="col-12">
+            <div class="row" style="margin-top:40px; margin-bottom: 25px;">
+                <div class="col-12" style="margin: 30px 0px">
                     @if(session()->get('pesan'))
                     <div class="alert alert-success alert-dismissible" role="alert">
                         {{ session()->get('pesan') }}

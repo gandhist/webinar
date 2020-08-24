@@ -19,6 +19,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="box-tools pull-right" style="margin-top:32px; margin-right:35px;">
+
             <div class="row">
                 <div class="col-12">
                     <div style="margin-bottom:10px">
@@ -29,8 +30,20 @@
             </div>
         </div>
         <div class="box-body"style="margin:25px;">
+
             <div class="row">
                 <h1 style="margin-bottom:50px;">Upload File Import</h1>
+
+                <div class="col-12">
+                    @if(session()->get('pesan'))
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        {{ session()->get('pesan') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                </div>
 
                 <form method="POST" action="{{ url('import') }}" enctype="multipart/form-data">
                 @csrf

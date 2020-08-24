@@ -19,11 +19,19 @@ class ImportController extends Controller
             'seminar' => 'required',
             'file' => 'required|mimes:xlsx|max:2048'
         ]);
-        if ($files = $request->file('file')) {
-            Excel::import(new ImportPeserta($request->seminar), $files);
+
+
+        try {
+            if ($files = $request->file('file')) {
+                Excel::import(new ImportPeserta($request->seminar), $files);
+            }
+        }
+        catch(\Throwable $e) {
+            return redirect('/import')
+        ->with('pesan', 'Mohon gunakan file template import yang disediakan');
         }
 
         return redirect('/pesertas')
-        ->with('pesan', 'Import peserta berhasil diubah');
+        ->with('pesan', 'Import peserta berhasil');
     }
 }
