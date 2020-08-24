@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <div class="container">
 	
 	
@@ -43,8 +44,11 @@
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Username" name="username">
-						<span class="glyphicon glyphicon-user form-control-feedback"></span>
+						<input type="text" class="form-control select2" placeholder="Username" name="username" id="username">
+						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
+						<div id="name">
+
+						</div>
 					</div>
 					{{-- <div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password">
@@ -134,6 +138,26 @@
 	$(document).ready(function() {
 		$('#example').DataTable();
 	} );
+
+	$('#username').keyup(function(){ 
+        var query = $(this).val();
+        if(query != '') {
+			var _token = $('input[name="_token"]').val();
+			$.ajax({
+			url:"{{ route('autocomplete.fetch') }}",
+			method:"POST",
+			data:{query:query, _token:_token},
+			success:function(data){
+				$('#name').fadeIn();  
+							$('#name').html(data);
+				}
+			});
+        }
+    });
+	$(document).on('click', 'li', function(){  
+        $('#username').val($(this).text());  
+        $('#name').fadeOut();  
+    });  
 
 </script>
 @endpush
