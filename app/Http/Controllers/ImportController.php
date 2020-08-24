@@ -21,15 +21,15 @@ class ImportController extends Controller
         ]);
 
 
-        // try {
+        try {
             if ($files = $request->file('file')) {
                 Excel::import(new ImportPeserta($request->seminar), $files);
             }
-        // }
-        // catch(\Throwable $e) {
-        //     return redirect('/import')
-        // ->with('pesan', 'Mohon gunakan file template import yang disediakan');
-        // }
+        }
+        catch(\Throwable $e) {
+            return redirect('/import')
+        ->with('pesan', 'Mohon gunakan file template import yang disediakan');
+        }
 
         return redirect('/pesertas')
         ->with('pesan', 'Import peserta berhasil');

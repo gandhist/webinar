@@ -37,7 +37,8 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $user->save();
 
                 $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'email' => $row['email']];
-                \Mail::to($row['email'])->send(new MailPeserta($detail));
+                dispatch(new \App\Jobs\SendEmailUserBaru($detail));
+                // \Mail::to($row['email'])->send(new MailPeserta($detail));
 
             }
 
@@ -96,8 +97,9 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $nama_seminar = Seminar::select('nama_seminar')->where('id', '=',$this->id)->first();
 
 
-                $detail = ['nama' => $row['nama'], 'nama_seminar' => $nama_seminar->nama_seminar];
-                \Mail::to($row['email'])->send(new MailSeminar($detail));
+                $detail = ['nama' => $row['nama'], 'nama_seminar' => $nama_seminar->nama_seminar, 'email' => $row['email']];
+                dispatch(new \App\Jobs\SendEmailTerdaftarSeminar($detail));
+                // \Mail::to($row['email'])->send(new MailSeminar($detail));
 
             }
 
