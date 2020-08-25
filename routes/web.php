@@ -11,7 +11,10 @@
 |
 */
 Route::auth();
+Route::get('login/google', 'Auth\LoginController@redirectToProvider');
+Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');
+Route::get('/cari', 'FrontendController@loadData');
 Route::get('reset', 'FrontendController@reset');
 Route::post('reset/update', 'FrontendController@update');
 Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');

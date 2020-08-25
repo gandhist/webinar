@@ -11,7 +11,7 @@
 		background-position-x: right;
 		background-position-y: center;
 	}
-	
+
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
 		.jumbotron {
             background-image: url("p3sm.jpeg");
@@ -24,10 +24,9 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 <div class="container">
-	
-	
+
+
 	<div class="jumbotron">
 		<div class="welcome">
 			<h1>Selamat Datang di Website Sertifikat</h1>
@@ -44,11 +43,8 @@
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
-						<input type="text" class="form-control select2" placeholder="Username" name="username" id="username">
-						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
-						<div id="name">
-
-						</div>
+						<select type="text" style="width:100%" name="username" id="username"></select>
+						<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					</div>
 					{{-- <div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password">
@@ -62,7 +58,7 @@
 	</div>
 	@if(session()->get('success'))
         <div class="alert alert-success">{{ session()->get('success') }}
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         </div>
 	@endif
 	@if(session()->get('warning'))
@@ -94,8 +90,8 @@
                 @foreach($data as $key)
                 <tr>
 					<td style="text-align:center;">{{ $loop->iteration }}</td>
-					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
-					<td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>				
+					<td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td>
+					<td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
 					{{-- <td style="text-align:center;">{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td> --}}
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
 					<td>@if ($key->is_free == '0') Gratis @else Rp. {{ format_uang($key->biaya)}} @endif</td></td>
@@ -119,6 +115,9 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+
 <script type="text/javascript" >
 	$('.login').hide();
 	$('.welcome').fadeIn('slow');
@@ -136,8 +135,7 @@
 	});
 
 	$(document).ready(function() {
-		$('#example').DataTable();
-	} );
+        $('#example').DataTable();
 
 	$('#username').keyup(function(){ 
         var query = $(this).val();

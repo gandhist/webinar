@@ -29,14 +29,14 @@ class ImportPeserta implements ToCollection,WithHeadingRow
 
             if(!isset($user)) {
                 $user                               = new User;
-                $user->username                     = $row['email'];
+                $user->username                     = $row['nama'];
                 $user->email                        = $row['email'];
                 $user->password                     = Hash::make($row['nomor_handphone']);
                 $user->name                         = $row['nama'];
                 $user->role_id                      = '2';
                 $user->save();
 
-                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'email' => $row['email']];
+                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'email' => $row['email'], 'user' => $row['nama']];
                 dispatch(new \App\Jobs\SendEmailUserBaru($detail));
                 // \Mail::to($row['email'])->send(new MailPeserta($detail));
 
