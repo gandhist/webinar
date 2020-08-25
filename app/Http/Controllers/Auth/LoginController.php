@@ -7,7 +7,11 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
+use App\Peserta;
 use Socialite;
+
+use Carbon\Carbon;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class LoginController extends Controller
 {
@@ -134,13 +138,36 @@ class LoginController extends Controller
             return $authUser;
         }
         else{
-            dd($user);
             $data = User::create([
                 'name'     => $user->name,
-                'username' => $user->name,
+                'username' => !empty($user->email)? $user->email : $user->name,
                 'email'    => !empty($user->email)? $user->email : '' ,
                 'provider' => $provider,
                 'provider_id' => $user->id
+            ]);
+            // handle upload Foto
+            $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $user->name);
+            $foto = '';
+            if ($user->avatar) {
+                $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+                if (!is_dir($destinationPath)) {
+                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                }
+                $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                $destinationFile = $destinationPath."/".$file;
+                $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+                $resize_image = Image::make($user->avatar);
+                $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
+                $temp = $destinationPathTemp.$file;
+                rename($temp, $destinationFile);
+                $foto = $destinationPath."/".$file;
+            }
+
+            Peserta::create([
+                'user_id' => $data->id,
+                'nama'    => $user->name,
+                'email'   => !empty($user->email)? $user->email : '' ,
+                'foto'    => $foto,
             ]);
 
             return $data;
