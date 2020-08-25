@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => 'http://your-callback-url',
+    ],
+
     'midtrans' => [
         // Midtrans server key
         'serverKey'     => env('MIDTRANS_SERVERKEY'),

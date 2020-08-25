@@ -43,7 +43,7 @@ class InfoSeminarController extends Controller
         $data = Seminar::find($id);
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $bank = BankModel::all();
-        
+
         // dd($cek);
 
         // if(isset($peserta)){
@@ -70,7 +70,7 @@ class InfoSeminarController extends Controller
         if(!Auth::user()){
             $login = '<a href="'.url("login").'">disini</a>';
             return redirect('registrasi')->with('pesan', 'Anda harus melakukan registrasi terlebih dahulu. Klik '.$login.' jika sudah mempunyai akun');
-        } 
+        }
         elseif(!isset($peserta)) {
             return redirect('/')->with('success', 'Anda tidak terdaftar sebagai peserta');
         }
@@ -158,9 +158,9 @@ class InfoSeminarController extends Controller
                 $total_nilai = Peserta::find($peserta['id']);
                 $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                 $total_nilai->update();
-            
+
             }
- 
+
             return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
         }
     }
