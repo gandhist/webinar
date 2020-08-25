@@ -489,7 +489,7 @@ class SeminarController extends Controller
             $logo = "/public/".$inisiator->logo;
 
             $qr = SeminarModel::find($data->id);
-            $url = url("infoseminar/detail/".$data->id);
+            $url = url("registrasi/daftar/".$data->id);
             $nama = "QR_Seminar_".$data->id.".png";
 
             $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
@@ -1346,7 +1346,7 @@ class SeminarController extends Controller
         $logo = "/public/".$inisiator->logo;
 
         $qr = SeminarModel::find($data->id);
-        $url = url("infoseminar/detail/".$data->id);
+        $url = url("registrasi/daftar/".$data->id);
         $nama = "QR_Seminar_".$data->id.".png";
 
         $qrcode = \QrCode::merge($logo)->format('png')->errorCorrection('H')->size(200)->generate($url, base_path("public/file_seminar/".$nama));
