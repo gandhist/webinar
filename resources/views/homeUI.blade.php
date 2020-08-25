@@ -34,14 +34,14 @@
 <div class="container">
 
 
-	<div class="jumbotron">
+	<div class="jumbotron" style="height: auto;">
 		<div class="welcome">
 			<h1>Selamat Datang di Website Sertifikat</h1>
 			<p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p>
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
             @if(Auth::guest())
-            <button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button>
-            <a href="{{url('login/google')}}" style="color: white" class="btn btn-danger">
+            <button href="#" class="btn btn-success btn-border-filled m-2" id="login" >Login</button>
+            <a href="{{url('login/google')}}" style="color: white" class="btn btn-danger m-2">
                 <i class="fa fa-google fa-fw"></i> Login with Google Account
             </a>
             @endif
