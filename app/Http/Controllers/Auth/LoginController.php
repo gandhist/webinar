@@ -109,9 +109,12 @@ class LoginController extends Controller
     {
         // dd(Socialite::driver('google'));
         return Socialite::driver('google')
-        ->scopes(
-            ['https://www.googleapis.com/auth/user.organization.read ',
-            'https://www.googleapis.com/auth/user.phonenumbers.read ',
+        ->scopes([
+                'openid',
+                'profile',
+                'email',
+                'user.phonenumbers.read',
+                'user.organization.read',
             ])
         ->redirect();
     }
