@@ -108,7 +108,12 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         // dd(Socialite::driver('google'));
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+        ->scopes(
+            ['https://www.googleapis.com/auth/user.organization.read ',
+            'https://www.googleapis.com/auth/user.phonenumbers.read ',
+            ])
+        ->redirect();
     }
 
     public function handleProviderCallback()
