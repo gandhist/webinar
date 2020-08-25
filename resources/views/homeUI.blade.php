@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <div class="container">
 
 
@@ -43,8 +44,11 @@
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
-						<select type="text" style="width:100%" name="username" id="username"></select>
-						<span class="glyphicon glyphicon-user form-control-feedback"></span>
+						<input type="text" class="form-control select2" placeholder="Username" name="username" id="username">
+						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
+						<div id="name">
+
+						</div>
 					</div>
 					{{-- <div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password">
@@ -90,7 +94,7 @@
                 @foreach($data as $key)
                 <tr>
 					<td style="text-align:center;">{{ $loop->iteration }}</td>
-					<td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td>
+					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
 					<td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
 					{{-- <td style="text-align:center;">{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td> --}}
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
@@ -115,9 +119,6 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
-
 <script type="text/javascript" >
 	$('.login').hide();
 	$('.welcome').fadeIn('slow');
@@ -128,36 +129,31 @@
         		$('.login').fadeIn('slow');
       		});
 		});
-
 		$('#seminar').on('click', function(){
 			$('.seminar').fadeIn('slow');
 		});
 	});
-
 	$(document).ready(function() {
-        $('#example').DataTable();
-
-        $('#username').keyup(function(){
-            var query = $(this).val();
-            if(query != '') {
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                url:"{{ route('autocomplete.fetch') }}",
-                method:"POST",
-                data:{query:query, _token:_token},
-                success:function(data){
-                    $('#name').fadeIn();
-                                $('#name').html(data);
-                    }
-                });
-            }
-        });
-
-        $(document).on('click', 'li', function(){
-            $('#username').val($(this).text());
-            $('#name').fadeOut();
-        });
+		$('#example').DataTable();
+	} );
+	$('#username').keyup(function(){
+        var query = $(this).val();
+        if(query != '') {
+			var _token = $('input[name="_token"]').val();
+			$.ajax({
+			url:"{{ route('autocomplete.fetch') }}",
+			method:"POST",
+			data:{query:query, _token:_token},
+			success:function(data){
+				$('#name').fadeIn();
+							$('#name').html(data);
+				}
+			});
+        }
     });
-
+	$(document).on('click', 'li', function(){
+        $('#username').val($(this).text());
+        $('#name').fadeOut();
+    });
 </script>
 @endpush
