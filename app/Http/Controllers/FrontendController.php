@@ -44,7 +44,7 @@ class FrontendController extends Controller
         if($request->get('query')) {
             $query = $request->get('query');
             $data = DB::table('users')->where('username', 'LIKE', "%{$query}%")->get();
-            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative; width:100%;">';
             foreach($data as $row) {
                 $output .= '<li><a href="#">'.$row->username.'</a></li>';
             }

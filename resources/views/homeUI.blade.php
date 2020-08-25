@@ -154,6 +154,7 @@
 			});
         }
     });
+	
 	$(document).on('click', 'li', function(){  
         $('#username').val($(this).text());  
         $('#name').fadeOut();  
