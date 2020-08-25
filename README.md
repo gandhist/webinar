@@ -45,6 +45,13 @@ NOTE
         MIDTRANS_IS_SANITIZED= true
         MIDTRANS_IS3DS= true
         
+    .env google login
+
+        GOOGLE_CLIENT_ID=451175512287-5ncc5oh266fkippep8rkcva2chb168lj.apps.googleusercontent.com
+        GOOGLE_CLIENT_SECRET=GM5acmxsH0MgDEdxbh_AWw6
+        GOOGLE_REDIRECT_CALLBACK='https://srtf.p3sm.or.id/login/google/callback'
+
+        
     kalau masih error, coba:
         -composer install
         -php artisan config:cache
