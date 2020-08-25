@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Peserta;
 use Socialite;
-
+use File;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 
