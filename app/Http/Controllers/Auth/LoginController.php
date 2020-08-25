@@ -126,7 +126,7 @@ class LoginController extends Controller
             return $authUser;
         }
         else{
-            $dd($user);
+            dd($user);
             $data = User::create([
                 'name'     => $user->name,
                 'username' => $user->name,
