@@ -153,7 +153,7 @@ class LoginController extends Controller
                 if (!is_dir($destinationPath)) {
                     File::makeDirectory($destinationPath, $mode = 0777, true, true);
                 }
-                $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . 'png';
                 $destinationFile = $destinationPath."/".$file;
                 $destinationPathTemp = 'uploads/tmp/'; // upload path temp
                 $resize_image = Image::make($user->avatar);
