@@ -137,18 +137,26 @@
 	$(document).ready(function() {
         $('#example').DataTable();
 
-        $('#username').select2({
-            ajax: {
-                url: '/cari',
-                delay: 250,
-                dataType: "json",
-                processResults : function (data) {
-                return {
-                    results : data
-                },
-            }
-        });
-	} );
+	$('#username').keyup(function(){ 
+        var query = $(this).val();
+        if(query != '') {
+			var _token = $('input[name="_token"]').val();
+			$.ajax({
+			url:"{{ route('autocomplete.fetch') }}",
+			method:"POST",
+			data:{query:query, _token:_token},
+			success:function(data){
+				$('#name').fadeIn();  
+							$('#name').html(data);
+				}
+			});
+        }
+    });
+	
+	$(document).on('click', 'li', function(){  
+        $('#username').val($(this).text());  
+        $('#name').fadeOut();  
+    });  
 
 </script>
 @endpush

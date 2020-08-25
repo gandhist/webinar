@@ -262,7 +262,7 @@ a {
                         <td class="padded">
                         <h1>Halo, {{ $details[0]->peserta_r->nama }}!</h1>
                         <p>Berikut ini adalah link untuk mengikuti seminar:</p>
-                        <p>{{ $details[1]}}</p>
+                        <p><a href="{{$details[1] }}">Klik Link</a></p>
                         </td>
                     </tr>
                     </tbody>
