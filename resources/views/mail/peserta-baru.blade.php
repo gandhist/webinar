@@ -358,7 +358,7 @@
                               <td align="left">Email : {{$detail['email']}}</td>
                             </tr>
                             <tr>
-                              <td align="left">Username : {{$detail['email']}}</td>
+                              <td align="left">Username : {{$detail['user']}}</td>
                             </tr>
                             <tr>
                               <td align="left">Password : {{$detail['password']}}</td>
