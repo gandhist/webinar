@@ -33,7 +33,12 @@
 			<h1>Selamat Datang di Website Sertifikat</h1>
 			<p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p>
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
-			<button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button>
+            @if(Auth::guest())
+            <button href="#" class="btn btn-success btn-border-filled" id="login" >Login</button>
+            <a href="{{url('login/google')}}" style="color: white" class="btn btn-danger">
+                </i> Login with Google Account
+            </a>
+            @endif
 			{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
 			{{-- <button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button> --}}
 		</div>

@@ -62,6 +62,16 @@
         <div class="col-xs-6">
           <a href="{{url('')}}" class="btn btn-danger btn-block btn-flat">Cancel</a>
         </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-xs-12" style="align-content: center">
+            <button type="submit" class="btn btn-danger btn-block btn-flat">
+                <a href="{{url('login/google')}}" style="color: white">
+                    <i class="fa fa-google fa-fw"></i> Login with Google Account
+                </a>
+            </button>
+        </div>
         <!-- /.col -->
       </div>
       <br>
