@@ -5,12 +5,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\SeminarModel;
 use App\Mail\EmailLinkSert as MailSertifikat;
+use Carbon\Carbon;
+use DB;
 
 class FrontendController extends Controller
 {
     function index()
     {
-        $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
+        $date = Carbon::now()->toDateTimeString();
+        $data = SeminarModel::where('status','=','published')->whereDate('tgl_akhir','>',$date)->orderBy('id','desc')->get();
         if(Auth::check())
         if(Auth::user()->role_id == 2){
             return view('homeUI')->with(compact('data'));
@@ -34,5 +37,19 @@ class FrontendController extends Controller
 
         return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke $email->email");
 
+    }
+
+    public function fetch(Request $request)
+    {
+        if($request->get('query')) {
+            $query = $request->get('query');
+            $data = DB::table('users')->where('username', 'LIKE', "%{$query}%")->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach($data as $row) {
+                $output .= '<li><a href="#">'.$row->username.'</a></li>';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 }

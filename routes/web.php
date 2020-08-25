@@ -17,6 +17,7 @@ Route::get('', 'FrontendController@index')->name('homeUI');
 Route::get('/cari', 'FrontendController@loadData');
 Route::get('reset', 'FrontendController@reset');
 Route::post('reset/update', 'FrontendController@update');
+Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');
 
 Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
@@ -91,6 +92,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('kirim_email/{id}','SeminarController@kirimEmail');
 	Route::get('send_email/{no_srtf}','SeminarController@sendEmail');
 	Route::get('approve/{id}','SeminarController@approve');
+	Route::post('kirimlink/{id}','SeminarController@kirimLink');
 
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
