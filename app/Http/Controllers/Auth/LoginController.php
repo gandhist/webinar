@@ -169,7 +169,7 @@ class LoginController extends Controller
                 $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
                 $temp = $destinationPathTemp.$file;
                 rename($temp, $destinationFile);
-                $foto = $destinationPath."/".$file;
+                $foto = $file;
             }
 
             $peserta = new Peserta;
