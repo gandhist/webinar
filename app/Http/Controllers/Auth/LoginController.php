@@ -138,14 +138,22 @@ class LoginController extends Controller
             return $authUser;
         }
         else{
-            $data = User::create([
-                'name'     => $user->name,
-                'username' => !empty($user->email)? $user->email : $user->name,
-                'email'    => !empty($user->email)? $user->email : '' ,
-                'provider' => $provider,
-                'provider_id' => $user->id,
-                'role_id'  => '2',
-            ]);
+            // $data = User::create([
+            //     'name'     => $user->name,
+            //     'username' => !empty($user->email)? $user->email : $user->name,
+            //     'email'    => !empty($user->email)? $user->email : '' ,
+            //     'provider' => $provider,
+            //     'provider_id' => $user->id,
+            //     'role_id'  => '2',
+            // ]);
+            $data = new User;
+            $data->name         = $user->name;
+            $data->username     = !empty($user->email)? $user->email : $user->name;
+            $data->email        = !empty($user->email)? $user->email : '';
+            $data->provider     = $provider;
+            $data->provider_id  = $user->id;
+            $data->role_id      = '2';
+            $data->save();
             // handle upload Foto
             $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $user->name);
             $foto = '';
@@ -161,15 +169,15 @@ class LoginController extends Controller
                 $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
                 $temp = $destinationPathTemp.$file;
                 rename($temp, $destinationFile);
-                $foto = $file;
+                $foto = $destinationPath."/".$file;
             }
 
-            Peserta::create([
-                'user_id' => $data->id,
-                'nama'    => $user->name,
-                'email'   => !empty($user->email)? $user->email : '' ,
-                'foto'    => $foto,
-            ]);
+            $peserta = new Peserta;
+            $peserta->user_id = $data->id;
+            $peserta->nama    = $user->name;
+            $peserta->email   = !empty($user->email)? $user->email : '';
+            $peserta->foto    = $foto;
+            $peserta->save();
 
             return $data;
         }
