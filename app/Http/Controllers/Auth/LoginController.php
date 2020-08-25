@@ -113,8 +113,8 @@ class LoginController extends Controller
                 'openid',
                 'profile',
                 'email',
-                'user.phonenumbers.read',
-                'user.organization.read',
+                'https://www.googleapis.com/auth/user.phonenumbers.read',
+                'https://www.googleapis.com/auth/user.organization.read',
             ])
         ->redirect();
     }
