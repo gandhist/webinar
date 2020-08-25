@@ -143,7 +143,8 @@ class LoginController extends Controller
                 'username' => !empty($user->email)? $user->email : $user->name,
                 'email'    => !empty($user->email)? $user->email : '' ,
                 'provider' => $provider,
-                'provider_id' => $user->id
+                'provider_id' => $user->id,
+                'role_id'  => '2',
             ]);
             // handle upload Foto
             $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $user->name);
@@ -160,7 +161,7 @@ class LoginController extends Controller
                 $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
                 $temp = $destinationPathTemp.$file;
                 rename($temp, $destinationFile);
-                $foto = $destinationPath."/".$file;
+                $foto = $file;
             }
 
             Peserta::create([
