@@ -2,7 +2,7 @@
    <nav class="navbar navbar-expand-lg navbar-light">
                 
         <div class="container-fluid">
-            <h3>P3SM</h3>
+            <h3>P<sub>3</sub>SM</h3>
             {{-- <div id="logo" class="pull-left">
                 <img src="{{ url('p3sm.jpeg') }}" alt="logo" width="100px" height="60px">
             </div> --}}
