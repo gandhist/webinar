@@ -11,6 +11,7 @@
 |
 */
 Route::auth();
+Route::get('test', 'RegistController@test');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');
@@ -39,6 +40,12 @@ Route::get('detail_seminar/{id}','ProfileController@detail');
 Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
 Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
+
+Route::group(['prefix' => 'presensi'], function () {
+	Route::get('/','AbsensiController@index');
+	Route::get('datang','AbsensiController@datang');
+	Route::get('pulang','AbsensiController@pulang');
+});
 
 
 Route::get('sertifikat/cari','SertController@cari')->name('cari');

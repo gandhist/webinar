@@ -12,6 +12,8 @@ use App\Mail\SeminarBaru as MailSeminar;
 use App\Peserta;
 use App\PesertaSeminar;
 use App\Seminar;
+use App\LogImport;
+use App\LogImportErr;
 use App\User;
 
 class ImportPeserta implements ToCollection,WithHeadingRow
@@ -23,8 +25,14 @@ class ImportPeserta implements ToCollection,WithHeadingRow
 
     public function collection(Collection $rows)
     {
+        $import = new LogImport;
+        $import->save();
+        $jumlah = 0;
         foreach ($rows as $row)
         {
+            $err = [];
+            $import_err = new LogImportErr;
+            $import_err->save();
             $user = User::where('email',$row['email'])->first();
 
             if(!isset($user)) {
@@ -36,10 +44,31 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $user->role_id                      = '2';
                 $user->save();
 
-                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'email' => $row['email']];
+                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] , 'email' => $row['email'], 'im_id' => $import_err->id];
                 dispatch(new \App\Jobs\SendEmailUserBaru($detail));
                 // \Mail::to($row['email'])->send(new MailPeserta($detail));
 
+            } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp != $row['nomor_handphone']) {
+
+                $user->grup_id = $user->id;
+                $user->save();
+
+                $duplicate_user                               = new User;
+                $duplicate_user->username                     = $row['email'];
+                $duplicate_user->email                        = $row['email'];
+                $duplicate_user->password                     = Hash::make($row['nomor_handphone']);
+                $duplicate_user->name                         = $row['nama'];
+                $duplicate_user->role_id                      = '2';
+                $duplicate_user->grup_id                      = $user->id;
+                $duplicate_user->save();
+
+                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] ,'email' => $row['email'], 'im_id' => $import_err->id];
+                dispatch(new \App\Jobs\SendEmailUserBaru($detail));
+
+                array_push($err, 'Membuat user ganda');
+
+            } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp == $row['nomor_handphone']) {
+                array_push($err, 'User sudah ada');
             }
 
             $peserta = Peserta::where('user_id',$user->id)->first();
@@ -55,6 +84,8 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $peserta->instansi                  = $row['instansi'];
                 $peserta->save();
 
+            } else {
+                array_push($err, 'Peserta sudah ada');
             }
 
             $udahAda = PesertaSeminar::where('id_seminar',$this->id)->where('id_peserta',$peserta->id)->first();
@@ -94,16 +125,34 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $peserta_seminar->qr_code = $dir_name."/".$nama;
                 $peserta_seminar->save();
 
-                $nama_seminar = Seminar::select('nama_seminar')->where('id', '=',$this->id)->first();
+                // $kurangi_kuota = Seminar::where('id',$this->id)->first();
+                // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
+                // $kurangi_kuota->save();
+                $nama_seminar = Seminar::select('nama_seminar', 'tema')->where('id', '=',$this->id)->first();
 
 
-                $detail = ['nama' => $row['nama'], 'nama_seminar' => $nama_seminar->nama_seminar, 'email' => $row['email']];
+                $detail = ['nama' => $row['nama'],
+                'tema' => $nama_seminar->tema,
+                'email' => $row['email'], 'nope' => $row['nomor_handphone'] , 'im_id' => $import_err->id];
                 dispatch(new \App\Jobs\SendEmailTerdaftarSeminar($detail));
                 // \Mail::to($row['email'])->send(new MailSeminar($detail));
+                // Mail::to($this->detail['email'])->send(new MailSeminar($this->detail));
 
+            } else {
+                array_push($err, 'sudah mengikuti seminar');
             }
 
+
+            $import_err->import_id = $import->id;
+            $import_err->note = implode(', ', $err);
+            $import_err->save();
+
+            $jumlah = $jumlah+1;
+
         }
+
+        $import->jumlah = $jumlah;
+        $import->save();
     }
 
 }
