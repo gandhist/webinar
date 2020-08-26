@@ -44,6 +44,8 @@
             <a href="{{url('login/google')}}" style="color: white" class="btn btn-danger m-2">
                 <i class="fa fa-google fa-fw"></i> Login with Google Account
             </a>
+            @else
+            <div style="height: 60px;"></div>
             @endif
 			{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
 			{{-- <button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button> --}}

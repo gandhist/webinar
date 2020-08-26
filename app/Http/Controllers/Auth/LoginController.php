@@ -128,7 +128,7 @@ class LoginController extends Controller
         $user = Socialite::driver('google')->user();
         $authUser = $this->findOrCreateUser($user, 'google');
         Auth::login($authUser, true);
-        return redirect('/');
+        return redirect('/infoseminar');
     }
 
     public function findOrCreateUser($user, $provider)
@@ -146,38 +146,53 @@ class LoginController extends Controller
             //     'provider_id' => $user->id,
             //     'role_id'  => '2',
             // ]);
-            $data = new User;
-            $data->name         = $user->name;
-            $data->username     = !empty($user->email)? $user->email : $user->name;
-            $data->email        = !empty($user->email)? $user->email : '';
-            $data->provider     = $provider;
-            $data->provider_id  = $user->id;
-            $data->role_id      = '2';
-            $data->save();
-            // handle upload Foto
-            $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $user->name);
-            $foto = '';
-            if ($user->avatar) {
-                $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
-                if (!is_dir($destinationPath)) {
-                    File::makeDirectory($destinationPath, $mode = 0777, true, true);
+            $udahAda = User::where('email', $user->email)->first();
+            if($udahAda) {
+                $data = User::where('email', $user->email)->first();
+                $data->provider = 'google';
+                $data->provider_id = $user->id;
+                $data->save();
+            } else {
+                $data = new User;
+                $data->name         = $user->name;
+                $data->username     = !empty($user->email)? $user->email : $user->name;
+                $data->email        = !empty($user->email)? $user->email : '';
+                $data->provider     = $provider;
+                $data->provider_id  = $user->id;
+                $data->role_id      = '2';
+                $data->save();
+                // handle upload Foto
+                $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $user->name);
+                $foto = '';
+                if ($user->avatar) {
+                    $destinationPath = 'uploads/peserta/'.$dir_name; // upload path
+                    if (!is_dir($destinationPath)) {
+                        File::makeDirectory($destinationPath, $mode = 0777, true, true);
+                    }
+                    $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . 'png';
+                    $destinationFile = $destinationPath."/".$file;
+                    $destinationPathTemp = 'uploads/tmp/'; // upload path temp
+                    $resize_image = Image::make($user->avatar);
+                    $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
+                    $temp = $destinationPathTemp.$file;
+                    rename($temp, $destinationFile);
+                    $foto = $dir_name.'/'.$file;
                 }
-                $file = "foto_".$dir_name.Carbon::now()->timestamp. "." . 'png';
-                $destinationFile = $destinationPath."/".$file;
-                $destinationPathTemp = 'uploads/tmp/'; // upload path temp
-                $resize_image = Image::make($user->avatar);
-                $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
-                $temp = $destinationPathTemp.$file;
-                rename($temp, $destinationFile);
-                $foto = $dir_name.'/'.$file;
             }
 
-            $peserta = new Peserta;
-            $peserta->user_id = $data->id;
-            $peserta->nama    = $user->name;
-            $peserta->email   = !empty($user->email)? $user->email : '';
-            $peserta->foto    = $foto;
-            $peserta->save();
+            $cekPeserta = Peserta::where('user_id', $data->id)->first();
+            if($cekPeserta){
+                //
+            } else {
+
+                $peserta = new Peserta;
+                $peserta->user_id = $data->id;
+                $peserta->nama    = $user->name;
+                $peserta->email   = !empty($user->email)? $user->email : '';
+                $peserta->foto    = $foto;
+                $peserta->save();
+
+            }
 
             return $data;
         }
