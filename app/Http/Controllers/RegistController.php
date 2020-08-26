@@ -15,6 +15,7 @@ use File;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailRegist;
 use App\Mail\EmailRegist2;
+use App\Mail\EmailRegistAkun;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\GlobalFunction;
@@ -54,8 +55,6 @@ class RegistController extends Controller
         // validasi form
         $request->validate([
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'email' => 'unique:srtf_peserta',
-            // 'no_hp' => 'unique:srtf_peserta',
             'email' => 'unique:users',
         ],[
             'foto.mimes' => 'Format Foto Harus JPG atau PNG',
@@ -64,8 +63,6 @@ class RegistController extends Controller
             'email.unique' => 'Email Sudah terdaftar!!',
             'no_hp.unique' => 'No Hp Sudah terdaftar!!'
         ]);
-        // simpan data peserta
-        // $data = new Peserta;
         $data['nama'] = $request->nama;
         $data['no_hp'] = $request->no_hp;
         $data['email'] = $request->email;
@@ -85,14 +82,14 @@ class RegistController extends Controller
             $resize_image->resize(354, 472)->save(public_path($destinationPathTemp.$file));
             $temp = $destinationPathTemp.$file;
             rename($temp, $destinationFile);
-            $data['foto'] = $destinationPath."/".$file;
+            $data['foto'] = $dir_name."/".$file;
         }
         $peserta = Peserta::create($data);
         $password = str_random(8);
         // $password = '123456'; // buat test masih hardcode
 
         if ($peserta) {
-            $data['username'] = strtolower($request->email); // mengganti username menjadi email
+            $data['username'] = $request->nama; 
             $data['email'] = strtolower($request->email);
             $data['password'] = Hash::make($password);
             $data['name'] = $request->nama;
@@ -105,14 +102,19 @@ class RegistController extends Controller
             Peserta::find($peserta->id)->update($peserta_id);
 
             $pesan = [
-                'username' => strtolower($request->email),
+                'username' => $request->nama,
                 'password' => $password
             ];
             $email = strtolower($request->email);
-            Mail::to($email)->send(new EmailRegist($pesan));
+            Mail::to($email)->send(new EmailRegistAkun($pesan));
+
+            //kirim wa
+            $nohp = $request->no_hp;
+            $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
+            $this->kirimPesanWA($nohp,$pesan);
         }
 
-        return redirect('registrasi')->with('success', 'Registrasi berhasil, silahkan konfirmasi email');
+        return redirect('')->with('success', 'Registrasi Akun berhasil, silahkan konfirmasi email');
     }
 
     /**
@@ -153,8 +155,7 @@ class RegistController extends Controller
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
         $cekPeserta = Peserta::selectRaw('COUNT(id) as jumlah,id')->where('email','=',$request->email)->orWhere('no_hp','=',$request->no_hp)->first();
-        // $cekPeserta2 = Peserta::selectRaw('COUNT(id) as jumlah,id')->where('no_hp','=',$request->no_hp)->first();
-            // dd($cekPeserta);
+
         if($cekPeserta->jumlah > 0 ){
             $data['nama'] = $request->nama;
             $data['no_hp'] = $request->no_hp;
