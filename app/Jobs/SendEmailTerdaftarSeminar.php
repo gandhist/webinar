@@ -16,6 +16,8 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
 
     protected $detail;
 
+    public $tries = 5;
+
     /**
      * Create a new job instance.
      *

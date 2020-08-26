@@ -352,7 +352,7 @@
                       <td>
                         <p>Halo {{ $detail['nama'] }}</p>
                         <p>Selamat, Anda telah terdaftar sebagai pengguna di website P3S Mandiri. Silahkan login pada link yang diberikut untuk mengakses akun Anda.</p>
-                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                        <table role="presentation" border="0" cellpadding="10" cellspacing="0">
                           <tbody>
                             <tr>
                               <td align="left">Email : {{$detail['email']}}</td>
@@ -364,7 +364,7 @@
                               <td align="left">Password : {{$detail['password']}}</td>
                             </tr>
                               <td align="left">
-                                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                <table role="presentation" border="0" cellpadding="0" cellspacing="0"  class="btn btn-primary">
                                   <tbody>
                                     <tr>
                                       <td> <a href="http://srtf.p3sm.or.id/login" target="_blank">Login</a> </td>
