@@ -37,12 +37,25 @@
                         <a class="nav-link" href="{{ route('profile.edit') }}">User Profile</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
+                        {{-- <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
                             Sign Out
-                        </a>
-                        <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+                        </a> --}}
+                        {{-- <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
                             @csrf
-                        </form>
+                        </form> --}}
+                        <div class="btn-group dropleft">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                                {{ \Auth::user()->name }}
+                            </button>
+                            <div class="dropdown-menu">
+                                <!-- Dropdown menu links -->
+                                <form method="post" action="{{ url('logout') }}" style="display: inline">
+                                {{ csrf_field() }}
+                                <button class="btn btn-default" type="submit">Sign Out</button>
+                                </form>
+                            </div>
+                    </div>
                     </li>
                 </ul>
             </div>
