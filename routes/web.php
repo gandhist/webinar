@@ -40,6 +40,12 @@ Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
 Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 
+Route::group(['prefix' => 'presensi'], function () {
+	Route::get('/','AbsensiController@index');
+	Route::get('datang','AbsensiController@datang');
+	Route::get('pulang','AbsensiController@pulang');
+});
+
 
 Route::get('sertifikat/cari','SertController@cari')->name('cari');
 Route::get('sertifikat/{no_sert}/{email}','SertController@by_sert');
