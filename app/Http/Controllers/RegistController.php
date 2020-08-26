@@ -145,7 +145,7 @@ class RegistController extends Controller
             // 'email.unique' => 'Email Sudah terdaftar!!',
             // 'no_hp.unique' => 'No Hp Sudah terdaftar!!'
         ]);
-            
+
         $detailseminar = Seminar::where('id',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
@@ -161,9 +161,9 @@ class RegistController extends Controller
             $data['email'] = $request->email;
             $data['pekerjaan'] = $request->pekerjaan;
             $data['instansi'] = $request->instansi;
-            
+
             $cek = PesertaSeminar::where('id_peserta',$cekPeserta->id)->where('id_seminar', $id)->count();
-             
+
             $peserta_seminar = new PesertaSeminar;
             if($is_free['is_free'] == '0'){
                 $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
@@ -220,7 +220,7 @@ class RegistController extends Controller
                     $total_nilai = Peserta::find($cekPeserta->id);
                     $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                     $total_nilai->update();
-                }     
+                }
             }
 
             $peserta = Peserta::find($cekPeserta->id);
@@ -228,7 +228,7 @@ class RegistController extends Controller
 
             //kirim email
             $pesan = [
-                'tema' => $tema,       
+                'tema' => $tema,
             ];
             Mail::to($peserta['email'])->send(new EmailRegist2($pesan));
 
@@ -238,17 +238,17 @@ class RegistController extends Controller
             $this->kirimPesanWA($nohp,$pesan);
 
             return redirect('')->with('success', 'Pendaftaran Seminar berhasil');
-     
+
         } else{
             $data['nama'] = $request->nama;
             $data['no_hp'] = $request->no_hp;
             $data['email'] = $request->email;
             $data['pekerjaan'] = $request->pekerjaan;
             $data['instansi'] = $request->instansi;
-           
+
             $peserta = Peserta::create($data);
-              
-            $cek = PesertaSeminar::where('id_peserta',$peserta['id'])->where('id_seminar', $id)->count();  
+
+            $cek = PesertaSeminar::where('id_peserta',$peserta['id'])->where('id_seminar', $id)->count();
 
             $peserta_seminar = new PesertaSeminar;
             if($is_free['is_free'] == '0'){
@@ -307,15 +307,15 @@ class RegistController extends Controller
                     $total_nilai = Peserta::find($peserta['id']);
                     $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                     $total_nilai->update();
-                }     
+                }
             }
-            // Create User 
+            // Create User
             $password = str_random(8);
             // $nama = str_replace(" ","", strtolower($request->nama));
             // $nama = preg_replace("/[^a-zA-Z]/", "", $nama);
             // $password = '123456'; // buat test masih hardcode
             if ($peserta) {
-                $data['username'] = $request->nama; 
+                $data['username'] = $request->nama;
                 $data['email'] = strtolower($request->email);
                 $data['password'] = Hash::make($password);
                 $data['name'] = $request->nama;
@@ -343,6 +343,19 @@ class RegistController extends Controller
             }
             return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
         }
+    }
+
+    public function test() {
+
+        $kurangi_kuota = Seminar::where('id','173')->first();
+        // dd($kurangi_kuota);
+        $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
+        $kurangi_kuota->save();
+        //kirim wa
+        $nohp = "082241904510";
+        $pesan = "jhbkhjhfghfjkldhgjdk \n hjsdagjh";
+        $wa = $this->kirimPesanWA($nohp,$pesan);
+        dd($wa['status']);
     }
 
 }

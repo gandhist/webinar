@@ -11,6 +11,7 @@
 |
 */
 Route::auth();
+Route::get('test', 'RegistController@test');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');

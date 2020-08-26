@@ -351,7 +351,7 @@
                       <tr>
                         <td>
                           <p>Halo {{ $detail['nama'] }}</p>
-                          <p>Selamat, Anda telah terdaftar pada seminar <b> {{$detail['nama_seminar']}}</b></p>
+                          <p>Selamat, Anda telah terdaftar pada seminar <b> {{strip_tags($detail['tema'])}}</b></p>
                           <table role="presentation" border="0" cellpadding="10" cellspacing="0">
                             <tbody>
                               <tr>

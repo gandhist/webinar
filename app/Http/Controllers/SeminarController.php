@@ -1532,7 +1532,7 @@ class SeminarController extends Controller
             $data = Peserta::find($key->id_peserta);
             \Mail::to($data->email)->send(new MailLink([$key,$request->link]));
         }
-        
+
         return redirect()->back()->with('alert',"Link Berhasil dikirim ke semua peserta");
     }
 
