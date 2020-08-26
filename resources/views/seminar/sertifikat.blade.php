@@ -2,13 +2,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sertifikat {{ $data->no_srtf }}</title>
     
     <style>
         @page {
             margin: 0;
+        }
+
+        @font-face {
+            font-family: 'certificate';
+            src: url({{ storage_path('fonts/Certificate-Regular.ttf') }}) format("truetype");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'certificate2';
+            src: url({{ storage_path('fonts/Adine-Kirnberg-Xdyj.ttf') }}) format("truetype");
+            font-weight: 400;
+            font-style: normal;
         }
 
         .header{
@@ -36,23 +50,27 @@
         }
     
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'certificate2';
             font-size: 16px;
             -webkit-print-color-adjust: exact !important;
             background-image: url("/certificate-bg.jpeg");
             background-repeat: no-repeat;
             background-position: center;
-            background-size: 100%;
         }
     
         p {
-            line-height: 150%;
+            font-family: 'certificate2';
+            margin-top: -105px; 
+            margin-bottom: -5px; 
+            font-size: 80px; 
+            /* font-weight: bold; */
+            /* line-height: 150%; */
         }
     
         td {
             height: 15px;
         }
-    
+
         .footer{
             position: fixed;
         }
@@ -61,7 +79,7 @@
 </head>
 <body>
     <div class="">
-        <div class="container">
+        <div class="">
             <div class="header">
                 <table style="table-layout:fixed;" width=780 cellspacing=0 cellpadding=0>
                     <tr>
@@ -73,7 +91,7 @@
                         <td colspan="10" style="padding-left:20px;"><img src="{{ public_path($data->qr_code)}}" height=110px></td>
                     </tr>
                     <tr>
-                        <td colspan="19" style="text-align: center;padding:10px 0">
+                        <td colspan="19" style="text-align: center;padding:10px 0">      
                             @foreach ($instansi as $index => $key)
                                 @if($key->is_tampil == 1)
                                     @if ($index == 1)
@@ -87,7 +105,7 @@
                                 @endif
                             @endforeach
                         </td>
-                    </tr>    
+                    </tr>
                 </table>
             </div>
             
@@ -96,8 +114,7 @@
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle; color: brown;">
-                            {{-- <p style="margin-top: -27px; margin-bottom: 4px; font-size: 54px; font-weight: bold;">SERTIFIKAT</p> --}}
-                            <img src="{{ public_path("srtf.jpg")  }}"  style="width:250px; height:100px">
+                            <p id="judul">Sertifikat</p>   
                         </td>
                     </tr>
                     <tr>
@@ -117,35 +134,30 @@
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
-                            <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; margin-top: -2px; margin-bottom:-3px; color: crimson;">{{ $data->seminar_p->nama_seminar }} (Seminar)</span>
+                            <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; margin-top: -2px; margin-bottom:-3px; color: crimson;">
+                                {{ $data->seminar_p->nama_seminar }} (Seminar)</span>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            <p style="font-size: 25px; margin-top: -2px; margin-bottom: -20px;"><strong>***</strong></p>
-                            <p style="margin-bottom: -15px;">
-                                <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; color: crimson;">
-                                    {{-- MEMPERSIAPKAN BUSINESS CONTINUITY
-                                    MANAGEMENT MENUJU ERA SOCIETY 5.0
-                                    (POST COVID-19) DI INDONESIA</span><br></p> --}}
-                                    {{ strip_tags(html_entity_decode($data->seminar_p->tema)) }}</span><br></p>
-                                    <p tyle="margin-top: -25px;"> <strong>Nilai SKPK : {{ $data->seminar_p->skpk_nilai }} ({{terbilang($data->seminar_p->skpk_nilai)}})</strong></p>
-                            {{-- </p> --}}
+                            <p style="font-size: 25px; margin-top: 0px; margin-bottom: 100px;"><strong>***</strong></p>
+                            <p style="margin-bottom: -15px; font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; color: crimson;">
+                                    {{ strip_tags(html_entity_decode($data->seminar_p->tema)) }}</p>
+                            <p style="font-size: 15px;margin-top: 20px;margin-bottom: 3px;"><strong>Nilai SKPK : {{ $data->seminar_p->skpk_nilai }} ({{terbilang($data->seminar_p->skpk_nilai)}})</strong></p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            <p style="margin-top: -8px; margin-bottom: 9px;"><strong>Penyelenggara :</strong></p>
+                            <p style="font-size: 15px;margin-top: 5px; margin-bottom: 5px;"><strong>Penyelenggara :</strong></p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            <p style="margin-top: 2px; margin-bottom:9px ">
+                            <p style="margin-top: 0px; margin-bottom:9px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    {{-- ASTEKINDO * GATAKI * DK3N * WASKITA * PPK * K3 * UNAND * LPJKP KEPRI  --}}
                                     @foreach ($instansi as $index => $key) 
                                         @if(count($instansi) > $index + 1) 
                                         {{ $key->bu_instansi->singkat_bu }} *
@@ -159,7 +171,7 @@
                     </tr>
                     <tr>
                         <td colspan="6"></td>
-                        <td colspan="48" style="text-align: center; vertical-align: middle; padding-bottom: 25px; ">
+                        <td colspan="48" style="text-align: center; vertical-align: middle; padding-bottom: 15px; ">
                             <b>{{ $data->seminar_p->lokasi_penyelenggara }}, {{ isset($data->seminar_p) ? \Carbon\Carbon::parse($data->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
                         </td>
                     </tr>
@@ -173,25 +185,14 @@
                         </td>
                         @endforeach
                     </tr>
-                    <tr>
-                        {{-- <td colspan="6"></td>
-                        <td colspan="48" style="font-size: small; vertical-align: bottom;"><br>
-                            <b>Catatan:</b><br>
-                            SKPK sebesar 25 untuk kegiatan Pembelajaran Mandiri dapat <br>
-                            diperoleh setelah Peserta menyusun <strong><i>Executive Summary</i></strong></td> --}}
-                    </tr>
                 </table>
-                
             </div>
             <div class="footer" style="padding-left:95px;padding-top:962px;">
                 <b>Catatan:</b><br>
                     SKPK sebesar 25 untuk kegiatan Pembelajaran Mandiri dapat <br>
                     diperoleh setelah Peserta menyusun <strong><i>Executive Summary</i></strong>
             </div>
-
         </div>
     </div>
-    
 </body>
-
 </html>
