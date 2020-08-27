@@ -7,7 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Mail\EmailLinkSert as MailSertifikat;
+use App\Mail\EmailLink as MailLink;
 use Mail;
 
 class KirimLinkSeminar implements ShouldQueue
@@ -23,11 +23,12 @@ class KirimLinkSeminar implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($param)
+    public function __construct($email,$key)
     {
         //
         $this->key = $param['key'];
-        $this->data = $data['detail'];
+        $this->data = $param['data'];
+        $this->link = $param['link'];
     }
 
     /**
@@ -38,6 +39,6 @@ class KirimLinkSeminar implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to($this->data->email)->send(new MailSertifikat($key));
+        Mail::to($this->data->email)->send(new MailLink([$this->key,$this->link]));
     }
 }
