@@ -53,6 +53,7 @@ class KirimLinkSeminar implements ShouldQueue
         $url =  url('presensi', \Hashids::encode($this->key->id));
 
         $nohp = $this->data->no_hp;
+        $nama = $this->data->nama;
         // print_r($this->detail);
         // $pesan = 'test';
         $pesan = "Salam Sehat Bapak, Ibu serta rekan-rekan semua bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal $tgl dengan topik *$tema*. Acara dimulai pukul $jam WIB, harap menggunakan nama dengan format *\"nama_institusi\"*. \n.$url \nTerimakasih";
