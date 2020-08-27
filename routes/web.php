@@ -42,9 +42,9 @@ Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
 Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 
 Route::group(['prefix' => 'presensi'], function () {
-	Route::get('/','AbsensiController@index');
-	Route::get('datang','AbsensiController@datang');
-	Route::get('pulang','AbsensiController@pulang');
+	Route::get('/{id}','AbsensiController@index');
+	Route::get('datang/{id_peserta}','AbsensiController@datang');
+	Route::get('pulang/{id_peserta}','AbsensiController@pulang');
 });
 
 
