@@ -13,7 +13,7 @@ use App\PesertaSeminar;
 class AbsensiController extends Controller
 {
     public function index($id){
-        
+
         $peserta_seminar = PesertaSeminar::where('id',$id)->first();
         // $peserta = Peserta::where('id',$id)->first();
         $cek_in = $this->cek_in();
@@ -21,7 +21,7 @@ class AbsensiController extends Controller
         $data = AbsensiModel::where('id_peserta',$peserta_seminar->id_peserta)->get();
         // dd($data);
 
-        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta','seminar', 'peserta_seminar'));
+        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar'));
     }
 
     // absen masuk
@@ -33,7 +33,7 @@ class AbsensiController extends Controller
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
         $masuk->save();
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Berhasil Absen',
