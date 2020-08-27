@@ -1311,7 +1311,9 @@ class SeminarController extends Controller
         $emails = PesertaSeminar::where('id_seminar',$id)->where('is_email_sent','0')->where('is_paid','=','1')->get();
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
-            \Mail::to($data->email)->send(new MailSertifikat($key));
+            $param = ['data' => $data, 'key' => $key];
+            dispatch(new \App\Jobs\KirimLinkSeminar($param));
+            // \Mail::to($data->email)->send(new MailSertifikat($key));
         }
         PesertaSeminar::where('is_email_sent','0')->update(['is_email_sent'=>'1']);
         return redirect()->back()->with('alert',"Sertifikat Berhasil dikirim ke semua peserta");
@@ -1530,7 +1532,8 @@ class SeminarController extends Controller
 
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
-            \Mail::to($data->email)->send(new MailLink($key));
+            dispatch(new \App\Jobs\KirimLinkSeminar($data, $key));
+            // \Mail::to($data->email)->send(new MailLink($key));
         }
 
         return redirect()->back()->with('alert',"Link Berhasil dikirim ke semua peserta");

@@ -260,8 +260,11 @@ a {
                     <tbody>
                     <tr>
                         <td class="padded">
-                        <h1>Halo, {{ $details->peserta_r->nama }}</h1>
-                        <p>Silahkan klik link berikut untuk mengikuti seminar P3S Mandiri</p>
+                        <h1>Halo, {{ $details->peserta_r->nama }}!</h1>
+                        <p>Silahkan klik link dibawah ini untuk mengikuti seminar P3S Mandiri yang akan diadakan dengan :</p>
+                        <p>Tema : <b>{{ strip_tags($details->seminar_p->tema) }}</b> 
+                        <p>Tanggal : {{ \Carbon\Carbon::parse($details->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") }} 
+                        <p>Jam : {{ $details->seminar_p->jam_awal }}</p>
                         <p><a href="{{ url('presensi', \Crypt::encrypt($details->id)) }}">Presensi Seminar</a></p>
                         </td>
                     </tr>

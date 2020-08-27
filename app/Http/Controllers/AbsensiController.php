@@ -34,7 +34,7 @@ class AbsensiController extends Controller
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
         $masuk->save();
-    
+
         return response()->json([
             'status' => true,
             'message' => 'Berhasil Absen',
