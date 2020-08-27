@@ -797,7 +797,7 @@
 
         // onchange kota
         $('#kota_penyelenggara').on('select2:select', function() {
-            is_online = {{$seminar->is_online}};
+            is_online = "{{$seminar->is_online}}";
 
             if(is_online == '0') {
 
