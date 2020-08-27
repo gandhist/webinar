@@ -34,7 +34,11 @@
             <div class="jumbotron"  style='padding-top:1px'>
 
                 <h1 style="margin-bottom:50px;">Seminar</h1>
-
+                @if($seminar->is_mulai == 0)
+                    <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar</a><br><br>
+                @else
+                @endif
+                    
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">

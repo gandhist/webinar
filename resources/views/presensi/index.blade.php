@@ -13,7 +13,7 @@
         Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
         Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
         Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br><br>
-        
+    
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">
@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-md-6">
                     @if($cek_in)
-                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk"> <!-- Aktif saat tanggal seminar-->
+                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk">
                     @else
                         @if($cek_out)
                         <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar">
@@ -45,7 +45,6 @@
             <table class="table">
                 <thead>
                   <tr>
-                    {{-- <th>No</th> --}}
                     <th>Tanggal</th>
                     <th>Jam Masuk</th>
                     <th>Jam Keluar</th>
@@ -54,7 +53,6 @@
                 <tbody>
                     @foreach($data as $key)
                     <tr>
-                        {{-- <td>{{ $loop->iteration }} </td> --}}
                         <td>{{ \Carbon\Carbon::parse($key->tanggal)->isoFormat('DD MMMM YYYY') }}</td>
                         <td>{{ $key->jam_cek_in }}</td>
                         <td>{{ $key->jam_cek_out }}</td>
@@ -80,6 +78,7 @@
 
 <script>
 var home = "{{ url('presensi', $id_encrypt) }}";
+var home_url = "{{ $peserta_seminar->seminar_p->url }}";
 
 function absen_masuk() {
     var formData = new FormData($('#formAdd')[0]);
@@ -104,7 +103,19 @@ function absen_masuk() {
                 confirmButtonText: 'Close',
                 confirmButtonColor: '#AAA',
                 onClose: function() {
-                    window.location.replace(home);
+                    window.open(home_url);
+                    window.location.replace(home);        
+                }
+            })
+        } 
+        else if (response.status) {
+            Swal.fire({
+                title: response.message,
+                type: 'success',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA',
+                onClose: function() {
+                    window.location.replace(home);        
                 }
             })
         }
