@@ -11,6 +11,8 @@ use App\Mail\EmailLink as MailLink;
 use App\PesertaSeminar;
 use App\Traits\GlobalFunction;
 use Mail;
+use Vinkla\Hashids\Facades\Hashids;
+
 
 class KirimLinkSeminar implements ShouldQueue
 {
@@ -45,18 +47,18 @@ class KirimLinkSeminar implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to($this->data->email)->send(new MailLink($this->key));
+        // Mail::to($this->data->email)->send(new MailLink($this->key));
 
         $tgl = \Carbon\Carbon::parse($this->key->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY');
         $tema = strip_tags($this->key->seminar_p->tema);
         $jam = $this->key->seminar_p->jam_awal;
-        $url =  url('presensi', \Hashids::encode($this->key->id));
+        $url =  url('presensi', Hashids::encode($this->key->id));
 
         $nohp = $this->data->no_hp;
         $nama = $this->data->nama;
         // print_r($this->detail);
         // $pesan = 'test';
-        $pesan = "Salam Sehat Bapak, Ibu serta rekan-rekan semua bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal $tgl dengan topik *$tema*. Acara dimulai pukul $jam WIB, harap menggunakan nama dengan format *\"nama_institusi\"*. \n.$url \nTerimakasih";
+        $pesan = "Salam Sehat Bapak/Ibu $nama serta rekan-rekan semua bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal $tgl dengan topik *$tema*. \nAcara dimulai pukul $jam WIB, harap menggunakan nama dengan format *\"nama_institusi\"*.\ncontoh : Budi_P3S mandiri \nLink : $url \nTerimakasih";
         $status = $this->kirimPesanWA($nohp,$pesan);
         // print_r($status);
 

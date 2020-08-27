@@ -10,6 +10,7 @@ use App\Peserta;
 use App\SeminarModel;
 use App\PesertaSeminar;
 use Illuminate\Support\Facades\Crypt;
+use Vinkla\Hashids\Facades\Hashids;
 
 class AbsensiController extends Controller
 {
@@ -17,8 +18,9 @@ class AbsensiController extends Controller
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
-            $id_decrypt =  \Hashids::decode($id);
+            $id_decrypt =  Hashids::decode($id);
         }
+        return "<center><h1>halaman absensi belum bisa di akses untuk saat ini</h1></center>";
         dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         $cek_in = $this->cek_in();
