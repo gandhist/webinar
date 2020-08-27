@@ -53,10 +53,12 @@ class KirimLinkSeminar implements ShouldQueue
         $url =  url('presensi', \Crypt::encrypt($this->key->id));
 
         $nohp = $this->data->no_hp;
+        $nama = $this->data->nama;
         // print_r($this->detail);
         // $pesan = 'test';
-        $pesan = "Salam Sehat Bapak, Ibu serta rekan-rekan semua 🙏🙏🙏 bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal ".$tgl."
-        dengan topik *".$tema.".* Acara dimulai pukul ".$jam." WIB, harap menggunakan nama dengan format *\"nama_institusi\"*. Terima Kasih 🇮🇩🇮🇩\n".$url;
+        $pesan = "Salam Sehat Bapak, Ibu $nama serta rekan-rekan semua bersama ini kami sampaikan L1nk Presensi untuk acara Webinar pada tanggal ".$tgl."
+        dengan topik *".$tema.".* Acara dimulai pukul ".$jam." WIB, harap menggunakan nama dengan format *\"nama_institusi\"*. Terima Kasih\n".$url;
+        // $pesan = "Salam Sehat Bapak, Ibu $nama serta rekan-rekan semua bersama ini kami sampaikan L1nk Presensi untuk acara Webinar pada tanggal ";
         $status = $this->kirimPesanWA($nohp,$pesan);
         print_r($status);
 
