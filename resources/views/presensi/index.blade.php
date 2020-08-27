@@ -13,7 +13,7 @@
         Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
         Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
         Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br><br>
-        {{-- Link <br><br> --}}
+        
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">
@@ -27,10 +27,10 @@
             <div class="row">
                 <div class="col-md-6">
                     @if($cek_in)
-                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk" disabled> <!-- Aktif saat tanggal seminar-->
+                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk"> <!-- Aktif saat tanggal seminar-->
                     @else
                         @if($cek_out)
-                        <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar" disabled>
+                        <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar">
                         @else
                         @endif
                     @endif
@@ -45,7 +45,7 @@
             <table class="table">
                 <thead>
                   <tr>
-                    <th>No</th>
+                    {{-- <th>No</th> --}}
                     <th>Tanggal</th>
                     <th>Jam Masuk</th>
                     <th>Jam Keluar</th>
@@ -54,7 +54,7 @@
                 <tbody>
                     @foreach($data as $key)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        {{-- <td>{{ $loop->iteration }} </td> --}}
                         <td>{{ \Carbon\Carbon::parse($key->tanggal)->isoFormat('DD MMMM YYYY') }}</td>
                         <td>{{ $key->jam_cek_in }}</td>
                         <td>{{ $key->jam_cek_out }}</td>
@@ -69,6 +69,7 @@
 
 @endsection
 @push('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -78,11 +79,11 @@
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
 <script>
-var home = "{{ url('presensi') }}";
+var home = "{{ url('presensi', $id_encrypt) }}";
 
 function absen_masuk() {
     var formData = new FormData($('#formAdd')[0]);
-    var url = "{{ url('presensi/datang', $peserta_seminar->id_peserta) }}";
+    var url = "{{ url('presensi/datang', $peserta_seminar->id) }}";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -90,7 +91,7 @@ function absen_masuk() {
     });
     $.ajax({
     url: url,
-    type: 'POST',
+    type: 'GET',
     dataType: "JSON",
     data: formData,
     contentType: false,
@@ -127,7 +128,7 @@ function absen_masuk() {
 
 function absen_keluar() {
     var formData = new FormData($('#formAdd')[0]);
-    var url = "{{ url('presensi/pulang') }}";
+    var url = "{{ url('presensi/pulang', $peserta_seminar->id) }}";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -135,7 +136,7 @@ function absen_keluar() {
     });
     $.ajax({
     url: url,
-    type: 'POST',
+    type: 'GET',
     dataType: "JSON",
     data: formData,
     contentType: false,
