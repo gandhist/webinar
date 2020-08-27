@@ -15,13 +15,11 @@ class AbsensiController extends Controller
 {
     public function index($id){
         $id_encrypt = $id;
-        $id_decrypt = Crypt::decrypt($id);
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
             $id_decrypt =  \Hashids::decode($id);
         }
-        dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         $cek_in = $this->cek_in($peserta_seminar->id);
         $cek_out = $this->cek_out($peserta_seminar->id);
@@ -38,11 +36,22 @@ class AbsensiController extends Controller
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
         $masuk->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Berhasil Absen Masuk',
-        ]);
+        
+        $seminar = PesertaSeminar::select('id_seminar')->where('id','=',$id)->first();
+        $status = SeminarModel::select('is_mulai')->where('id','=',$seminar['id_seminar'])->first();
+        
+        if ($status['is_mulai'] == 0){
+            return response()->json([
+                'status' => false,
+                'message' => 'Seminar belum dimulai',
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil Absen Masuk',
+            ]);
+        }
+        
     }
 
     // absen keluar
