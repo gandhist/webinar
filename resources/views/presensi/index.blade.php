@@ -8,7 +8,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="container" id="content">
-    <h2 text-align="center">Halaman Presensi</h2><br>
+    <h2 text-align="center">Halaman Presensi</h2>
+    <hr>
         Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
         Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
         Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br><br>
@@ -36,7 +37,7 @@
                 </div>
             </div>
         </form>
-    <hr>
+    <br>
 
     <div class="row">    
         <div class="col-lg-12">
