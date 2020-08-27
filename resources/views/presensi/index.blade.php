@@ -8,9 +8,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <div class="container" id="content">
-    <h2 text-align="center">Halaman Absensi</h2><br>
-        Nama Peserta : {{ $peserta_seminar->peserta_r->nama}}<br><br>
+    <h2 text-align="center">Halaman Presensi</h2><br>
+        Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
         Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
+        Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br><br>
         {{-- Link <br><br> --}}
         @if(session()->get('status'))
         <div class="row">
@@ -25,10 +26,10 @@
             <div class="row">
                 <div class="col-md-6">
                     @if($cek_in)
-                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk">
+                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk" disabled> <!-- Aktif saat tanggal seminar-->
                     @else
                         @if($cek_out)
-                        <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar">
+                        <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar" disabled>
                         @else
                         @endif
                     @endif
@@ -39,7 +40,7 @@
 
     <div class="row">    
         <div class="col-lg-12">
-            <h3>Daftar Absensi Anda</h3>
+            <h3>Daftar Presensi Anda</h3>
             <table class="table">
                 <thead>
                   <tr>
@@ -80,7 +81,7 @@ var home = "{{ url('presensi') }}";
 
 function absen_masuk() {
     var formData = new FormData($('#formAdd')[0]);
-    var url = "{{ url('presensi/datang') }}";
+    var url = "{{ url('presensi/datang', $peserta_seminar->id_peserta) }}";
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
