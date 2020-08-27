@@ -9,25 +9,26 @@ use App\AbsensiModel;
 use App\Peserta;
 use App\SeminarModel;
 use App\PesertaSeminar;
+use Illuminate\Support\Facades\Crypt;
 
 class AbsensiController extends Controller
 {
     public function index($id){
-        
-        $peserta_seminar = PesertaSeminar::where('id',$id)->first();
-        // $peserta = Peserta::where('id',$id)->first();
+        $id_decrypt = Crypt::decrypt($id);
+        $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         $cek_in = $this->cek_in();
         $cek_out = $this->cek_out();
-        $data = AbsensiModel::where('id_peserta',$peserta_seminar->id_peserta)->get();
+        $data = AbsensiModel::where('id_peserta', $peserta_seminar->id_peserta)->get();
         // dd($data);
 
-        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta','seminar', 'peserta_seminar'));
+        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar'));
     }
 
     // absen masuk
-    public function datang(Request $request){
+    public function datang(Request $request, $id){
+        $id_decrypt = Crypt::decrypt($id);
         $masuk = new AbsensiModel;
-        $masuk->id_peserta = Peserta::where('user_id',Auth::id())->first()->id;
+        $masuk->id_peserta = Peserta::where('id',$id_decrypt)->first();
         $masuk->jam_cek_in = Carbon::now()->toDateTimeString();
         $masuk->created_by = Auth::id();
         $masuk->created_at = Carbon::now()->toDateTimeString();
@@ -42,6 +43,7 @@ class AbsensiController extends Controller
 
     // absen keluar
     public function pulang(Request $request){
+        $id_decrypt = Crypt::decrypt($id);
         $keluar = AbsensiModel::where('id_peserta',Peserta::where('user_id',Auth::id())->first()->id)->orderBy('id','desc')->first();
         $keluar->id_peserta = Peserta::where('user_id',Auth::id())->first()->id;
         $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
