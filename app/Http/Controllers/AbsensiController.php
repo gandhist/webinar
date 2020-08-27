@@ -8,17 +8,20 @@ use Illuminate\Support\Facades\Auth;
 use App\AbsensiModel;
 use App\Peserta;
 use App\SeminarModel;
+use App\PesertaSeminar;
 
 class AbsensiController extends Controller
 {
-    public function index(){
-        $seminar = SeminarModel::all();
-        $peserta = Peserta::where('user_id',Auth::id())->first();
+    public function index($id){
+        
+        $peserta_seminar = PesertaSeminar::where('id',$id)->first();
+        // $peserta = Peserta::where('id',$id)->first();
         $cek_in = $this->cek_in();
         $cek_out = $this->cek_out();
-        $data = AbsensiModel::where('id_peserta',$peserta->id)->get();
+        $data = AbsensiModel::where('id_peserta',$peserta_seminar->id_peserta)->get();
+        // dd($data);
 
-        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta','seminar'));
+        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta','seminar', 'peserta_seminar'));
     }
 
     // absen masuk

@@ -1527,10 +1527,10 @@ class SeminarController extends Controller
         // dd($request->link);
         // kirim email
         $emails = PesertaSeminar::where('id_seminar',$id)->get();
-        // dd($emails);
+
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);
-            \Mail::to($data->email)->send(new MailLink([$key,$request->link]));
+            \Mail::to($data->email)->send(new MailLink($key));
         }
 
         return redirect()->back()->with('alert',"Link Berhasil dikirim ke semua peserta");

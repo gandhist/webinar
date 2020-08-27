@@ -260,9 +260,9 @@ a {
                     <tbody>
                     <tr>
                         <td class="padded">
-                        <h1>Halo, {{ $details[0]->peserta_r->nama }}!</h1>
-                        <p>Berikut ini adalah link untuk mengikuti seminar:</p>
-                        <p><a href="{{$details[1] }}">Klik Link</a></p>
+                        <h1>Halo, {{ $details->peserta_r->nama }}</h1>
+                        <p>Silahkan klik link berikut untuk mengikuti seminar</p>
+                        <p><a href="{{ url('presensi',$details->id) }}">Presensi Seminar</a></p>
                         </td>
                     </tr>
                     </tbody>
