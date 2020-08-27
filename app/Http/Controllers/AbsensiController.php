@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Crypt;
 class AbsensiController extends Controller
 {
     public function index($id){
+        $id_encrypt = $id;
+        $id_decrypt = Crypt::decrypt($id);
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
@@ -21,51 +23,45 @@ class AbsensiController extends Controller
         }
         dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
-        $cek_in = $this->cek_in();
-        $cek_out = $this->cek_out();
-        $data = AbsensiModel::where('id_peserta', $peserta_seminar->id_peserta)->get();
-        // dd($data);
+        $cek_in = $this->cek_in($peserta_seminar->id);
+        $cek_out = $this->cek_out($peserta_seminar->id);
+        $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
 
-        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar'));
+        return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar', 'id_encrypt'));
     }
 
     // absen masuk
     public function datang(Request $request, $id){
-        $id_decrypt = Crypt::decrypt($id);
         $masuk = new AbsensiModel;
-        $masuk->id_peserta = Peserta::where('id',$id_decrypt)->first();
+        $masuk->id_peserta_seminar = $id;
         $masuk->jam_cek_in = Carbon::now()->toDateTimeString();
-        $masuk->created_by = Auth::id();
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
         $masuk->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Berhasil Absen',
+            'message' => 'Berhasil Absen Masuk',
         ]);
     }
 
     // absen keluar
-    public function pulang(Request $request){
-        $id_decrypt = Crypt::decrypt($id);
-        $keluar = AbsensiModel::where('id_peserta',Peserta::where('user_id',Auth::id())->first()->id)->orderBy('id','desc')->first();
-        $keluar->id_peserta = Peserta::where('user_id',Auth::id())->first()->id;
+    public function pulang(Request $request, $id){
+        $keluar = AbsensiModel::where('id_peserta_seminar',$id)->orderBy('id','desc')->first();
+        $keluar->id_peserta_seminar = $id;
         $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
-        $keluar->updated_by = Auth::id();
         $keluar->updated_at = Carbon::now()->toDateTimeString();
         $keluar->save();
 
         return response()->json([
             'status' => true,
-            'message' => 'Berhasil Absen',
+            'message' => 'Berhasil Absen Keluar',
         ]);
     }
 
     // function cek absen masuk
-    public function cek_in(){
-        $peserta = Peserta::where('user_id',Auth::id())->first();
-        $cek_cekin = AbsensiModel::where('tanggal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('id_peserta', $peserta->id)->first();
+    public function cek_in($id){
+        $cek_cekin = AbsensiModel::where('tanggal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('id_peserta_seminar', $id)->first();
         if($cek_cekin){
             $allow = false;
         }
@@ -76,9 +72,8 @@ class AbsensiController extends Controller
     }
 
     // function cek absen keluar
-    public function cek_out(){
-        $peserta = Peserta::where('user_id',Auth::id())->first();
-        $cek_cekin = AbsensiModel::where('tanggal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('id_peserta', $peserta->id)->whereNotNull('jam_cek_out')->first();
+    public function cek_out($id){
+        $cek_cekin = AbsensiModel::where('tanggal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('id_peserta_seminar', $id)->whereNotNull('jam_cek_out')->first();
         if($cek_cekin){
             $allow = false;
         }
