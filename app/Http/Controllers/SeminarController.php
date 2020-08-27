@@ -1528,6 +1528,9 @@ class SeminarController extends Controller
     public function kirimLink(Request $request, $id){
         // dd($request->link);
         // kirim email
+        $seminar = SeminarModel::where('id',$id)->first();
+        $seminar->url = $request->link;
+        $seminar->save();
         $emails = PesertaSeminar::where('id_seminar',$id)->get();
 
         foreach ($emails as $key) {

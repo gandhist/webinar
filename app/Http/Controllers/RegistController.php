@@ -353,9 +353,10 @@ class RegistController extends Controller
         // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
         // $kurangi_kuota->save();
         //kirim wa
-        $nohp = "081294868833";
+        $nohp = "081240353913";
         $pesan = "new \n line";
         $wa = $this->kirimPesanWA($nohp,$pesan);
+        return $wa['status'];
         dd($wa['status']);
     }
 

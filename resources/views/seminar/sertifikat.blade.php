@@ -53,7 +53,8 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'certificate2';
             font-size: 16px;
             -webkit-print-color-adjust: exact !important;
-            background-image: url("/certificate-bg.jpeg");
+            background-image: url("/bg_srtf.jpg");
+            /* background-image: url("/certificate-bg.jpeg"); */
             background-repeat: no-repeat;
             background-position: center;
         }
