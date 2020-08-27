@@ -9,9 +9,9 @@
 
 <div class="container" id="content">
     <h2 text-align="center">Halaman Absensi</h2><br>
-        Nama Peserta : ...<br><br>
-        Tema Seminar : ...<br><br>
-        Link <br><br>
+        Nama Peserta : {{ $peserta_seminar->peserta_r->nama}}<br><br>
+        Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
+        {{-- Link <br><br> --}}
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">
