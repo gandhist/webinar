@@ -89,7 +89,7 @@ class RegistController extends Controller
         // $password = '123456'; // buat test masih hardcode
 
         if ($peserta) {
-            $data['username'] = $request->nama; 
+            $data['username'] = $request->nama;
             $data['email'] = strtolower($request->email);
             $data['password'] = Hash::make($password);
             $data['name'] = $request->nama;
@@ -348,13 +348,13 @@ class RegistController extends Controller
 
     public function test() {
 
-        $kurangi_kuota = Seminar::where('id','173')->first();
-        // dd($kurangi_kuota);
-        $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
-        $kurangi_kuota->save();
+        // $kurangi_kuota = Seminar::where('id','173')->first();
+        // // dd($kurangi_kuota);
+        // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
+        // $kurangi_kuota->save();
         //kirim wa
-        $nohp = "082241904510";
-        $pesan = "jhbkhjhfghfjkldhgjdk \n hjsdagjh";
+        $nohp = "081294868833";
+        $pesan = "new \n line";
         $wa = $this->kirimPesanWA($nohp,$pesan);
         dd($wa['status']);
     }
