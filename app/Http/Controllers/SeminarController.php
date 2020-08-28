@@ -1519,4 +1519,11 @@ class SeminarController extends Controller
         return redirect()->back()->with('alert',"Link Berhasil dikirim ke semua peserta");
     }
 
+    public function mulai($id){
+        $status = SeminarModel::find($id);
+        $status->is_mulai = 1;
+        $status->save();
+
+        return redirect()->back()->with('alert',"Seminar sudah dimulai");
+    }
 }

@@ -241,7 +241,7 @@ a {
         <tbody>
         <tr>
             <td class="title" width="300">P3SM</td>
-            <td class="subject" width="300"><a class="strong" href="https://p3sm.or.id/" target="_blank">www.p3sm.or.id</a></td>
+            <td class="subject" width="300"><a class="strong" href="https://https://srtf.p3sm.or.id//" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
             <td class="border" colspan="2">&nbsp;</td>
@@ -261,11 +261,11 @@ a {
                     <tr>
                         <td class="padded">
                         <h1>Halo, {{ $details->peserta_r->nama }}!</h1>
-                        <p>Silahkan klik link dibawah ini untuk mengikuti seminar P3S Mandiri yang akan diadakan dengan :</p>
-                        <p>Tema : <b>{{ strip_tags($details->seminar_p->tema) }}</b> 
-                        <p>Tanggal : {{ \Carbon\Carbon::parse($details->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") }} 
-                        <p>Jam : {{ $details->seminar_p->jam_awal }}</p>
-                        <p><a href="{{ url('presensi', \Crypt::encrypt($details->id)) }}">Presensi Seminar</a></p>
+                        <p>Silahkan klik link dibawah ini untuk mengikuti seminar P3S Mandiri yang akan diadakan dengan 
+                        tema <b>"{{ strip_tags($details->seminar_p->tema) }}"</b> 
+                        pada tanggal {{ \Carbon\Carbon::parse($details->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") }} 
+                        di jam {{ $details->seminar_p->jam_awal }}.</p>
+                        <p style="text-align:center;"><a href="{{ url('presensi', \Crypt::encrypt($details->id)) }}" style="color:black" class="btn">Presensi Seminar</a></p>
                         </td>
                     </tr>
                     </tbody>
