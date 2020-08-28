@@ -103,6 +103,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('approve/{id}','SeminarController@approve');
 	Route::post('kirimlink/{id}','SeminarController@kirimLink');
 	Route::get('mulai/{id}','SeminarController@mulai');
+	Route::get('selesai/{id}','SeminarController@selesai');
 
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
