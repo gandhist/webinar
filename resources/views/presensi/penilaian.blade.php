@@ -58,7 +58,7 @@
 
         </div>
         <div class="col-lg-8">
-        <h2>Presensi Webinar "{{ strip_tags(html_entity_decode($peserta_seminar->seminar_p->tema)) }}" {{ $peserta_seminar->id }}</h2>
+        <h2>Presensi Webinar "{{ strip_tags(html_entity_decode($peserta_seminar->seminar_p->tema)) }}" </h2>
             <p>* Wajib</p>
             <hr>
         </div>
@@ -144,6 +144,24 @@
             </div>
             <br>
             @endforeach
+
+            <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8 card" style="width: 100%;background-color:#b7d0ed">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <br>
+                            <label for="nama" class="label-control required"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
+                            <textarea name="kesan_pesan" id="kesan_pesan" class="form-control"></textarea>
+                            <span id="nama" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <br>
 
 
             <div class="row">
