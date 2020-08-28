@@ -861,7 +861,7 @@ class SeminarController extends Controller
         // Cek Is tampil
         $ins =  SertInstansiModel::where('id_seminar',$id)->get();
         foreach($ins as $key){
-            if(collect($request->logo)->contains($key->id)){
+            if(collect($request->logo)->contains($key->id_instansi)){
                 $tampil = SertInstansiModel::find($key->id);
                 $tampil->is_tampil = '1';
                 $tampil->save();
@@ -1193,7 +1193,7 @@ class SeminarController extends Controller
         // Cek Is tampil
         $ins =  SertInstansiModel::where('id_seminar',$id)->get();
         foreach($ins as $key){
-            if(collect($request->logo)->contains($key->id)){
+            if(collect($request->logo)->contains($key->id_instansi)){
                 $tampil = SertInstansiModel::find($key->id);
                 $tampil->is_tampil = '1';
                 $tampil->save();

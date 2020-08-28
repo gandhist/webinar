@@ -106,22 +106,7 @@
                             <div class="rating d-flex justify-content-end">
                                 @for ($i = 5; $i > 0; $i--)
                                 <input id="radio-narasumber-{{"$loop->iteration-$i"}}" type="radio" name="narasumber[{{$n->peserta_r->id}}]" value="{{$i}}" class="star"  {{old("narasumber[$loop->iteration]") == $i ? "selected" : ''}} required/>
-                                <label for="radio-narasumber-{{"$loop->iteration-$i"}}"
-                                    data-toggle="tooltip" data-placement="bottom" title="
-                                    @php
-                                    switch ($i) {
-                                        case '1':
-                                            echo "Sangat Buruk";
-                                        case '2':
-                                            echo "Buruk";
-                                        case '3':
-                                            echo "Cukup Baik";
-                                        case '4':
-                                            echo "Baik";
-                                        case '5':
-                                            echo "Sangat Baik";
-                                    @endphp
-                                    ">&#9733;</label>
+                                <label for="radio-narasumber-{{"$loop->iteration-$i"}}">&#9733;</label>
                                 @endfor
                             </div>
                         </div>
@@ -145,22 +130,7 @@
                             <div class="rating d-flex justify-content-end">
                                 @for ($i = 5; $i > 0; $i--)
                                 <input id="radio-moderator-{{"$loop->iteration-$i"}}" type="radio" name="moderator[{{$m->peserta_r->id}}]" value="{{$i}}" class="star" {{old("moderator[$loop->iteration]") == $i ? "selected" : ''}} required/>
-                                <label for="radio-moderator-{{"$loop->iteration-$i"}}"
-                                    data-toggle="tooltip" data-placement="bottom" title=
-                                    @php
-                                    switch ($i) {
-                                        case '1':
-                                            echo "Sangat Buruk";
-                                        case '2':
-                                            echo "Buruk";
-                                        case '3':
-                                            echo "Cukup Baik";
-                                        case '4':
-                                            echo "Baik";
-                                        case '5':
-                                            echo "Sangat Baik";
-                                    @endphp
-                                    >&#9733;</label>
+                                <label for="radio-moderator-{{"$loop->iteration-$i"}}">&#9733;</label>
                                 @endfor
                             </div>
                         </div>
