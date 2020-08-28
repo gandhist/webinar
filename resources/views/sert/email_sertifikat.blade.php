@@ -241,7 +241,7 @@ a {
         <tbody>
         <tr>
             <td class="title" width="300">P3SM</td>
-            <td class="subject" width="300"><a class="strong" href="https://p3sm.or.id/" target="_blank">www.p3sm.or.id</a></td>
+            <td class="subject" width="300"><a class="strong" href="https://https://srtf.p3sm.or.id//" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
             <td class="border" colspan="2">&nbsp;</td>
