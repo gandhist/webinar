@@ -78,15 +78,14 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <br>
-                            <label for="nama" class="label-control required"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
+                            <label for="seminar" class="label-control required"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
                             <div class="rating d-flex justify-content-end">
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-seminar-{{$i}}" type="radio" name="seminar
-                                " value="{{$i}}" class="star" />
+                                <input id="radio-seminar-{{$i}}" type="radio" name="seminar[{{$peserta_seminar->seminar_p->tema}}]" value="{{$i}}" class="star" required />
                                 <label for="radio-seminar-{{$i}}">&#9733;</label>
                                 @endfor
                             </div>
-                            <span id="nama" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
+                            <span id="seminar" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
                         </div>
                     </div>
                 </div>
@@ -103,14 +102,13 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <br>
-                            <label for="nama" class="label-control required"><b>Penilaian untuk {{$n->peserta_r->nama}} sebagai Narasumber?</b></label>
+                            <label for="narasumber" class="label-control required"><b>Penilaian untuk {{$n->peserta_r->nama}} sebagai Narasumber?</b></label>
                             <div class="rating d-flex justify-content-end">
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-narasumber-{{"$loop->iteration-$i"}}" type="radio" name="narasumber-{{$n->peserta_r->id}}" value="{{$i}}" class="star"  {{old("narasumber-$loop->iteration") == $i ? "selected" : ''}}/>
+                                <input id="radio-narasumber-{{"$loop->iteration-$i"}}" type="radio" name="narasumber[{{$n->peserta_r->id}}]" value="{{$i}}" class="star"  {{old("narasumber[$loop->iteration]") == $i ? "selected" : ''}} required/>
                                 <label for="radio-narasumber-{{"$loop->iteration-$i"}}">&#9733;</label>
                                 @endfor
                             </div>
-                            <span id="nama" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
                         </div>
                     </div>
                 </div>
@@ -128,14 +126,13 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <br>
-                            <label for="nama" class="label-control required"><b>Penilaian untuk {{$m->peserta_r->nama}} sebagai Moderator?</b></label>
+                            <label for="moderator" class="label-control required"><b>Penilaian untuk {{$m->peserta_r->nama}} sebagai Moderator?</b></label>
                             <div class="rating d-flex justify-content-end">
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-moderator-{{"$loop->iteration-$i"}}" type="radio" name="moderator-{{$m->peserta_r->id}}" value="{{$i}}" class="star" {{old("moderator-$loop->iteration") == $i ? "selected" : ''}}/>
+                                <input id="radio-moderator-{{"$loop->iteration-$i"}}" type="radio" name="moderator[{{$m->peserta_r->id}}]" value="{{$i}}" class="star" {{old("moderator[$loop->iteration]") == $i ? "selected" : ''}} required/>
                                 <label for="radio-moderator-{{"$loop->iteration-$i"}}">&#9733;</label>
                                 @endfor
                             </div>
-                            <span id="nama" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
                         </div>
                     </div>
                 </div>
@@ -152,9 +149,9 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <br>
-                            <label for="nama" class="label-control required"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
-                            <textarea name="kesan_pesan" id="kesan_pesan" class="form-control"></textarea>
-                            <span id="nama" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
+                            <label for="kesan_pesan" class="label-control required"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
+                            <textarea name="kesan_pesan" id="kesan_pesan" class="form-control" required></textarea>
+                            <span id="kesan_pesan" class="invalid-feedback">{{ $errors->first('kesan_pesan') }}</span>
                         </div>
                     </div>
                 </div>
@@ -163,6 +160,23 @@
             </div>
             <br>
 
+            <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8 card" style="width: 100%;background-color:#b7d0ed">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <br>
+                            <label for="keterangan" class="label-control required"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
+                            <textarea name="keterangan" id="keterangan" class="form-control" required></textarea>
+                            <span id="keterangan" class="invalid-feedback">{{ $errors->first('keterangan') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                </div>
+            </div>
+            <br>
 
             <div class="row">
                 <div class="col-lg-2">

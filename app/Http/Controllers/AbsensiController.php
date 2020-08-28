@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Crypt;
 class AbsensiController extends Controller
 {
     public function index($id){
-        // 6797
         // dd(Crypt::encrypt($id));
         $id_encrypt = $id;
         if(strlen($id) > 10) {
@@ -23,6 +22,7 @@ class AbsensiController extends Controller
         } else {
             $id_decrypt =  \Hashids::decode($id);
         }
+        // dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         // dd($peserta_seminar);
         $cek_in = $this->cek_in($peserta_seminar->id);
@@ -79,6 +79,43 @@ class AbsensiController extends Controller
                     'status' => false,
                 ]);
             } else {
+
+                foreach($request->seminar as $key => $value){
+                    $narasumber = New RatingModel;
+                    $narasumber->id_peserta_seminar = $id;
+                    $narasumber->tipe = '0';
+                    $narasumber->id_seminar = $key;
+                    $narasumber->nilai = $value;
+                    $narasumber->save();
+                }
+
+                foreach($request->narasumber as $key => $value){
+                    $narasumber = New RatingModel;
+                    $narasumber->id_peserta_seminar = $id;
+                    $narasumber->tipe = '1';
+                    $narasumber->id_peserta = $key;
+                    $narasumber->nilai = $value;
+                    $narasumber->save();
+                }
+
+                foreach($request->moderator as $key => $value){
+                    $moderator = New RatingModel;
+                    $moderator->id_peserta_seminar = $id;
+                    $moderator->tipe = '1';
+                    $moderator->id_peserta = $key;
+                    $moderator->nilai = $value;
+                    $moderator->save();
+                }
+
+                $feedback = new FeedbackModel;
+                $feedback->id_peserta_seminar = $id;
+                $feedback->kesan_pesan = $request->kesan_pesan;
+                $feedback->keterangan = $request->keterangan;
+                $feedback->save();
+
+                // dd($request);
+
+
                 $keluar->id_peserta_seminar = $id;
                 $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
                 $keluar->updated_at = Carbon::now()->toDateTimeString();
@@ -123,14 +160,14 @@ class AbsensiController extends Controller
     }
 
     public function penilaian($id){
-        // if(strlen($id) > 10) {
-        //     $id_decrypt = Crypt::decrypt($id);
-        // } else {
-        //     $id_decrypt =  \Hashids::decode($id);
-        // }
-        // $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
+        if(strlen($id) > 10) {
+            $id_decrypt = Crypt::decrypt($id);
+        } else {
+            $id_decrypt =  \Hashids::decode($id);
+        }
+        $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
 
-        $peserta_seminar = PesertaSeminar::where('id',$id)->first();
+        // $peserta_seminar = PesertaSeminar::where('id',$id)->first();
 
         $narasumber = PesertaSeminar::where('id_seminar',$peserta_seminar->id_seminar)->where('status','2')->get();
         $moderator = PesertaSeminar::where('id_seminar',$peserta_seminar->id_seminar)->where('status','4')->get();
