@@ -311,6 +311,7 @@ class SeminarController extends Controller
         } else {
 
             $data->status = "published";
+            $data->is_mulai = '0';
             $data->is_actived = "1";
 
             $counter = SeminarModel::all();
@@ -575,29 +576,6 @@ class SeminarController extends Controller
     }
 
     public function update(Request $request, $id) {
-        // foreach($request->narasumber as $key) {
-        //     print($key);
-        //     print('<br>');
-
-        //     $narasumber = Peserta::where('id_personal',$key)->first();
-        //     print('<br>');
-        //     print($narasumbers);
-        //     print('<br>');
-        // }
-        // dd('done');
-
-        // $naraAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
-        // $modeAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');
-
-        // // dump($naraAwalAsPeserta);
-        // // dd($modeAwalAsPeserta);
-
-        // $naraAwal = Peserta::Wherein('id',$naraAwalAsPeserta)->get();
-        // $modeAwal = Peserta::Wherein('id',$modeAwalAsPeserta)->get();
-
-
-        // dump($naraAwal);
-        // dd($modeAwal);
 
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
@@ -726,7 +704,7 @@ class SeminarController extends Controller
         // Kalo ada narasumber yang dikurangi
         foreach($naraAwal as $key) {
             if(!in_array($key->id_personal,$request->narasumber)){
-                $naraHapus = PesertaSeminar::where('id',$key->id)->first();
+                $naraHapus = PesertaSeminar::where('id_seminar',$id)->where('id_peserta',$key->id)->first();
                 $naraHapus->deleted_by = Auth::id();
                 $naraHapus->deleted_at = Carbon::now()->toDateTimeString();
                 $naraHapus->save();
@@ -778,7 +756,7 @@ class SeminarController extends Controller
 
         foreach($modeAwal as $key) {
             if(!in_array($key->id_personal,$request->moderator)){
-                $modeHapus = PesertaSeminar::where('id',$key->id)->first();
+                $modeHapus = PesertaSeminar::where('id_seminar',$id)->where('id_peserta',$key->id)->first();
                 $modeHapus->deleted_by = Auth::id();
                 $modeHapus->deleted_at = Carbon::now()->toDateTimeString();
                 $modeHapus->save();
@@ -1341,6 +1319,7 @@ class SeminarController extends Controller
         $data = SeminarModel::where('id',$id)->first();
         $data->is_actived = "1";
         $data->status = "published";
+        $data->is_mulai = '0';
 
 
         //generate qr code seminar
