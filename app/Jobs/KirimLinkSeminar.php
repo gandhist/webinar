@@ -47,7 +47,7 @@ class KirimLinkSeminar implements ShouldQueue
     public function handle()
     {
         //
-        // Mail::to($this->data->email)->send(new MailLink($this->key));
+        Mail::to($this->data->email)->send(new MailLink($this->key));
 
         $tgl = \Carbon\Carbon::parse($this->key->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY');
         $tema = strip_tags($this->key->seminar_p->tema);

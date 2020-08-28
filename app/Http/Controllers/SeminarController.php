@@ -1531,7 +1531,7 @@ class SeminarController extends Controller
         $seminar = SeminarModel::where('id',$id)->first();
         $seminar->url = $request->link;
         $seminar->save();
-        $emails = PesertaSeminar::where('id_seminar',$id)->get();
+        $emails = PesertaSeminar::where('id_seminar',$id)->whereNull('status_wa')->get();
 
         foreach ($emails as $key) {
             $data = Peserta::find($key->id_peserta);

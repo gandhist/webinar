@@ -405,7 +405,7 @@
 <script>
     $(document).ready(function() {
 		$('#example').DataTable({
-            lengthMenu: [100, 200, 500],});
+            lengthMenu: [100, 200, 500,2000],});
 	} );
 var msg = '{{Session::get('alert')}}';
 var exist = '{{Session::has('alert')}}';

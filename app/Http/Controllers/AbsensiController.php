@@ -16,14 +16,14 @@ class AbsensiController extends Controller
 {
     public function index($id){
         $id_encrypt = $id;
-        $id_decrypt = Crypt::decrypt($id);
+        // $id_decrypt = Crypt::decrypt($id);
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
             $id_decrypt =  Hashids::decode($id);
         }
-        return "<center><h1>halaman absensi belum bisa di akses untuk saat ini</h1></center>";
-        dd($id_decrypt);
+        // return "<center><h1>halaman absensi belum bisa di akses untuk saat ini</h1></center>";
+        // dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         $cek_in = $this->cek_in($peserta_seminar->id);
         $cek_out = $this->cek_out($peserta_seminar->id);
