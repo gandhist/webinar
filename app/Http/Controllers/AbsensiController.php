@@ -11,6 +11,7 @@ use App\Personal;
 use App\SeminarModel;
 use App\PesertaSeminar;
 use Illuminate\Support\Facades\Crypt;
+use Vinkla\Hashids\Facades\Hashids;
 use App\FeedbackModel;
 use App\RatingModel;
 
@@ -19,10 +20,11 @@ class AbsensiController extends Controller
     public function index($id){
         // dd(Crypt::encrypt($id));
         $id_encrypt = $id;
+        // $id_decrypt = Crypt::decrypt($id);
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
-            $id_decrypt =  \Hashids::decode($id);
+            $id_decrypt =  Hashids::decode($id);
         }
         // dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();

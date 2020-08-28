@@ -127,7 +127,7 @@
                     <th style="width:10%;text-align:center;">Tanggal</th>
                     <th style="width:5%;text-align:center;">Waktu</th>
                     <th style="width:3%;text-align:center;">Nilai_SKPK</th>
-                    <th style="width:10%;text-align:center;">No_Srtf</th>
+                    {{-- <th style="width:10%;text-align:center;">No_Srtf</th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -151,9 +151,9 @@
                     <td style="text-align:center;">
                         {{$key->seminar_p->skpk_nilai}}
                     </td>
-                    <td style="text-align:center;">
+                    {{-- <td style="text-align:center;">
                         {{$key->no_srtf}}
-                    </td>
+                    </td> --}}
                 </tr>
                 @endforeach
             </tbody>
