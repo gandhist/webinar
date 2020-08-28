@@ -113,8 +113,12 @@
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
 					<td>@if ($key->is_free == '0') Gratis @else Rp. {{ format_uang($key->biaya)}} @endif</td></td>
 					<td style="text-align:center;">
+						@if($key->kuota_temp <= 0)
+						<button class="btn btn-primary disabled"> Kuota Sudah Penuh</button>
+						@else
 						<a href="{{ url('registrasi/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
 						data-placement="top" title="Ikut Seminar">IKUT</a>
+						@endif
 					</td>
                 </tr>
                 @endforeach
