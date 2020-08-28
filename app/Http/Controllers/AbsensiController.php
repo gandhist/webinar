@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\AbsensiModel;
 use App\Peserta;
+use App\Personal;
 use App\SeminarModel;
 use App\PesertaSeminar;
 use Illuminate\Support\Facades\Crypt;
@@ -36,10 +37,10 @@ class AbsensiController extends Controller
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
         $masuk->save();
-        
+
         $seminar = PesertaSeminar::select('id_seminar')->where('id','=',$id)->first();
         $status = SeminarModel::select('is_mulai')->where('id','=',$seminar['id_seminar'])->first();
-        
+
         if ($status['is_mulai'] == 0){
             return response()->json([
                 'status' => false,
@@ -50,7 +51,7 @@ class AbsensiController extends Controller
                 'status' => true,
                 'message' => 'Berhasil Absen Masuk',
             ]);
-        }   
+        }
     }
 
     // absen keluar
@@ -105,13 +106,18 @@ class AbsensiController extends Controller
     }
 
     public function penilaian($id){
-        if(strlen($id) > 10) {
-            $id_decrypt = Crypt::decrypt($id);
-        } else {
-            $id_decrypt =  \Hashids::decode($id);
-        }
-        $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
+        // if(strlen($id) > 10) {
+        //     $id_decrypt = Crypt::decrypt($id);
+        // } else {
+        //     $id_decrypt =  \Hashids::decode($id);
+        // }
+        // $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
 
-        return view('presensi.penilaian')->with(compact('peserta_seminar'));;
+        $peserta_seminar = PesertaSeminar::where('id',$id)->first();
+
+        $narasumber = PesertaSeminar::where('id_seminar',$peserta_seminar->id_seminar)->where('status','2')->get();
+        $moderator = PesertaSeminar::where('id_seminar',$peserta_seminar->id_seminar)->where('status','4')->get();
+
+        return view('presensi.penilaian')->with(compact('peserta_seminar','narasumber','moderator'));
     }
 }

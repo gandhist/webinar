@@ -40,4 +40,6 @@ class SeminarModel extends Model
     public function seminar_sub(){
         return $this->hasOne('App\SubKlasifikasiModel','ID_Sub_Bidang_Keahlian','sub_klasifikasi');
     }
+
+
 }

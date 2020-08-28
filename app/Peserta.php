@@ -26,4 +26,8 @@ class Peserta extends Model
     public function badan_usaha(){
         return $this->belongsTo('App\BuModel','instansi', 'id');
     }
+
+    public function seminar_sub(){
+        return $this->belongsTo('App\PesertaSeminar');
+    }
 }
