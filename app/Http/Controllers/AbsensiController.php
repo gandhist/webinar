@@ -36,7 +36,7 @@ class AbsensiController extends Controller
         $masuk->jam_cek_in = Carbon::now()->toDateTimeString();
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
-        $masuk->save();
+
 
         $seminar = PesertaSeminar::select('id_seminar')->where('id','=',$id)->first();
         $status = SeminarModel::select('is_mulai')->where('id','=',$seminar['id_seminar'])->first();
@@ -47,6 +47,7 @@ class AbsensiController extends Controller
                 'message' => 'Seminar belum dimulai',
             ]);
         } else {
+            $masuk->save();
             return response()->json([
                 'status' => true,
                 'message' => 'Berhasil Absen Masuk',
@@ -58,26 +59,36 @@ class AbsensiController extends Controller
     public function pulang(Request $request, $id){
         $status = AbsensiModel::select('is_review')->where('id_peserta_seminar', $id)->first();
         $keluar = AbsensiModel::where('id_peserta_seminar',$id)->orderBy('id','desc')->first();
-        $keluar->is_review = 1;
-        $keluar->save();
+        $peserta_seminar = PesertaSeminar::select('id_seminar')->where('id',$id)->first();
+        $status_seminar = SeminarModel::select('is_mulai')->where('id',$peserta_seminar['id_seminar'])->first();
 
-        if ($status['is_review'] == 0){
+        if ($status_seminar['is_mulai'] == 1) {
             return response()->json([
-                'status' => false,
+                'status' => true,
+                'message' => 'Seminar belum selesai',
             ]);
-        } else {
-            $keluar->id_peserta_seminar = $id;
-            $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
-            $keluar->updated_at = Carbon::now()->toDateTimeString();
-            $keluar->save();
+        } else{
+            if ($status['is_review'] == 0){
+                $keluar->is_review = 1;
+                $keluar->save();
 
-            $id_encrypt = Crypt::encrypt($id);
-            $peserta_seminar = PesertaSeminar::where('id',$id)->first();
-            $cek_in = $this->cek_in($peserta_seminar->id);
-            $cek_out = $this->cek_out($peserta_seminar->id);
-            $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
+                return response()->json([
+                    'status' => false,
+                ]);
+            } else {
+                $keluar->id_peserta_seminar = $id;
+                $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
+                $keluar->updated_at = Carbon::now()->toDateTimeString();
+                $keluar->save();
 
-            return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'));
+                $id_encrypt = Crypt::encrypt($id);
+                $peserta_seminar = PesertaSeminar::where('id',$id)->first();
+                $cek_in = $this->cek_in($peserta_seminar->id);
+                $cek_out = $this->cek_out($peserta_seminar->id);
+                $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
+
+                return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Berhasil Absen Keluar');
+            }
         }
     }
 

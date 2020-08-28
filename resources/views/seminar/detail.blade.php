@@ -36,6 +36,8 @@
                 <h1 style="margin-bottom:50px;">Seminar</h1>
                 @if($seminar->is_mulai == 0)
                     <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar</a><br><br>
+                @elseif ($seminar->is_mulai == 1)
+                    <a href="{{ url('seminar/selesai',$seminar->id) }}" class="btn btn-warning"> Akhiri Seminar</a><br><br>
                 @else
                 @endif
                     
