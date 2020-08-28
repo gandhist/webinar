@@ -76,7 +76,7 @@ class AbsensiController extends Controller
             $cek_out = $this->cek_out($peserta_seminar->id);
             $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
 
-            return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'));
+            return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'));
         }
     }
 
@@ -111,14 +111,6 @@ class AbsensiController extends Controller
             $id_decrypt =  \Hashids::decode($id);
         }
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
-        
-
-        // $keluar = AbsensiModel::where('id_peserta_seminar',$id_decrypt)->orderBy('id','desc')->first();
-        // $keluar->id_peserta_seminar = $id_decrypt;
-        // $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
-        // $keluar->updated_at = Carbon::now()->toDateTimeString();
-        // $keluar->is_review = 1;
-        // $keluar->save();
 
         return view('presensi.penilaian')->with(compact('peserta_seminar'));;
     }
