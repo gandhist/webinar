@@ -43,8 +43,10 @@ Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 
 Route::group(['prefix' => 'presensi'], function () {
 	Route::get('/{id}','AbsensiController@index');
-	Route::get('datang/{id_peserta}','AbsensiController@datang');
-	Route::get('pulang/{id_peserta}','AbsensiController@pulang');
+	Route::get('datang/{id}','AbsensiController@datang');
+	Route::post('pulang/{id}','AbsensiController@pulang');
+	Route::get('penilaian/{id}','AbsensiController@penilaian');
+	// Route::get('pulang/{id}','AbsensiController@pulang');
 });
 
 

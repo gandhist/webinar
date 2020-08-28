@@ -32,6 +32,9 @@
                         @if($cek_out)
                         <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar">
                         @else
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            Terimakasih, Anda telah selesai mengikuti seminar.
+                        </div>
                         @endif
                     @endif
                 </div>
@@ -79,6 +82,7 @@
 <script>
 var home = "{{ url('presensi', $id_encrypt) }}";
 var home_url = "{{ $peserta_seminar->seminar_p->url }}";
+var home_rating = "{{ url('presensi/penilaian', $id_encrypt) }}";
 
 function absen_masuk() {
     var formData = new FormData($('#formAdd')[0]);
@@ -147,32 +151,33 @@ function absen_keluar() {
     });
     $.ajax({
     url: url,
-    type: 'GET',
+    type: 'POST',
     dataType: "JSON",
     data: formData,
     contentType: false,
     processData: false,
     success: function(response) {
         if (response.status) {
-            Swal.fire({
-                title: response.message,
-                type: 'success',
-                confirmButtonText: 'Close',
-                confirmButtonColor: '#AAA',
-                onClose: function() {
+            // Swal.fire({
+            //     title: response.message,
+            //     type: 'success',
+            //     confirmButtonText: 'Close',
+            //     confirmButtonColor: '#AAA',
+            //     onClose: function() {
                     window.location.replace(home);
-                }
-            })
+            //     }
+            // })
         }
         else {
-            Swal.fire({
-            title: response.message,
-            type: 'error',
-            confirmButtonText: 'Close',
-            confirmButtonColor: '#AAA',
-                onClose: function() {
-                }
-            })
+            // Swal.fire({
+            // title: response.message,
+            // type: 'error',
+            // confirmButtonText: 'Close',
+            // confirmButtonColor: '#AAA',
+            //     onClose: function() {
+                    window.location.replace(home_rating);        
+            //     }
+            // })
             $('#alert').text(response.message).show();
         }
     },
