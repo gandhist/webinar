@@ -311,6 +311,7 @@ class SeminarController extends Controller
         } else {
 
             $data->status = "published";
+            $data->is_mulai = '0';
             $data->is_actived = "1";
 
             $counter = SeminarModel::all();
@@ -1318,6 +1319,7 @@ class SeminarController extends Controller
         $data = SeminarModel::where('id',$id)->first();
         $data->is_actived = "1";
         $data->status = "published";
+        $data->is_mulai = '0';
 
 
         //generate qr code seminar
