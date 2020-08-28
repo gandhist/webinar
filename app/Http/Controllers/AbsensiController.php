@@ -11,6 +11,8 @@ use App\Personal;
 use App\SeminarModel;
 use App\PesertaSeminar;
 use Illuminate\Support\Facades\Crypt;
+use App\FeedbackModel;
+use App\RatingModel;
 
 class AbsensiController extends Controller
 {
@@ -80,33 +82,40 @@ class AbsensiController extends Controller
                 ]);
             } else {
 
-                foreach($request->seminar as $key => $value){
-                    $narasumber = New RatingModel;
-                    $narasumber->id_peserta_seminar = $id;
-                    $narasumber->tipe = '0';
-                    $narasumber->id_seminar = $key;
-                    $narasumber->nilai = $value;
-                    $narasumber->save();
+                if(isset($request->seminar)){
+                    foreach($request->seminar as $key => $value){
+                        $narasumber = New RatingModel;
+                        $narasumber->id_peserta_seminar = $id;
+                        $narasumber->tipe = '0';
+                        $narasumber->id_seminar = $key;
+                        $narasumber->nilai = $value;
+                        $narasumber->save();
+                    }
                 }
 
-                foreach($request->narasumber as $key => $value){
-                    $narasumber = New RatingModel;
-                    $narasumber->id_peserta_seminar = $id;
-                    $narasumber->tipe = '1';
-                    $narasumber->id_peserta = $key;
-                    $narasumber->nilai = $value;
-                    $narasumber->save();
+                if(isset($request->narasumber)){
+                    foreach($request->narasumber as $key => $value){
+                        $narasumber = New RatingModel;
+                        $narasumber->id_peserta_seminar = $id;
+                        $narasumber->tipe = '1';
+                        $narasumber->id_peserta = $key;
+                        $narasumber->nilai = $value;
+                        $narasumber->save();
+                    }
                 }
 
-                foreach($request->moderator as $key => $value){
-                    $moderator = New RatingModel;
-                    $moderator->id_peserta_seminar = $id;
-                    $moderator->tipe = '1';
-                    $moderator->id_peserta = $key;
-                    $moderator->nilai = $value;
-                    $moderator->save();
+                if(isset($request->moderator)){
+                    foreach($request->moderator as $key => $value){
+                        $moderator = New RatingModel;
+                        $moderator->id_peserta_seminar = $id;
+                        $moderator->tipe = '1';
+                        $moderator->id_peserta = $key;
+                        $moderator->nilai = $value;
+                        $moderator->save();
+                    }
                 }
 
+                if(isset($request->kesan_pesan) && isset($request->keterangan))
                 $feedback = new FeedbackModel;
                 $feedback->id_peserta_seminar = $id;
                 $feedback->kesan_pesan = $request->kesan_pesan;

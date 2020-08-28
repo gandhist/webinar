@@ -81,7 +81,7 @@
                             <label for="seminar" class="label-control required"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
                             <div class="rating d-flex justify-content-end">
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-seminar-{{$i}}" type="radio" name="seminar[{{$peserta_seminar->seminar_p->tema}}]" value="{{$i}}" class="star" required />
+                                <input id="radio-seminar-{{$i}}" type="radio" name="seminar[{{$peserta_seminar->seminar_p->id}}]" value="{{$i}}" class="star" required />
                                 <label for="radio-seminar-{{$i}}">&#9733;</label>
                                 @endfor
                             </div>
