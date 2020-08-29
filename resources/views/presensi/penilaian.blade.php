@@ -176,8 +176,8 @@
                         <div class="form-group">
                             <br>
                             <label for="moderator" class="label-control required"><b>Penilaian untuk {{$m->peserta_r->nama}} sebagai Moderator?</b></label>
-                            <div class="rating d-flex justify-content-end" id="for-moderator[{{$m->peserta_r->id}}]">
-                                <span class="align-self-center ml-4"></span>
+                            <div class="rating d-flex justify-content-end">
+                                <span class="align-self-center ml-4" id="for-moderator[{{$m->peserta_r->id}}]"></span>
                                 @for ($i = 5; $i > 0; $i--)
                                 <input id="radio-moderator-{{"$loop->iteration-$i"}}"
                                 type="radio" name="moderator[{{$m->peserta_r->id}}]" value="{{$i}}" class="star"
@@ -282,35 +282,43 @@
     $("#foto").change(function(){
         readURL(this);
     });
-    $("input.star[type=radio]").on('click',function(e) {
+    $("input.star[type=radio]").on("click mouseover hover",function(e) {
         var nama = e.target.name;
         var nilai = e.target.value;
         // console.log((nilai));
         switch(nilai) {
             case '1':
                 // code block
-                $("#for-"+nama).val('Sangat Buruk');
-                console.log($("#for-"+nama));
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Sangat Buruk';
+                // console.log($("#for-"+nama));
                 break;
             case '2':
                 // code block
-                $("#for-"+nama).val('Buruk');
-                console.log($("#for-"+nama));
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Buruk';
+                // console.log($("#for-"+nama));
                 break;
             case '3':
                 // code block
-                $("#for-"+nama).val('Cukup Baik');
-                console.log($("#for-"+nama));
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Cukup Baik';
+                // $("#for-"+nama).val('Cukup Baik');
+                // console.log($("#for-"+nama));
                 break;
             case '4':
                 // code block
-                $("#for-"+nama).val('Baik');
-                console.log($("#for-"+nama));
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Baik';
+                // $("#for-"+nama).val('Baik');
+                // console.log($("#for-"+nama));
                 break;
             case '5':
                 // code block
-                $("#for-"+nama).val('Sangat Baik');
-                console.log($("#for-"+nama));
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Sangat Baik';
+                // $("#for-"+nama).val('Sangat Baik');
+                // console.log($("#for-"+nama));
                 break;
             default:
                 // code block
