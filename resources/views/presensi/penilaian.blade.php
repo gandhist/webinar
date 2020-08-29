@@ -101,7 +101,7 @@
                                         title = 'Baik'
                                         @break
                                     @case(5)
-                                        title = 'Luar Biasa'
+                                        title = 'Sangat Baik'
                                         @break
                                     @default
                                         title = 'Tidak tersedia'
@@ -149,7 +149,7 @@
                                             title = 'Baik'
                                             @break
                                         @case(5)
-                                            title = 'Luar Biasa'
+                                            title = 'Sangat Baik'
                                             @break
                                         @default
                                             title = 'Tidak tersedia'
@@ -198,7 +198,7 @@
                                             title = 'Baik'
                                             @break
                                         @case(5)
-                                            title = 'Luar Biasa'
+                                            title = 'Sangat Baik'
                                             @break
                                         @default
                                             title = 'Tidak tersedia'
@@ -316,8 +316,8 @@
             case '5':
                 // code block
                 el = document.getElementById("for-"+nama);
-                el.textContent = 'Luar Biasa';
-                // $("#for-"+nama).val('Luar Biasa');
+                el.textContent = 'Sangat Baik';
+                // $("#for-"+nama).val('Sangat Baik');
                 // console.log($("#for-"+nama));
                 break;
             default:
