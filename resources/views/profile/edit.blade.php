@@ -121,13 +121,15 @@
         <table id="example" class="table table-bordered table-hover dataTable" role="grid">
             <thead>
                 <tr role="row">
-                    <th style="width:2%;text-align:center;">No</th>
-                    <th style="width:14%;text-align:center;">Title</th>
-                    <th style="width:19%;text-align:center;">Tema</th>
+                    <th style="width:1%;text-align:center;">No</th>
+                    <th style="width:8%;text-align:center;">Title</th>
+                    <th style="width:15%;text-align:center;">Tema</th>
                     <th style="width:10%;text-align:center;">Tanggal</th>
-                    <th style="width:5%;text-align:center;">Waktu</th>
-                    <th style="width:3%;text-align:center;">Nilai_SKPK</th>
-                    {{-- <th style="width:10%;text-align:center;">No_Srtf</th> --}}
+                    {{-- <th style="width:5%;text-align:center;">Waktu</th> --}}
+                    <th style="width:10%;text-align:center;">Nilai SKPK</th>
+                    <th style="width:10%;text-align:center;">Absen Masuk</th>
+                    <th style="width:10%;text-align:center;">Absen Keluar</th>
+                    <th style="width:5%;text-align:center;">Materi</th>
                 </tr>
             </thead>
             <tbody>
@@ -145,15 +147,27 @@
                     <td style="text-align:center;">
                         {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
                     </td>
-                    <td style="text-align:center;">
+                    {{-- <td style="text-align:center;">
                         {{$key->seminar_p->jam_awal}}
-                    </td>
+                    </td> --}}
                     <td style="text-align:center;">
                         {{$key->seminar_p->skpk_nilai}}
                     </td>
-                    {{-- <td style="text-align:center;">
-                        {{$key->no_srtf}}
-                    </td> --}}
+                    <td style="text-align:center;">
+                        {{ isset($key->presensi) ? $key->presensi->jam_cek_in : '' }}
+                    </td>
+                    <td style="text-align:center;">
+                        {{ isset($key->presensi) ? $key->presensi->jam_cek_out : '' }}
+                    </td>
+                    <td style="text-align:center;">
+                        @if(isset($key->presensi->jam_cek_out) == null)
+                        @else
+                            @if(isset($key->seminar_p->materi))
+                            <a href="{{url($key->seminar_p->materi)}}" class="download-link" download="">Download</a>
+                        
+                            @endif
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

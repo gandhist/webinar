@@ -18,15 +18,14 @@ use App\RatingModel;
 class AbsensiController extends Controller
 {
     public function index($id){
-        // dd(Crypt::encrypt($id));
+        // $tes = Crypt::encrypt(3074);
+        // dd($tes);
         $id_encrypt = $id;
-        // $id_decrypt = Crypt::decrypt($id);
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
             $id_decrypt =  Hashids::decode($id);
         }
-        // dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         // dd($peserta_seminar);
         $cek_in = $this->cek_in($peserta_seminar->id);
@@ -123,9 +122,6 @@ class AbsensiController extends Controller
                 $feedback->kesan_pesan = $request->kesan_pesan;
                 $feedback->keterangan = $request->keterangan;
                 $feedback->save();
-
-                // dd($request);
-
 
                 $keluar->id_peserta_seminar = $id;
                 $keluar->jam_cek_out = Carbon::now()->toDateTimeString();

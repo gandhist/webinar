@@ -253,24 +253,65 @@
                 <div class="row" style="margin-bottom:50px;">
                     @if($seminar->is_online == 0)
                         <div class="col-md-12">
-                            <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
-                                <label>Browsur Seminar</label>
-                                <div>
-                                    <a data-toggle="modal" data-target="#myModal">
-                                        Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                    </a>
+                            <div class="row">
+                                <div class="{{isset($seminar->materi) ? 'col-md-6' : 'col-md-12'}}">
+                                    <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                                        <label>Browsur Seminar</label>
+                                        <div>
+                                            <a data-toggle="modal" data-target="#myModal" id="lihat">
+                                                <label for="lihat">
+                                                    Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                                </label>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
+                                @if(isset($seminar->materi))
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Materi Seminar</label>
+                                        <div>
+                                            <a href="{{url($seminar->materi)}}" download id="download">
+                                                <label for="download">
+                                                    <i class="fa fa-download" aria-hidden="true"></i> Download
+                                                </label>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     @else
                         <div class="col-md-6">
-                            <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
-                                <label>Browsur Seminar</label>
-                                <div>
-                                    <a data-toggle="modal" data-target="#myModal">
-                                        Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                    </a>
+                            <div class="row">
+                                <div class="{{isset($seminar->materi) ? 'col-md-6' : 'col-md-12'}}">
+                                    <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
+                                        <label>Browsur Seminar</label>
+                                        <div>
+                                            <a data-toggle="modal" data-target="#myModal">
+                                                <button class="btn btn-info">
+                                                    Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
+                                @if(isset($seminar->materi))
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Materi Seminar</label>
+                                        <div>
+                                            <a href="{{url($seminar->materi)}}" download>
+                                                <button class="btn btn-info">
+                                                    <i class="fa fa-download" aria-hidden="true"></i> Download
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -281,7 +322,8 @@
                                         <form action="{{ url('seminar/kirimlink',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
                                         method="post" enctype="multipart/form-data">
                                             @csrf
-                                            <input name="link" id="link" type="text">
+                                            <input name="link" id="link" type="text"
+                                            value="{{ old('link') ? old('link') : (isset($seminar->url) ? $seminar->url : '')}}">
                                             <button type="submit">Kirim</button>
                                         </form>
                                     </div>
@@ -303,8 +345,40 @@
                         </div>
                     @endif
                 </div>
+                <div class="row" style="margin-bottom:50px;">
+                    <div class="col-md-12">
+                        <form action="{{ url('seminar/upload-materi',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
+                            method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group  {{ ($errors->first('materi')) ? ' has-error' : '' }}">
+                                <div class="custom-file" style="padding-left:1.2rem">
+                                    <div>
+                                        <label class="label-control required" for="materi">Upload Materi Seminar</label>
+                                        <br>
+                                        <input type="file" id="materi" name="materi" required
+                                        class="custom-file-input" id="materi" required
+                                        style="display:inline">
+                                        <button class="btn btn-success">Upload</button>
+                                        <div id="materi" class="invalid-feedback text-danger" >
+                                            {{ $errors->first('materi') }}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <small class="form-text text-muted">Format: zip, rar, etc (archive).</small>
 
-                {{-- <div class="box-body">     --}}
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            {{-- <br/>
+                            <button class="btn btn-success">Upload</button> --}}
+                        </form>
+                    </div>
+                </div>
+
+                <div class="box-body">
                   <b>Daftar Peserta</b>
                   <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
                   <br>
@@ -379,7 +453,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-              <img src="{{isset($seminar->link) ? url($seminar->link) : ''}}" alt="Brosur Seminar"
+              <img src="{{isset($seminar->link) ? url($seminar->link) : ''}}" alt="Link Seminar"
                             class="img-thumbnail center" style="width:50%">
 	        </center>
 	      </div>

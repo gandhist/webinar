@@ -102,7 +102,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('send_email/{no_srtf}','SeminarController@sendEmail');
 	Route::get('approve/{id}','SeminarController@approve');
 	Route::post('kirimlink/{id}','SeminarController@kirimLink');
-	Route::post('kirimlink2/{id}','SeminarController@kirimLink2');
+    Route::post('kirimlink2/{id}','SeminarController@kirimLink2');
+    Route::post('upload-materi/{id}','SeminarController@uploadMateri');
 	Route::get('mulai/{id}','SeminarController@mulai');
 	Route::get('selesai/{id}','SeminarController@selesai');
 

@@ -1548,4 +1548,23 @@ class SeminarController extends Controller
 
         return redirect()->back()->with('alert',"Link berhasil ditambahkan");
     }
+
+    public function uploadMateri(Request $request,$id) {
+        $request->validate([
+            'materi' => 'required|file|mimes:zip,rar,gzip',
+        ],[
+            'materi.required' => 'Mohon pilih file untuk diupload',
+            'materi.mimes' => 'Mohon upload file dengan format yang telah ditentukan',
+        ]);
+        if ($files = $request->file('materi')) {
+            $data = SeminarModel::where('id',$id)->first();
+            $destinationPath = 'file_seminar/'.$data->id; // upload path
+            $file = "Materi_".$data->nama_seminar."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->materi = $destinationPath."/".$file;
+            $data->save();
+
+            return redirect()->back()->with('alert',"Upload materi berhasil");
+        }
+    }
 }
