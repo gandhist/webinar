@@ -23,4 +23,8 @@ class PesertaSeminar extends Model
         return $this->belongsTo('App\Seminar','id_seminar','id');
     }
 
+    public function presensi(){
+        return $this->belongsTo('App\AbsensiModel','id','id_peserta_seminar');
+    }
+
 }

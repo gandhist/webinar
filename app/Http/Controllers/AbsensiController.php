@@ -18,15 +18,14 @@ use App\RatingModel;
 class AbsensiController extends Controller
 {
     public function index($id){
-        // dd(Crypt::encrypt($id));
+        // $tes = Crypt::encrypt(3074);
+        // dd($tes);
         $id_encrypt = $id;
-        // $id_decrypt = Crypt::decrypt($id);
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
             $id_decrypt =  Hashids::decode($id);
         }
-        // dd($id_decrypt);
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
         // dd($peserta_seminar);
         $cek_in = $this->cek_in($peserta_seminar->id);
@@ -124,9 +123,6 @@ class AbsensiController extends Controller
                 $feedback->keterangan = $request->keterangan;
                 $feedback->save();
 
-                // dd($request);
-
-
                 $keluar->id_peserta_seminar = $id;
                 $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
                 $keluar->updated_at = Carbon::now()->toDateTimeString();
@@ -138,9 +134,6 @@ class AbsensiController extends Controller
                 $cek_out = $this->cek_out($peserta_seminar->id);
                 $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
 
-                // Save penilaian #Rafi
-                    dd($request);
-                // End
                 return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Berhasil Absen Keluar');
             }
         }
