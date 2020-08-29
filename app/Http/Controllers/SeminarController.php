@@ -1532,6 +1532,8 @@ class SeminarController extends Controller
     public function selesai($id){
         $status = SeminarModel::find($id);
         $status->is_mulai = 2;
+        $status->is_actived = 2;
+        $status->status = 'finished';
         $status->save();
 
         return redirect()->back()->with('alert',"Seminar sudah berhasil di akhiri");

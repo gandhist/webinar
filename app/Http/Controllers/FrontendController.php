@@ -13,7 +13,7 @@ class FrontendController extends Controller
     function index()
     {
         $date = Carbon::now()->toDateTimeString();
-        $data = SeminarModel::where('status','=','published')->whereDate('tgl_akhir','>',$date)->orderBy('id','desc')->get();
+        $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
         if(Auth::check())
         if(Auth::user()->role_id == 2){
             return view('homeUI')->with(compact('data'));
