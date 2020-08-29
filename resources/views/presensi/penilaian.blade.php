@@ -80,9 +80,34 @@
                             <br>
                             <label for="seminar" class="label-control required"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
                             <div class="rating d-flex justify-content-end">
+                                <span class="align-self-center ml-4" id="for-seminar[{{$peserta_seminar->seminar_p->id}}]"></span>
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-seminar-{{$i}}" type="radio" name="seminar[{{$peserta_seminar->seminar_p->id}}]" value="{{$i}}" class="star" required />
-                                <label for="radio-seminar-{{$i}}">&#9733;</label>
+                                <input id="radio-seminar-{{$i}}" type="radio"
+                                name="seminar[{{$peserta_seminar->seminar_p->id}}]" value="{{$i}}"
+                                class="star" required/>
+                                <label for="radio-seminar-{{$i}}"
+
+                                @switch($i)
+                                    @case(1)
+                                        title = 'Sangat Buruk'
+                                        @break
+                                    @case(2)
+                                        title = 'Buruk'
+                                        @break
+                                    @case(3)
+                                        title = 'Cukup Baik'
+                                        @break
+                                    @case(4)
+                                        title = 'Baik'
+                                        @break
+                                    @case(5)
+                                        title = 'Sangat Baik'
+                                        @break
+                                    @default
+                                        title = 'Tidak tersedia'
+                                @endswitch
+                                data-toggle="tooltip" data-placement="bottom"
+                                >&#9733;</label>
                                 @endfor
                             </div>
                             <span id="seminar" class="invalid-feedback">{{ $errors->first('seminar') }}</span>
@@ -104,9 +129,33 @@
                             <br>
                             <label for="narasumber" class="label-control required"><b>Penilaian untuk {{$n->peserta_r->nama}} sebagai Narasumber?</b></label>
                             <div class="rating d-flex justify-content-end">
+                                <span class="align-self-center ml-4" id="for-narasumber[{{$n->peserta_r->id}}]"></span>
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-narasumber-{{"$loop->iteration-$i"}}" type="radio" name="narasumber[{{$n->peserta_r->id}}]" value="{{$i}}" class="star"  {{old("narasumber[$loop->iteration]") == $i ? "selected" : ''}} required/>
-                                <label for="radio-narasumber-{{"$loop->iteration-$i"}}">&#9733;</label>
+                                <input id="radio-narasumber-{{"$loop->iteration-$i"}}" type="radio"
+                                name="narasumber[{{$n->peserta_r->id}}]" value="{{$i}}" class="star"
+                                {{old("narasumber[$loop->iteration]") == $i ? "selected" : ''}} required/>
+                                <label for="radio-narasumber-{{"$loop->iteration-$i"}}"
+                                    @switch($i)
+                                        @case(1)
+                                            title = 'Sangat Buruk'
+                                            @break
+                                        @case(2)
+                                            title = 'Buruk'
+                                            @break
+                                        @case(3)
+                                            title = 'Cukup Baik'
+                                            @break
+                                        @case(4)
+                                            title = 'Baik'
+                                            @break
+                                        @case(5)
+                                            title = 'Sangat Baik'
+                                            @break
+                                        @default
+                                            title = 'Tidak tersedia'
+                                    @endswitch
+                                    data-toggle="tooltip" data-placement="bottom"
+                                    >&#9733;</label>
                                 @endfor
                             </div>
                         </div>
@@ -128,9 +177,34 @@
                             <br>
                             <label for="moderator" class="label-control required"><b>Penilaian untuk {{$m->peserta_r->nama}} sebagai Moderator?</b></label>
                             <div class="rating d-flex justify-content-end">
+                                <span class="align-self-center ml-4" id="for-moderator[{{$m->peserta_r->id}}]"></span>
                                 @for ($i = 5; $i > 0; $i--)
-                                <input id="radio-moderator-{{"$loop->iteration-$i"}}" type="radio" name="moderator[{{$m->peserta_r->id}}]" value="{{$i}}" class="star" {{old("moderator[$loop->iteration]") == $i ? "selected" : ''}} required/>
-                                <label for="radio-moderator-{{"$loop->iteration-$i"}}">&#9733;</label>
+                                <input id="radio-moderator-{{"$loop->iteration-$i"}}"
+                                type="radio" name="moderator[{{$m->peserta_r->id}}]" value="{{$i}}" class="star"
+                                {{old("moderator[$loop->iteration]") == $i ? "selected" : ''}} required/>
+                                <label for="radio-moderator-{{"$loop->iteration-$i"}}"
+
+                                    @switch($i)
+                                        @case(1)
+                                            title = 'Sangat Buruk'
+                                            @break
+                                        @case(2)
+                                            title = 'Buruk'
+                                            @break
+                                        @case(3)
+                                            title = 'Cukup Baik'
+                                            @break
+                                        @case(4)
+                                            title = 'Baik'
+                                            @break
+                                        @case(5)
+                                            title = 'Sangat Baik'
+                                            @break
+                                        @default
+                                            title = 'Tidak tersedia'
+                                    @endswitch
+                                    data-toggle="tooltip" data-placement="bottom"
+                                    >&#9733;</label>
                                 @endfor
                             </div>
                         </div>
@@ -202,12 +276,55 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script>
   $(document).ready(function () {
     $("#foto").change(function(){
         readURL(this);
     });
-  })
+    $("input.star[type=radio]").on("click mouseover hover",function(e) {
+        var nama = e.target.name;
+        var nilai = e.target.value;
+        // console.log((nilai));
+        switch(nilai) {
+            case '1':
+                // code block
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Sangat Buruk';
+                // console.log($("#for-"+nama));
+                break;
+            case '2':
+                // code block
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Buruk';
+                // console.log($("#for-"+nama));
+                break;
+            case '3':
+                // code block
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Cukup Baik';
+                // $("#for-"+nama).val('Cukup Baik');
+                // console.log($("#for-"+nama));
+                break;
+            case '4':
+                // code block
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Baik';
+                // $("#for-"+nama).val('Baik');
+                // console.log($("#for-"+nama));
+                break;
+            case '5':
+                // code block
+                el = document.getElementById("for-"+nama);
+                el.textContent = 'Sangat Baik';
+                // $("#for-"+nama).val('Sangat Baik');
+                // console.log($("#for-"+nama));
+                break;
+            default:
+                // code block
+        }
+    });
+  });
 
   function readURL(input) {
     if (input.files && input.files[0]) {
@@ -219,6 +336,11 @@
 
       reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip({
+            delay: { "show": 0, "hide": 100 },
+        })
+    })
   }
 
 </script>

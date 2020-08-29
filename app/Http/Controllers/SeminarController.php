@@ -1538,4 +1538,14 @@ class SeminarController extends Controller
 
         return redirect()->back()->with('alert',"Seminar sudah berhasil di akhiri");
     }
+
+    public function kirimLink2(Request $request, $id){
+        // dd($request->link);
+        // kirim email
+        $seminar = SeminarModel::where('id',$id)->first();
+        $seminar->url2 = $request->link2;
+        $seminar->save();
+
+        return redirect()->back()->with('alert',"Link berhasil ditambahkan");
+    }
 }

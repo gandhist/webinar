@@ -40,7 +40,7 @@
                     <a href="{{ url('seminar/selesai',$seminar->id) }}" class="btn btn-warning"> Akhiri Seminar</a><br><br>
                 @else
                 @endif
-                    
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">
@@ -274,16 +274,31 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
-                            <label>Link</label>
-                                <div class="col-6">
-                                    <form action="{{ url('seminar/kirimlink',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
-                                    method="post" enctype="multipart/form-data">
-                                        @csrf
-                                        <input name="link" id="link" type="text">
-                                        <button type="submit">Kirim</button>
-                                    </form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group {{ $errors->first('link') ? 'has-error' : '' }} ">
+                                    <label>Link</label>
+                                        <form action="{{ url('seminar/kirimlink',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
+                                        method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input name="link" id="link" type="text">
+                                            <button type="submit">Kirim</button>
+                                        </form>
+                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group {{ $errors->first('link2') ? 'has-error' : '' }} ">
+                                    <label>Link 2 (Tidak dikirim ke peserta)</label>
+                                        <form action="{{ url('seminar/kirimlink2',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
+                                        method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input name="link2" id="link2" type="text"
+                                            value="{{ old('link2') ? old('link2') : (isset($seminar->url2) ? $seminar->url2 : '')}}">
+                                            <button type="submit">Simpan</button>
+                                        </form>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     @endif
