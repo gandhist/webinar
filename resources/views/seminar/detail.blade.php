@@ -346,50 +346,43 @@
                     @endif
                 </div>
                 <div class="row" style="margin-bottom:50px;">
-                    <div class="col-md-6">
-                        <label>Daftar Peserta</label>
-                        <div>
-                        <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <form action="{{ url('seminar/upload-materi',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
                             method="post" enctype="multipart/form-data">
                             @csrf
-                        <div class="row" style="padding-left:1.3rem">
-                            <div class="col-md-4">
-                                <div class="form-group  {{ ($errors->first('materi')) ? ' has-error' : '' }}">
-                                    <div class="custom-file">
-                                        <label class="label-control required" for="materi">Brosur Seminar</label>
-                                        <div class="custom-file">
-                                            <input type="file" id="materi" name="materi" required class="custom-file-input" id="materi" required>
-                                            <div id="materi" class="invalid-feedback text-danger">
-                                                {{ $errors->first('materi') }}
-                                            </div>
-                                            <small class="form-text text-muted">Format: zip, rar, etc (archive).</small><br>
-                                            {{-- <br/>
-                                            <button class="btn btn-success">Upload</button>
-                                            </form> --}}
+                            <div class="form-group  {{ ($errors->first('materi')) ? ' has-error' : '' }}">
+                                <div class="custom-file" style="padding-left:1.2rem">
+                                    <div>
+                                        <label class="label-control required" for="materi">Upload Materi Seminar</label>
+                                        <br>
+                                        <input type="file" id="materi" name="materi" required
+                                        class="custom-file-input" id="materi" required
+                                        style="display:inline">
+                                        <button class="btn btn-success">Upload</button>
+                                        <div id="materi" class="invalid-feedback text-danger" >
+                                            {{ $errors->first('materi') }}
                                         </div>
                                     </div>
+                                    <div>
+                                        <small class="form-text text-muted">Format: zip, rar, etc (archive).</small>
+
+
+
+                                    </div>
+
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <br/>
-                                <button class="btn btn-success">Upload</button>
-                            </div>
-                        </div>
+                            {{-- <br/>
+                            <button class="btn btn-success">Upload</button> --}}
                         </form>
                     </div>
                 </div>
 
-                {{-- <div class="box-body">     --}}
-                  {{-- <b>Daftar Peserta</b>
+                <div class="box-body">
+                  <b>Daftar Peserta</b>
                   <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a>
                   <br>
-                  <br> --}}
+                  <br>
                   <table id="example" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
                       <thead>
                           <tr role="row">
@@ -460,7 +453,7 @@
 	      </div>
 	      <div class="modal-body">
 	      	<center>
-              <img src="{{isset($seminar->link) ? url($seminar->link) : ''}}" alt="Brosur Seminar"
+              <img src="{{isset($seminar->link) ? url($seminar->link) : ''}}" alt="Link Seminar"
                             class="img-thumbnail center" style="width:50%">
 	        </center>
 	      </div>
