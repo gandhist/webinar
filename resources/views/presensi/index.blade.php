@@ -14,6 +14,7 @@
         Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
         Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br><br>
     
+        <a target="_blank" href="https://us02web.zoom.us/j/84363728496?pwd=U2d5bTVoaHIycXZ3Y21hbm9RbXBKZz09">LINK ZOOM!!!</a>
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">
@@ -34,7 +35,7 @@
                         @else
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             Terimakasih, Anda telah selesai mengikuti seminar.
-                        </div>
+                        </div>l
                         @endif
                     @endif
                 </div>

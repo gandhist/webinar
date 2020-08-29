@@ -139,7 +139,7 @@ class AbsensiController extends Controller
                 $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
 
                 // Save penilaian #Rafi
-                    dd($request);
+                    // dd($request);
                 // End
                 return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Berhasil Absen Keluar');
             }
@@ -174,7 +174,7 @@ class AbsensiController extends Controller
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
-            $id_decrypt =  \Hashids::decode($id);
+            $id_decrypt =  Hashids::decode($id);
         }
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
 
