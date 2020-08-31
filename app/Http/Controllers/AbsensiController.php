@@ -73,7 +73,7 @@ class AbsensiController extends Controller
                 'status' => true,
                 'message' => 'Seminar belum selesai',
             ]);
-        } elseif($peserta_seminar['is_review'] == 0){
+        } elseif($peserta_seminar['is_review'] == 0 && $request->ajax()){
             return response()->json([
                 'status' => true,
                 'code' => 10,
