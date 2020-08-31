@@ -1573,7 +1573,9 @@ class SeminarController extends Controller
 
     public function feedback($id){
         $seminar = PesertaSeminar::select('id')->where('id_seminar','=',$id);
-        $respons = AbsensiModel::where('is_review','=', 1)->count();
+        $daftar = PesertaSeminar::whereIn('id',$seminar)->distinct()->count();
+        $absen = AbsensiModel::whereIn('id_peserta_seminar',$seminar)->whereNotNull('jam_cek_in')->count();
+        $respons = AbsensiModel::whereIn('id_peserta_seminar',$seminar)->where('is_review','=', 1)->count();
         $narasumber = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
         $moderator = PesertaSeminar::where('id_seminar',$id)->where('status','4')->get();
         $feedback = FeedbackModel::whereIn('id_peserta_seminar',$seminar)->get();
@@ -1606,6 +1608,6 @@ class SeminarController extends Controller
                                                     ];
         }
 
-        return view ('seminar.feedback')->with(compact('respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal'));
+        return view ('seminar.feedback')->with(compact('daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal'));
     }
 }
