@@ -1597,8 +1597,7 @@ class SeminarController extends Controller
         $feedback_seminar["persen_3"] = ($feedback_seminar['3']/$feedback_seminar["jumlah"])*100;
         $feedback_seminar["persen_4"] = ($feedback_seminar['4']/$feedback_seminar["jumlah"])*100;
         $feedback_seminar["persen_5"] = ($feedback_seminar['5']/$feedback_seminar["jumlah"])*100;
-
-
+        // dd($feedback_seminar);
 
         $feedback_personal_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','1')->get();
         foreach($narasumber as $n){
