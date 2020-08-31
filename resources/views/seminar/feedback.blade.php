@@ -26,9 +26,8 @@
     <!-- Default box -->
     <div class="box box-content">
 
-      <div class="box-body">
+      <div class="box-body" style="padding:0 25px">
         <h3>{{ $respons }} responses</h3>
-        {{-- {{ $feedback_rating }} --}}
         <br>
         <div class="row">
           <div class="col-lg-12 card">
@@ -72,7 +71,7 @@
           <label for="kesan_pesan" class="label-control"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
 
           <div class="row">
-            <div class="col-md-6 line">
+            <div class="col-md-12 line">
               <ul>
                 @foreach($feedback as $key)
                 <li>
@@ -91,7 +90,7 @@
           <label for="keterangan" class="label-control"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
 
           <div class="row">
-            <div class="col-md-6 line">
+            <div class="col-md-12 line">
               <ul>
                 @foreach($feedback as $key)
                 <li>
@@ -104,7 +103,6 @@
 
           </div>
         </div>
-
       </div>
 
     </div> {{-- Box-Content --}}
