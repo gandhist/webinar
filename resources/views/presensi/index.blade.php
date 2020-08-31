@@ -31,16 +31,22 @@
         <form method="POST" name="formAdd" id="formAdd">
             <div class="row">
                 <div class="col-md-6">
-                    @if($cek_in)
+                    {{-- @if($cek_in)
                     <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk">
                     @else
                         @if($cek_out)
                         <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar">
                         @else
+                        @endif
+                    @endif --}}
+                    @if(isset($data[0]->jam_cek_in) && !isset($data[0]->jam_cek_out))
+                    <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="Absen Keluar">
+                    @elseif(isset($data[0]->jam_cek_in) && isset($data[0]->jam_cek_out))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             Terimakasih, Anda telah selesai mengikuti seminar.
                         </div>
-                        @endif
+                    @elseif((!isset($data[0]->jam_cek_in) && !isset($data[0]->jam_cek_out)))
+                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="Absen Masuk">
                     @endif
                 </div>
             </div>

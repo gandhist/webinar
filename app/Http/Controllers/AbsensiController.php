@@ -31,7 +31,7 @@ class AbsensiController extends Controller
         $cek_in = $this->cek_in($peserta_seminar->id);
         $cek_out = $this->cek_out($peserta_seminar->id);
         $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
-
+        // dd($data);
         return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar', 'id_encrypt'));
     }
 
@@ -43,6 +43,8 @@ class AbsensiController extends Controller
         $masuk->created_at = Carbon::now()->toDateTimeString();
         $masuk->tanggal = Carbon::now()->isoFormat("YYYY-MM-DD");
 
+        $cek_absen = AbsensiModel::where('id_peserta_seminar', $id)->first();
+
 
         $seminar = PesertaSeminar::select('id_seminar')->where('id','=',$id)->first();
         $status = SeminarModel::select('is_mulai')->where('id','=',$seminar['id_seminar'])->first();
@@ -51,6 +53,11 @@ class AbsensiController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Seminar belum dimulai',
+            ]);
+        } else if($cek_absen){
+            return response()->json([
+                'status' => false,
+                'message' => 'Anda sudah pernah absen',
             ]);
         } else {
             $masuk->save();
@@ -156,14 +163,15 @@ class AbsensiController extends Controller
 
     // function cek absen keluar
     public function cek_out($id){
-        $cek_cekin = AbsensiModel::where('tanggal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('id_peserta_seminar', $id)->whereNotNull('jam_cek_out')->first();
-        if($cek_cekin){
-            $allow = false;
-        }
-        else {
-            $allow = true;
-        }
-        return $allow;
+        // $cek_cekin = AbsensiModel::where('tanggal', Carbon::now()->isoFormat('YYYY-MM-DD'))->where('id_peserta_seminar', $id)->whereNotNull('jam_cek_out')->first();
+        // if($cek_cekin){
+        //     $allow = false;
+        // }
+        // else {
+        //     $allow = true;
+        // }
+        // return $allow;
+        return true;
     }
 
     public function penilaian($id){
