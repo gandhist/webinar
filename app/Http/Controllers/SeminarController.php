@@ -1580,7 +1580,7 @@ class SeminarController extends Controller
         // $feedback_rating = FeedbackRatingModel::select('nilai')->whereIn('id_peserta_seminar',$seminar)->get();
         $feedback_seminar_full = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->get();
 
-        $feedback_seminar_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','0')->groupBy('nilai')->get();
+        $feedback_seminar_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','0')->get();
         $feedback_seminar = [   "1" => count($feedback_seminar_raw->where('nilai','1')),
                                 "2" => count($feedback_seminar_raw->where('nilai','2')),
                                 "3" => count($feedback_seminar_raw->where('nilai','3')),
@@ -1589,7 +1589,7 @@ class SeminarController extends Controller
                             ];
 
 
-        $feedback_personal_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','1')->groupBy('nilai')->get();
+        $feedback_personal_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','1')->get();
         foreach($narasumber as $n){
             $feedback_personal[$n->id_peserta] = [      "1" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','1')),
                                                         "2" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','2')),
