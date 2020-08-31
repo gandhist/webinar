@@ -146,7 +146,11 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
+        labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik',
+        '\u2605\u2605\u2605\u2605 Baik',
+        '\u2605\u2605\u2605 Cukup Baik',
+        '\u2605\u2605 Buruk',
+        '\u2605 Sangat Buruk'],
         datasets: [{
             label: '# of Votes',
             data: [
@@ -207,7 +211,11 @@ var myChart = new Chart(ctx, {
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
+            labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik',
+            '\u2605\u2605\u2605\u2605 Baik',
+            '\u2605\u2605\u2605 Cukup Baik',
+            '\u2605\u2605 Buruk',
+            '\u2605 Sangat Buruk'],
             datasets: [{
                 label: '# of Votes',
                 data: [
@@ -272,7 +280,11 @@ var myChart = new Chart(ctx, {
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
+            labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik',
+            '\u2605\u2605\u2605\u2605 Baik',
+            '\u2605\u2605\u2605 Cukup Baik',
+            '\u2605\u2605 Buruk',
+            '\u2605 Sangat Buruk'],
             datasets: [{
                 label: '# of Votes',
                 data: [
