@@ -31,6 +31,8 @@ use App\Mail\EmailLinkSert as MailSertifikat;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\EmailLink as MailLink;
 use App\AbsensiModel;
+use App\FeedbackModel;
+use App\FeedbackRatingModel;
 
 class SeminarController extends Controller
 {
@@ -1570,8 +1572,14 @@ class SeminarController extends Controller
     }
 
     public function feedback($id){
-        $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->orderBy('id','asc')->get();
-        $respons = AbsensiModel::whereNotNull('jam_cek_out')->count();
-        return view ('seminar.feedback')->with(compact('detailseminar','respons'));
+        $seminar = PesertaSeminar::select('id')->where('id_seminar','=',$id);
+        $respons = AbsensiModel::where('is_review','=', 1)->count();
+        $narasumber = PesertaSeminar::where('id_seminar',$id)->where('status','2')->get();
+        $moderator = PesertaSeminar::where('id_seminar',$id)->where('status','4')->get();
+        $feedback = FeedbackModel::whereIn('id_peserta_seminar',$seminar)->get();
+        $feedback_rating = FeedbackRatingModel::select('nilai')->whereIn('id_peserta_seminar',$seminar)->get();
+        // dd($feedback_rating);
+
+        return view ('seminar.feedback')->with(compact('respons','narasumber','moderator','feedback','feedback_rating'));
     }
 }
