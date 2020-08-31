@@ -25,7 +25,7 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
-     
+
       <div class="box-body">
         <h3>{{ $respons }} responses</h3>
         {{ $feedback_rating }}
@@ -47,7 +47,7 @@
           <label for="seminar" class="label-control"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
 
           <div class="row">
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <canvas id="narasumber-{{$n->id_peserta}}" width="400" height="400"></canvas>
           </div>
 
           </div>
@@ -60,7 +60,7 @@
           <label for="seminar" class="label-control"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
 
           <div class="row">
-            <canvas id="myChart" width="400" height="400"></canvas>
+            <canvas id="moderator-{{$m->id_peserta}}" width="400" height="400"></canvas>
           </div>
 
           </div>
@@ -70,7 +70,7 @@
         <div class="row">
           <div class="col-lg-12 card">
           <label for="kesan_pesan" class="label-control"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
-          
+
           <div class="row">
             <div class="col-md-6 line">
               <ul>
@@ -80,9 +80,9 @@
                 </li>
                 @endforeach
               </ul>
-            </div> 
+            </div>
           </div>
-          
+
           </div>
         </div>
         <hr>
@@ -99,12 +99,12 @@
                 </li>
                 @endforeach
               </ul>
-            </div> 
+            </div>
           </div>
-          
+
           </div>
         </div>
-        
+
       </div>
 
     </div> {{-- Box-Content --}}
@@ -119,8 +119,8 @@
 
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
-var data = '{{$feedback_rating}}';
-console.log(data);
+// var data = '{{$feedback_rating}}';
+// console.log(data);
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -134,7 +134,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 0.2)',
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)'
-                
+
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -142,7 +142,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 206, 86, 1)',
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)'
-                
+
             ],
             borderWidth: 1
         }]
@@ -151,9 +151,89 @@ var myChart = new Chart(ctx, {
       responsive: true,
       maintainAspectRatio: false,
         scales: {
-            
+
         }
     }
 });
+
+@foreach($narasumber as $n)
+    var ctx = document.getElementById('narasumber-'+{{$n->id_peserta}}).getContext('2d');
+    // var data = '{{$feedback_rating}}';
+    // console.log(data);
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 0, 3, 85, 2],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+            scales: {
+
+            }
+        }
+    });
+@endforeach
+
+@foreach($moderator as $m)
+    var ctx = document.getElementById('moderator-'+{{$m->id_peserta}}).getContext('2d');
+    // var data = '{{$feedback_rating}}';
+    // console.log(data);
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 149, 3, 5, 0],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+        responsive: true,
+        maintainAspectRatio: false,
+            scales: {
+
+            }
+        }
+    });
+@endforeach
 </script>
 @endpush
