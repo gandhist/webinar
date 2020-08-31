@@ -30,6 +30,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Mail\EmailLinkSert as MailSertifikat;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\EmailLink as MailLink;
+use App\AbsensiModel;
 
 class SeminarController extends Controller
 {
@@ -1566,5 +1567,11 @@ class SeminarController extends Controller
 
             return redirect()->back()->with('alert',"Upload materi berhasil");
         }
+    }
+
+    public function feedback($id){
+        $detailseminar = PesertaSeminar::where('id_seminar','=',$id)->orderBy('id','asc')->get();
+        $respons = AbsensiModel::whereNotNull('jam_cek_out')->count();
+        return view ('seminar.feedback')->with(compact('detailseminar','respons'));
     }
 }

@@ -39,6 +39,7 @@
                 @elseif ($seminar->is_mulai == 1)
                     <a href="{{ url('seminar/selesai',$seminar->id) }}" class="btn btn-warning"> Akhiri Seminar</a><br><br>
                 @else
+                    <a href="{{ url('seminar/feedback',$seminar->id) }}" class="btn btn-success"> Feedback</a><br><br>
                 @endif
 
                 <div class="row">
