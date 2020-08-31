@@ -1578,8 +1578,17 @@ class SeminarController extends Controller
         $moderator = PesertaSeminar::where('id_seminar',$id)->where('status','4')->get();
         $feedback = FeedbackModel::whereIn('id_peserta_seminar',$seminar)->get();
         // $feedback_rating = FeedbackRatingModel::select('nilai')->whereIn('id_peserta_seminar',$seminar)->get();
-        $feedback_rating = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->pluck('nilai');
-        // dd($feedback_rating);
+        $feedback_seminar_full = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->get();
+
+        $feedback_seminar_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','0')->groupBy('nilai')->get();
+        $feedback_seminar = [   "1" => count($feedback_seminar_raw->where('nilai','1')),
+                                "2" => count($feedback_seminar_raw->where('nilai','2')),
+                                "3" => count($feedback_seminar_raw->where('nilai','3')),
+                                "4" => count($feedback_seminar_raw->where('nilai','4')),
+                                "5" => count($feedback_seminar_raw->where('nilai','5')),
+                            ];
+
+        dd($feedback_seminar);
 
         return view ('seminar.feedback')->with(compact('respons','narasumber','moderator','feedback','feedback_rating'));
     }
