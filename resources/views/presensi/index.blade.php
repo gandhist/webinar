@@ -38,7 +38,7 @@
                         @else
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             Terimakasih, Anda telah selesai mengikuti seminar.
-                        </div>l
+                        </div>
                         @endif
                     @endif
                 </div>
