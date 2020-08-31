@@ -2,10 +2,24 @@
 
 @section('content')
 <style>
+ 
   .line {
-  height:250px;
-  overflow-y: auto;
-}
+    height:250px;
+    overflow-y: auto;
+  }
+
+  .box-body {
+      counter-reset: listCounter;
+  }
+
+  .continuous-list .nomor {
+        list-style: none;
+  }
+
+  .continuous-list .nomor::before {
+        content: counter(listCounter) " . ";  
+        counter-increment: listCounter;
+  }
 </style>
 
 <!-- Content Header (Page header) -->
@@ -13,12 +27,23 @@
     <h1>
         Feedback Seminar
     </h1>
-    <ol class="breadcrumb">
+    {{-- <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
         <li class="active"><a href="#"> Feedback</a></li>
-    </ol>
+    </ol> --}}
+</section>
+<section class="content-header">
+  <h1>
+      Feedback Seminar ({{ $daftar }} daftar - {{ $absen }} absen - {{ $respons }} responses)
+  </h1>
+  {{-- <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#"> Daftar</a></li>
+      <li class="active"><a href="#"> Seminar</a></li>
+      <li class="active"><a href="#"> Feedback</a></li>
+  </ol> --}}
 </section>
 
 <!-- Main content -->
@@ -26,13 +51,12 @@
     <!-- Default box -->
     <div class="box box-content">
 
-      <div class="box-body">
-        <h3>{{ $respons }} responses</h3>
-        {{-- {{ $feedback_rating }} --}}
+      <div class="box-body" style="padding:0 25px"> 
         <br>
+        <ol class="continuous-list">
         <div class="row">
           <div class="col-lg-12 card">
-          <label for="seminar" class="label-control"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
+          <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
 
           <div class="row">
             <canvas id="myChart" width="400" height="400"></canvas>
@@ -44,7 +68,7 @@
         @foreach($narasumber as $n)
         <div class="row">
           <div class="col-lg-12 card">
-          <label for="seminar" class="label-control"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
+          <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
 
           <div class="row">
             <canvas id="narasumber-{{$n->id_peserta}}" width="400" height="400"></canvas>
@@ -57,7 +81,7 @@
         @foreach($moderator as $m)
         <div class="row">
           <div class="col-lg-12 card">
-          <label for="seminar" class="label-control"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
+          <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
 
           <div class="row">
             <canvas id="moderator-{{$m->id_peserta}}" width="400" height="400"></canvas>
@@ -69,10 +93,10 @@
         <hr>
         <div class="row">
           <div class="col-lg-12 card">
-          <label for="kesan_pesan" class="label-control"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
+          <label for="kesan_pesan" class="label-control nomor"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
 
           <div class="row">
-            <div class="col-md-6 line">
+            <div class="col-md-12 line">
               <ul>
                 @foreach($feedback as $key)
                 <li>
@@ -88,10 +112,10 @@
         <hr>
         <div class="row">
           <div class="col-lg-12 card">
-          <label for="keterangan" class="label-control"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
+          <label for="keterangan" class="label-control nomor"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
 
           <div class="row">
-            <div class="col-md-6 line">
+            <div class="col-md-12 line">
               <ul>
                 @foreach($feedback as $key)
                 <li>
@@ -104,7 +128,7 @@
 
           </div>
         </div>
-
+      </ol>
       </div>
 
     </div> {{-- Box-Content --}}
