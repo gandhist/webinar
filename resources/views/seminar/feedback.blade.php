@@ -2,7 +2,7 @@
 
 @section('content')
 <style>
- 
+
   .line {
     height:250px;
     overflow-y: auto;
@@ -17,7 +17,7 @@
   }
 
   .continuous-list .nomor::before {
-        content: counter(listCounter) " . ";  
+        content: counter(listCounter) " . ";
         counter-increment: listCounter;
   }
 </style>
@@ -51,7 +51,7 @@
     <!-- Default box -->
     <div class="box box-content">
 
-      <div class="box-body" style="padding:0 25px"> 
+      <div class="box-body" style="padding:0 25px">
         <br>
         <ol class="continuous-list">
         <div class="row">
@@ -157,11 +157,11 @@ var myChart = new Chart(ctx, {
                 {{$feedback_seminar['1']}},
             ],
             backgroundColor: [
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 99, 132, 0.2)'
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(75, 192, 192, 0.7)',
+              'rgba(255, 206, 86, 0.7)',
+              'rgba(153, 102, 255, 0.7)',
+              'rgba(255, 99, 132, 0.7)'
 
             ],
             borderColor: [
@@ -200,15 +200,15 @@ var myChart = new Chart(ctx, {
                     {{$feedback_personal[$n->id_peserta]['1']}},
                 ],
                 backgroundColor: [
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(75, 192, 192, 0.7)',
+                  'rgba(255, 206, 86, 0.7)',
+                  'rgba(153, 102, 255, 0.7)',
+                  'rgba(255, 99, 132, 0.7)',
 
                 ],
                 borderColor: [
-                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.7)',
                   'rgba(75, 192, 192, 1)',
                   'rgba(255, 206, 86, 1)',
                   'rgba(153, 102, 255, 1)',
@@ -244,15 +244,15 @@ var myChart = new Chart(ctx, {
                     {{$feedback_personal[$m->id_peserta]['1']}},
                 ],
                 backgroundColor: [
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 99, 132, 0.2)'
+                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(75, 192, 192, 0.7)',
+                  'rgba(255, 206, 86, 0.7)',
+                  'rgba(153, 102, 255, 0.7)',
+                  'rgba(255, 99, 132, 0.7)'
 
                 ],
                 borderColor: [
-                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(54, 162, 235, 0.7)',
                   'rgba(75, 192, 192, 1)',
                   'rgba(255, 206, 86, 1)',
                   'rgba(153, 102, 255, 1)',
