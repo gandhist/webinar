@@ -61,7 +61,7 @@
           <div class="row" height="500px">
             <canvas id="myChart" height="300px"></canvas>
           </div>
-
+          <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_seminar["rata_rata"] }}</strong></span>
           </div>
         </div>
         <hr>
@@ -73,7 +73,7 @@
           <div class="row" height="500px">
             <canvas id="narasumber-{{$n->id_peserta}}" height="300px"></canvas>
           </div>
-
+          <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$n->id_peserta]["rata_rata"] }}</strong></span>
           </div>
         </div>
         @endforeach
@@ -86,7 +86,7 @@
           <div class="row" height="500px">
             <canvas id="moderator-{{$m->id_peserta}}" height="300px"></canvas>
           </div>
-
+          <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$m->id_peserta]["rata_rata"] }}</strong></span>
           </div>
         </div>
         @endforeach
