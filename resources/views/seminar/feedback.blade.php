@@ -1,7 +1,12 @@
 @extends('templates.header')
 
 @section('content')
-
+<style>
+  .line {
+  height:200px;
+  overflow-y: auto;
+}
+</style>
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -12,7 +17,7 @@
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
-        <li class="active"><a href="#"> Detail</a></li>
+        <li class="active"><a href="#"> Feedback</a></li>
     </ol>
 </section>
 
@@ -22,7 +27,84 @@
     <div class="box box-content">
      
       <div class="box-body">
-        <h3>{{ $respons }} Responses</h3>
+        <h3>{{ $respons }} responses</h3>
+        {{ $feedback_rating }}
+        <br>
+        <div class="row">
+          <div class="col-lg-12 card">
+          <label for="seminar" class="label-control"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
+
+          <div class="row">
+            <canvas id="myChart" width="400" height="400"></canvas>
+          </div>
+
+          </div>
+        </div>
+        <hr>
+        @foreach($narasumber as $n)
+        <div class="row">
+          <div class="col-lg-12 card">
+          <label for="seminar" class="label-control"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
+
+          <div class="row">
+            <canvas id="myChart" width="400" height="400"></canvas>
+          </div>
+
+          </div>
+        </div>
+        @endforeach
+        <hr>
+        @foreach($moderator as $m)
+        <div class="row">
+          <div class="col-lg-12 card">
+          <label for="seminar" class="label-control"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
+
+          <div class="row">
+            <canvas id="myChart" width="400" height="400"></canvas>
+          </div>
+
+          </div>
+        </div>
+        @endforeach
+        <hr>
+        <div class="row">
+          <div class="col-lg-12 card">
+          <label for="kesan_pesan" class="label-control"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
+          
+          <div class="row">
+            <div class="col-md-6 line">
+              <ul>
+                @foreach($feedback as $key)
+                <li>
+                  {{ $key->peserta_s->peserta_r->nama }} - {{ $key->kesan_pesan }}
+                </li>
+                @endforeach
+              </ul>
+            </div> 
+          </div>
+          
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-lg-12 card">
+          <label for="keterangan" class="label-control"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
+
+          <div class="row">
+            <div class="col-md-6 line">
+              <ul>
+                @foreach($feedback as $key)
+                <li>
+                  {{ $key->peserta_s->peserta_r->nama }} - {{ $key->keterangan }}
+                </li>
+                @endforeach
+              </ul>
+            </div> 
+          </div>
+          
+          </div>
+        </div>
+        
       </div>
 
     </div> {{-- Box-Content --}}
@@ -33,8 +115,45 @@
 @endsection
 
 @push('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
 
 <script>
-
+var ctx = document.getElementById('myChart').getContext('2d');
+var data = '{{$feedback_rating}}';
+console.log(data);
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+                
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+                
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+        scales: {
+            
+        }
+    }
+});
 </script>
 @endpush
