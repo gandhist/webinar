@@ -1588,8 +1588,27 @@ class SeminarController extends Controller
                                 "5" => count($feedback_seminar_raw->where('nilai','5')),
                             ];
 
-        dd($feedback_seminar);
 
-        return view ('seminar.feedback')->with(compact('respons','narasumber','moderator','feedback','feedback_rating'));
+        $feedback_personal_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','1')->groupBy('nilai')->get();
+        foreach($narasumber as $n){
+            $feedback_personal[$n->id_peserta] = [      "1" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','1')),
+                                                        "2" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','2')),
+                                                        "3" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','3')),
+                                                        "4" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','4')),
+                                                        "5" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)->where('nilai','5')),
+                                                    ];
+        }
+        foreach($moderator as $m){
+            $feedback_personal[$m->id_peserta] = [      "1" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','1')),
+                                                        "2" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','2')),
+                                                        "3" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','3')),
+                                                        "4" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','4')),
+                                                        "5" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','5')),
+                                                    ];
+        }
+
+        // dd($feedback_personal);
+
+        return view ('seminar.feedback')->with(compact('respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal'));
     }
 }

@@ -28,7 +28,7 @@
 
       <div class="box-body">
         <h3>{{ $respons }} responses</h3>
-        {{ $feedback_rating }}
+        {{-- {{ $feedback_rating }} --}}
         <br>
         <div class="row">
           <div class="col-lg-12 card">
@@ -119,15 +119,20 @@
 
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
-// var data = '{{$feedback_rating}}';
-// console.log(data);
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
         labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
         datasets: [{
             label: '# of Votes',
-            data: [12, 19, 3, 5, 2],
+            // data: [12, 19, 3, 5, 2],
+            data: [
+                {{$feedback_seminar['5']}},
+                {{$feedback_seminar['4']}},
+                {{$feedback_seminar['3']}},
+                {{$feedback_seminar['2']}},
+                {{$feedback_seminar['1']}},
+            ],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -158,15 +163,20 @@ var myChart = new Chart(ctx, {
 
 @foreach($narasumber as $n)
     var ctx = document.getElementById('narasumber-'+{{$n->id_peserta}}).getContext('2d');
-    // var data = '{{$feedback_rating}}';
-    // console.log(data);
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 0, 3, 85, 2],
+                // data: [12, 0, 3, 85, 2],
+                data: [
+                    {{$feedback_personal[$n->id_peserta]['5']}},
+                    {{$feedback_personal[$n->id_peserta]['4']}},
+                    {{$feedback_personal[$n->id_peserta]['3']}},
+                    {{$feedback_personal[$n->id_peserta]['2']}},
+                    {{$feedback_personal[$n->id_peserta]['1']}},
+                ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -198,15 +208,20 @@ var myChart = new Chart(ctx, {
 
 @foreach($moderator as $m)
     var ctx = document.getElementById('moderator-'+{{$m->id_peserta}}).getContext('2d');
-    // var data = '{{$feedback_rating}}';
-    // console.log(data);
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Sangat Baik', 'Baik', 'Cukup Baik', 'Buruk', 'Sangat Buruk'],
             datasets: [{
                 label: '# of Votes',
-                data: [12, 149, 3, 5, 0],
+                // data: [12, 0, 3, 85, 2],
+                data: [
+                    {{$feedback_personal[$m->id_peserta]['5']}},
+                    {{$feedback_personal[$m->id_peserta]['4']}},
+                    {{$feedback_personal[$m->id_peserta]['3']}},
+                    {{$feedback_personal[$m->id_peserta]['2']}},
+                    {{$feedback_personal[$m->id_peserta]['1']}},
+                ],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
