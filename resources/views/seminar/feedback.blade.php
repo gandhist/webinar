@@ -58,8 +58,8 @@
           <div class="col-lg-12 card">
           <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
 
-          <div class="row">
-            <canvas id="myChart" width="400" height="400"></canvas>
+          <div class="row" height="500px">
+            <canvas id="myChart" height="300px"></canvas>
           </div>
 
           </div>
@@ -70,8 +70,8 @@
           <div class="col-lg-12 card">
           <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
 
-          <div class="row">
-            <canvas id="narasumber-{{$n->id_peserta}}" width="400" height="400"></canvas>
+          <div class="row" height="500px">
+            <canvas id="narasumber-{{$n->id_peserta}}" height="300px"></canvas>
           </div>
 
           </div>
@@ -83,8 +83,8 @@
           <div class="col-lg-12 card">
           <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
 
-          <div class="row">
-            <canvas id="moderator-{{$m->id_peserta}}" width="400" height="400"></canvas>
+          <div class="row" height="500px">
+            <canvas id="moderator-{{$m->id_peserta}}" height="300px"></canvas>
           </div>
 
           </div>
@@ -176,11 +176,29 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-        scales: {
-
-        }
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            outlabels: {
+                stretch: 10,
+                font: {
+                    resizable: true,
+                    minSize: 12,
+                    maxSize: 18
+                }
+            }
+        },
+        legend: {
+                    position: 'right',
+                },
+        layout: {
+            padding: {
+                left: 50,
+                right: 50,
+                top: 50,
+                bottom: 50
+            },
+        },
     }
 });
 
@@ -219,11 +237,32 @@ var myChart = new Chart(ctx, {
             }]
         },
         options: {
-        responsive: true,
-        maintainAspectRatio: false,
-            scales: {
-
-            }
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'right',
+            },
+            plugins: {
+                outlabels: {
+                    stretch: 10,
+                    font: {
+                        resizable: true,
+                        minSize: 12,
+                        maxSize: 18
+                    }
+                }
+            },
+            legend: {
+                        position: 'right',
+                    },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 50,
+                    top: 50,
+                    bottom: 50
+                },
+            },
         }
     });
 @endforeach
@@ -263,11 +302,34 @@ var myChart = new Chart(ctx, {
             }]
         },
         options: {
-        responsive: true,
-        maintainAspectRatio: false,
-            scales: {
+            responsive: true,
+            maintainAspectRatio: false,
 
-            }
+            legend: {
+                    position: 'right',
+                },
+
+            plugins: {
+                outlabels: {
+                    stretch: 10,
+                    font: {
+                        resizable: true,
+                        minSize: 12,
+                        maxSize: 18
+                    }
+                }
+            },
+            legend: {
+                        position: 'right',
+                    },
+            layout: {
+                padding: {
+                    left: 50,
+                    right: 50,
+                    top: 50,
+                    bottom: 50
+                },
+            },
         }
     });
 @endforeach
