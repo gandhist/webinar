@@ -346,9 +346,9 @@ class RegistController extends Controller
         }
     }
 
-    public function test() {
+    public function test($id) {
 
-        dd(\Crypt::encrypt('5948'));
+        dd(\Crypt::encrypt($id));
         // $kurangi_kuota = Seminar::where('id','173')->first();
         // // dd($kurangi_kuota);
         // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;

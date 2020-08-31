@@ -73,72 +73,72 @@ class AbsensiController extends Controller
                 'status' => true,
                 'message' => 'Seminar belum selesai',
             ]);
-        } else{
-            if ($status['is_review'] == 0){
-                $keluar->is_review = 1;
-                $keluar->save();
-
-                return response()->json([
-                    'status' => false,
-                ]);
-            } else {
-
-                if(isset($request->seminar)){
-                    foreach($request->seminar as $key => $value){
-                        $narasumber = New RatingModel;
-                        $narasumber->id_peserta_seminar = $id;
-                        $narasumber->tipe = '0';
-                        $narasumber->id_seminar = $key;
-                        $narasumber->nilai = $value;
-                        $narasumber->save();
-                    }
+        } elseif($peserta_seminar['is_review'] == 0 && $request->ajax()){
+            return response()->json([
+                'status' => true,
+                'code' => 10,
+                'message' => 'Mohon isi penilaian',
+            ]);
+        }else{
+            if(isset($request->seminar)){
+                foreach($request->seminar as $key => $value){
+                    $narasumber = New RatingModel;
+                    $narasumber->id_peserta_seminar = $id;
+                    $narasumber->tipe = '0';
+                    $narasumber->id_seminar = $key;
+                    $narasumber->nilai = $value;
+                    $narasumber->save();
                 }
-
-                if(isset($request->narasumber)){
-                    foreach($request->narasumber as $key => $value){
-                        $narasumber = New RatingModel;
-                        $narasumber->id_peserta_seminar = $id;
-                        $narasumber->tipe = '1';
-                        $narasumber->id_peserta = $key;
-                        $narasumber->nilai = $value;
-                        $narasumber->save();
-                    }
-                }
-
-                if(isset($request->moderator)){
-                    foreach($request->moderator as $key => $value){
-                        $moderator = New RatingModel;
-                        $moderator->id_peserta_seminar = $id;
-                        $moderator->tipe = '1';
-                        $moderator->id_peserta = $key;
-                        $moderator->nilai = $value;
-                        $moderator->save();
-                    }
-                }
-
-                if(isset($request->kesan_pesan) && isset($request->keterangan))
-                $feedback = new FeedbackModel;
-                $feedback->id_peserta_seminar = $id;
-                $feedback->kesan_pesan = $request->kesan_pesan;
-                $feedback->keterangan = $request->keterangan;
-                $feedback->save();
-
-                $keluar->id_peserta_seminar = $id;
-                $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
-                $keluar->updated_at = Carbon::now()->toDateTimeString();
-                $keluar->save();
-
-                $id_encrypt = Crypt::encrypt($id);
-                $peserta_seminar = PesertaSeminar::where('id',$id)->first();
-                $cek_in = $this->cek_in($peserta_seminar->id);
-                $cek_out = $this->cek_out($peserta_seminar->id);
-                $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
-
-                // Save penilaian #Rafi
-                    // dd($request);
-                // End
-                return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Berhasil Absen Keluar');
             }
+
+            if(isset($request->narasumber)){
+                foreach($request->narasumber as $key => $value){
+                    $narasumber = New RatingModel;
+                    $narasumber->id_peserta_seminar = $id;
+                    $narasumber->tipe = '1';
+                    $narasumber->id_peserta = $key;
+                    $narasumber->nilai = $value;
+                    $narasumber->save();
+                }
+            }
+
+            if(isset($request->moderator)){
+                foreach($request->moderator as $key => $value){
+                    $moderator = New RatingModel;
+                    $moderator->id_peserta_seminar = $id;
+                    $moderator->tipe = '1';
+                    $moderator->id_peserta = $key;
+                    $moderator->nilai = $value;
+                    $moderator->save();
+                }
+            }
+
+            if(isset($request->kesan_pesan) && isset($request->keterangan))
+            $feedback = new FeedbackModel;
+            $feedback->id_peserta_seminar = $id;
+            $feedback->kesan_pesan = $request->kesan_pesan;
+            $feedback->keterangan = $request->keterangan;
+            $feedback->save();
+
+            $keluar->id_peserta_seminar = $id;
+            $keluar->jam_cek_out = Carbon::now()->toDateTimeString();
+            $keluar->updated_at = Carbon::now()->toDateTimeString();
+            $keluar->save();
+
+            $id_encrypt = Crypt::encrypt($id);
+            $peserta_seminar = PesertaSeminar::where('id',$id)->first();
+            $cek_in = $this->cek_in($peserta_seminar->id);
+            $cek_out = $this->cek_out($peserta_seminar->id);
+            $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
+
+            $keluar->is_review = 1;
+            $keluar->save();
+
+            // return response()->json([
+            //     'status' => false,
+            // ]);
+
+            return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Berhasil Absen Keluar');
         }
     }
 
