@@ -18,7 +18,7 @@
         @if($cek_in == false)
             <a target="_blank" href="{{ $peserta_seminar->seminar_p->url2 }}">LINK YOUTUBE!!!</a>
         @endif
-    
+
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">
@@ -47,7 +47,7 @@
         </form>
     <br>
 
-    <div class="row">    
+    <div class="row">
         <div class="col-lg-12">
             <h3>Daftar Presensi Anda</h3>
             <table class="table">
@@ -128,10 +128,10 @@ function absen_masuk() {
                 confirmButtonColor: '#AAA',
                 onClose: function() {
                     window.open(home_url);
-                    window.location.replace(home);        
+                    window.location.replace(home);
                 }
             })
-        } 
+        }
         else if (response.status) {
             Swal.fire({
                 title: response.message,
@@ -139,7 +139,7 @@ function absen_masuk() {
                 confirmButtonText: 'Close',
                 confirmButtonColor: '#AAA',
                 onClose: function() {
-                    window.location.replace(home);        
+                    window.location.open(home);
                 }
             })
         }
@@ -184,18 +184,17 @@ function absen_keluar() {
                 confirmButtonText: 'Close',
                 confirmButtonColor: '#AAA',
                 onClose: function() {
-                    window.location.replace(home);
+                    window.location.replace(home_rating);
                 }
             })
-        }
-        else {
+        } else {
             // Swal.fire({
             // title: response.message,
             // type: 'error',
             // confirmButtonText: 'Close',
             // confirmButtonColor: '#AAA',
             //     onClose: function() {
-                    window.location.replace(home_rating);        
+                    window.location.replace(home_rating);
             //     }
             // })
             $('#alert').text(response.message).show();
