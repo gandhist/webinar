@@ -167,7 +167,7 @@
             <br>
             @endforeach
 
-            @foreach($moderator as $m)
+            {{-- @foreach($moderator as $m)
             <div class="row">
                 <div class="col-lg-2">
                 </div>
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <br>
-            @endforeach
+            @endforeach --}}
 
             <div class="row">
                 <div class="col-lg-2">

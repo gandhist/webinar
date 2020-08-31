@@ -13,6 +13,8 @@ use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use File;
+use Vinkla\Hashids\Facades\Hashids;
+
 
 class ProfileController extends Controller
 {

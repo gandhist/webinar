@@ -78,7 +78,7 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'certificate' => array(
-    'normal' => $fontDir . '/certificate-normal_bb307f2d2b10bbe6ba3a394436a33e72',
+    'normal' => $fontDir . '/certificate-normal_15f2100175c94f3644ee6b4d6342ede7',
   ),
   'certificate2' => array(
     'normal' => $fontDir . '/certificate2-normal_784486b6b3b550718f75730310ae5cd9',

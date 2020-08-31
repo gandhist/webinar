@@ -130,6 +130,8 @@
                     <th style="width:10%;text-align:center;">Absen Masuk</th>
                     <th style="width:10%;text-align:center;">Absen Keluar</th>
                     <th style="width:5%;text-align:center;">Materi</th>
+                    <th style="width:5%;text-align:center;">Sertifikat</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -137,7 +139,7 @@
                 <tr>
                     <td style="text-align:center;">{{$loop->iteration}}</td>
                     <td style="text-align:center;">
-                        <a href="{{ url('detail_seminar', $key->seminar_p->id) }}" data-toggle="tooltip"
+                        <a class="" href="{{ url('detail_seminar', $key->seminar_p->id) }}" data-toggle="tooltip"
                             data-placement="bottom" title="Lihat Detail">
                             {{$key->seminar_p->nama_seminar}}</a>
                     </td>
@@ -154,18 +156,28 @@
                         {{$key->seminar_p->skpk_nilai}}
                     </td>
                     <td style="text-align:center;">
-                        {{ isset($key->presensi) ? $key->presensi->jam_cek_in : '' }}
+                        @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
+                        @if(isset($key->presensi->jam_cek_in) == null)
+                            <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
+                        @else 
+                        <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? $key->presensi->jam_cek_in : '' }} </a>
+                        @endif
                     </td>
                     <td style="text-align:center;">
-                        {{ isset($key->presensi) ? $key->presensi->jam_cek_out : '' }}
+                            {{ isset($key->presensi) ? $key->presensi->jam_cek_out : '' }}
                     </td>
                     <td style="text-align:center;">
                         @if(isset($key->presensi->jam_cek_out) == null)
                         @else
                             @if(isset($key->seminar_p->materi))
-                            <a href="{{url($key->seminar_p->materi)}}" class="download-link" download="">Download</a>
+                            <a href="{{url($key->seminar_p->materi)}}" class="download-link btn btn-sm btn-primary" download=""> <i class="fa fa-download" ></i> Download</a>
                         
                             @endif
+                        @endif
+                    </td>
+                    <td>
+                        @if(isset($key->presensi->jam_cek_out) != null)
+                            <a href="{{ url('sertifikat', Illuminate\Support\Facades\Crypt::encrypt($key->no_srtf)) }}" target="_blank" type="submit" class="btn btn-sm btn-success pull-right"> <i class="fa fa-file"></i> Sertifikat</a>
                         @endif
                     </td>
                 </tr>

@@ -52,12 +52,12 @@
 		</div>
 		<div class="login">
 			<h2 class="head-title">Login</h2>
-			<p>Silahkan Login dengan username yang sudah terverifikasi.</p>
+			<p>Silahkan Login dengan email yang sudah terverifikasi.</p>
 			<div class="col-sm-4">
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
-						<input type="text" class="form-control select2" placeholder="Username" name="username" id="username">
+						<input type="text" class="form-control select2" placeholder="Email" name="username" id="username">
 						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
 						<div id="name">
 
