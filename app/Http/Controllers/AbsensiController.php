@@ -49,12 +49,13 @@ class AbsensiController extends Controller
         $seminar = PesertaSeminar::select('id_seminar')->where('id','=',$id)->first();
         $status = SeminarModel::select('is_mulai')->where('id','=',$seminar['id_seminar'])->first();
 
-        if ($status['is_mulai'] == 2){
-            return response()->json([
-                'status' => false,
-                'message' => 'Seminar sudah berakhir',
-            ]);
-        } else if ($status['is_mulai'] == 0){
+        // if ($status['is_mulai'] == 2){
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Seminar sudah berakhir',
+        //     ]);
+        // } else
+        if ($status['is_mulai'] == 0){
             return response()->json([
                 'status' => false,
                 'message' => 'Seminar belum dimulai',
