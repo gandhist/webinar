@@ -18,7 +18,6 @@
         @if($cek_in == false)
             <a target="_blank" href="{{ $peserta_seminar->seminar_p->url2 }}">LINK YOUTUBE!!!</a>
         @endif
-
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">

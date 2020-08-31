@@ -89,7 +89,7 @@ class RegistController extends Controller
         // $password = '123456'; // buat test masih hardcode
 
         if ($peserta) {
-            $data['username'] = $request->nama;
+            $data['username'] = strtolower($request->email);
             $data['email'] = strtolower($request->email);
             $data['password'] = Hash::make($password);
             $data['name'] = $request->nama;
@@ -316,7 +316,7 @@ class RegistController extends Controller
             // $nama = preg_replace("/[^a-zA-Z]/", "", $nama);
             // $password = '123456'; // buat test masih hardcode
             if ($peserta) {
-                $data['username'] = $request->nama;
+                $data['username'] = strtolower($request->email); // di ubah menjadi email sebagai username by gandhi
                 $data['email'] = strtolower($request->email);
                 $data['password'] = Hash::make($password);
                 $data['name'] = $request->nama;

@@ -178,7 +178,7 @@ class AbsensiController extends Controller
         if(strlen($id) > 10) {
             $id_decrypt = Crypt::decrypt($id);
         } else {
-            $id_decrypt =  \Hashids::decode($id);
+            $id_decrypt =  Hashids::decode($id);
         }
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
 
