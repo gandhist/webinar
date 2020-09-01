@@ -23,7 +23,8 @@ class User extends Authenticatable
         'name',
         'last_login',
         'role_id',
-        'is_active'
+        'is_active',
+        'is_login'
     ];
 
     /**
@@ -32,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'is_login',
     ];
 
     protected $casts = [
