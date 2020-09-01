@@ -33,6 +33,11 @@
   <div class="login-logo">
     <a href="../../index2.html"><b>Sertifikat P3SM</b> - Login</a>
   </div>
+  @if(session()->get('warning'))
+		<div class="alert alert-warning"> {{ session()->get('warning') }}
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		</div>
+	@endif
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>

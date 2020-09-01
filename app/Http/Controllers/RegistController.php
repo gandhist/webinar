@@ -206,7 +206,7 @@ class RegistController extends Controller
             $peserta_seminar->created_at = Carbon::now()->toDateTimeString();
             // validasi jika sudah pernah terdaftar
             if($cek > 0){
-                return redirect('')->with('warning', 'Anda Sudah Mendaftar Seminar');
+                return redirect()->route('login')->with('warning', 'Anda Sudah Mendaftar Seminar');
             } else{
                 $peserta_seminar = $peserta_seminar->save();
 
@@ -293,7 +293,7 @@ class RegistController extends Controller
             $peserta_seminar->created_at = Carbon::now()->toDateTimeString();
             // validasi jika sudah pernah terdaftar
             if($cek > 0){
-                return redirect('')->with('warning', 'Anda Sudah Mendaftar Seminar');
+                return redirect()->route('login')->with('warning', 'Anda Sudah Mendaftar Seminar');
             } else{
                 $peserta_seminar = $peserta_seminar->save();
 

@@ -49,12 +49,6 @@ class AbsensiController extends Controller
         $seminar = PesertaSeminar::select('id_seminar')->where('id','=',$id)->first();
         $status = SeminarModel::select('is_mulai')->where('id','=',$seminar['id_seminar'])->first();
 
-        // if ($status['is_mulai'] == 2){
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' => 'Seminar sudah berakhir',
-        //     ]);
-        // } else
         if ($status['is_mulai'] == 0){
             return response()->json([
                 'status' => false,
@@ -83,7 +77,7 @@ class AbsensiController extends Controller
 
         if ($status_seminar['is_mulai'] == 1) {
             return response()->json([
-                'status' => true,
+                'status' => false,
                 'message' => 'Seminar belum selesai',
             ]);
         } elseif($peserta_seminar['is_review'] == 0 && $request->ajax()){
@@ -151,7 +145,7 @@ class AbsensiController extends Controller
             //     'status' => false,
             // ]);
 
-            return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Berhasil Absen Keluar');
+            return redirect()->route('presensi', $id_encrypt)->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar','id_encrypt'))->with('alert', 'Terimakasih sudah mengisi kuisioner');
         }
     }
 
