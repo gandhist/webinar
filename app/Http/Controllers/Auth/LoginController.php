@@ -12,6 +12,7 @@ use Socialite;
 use File;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
+use Session;
 
 class LoginController extends Controller
 {
@@ -79,13 +80,35 @@ class LoginController extends Controller
 
                 return $this->sendFailedLoginResponse($request);
 
-            } else {
-                \Auth::login($user);
-                return redirect('infoseminar');
+            } else {   
+                if($user->is_login == 0) {
+                    $data = User::find($user->id);
+                    $data->is_login = 1;
+                    $data->save(); 
+
+                    \Auth::login($user);
+                    return redirect('infoseminar');
+                } else{
+                    // \Session::put('errors', 'User masih aktif !!');
+                    return redirect('');
+                }
+                   
             }
 
         }
 
+    }
+
+    public function logout(Request $request){
+        $user = User::where('id', Auth::id())->first();
+       
+        $data = User::find($user->id);
+        $data->is_login = 0;
+        $data->save(); 
+
+        Session::flush(); 
+        Auth::logout();
+        return redirect('');
     }
 
     public function showLoginForm(){
