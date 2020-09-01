@@ -1660,6 +1660,10 @@ class SeminarController extends Controller
             }
         }
         // dd($feedback_personal);
-        return view ('seminar.feedback')->with(compact('daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal'));
+        return view ('seminar.feedback')->with(compact('id','daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal'));
+    }
+
+    public function downloadFeedback($id) {
+        Excel::create($id);
     }
 }
