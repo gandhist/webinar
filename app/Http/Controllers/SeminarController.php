@@ -33,6 +33,7 @@ use App\Mail\EmailLink as MailLink;
 use App\AbsensiModel;
 use App\FeedbackModel;
 use App\FeedbackRatingModel;
+use App\Exports\FeedbackExport;
 use Excel;
 
 class SeminarController extends Controller
@@ -1666,5 +1667,6 @@ class SeminarController extends Controller
 
     public function downloadFeedback($id) {
         //
+        return Excel::download(new FeedbackExport($id), 'invoices.xlsx');
     }
 }
