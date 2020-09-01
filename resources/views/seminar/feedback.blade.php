@@ -76,8 +76,9 @@
           <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$n->id_peserta]["rata_rata"] }}</strong></span>
           </div>
         </div>
-        @endforeach
         <hr>
+        @endforeach
+
         @foreach($moderator as $m)
         <div class="row">
           <div class="col-lg-12 card">
@@ -89,8 +90,9 @@
           <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$m->id_peserta]["rata_rata"] }}</strong></span>
           </div>
         </div>
-        @endforeach
         <hr>
+        @endforeach
+
         <div class="row">
           <div class="col-lg-12 card">
           <label for="kesan_pesan" class="label-control nomor"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
