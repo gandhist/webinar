@@ -1591,7 +1591,7 @@ class SeminarController extends Controller
                                 "total" => array_sum($feedback_seminar_raw->pluck('nilai')->toArray()),
                             ];
 
-        $feedback_seminar["rata_rata"] = $feedback_seminar['total']/$feedback_seminar['jumlah'];
+        $feedback_seminar["rata_rata"] = round($feedback_seminar['total']/$feedback_seminar['jumlah'],2);
         $feedback_seminar["persen_1"] = ($feedback_seminar['1']/$feedback_seminar["jumlah"])*100;
         $feedback_seminar["persen_2"] = ($feedback_seminar['2']/$feedback_seminar["jumlah"])*100;
         $feedback_seminar["persen_3"] = ($feedback_seminar['3']/$feedback_seminar["jumlah"])*100;
@@ -1609,7 +1609,7 @@ class SeminarController extends Controller
                                                         "jumlah" => count($feedback_personal_raw->where('id_peserta',$n->id_peserta)),
                                                         "total" => array_sum($feedback_personal_raw->where('id_peserta',$n->id_peserta)->pluck('nilai')->toArray()),
                                                     ];
-            $feedback_personal[$n->id_peserta]["rata_rata"] = $feedback_personal[$n->id_peserta]['total']/$feedback_personal[$n->id_peserta]['jumlah'];
+            $feedback_personal[$n->id_peserta]["rata_rata"] = round($feedback_personal[$n->id_peserta]['total']/$feedback_personal[$n->id_peserta]['jumlah'],2);
             $feedback_personal[$n->id_peserta]["persen_1"] = ($feedback_personal[$n->id_peserta]['1']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
             $feedback_personal[$n->id_peserta]["persen_2"] = ($feedback_personal[$n->id_peserta]['2']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
             $feedback_personal[$n->id_peserta]["persen_3"] = ($feedback_personal[$n->id_peserta]['3']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
@@ -1626,7 +1626,7 @@ class SeminarController extends Controller
                                                         "total" => array_sum($feedback_personal_raw->where('id_peserta',$m->id_peserta)->pluck('nilai')->toArray()),
                                                     ];
 
-            $feedback_personal[$m->id_peserta]["rata_rata"] = $feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'];
+            $feedback_personal[$m->id_peserta]["rata_rata"] = round($feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'],2);
             $feedback_personal[$m->id_peserta]["persen_1"] = ($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
             $feedback_personal[$m->id_peserta]["persen_2"] = ($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
             $feedback_personal[$m->id_peserta]["persen_3"] = ($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
