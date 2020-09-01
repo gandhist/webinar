@@ -89,7 +89,7 @@ class LoginController extends Controller
                     \Auth::login($user);
                     return redirect('infoseminar');
                 } else{
-                    // \Session::put('errors', 'User masih aktif !!');
+                    \Session::put('errors', 'User masih aktif !!');
                     return redirect('');
                 }
                    
