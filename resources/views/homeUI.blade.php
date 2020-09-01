@@ -15,9 +15,19 @@
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
 		.jumbotron {
             background-image: url("p3sm.jpeg");
-            background-size: 100%;
+            background-size: 20%;
             background-repeat:no-repeat;
+			height: 390px;
+			background-position-x: center;
+			background-position-y: top;
+			margin-top: 4px;
         }
+		.welcome{
+			margin-top: 23px;
+		}
+		.login{
+			margin-top: 23px;
+		}
 	}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -34,9 +44,9 @@
 <div class="container">
 
 
-	<div class="jumbotron" style="height: auto;">
+	<div class="jumbotron">
 		<div class="welcome">
-			<h1>Selamat Datang di Website Sertifikat</h1>
+			<h1>Selamat Datang di PPKB P3S Mandiri</h1>
 			<p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p>
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
             @if(Auth::guest())
@@ -53,7 +63,7 @@
 		<div class="login">
 			<h2 class="head-title">Login</h2>
 			<p>Silahkan Login dengan email yang sudah terverifikasi.</p>
-			<div class="col-sm-4">
+			<div class="col-sm-6">
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
@@ -67,7 +77,10 @@
 						<input type="password" class="form-control" placeholder="Password" name="password">
 						<span class="glyphicon glyphicon-lock"></span>
 					</div> --}}
-					<button type="submit" class="btn btn-primary">Sign In</button>
+					<button type="submit" class="btn btn-success btn-border-filled m-2">Login</button>
+					<a href="{{url('login/google')}}" style="color: white" class="btn btn-danger m-2">
+						<i class="fa fa-google fa-fw"></i> Login with Google Account
+					</a>
 				{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
 				</form>
 			</div>

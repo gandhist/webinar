@@ -2,10 +2,8 @@
    <nav class="navbar navbar-expand-lg navbar-light">
                 
         <div class="container-fluid">
-            <h3>P<sub>3</sub>SM</h3>
-            {{-- <div id="logo" class="pull-left">
-                <img src="{{ url('p3sm.jpeg') }}" alt="logo" width="100px" height="60px">
-            </div> --}}
+            <a class="home" href="{{ url('') }}"><h3>P<sub>3</sub>SM</h3></a>
+      
             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-align-justify"></i>
             </button>
