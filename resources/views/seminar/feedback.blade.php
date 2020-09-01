@@ -59,7 +59,7 @@
           <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
 
           <div class="row" height="500px">
-            <canvas id="myChart" height="300px"></canvas>
+            <canvas id="myChart" height="400px"></canvas>
           </div>
           <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_seminar["rata_rata"] }}</strong></span>
           </div>
@@ -71,7 +71,7 @@
           <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
 
           <div class="row" height="500px">
-            <canvas id="narasumber-{{$n->id_peserta}}" height="300px"></canvas>
+            <canvas id="narasumber-{{$n->id_peserta}}" height="400px"></canvas>
           </div>
           <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$n->id_peserta]["rata_rata"] }}</strong></span>
           </div>
@@ -84,7 +84,7 @@
           <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
 
           <div class="row" height="500px">
-            <canvas id="moderator-{{$m->id_peserta}}" height="300px"></canvas>
+            <canvas id="moderator-{{$m->id_peserta}}" height="400px"></canvas>
           </div>
           <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$m->id_peserta]["rata_rata"] }}</strong></span>
           </div>
@@ -199,7 +199,7 @@ var myChart = new Chart(ctx, {
             padding: {
                 left: 50,
                 right: 50,
-                top: 50,
+                top: 150,
                 bottom: 50
             },
         },
@@ -267,7 +267,7 @@ var myChart = new Chart(ctx, {
                 padding: {
                     left: 50,
                     right: 50,
-                    top: 50,
+                    top: 150,
                     bottom: 50
                 },
             },
@@ -338,7 +338,7 @@ var myChart = new Chart(ctx, {
                 padding: {
                     left: 50,
                     right: 50,
-                    top: 50,
+                    top: 150,
                     bottom: 50
                 },
             },
