@@ -240,7 +240,7 @@ a {
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <td class="title" width="300">P3SM</td>
+            <td class="title" width="300">P3S Mandiri</td>
             <td class="subject" width="300"><a class="strong" href="https://https://srtf.p3sm.or.id//" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
@@ -265,7 +265,7 @@ a {
                         tema <b>"{{ strip_tags($details->seminar_p->tema) }}"</b> 
                         pada tanggal {{ \Carbon\Carbon::parse($details->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") }} 
                         di jam {{ $details->seminar_p->jam_awal }}.</p>
-                        <p style="text-align:center;"><a href="{{ url('presensi', \Crypt::encrypt($details->id)) }}" style="color:black" class="btn">Presensi Seminar</a></p>
+                        <p style="text-align:center;"><a href="{{ url('presensi', \Crypt::encrypt($details->id)) }}" style="color:black" class="btn">Ikuti Seminar</a></p>
                         </td>
                     </tr>
                     </tbody>
