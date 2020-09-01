@@ -1667,6 +1667,8 @@ class SeminarController extends Controller
 
     public function downloadFeedback($id) {
         //
-        return Excel::download(new FeedbackExport($id), 'invoices.xlsx');
+        $seminar = SeminarModel::where('id',$id)->first();
+        $nama = "FEEDBACK_".$seminar->nama_seminar."_".strip_tags($seminar->tema)."_".Carbon::now()->timestamp;
+        return Excel::download(new FeedbackExport($id), $nama.".xlsx");
     }
 }
