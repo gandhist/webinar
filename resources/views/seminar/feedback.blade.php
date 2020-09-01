@@ -204,7 +204,7 @@ var myChart = new Chart(ctx, {
             }
         },
         legend: {
-                    position: 'right',
+                    position: 'left',
                 },
         layout: {
             padding: {
@@ -259,7 +259,7 @@ var myChart = new Chart(ctx, {
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position: 'right',
+                position: 'left',
             },
             plugins: {
                 outlabels: {
@@ -272,7 +272,7 @@ var myChart = new Chart(ctx, {
                 }
             },
             legend: {
-                        position: 'right',
+                        position: 'left',
                     },
             layout: {
                 padding: {
@@ -329,7 +329,7 @@ var myChart = new Chart(ctx, {
             maintainAspectRatio: false,
 
             legend: {
-                    position: 'right',
+                    position: 'left',
                 },
 
             plugins: {
@@ -343,7 +343,7 @@ var myChart = new Chart(ctx, {
                 }
             },
             legend: {
-                        position: 'right',
+                        position: 'left',
                     },
             layout: {
                 padding: {

@@ -33,6 +33,7 @@ use App\Mail\EmailLink as MailLink;
 use App\AbsensiModel;
 use App\FeedbackModel;
 use App\FeedbackRatingModel;
+use Excel;
 
 class SeminarController extends Controller
 {
@@ -1664,6 +1665,6 @@ class SeminarController extends Controller
     }
 
     public function downloadFeedback($id) {
-        Excel::create($id);
+        //
     }
 }
