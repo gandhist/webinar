@@ -167,10 +167,10 @@
                     <th colspan="1">
                         <b>ID Peserta Seminar</b>
                     </th>
-                    <th colspan="8">
+                    <th colspan="6">
                         <b>Nama Peserta</b>
                     </th>
-                    <th colspan="6">
+                    <th colspan="10">
                         <b>Pertanyaan</b>
                     </th>
                     <th>
@@ -184,8 +184,8 @@
                         @if($s->id_peserta_seminar == $key->id)
                             <tr>
                                 <td colspan="1">{{$key->id}}</td>
-                                <td colspan="8">{{$key->peserta_r->nama}}</td>
-                                <td colspan="6">Penilaian untuk penyelenggara secara keseluruhan?</td>
+                                <td colspan="6">{{$key->peserta_r->nama}}</td>
+                                <td colspan="10">Penilaian untuk penyelenggara secara keseluruhan?</td>
                                 <td>{{$s->nilai}}</td>
                             </tr>
                         @endif
@@ -193,16 +193,16 @@
                     @foreach($feedback_personal_raw->where('id_peserta_seminar',$key->id)->whereIn('id_peserta',$id_nara) as $p)
                         <tr>
                             <td colspan="1">{{$key->id}}</td>
-                            <td colspan="8">{{$key->peserta_r->nama}}</td>
-                            <td colspan="6">Penilaian untuk {{$narasumber->where('id_peserta',$p->id_peserta)->first()->peserta_r->nama}} sebagai Narasumber?</td>
+                            <td colspan="6">{{$key->peserta_r->nama}}</td>
+                            <td colspan="10">Penilaian untuk {{$narasumber->where('id_peserta',$p->id_peserta)->first()->peserta_r->nama}} sebagai Narasumber?</td>
                             <td>{{$p->nilai}}</td>
                         </tr>
                     @endforeach
                     @foreach($feedback_personal_raw->where('id_peserta_seminar',$key->id)->whereIn('id_peserta',$id_mode) as $p)
                         <tr>
                             <td colspan="1">{{$key->id}}</td>
-                            <td colspan="8">{{$key->peserta_r->nama}}</td>
-                            <td colspan="6">Penilaian untuk {{$moderator->where('id_peserta',$p->id_peserta)->first()->peserta_r->nama}} sebagai Moderator?</td>
+                            <td colspan="6">{{$key->peserta_r->nama}}</td>
+                            <td colspan="10">Penilaian untuk {{$moderator->where('id_peserta',$p->id_peserta)->first()->peserta_r->nama}} sebagai Moderator?</td>
                             <td>{{$p->nilai}}</td>
                         </tr>
                     @endforeach
