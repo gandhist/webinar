@@ -50,7 +50,16 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
-
+        <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
+            <div class="row">
+                <div class="col-12">
+                    <div style="margin-bottom:10px">
+                        <a href="{{ url('seminar/download-feedback/'.$id) }}" class="btn btn-success">
+                            <i class="fa fa-save"></i> Download Data Feedback</a>
+                    </div>
+                </div>
+            </div>
+        </div>
       <div class="box-body" style="padding:0 25px">
         <br>
         <ol class="continuous-list">
@@ -95,7 +104,7 @@
 
         <div class="row">
           <div class="col-lg-12 card">
-          <label for="kesan_pesan" class="label-control nomor"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
+          <label for="kesan_pesan"blade.php class="label-control nomor"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
 
           <div class="row">
             <div class="col-md-12 line">
