@@ -28,7 +28,7 @@ Route::get('kirimwa','SeminarController@kirimWA');
 
 Route::get('registrasi','RegistController@index');
 Route::post('registrasi/store','RegistController@store');
-Route::get('registrasi/daftar/{id}','RegistController@daftar');
+Route::get('registrasi/daftar/{slug}','RegistController@daftar');
 Route::post('registrasi/save/{id}','RegistController@save');
 
 Route::get('profile', 'ProfileController@edit')->name('profile.edit');
