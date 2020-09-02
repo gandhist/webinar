@@ -7,6 +7,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <style>
+  .customTable thead {
+    background-color: #b7d0ed;
+  }
   @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
     table.dataTable>tbody>tr.child {
         padding: 0px 0px;
@@ -69,7 +72,7 @@
   @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
-  <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
+  <table id="example" class="table table-striped table-bordered dt-responsive wrap customTable" style="width:100%">
     <thead>
       <tr>
         <th style="width:2%;text-align:center">No</th>
@@ -79,7 +82,7 @@
         <th style="text-align:center">Tempat</th>
         <th style="text-align:center">Narasumber</th>
         <th style="width:7%;text-align:center;">Biaya</th>
-        <th style="text-align:center"></th>
+        <th style="text-align:center">Aksi</th>
       </tr>
     </thead>
     <tbody>

@@ -50,11 +50,11 @@
 		background-image: url("p3sm.jpeg");
   		background-size: 15%;
 		background-repeat:no-repeat;
-		height: 250px;
+		height: 280px;
 		background-color: #f7f7f7 !important;
 		background-position-x: 98%;
 		background-position-y: 55%;
-	    margin-top:10px;
+	    margin-top:5px;
 	}
 
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {

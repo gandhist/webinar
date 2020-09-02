@@ -3,12 +3,15 @@
                 
         <div class="container-fluid">
             @if(!Auth::user())
-            <a class="home" href="{{ url('') }}"><h3>P<sub>3</sub>SM</h3></a>
-            {{-- <div id="logo" class="pull-left">
-                <img src="{{ url('p3sm.jpeg') }}" alt="logo" width="80px" height="60px">
-            </div> --}}
+            {{-- <a class="home" href="{{ url('') }}"><h3>P<sub>3</sub>SM</h3></a> --}}
+            <div id="logo" class="pull-left">
+                <a class="home" href="{{ url('') }}"><img src="{{ url('p3sm_a.png') }}" alt="logo" width="60px" height="30px"></a>
+            </div>
             @else
-            <a class="home" href="{{ url('infoseminar') }}"><h3>P<sub>3</sub>SM</h3></a>
+            {{-- <a class="home" href="{{ url('infoseminar') }}"><h3>P<sub>3</sub>SM</h3></a> --}}
+            <div id="logo" class="pull-left">
+                <a class="home" href="{{ url('infoseminar') }}"><img src="{{ url('p3sm_a.png') }}" alt="logo" width="60px" height="30px"></a>
+            </div>
             @endif
       
             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
