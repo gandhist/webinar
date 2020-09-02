@@ -127,7 +127,7 @@ class RegistController extends Controller
     {
         // dd($slug);
         // Handle seminar lama (nggak ada slug)
-        if (strpos($slug, '-') !== false) {
+        if ((strpos($slug, '-') !== false) || (preg_match("/[a-z]/i", $slug)) ) {
             $data = Seminar::where('slug','=', $slug)->first();
         } else {
             $data = Seminar::where('id','=', $slug)->first();
