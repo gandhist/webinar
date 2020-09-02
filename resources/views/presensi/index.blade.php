@@ -10,7 +10,6 @@
 
 <div class="container" id="content">
     <h2 text-align="center">Halaman Peserta Seminar</h2>
-    {{ $peserta_seminar }}
         <hr>
         @if($cek_in == false)
             Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
