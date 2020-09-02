@@ -239,7 +239,7 @@ class InstansiController extends Controller
         $request->validate([
             'nama' => 'required|min:3|max:100',
             'nik' => 'required|numeric|digits:16',
-            'email' => 'required|email|max',
+            'email' => 'required|email',
             'no_hp' => 'required|numeric|digits_between:9,14',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
             // 'instansi' => 'required',
