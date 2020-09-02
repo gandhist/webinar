@@ -19,6 +19,8 @@ use App\Mail\EmailRegistAkun;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\GlobalFunction;
+use Illuminate\Support\Facades\Http;
+use Session;
 
 class RegistController extends Controller
 {
@@ -352,19 +354,47 @@ class RegistController extends Controller
         }
     }
 
-    public function test($id) {
-
-        dd(\Crypt::encrypt($id));
-        // $kurangi_kuota = Seminar::where('id','173')->first();
-        // // dd($kurangi_kuota);
-        // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
-        // $kurangi_kuota->save();
-        //kirim wa
-        $nohp = "081240353913";
-        $pesan = "new \n line";
-        $wa = $this->kirimPesanWA($nohp,$pesan);
-        return $wa['status'];
-        dd($wa['status']);
+    public function test() {
+        // $body = {
+        //     "to_number": "081586604381",
+        //     "to_name": "Arief Purwoko",
+        //     "message_template_id": "aaf1bfb3-0ec7-4891-957a-a9c413c4a0d2",
+        //     "channel_integration_id": "65038597-0de1-47e2-adcf-c7fd15acf0ea",
+        //     "language": {
+        //       "code": "id"
+        //     },
+        //     "parameters": {
+        //       "body": [
+        //         {
+        //           "key": "1",
+        //           "value": "full_name",
+        //           "value_text": "Arief Purwoko"
+        //         },
+        //         {
+        //           "key": "2",
+        //           "value": "lokasi",
+        //           "value_text": "ini di kirim dari API lewat postman"
+        //         },
+        //         {
+        //           "key": "3",
+        //           "value": "link",
+        //           "value_text": "https://laravel.com/docs/5.7/http-tests#introduction"
+        //         },
+        //         {
+        //           "key": "4",
+        //           "value": "cp",
+        //           "value_text": "hubungin aja no admin nya"
+        //         }
+        //       ]
+        //     }
+        //   }
+        $token = "Etk6qmemyc6DgKdouMtPwjxnh-I2aExvX0tI0JNJ1_g";
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            // 'Authorization' => 'bar'
+        ])->withToken($token)->get('https://service.qontak.com/api/open/v1/templates/whatsapp');
+        // $response->header();
+        return $response;
     }
 
 }
