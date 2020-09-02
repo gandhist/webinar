@@ -40,6 +40,9 @@
         #content{
             padding-top: 55px;
         } 
+        #content-daftar{
+            padding-top: 25px;
+        } 
         table { 
             width: 100%; 
             border-collapse: collapse; 
