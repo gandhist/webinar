@@ -80,8 +80,8 @@
                 <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
                 <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
                 data-placement="top" title="Lihat Detail">Detail</a>
-                <a target="_blank" href="{{ $key->link }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-                  data-placement="top" title="Lihat Brosur">Brosur</a>
+                {{-- <a target="_blank" href="{{ $key->link }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+                  data-placement="top" title="Lihat Brosur">Brosur</a> --}}
               @endif
             @endif
           </td>
