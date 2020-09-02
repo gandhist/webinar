@@ -248,6 +248,7 @@ class RegistController extends Controller
 
             return redirect('')->with('success', 'Pendaftaran Seminar berhasil');
 
+
         } else{
             $data['nama'] = $request->nama;
             $data['no_hp'] = $request->no_hp;
@@ -350,7 +351,8 @@ class RegistController extends Controller
                 $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
                 $this->kirimPesanWA($nohp,$pesan);
             }
-            return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
+            return redirect()->route('login')->with('success', 'Anda Berhasil Terdaftar! Silahkan coba login dengan username dan password yang telah dikirim melalui email dan Whatsapp');
+            // return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
         }
     }
 
