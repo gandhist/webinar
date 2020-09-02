@@ -12,7 +12,51 @@
     .form-group{
         padding-top:10px;
     }
+
+
+.button-flash {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #141414; -webkit-box-shadow: 0 0 3px #141414; }
+  50% { background-color: #343a40; -webkit-box-shadow: 0 0 40px #343a40; }
+  100% { background-color: #141414; -webkit-box-shadow: 0 0 3px #141414; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #141414; -moz-box-shadow: 0 0 3px #141414; }
+  50% { background-color: #343a40; -moz-box-shadow: 0 0 40px #343a40; }
+  100% { background-color: #141414; -moz-box-shadow: 0 0 3px #141414; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #141414; box-shadow: 0 0 3px #141414; }
+  50% { background-color: #343a40; box-shadow: 0 0 40px #343a40; }
+  100% { background-color: #141414; box-shadow: 0 0 3px #141414; }
+}
+
+@keyframes glowing {
+  0% { background-color: #141414; box-shadow: 0 0 3px #141414; }
+  50% { background-color: #343a40; box-shadow: 0 0 40px #343a40; }
+  100% { background-color: #141414; box-shadow: 0 0 3px #141414; }
+}
 </style>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
@@ -20,19 +64,19 @@
 <div class="container" id="content-daftar">
     @if(session()->get('success'))
         <div class="alert alert-success">{{ session()->get('success') }}
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         </div>
     @endif
 
     @if(session()->get('pesan'))
         <div class="alert alert-warning">{!! session()->get('pesan') !!}
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         </div>
     @endif
-    
+
     {{-- <div class="row">
         <div class="col-lg-2">
-            
+
         </div>
         <div class="col-lg-8">
             <p>tes</p>
@@ -42,7 +86,7 @@
     </div> --}}
     <div class="row">
         <div class="col-lg-2">
-            
+
         </div>
         <div class="col-lg-8">
             <h2>{{ strip_tags(html_entity_decode($data->tema)) }}</h2>
@@ -52,7 +96,7 @@
         <div class="col-lg-2">
         </div>
     </div>
-    
+
     <main role="main" class="container">
         <form action="{{ url('registrasi/save', $data->id) }}" class="form-horizontal" id="formRegist" name="formRegist"
                 method="post" enctype="multipart/form-data">
@@ -141,13 +185,13 @@
             <div class="col-lg-2">
             </div>
             <div class="col-lg-8" style="width: 100%;">
-                <button type="submit" class="btn btn-dark btn-block">SUBMIT</button>
+                <button type="submit" class="btn button-flash btn-block">SUBMIT</button>
             <div class="col-lg-2">
             </div>
         </div>
       </form>
     </main>
-        
+
 </div>
 
 @endsection
@@ -165,15 +209,15 @@
         readURL(this);
     });
   })
-  
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-      
+
       reader.onload = function(e) {
         $('#blah').attr('src', e.target.result);
       }
-      
+
       reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
   }

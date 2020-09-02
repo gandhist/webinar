@@ -21,27 +21,27 @@
   animation: glowing 1500ms infinite;
 }
 @-webkit-keyframes glowing {
-  0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
-  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
-  100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
 }
 
 @-moz-keyframes glowing {
-  0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
-  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
-  100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
 }
 
 @-o-keyframes glowing {
-  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
 }
 
 @keyframes glowing {
-  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
 }
 
 
@@ -141,8 +141,8 @@
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	@endif
-	@if(session()->get('errors'))
-		<div class="alert alert-warning"> {{ session()->get('errors') }}
+	@if(session()->get('is_login'))
+		<div class="alert alert-warning"> {{ session()->get('is_login') }}
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
   	@endif

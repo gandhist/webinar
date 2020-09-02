@@ -1,6 +1,50 @@
 @extends('frontend.main')
 
 @section('content')
+<style>
+
+.button-flash {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
+
+@keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">

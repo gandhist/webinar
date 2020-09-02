@@ -12,6 +12,48 @@
         padding: 0px 0px;
     }
   }
+
+.button-flash {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
+
+@keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
 </style>
 
 <div class="container-fluid" id="content">
@@ -77,7 +119,10 @@
               @if($cek > 0)
               <button class="btn btn-success disabled"> Anda Sudah Mendaftar</button>
               @else
-                <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
+              <button class="btn btn-success button-flash">
+                <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn button-flash my-2 my-sm-0">Daftar</a>
+              </button>
+
                 {{-- <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
                 data-placement="top" title="Lihat Detail">Detail</a> --}}
                 {{-- <a target="_blank" href="{{ $key->link }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"

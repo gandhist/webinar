@@ -52,7 +52,7 @@ class LoginController extends Controller
 
         // Check Condition Mobile No. Found or Not
         if(!isset($user)) {
-            \Session::put('errors', 'Username tidak ditemukan !!');
+            \Session::put('is_login', 'Username tidak ditemukan !!');
             return back();
         } else {
 
@@ -80,11 +80,11 @@ class LoginController extends Controller
 
                 return $this->sendFailedLoginResponse($request);
 
-            } else {   
+            } else {
                 if($user->is_login == 0) {
                     $data = User::find($user->id);
                     $data->is_login = 1;
-                    $data->save(); 
+                    $data->save();
 
                     \Auth::login($user);
                     return redirect('infoseminar');
@@ -92,7 +92,7 @@ class LoginController extends Controller
                     \Session::put('errors', 'User masih aktif !!');
                     return redirect('');
                 }
-                   
+
             }
 
         }
@@ -101,12 +101,12 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         $user = User::where('id', Auth::id())->first();
-       
+
         $data = User::find($user->id);
         $data->is_login = 0;
-        $data->save(); 
+        $data->save();
 
-        Session::flush(); 
+        Session::flush();
         Auth::logout();
         return redirect('');
     }
