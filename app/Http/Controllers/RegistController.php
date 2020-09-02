@@ -123,10 +123,10 @@ class RegistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function daftar($id)
+    public function daftar($slug)
     {
-        $data = Seminar::find($id);
-
+        $data = Seminar::where('slug','=', $slug)->first();
+        
         return view('registrasi.daftar')->with(compact('data'));
     }
 
