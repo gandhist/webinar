@@ -125,8 +125,14 @@ class RegistController extends Controller
      */
     public function daftar($slug)
     {
-        $data = Seminar::where('slug','=', $slug)->first();
-        
+        // dd($slug);
+        // Handle seminar lama (nggak ada slug)
+        if (strpos($slug, '-') !== false) {
+            $data = Seminar::where('slug','=', $slug)->first();
+        } else {
+            $data = Seminar::where('id','=', $slug)->first();
+        }
+
         return view('registrasi.daftar')->with(compact('data'));
     }
 
