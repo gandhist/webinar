@@ -37,7 +37,13 @@
 		<div class="alert alert-warning"> {{ session()->get('warning') }}
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
-	@endif
+    @endif
+
+  @if(session()->get('success'))
+  <div class="alert alert-success"> {{ session()->get('success') }}
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  </div>
+@endif
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
