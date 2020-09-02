@@ -30,14 +30,14 @@
   <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
     <thead>
       <tr>
-        <th style="width:2%;">No</th>
-        <th>Tema</th>
-        <th>Judul Seminar</th>
-        <th>Tanggal</th>
-        <th>Tempat</th>
-        <th>Narasumber</th>
-        <th style="width:7%;">Biaya</th>
-        <th></th>
+        <th style="width:2%;text-align:center">No</th>
+        <th style="text-align:center">Tema</th>
+        <th style="text-align:center">Judul Seminar</th>
+        <th style="text-align:center">Tanggal</th>
+        <th style="text-align:center">Tempat</th>
+        <th style="text-align:center">Narasumber</th>
+        <th style="width:7%;text-align:center;">Biaya</th>
+        <th style="text-align:center"></th>
       </tr>
     </thead>
     <tbody>

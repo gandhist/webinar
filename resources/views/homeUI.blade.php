@@ -158,7 +158,7 @@
                     {{-- <th style="width:10%;text-align:center;">Tanggal</th> --}}
 					<th style="width:5%;text-align:center;">Tempat</th>
 					<th style="width:5%;text-align:center;">Biaya</th>
-					<th style="width:5%;text-align:center;"></th>
+					<th style="width:5%;text-align:center;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
