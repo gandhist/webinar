@@ -120,10 +120,10 @@
             <button class="btn btn-primary disabled"> Kuota Peserta Sudah Penuh</button>
             @else
               @if($cek > 0)
-              <button class="btn btn-success disabled"> Anda Sudah Terdaftar</button>
                 @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
-                    <p>Pada tanggal: </p>
-                    <p>{{$peserta->where('id_seminar',$key->id)->first()->created_at}}</p>
+                    <button class="btn btn-success disabled">Terdaftar pada {{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d, M Y H:i')}}</button>
+                @else
+                    <button class="btn btn-success disabled">Terdaftar</button>
                 @endif
               @else
               <button class="btn btn-success button-flash">
