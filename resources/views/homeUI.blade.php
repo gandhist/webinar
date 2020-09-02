@@ -47,10 +47,10 @@
 
 
     .jumbotron {
-		background-image: url("p3sm.jpeg");
-  		background-size: 15%;
+		/* background-image: url("p3sm.jpeg");
+  		background-size: 15%; */
 		background-repeat:no-repeat;
-		height: 280px;
+		height: 310px;
 		background-color: #f7f7f7 !important;
 		background-position-x: 98%;
 		background-position-y: 55%;
@@ -59,20 +59,22 @@
 
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
 		.jumbotron {
-            background-image: url("p3sm.jpeg");
-            background-size: 10%;
+            /* background-image: url("p3sm.jpeg");
+            background-size: 10%; */
             background-repeat:no-repeat;
-			height: 250px;
+			height: 470px;
 			background-position-x: 50%;
 			background-position-y: 1%;
-			margin: 10px;
+			margin: 15px;
+			margin-top: 23px;
         }
 		.welcome{
-			margin-top: 23px;
+			margin-top: -25px;
 		}
 		.login{
 			margin-top: 23px;
 		}
+		
 	}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -87,10 +89,20 @@
     FontAwesomeConfig = { autoReplaceSvg: false }
 </script>
 <div class="container">
-
-
 	<div class="jumbotron">
+		<div class="d-flex justify-content-around logo" style="margin-top: -55px;">
+			<div>
+				<img src="{{ url('dk3n.jpeg') }}" alt="logo" class="img-responsive" width="100px" height="80px"></a>
+			</div>
+			<div>
+				<img src="{{ url('p3sm.jpeg') }}" alt="logo" class="img-responsive" width="120px" height="100px"></a>
+			</div>
+			<div>
+				<img src="{{ url('forum.jpeg') }}" alt="logo" class="img-responsive" width="100px" height="80px"></a>
+			</div>
+		</div>
 		<div class="welcome">
+			<br>	
 			<h2>Program Pengembangan Keprofesian Berkelanjutan</h2>
 			<p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p>
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
