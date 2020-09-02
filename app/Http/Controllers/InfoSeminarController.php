@@ -28,9 +28,11 @@ class InfoSeminarController extends Controller
             $user = 'Error';
         } else{
             $user = Peserta::select('id')->where('user_id', Auth::id())->first();
+            $peserta = PesertaSeminar::where('id_peserta',$user->id)->get();
         }
-
-        return view('infoseminar.index')->with(compact('data','user'));
+        // dd($peserta);
+        // $peserta = NULL;
+        return view('infoseminar.index')->with(compact('data','user','peserta'));
     }
     public function detail($id)
     {

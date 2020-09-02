@@ -120,7 +120,11 @@
             <button class="btn btn-primary disabled"> Kuota Peserta Sudah Penuh</button>
             @else
               @if($cek > 0)
-              <button class="btn btn-success disabled"> Anda Sudah Mendaftar</button>
+              <button class="btn btn-success disabled"> Anda Sudah Terdaftar</button>
+                @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
+                    <p>Pada tanggal: </p>
+                    <p>{{$peserta->where('id_seminar',$key->id)->first()->created_at}}</p>
+                @endif
               @else
               <button class="btn btn-success button-flash">
                 <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn button-flash my-2 my-sm-0">Daftar</a>
