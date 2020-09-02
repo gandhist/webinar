@@ -89,7 +89,8 @@ class LoginController extends Controller
                     \Auth::login($user);
                     return redirect('infoseminar');
                 } else{
-                    \Session::put('errors', 'User masih aktif !!');
+                    \Session::put('is_login', 'Akun anda sudah login di perangkat lain, silahkan logout dari perangkat sebelumnya.!!');
+                    // Session::flush(); 
                     return redirect('');
                 }
                    

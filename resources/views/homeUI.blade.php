@@ -141,8 +141,8 @@
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
 	@endif
-	@if(session()->get('errors'))
-		<div class="alert alert-warning"> {{ session()->get('errors') }}
+	@if(session()->get('is_login'))
+		<div class="alert alert-warning"> {{ session()->get('is_login') }}
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 		</div>
   	@endif
