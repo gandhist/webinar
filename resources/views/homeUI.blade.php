@@ -2,25 +2,70 @@
 
 @section('content')
 <style>
+	.button-flash {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+
+
     .jumbotron {
 		background-image: url("p3sm.jpeg");
-  		background-size: 30%;
+  		background-size: 15%;
 		background-repeat:no-repeat;
-		height: 300px;
+		height: 250px;
 		background-color: #f7f7f7 !important;
-		background-position-x: right;
-		background-position-y: center;
+		background-position-x: 98%;
+		background-position-y: 55%;
+	    margin-top:10px;
 	}
 
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
 		.jumbotron {
             background-image: url("p3sm.jpeg");
-            background-size: 20%;
+            background-size: 10%;
             background-repeat:no-repeat;
-			height: 390px;
-			background-position-x: center;
-			background-position-y: top;
-			margin-top: 4px;
+			height: 250px;
+			background-position-x: 50%;
+			background-position-y: 1%;
+			margin: 10px;
         }
 		.welcome{
 			margin-top: 23px;
@@ -46,7 +91,7 @@
 
 	<div class="jumbotron">
 		<div class="welcome">
-			<h1>Selamat Datang di PPKB P3S Mandiri</h1>
+			<h2>Program Pengembangan Keprofesian Berkelanjutan</h2>
 			<p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p>
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
             @if(Auth::guest())
@@ -129,8 +174,8 @@
 						@if($key->kuota_temp <= 0)
 						<button class="btn btn-primary disabled"> Kuota Sudah Penuh</button>
 						@else
-						<a href="{{ url('registrasi/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-						data-placement="top" title="Ikut Seminar">IKUT</a>
+						<a href="{{ url('registrasi/daftar',$key->id) }}" class="btn button-flash my-2 my-sm-0" data-toggle="tooltip"
+						data-placement="top" title="Daftar Seminar">Daftar</a>
 						@endif
 					</td>
                 </tr>
