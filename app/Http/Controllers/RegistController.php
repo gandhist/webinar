@@ -125,10 +125,15 @@ class RegistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function daftar($id)
+    public function daftar($slug)
     {
-        // Session::flush();  // hapus session ketika orang sudah login
-        $data = Seminar::find($id);
+        // dd($slug);
+        // Handle seminar lama (nggak ada slug)
+        if ((strpos($slug, '-') !== false) || (preg_match("/[a-z]/i", $slug)) ) {
+            $data = Seminar::where('slug','=', $slug)->first();
+        } else {
+            $data = Seminar::where('id','=', $slug)->first();
+        }
 
         return view('registrasi.daftar')->with(compact('data'));
     }

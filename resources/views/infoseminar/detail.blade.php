@@ -8,105 +8,122 @@
 <div class="container-fluid">
     <div class="box box-content" id="content">
         <div class="box-body">
-            <h2 text-align="center">Detail Seminar P3SM</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 text-align="center">Detail Seminar P3SM</h2>
+                </div>
+                <div class="col-md-4">
+                    <h2 onclick="location.href='{{ url($data->link) }}'">Brosur Seminar</h2>
+                </div>
+            </div>
             <hr>
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Title</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->nama_seminar }}">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Title</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->nama_seminar }}">
+                            </div>
+                        </div>
                     </div>
-                </div>										
-            </div>   
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Tema</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ strip_tags(html_entity_decode($data->tema)) }}">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Tema</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ strip_tags(html_entity_decode($data->tema)) }}">
+                            </div>
+                        </div>
                     </div>
-                </div>										
-            </div> 
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Narasumber</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly 
-                        value="@foreach($data->seminar_r as $index => $key)@if(count($data->seminar_r) > $index + 1){{ $key->peserta_r->nama }},@else{{ $key->peserta_r->nama }}@endif @endforeach">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Narasumber</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly
+                                value="@foreach($data->seminar_r as $index => $key)@if(count($data->seminar_r) > $index + 1){{ $key->peserta_r->nama }},@else{{ $key->peserta_r->nama }}@endif @endforeach">
+                            </div>
+                        </div>
                     </div>
-                </div>										
-            </div> 
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Kuota</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->kuota }} Peserta">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Kuota</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->kuota }} Peserta">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Biaya</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="@if ($data->is_free == '0') Gratis @else Rp {{ format_uang($data->biaya)}} @endif">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Tempat</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->lokasi_penyelenggara }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Tanggal & Waktu</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ isset($data->tgl_awal) ? \Carbon\Carbon::parse($data->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} / {{ $data->jam_awal }} - {{ $data->jam_akhir }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Nilai SKPK</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->skpk_nilai }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Contact Person 1</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_1_nama }} ({{ $data->cp_1_no }})">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Contact Person 2</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_2_nama }} ({{ $data->cp_2_no }})">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label" for="inputSuccess"> Contact Person 3</label>
+                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_3_nama }} ({{ $data->cp_3_no }})">
+                            </div>
+                        </div>
+                    </div>  --}}
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
+                            <a href="{{ url('infoseminar/daftar',$data->id) }}" class="btn btn-md btn-success pull-center"><i class="fa fa-arrow-circle-right"></i> Lanjutkan</a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <div class="box-body">
+                        <img src="{{ url($data->link) }}" onclick="location.href='{{ url($data->link) }}'" class="rounded img-fluid" alt="Brosur">
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Biaya</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="@if ($data->is_free == '0') Gratis @else Rp {{ format_uang($data->biaya)}} @endif">
-                    </div>
-                </div>										
-            </div> 
+            </div>
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Tempat</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->lokasi_penyelenggara }}">
-                    </div>
-                </div>	
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Tanggal & Waktu</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ isset($data->tgl_awal) ? \Carbon\Carbon::parse($data->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} / {{ $data->jam_awal }} - {{ $data->jam_akhir }}">
-                    </div>
-                </div>										
-            </div> 
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Nilai SKPK</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->skpk_nilai }}">
-                    </div>
-                </div>										
-            </div> 
-
-            {{-- <div class="row">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Contact Person 1</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_1_nama }} ({{ $data->cp_1_no }})">
-                    </div>
-                </div>	
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Contact Person 2</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_2_nama }} ({{ $data->cp_2_no }})">
-                    </div>
-                </div>	
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label" for="inputSuccess"> Contact Person 3</label>
-                        <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->cp_3_nama }} ({{ $data->cp_3_no }})">
-                    </div>
-                </div>										
-            </div>  --}}
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
-                    <a href="{{ url('infoseminar/daftar',$data->id) }}" class="btn btn-md btn-success pull-center"><i class="fa fa-arrow-circle-right"></i> Lanjutkan</a>
-                </div>										
-            </div> 
-
-        </div> 
-    </div> 
+        </div>
+    </div>
 </div>
 
 @endsection

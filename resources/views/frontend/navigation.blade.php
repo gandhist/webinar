@@ -4,6 +4,9 @@
         <div class="container-fluid">
             @if(!Auth::user())
             <a class="home" href="{{ url('') }}"><h3>P<sub>3</sub>SM</h3></a>
+            {{-- <div id="logo" class="pull-left">
+                <img src="{{ url('p3sm.jpeg') }}" alt="logo" width="80px" height="60px">
+            </div> --}}
             @else
             <a class="home" href="{{ url('infoseminar') }}"><h3>P<sub>3</sub>SM</h3></a>
             @endif

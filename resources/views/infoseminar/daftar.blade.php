@@ -1,6 +1,49 @@
 @extends('frontend.main')
 
 @section('content')
+<style>
+.button-flash {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
+
+@keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
@@ -8,90 +51,109 @@
 <div class="container-fluid" id="content">
     <div class="box box-content">
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 <form action="{{ url('infoseminar/store', $data->id) }}" class="form-horizontal" id="formAdd" name="formAdd" method="post" enctype="multipart/form-data">
                     @csrf
+
                     <div class="box-body">
-                        <h2 text-align="center">Pendaftaran Seminar P3SM</h2>
-                        <p>{{ strip_tags(html_entity_decode($data->tema)) }}</p>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h2 text-align="center">Detail Seminar P3SM</h2>
+                            </div>
+                            <div class="col-md-4">
+                                <h2 onclick="location.href='{{ url($data->link) }}'">Brosur Seminar</h2>
+                            </div>
+                        </div>
                         <hr>
                         <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> Nama</label>
-                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $user->peserta->nama }}">
-                                </div>
-                            </div>
-                        </div>
-            
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> Email</label>
-                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{$user->peserta->email }}">
-                                </div>
-                            </div>
-                        </div>
-            
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> No HP</label>
-                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $user->peserta->no_hp }}">
-                                </div>
-                            </div>
-                        </div>
-            
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> Pekerjaan</label>
-                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $user->peserta->pekerjaan }}">
-                                </div>
-                            </div>
-                        </div>
-            
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> Instansi</label>
-                                <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $user->peserta->instansi }}">
-                                </div>
-                            </div>
-                        </div>
-            
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> Biaya Investasi</label>
-                                <input type="text" class="form-control" id="inputSuccess" readonly value="@if ($data->is_free == '0') Gratis @else Rp {{ format_uang($data->biaya)}} @endif">
-                                </div>
-                            </div>
-            
-                            @if ($data->is_free == '0')
-                            @else
-                            <div class="col-sm-6">
-                                {{-- <div class="form-group">
-                                    <label class="control-label" for="inputSuccess"> Metode Pembayaran</label>
-                                    <select class="form-control select2" name="id_nama_bank" id="id_nama_bank" style="width: 100%;" placeholder="Nama Bank">
-                                        <option value="" disabled selected>Nama Bank</option>
-                                        @foreach($bank as $key)
-                                        <option value="{{ $key->id_bank }}" {{ $key->id_bank == old('id_nama_bank') ? 'selected' : '' }}>{{ $key->Nama_Bank }} </option>
-                                        @endforeach
-                                    </select>
-                                </div> --}}
-                                <div class="custom-file">
-                                    <label for="instansi">Upload Bukti Pembayaran</label>
-                                    <div class="custom-file">
-                                      <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="bukti_bayar" name="bukti_bayar" class="custom-file-input {{ $errors->first('bukti_bayar') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
-                                      <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Title</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->nama_seminar }}">
+                                        </div>
                                     </div>
-                                  </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Tema</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="{{ strip_tags(html_entity_decode($data->tema)) }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Narasumber</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly
+                                            value="@foreach($data->seminar_r as $index => $key)@if(count($data->seminar_r) > $index + 1){{ $key->peserta_r->nama }},@else{{ $key->peserta_r->nama }}@endif @endforeach">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Kuota</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->kuota }} Peserta">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Biaya</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="@if ($data->is_free == '0') Gratis @else Rp {{ format_uang($data->biaya)}} @endif">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Tempat</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->lokasi_penyelenggara }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Tanggal & Waktu</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="{{ isset($data->tgl_awal) ? \Carbon\Carbon::parse($data->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} / {{ $data->jam_awal }} - {{ $data->jam_akhir }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputSuccess"> Nilai SKPK</label>
+                                            <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->skpk_nilai }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-times-circle"></i> Batal</a>
+                                        <button type="submit" class="btn button-flash pull-right"> <i class="fa fa-check-circle"></i> Daftar</button>
+                                        {{-- <a target="_blank" href="{{ url($data->link) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+                                            data-placement="top" title="Lihat Brosur">Brosur</a> --}}
+                                    </div>
+                                </div>
+
                             </div>
-                            @endif
+                            <div class="col-md-4">
+                                <div class="box-body">
+                                    <img src="{{ url($data->link) }}" onclick="location.href='{{ url($data->link) }}'" class="rounded img-fluid" alt="Brosur">
+                                </div>
+                            </div>
                         </div>
-            
-                        <div class="row">
+
+                    </div>
+
+                        {{-- <div class="row">
                             <div class="col-sm-12">
                                 <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-times-circle"></i> Batal</a>
                                 <button type="submit" class="btn btn-info pull-right"> <i class="fa fa-check-circle"></i> Daftar</button>
@@ -99,16 +161,10 @@
                                     data-placement="top" title="Lihat Brosur">Brosur</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     </form>
             </div>
-            <div class="col-lg-3">
-                <div class="box-body">
-                    <h2 text-align="center" onclick="location.href='{{ url($data->link) }}'">Brosur Seminar</h2>
-                    <img src="{{ url($data->link) }}" onclick="location.href='{{ url($data->link) }}'" class="rounded img-fluid" alt="Brosur"> 
-                </div>
-            </div>
-        </div>   
+        </div>
     </div>
 </div>
 

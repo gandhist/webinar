@@ -158,7 +158,7 @@
                     {{-- <th style="width:10%;text-align:center;">Tanggal</th> --}}
 					<th style="width:5%;text-align:center;">Tempat</th>
 					<th style="width:5%;text-align:center;">Biaya</th>
-					<th style="width:5%;text-align:center;"></th>
+					<th style="width:5%;text-align:center;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -174,7 +174,8 @@
 						@if($key->kuota_temp <= 0)
 						<button class="btn btn-primary disabled"> Kuota Sudah Penuh</button>
 						@else
-						<a href="{{ url('registrasi/daftar',$key->id) }}" class="btn button-flash my-2 my-sm-0" data-toggle="tooltip"
+                        <a href="{{ isset($key->slug) ? url('registrasi/daftar',$key->slug) : url('registrasi/daftar',$key->id)}}"
+                            class="btn button-flash my-2 my-sm-0" data-toggle="tooltip"
 						data-placement="top" title="Daftar Seminar">Daftar</a>
 						@endif
 					</td>

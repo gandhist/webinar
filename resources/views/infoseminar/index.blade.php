@@ -30,14 +30,14 @@
   <table id="example" class="table table-striped table-bordered dt-responsive wrap" style="width:100%">
     <thead>
       <tr>
-        <th style="width:2%;">No</th>
-        <th>Tema</th>
-        <th>Judul Seminar</th>
-        <th>Tanggal</th>
-        <th>Tempat</th>
-        <th>Narasumber</th>
-        <th style="width:7%;">Biaya</th>
-        <th></th>
+        <th style="width:2%;text-align:center">No</th>
+        <th style="text-align:center">Tema</th>
+        <th style="text-align:center">Judul Seminar</th>
+        <th style="text-align:center">Tanggal</th>
+        <th style="text-align:center">Tempat</th>
+        <th style="text-align:center">Narasumber</th>
+        <th style="width:7%;text-align:center;">Biaya</th>
+        <th style="text-align:center"></th>
       </tr>
     </thead>
     <tbody>
@@ -78,10 +78,10 @@
               <button class="btn btn-success disabled"> Anda Sudah Mendaftar</button>
               @else
                 <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0">Daftar</a>
-                <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-                data-placement="top" title="Lihat Detail">Detail</a>
-                <a target="_blank" href="{{ $key->link }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
-                  data-placement="top" title="Lihat Brosur">Brosur</a>
+                {{-- <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+                data-placement="top" title="Lihat Detail">Detail</a> --}}
+                {{-- <a target="_blank" href="{{ $key->link }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
+                  data-placement="top" title="Lihat Brosur">Brosur</a> --}}
               @endif
             @endif
           </td>
