@@ -165,6 +165,11 @@ class InfoSeminarController extends Controller
                 $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                 $total_nilai->update();
 
+                $detail = ['nama' => $peserta->nama,
+                'tema' => $detailseminar->tema,
+                'email' => $peserta->email, 'nope' => $peserta->nomor_handphone];
+                dispatch(new \App\Jobs\DaftarSeminarSudahLogin($detail));
+
             }
 
             return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
