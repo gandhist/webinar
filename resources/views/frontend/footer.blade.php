@@ -1,18 +1,49 @@
 <button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button> 
+<!--
+<section class="tentang pt-5 pb-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <h3 class="text-white">TENTANG KAMI</h3>
+          <a href=""><img id="logoFoot" src="{{url('p3sm_a.png')}}" alt="" /></a>
+          <h5 class="text-white">Mitra terpercaya bagi dunia usaha dan para profesional ...</h5>
+          <a target="_blank" href="www.p3sm.or.id" class="text-white">Selengkapnya</a>
+        </div>
+        <div class="col-md-3 mb-3">
+          <ul style="list-style: none; padding-left: 0">
+            <li class=" mb-2"><a href="" class="text-white">LAYANAN KAMI</a></li>
+            <li><a href="" class="text-white fz14">KONSTRUKSI</a></li>
+            <li><a href="" class="text-white fz14">KETENAGALISTRIKAN</a></li>
+            <li><a href="" class="text-white fz14">KETENAGAKERJAAN</a></li>
+            <li><a href="" class="text-white fz14">BNSP</a></li>
+            <li><a href="" class="text-white fz14">BSN/KAN</a></li>
+            <li><a href="" class="text-white fz14">REGULASI</a></li>
+            <li><a href="" class="text-white fz14">LAINNYA</a></li>
+            <li><a href="" class="text-white fz14">TENTANG KAMI</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-3">
+          <h3 class="text-white">ALAMAT KANTOR</h3>
+          <h6 class="text-white" style="font-size: 15px; line-height: 28px">Jl. Pluit Raya Kav. 12 Blok A5 Rt.01 Rw 004 - Penjaringan Jakarta Utara 14440</h6>
+        </div>
+        <div class="col-md-3 mb-3">
+          {{-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7934.0620224361655!2d106.79129582219835!3d-6.126529232256014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6a1df20df00b7f%3A0x86fdf3a8e5816da5!2sHJKI!5e0!3m2!1sid!2sid!4v1594200386783!5m2!1sid!2sid" width="100%"  frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe> --}}
+        </div>
+      </div>
+    </div>
+</section>
+-->
 <!-- Footer Section Start -->
 <footer>
     <!-- Footer Area Start -->
     <section class="footer">
-    {{-- <div class="container">
-    
-    </div> --}}
     <!-- Copyright Start  -->
     <div class="copyright">
         <div class="container">
             <div class="row" align="center">
                 <div class="col-md-12">
                     <div class="site-info">
-                        &copy; {{ \Carbon\Carbon::now()->isoFormat('YYYY') }} - All Rights Reserved
+                        <strong>&copy; {{ \Carbon\Carbon::now()->isoFormat('YYYY') }} - All Rights Reserved</strong>
                     </div>
                 </div>
             </div>

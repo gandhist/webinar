@@ -74,30 +74,18 @@
         </div>
     @endif
 
-    {{-- <div class="row">
-        <div class="col-lg-2">
-
-        </div>
-        <div class="col-lg-8">
-            <p>tes</p>
-        </div>
-        <div class="col-lg-2">
-        </div>
-    </div> --}}
     <div class="row">
         <div class="col-lg-2">
-
         </div>
         <div class="col-lg-8">
             <h2>{{ strip_tags(html_entity_decode($data->tema)) }}</h2>
-            {{-- <p style="margin-bottom: -10px;">* Wajib</p> --}}
             <hr>
         </div>
         <div class="col-lg-2">
         </div>
     </div>
 
-    <main role="main" class="container">
+    <div class="container">
         <form action="{{ url('registrasi/save', $data->id) }}" class="form-horizontal" id="formRegist" name="formRegist"
                 method="post" enctype="multipart/form-data">
         @csrf
@@ -155,8 +143,8 @@
             <div class="col-lg-8 card" style="width: 100%;background-color:#b7d0ed">
                 <div class="col-lg-12">
                     <div class="form-group">
-                        <label for="instansi" class="label-control required"><b>Institusi</b><br>Tempat Kerja dan/atau Tempat Studi (spesifik)</label>
-                        <input oninvalid="this.setCustomValidity('Masukkan Nama Instansi')" oninput="setCustomValidity('')" value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Institusi">
+                        <label for="instansi" class="label-control required"><b>Institusi</b></label>
+                        <input oninvalid="this.setCustomValidity('Masukkan Nama Institusi')" oninput="setCustomValidity('')" value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Tempat Kerja atau Tempat Studi (spesifik)">
                         <span id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</span>
                     </div>
                 </div>
@@ -172,7 +160,7 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="pekerjaan" class="label-control required"><b>Jabatan pada institusi terkait</b></label>
-                        <input oninvalid="this.setCustomValidity('Masukkan Nama Pekerjaan')" oninput="setCustomValidity('')" value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Jabatan">
+                        <input oninvalid="this.setCustomValidity('Masukkan Nama Jabatan')" oninput="setCustomValidity('')" value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Jabatan">
                         <span id="pekerjaan" class="invalid-feedback">{{ $errors->first('pekerjaan') }}</span>
                     </div>
                 </div>
@@ -186,11 +174,12 @@
             </div>
             <div class="col-lg-8" style="width: 100%;">
                 <button type="submit" class="btn button-flash btn-block">SUBMIT</button>
+            </div>
             <div class="col-lg-2">
             </div>
         </div>
-      </form>
-    </main>
+        </form>
+    </div>
 
 </div>
 
