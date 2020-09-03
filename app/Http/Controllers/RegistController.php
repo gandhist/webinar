@@ -104,7 +104,7 @@ class RegistController extends Controller
             Peserta::find($peserta->id)->update($peserta_id);
 
             $pesan = [
-                'username' => $request->nama,
+                'username' => $request->email,
                 'password' => $password
             ];
             $email = strtolower($request->email);

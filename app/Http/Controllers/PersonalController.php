@@ -186,9 +186,33 @@ class PersonalController extends Controller
 
         $data->save();
 
+        $password = str_random(8);
+
+        $user               = new User;
+        $user->email        = $request->email;
+        $user->password     = Hash::make($password);
+        $user->name         = $request->nama;
+        $user->role_id      = 2;
+        $user->is_active    = 1;
+        $user->created_by   = Auth::id();
+        $user->save();
+
+        $pesan = [
+            'username' => $request->nama,
+            'password' => $password
+        ];
+        $email = strtolower($request->email);
+        Mail::to($email)->send(new EmailRegistAkun($pesan));
+
+        //kirim wa
+        $nohp = $request->no_hp;
+        $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
+        $this->kirimPesanWA($nohp,$pesan);
+
         $peserta = new Peserta;
 
         $peserta->id_personal = $data->id;
+        $peserta->user_id = $user->id;
         $peserta->nama = $request->nama;
         $peserta->email = $request->email;
         $peserta->no_hp = $request->no_hp;
@@ -454,6 +478,14 @@ class PersonalController extends Controller
             // }
         }
 
+        $user = User::where('id',$request->user_id)->first();
+        if(isset($user) && $user->email != $request->email){
+            $user->email = $request->email;
+
+            $user->updated_at = Carbon::now();
+            $user->updated_by = Auth::id();
+            $user->save();
+        }
 
         $data->updated_at = Carbon::now();
         $data->updated_by = Auth::id();
