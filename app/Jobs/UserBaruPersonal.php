@@ -44,7 +44,7 @@ class UserBaruPersonal implements ShouldQueue
 
         $nohp = $this->detail['nope'];
         // print_r($this->detail);
-        $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di P3S Mandiri. \nUsername : ".$this->detail['email']."\nPassword : ".$this->detail['nope']."\nAnda bisa login melalui :\nhttps://srtf.p3sm.or.id/login\nMohon segera mengganti password Anda.";
+        $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di P3S Mandiri. \nUsername : ".$this->detail['email']."\nPassword : ".$this->detail['password']."\nAnda bisa login melalui :\nhttps://srtf.p3sm.or.id/login\nMohon segera mengganti password Anda.";
         $status =  $this->kirimPesanWA($nohp,$pesan);
         // print_r($status);
     }
