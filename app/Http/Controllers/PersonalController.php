@@ -8,11 +8,14 @@ use App\KotaModel;
 use App\BuModel;
 use App\BankModel;
 use App\Peserta;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use File;
@@ -189,25 +192,28 @@ class PersonalController extends Controller
         $password = str_random(8);
 
         $user               = new User;
+        $user->username     = $request->email;
         $user->email        = $request->email;
         $user->password     = Hash::make($password);
         $user->name         = $request->nama;
         $user->role_id      = 2;
         $user->is_active    = 1;
-        $user->created_by   = Auth::id();
+        // $user->created_by   = Auth::id();
         $user->save();
+        $data->user_id = $user->id;
+        $data->save();
 
         $pesan = [
             'username' => $request->nama,
             'password' => $password
         ];
-        $email = strtolower($request->email);
-        Mail::to($email)->send(new EmailRegistAkun($pesan));
+        // $email = strtolower($request->email);
+        // Mail::to($email)->send(new EmailRegistAkun($pesan));
 
-        //kirim wa
-        $nohp = $request->no_hp;
-        $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
-        $this->kirimPesanWA($nohp,$pesan);
+        // //kirim wa
+        // $nohp = $request->no_hp;
+        // $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
+        // $this->kirimPesanWA($nohp,$pesan);
 
         $peserta = new Peserta;
 
@@ -478,12 +484,12 @@ class PersonalController extends Controller
             // }
         }
 
-        $user = User::where('id',$request->user_id)->first();
+        $user = User::where('id',$personal->user_id)->first();
         if(isset($user) && $user->email != $request->email){
             $user->email = $request->email;
 
             $user->updated_at = Carbon::now();
-            $user->updated_by = Auth::id();
+            // $user->updated_by = Auth::id();
             $user->save();
         }
 
