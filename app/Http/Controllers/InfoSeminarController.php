@@ -32,7 +32,11 @@ class InfoSeminarController extends Controller
         }
         // dd($peserta);
         // $peserta = NULL;
-        return view('infoseminar.index')->with(compact('data','user','peserta'));
+        if(isset($peserta)){
+            return view('infoseminar.index')->with(compact('data','user','peserta'));
+        } else {
+            return view('infoseminar.index')->with(compact('data','user'));
+        }
     }
     public function detail($id)
     {
