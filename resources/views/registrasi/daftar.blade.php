@@ -90,7 +90,7 @@
         </div>
         <div class="col-lg-8">
             <h2>{{ strip_tags(html_entity_decode($data->tema)) }}</h2>
-            <p style="margin-bottom: -10px;">* Wajib</p>
+            {{-- <p style="margin-bottom: -10px;">* Wajib</p> --}}
             <hr>
         </div>
         <div class="col-lg-2">

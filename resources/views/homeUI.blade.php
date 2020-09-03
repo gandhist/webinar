@@ -45,16 +45,18 @@
 }
 
 
-
     .jumbotron {
 		/* background-image: url("p3sm.jpeg");
   		background-size: 15%; */
 		background-repeat:no-repeat;
-		height: 310px;
+		height: 350px;
 		background-color: #f7f7f7 !important;
 		background-position-x: 98%;
 		background-position-y: 55%;
-	    margin-top:5px;
+	    margin-top:1px;
+	}
+	.logo { 
+			margin-top: -55px;
 	}
 
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
@@ -66,13 +68,19 @@
 			background-position-x: 50%;
 			background-position-y: 1%;
 			margin: 15px;
-			margin-top: 23px;
+			margin-top: 15px;
         }
-		.welcome{
+		.welcome {
 			margin-top: -25px;
 		}
-		.login{
+		.login {
 			margin-top: 23px;
+		}
+		.logo{
+			margin-top: -15px;
+		}
+		img{
+			height: 50px;	
 		}
 		
 	}
@@ -90,15 +98,15 @@
 </script>
 <div class="container">
 	<div class="jumbotron">
-		<div class="d-flex justify-content-around logo" style="margin-top: -55px;">
-			<div>
-				<img src="{{ url('dk3n.jpeg') }}" alt="logo" class="img-responsive" width="100px" height="80px"></a>
+		<div class="d-flex justify-content-around logo">
+		<div>
+				<img src="{{ url('dk3n.png') }}" alt="logo" class="img-responsive"  height="100px" style="margin-bottom: -100px;"></a>
 			</div>
 			<div>
-				<img src="{{ url('p3sm.jpeg') }}" alt="logo" class="img-responsive" width="120px" height="100px"></a>
+				<img src="{{ url('p3sm.jpeg') }}" alt="logo" class="img-responsive" height="120px"></a>
 			</div>
 			<div>
-				<img src="{{ url('forum.jpeg') }}" alt="logo" class="img-responsive" width="100px" height="80px"></a>
+				<img src="{{ url('forum.png') }}" alt="logo" class="img-responsive" height="80px" style="margin-top: 30px;"></a>
 			</div>
 		</div>
 		<div class="welcome">
