@@ -204,22 +204,16 @@ class PersonalController extends Controller
             // $user->created_by   = Auth::id();
             $user->save();
 
+
+            $detail = ['nama' => $request->nama,
+            'password' => $password,
+            'email' => $request->email, 'nope' => $request->no_hp];
+            dispatch(new \App\Jobs\UserBaruPersonal($detail));
+
         }
 
         $data->user_id = $user->id;
         $data->save();
-
-        // $pesan = [
-        //     'username' => $request->nama,
-        //     'password' => $password
-        // ];
-        // $email = strtolower($request->email);
-        // Mail::to($email)->send(new EmailRegistAkun($pesan));
-
-        // //kirim wa
-        // $nohp = $request->no_hp;
-        // $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
-        // $this->kirimPesanWA($nohp,$pesan);
 
         $peserta = new Peserta;
 
