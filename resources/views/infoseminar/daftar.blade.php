@@ -136,7 +136,7 @@
 
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-times-circle"></i> Batal</a>
+                                        {{-- <a href="{{ url('infoseminar') }}" class="btn btn-md btn-danger pull-left"><i class="fa fa-times-circle"></i> Batal</a> --}}
                                         <button type="submit" class="btn button-flash pull-right"> <i class="fa fa-check-circle"></i> Daftar</button>
                                         {{-- <a target="_blank" href="{{ url($data->link) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
                                             data-placement="top" title="Lihat Brosur">Brosur</a> --}}
