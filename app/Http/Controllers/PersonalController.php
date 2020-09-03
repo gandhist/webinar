@@ -189,24 +189,30 @@ class PersonalController extends Controller
 
         $data->save();
 
-        $password = str_random(8);
+        $user = User::where('email',$request->email)->first();
 
-        $user               = new User;
-        $user->username     = $request->email;
-        $user->email        = $request->email;
-        $user->password     = Hash::make($password);
-        $user->name         = $request->nama;
-        $user->role_id      = 2;
-        $user->is_active    = 1;
-        // $user->created_by   = Auth::id();
-        $user->save();
+        if(!isset($user)){
+            $password = str_random(8);
+
+            $user               = new User;
+            $user->username     = $request->email;
+            $user->email        = $request->email;
+            $user->password     = Hash::make($password);
+            $user->name         = $request->nama;
+            $user->role_id      = 2;
+            $user->is_active    = 1;
+            // $user->created_by   = Auth::id();
+            $user->save();
+
+        }
+
         $data->user_id = $user->id;
         $data->save();
 
-        $pesan = [
-            'username' => $request->nama,
-            'password' => $password
-        ];
+        // $pesan = [
+        //     'username' => $request->nama,
+        //     'password' => $password
+        // ];
         // $email = strtolower($request->email);
         // Mail::to($email)->send(new EmailRegistAkun($pesan));
 
