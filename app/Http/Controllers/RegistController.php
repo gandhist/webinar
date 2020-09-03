@@ -146,6 +146,7 @@ class RegistController extends Controller
      */
     public function save(Request $request, $id)
     {
+
         // Create Peserta
         $request->validate([
             // 'email' => 'unique:srtf_peserta',
@@ -163,6 +164,7 @@ class RegistController extends Controller
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
         $cekPeserta = Peserta::selectRaw('COUNT(id) as jumlah,id')->where('email','=',$request->email)->orWhere('no_hp','=',$request->no_hp)->first();
+        $peserta = Peserta::find($cekPeserta->id);
 
         if($cekPeserta->jumlah > 0 ){
             $data['nama'] = $request->nama;
@@ -214,7 +216,15 @@ class RegistController extends Controller
             $peserta_seminar->created_at = Carbon::now()->toDateTimeString();
             // validasi jika sudah pernah terdaftar
             if($cek > 0){
-                return redirect()->route('login')->with('warning', 'Anda Sudah Mendaftar Seminar');
+
+                $user = User::find($peserta['user_id']);
+                $user->is_login = 1;
+                $user->save();
+
+                Auth::login($user);
+
+                return redirect()->route('profile.edit')->with('second', 'Anda Sudah Mendaftar Seminar');
+
             } else{
                 $peserta_seminar = $peserta_seminar->save();
 
@@ -232,7 +242,6 @@ class RegistController extends Controller
                 }
             }
 
-            $peserta = Peserta::find($cekPeserta->id);
             $tema = strip_tags(html_entity_decode($detailseminar['tema']));
 
             //kirim email
@@ -246,8 +255,15 @@ class RegistController extends Controller
             $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
             $this->kirimPesanWA($nohp,$pesan);
 
-            return redirect('')->with('success', 'Pendaftaran Seminar berhasil');
+            $user = User::find($peserta['user_id']);
+            $user->is_login = 1;
+            $user->save();
 
+            Auth::login($user);
+
+            return redirect()->route('profile.edit')
+            ->with('first', 'Akun berhasil dibuat! Username dan Password telah dikirim melalui email dan Whatsapp.')
+            ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
 
         } else{
             $data['nama'] = $request->nama;
@@ -351,7 +367,18 @@ class RegistController extends Controller
                 $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
                 $this->kirimPesanWA($nohp,$pesan);
             }
-            return redirect()->route('login')->with('success', 'Anda Berhasil Terdaftar! Silahkan coba login dengan username dan password yang telah dikirim melalui email dan Whatsapp');
+
+            $user = User::find($peserta_id['user_id']);
+            $user->is_login = 1;
+            $user->save();
+
+            Auth::login($user);
+
+            return redirect()->route('profile.edit')
+            ->with('first', 'Akun berhasil dibuat! Username dan Password telah dikirim melalui email dan Whatsapp.')
+            ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
+
+            // return redirect()->route('login')->with('success', 'Anda Berhasil Terdaftar! Silahkan coba login dengan username dan password yang telah dikirim melalui email dan Whatsapp');
             // return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
         }
     }

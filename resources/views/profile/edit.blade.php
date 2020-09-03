@@ -18,6 +18,17 @@
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             </div>
             @endif
+            @if(session()->get('first'))
+            <div class="alert alert-success"> {{ session()->get('first') }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+            @endif
+            @if(session()->get('second'))
+            <div class="alert alert-warning"> {{ session()->get('second') }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+            @endif
+
 
             <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd"
                 method="post" enctype="multipart/form-data">
@@ -159,7 +170,7 @@
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
                         @if(isset($key->presensi->jam_cek_in) == null)
                             <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
-                        @else 
+                        @else
                         <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? $key->presensi->jam_cek_in : '' }} </a>
                         @endif
                     </td>
@@ -171,7 +182,7 @@
                         @else
                             @if(isset($key->seminar_p->materi))
                             <a href="{{url($key->seminar_p->materi)}}" class="download-link btn btn-sm btn-primary" download=""> <i class="fa fa-download" ></i> Download</a>
-                        
+
                             @endif
                         @endif
                     </td>
