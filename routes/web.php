@@ -17,6 +17,8 @@ Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback
 Route::get('', 'FrontendController@index')->name('homeUI');
 Route::get('/cari', 'FrontendController@loadData');
 Route::get('reset', 'FrontendController@reset');
+Route::get('tesWA', 'FrontendController@kirimWA');
+
 Route::post('reset/update', 'FrontendController@update');
 Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');
 
@@ -30,6 +32,7 @@ Route::get('registrasi','RegistController@index');
 Route::post('registrasi/store','RegistController@store');
 Route::get('registrasi/daftar/{slug}','RegistController@daftar');
 Route::post('registrasi/save/{id}','RegistController@save');
+Route::get('wa_regist', 'FrontendController@wa_regist');
 
 Route::get('profile', 'ProfileController@edit')->name('profile.edit');
 Route::post('profile', 'ProfileController@update')->name('profile.update');

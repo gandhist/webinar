@@ -103,17 +103,21 @@ class RegistController extends Controller
 
             Peserta::find($peserta->id)->update($peserta_id);
 
+            $seminar = Seminar::where('status','=','published')->get();
+
             $pesan = [
                 'username' => $request->email,
-                'password' => $password
+                'password' => $password,
+                'name' => $request->nama,
+                'no_hp' => $request->no_hp,
             ];
             $email = strtolower($request->email);
-            Mail::to($email)->send(new EmailRegistAkun($pesan));
+            Mail::to($email)->send(new EmailRegistAkun([$pesan,$seminar]));
 
             //kirim wa
-            $nohp = $request->no_hp;
-            $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
-            $this->kirimPesanWA($nohp,$pesan);
+            // $nohp = $request->no_hp;
+            // $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
+            // $this->kirimPesanWA($nohp,$pesan);
         }
 
         return redirect('')->with('success', 'Registrasi Akun berhasil, silahkan konfirmasi email');
@@ -384,6 +388,58 @@ class RegistController extends Controller
             // return redirect()->route('login')->with('success', 'Anda Berhasil Terdaftar! Silahkan coba login dengan username dan password yang telah dikirim melalui email dan Whatsapp');
             // return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
         }
+    }
+
+    public function wa_regist()
+    {    
+        $no_hp = '082169761759';
+        $nama = 'Rama';
+        $tema = 'Tes Seminar';
+        $link = 'https://srtf.p3sm.or.id/';
+
+        $token = $this->getToken();
+        $channel = $this->setupChannel($token['access_token']);
+        $template = $this->setupTemplate($token['access_token']);
+
+        $lang = [
+            'code' => 'id'
+        ];
+        $var1 = [
+            "key" => "1",
+            "value" => "full_name",
+            "value_text" => $nama,
+        ];
+        $var2 = [
+            "key" => "2",
+            "value" => "full_name",
+            "value_text" => $tema,
+        ];
+        $var3 = [
+            "key" => "3",
+            "value" => "full_name",
+            "value_text" => $link,
+        ];
+
+        $isiBody = [$var1,$var2, $var3];
+
+        $param = [
+            "body" => $isiBody
+        ];
+
+        $body = [
+            'to_number' => $no_hp,
+            'to_name' => $nama,
+            'message_template_id' => $template['data'][0]['id'],
+            'channel_integration_id' => $channel['data'][0]['id'],
+            'language' => $lang,
+            'parameters' => $param,
+        ];
+    
+        $pesan = $this->sendMessage($token['access_token'],$body);
+        
+        return $pesan;
+      
+        
     }
 
     public function test() {

@@ -7,10 +7,13 @@ use App\SeminarModel;
 use App\Mail\EmailLinkSert as MailSertifikat;
 use Carbon\Carbon;
 use DB;
+use App\Traits\GlobalFunction;
 
 class FrontendController extends Controller
 {
-    function index()
+    use GlobalFunction;
+
+    public function index()
     {
         $date = Carbon::now()->toDateTimeString();
         $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
@@ -51,5 +54,57 @@ class FrontendController extends Controller
             $output .= '</ul>';
             echo $output;
         }
+    }
+
+    public function kirimWA()
+    {    
+        $no_hp = '082169761759';
+        $nama = 'Rama';
+        $tema = 'Tes Seminar';
+        $link = 'https://srtf.p3sm.or.id/';
+
+        $token = $this->getToken();
+        $channel = $this->setupChannel($token['access_token']);
+        $template = $this->setupTemplate($token['access_token']);
+
+        $lang = [
+            'code' => 'id'
+        ];
+        $var1 = [
+            "key" => "1",
+            "value" => "full_name",
+            "value_text" => $nama,
+        ];
+        $var2 = [
+            "key" => "2",
+            "value" => "full_name",
+            "value_text" => $tema,
+        ];
+        $var3 = [
+            "key" => "3",
+            "value" => "full_name",
+            "value_text" => $link,
+        ];
+
+        $isiBody = [$var1,$var2, $var3];
+
+        $param = [
+            "body" => $isiBody
+        ];
+
+        $body = [
+            'to_number' => $no_hp,
+            'to_name' => $nama,
+            'message_template_id' => $template['data'][0]['id'],
+            'channel_integration_id' => $channel['data'][0]['id'],
+            'language' => $lang,
+            'parameters' => $param,
+        ];
+    
+        $pesan = $this->sendMessage($token['access_token'],$body);
+        
+        return $pesan;
+      
+        
     }
 }

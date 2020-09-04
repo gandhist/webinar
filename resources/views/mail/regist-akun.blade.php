@@ -240,7 +240,7 @@ a {
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <td class="title" width="300">P3SM</td>
+            <td class="title" width="300">P3S Mandiri</td>
             <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id/" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
@@ -260,13 +260,18 @@ a {
                     <tbody>
                     <tr>
                         <td class="padded">
-                          <h1>Selamat!</h1>
-                          <p>Registrasi anda telah di verifikasi</p>
-                          <p>Silahkan masuk dengan data di bawah</p>
-                          <p>Username : {{ $pesan['username'] }}</p>
-                          <p>Password : {{ $pesan['password'] }}</p>
+                          <h1>Halo !</h1>
+                          <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut,</p>
+                          <p>Nama : {{ $pesan['name'] }}</p>
+                          <p>Nomor HP (WA) : {{ $pesan['username'] }}</p>
+                          <p>Email : {{ $pesan['username'] }}</p>
+                          <p>Dengan Username : {{ $pesan['username'] }}</p>
+                          <p>Dan Password : {{ $pesan['password'] }}</p>
+                          <p>Silahkan mendaftar di seminar sebagai berikut,</p>
+
+                          <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
                           <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
-                          <i>Note: Harap Langsung Ubah Password Anda!</i>
+                          <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>
                     </tbody>

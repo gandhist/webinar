@@ -21,17 +21,17 @@
             @if(!Auth::user())
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ url('') }}">Beranda</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('') }}"><strong>Beranda</strong></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href= "{{ url('infoseminar') }}">Seminar</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ url('infoseminar') }}"><strong>Seminar</strong></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ url('registrasi') }}">Bergabung</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('registrasi') }}"><strong>Bergabung</strong></a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ url('login') }}">Login</a>
+                    <li class="nav-item">
+                        <a class="btn btn-success" href="{{ url('login') }}">Login</a>
                     </li>
                 </ul>
             </div>
@@ -39,10 +39,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href= "{{ url('infoseminar') }}">Seminar</a>
+                        <a class="nav-link" href= "{{ url('infoseminar') }}"><strong>Seminar</strong></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('profile.edit') }}">User Profile</a>
+                        <a class="nav-link" href="{{ route('profile.edit') }}"><strong>User Profile</strong></a>
                     </li>
                     <li class="nav-item active">
                         {{-- <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
@@ -60,7 +60,7 @@
                                 <!-- Dropdown menu links -->
                                 <form method="post" action="{{ url('logout') }}" style="display: inline">
                                 {{ csrf_field() }}
-                                <button class="btn btn-default" type="submit">Sign Out</button>
+                                <button class="btn btn-default" type="submit">Logout</button>
                                 </form>
                             </div>
                     </div>

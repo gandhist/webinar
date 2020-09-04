@@ -20,6 +20,7 @@ class EmailRegistAkun extends Mailable
     public function __construct($pesan)
     {
         $this->pesan = $pesan;
+        dd($pesan);
     }
 
     /**
@@ -29,6 +30,6 @@ class EmailRegistAkun extends Mailable
      */
     public function build()
     {
-        return $this->from('info@p3sm.or.id','Registrasi Akun P3SM')->subject('Registrasi Akun P3SM')->view('mail.regist-akun');
+        return $this->from('info@p3sm.or.id','Registrasi Akun App PPKB ONLINE')->subject('Registrasi Akun App PPKB ONLINE')->view('mail.regist-akun');
     }
 }

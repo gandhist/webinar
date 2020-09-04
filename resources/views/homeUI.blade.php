@@ -59,6 +59,10 @@
 			margin-top: -55px;
 	}
 
+	.customTable thead {
+    	background-color: #b7d0ed;
+ 	}
+
 	@media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
 		.jumbotron {
             /* background-image: url("p3sm.jpeg");
@@ -99,14 +103,14 @@
 <div class="container">
 	<div class="jumbotron">
 		<div class="d-flex justify-content-around logo">
-		<div>
-				<img src="{{ url('dk3n.png') }}" alt="logo" class="img-responsive"  height="100px" style="margin-bottom: -100px;"></a>
+			<div>
+				<img src="{{ url('forum.png') }}" alt="logo" class="img-responsive" height="90px" style="margin-top: 23px;"></a>
 			</div>
 			<div>
 				<img src="{{ url('p3sm.jpeg') }}" alt="logo" class="img-responsive" height="120px"></a>
 			</div>
 			<div>
-				<img src="{{ url('forum.png') }}" alt="logo" class="img-responsive" height="80px" style="margin-top: 30px;"></a>
+				<img src="{{ url('dk3n.png') }}" alt="logo" class="img-responsive"  height="100px" style="margin-bottom: -110px;"></a>
 			</div>
 		</div>
 		<div class="welcome">
@@ -116,7 +120,7 @@
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
             @if(Auth::guest())
             <button href="#" class="btn btn-success btn-border-filled m-2" id="login" >Login</button>
-            <a href="{{url('login/google')}}" style="color: white" class="btn btn-danger m-2">
+            <a href="{{url('login/google')}}" style="color: white" class="btn btn-primary m-2">
                 <i class="fa fa-google fa-fw"></i> Login with Google Account
             </a>
             @else
@@ -143,7 +147,7 @@
 						<span class="glyphicon glyphicon-lock"></span>
 					</div> --}}
 					<button type="submit" class="btn btn-success btn-border-filled m-2">Login</button>
-					<a href="{{url('login/google')}}" style="color: white" class="btn btn-danger m-2">
+					<a href="{{url('login/google')}}" style="color: white" class="btn btn-primary m-2">
 						<i class="fa fa-google fa-fw"></i> Login with Google Account
 					</a>
 				{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
