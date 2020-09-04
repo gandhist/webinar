@@ -90,7 +90,7 @@ class LoginController extends Controller
                     return redirect('infoseminar');
                 } else{
                     \Session::put('is_login', 'Akun anda sudah login di perangkat lain, silahkan logout dari perangkat sebelumnya.!!');
-                    // Session::flush(); 
+                    // Session::flush();
                     return redirect('');
                 }
 

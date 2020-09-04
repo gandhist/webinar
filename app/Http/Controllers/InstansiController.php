@@ -10,6 +10,7 @@ use App\BuModel;
 use App\BankModel;
 use App\Personal;
 use App\Peserta;
+use App\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -18,6 +19,8 @@ use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use File;
 use DB;
 
@@ -195,8 +198,31 @@ class InstansiController extends Controller
 
         $data->save();
 
+        $user = User::where('email',$request->email)->first();
+
+        if(!isset($user)){
+            $password = str_random(8);
+
+            $user               = new User;
+            $user->username     = $request->email_pimp;
+            $user->email        = $request->email_pimp;
+            $user->password     = Hash::make($password);
+            $user->name         = $request->nama_pimp;
+            $user->role_id      = 2;
+            $user->is_active    = 1;
+            // $user->created_by   = Auth::id();
+            $user->save();
+
+
+            $detail = ['nama' => $request->nama_pimp,
+            'password' => $password,
+            'email' => $request->email_pimp, 'nope' => $request->hp_pimp];
+            dispatch(new \App\Jobs\UserBaruPersonal($detail));
+        }
+
         $pimp = new Personal;
         $pimp->instansi         = $data->id                ;
+        $pimp->user_id          = $user->id                ;
         $pimp->nama             = $request->nama_pimp      ;
         $pimp->jabatan          = $request->jab_pimp       ;
         $pimp->email            = $request->email_pimp     ;
@@ -210,6 +236,8 @@ class InstansiController extends Controller
 
         $data->id_personal_pimp = $pimp->id                ;
         $data->save();
+
+
 
         return redirect('/instansi/lengkapi/'.$data->id.'/'.$pimp->id)
         ->with('pesan',"Instansi \"".$request->nama_bu.
@@ -305,41 +333,14 @@ class InstansiController extends Controller
 
         // simpan data peserta
         $data = Personal::find($request->id);
-        $data->nama = $request->nama;
-        if($request->nik != $data->nik){
-            $request->validate([
-                'nik' => 'required|numeric|unique:personal|digits:16',
-            ], [
-                'nik.required' => 'Mohon isi NIK',
-                'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
-                'nik.unique' => 'NIK sudah terdaftar',
-                'nik.digits' => 'Mohon isi NIK dengan format yang valid',
-                'nik.gt' => 'Mohon isi NIK dengan format yang valid',
-            ]);
-            $data->nik = $request->nik;
-        }
-        if($request->email != $data->email){
-            $request->validate([
-                'email' => 'required|email|unique:personal',
-            ], [
-                'email.required' => 'Mohon isi Email',
-                'email.email' => 'Mohon isi Email dengan format yang valid',
-                // 'email.max' => 'Email maksimal 100 karakter',
-                'email.unique' => 'Email sudah terdaftar',
-            ]);
-            $data->email = $request->email;
-        }
-        if($request->no_hp != $data->no_hp){
-            $request->validate([
-                'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
-            ],[
-                'no_hp.required' => 'Mohon isi Nomor Telepon',
-                'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
-                'no_hp.unique' => 'Nomor Telepon sudah terdaftar',
-                'no_hp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
-                'no_hp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
-            ]);
-            $data->no_hp = $request->no_hp;
+
+        $user = User::where('id',$data->user_id)->first();
+        if(isset($user) && $user->email != $request->email){
+            $user->email = $request->email;
+
+            $user->updated_at = Carbon::now();
+            // $user->updated_by = Auth::id();
+            $user->save();
         }
 
 
@@ -432,6 +433,56 @@ class InstansiController extends Controller
         $instansi->updated_by = Auth::id();
         $instansi->save();
 
+        if($data->nama != $request->nama){
+            $request->validate([
+                'nama' => 'required|min:3|max:100',
+            ], [
+                'nama.required' => 'Mohon isi Nama',
+                'nama.min' => 'Email maksimal 3 karakter',
+                'nama.max' => 'Email maksimal 100 karakter',
+            ]);
+            $data->nama = $request->nama;
+            $instansi->nama_pimp = $request->nama;
+        }
+        if($request->nik != $data->nik){
+            $request->validate([
+                'nik' => 'required|numeric|unique:personal|digits:16',
+            ], [
+                'nik.required' => 'Mohon isi NIK',
+                'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
+                'nik.unique' => 'NIK sudah terdaftar',
+                'nik.digits' => 'Mohon isi NIK dengan format yang valid',
+                'nik.gt' => 'Mohon isi NIK dengan format yang valid',
+            ]);
+            $data->nik = $request->nik;
+        }
+        if($request->email != $data->email){
+            $request->validate([
+                'email' => 'required|email|unique:personal',
+            ], [
+                'email.required' => 'Mohon isi Email',
+                'email.email' => 'Mohon isi Email dengan format yang valid',
+                // 'email.max' => 'Email maksimal 100 karakter',
+                'email.unique' => 'Email sudah terdaftar',
+            ]);
+            $data->email = $request->email;
+            $instansi->email_pimp = $request->email;
+        }
+        if($request->no_hp != $data->no_hp){
+            $request->validate([
+                'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
+            ],[
+                'no_hp.required' => 'Mohon isi Nomor Telepon',
+                'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
+                'no_hp.unique' => 'Nomor Telepon sudah terdaftar',
+                'no_hp.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
+                'no_hp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
+            ]);
+            $data->no_hp = $request->no_hp;
+            $instansi->hp_pimp = $request->no_hp;
+        }
+        $data->save();
+        $instansi->save();
 
         $peserta = new Peserta;
 

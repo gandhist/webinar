@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sertifikat P3SM| Log in</title>
+  <title>PPKB P3SM| Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -27,11 +27,53 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+<style>
+    .button-flash {
+      background-color: #004A7F;
+      -webkit-border-radius: 10px;
+      border-radius: 10px;
+      border: none;
+      color: #FFFFFF;
+      cursor: pointer;
+      display: inline-block;
+      font-family: Arial;
+      text-align: center;
+      text-decoration: none;
+      -webkit-animation: glowing 1500ms infinite;
+      -moz-animation: glowing 1500ms infinite;
+      -o-animation: glowing 1500ms infinite;
+      animation: glowing 1500ms infinite;
+    }
+    @-webkit-keyframes glowing {
+      0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+      50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+      100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+    }
+
+    @-moz-keyframes glowing {
+      0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+      50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+      100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+    }
+
+    @-o-keyframes glowing {
+      0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+      50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+      100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+    }
+
+    @keyframes glowing {
+      0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+      50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+      100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+    }
+    </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Sertifikat P3SM</b> - Login</a>
+    <a href="../../index2.html"><b>PPKB P3SM</b> - Login</a>
   </div>
   @if(session()->get('warning'))
 		<div class="alert alert-warning"> {{ session()->get('warning') }}
@@ -68,7 +110,7 @@
         </div> -->
         <!-- /.col -->
         <div class="col-xs-6">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat button-flash">Sign In</button>
         </div>
         <div class="col-xs-6">
           <a href="{{url('')}}" class="btn btn-danger btn-block btn-flat">Cancel</a>
