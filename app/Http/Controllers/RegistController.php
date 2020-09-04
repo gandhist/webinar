@@ -131,6 +131,9 @@ class RegistController extends Controller
         // Handle seminar lama (nggak ada slug)
         if ((strpos($slug, '-') !== false) || (preg_match("/[a-z]/i", $slug)) ) {
             $data = Seminar::where('slug','=', $slug)->first();
+        }
+        elseif($slug == 11){
+            return redirect('https://us02web.zoom.us/j/81564894026?pwd=K2hTVWdRQzk1M1BydERDSnE5aTlvUT09');
         } else {
             $data = Seminar::where('id','=', $slug)->first();
         }
