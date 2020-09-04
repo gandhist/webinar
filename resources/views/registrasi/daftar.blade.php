@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <main role="main" class="container">
+    <div class="container">
         <form action="{{ url('registrasi/save', $data->id) }}" class="form-horizontal" id="formRegist" name="formRegist"
                 method="post" enctype="multipart/form-data">
         @csrf
@@ -179,7 +179,7 @@
             </div>
         </div>
         </form>
-    </main>
+    </div>
 
 </div>
 
