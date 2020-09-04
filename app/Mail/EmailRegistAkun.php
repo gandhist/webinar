@@ -12,15 +12,17 @@ class EmailRegistAkun extends Mailable
     use Queueable, SerializesModels;
 
     public $pesan;
+    public $seminar;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($pesan)
+    public function __construct($detail)
     {
-        $this->pesan = $pesan;
-        dd($pesan);
+        $this->pesan = $detail['pesan'];
+        $this->seminar = $detail['seminar'];
+        // dd($this->seminar);
     }
 
     /**
