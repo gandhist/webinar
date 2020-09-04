@@ -58,15 +58,25 @@ class FrontendController extends Controller
 
     public function kirimWA()
     {    
-        $no_hp = '082169761759';
-        $nama = 'Rama';
-        $tema = 'Tes Seminar';
-        $link = 'https://srtf.p3sm.or.id/';
+        $no_hp = '081294868833';
+        $nama = 'Nanda';
+        $username = 'noernanda@gmail.com';
+        $pass = '123456';
+        $detail_seminar = 'Tes Seminar';
+        $detail_seminar = "Nama : ".$nama."\n
+                  Password : ".$pass."\n
+                  Nomor Hp (WA) : ".$no_hp."\n
+                  Email : ".$username."\n
+                  dengan Username : ".$username."\n
+                  dan Password : ".$pass."\n
+                  Silahkan mendaftar di seminar sebagai berikut,\n
+                  ";
+        $link = '\nhttps://srtf.p3sm.or.id/login\n';
 
-        $token = $this->getToken();
-        $channel = $this->setupChannel($token['access_token']);
+        $token = $this->getToken(); 
+        $channel = '65038597-0de1-47e2-adcf-c7fd15acf0ea';
         $template = $this->setupTemplate($token['access_token']);
-
+        
         $lang = [
             'code' => 'id'
         ];
@@ -77,12 +87,12 @@ class FrontendController extends Controller
         ];
         $var2 = [
             "key" => "2",
-            "value" => "full_name",
-            "value_text" => $tema,
+            "value" => "detail_seminar",
+            "value_text" => $detail_seminar,
         ];
         $var3 = [
             "key" => "3",
-            "value" => "full_name",
+            "value" => "link",
             "value_text" => $link,
         ];
 
@@ -95,13 +105,15 @@ class FrontendController extends Controller
         $body = [
             'to_number' => $no_hp,
             'to_name' => $nama,
-            'message_template_id' => $template['data'][0]['id'],
-            'channel_integration_id' => $channel['data'][0]['id'],
+            'message_template_id' => $template['data'][1]['id'],
+            'channel_integration_id' => $channel,
             'language' => $lang,
             'parameters' => $param,
         ];
     
         $pesan = $this->sendMessage($token['access_token'],$body);
+
+        // $disc = $this->discChannel($token['access_token'],$channel['data'][0]['id']);
         
         return $pesan;
       
