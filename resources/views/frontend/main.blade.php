@@ -60,7 +60,7 @@
             z-index: 99;
             border: none;
             outline: none;
-            background-color: #b7d0ed;
+            background-color: #30363d;
             color: white;
             cursor: pointer;
             padding: 15px;
@@ -76,6 +76,13 @@
             text-align: center;
             font-size: 14px;
         }
+        .tentang {
+            /* background-color: #b6c5d4; */
+        }
+        #logoFoot {
+            width: 220px;
+        }
+
 
         @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
             /* Force table to not be like tables anymore */
@@ -122,7 +129,7 @@
                 z-index: 99;
                 border: none;
                 outline: none;
-                background-color: #b7d0ed;
+                background-color: #30363d;
                 color: white;
                 cursor: pointer;
                 padding: 10px;
