@@ -1583,6 +1583,17 @@ class SeminarController extends Controller
         $feedback = FeedbackModel::whereIn('id_peserta_seminar',$seminar)->get();
         $feedback_seminar_full = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->get();
 
+        if($daftar > 0){
+            $absen_persen = round((($absen/$daftar)*100),2);
+        } else {
+            $absen_persen = 0;
+        }
+        if($absen > 0){
+            $respons_persen = round((($respons/$absen)*100),2);
+        } else {
+            $respons_persen = 0;
+        }
+
         $feedback_seminar_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','0')->get();
         $feedback_seminar = [   "1" => count($feedback_seminar_raw->where('nilai','1')),
                                 "2" => count($feedback_seminar_raw->where('nilai','2')),
@@ -1662,7 +1673,7 @@ class SeminarController extends Controller
             }
         }
         // dd($feedback_personal);
-        return view ('seminar.feedback')->with(compact('id','daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal'));
+        return view ('seminar.feedback')->with(compact('id','daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal','absen_persen','respons_persen'));
     }
 
     public function downloadFeedback($id) {
