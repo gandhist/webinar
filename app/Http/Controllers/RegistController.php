@@ -103,7 +103,7 @@ class RegistController extends Controller
 
             Peserta::find($peserta->id)->update($peserta_id);
 
-            $seminar = Seminar::where('status','=','published')->get();
+            $seminar = Seminar::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
             $pesan = [
                 'username' => $request->email,

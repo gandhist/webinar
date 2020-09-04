@@ -313,7 +313,7 @@ table#seminar>thead>tr {
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$key->nama_seminar}}</td>
                                         <td>{{\Carbon\Carbon::parse($key->tgl_awal)->format('d M Y')}}</td>
-                                        <td><a href={{ isset($key->slug) ? url('/regestrasi/daftar/'.$key->slug) : url('/regestrasi/daftar/'.$key->id)}}>
+                                        <td><a href={{ isset($key->slug) ? url('/registrasi/daftar/'.$key->slug) : url('/regestrasi/daftar/'.$key->id)}}>
                                             <div style="height:100%;width:100%">Daftar</div></a></td>
                                         {{-- <td>{{$key->}}</td> --}}
                                     </tr>
