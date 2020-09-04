@@ -72,7 +72,80 @@ trait GlobalFunction {
         return $results;
 
     }
-
     
+    ////////////// BEGIN API QONTAK WHATSASPP /////////////////////////
+    public function getToken(){   
+        $url = env('URL_TOKEN');
+        $username = env('USER_WA');
+        $password = env('PASS_WA');
+        $client_id = env('CLIENT_ID_WA');
+        $client_secret = env('CLIENT_SECRET_WA');
+        $curlHandle = curl_init();
+        curl_setopt($curlHandle, CURLOPT_URL, $url);
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curlHandle, CURLOPT_POST, true);
+        curl_setopt($curlHandle, CURLOPT_POSTFIELDS, array(
+            'username' => $username,
+            'password' => $password,
+            'grant_type' => "password",
+            'client_id' => $client_id,
+            'client_secret' => $client_secret
+        ));
+        $results = json_decode(curl_exec($curlHandle), true);
+        curl_close($curlHandle);
+        return $results;
+    }
+
+    public function setupChannel($token){   
+        $url = env('URL_CHAN');
+        $headers = array(
+            'Authorization: Bearer '.$token
+        );
+        $curlHandle = curl_init();
+        curl_setopt($curlHandle, CURLOPT_URL, $url);
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);
+        $results = json_decode(curl_exec($curlHandle), true);
+        curl_close($curlHandle);
+        return $results;
+    }
+
+    public function setupTemplate($token){   
+        $url = env('URL_TEMP');
+        $headers = array(
+            'Authorization: Bearer '.$token
+        );
+        $curlHandle = curl_init();
+        curl_setopt($curlHandle, CURLOPT_URL, $url);
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);
+        $results = json_decode(curl_exec($curlHandle), true);
+        curl_close($curlHandle);
+        return $results;
+    }
+
+    public function sendMessage($token,$body){   
+        $url = env('URL_MESS');
+        $headers = array(
+            'Authorization: Bearer '.$token,
+            'Content-Type: application/json'
+        );
+        $curlHandle = curl_init();
+        curl_setopt($curlHandle, CURLOPT_URL, $url);
+        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curlHandle, CURLOPT_POST, true);
+        curl_setopt($curlHandle, CURLOPT_POSTFIELDS, json_encode($body));
+        $results = json_decode(curl_exec($curlHandle), true);
+        curl_close($curlHandle);
+        return $results;
+    }
+    
+    ////////////// END API QONTAK WHATSASPP /////////////////////////
+
 
 }

@@ -119,7 +119,7 @@
     <br/>
     <div class="row">
         <div class="col-xs-12" style="align-content: center">
-            <button type="submit" class="btn btn-danger btn-block btn-flat">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">
                 <a href="{{url('login/google')}}" style="color: white">
                     <i class="fa fa-google fa-fw"></i> Login with Google Account
                 </a>

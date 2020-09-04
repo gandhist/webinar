@@ -32,6 +32,7 @@
             z-index: 999;
         }
         .navbar {
+            /* background-color: whitesmoke; */
             background-color: #b7d0ed;   
         }
         #cont{
@@ -70,14 +71,14 @@
         .footer {
             background-color: #b7d0ed;
             width:100%;
-            color: #black;
+            color: black;
             height: 40px;
             line-height: 40px;
             text-align: center;
             font-size: 14px;
         }
         .tentang {
-            /* background-color: #b6c5d4; */
+            background-color: #252525;
         }
         #logoFoot {
             width: 220px;
