@@ -1594,11 +1594,11 @@ class SeminarController extends Controller
                             ];
         if($feedback_seminar['jumlah'] > 0){
             $feedback_seminar["rata_rata"] = round($feedback_seminar['total']/$feedback_seminar['jumlah'],2);
-            $feedback_seminar["persen_1"] = ($feedback_seminar['1']/$feedback_seminar["jumlah"])*100;
-            $feedback_seminar["persen_2"] = ($feedback_seminar['2']/$feedback_seminar["jumlah"])*100;
-            $feedback_seminar["persen_3"] = ($feedback_seminar['3']/$feedback_seminar["jumlah"])*100;
-            $feedback_seminar["persen_4"] = ($feedback_seminar['4']/$feedback_seminar["jumlah"])*100;
-            $feedback_seminar["persen_5"] = ($feedback_seminar['5']/$feedback_seminar["jumlah"])*100;
+            $feedback_seminar["persen_1"] = round((($feedback_seminar['1']/$feedback_seminar["jumlah"])*100),2);
+            $feedback_seminar["persen_2"] = round((($feedback_seminar['2']/$feedback_seminar["jumlah"])*100),2);
+            $feedback_seminar["persen_3"] = round((($feedback_seminar['3']/$feedback_seminar["jumlah"])*100),2);
+            $feedback_seminar["persen_4"] = round((($feedback_seminar['4']/$feedback_seminar["jumlah"])*100),2);
+            $feedback_seminar["persen_5"] = round((($feedback_seminar['5']/$feedback_seminar["jumlah"])*100),2);
         } else{
             $feedback_seminar["rata_rata"] = 0;
             $feedback_seminar["persen_1"] = 0;
@@ -1622,11 +1622,11 @@ class SeminarController extends Controller
                                                     ];
             if($feedback_personal[$n->id_peserta]['jumlah'] > 0) {
                 $feedback_personal[$n->id_peserta]["rata_rata"] = round($feedback_personal[$n->id_peserta]['total']/$feedback_personal[$n->id_peserta]['jumlah'],2);
-                $feedback_personal[$n->id_peserta]["persen_1"] = ($feedback_personal[$n->id_peserta]['1']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
-                $feedback_personal[$n->id_peserta]["persen_2"] = ($feedback_personal[$n->id_peserta]['2']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
-                $feedback_personal[$n->id_peserta]["persen_3"] = ($feedback_personal[$n->id_peserta]['3']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
-                $feedback_personal[$n->id_peserta]["persen_4"] = ($feedback_personal[$n->id_peserta]['4']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
-                $feedback_personal[$n->id_peserta]["persen_5"] = ($feedback_personal[$n->id_peserta]['5']/$feedback_personal[$n->id_peserta]["jumlah"])*100;
+                $feedback_personal[$n->id_peserta]["persen_1"] = round((($feedback_personal[$n->id_peserta]['1']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
+                $feedback_personal[$n->id_peserta]["persen_2"] = round((($feedback_personal[$n->id_peserta]['2']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
+                $feedback_personal[$n->id_peserta]["persen_3"] = round((($feedback_personal[$n->id_peserta]['3']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
+                $feedback_personal[$n->id_peserta]["persen_4"] = round((($feedback_personal[$n->id_peserta]['4']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
+                $feedback_personal[$n->id_peserta]["persen_5"] = round((($feedback_personal[$n->id_peserta]['5']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
             } else {
                 $feedback_personal[$n->id_peserta]["rata_rata"] = 0;
                 $feedback_personal[$n->id_peserta]["persen_1"] = 0;
@@ -1647,11 +1647,11 @@ class SeminarController extends Controller
                                                     ];
             if($feedback_personal[$m->id_peserta]['jumlah'] > 0){
                 $feedback_personal[$m->id_peserta]["rata_rata"] = round($feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'],2);
-                $feedback_personal[$m->id_peserta]["persen_1"] = ($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
-                $feedback_personal[$m->id_peserta]["persen_2"] = ($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
-                $feedback_personal[$m->id_peserta]["persen_3"] = ($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
-                $feedback_personal[$m->id_peserta]["persen_4"] = ($feedback_personal[$m->id_peserta]['4']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
-                $feedback_personal[$m->id_peserta]["persen_5"] = ($feedback_personal[$m->id_peserta]['5']/$feedback_personal[$m->id_peserta]["jumlah"])*100;
+                $feedback_personal[$m->id_peserta]["persen_1"] = round((($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+                $feedback_personal[$m->id_peserta]["persen_2"] = round((($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+                $feedback_personal[$m->id_peserta]["persen_3"] = round((($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+                $feedback_personal[$m->id_peserta]["persen_4"] = round((($feedback_personal[$m->id_peserta]['4']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+                $feedback_personal[$m->id_peserta]["persen_5"] = round((($feedback_personal[$m->id_peserta]['5']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
             } else {
                 $feedback_personal[$m->id_peserta]["rata_rata"] = 0;
                 $feedback_personal[$m->id_peserta]["persen_1"] = 0;

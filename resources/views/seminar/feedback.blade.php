@@ -14,12 +14,45 @@
 
   .continuous-list .nomor {
         list-style: none;
+        font-size: 25px;
+        margin: 25px 0;
   }
 
   .continuous-list .nomor::before {
         content: counter(listCounter) " . ";
         counter-increment: listCounter;
   }
+  canvas{
+
+    /* width:700px !important; */
+    /* height:500px !important; */
+
+  }
+  .chart-container{
+    position: relative;
+    height:40vh;
+  }
+  .custom-label{
+      display: inline-block;
+      height: 15px;
+      width: 50px;
+      content: '.';
+        /* visibility: hidden; */
+    }
+    .custom-label-container{
+    font-size: 20px;
+    }
+    .to-padd{
+        padding: 25px 0 ;
+    }
+    .start-div{
+        display: inline-block;
+        width: 100px;
+    }
+    .legend-div{
+        display: inline-block;
+        width: 150px;
+    }
 </style>
 
 <!-- Content Header (Page header) -->
@@ -64,40 +97,65 @@
         <br>
         <ol class="continuous-list">
         <div class="row">
-          <div class="col-lg-12 card">
-          <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
-
-          <div class="row" height="500px">
-            <canvas id="myChart" height="400px"></canvas>
-          </div>
-          <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_seminar["rata_rata"] }}</strong></span>
-          </div>
+            <div class="col-lg-12 card">
+                <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
+            </div>
+        </div>
+        <div class="row to-padd">
+            <div class="col-md-6 chart-container" height="500px">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-md-4" style="padding-top:75px">
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;</div> <div class="legend-div">Sangat Baik </div> <div class="persen-div">({{$feedback_seminar['persen_5']}} %)</div> {{$feedback_seminar['5']}}    </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       </div> <div class="legend-div">Baik        </div> <div class="persen-div">({{$feedback_seminar['persen_4']}} %)</div> {{$feedback_seminar['4']}} </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              </div> <div class="legend-div">Cukup Baik  </div> <div class="persen-div">({{$feedback_seminar['persen_3']}} %)</div> {{$feedback_seminar['3']}}         </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     </div> <div class="legend-div">Buruk       </div> <div class="persen-div">({{$feedback_seminar['persen_2']}} %)</div> {{$feedback_seminar['2']}}        </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            </div> <div class="legend-div">Sangat Buruk</div> <div class="persen-div">({{$feedback_seminar['persen_1']}} %)</div> {{$feedback_seminar['1']}}                </div>
+                <div class="custom-label-container">Rata-rata Nilai: {{ $feedback_seminar["rata_rata"] }}</div>
+            </div>
         </div>
         <hr>
+
         @foreach($narasumber as $n)
         <div class="row">
-          <div class="col-lg-12 card">
-          <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
-
-          <div class="row" height="500px">
-            <canvas id="narasumber-{{$n->id_peserta}}" height="400px"></canvas>
-          </div>
-          <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$n->id_peserta]["rata_rata"] }}</strong></span>
-          </div>
+            <div class="col-lg-12 card">
+                <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
+            </div>
+        </div>
+        <div class="row to-padd">
+            <div class="col-md-6 chart-container" height="500px">
+                <canvas id="narasumber-{{$n->id_peserta}}"></canvas>
+            </div>
+            <div class="col-md-4" style="padding-top:75px">
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_5']}} %)</div> {{$feedback_personal[$n->id_peserta]['5']}}    </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       </div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_4']}} %)</div> {{$feedback_personal[$n->id_peserta]['4']}} </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              </div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_3']}} %)</div> {{$feedback_personal[$n->id_peserta]['3']}}         </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     </div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_2']}} %)</div> {{$feedback_personal[$n->id_peserta]['2']}}        </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            </div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_1']}} %)</div> {{$feedback_personal[$n->id_peserta]['1']}}                </div>
+                <div class="custom-label-container">Rata-rata Nilai: {{ $feedback_personal[$n->id_peserta]["rata_rata"] }}</div>
+            </div>
         </div>
         <hr>
         @endforeach
 
         @foreach($moderator as $m)
         <div class="row">
-          <div class="col-lg-12 card">
-          <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
-
-          <div class="row" height="500px">
-            <canvas id="moderator-{{$m->id_peserta}}" height="400px"></canvas>
-          </div>
-          <span style="padding-left: 1343px;"><strong> Rata-rata Nilai: {{ $feedback_personal[$m->id_peserta]["rata_rata"] }}</strong></span>
-          </div>
+            <div class="col-lg-12 card">
+                <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
+            </div>
+        </div>
+        <div class="row to-padd">
+            <div class="col-md-6 chart-container" height="500px">
+                <canvas id="moderator-{{$m->id_peserta}}"></canvas>
+            </div>
+            <div class="col-md-4" style="padding-top:75px">
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_5']}} %)</div>    </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       </div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_4']}} %)</div> </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              </div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_3']}} %)</div>         </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     </div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_2']}} %)</div>        </div>
+                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            </div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_1']}} %)</div>                </div>
+                <div class="custom-label-container">Rata-rata Nilai: {{ $feedback_personal[$m->id_peserta]["rata_rata"] }}</div>
+            </div>
         </div>
         <hr>
         @endforeach
@@ -151,17 +209,17 @@
 
 @push('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-piechart-outlabels"></script> --}}
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik',
-        '\u2605\u2605\u2605\u2605 Baik',
-        '\u2605\u2605\u2605 Cukup Baik',
-        '\u2605\u2605 Buruk',
-        '\u2605 Sangat Buruk'],
+        labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik    ',
+                 '\u2605\u2605\u2605\u2605    Baik',
+                 '\u2605\u2605\u2605       Cukup Baik',
+                 '\u2605\u2605          Buruk',
+                 '\u2605             Sangat Buruk',],
         datasets: [{
             label: '# of Votes',
             data: [
@@ -172,11 +230,11 @@ var myChart = new Chart(ctx, {
                 {{$feedback_seminar['1']}},
             ],
             backgroundColor: [
-              'rgba(54, 162, 235, 0.7)',
-              'rgba(75, 192, 192, 0.7)',
-              'rgba(255, 206, 86, 0.7)',
-              'rgba(153, 102, 255, 0.7)',
-              'rgba(255, 99, 132, 0.7)'
+              'rgba(54, 162, 235, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 99, 132, 1)'
 
             ],
             borderColor: [
@@ -191,29 +249,12 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
+
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-            outlabels: {
-                stretch: 10,
-                font: {
-                    resizable: true,
-                    minSize: 12,
-                    maxSize: 18
-                }
-            }
-        },
-        legend: {
-                    position: 'left',
-                },
-        layout: {
-            padding: {
-                left: 50,
-                right: 50,
-                top: 150,
-                bottom: 50
-            },
-        },
+         legend: {
+            display: false
+         },
     }
 });
 
@@ -222,11 +263,11 @@ var myChart = new Chart(ctx, {
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik',
-            '\u2605\u2605\u2605\u2605 Baik',
-            '\u2605\u2605\u2605 Cukup Baik',
-            '\u2605\u2605 Buruk',
-            '\u2605 Sangat Buruk'],
+            labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik    ',
+                    '\u2605\u2605\u2605\u2605    Baik',
+                    '\u2605\u2605\u2605       Cukup Baik',
+                    '\u2605\u2605          Buruk',
+                    '\u2605             Sangat Buruk',],
             datasets: [{
                 label: '# of Votes',
                 data: [
@@ -237,15 +278,15 @@ var myChart = new Chart(ctx, {
                     {{$feedback_personal[$n->id_peserta]['1']}},
                 ],
                 backgroundColor: [
-                  'rgba(54, 162, 235, 0.7)',
-                  'rgba(75, 192, 192, 0.7)',
-                  'rgba(255, 206, 86, 0.7)',
-                  'rgba(153, 102, 255, 0.7)',
-                  'rgba(255, 99, 132, 0.7)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 99, 132, 1)',
 
                 ],
                 borderColor: [
-                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(54, 162, 235, 1)',
                   'rgba(75, 192, 192, 1)',
                   'rgba(255, 206, 86, 1)',
                   'rgba(153, 102, 255, 1)',
@@ -256,31 +297,11 @@ var myChart = new Chart(ctx, {
             }]
         },
         options: {
+
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position: 'left',
-            },
-            plugins: {
-                outlabels: {
-                    stretch: 10,
-                    font: {
-                        resizable: true,
-                        minSize: 12,
-                        maxSize: 18
-                    }
-                }
-            },
-            legend: {
-                        position: 'left',
-                    },
-            layout: {
-                padding: {
-                    left: 50,
-                    right: 50,
-                    top: 150,
-                    bottom: 50
-                },
+                display: false
             },
         }
     });
@@ -291,11 +312,11 @@ var myChart = new Chart(ctx, {
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: {
-            labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik',
-            '\u2605\u2605\u2605\u2605 Baik',
-            '\u2605\u2605\u2605 Cukup Baik',
-            '\u2605\u2605 Buruk',
-            '\u2605 Sangat Buruk'],
+            labels: ['\u2605\u2605\u2605\u2605\u2605 Sangat Baik    ',
+                    '\u2605\u2605\u2605\u2605    Baik',
+                    '\u2605\u2605\u2605       Cukup Baik',
+                    '\u2605\u2605          Buruk',
+                    '\u2605             Sangat Buruk',],
             datasets: [{
                 label: '# of Votes',
                 data: [
@@ -306,15 +327,15 @@ var myChart = new Chart(ctx, {
                     {{$feedback_personal[$m->id_peserta]['1']}},
                 ],
                 backgroundColor: [
-                  'rgba(54, 162, 235, 0.7)',
-                  'rgba(75, 192, 192, 0.7)',
-                  'rgba(255, 206, 86, 0.7)',
-                  'rgba(153, 102, 255, 0.7)',
-                  'rgba(255, 99, 132, 0.7)'
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 99, 132, 1)'
 
                 ],
                 borderColor: [
-                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(54, 162, 235, 1)',
                   'rgba(75, 192, 192, 1)',
                   'rgba(255, 206, 86, 1)',
                   'rgba(153, 102, 255, 1)',
@@ -325,33 +346,11 @@ var myChart = new Chart(ctx, {
             }]
         },
         options: {
+
             responsive: true,
             maintainAspectRatio: false,
-
             legend: {
-                    position: 'left',
-                },
-
-            plugins: {
-                outlabels: {
-                    stretch: 10,
-                    font: {
-                        resizable: true,
-                        minSize: 12,
-                        maxSize: 18
-                    }
-                }
-            },
-            legend: {
-                        position: 'left',
-                    },
-            layout: {
-                padding: {
-                    left: 50,
-                    right: 50,
-                    top: 150,
-                    bottom: 50
-                },
+                display: false
             },
         }
     });
