@@ -9,8 +9,8 @@
 /* This styles you should add to your html as inline-styles */
 /* You can easily do it with http://inlinestyler.torchboxapps.com/ */
 /* Copy this html-window code converter and click convert button */
-/* After that you can remove this style from your code */  
-  
+/* After that you can remove this style from your code */
+
 body {
     margin: 0;
     padding: 0;
@@ -230,11 +230,33 @@ a {
     font-size: 12px;
     line-height: 18px;
 }
+
+table#seminar, table#seminar>thead>tr>th, table#seminar>tbody>tr>td {
+    border: 2px solid rgba(0, 0, 0, 0.24);
+}
+table#seminar {
+    width: 100%;
+    margin: 0 auto;
+}
+table#seminar>tbody>tr:nth-child(odd) {
+    background-color: #bababa;
+}
+table#seminar>tbody>tr>td:nth-child(3), table#seminar>tbody>tr>td:nth-child(4),
+table#seminar>tbody>tr>td:nth-child(1) {
+    text-align: center;
+}
+table#seminar>tbody>tr>td, table#seminar>thead>tr>th {
+    padding: 5px;
+}
+table#seminar>thead>tr {
+    background-color: #bdaf84;
+    text-align: center;
+}
 </style>
 
 </head>
 <body>
-    
+
 
 <center class="wrapper">
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
@@ -263,11 +285,43 @@ a {
                           <h1>Halo !</h1>
                           <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut,</p>
                           <p>Nama : {{ $pesan['name'] }}</p>
-                          <p>Nomor HP (WA) : {{ $pesan['username'] }}</p>
-                          <p>Email : {{ $pesan['username'] }}</p>
+                          <p>Nomor HP (WA) : {{ $pesan['no_hp'] }}</p>
+                          <p>Email : {{ $pesan['email'] }}</p>
                           <p>Dengan Username : {{ $pesan['username'] }}</p>
                           <p>Dan Password : {{ $pesan['password'] }}</p>
+
+                          @if(isset($seminar))
                           <p>Silahkan mendaftar di seminar sebagai berikut,</p>
+                          <table id="seminar">
+                                <colgroup>
+                                    <col style="width:10%">
+                                    <col style="width:50%">
+                                    <col style="width:20%">
+                                    <col style="width:20%">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tema</th>
+                                        <th>Tanggal</th>
+                                        <th>Link</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($seminar as $key)
+                                    <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{$key->nama_seminar}}</td>
+                                        <td>{{\Carbon\Carbon::parse($key->tgl_awal)->format('d M Y')}}</td>
+                                        <td><a href={{ isset($key->slug) ? url('/registrasi/daftar/'.$key->slug) : url('/regestrasi/daftar/'.$key->id)}}>
+                                            <div style="height:100%;width:100%">Daftar</div></a></td>
+                                        {{-- <td>{{$key->}}</td> --}}
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                          </table>
+                          <br>
+                          @endif
 
                           <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
                           <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>

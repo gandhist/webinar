@@ -88,7 +88,7 @@ class RegistController extends Controller
         }
         $peserta = Peserta::create($data);
         $password = str_random(8);
-        // $password = '123456'; // buat test masih hardcode
+        // $password = '123456'; // buat t\est masih hardcode
 
         if ($peserta) {
             $data['username'] = strtolower($request->email);
@@ -103,16 +103,17 @@ class RegistController extends Controller
 
             Peserta::find($peserta->id)->update($peserta_id);
 
-            $seminar = Seminar::where('status','=','published')->get();
+            $seminar = Seminar::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
             $pesan = [
                 'username' => $request->email,
+                'email' => $request->email,
                 'password' => $password,
                 'name' => $request->nama,
                 'no_hp' => $request->no_hp,
             ];
             $email = strtolower($request->email);
-            Mail::to($email)->send(new EmailRegistAkun([$pesan,$seminar]));
+            Mail::to($email)->send(new EmailRegistAkun(['pesan' => $pesan, 'seminar' => $seminar]));
 
             //kirim wa
             // $nohp = $request->no_hp;
@@ -391,7 +392,7 @@ class RegistController extends Controller
     }
 
     public function wa_regist()
-    {    
+    {
         $no_hp = '082169761759';
         $nama = 'Rama';
         $tema = 'Tes Seminar';
@@ -434,12 +435,12 @@ class RegistController extends Controller
             'language' => $lang,
             'parameters' => $param,
         ];
-    
+
         $pesan = $this->sendMessage($token['access_token'],$body);
-        
+
         return $pesan;
-      
-        
+
+
     }
 
     public function test() {
@@ -476,13 +477,30 @@ class RegistController extends Controller
         //       ]
         //     }
         //   }
-        $token = "Etk6qmemyc6DgKdouMtPwjxnh-I2aExvX0tI0JNJ1_g";
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            // 'Authorization' => 'bar'
-        ])->withToken($token)->get('https://service.qontak.com/api/open/v1/templates/whatsapp');
-        // $response->header();
-        return $response;
+
+
+        // $token = "Etk6qmemyc6DgKdouMtPwjxnh-I2aExvX0tI0JNJ1_g";
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     // 'Authorization' => 'bar'
+        // ])->withToken($token)->get('https://service.qontak.com/api/open/v1/templates/whatsapp');
+        // // $response->header();
+        // return $response;
+
+
+        $seminar = Seminar::where('status','=','published')->get();
+        // $seminar = null;
+        $pesan = [
+            'username' => "USERNAME",
+            'email' => 'EMAIL',
+            'password' => "PASSWORD",
+            'name' => "NAMA LENGKAP",
+            'no_hp' => "HO HP",
+        ];
+
+
+        return view('mail.regist-akun')->with(compact('pesan', 'seminar'));
+
     }
 
 }
