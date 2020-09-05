@@ -8,6 +8,11 @@
         -nge-link antara foto diri di personal sama peserta
         
     *Rafi:
+    - 2 ANGKA DIBELAKANG KOMA
+    - EXCEL RESPON DAN KETERANGAN
+    - GANTI MAIL VIEW EMAIL
+    - (WA NUNGGU QONTAK)
+    
         -Fungsi hapus
         -Handle kalau email udah ada (import)
         -Integrasi Midtrans
