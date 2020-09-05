@@ -1683,4 +1683,10 @@ class SeminarController extends Controller
         $nama = "FEEDBACK_".$seminar->nama_seminar."_".strip_tags($seminar->tema)."_".Carbon::now()->timestamp;
         return Excel::download(new FeedbackExport($id), $nama.".xlsx");
     }
+
+    //statistik seminar
+    public function statistik($id){
+
+        return view('seminar.statistik');
+    }
 }
