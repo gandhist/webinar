@@ -154,7 +154,7 @@
                 <div class="col-12">
                     <div style="margin-bottom:10px">
                         <a href="{{ url('seminar/download-feedback/'.$id) }}" class="btn btn-success">
-                            <i class="fa fa-save"></i> Download Data Feedback</a>
+                            <i class="fa fa-save"></i> Download Data Feedback to Excel</a>
                     </div>
                 </div>
             </div>

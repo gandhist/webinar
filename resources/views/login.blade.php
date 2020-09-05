@@ -72,9 +72,7 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html"><b>PPKB P3SM</b> - Login</a>
-  </div>
+  
   @if(session()->get('warning'))
 		<div class="alert alert-warning"> {{ session()->get('warning') }}
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -88,12 +86,16 @@
 @endif
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <div class="login-logo">
+      <a href="#"><a class="home" href="{{ url('') }}"><img src="{{ url('p3sm_a.png') }}" alt="logo"  width="100px" ></a> - Login</a>
+      
+    </div>
+    {{-- <p class="login-box-msg">Login to start your session</p> --}}
 
     <form action="{{ url('login') }}" method="post">
       {{ csrf_field() }}
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Email" name="username">
+        <input type="text" class="form-control" placeholder="User(Email)" name="username">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -109,15 +111,24 @@
           </div>
         </div> -->
         <!-- /.col -->
-        <div class="col-xs-6">
-          <button type="submit" class="btn btn-primary btn-block btn-flat button-flash">Sign In</button>
+        <div class="col-xs-12">
+          <button type="submit" class="btn btn-sm btn-primary btn-block btn-flat button-flash">Login</button>
         </div>
-        <div class="col-xs-6">
-          <a href="{{url('')}}" class="btn btn-danger btn-block btn-flat">Cancel</a>
+        
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div class="col-xs-12">
+            {{-- <a href="{{url('')}}" class="btn btn-danger btn-block btn-flat">Cancel</a> --}}
+            <button type="submit" class="btn btn-sm btn-primary btn-block btn-flat">
+              <a href="{{url('login/google')}}" style="color: white">
+                  <i class="fa fa-google fa-fw"></i> 
+                  {{-- Login with Google Account --}}
+              </a>
+          </button>
         </div>
     </div>
     <br/>
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xs-12" style="align-content: center">
             <button type="submit" class="btn btn-primary btn-block btn-flat">
                 <a href="{{url('login/google')}}" style="color: white">
@@ -125,8 +136,7 @@
                 </a>
             </button>
         </div>
-        <!-- /.col -->
-      </div>
+      </div> --}}
       <br>
       {{-- <a href="{{url('reset')}}">Lupa Password?</a> --}}
     </form>
