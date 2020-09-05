@@ -12,7 +12,8 @@
     - EXCEL RESPON DAN KETERANGAN
     - GANTI MAIL VIEW EMAIL
     - (WA NUNGGU QONTAK)
-    
+    - Re-code di parameter rata-rata & persen di feedback
+
         -Fungsi hapus
         -Handle kalau email udah ada (import)
         -Integrasi Midtrans

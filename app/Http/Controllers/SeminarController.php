@@ -936,6 +936,7 @@ class SeminarController extends Controller
             'deleted_at' => Carbon::now()->toDateTimeString()
         ];
         SeminarModel::whereIn('id', $idData)->update($user_data);
+        PesertaSeminar::whereIn('id_seminar', $idData)->update($user_data);
         return redirect('/seminar')
         ->with('pesan',"Berhasil menghapus personal");
     }
