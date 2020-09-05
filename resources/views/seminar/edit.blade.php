@@ -28,7 +28,7 @@
     <div class="box box-content">
         <div class="container-fluid">
             <div class="jumbotron"  style='padding-top:1px'>
-                <h1 style="margin-bottom:50px;">Seminar</h1>
+                <h1 style="margin-bottom:50px;">Aplikasi PPKB Online</h1>
                 <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
@@ -1441,7 +1441,7 @@
         $("#logo").on("select2:select", function (evt) {
         var element = evt.params.data.element;
         var $element = $(element);
-        
+
         $element.detach();
         $(this).append($element);
         $(this).trigger("change");

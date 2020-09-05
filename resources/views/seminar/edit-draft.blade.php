@@ -28,7 +28,7 @@
     <div class="box box-content">
         <div class="container-fluid">
             <div class="jumbotron">
-                <h1 style="margin-bottom:50px;">Seminar</h1>
+                <h1 style="margin-bottom:50px;">Aplikasi PPKB Online</h1>
             <form method="POST" action="{{ url('seminar/'.$id.'/update-draft') }}" enctype="multipart/form-data">
                 @method('patch')
                 @csrf
