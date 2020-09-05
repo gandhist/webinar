@@ -56,22 +56,42 @@ class FrontendController extends Controller
         }
     }
 
+    public function berita()
+    {
+        return view('berita');
+    }
+
+    public function galeri()
+    {
+        return view('galeri');
+    }
+
     public function kirimWA()
     {    
-        $no_hp = '081294868833';
-        $nama = 'Nanda';
+        $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
+        $total = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->count();
+
+        $no_hp = '082241904510';
+        $nama = 'Rafi';
         $username = 'noernanda@gmail.com';
         $pass = '123456';
-        $detail_seminar = 'Tes Seminar';
-        $detail_seminar = "Nama : ".$nama."\n
-                  Password : ".$pass."\n
-                  Nomor Hp (WA) : ".$no_hp."\n
-                  Email : ".$username."\n
-                  dengan Username : ".$username."\n
-                  dan Password : ".$pass."\n
-                  Silahkan mendaftar di seminar sebagai berikut,\n
-                  ";
         $link = '\nhttps://srtf.p3sm.or.id/login\n';
+
+        // $detail_seminar = "Nama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,\n";
+        $detail = '';
+        $nomor = 1;
+        foreach($seminar as $key){
+            $tema = strip_tags(html_entity_decode($key->tema));
+            $tgl_awal = \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY");
+            $det = $nomor.'. '.$tema.' tanggal '.$tgl_awal.' link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$key->slug;
+            $detail .= "\n".$det;
+
+            $nomor++;
+        }
+        
+        $detail_seminar = "Nama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."";
+
+        return $this->kirimPesanWA($no_hp,$detail_seminar);
 
         $token = $this->getToken(); 
         $channel = '65038597-0de1-47e2-adcf-c7fd15acf0ea';

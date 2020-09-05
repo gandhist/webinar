@@ -31,6 +31,12 @@
                         <a class="nav-link" href="{{ url('registrasi') }}"><strong>Bergabung</strong></a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href= "{{ url('berita') }}"><strong>Berita</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ url('galeri') }}"><strong>Galeri</strong></a>
+                    </li>
+                    <li class="nav-item">
                         <a class="btn btn-success" href="{{ url('login') }}">Login</a>
                     </li>
                 </ul>

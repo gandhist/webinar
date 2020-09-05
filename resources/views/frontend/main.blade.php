@@ -137,6 +137,7 @@
                 border-radius: 20px;
                 line-height: 1.2;
             }
+            
         }
       </style>
 </head>

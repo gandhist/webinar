@@ -15,12 +15,13 @@ Route::get('test', 'RegistController@test');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');
-Route::get('/cari', 'FrontendController@loadData');
 Route::get('reset', 'FrontendController@reset');
 Route::get('tesWA', 'FrontendController@kirimWA');
 
 Route::post('reset/update', 'FrontendController@update');
 Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');
+Route::get('berita', 'FrontendController@berita');
+Route::get('galeri', 'FrontendController@galeri');
 
 Route::get('infoseminar','InfoSeminarController@index')->name('infoseminar');
 Route::get('infoseminar/detail/{id}','InfoSeminarController@detail');
@@ -110,7 +111,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('mulai/{id}','SeminarController@mulai');
 	Route::get('selesai/{id}','SeminarController@selesai');
 	Route::get('feedback/{id}','SeminarController@feedback');
-    Route::get('download-feedback/{id}','SeminarController@downloadFeedback');
+	Route::get('download-feedback/{id}','SeminarController@downloadFeedback');
+	Route::get('statistik/{id}','SeminarController@statistik');
 
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');

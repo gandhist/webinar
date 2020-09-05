@@ -51,6 +51,8 @@
 
                             </span>
                         </div>
+                        <button type="button" class="btn btn-secondary pull-right" id="btnStatistikl" name="btnStatistik">
+                            <i class="fa fa-area-chart"></i> Statistik</button>
                         <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
                             <i class="fa fa-eye"></i> Detail</button>
                     </div>
@@ -355,6 +357,33 @@
         } else {
             url = id[0];
             window.location.href = "{{ url('seminar/detail') }}/" + url ;
+        }
+    });
+
+    // Button Statistik click
+    $('#btnStatistik').on('click', function (e) {
+        e.preventDefault();
+        var id = [];
+        $('.selection:checked').each(function () {
+            id.push($(this).data('id'));
+        });
+        if (id.length == 0) {
+            Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+        } else if (id.length > 1) {
+            Swal.fire({
+                    title: "Harap pilih satu data untuk di tampilkan",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+        } else {
+            url = id[0];
+            window.location.href = "{{ url('seminar/statistik') }}/" + url ;
         }
     });
 </script>
