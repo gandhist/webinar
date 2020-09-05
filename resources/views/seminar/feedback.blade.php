@@ -56,7 +56,7 @@
     }
     .start-div{
         display: inline-block;
-        width: 100px;
+        width: 150px;
     }
     .legend-div{
         display: inline-block;
@@ -69,7 +69,7 @@
     .persen-div::before{
         content: 'Persentase : ';
         display: inline-block;
-        width: 158px;
+        width: 208px;
     }
     .jumlah-div{
         display: inline-block;
@@ -78,10 +78,10 @@
     .jumlah-div::before{
         content: 'Jumlah : ';
         display: inline-block;
-        width: 160px;
+        width: 210px;
     }
     .jumlah-div::after{
-        content: ' Responden';
+        content: ' Peserta';
         display: inline-block;
         padding-left: 1rem;
     }
@@ -114,10 +114,63 @@
         width: 110px;
     }
     .jumlah-div-bar::after{
-        content: ' Responden';
+        content: ' Peserta';
         display: inline-block;
         padding-left: 1rem;
     }
+    .groupping {
+        border: 2px solid black;
+        padding: 50px;
+        margin: 50px;
+        margin-top: 75px;
+    }
+    /* FULL BINTANG */
+    .ratings {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    color: #b1b1b1;
+    overflow: hidden;
+    margin-top:-5px;
+    }
+
+    .full-stars{
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    color: #fde16d;
+    }
+
+    .empty-stars:before,
+    .full-stars:before {
+    content: "\2605\2605\2605\2605\2605";
+    font-size: 14pt;
+    }
+
+    .empty-stars:before {
+    -webkit-text-stroke: 1px #848484;
+    }
+
+    .full-stars:before {
+    -webkit-text-stroke: 1px orange;
+    }
+
+    /* Webkit-text-stroke is not supported on firefox or IE */
+    /* Firefox */
+    @-moz-document url-prefix() {
+    .full-stars{
+        color: #ECBE24;
+    }
+    }
+    /* IE */
+    <!--[if IE]>
+    .full-stars{
+        color: #ECBE24;
+    }
+    <![endif]-->
+
 
 </style>
 
@@ -162,124 +215,143 @@
       <div class="box-body" style="padding:0 25px">
         <br>
         <ol class="continuous-list">
+        <div class="groupping">
+            <div class="row">
+                <div class="col-lg-12 card">
+                    <label for="seminar" class="label-control" style="color:brown;
+                    font-size: 25px;
+                    margin: 25px 0;"><b>Statistik Kehadiran Peserta</b></label>
+                </div>
+            </div>
+            <div class="row to-padd">
+                <div class="col-md-6 chart-container" height="500px">
+                    <canvas id="myBar"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Peserta Terdaftar </div> <div class="jumlah-div-bar">{{$daftar}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Kehadiran Peserta</div> <div class="persen-div-bar">({{$absen_persen}} %) Dari Jumlah Peserta</div> <div class="jumlah-div-bar">{{$absen}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Feedback (Kuisioner)</div> <div class="persen-div-bar">({{$respons_persen}} %) Dari Kehadiran Peserta</div> <div class="jumlah-div-bar">{{$respons}}</div></div>
+                </div>
+            </div>
+        </div>
 
-        <div class="row">
+        <div class="groupping">
+            <div class="row">
+                <div class="col-lg-12 card">
+                    <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
+                </div>
+            </div>
+            <div class="row to-padd">
+                <div class="col-md-6 chart-container" height="500px">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div> <div class="persen-div">({{$feedback_seminar['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['5']}}</div>   </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div> <div class="persen-div">({{$feedback_seminar['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['4']}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div> <div class="persen-div">({{$feedback_seminar['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['3']}}</div>        </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div> <div class="persen-div">({{$feedback_seminar['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['2']}}</div>       </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div> <div class="persen-div">({{$feedback_seminar['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['1']}}</div>               </div>
+                    <div class="custom-label-container">Rata-rata Nilai:
+                        <div class="ratings">
+                            <div class="empty-stars"></div>
+                            <div class="full-stars" style="width:{{ (($feedback_seminar["rata_rata"]/5)*100).'%' }}"></div>
+                        </div> {{'('.($feedback_seminar["rata_rata"]." / 5").')'}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            @foreach($narasumber as $n)
+            <div class="row">
+                <div class="col-lg-12 card">
+                    <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
+                </div>
+            </div>
+            <div class="row to-padd">
+                <div class="col-md-6 chart-container" height="500px">
+                    <canvas id="narasumber-{{$n->id_peserta}}"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['5']}}</div>   </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['4']}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['3']}}</div>        </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['2']}}</div>       </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['1']}}</div>               </div>
+                    <div class="custom-label-container">Rata-rata Nilai:
+                        <div class="ratings">
+                            <div class="empty-stars"></div>
+                            <div class="full-stars" style="width:{{ (($feedback_personal[$n->id_peserta]["rata_rata"]/5)*100).'%' }}"></div>
+                        </div> {{'('.($feedback_personal[$n->id_peserta]["rata_rata"]." / 5").')'}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            @endforeach
+
+            @foreach($moderator as $m)
+            <div class="row">
+                <div class="col-lg-12 card">
+                    <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
+                </div>
+            </div>
+            <div class="row to-padd">
+                <div class="col-md-6 chart-container" height="500px">
+                    <canvas id="moderator-{{$m->id_peserta}}"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['5']}}</div>   </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['4']}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['3']}}</div>        </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['2']}}</div>       </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['1']}}</div>               </div>
+                    <div class="custom-label-container">Rata-rata Nilai:
+                        <div class="ratings">
+                            <div class="empty-stars"></div>
+                            <div class="full-stars" style="width:{{ (($feedback_personal[$m->id_peserta]["rata_rata"]/5)*100).'%' }}"></div>
+                        </div>  {{'('.($feedback_personal[$m->id_peserta]["rata_rata"]." / 5").')'}}
+                    </div>
+                </div>
+            </div>
+            <hr>
+            @endforeach
+
+            <div class="row">
             <div class="col-lg-12 card">
-                <label for="seminar" class="label-control nomor"><b>Statistik Kehadiran Peserta</b></label>
-            </div>
-        </div>
-        <div class="row to-padd">
-            <div class="col-md-6 chart-container" height="500px">
-                <canvas id="myBar"></canvas>
-            </div>
-            <div class="col-md-4">
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Jumlah Peserta Terdaftar </div> <div class="jumlah-div-bar">{{$daftar}}</div></div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Jumlah Peserta Absen</div> <div class="persen-div-bar">({{$absen_persen}} %) Dari Jumlah Peserta</div> <div class="jumlah-div-bar">{{$absen}}</div></div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Jumlah Peserta Yang Memberi Feedback</div> <div class="persen-div-bar">({{$respons_persen}} %) Dari Jumlah Peserta Absen</div> <div class="jumlah-div-bar">{{$respons}}</div></div>
-            </div>
-        </div>
-        <hr>
+            <label for="kesan_pesan"blade.php class="label-control nomor"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
 
-        <div class="row">
+            <div class="row">
+                <div class="col-md-12 line">
+                <ul>
+                    @foreach($feedback as $key)
+                    <li>
+                    {{ $key->peserta_s->peserta_r->nama }} - <b>{{ $key->kesan_pesan }}</b>
+                    </li>
+                    @endforeach
+                </ul>
+                </div>
+            </div>
+
+            </div>
+            </div>
+            <hr>
+            <div class="row">
             <div class="col-lg-12 card">
-                <label for="seminar" class="label-control nomor"><b>Penilaian untuk penyelenggara secara keseluruhan?</b></label>
-            </div>
-        </div>
-        <div class="row to-padd">
-            <div class="col-md-6 chart-container" height="500px">
-                <canvas id="myChart"></canvas>
-            </div>
-            <div class="col-md-4">
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;</div> <div class="legend-div">Sangat Baik </div> <div class="persen-div">({{$feedback_seminar['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['5']}}</div>   </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       </div> <div class="legend-div">Baik        </div> <div class="persen-div">({{$feedback_seminar['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['4']}}</div></div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              </div> <div class="legend-div">Cukup Baik  </div> <div class="persen-div">({{$feedback_seminar['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['3']}}</div>        </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     </div> <div class="legend-div">Buruk       </div> <div class="persen-div">({{$feedback_seminar['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['2']}}</div>       </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            </div> <div class="legend-div">Sangat Buruk</div> <div class="persen-div">({{$feedback_seminar['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['1']}}</div>               </div>
-                <div class="custom-label-container">Rata-rata Nilai: {{ $feedback_seminar["rata_rata"] }}</div>
-            </div>
-        </div>
-        <hr>
+            <label for="keterangan" class="label-control nomor"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
 
-        @foreach($narasumber as $n)
-        <div class="row">
-            <div class="col-lg-12 card">
-                <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
+            <div class="row">
+                <div class="col-md-12 line">
+                <ul>
+                    @foreach($feedback as $key)
+                    <li>
+                    {{ $key->peserta_s->peserta_r->nama }} - <b>{{ $key->keterangan }}</b>
+                    </li>
+                    @endforeach
+                </ul>
+                </div>
             </div>
-        </div>
-        <div class="row to-padd">
-            <div class="col-md-6 chart-container" height="500px">
-                <canvas id="narasumber-{{$n->id_peserta}}"></canvas>
-            </div>
-            <div class="col-md-4">
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['5']}}</div>   </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       </div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['4']}}</div></div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              </div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['3']}}</div>        </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     </div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['2']}}</div>       </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            </div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['1']}}</div>               </div>
-                <div class="custom-label-container">Rata-rata Nilai: {{ $feedback_personal[$n->id_peserta]["rata_rata"] }}</div>
-            </div>
-        </div>
-        <hr>
-        @endforeach
 
-        @foreach($moderator as $m)
-        <div class="row">
-            <div class="col-lg-12 card">
-                <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
             </div>
-        </div>
-        <div class="row to-padd">
-            <div class="col-md-6 chart-container" height="500px">
-                <canvas id="moderator-{{$m->id_peserta}}"></canvas>
             </div>
-            <div class="col-md-4">
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['5']}}</div>   </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       </div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['4']}}</div></div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              </div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['3']}}</div>        </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     </div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['2']}}</div>       </div>
-                <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            </div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['1']}}</div>               </div>
-                <div class="custom-label-container">Rata-rata Nilai: {{ $feedback_personal[$m->id_peserta]["rata_rata"] }}</div>
-            </div>
-        </div>
-        <hr>
-        @endforeach
-
-        <div class="row">
-          <div class="col-lg-12 card">
-          <label for="kesan_pesan"blade.php class="label-control nomor"><b>Kesan & Pesan untuk Penyelenggara, Pengantar Diskusi, Narasumber, dan Moderator?</b></label>
-
-          <div class="row">
-            <div class="col-md-12 line">
-              <ul>
-                @foreach($feedback as $key)
-                <li>
-                  {{ $key->peserta_s->peserta_r->nama }} - <b>{{ $key->kesan_pesan }}</b>
-                </li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
-
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-lg-12 card">
-          <label for="keterangan" class="label-control nomor"><b>Apakah ada topik yang dipandang penting dan perlu untuk diangkat dalam webinar selanjutnya? </b></label>
-
-          <div class="row">
-            <div class="col-md-12 line">
-              <ul>
-                @foreach($feedback as $key)
-                <li>
-                  {{ $key->peserta_s->peserta_r->nama }} - <b>{{ $key->keterangan }}</b>
-                </li>
-                @endforeach
-              </ul>
-            </div>
-          </div>
-
-          </div>
         </div>
       </ol>
       </div>
@@ -299,9 +371,9 @@ var ctx = document.getElementById('myBar').getContext('2d');
 var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Jumlah Peserta Terdaftar',
-                 'Jumlah Peserta Absen',
-                 'Jumlah Peserta Yang Memberi Feedback '],
+        labels: ['Peserta Terdaftar',
+                 'Kehadiran Peserta',
+                 'Jumlah Feedback (Kuisioner)',],
         datasets: [{
             // label: '# of Votes',
             data: [
