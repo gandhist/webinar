@@ -936,6 +936,7 @@ class SeminarController extends Controller
             'deleted_at' => Carbon::now()->toDateTimeString()
         ];
         SeminarModel::whereIn('id', $idData)->update($user_data);
+        PesertaSeminar::whereIn('id_seminar', $idData)->update($user_data);
         return redirect('/seminar')
         ->with('pesan',"Berhasil menghapus personal");
     }
@@ -1584,12 +1585,12 @@ class SeminarController extends Controller
         $feedback_seminar_full = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->get();
 
         if($daftar > 0){
-            $absen_persen = round((($absen/$daftar)*100),2);
+            $absen_persen = number_format(round((($absen/$daftar)*100),2),2, '.', '');
         } else {
             $absen_persen = 0;
         }
         if($absen > 0){
-            $respons_persen = round((($respons/$absen)*100),2);
+            $respons_persen = number_format(round((($respons/$absen)*100),2),2, '.', '');
         } else {
             $respons_persen = 0;
         }
@@ -1604,12 +1605,12 @@ class SeminarController extends Controller
                                 "total" => array_sum($feedback_seminar_raw->pluck('nilai')->toArray()),
                             ];
         if($feedback_seminar['jumlah'] > 0){
-            $feedback_seminar["rata_rata"] = round($feedback_seminar['total']/$feedback_seminar['jumlah'],2);
-            $feedback_seminar["persen_1"] = round((($feedback_seminar['1']/$feedback_seminar["jumlah"])*100),2);
-            $feedback_seminar["persen_2"] = round((($feedback_seminar['2']/$feedback_seminar["jumlah"])*100),2);
-            $feedback_seminar["persen_3"] = round((($feedback_seminar['3']/$feedback_seminar["jumlah"])*100),2);
-            $feedback_seminar["persen_4"] = round((($feedback_seminar['4']/$feedback_seminar["jumlah"])*100),2);
-            $feedback_seminar["persen_5"] = round((($feedback_seminar['5']/$feedback_seminar["jumlah"])*100),2);
+            $feedback_seminar["rata_rata"] =number_format(round($feedback_seminar['total']/$feedback_seminar['jumlah'],2),2, '.', '');
+            $feedback_seminar["persen_1"] = number_format(round((($feedback_seminar['1']/$feedback_seminar["jumlah"])*100),2),2, '.', '');
+            $feedback_seminar["persen_2"] = number_format(round((($feedback_seminar['2']/$feedback_seminar["jumlah"])*100),2),2, '.', '');
+            $feedback_seminar["persen_3"] = number_format(round((($feedback_seminar['3']/$feedback_seminar["jumlah"])*100),2),2, '.', '');
+            $feedback_seminar["persen_4"] = number_format(round((($feedback_seminar['4']/$feedback_seminar["jumlah"])*100),2),2, '.', '');
+            $feedback_seminar["persen_5"] = number_format(round((($feedback_seminar['5']/$feedback_seminar["jumlah"])*100),2),2, '.', '');
         } else{
             $feedback_seminar["rata_rata"] = 0;
             $feedback_seminar["persen_1"] = 0;
@@ -1632,12 +1633,12 @@ class SeminarController extends Controller
                                                         "total" => array_sum($feedback_personal_raw->where('id_peserta',$n->id_peserta)->pluck('nilai')->toArray()),
                                                     ];
             if($feedback_personal[$n->id_peserta]['jumlah'] > 0) {
-                $feedback_personal[$n->id_peserta]["rata_rata"] = round($feedback_personal[$n->id_peserta]['total']/$feedback_personal[$n->id_peserta]['jumlah'],2);
-                $feedback_personal[$n->id_peserta]["persen_1"] = round((($feedback_personal[$n->id_peserta]['1']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
-                $feedback_personal[$n->id_peserta]["persen_2"] = round((($feedback_personal[$n->id_peserta]['2']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
-                $feedback_personal[$n->id_peserta]["persen_3"] = round((($feedback_personal[$n->id_peserta]['3']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
-                $feedback_personal[$n->id_peserta]["persen_4"] = round((($feedback_personal[$n->id_peserta]['4']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
-                $feedback_personal[$n->id_peserta]["persen_5"] = round((($feedback_personal[$n->id_peserta]['5']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2);
+                $feedback_personal[$n->id_peserta]["rata_rata"] =number_format(round($feedback_personal[$n->id_peserta]['total']/$feedback_personal[$n->id_peserta]['jumlah'],2),2, '.', '');
+                $feedback_personal[$n->id_peserta]["persen_1"] = number_format(round((($feedback_personal[$n->id_peserta]['1']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2),2, '.', '');
+                $feedback_personal[$n->id_peserta]["persen_2"] = number_format(round((($feedback_personal[$n->id_peserta]['2']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2),2, '.', '');
+                $feedback_personal[$n->id_peserta]["persen_3"] = number_format(round((($feedback_personal[$n->id_peserta]['3']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2),2, '.', '');
+                $feedback_personal[$n->id_peserta]["persen_4"] = number_format(round((($feedback_personal[$n->id_peserta]['4']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2),2, '.', '');
+                $feedback_personal[$n->id_peserta]["persen_5"] = number_format(round((($feedback_personal[$n->id_peserta]['5']/$feedback_personal[$n->id_peserta]["jumlah"])*100), 2),2, '.', '');
             } else {
                 $feedback_personal[$n->id_peserta]["rata_rata"] = 0;
                 $feedback_personal[$n->id_peserta]["persen_1"] = 0;
@@ -1657,12 +1658,12 @@ class SeminarController extends Controller
                                                         "total" => array_sum($feedback_personal_raw->where('id_peserta',$m->id_peserta)->pluck('nilai')->toArray()),
                                                     ];
             if($feedback_personal[$m->id_peserta]['jumlah'] > 0){
-                $feedback_personal[$m->id_peserta]["rata_rata"] = round($feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'],2);
-                $feedback_personal[$m->id_peserta]["persen_1"] = round((($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_2"] = round((($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_3"] = round((($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_4"] = round((($feedback_personal[$m->id_peserta]['4']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_5"] = round((($feedback_personal[$m->id_peserta]['5']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+                $feedback_personal[$m->id_peserta]["rata_rata"] =number_format(round($feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'],2),2, '.', '');
+                $feedback_personal[$m->id_peserta]["persen_1"] = number_format(round((($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2),2, '.', '');
+                $feedback_personal[$m->id_peserta]["persen_2"] = number_format(round((($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2),2, '.', '');
+                $feedback_personal[$m->id_peserta]["persen_3"] = number_format(round((($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2),2, '.', '');
+                $feedback_personal[$m->id_peserta]["persen_4"] = number_format(round((($feedback_personal[$m->id_peserta]['4']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2),2, '.', '');
+                $feedback_personal[$m->id_peserta]["persen_5"] = number_format(round((($feedback_personal[$m->id_peserta]['5']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2),2, '.', '');
             } else {
                 $feedback_personal[$m->id_peserta]["rata_rata"] = 0;
                 $feedback_personal[$m->id_peserta]["persen_1"] = 0;
@@ -1681,5 +1682,11 @@ class SeminarController extends Controller
         $seminar = SeminarModel::where('id',$id)->first();
         $nama = "FEEDBACK_".$seminar->nama_seminar."_".strip_tags($seminar->tema)."_".Carbon::now()->timestamp;
         return Excel::download(new FeedbackExport($id), $nama.".xlsx");
+    }
+
+    //statistik seminar
+    public function statistik($id){
+
+        return view('seminar.statistik');
     }
 }

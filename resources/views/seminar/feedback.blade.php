@@ -93,7 +93,7 @@
     }
     .legend-div-bar{
         display: inline-block;
-        width: 350px;
+        width: 200px;
     }
     .persen-div-bar{
         display: inline-block;
