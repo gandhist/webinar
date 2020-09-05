@@ -168,6 +168,7 @@ class RegistController extends Controller
         $detailseminar = Seminar::where('id',$id)->first();
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
+        $jam = Seminar::select('jam_awal')->where('id', '=',$id)->first();
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
@@ -361,10 +362,15 @@ class RegistController extends Controller
 
                 Peserta::find($peserta->id)->update($peserta_id);
                 $tema = strip_tags(html_entity_decode($detailseminar['tema']));
-                //kirim email
+                //kirim email ikhi
                 $pesan = [
                     'username' => $request->nama,
                     'password' => $password,
+                    'email' => strtolower($request->email),
+                    'nama' => $request->nama,
+                    'nope' => $request->no_hp,
+                    'tanggal' => \Carbon\Carbon::parse($tanggal->tgl_awal)->translatedFormat('d F Y'),
+                    'jam' => $jam->jam_awal,
                     'tema' => $tema,
                 ];
                 $email = strtolower($request->email);

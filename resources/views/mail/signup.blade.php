@@ -9,8 +9,8 @@
 /* This styles you should add to your html as inline-styles */
 /* You can easily do it with http://inlinestyler.torchboxapps.com/ */
 /* Copy this html-window code converter and click convert button */
-/* After that you can remove this style from your code */  
-  
+/* After that you can remove this style from your code */
+
 body {
     margin: 0;
     padding: 0;
@@ -234,7 +234,7 @@ a {
 
 </head>
 <body>
-    
+
 
 <center class="wrapper">
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
@@ -260,15 +260,24 @@ a {
                     <tbody>
                     <tr>
                         <td class="padded">
-                            <h1>Selamat!</h1>
-                            <p>Anda telah berhasil mendaftar di seminar</p>
-                            <p>Tema : {{ strip_tags(html_entity_decode($pesan['tema'])) }}</p>
+                            <h1>Halo {{$pesan['nama']}},</h1>
+                            <p>Selamat, Anda sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data  sebagai berikut.</p>
+                            <p>Nama : {{$pesan['nama']}}</p>
+                            <p>Nomor Hp (WA) : {{$pesan['nope']}}</p>
+                            <p>Email : {{$pesan['email']}}</p>
+                            <p>Dengan Username : {{$pesan['username']}}</p>
+                            <p>Dan Password : {{$pesan['password']}}</p>
                             <br>
-                            <p>Silahkan login dengan data di bawah</p>
-                            <p>Username : {{ $pesan['username'] }}</p>
-                            <p>Password : {{ $pesan['password'] }}</p>
+                            <p>Anda berhasil terdaftar diseminar sebagai berikut, </p>
+                            <p>Tema : <b>"{{$pesan['tema']}}"</b></p>
+                            <p>Yang akan dilaksanakan pada </p>
+                            <p>Tanggal : {{$pesan['tanggal']}}</p>
+                            <p>Jam : {{$pesan['jam']}}</p>
+                            <br>
+                            <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
+                            <p>Silakan login dengan klik tombol login berikut ini, pada Tanggal “{{$pesan['tanggal']}}” dan satu jam sebelum acara dimulai.</p>
                             <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
-                            <i>Note: Harap Langsung Ubah Password Anda!</i>
+                            <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>
                     </tbody>
