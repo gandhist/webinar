@@ -58,12 +58,12 @@ class FrontendController extends Controller
 
     public function berita()
     {
-        return view('berita');
+        return view('blogs.berita');
     }
 
     public function galeri()
     {
-        return view('galeri');
+        return view('blogs.galeri');
     }
 
     public function kirimWA()
