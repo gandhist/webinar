@@ -1,4 +1,9 @@
 @extends('frontend.main')
+<style>
+    .customTable thead {
+        background-color: #b7d0ed;
+    }
+</style>
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -130,7 +135,7 @@
     <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
         <br>
-        <table id="example" class="table table-striped table-bordered dataTable" role="grid">
+        <table id="example" class="table table-striped table-bordered dataTable customTable" role="grid">
             <thead>
                 <tr role="row">
                     <th style="width:1%;text-align:center;">No</th>
@@ -241,9 +246,11 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script> --}}
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" >
 $(document).ready(function() {
 		$('#example').DataTable();
