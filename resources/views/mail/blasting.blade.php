@@ -263,7 +263,7 @@ a {
                             <p>Kepada Yth,</p>
                             <p>{{$detail['nama']}}</p>
                             <p>Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh PPKB P3SM.</p>
-                            <p>Free Webinar : Title Webinar dengan tema Tema Webinar yang akan dilaksanakan pada hari Sabtu tanggal 12 Agustus 2020 jam 09:00 WIB sampai selesai.</p>
+                            <p>Free Webinar : {{$detail['title']}} dengan tema <b>{{$detail['tema']}}</b> yang akan dilaksanakan pada hari Sabtu tanggal {{$detail['tanggal']}} jam {{$detail['jam']}} WIB sampai selesai.</p>
                             <br>
                             <p>Silahkan mendaftar melalui link di bawah ini: </p>
                             <p>Tanggal : {{$detail['tanggal']}}</p>

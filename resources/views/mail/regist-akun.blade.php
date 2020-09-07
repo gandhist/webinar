@@ -282,7 +282,7 @@ table#seminar>thead>tr {
                     <tbody>
                     <tr>
                         <td class="padded">
-                          <h1>Halo !</h1>
+                          <h1>Halo {{ $pesan['name'] }}!</h1>
                           <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut,</p>
                           <p>Nama : {{ $pesan['name'] }}</p>
                           <p>Nomor HP (WA) : {{ $pesan['no_hp'] }}</p>

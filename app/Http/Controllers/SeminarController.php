@@ -1698,6 +1698,12 @@ class SeminarController extends Controller
     public function blast(Request $request, $id) {
         // dd($request);
         $seminar = SeminarModel::where('id', $id)->first();
+
+        $title = strip_tags(html_entity_decode($seminar->nama_seminar));
+        $tema = strip_tags(html_entity_decode($seminar->tema));
+        $tanggal = \Carbon\Carbon::parse($seminar->tgl_awal)->translatedFormat('d F Y');
+        $jam = $seminar->jam_awal;
+
         $target = TargetBlasting::all();
         $link = null;
         if($request->link_daftar) {
@@ -1723,6 +1729,9 @@ class SeminarController extends Controller
                 'target' => $key,
                 'peserta' => $peserta,
                 'magic' => $magic,
+                'tanggal' => $tanggal,
+                'jam' => $jam,
+                'tema' => $tema,
             ];
             // dump($detail);
 //

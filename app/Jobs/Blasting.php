@@ -7,7 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-
+use Illuminate\Support\Facades\Mail;
 use App\Mail\BlastingMail;
 use App\Traits\GlobalFunction;
 
@@ -41,7 +41,7 @@ class Blasting implements ShouldQueue
     public function handle()
     {
         // Fungsi blasting email
-        Mail::to($this->detail['email'])->send(new BlastingMail($this->detail, $this->link));
+        Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link));
 
         // Fungsi blasting untuk wa
 
