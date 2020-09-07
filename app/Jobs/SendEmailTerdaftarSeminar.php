@@ -18,7 +18,7 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
 
     protected $detail;
 
-    public $tries = 1;
+    public $tries = 5;
 
     /**
      * Create a new job instance.
@@ -39,21 +39,28 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to($this->detail['email'])->send(new MailSeminar($this->detail));
-        // $nohp = $this->detail['nope'];
-        // // print_r($this->detail);
-        // $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di seminar P3S Mandiri, dengan tema *".strip_tags($this->detail['tema'])."*";
-        // $status =  $this->kirimPesanWA($nohp,$pesan);
-        // // print_r($status);
+        $log = LogImportErr::where('id',$this->detail['im_id'])->first();
 
-        // if($status['status'] == '1'){
-        //     $log = LogImportErr::where('id',$this->detail['im_id'])->first();
-        //     $log->status = '1';
-        //     $log->save();
-        // } elseif ($status['status'] =='0') {
-        //     $log = LogImportErr::where('id',$this->detail['im_id'])->first();
-        //     $log->status = '0';
-        //     $log->save();
-        // }
+        if($log->is_email_sent != 1){
+            Mail::to($this->detail['email'])->send(new MailSeminar($this->detail));
+            $log->is_email_sent = 1;
+            $log->save();
+        }
+
+        $nohp = $this->detail['nope'];
+        // print_r($this->detail);
+        $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di seminar P3S Mandiri, dengan tema *".strip_tags($this->detail['tema'])."*";
+        $status =  $this->kirimPesanWA($nohp,$pesan);
+        // print_r($status);
+
+        if($status['status'] == '1'){
+            $log = LogImportErr::where('id',$this->detail['im_id'])->first();
+            $log->status = '1';
+            $log->save();
+        } elseif ($status['status'] =='0') {
+            $log = LogImportErr::where('id',$this->detail['im_id'])->first();
+            $log->status = '0';
+            $log->save();
+        }
     }
 }

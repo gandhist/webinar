@@ -36,6 +36,8 @@ class ImportPeserta implements ToCollection,WithHeadingRow
             $import_err = new LogImportErr;
             $import_err->save();
             $user = User::where('email',$row['email'])->first();
+            $user_id = NULL;
+            $id_peserta_seminar = NULL;
 
             if(!isset($user)) {
                 $user                               = new User;
@@ -45,6 +47,8 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $user->name                         = $row['nama'];
                 $user->role_id                      = '2';
                 $user->save();
+
+                $user_id = $user->id;
 
                 $password = $row['nomor_handphone'];
 
@@ -66,6 +70,9 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $duplicate_user->grup_id                      = $user->id;
                 $duplicate_user->save();
 
+
+                $user_id = $duplicate_user->id;
+
                 $password = $row['nomor_handphone'];
 
                 // $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] ,'email' => $row['email'], 'im_id' => $import_err->id];
@@ -76,6 +83,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
             } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp == $row['nomor_handphone']) {
                 array_push($err, 'User sudah ada');
                 $userAda = 1;
+                $user_id = $user->id;
             }
 
             $peserta = Peserta::where('user_id',$user->id)->first();
@@ -133,6 +141,8 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $peserta_seminar->qr_code = $dir_name."/".$nama;
                 $peserta_seminar->save();
 
+                $id_peserta_seminar = $peserta_seminar->id;
+
                 // $kurangi_kuota = Seminar::where('id',$this->id)->first();
                 // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
                 // $kurangi_kuota->save();
@@ -162,7 +172,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                         'tanggal' => $tanggal,
                         'jam' => $jam,
                         'tema' => $tema,
-                        'im_id' => $import_err->id
+                        'im_id' => $import_err->id,
                     ];
                     dispatch(new \App\Jobs\SendEmailUserBaru($detail));
                 } else {
@@ -176,7 +186,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                         'tanggal' => $tanggal,
                         'jam' => $jam,
                         'tema' => $tema,
-                        'im_id' => $import_err->id
+                        'im_id' => $import_err->id,
                     ];
 
                     dispatch(new \App\Jobs\SendEmailTerdaftarSeminar($detail));
@@ -184,10 +194,13 @@ class ImportPeserta implements ToCollection,WithHeadingRow
 
             } else {
                 array_push($err, 'sudah mengikuti seminar');
+                $id_peserta_seminar = $udahAda->id;
             }
 
 
             $import_err->import_id = $import->id;
+            $import_err->user_id = $user_id;
+            $import_err->id_peserta_seminar = $id_peserta_seminar;
             $import_err->note = implode(', ', $err);
             $import_err->save();
 
