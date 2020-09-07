@@ -23,6 +23,24 @@
       </div>
       <div class="row News">
         {{-- @foreach($blogs as $results) --}}
+        <div class="col-md-4 mb-4">
+          <div class="card cardNews">
+            {{-- <img class="card-img-top" src="{{asset('front/image/bannerAllPage/blogs/'.$results->image)}}" alt="Card image cap"> --}}
+            <img class="card-img-top" src="{{ url('p3sm.jpeg') }}" alt="Card image cap">
+            <div class="card-body">
+              <div class="date">
+                {{-- <h3 class="mb-0 text-white">{{ substr($results->created_at,0,2) }}</h3> --}}
+                <h5 class="mb-0 text-black">07 September 2020</h5> <br>
+                {{-- <p class="mb-0 text-white">{{bulanSaja($results->created_at)}}</p> --}}
+              </div>
+              {{-- <h5 class="card-title text-center">{{ucwords($results->title)}}</h5> --}}
+              <h5 class="card-title text-center">PERTEMUAN PROFESI</h5>
+              {{-- <p>{!! substr($results->description,0,200) !!}</p> --}}
+              <p>PROBLEM, PELUANG DAN TANTANGAN PROFESI SANITASI DAN TATA LINGKUNGAN DALAM ERA COVID-19 DAN MILENIAL</p>
+              {{-- <a href="{{url('blogs/'.$results->slug)}}" class="ReadMore m-auto">Read More</a> --}}
+            </div>
+          </div>
+        </div>
           <div class="col-md-4 mb-4">
             <div class="card cardNews">
               {{-- <img class="card-img-top" src="{{asset('front/image/bannerAllPage/blogs/'.$results->image)}}" alt="Card image cap"> --}}
@@ -30,11 +48,11 @@
               <div class="card-body">
                 <div class="date">
                   {{-- <h3 class="mb-0 text-white">{{ substr($results->created_at,0,2) }}</h3> --}}
-                  <h4 class="mb-0 text-black">07 September 2020</h4> <br>
+                  <h5 class="mb-0 text-black">07 September 2020</h5> <br>
                   {{-- <p class="mb-0 text-white">{{bulanSaja($results->created_at)}}</p> --}}
                 </div>
                 {{-- <h5 class="card-title text-center">{{ucwords($results->title)}}</h5> --}}
-                <h5 class="card-title text-center">WEBINAR SAFETY CONSTRUCTION</h5>
+                <h5 class="card-title text-center">SAFETY CONSTRUCTION</h5>
                 {{-- <p>{!! substr($results->description,0,200) !!}</p> --}}
                 <p>THE POWER OF SMKK "Mengulas Tuntas Kebaruan Sistem Manajemen Keselamatan Konstruksi"</p>
                 {{-- <a href="{{url('blogs/'.$results->slug)}}" class="ReadMore m-auto">Read More</a> --}}
@@ -48,31 +66,13 @@
               <div class="card-body">
                 <div class="date">
                   {{-- <h3 class="mb-0 text-white">{{ substr($results->created_at,0,2) }}</h3> --}}
-                  <h4 class="mb-0 text-black">22 Agustus 2020</h4> <br>
+                  <h5 class="mb-0 text-black">22 Agustus 2020</h5> <br>
                   {{-- <p class="mb-0 text-white">{{bulanSaja($results->created_at)}}</p> --}}
                 </div>
                 {{-- <h5 class="card-title text-center">{{ucwords($results->title)}}</h5> --}}
                 <h5 class="card-title text-center">PERTEMUAN PROFESI</h5>
                 {{-- <p>{!! substr($results->description,0,200) !!}</p> --}}
                 <p>MEMPERSIAPKAN BUSINESS CONTINUITY MANAGEMENT MENUJU ERA SOCIETY 5.0 (POST COVID-19) DI INDONESIA</p>
-                {{-- <a href="{{url('blogs/'.$results->slug)}}" class="ReadMore m-auto">Read More</a> --}}
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-4">
-            <div class="card cardNews">
-              {{-- <img class="card-img-top" src="{{asset('front/image/bannerAllPage/blogs/'.$results->image)}}" alt="Card image cap"> --}}
-              <img class="card-img-top" src="{{ url('p3sm.jpeg') }}" alt="Card image cap">
-              <div class="card-body">
-                <div class="date">
-                  {{-- <h3 class="mb-0 text-white">{{ substr($results->created_at,0,2) }}</h3> --}}
-                  <h4 class="mb-0 text-black">05 Agutus 2020</h4> <br>
-                  {{-- <p class="mb-0 text-white">{{bulanSaja($results->created_at)}}</p> --}}
-                </div>
-                {{-- <h5 class="card-title text-center">{{ucwords($results->title)}}</h5> --}}
-                <h5 class="card-title text-center">PERTEMUAN PROFESI</h5>
-                {{-- <p>{!! substr($results->description,0,200) !!}</p> --}}
-                <p>URGENSI PENINGKATAN KOMPETENSI TENAGA KERJA KONSTRUKSI SEIRING DENGAN PELAKSANAAN "KEBIASAAN BARU" DI INDONESIA</p>
                 {{-- <a href="{{url('blogs/'.$results->slug)}}" class="ReadMore m-auto">Read More</a> --}}
               </div>
             </div>

@@ -137,12 +137,12 @@
 		</div>
 		<div class="login">
 			<h4 class="head-title">Login</h4>
-			<p>Silahkan Login dengan email yang sudah terverifikasi.</p>
+			<p>Silahkan Login dengan user bagi yang sudah memiliki akun, atau klik <button class="btn btn-sm button-flash my-2 my-sm-0">Daftar</button> pada kegiatan dibawah ini</p>
 			<div class="col-sm-6">
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
-						<input type="text" class="form-control select2" placeholder="User(Email)" name="username" id="username">
+						<input type="text" class="form-control select2" placeholder="User (Email)" name="username" id="username">
 						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
 						<div id="name">
 
@@ -207,7 +207,7 @@
 						@else
                         <a href="{{ isset($key->slug) ? url('registrasi/daftar',$key->slug) : url('registrasi/daftar',$key->id)}}"
                             class="btn button-flash my-2 my-sm-0" data-toggle="tooltip"
-						data-placement="top" title="Daftar Seminar">Daftar</a>
+						data-placement="top" title="Daftar disini bagi yang belum memiliki akun APP PPKB P3S Mandiri">Daftar</a>
 						@endif
 					</td>
                 </tr>

@@ -6,10 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="keywords" content="P3SM, Sertifikat, Seminar, Jakarta, Indonesia, Seminar">
-    <meta name="description" content="PPKB ONLINE adalah Halaman Web untuk melakukan pendaftaran seminar yang diselenggarakan oleh P3S Mandiri"/>
+    <meta name="keywords" content="PPKB ONLINE, P3SM, Sertifikat, Sertifikasi, Seminar, Jakarta, Indonesia, Webinar">
+    <meta name="description" content="PPKB P3S MANDIRI adalah halaman web untuk Program Pengembangan Keprofesian Berkelanjutan yang diselenggarakan oleh P3S Mandiri"/>
 
-    <title>PPKB ONLINE P3S Mandiri</title>
+    <title>PPKB P3S MANDIRI</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
