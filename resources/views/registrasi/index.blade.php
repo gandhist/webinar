@@ -237,7 +237,7 @@
           </div>
       </div>
       <br>
-      <div class="row">
+      {{-- <div class="row">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8 card" style="width: 100%;background-color:#b7d0ed">
@@ -255,7 +255,7 @@
         <div class="col-lg-2">
         </div>
       </div>
-      <br>
+      <br> --}}
       <div class="row">
           <div class="col-lg-2">
           </div>

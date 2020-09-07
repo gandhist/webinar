@@ -17,6 +17,8 @@ Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback
 Route::get('', 'FrontendController@index')->name('homeUI');
 Route::get('reset', 'FrontendController@reset');
 Route::get('tesWA', 'FrontendController@kirimWA');
+Route::get('tesWA2', 'FrontendController@kirimWA2');
+Route::get('tesWA3', 'FrontendController@kirimWA3');
 
 Route::post('reset/update', 'FrontendController@update');
 Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');

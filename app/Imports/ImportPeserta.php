@@ -143,9 +143,10 @@ class ImportPeserta implements ToCollection,WithHeadingRow
 
                 $id_peserta_seminar = $peserta_seminar->id;
 
-                // $kurangi_kuota = Seminar::where('id',$this->id)->first();
-                // $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
-                // $kurangi_kuota->save();
+                $kurangi_kuota = Seminar::where('id',$this->id)->first();
+                $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
+                $kurangi_kuota->save();
+                
                 $nama_seminar = Seminar::select('nama_seminar', 'tema')->where('id', '=',$this->id)->first();
 
 
