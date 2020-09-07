@@ -56,34 +56,37 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 // dispatch(new \App\Jobs\SendEmailUserBaru($detail));
                 // \Mail::to($row['email'])->send(new MailPeserta($detail));
 
-            } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp != $row['nomor_handphone']) {
+            }
+            if(isset($user->peserta->no_hp)){
+                if ($user->email ==  $row['email'] && $user->peserta->no_hp != $row['nomor_handphone']) {
 
-                $user->grup_id = $user->id;
-                $user->save();
+                    $user->grup_id = $user->id;
+                    $user->save();
 
-                $duplicate_user                               = new User;
-                $duplicate_user->username                     = $row['email'];
-                $duplicate_user->email                        = $row['email'];
-                $duplicate_user->password                     = Hash::make($row['nomor_handphone']);
-                $duplicate_user->name                         = $row['nama'];
-                $duplicate_user->role_id                      = '2';
-                $duplicate_user->grup_id                      = $user->id;
-                $duplicate_user->save();
+                    $duplicate_user                               = new User;
+                    $duplicate_user->username                     = $row['email'];
+                    $duplicate_user->email                        = $row['email'];
+                    $duplicate_user->password                     = Hash::make($row['nomor_handphone']);
+                    $duplicate_user->name                         = $row['nama'];
+                    $duplicate_user->role_id                      = '2';
+                    $duplicate_user->grup_id                      = $user->id;
+                    $duplicate_user->save();
 
 
-                $user_id = $duplicate_user->id;
+                    $user_id = $duplicate_user->id;
 
-                $password = $row['nomor_handphone'];
+                    $password = $row['nomor_handphone'];
 
-                // $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] ,'email' => $row['email'], 'im_id' => $import_err->id];
-                // dispatch(new \App\Jobs\SendEmailUserBaru($detail));
+                    // $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] ,'email' => $row['email'], 'im_id' => $import_err->id];
+                    // dispatch(new \App\Jobs\SendEmailUserBaru($detail));
 
-                array_push($err, 'Membuat user ganda');
+                    array_push($err, 'Membuat user ganda');
 
-            } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp == $row['nomor_handphone']) {
-                array_push($err, 'User sudah ada');
-                $userAda = 1;
-                $user_id = $user->id;
+                } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp == $row['nomor_handphone']) {
+                    array_push($err, 'User sudah ada');
+                    $userAda = 1;
+                    $user_id = $user->id;
+                }
             }
 
             $peserta = Peserta::where('user_id',$user->id)->first();
@@ -146,7 +149,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $kurangi_kuota = Seminar::where('id',$this->id)->first();
                 $kurangi_kuota->kuota_temp = $kurangi_kuota->kuota_temp - 1;
                 $kurangi_kuota->save();
-                
+
                 $nama_seminar = Seminar::select('nama_seminar', 'tema')->where('id', '=',$this->id)->first();
 
 
