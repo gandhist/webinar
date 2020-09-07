@@ -268,7 +268,10 @@ a {
                             <p>Dengan Username : {{$detail['username']}}</p>
                             <br>
                             <p>Anda berhasil terdaftar diseminar sebagai berikut, </p>
-                            <p>Tema : <b style="padding-left: 3.7rem; display: inline-block;margin-top: -1.5rem;">"{{$detail['tema']}}"</b> </p>
+                            <div style="display: flex; width:100%">
+                                <div style="display: inline-block; width:15%;">Tema :</div>
+                                <div style="display: inline-block;"><b>"{{$detail['tema']}}"</b> </div>
+                            </div>
                             <p>Yang akan dilaksanakan pada </p>
                             <p>Tanggal : {{$detail['tanggal']}}</p>
                             <p>Jam : {{$detail['jam']}}</p>
