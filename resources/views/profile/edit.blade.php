@@ -133,13 +133,12 @@
             <thead>
                 <tr role="row">
                     <th style="width:1%;text-align:center;">No</th>
-                    <th style="width:8%;text-align:center;">Title</th>
-                    <th style="width:15%;text-align:center;">Tema</th>
-                    <th style="width:10%;text-align:center;">Tanggal</th>
+                    <th style="width:14%;text-align:center;">Jenis Kegiatan</th>
+                    <th style="width:17%;text-align:center;">Judul</th>
+                    <th style="width:10%;text-align:center;">Jadwal</th>
                     {{-- <th style="width:5%;text-align:center;">Waktu</th> --}}
-                    <th style="width:10%;text-align:center;">Nilai SKPK</th>
-                    <th style="width:10%;text-align:center;">Absen Masuk</th>
-                    <th style="width:10%;text-align:center;">Absen Keluar</th>
+                    <th style="width:8%;text-align:center;">SKPK</th>
+                    <th style="width:10%;text-align:center;">Awal - Akhir Kegiatan</th>
                     <th style="width:5%;text-align:center;">Materi</th>
                     <th style="width:5%;text-align:center;">Sertifikat</th>
 
@@ -168,14 +167,16 @@
                     </td>
                     <td style="text-align:center;">
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
-                        @if(isset($key->presensi->jam_cek_in) == null)
-                            <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
+                        @if(isset($key->presensi->jam_cek_out) == null)
+                            @if(isset($key->presensi->jam_cek_in) == null)
+                                <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
+                            @else
+                            <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
+                            @endif
                         @else
-                        <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? $key->presensi->jam_cek_in : '' }} </a>
+                        <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>
+                        <button class="btn btn-sm btn-secondary pull-right">{{ isset($key->presensi->jam_cek_out) ? \Carbon\Carbon::parse($key->presensi->jam_cek_out)->isoFormat("DD MMMM YYYY H:m") : '' }}</button>
                         @endif
-                    </td>
-                    <td style="text-align:center;">
-                            {{ isset($key->presensi) ? $key->presensi->jam_cek_out : '' }}
                     </td>
                     <td style="text-align:center;">
                         @if(isset($key->presensi->jam_cek_out) == null)
@@ -188,7 +189,7 @@
                     </td>
                     <td>
                         @if(isset($key->presensi->jam_cek_out) != null)
-                            <a href="{{ url('sertifikat', Illuminate\Support\Facades\Crypt::encrypt($key->no_srtf)) }}" target="_blank" type="submit" class="btn btn-sm btn-success pull-right"> <i class="fa fa-file"></i> Sertifikat</a>
+                            <a href="{{ url('sertifikat', Illuminate\Support\Facades\Crypt::encrypt($key->no_srtf)) }}" target="_blank" type="submit" class="btn btn-sm btn-success pull-right"> <i class="fa fa-eye"></i> Sertifikat</a>
                         @endif
                     </td>
                 </tr>

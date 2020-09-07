@@ -76,9 +76,9 @@
     <thead>
       <tr>
         <th style="width:2%;text-align:center">No</th>
-        <th style="text-align:center">Tema</th>
-        <th style="text-align:center">Judul Seminar</th>
-        <th style="text-align:center">Tanggal</th>
+        <th style="text-align:center">Jenis Kegiatan</th>
+        <th style="text-align:center">Judul</th>
+        <th style="text-align:center">Jadwal Kegiatan</th>
         <th style="text-align:center">Tempat</th>
         <th style="text-align:center">Narasumber</th>
         <th style="width:7%;text-align:center;">Biaya</th>
@@ -90,8 +90,8 @@
       <tr>
           <td>{{ $loop->iteration}}</td>
           {{-- <td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td> --}}
-          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
           <td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
+          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>  
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}

@@ -78,12 +78,30 @@ class FrontendController extends Controller
         $password = "dan Password : ".$pass;
         $login = 'https://srtf.p3sm.or.id/login';
 
-        $tema = strip_tags(html_entity_decode($seminar[0]['tema']));
-        $tgl = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->isoFormat("DD MMMM YYYY");
-        $link = $seminar[0]['slug'];
-        $seminar_1 = $tema.' pada tanggal '.$tgl.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link;
+        $seminar_1 = '-';
         $seminar_2 = '-';
         $seminar_3 = '-';
+
+        if(isset($seminar[0])){
+            $tema_1 = strip_tags(html_entity_decode($seminar[0]['tema']));
+            $tgl_1 = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+            $link_1 = $seminar[0]['slug'];
+            $seminar_1 = $tema_1.' pada tanggal '.$tgl_1.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_1;
+        }
+        
+        if(isset($seminar[1])){
+            $tema_2 = strip_tags(html_entity_decode($seminar[1]['tema']));
+            $tgl_2 = \Carbon\Carbon::parse($seminar[1]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+            $link_2 = $seminar[1]['slug'];
+            $seminar_2 = $tema_2.' pada tanggal '.$tgl_2.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_2;
+        }
+
+        if(isset($seminar[2])){
+            $tema_3 = strip_tags(html_entity_decode($seminar[2]['tema']));
+            $tgl_3 = \Carbon\Carbon::parse($seminar[2]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+            $link_3 = $seminar[2]['slug'];
+            $seminar_3 = $tema_3.' pada tanggal '.$tgl_3.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_3;
+        }   
 
         $token = $this->getToken(); 
         $channel = $this->setupChannel($token['access_token']);
