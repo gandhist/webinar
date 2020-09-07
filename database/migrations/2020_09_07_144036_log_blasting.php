@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TargetBlasting extends Migration
+class LogBlasting extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,12 @@ class TargetBlasting extends Migration
     public function up()
     {
         //
-        if (!Schema::hasTable('srtf_target_blasting')) {
-            Schema::create('srtf_target_blasting', function (Blueprint $table) {
+        if (!Schema::hasTable('srtf_log_blasting')) {
+            Schema::create('srtf_log_blasting', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('email');
-                $table->string('no_hp');
+                $table->string('id_seminar');
+                $table->string('kirim_email');
+                $table->string('kirim_wa');
                 $table->timestamps();
             });
         }
