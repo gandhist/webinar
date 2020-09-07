@@ -28,6 +28,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
         $import = new LogImport;
         $import->save();
         $jumlah = 0;
+        $seminar = Seminar::where('id', $this->id)->first();
         foreach ($rows as $row)
         {
             $err = [];
@@ -103,6 +104,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $peserta_seminar->id_peserta        = $peserta->id;
                 $peserta_seminar->is_paid           = '1';
                 $peserta_seminar->status            = '1';
+                $peserta_seminar->skpk_nilai        = $seminar->skpk_nilai;
 
                 $tanggal = Seminar::select('tgl_awal')->where('id', '=',$this->id)->first();
                 $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$this->id)->first();
@@ -144,7 +146,6 @@ class ImportPeserta implements ToCollection,WithHeadingRow
 
                 // \Mail::to($row['email'])->send(new MailSeminar($detail));
                 // Mail::to($this->detail['email'])->send(new MailSeminar($this->detail));
-                $seminar = Seminar::where('id', $this->id)->first();
                 $tema = strip_tags(html_entity_decode($seminar->tema));
                 $tanggal = \Carbon\Carbon::parse($seminar->tgl_awal)->translatedFormat('d F Y');
                 $jam = $seminar->jam_awal;
