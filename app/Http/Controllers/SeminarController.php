@@ -18,6 +18,10 @@ use App\TtdModel;
 use App\KlasifikasiModel;
 use App\TUKModel;
 use App\SubKlasifikasiModel;
+use App\TargetBlasting;
+use App\LogBlasting;
+use App\ReportBlasting;
+use App\User;
 use PDF;
 use Mail;
 use App\NarasumberModel;
@@ -34,6 +38,7 @@ use App\AbsensiModel;
 use App\FeedbackModel;
 use App\FeedbackRatingModel;
 use App\Exports\FeedbackExport;
+use Hashids\Hashids;
 use Excel;
 
 class SeminarController extends Controller
@@ -1688,5 +1693,40 @@ class SeminarController extends Controller
     public function statistik($id){
 
         return view('seminar.statistik');
+    }
+
+    public function blast(Request $request, $id) {
+        // dd($request);
+        $seminar = SeminarModel::where('id', $id)->first();
+        $target = TargetBlasting::all();
+        $link = null;
+        if($request->link_daftar) {
+            $link['link_daftar'] = $request->link_daftar;
+        }
+
+        if($request->link_zoom) {
+            $link['link_zoom'] = $request->link_zoom;
+        }
+
+        foreach($target as $key){
+            $magic = null;
+            $user = User::where('email', $key->email)->first();
+            if(isset($user->peserta->id)){
+                $peserta = Peserta::where('id', $user->peserta->id)->first();
+                $hashids = new Hashids();
+                $magic = $hashids->encode($user->id, $seminar->id);
+            } else {
+                $peserta = NULL;
+            }
+            $detail = [
+                'seminar' => $seminar,
+                'target' => $key,
+                'peserta' => $peserta,
+                'magic' => $magic,
+            ];
+            // dump($detail);
+//
+            dispatch(new \App\Jobs\Blasting($detail, $link));
+        }
     }
 }

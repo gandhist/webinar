@@ -11,7 +11,7 @@
 |
 */
 Route::auth();
-Route::get('test', 'RegistController@test');
+Route::get('test/{id}', 'RegistController@test');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');
@@ -112,7 +112,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('selesai/{id}','SeminarController@selesai');
 	Route::get('feedback/{id}','SeminarController@feedback');
 	Route::get('download-feedback/{id}','SeminarController@downloadFeedback');
-	Route::get('statistik/{id}','SeminarController@statistik');
+    Route::get('statistik/{id}','SeminarController@statistik');
+    Route::post('blast/{id}', 'SeminarController@blast');
 
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');

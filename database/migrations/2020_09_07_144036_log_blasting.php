@@ -17,9 +17,9 @@ class LogBlasting extends Migration
         if (!Schema::hasTable('srtf_log_blasting')) {
             Schema::create('srtf_log_blasting', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('id_seminar');
-                $table->string('kirim_email');
-                $table->string('kirim_wa');
+                $table->string('id_seminar')->nullable();
+                $table->string('kirim_email')->nullable();
+                $table->string('kirim_wa')->nullable();
                 $table->timestamps();
             });
         }

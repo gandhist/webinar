@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\GlobalFunction;
 use Illuminate\Support\Facades\Http;
+use Hashids\Hashids;
 use Session;
 
 class RegistController extends Controller
@@ -117,7 +118,7 @@ class RegistController extends Controller
 
             //kirim wa
             $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
-            
+
             $nohp = $request->no_hp;
             $nama = $request->nama;
             $username = $request->email;
@@ -133,7 +134,7 @@ class RegistController extends Controller
 
                 $nomor++;
             }
-        
+
             $pesan = "Halo ".$nama.", \nSelamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut,\n\nNama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."\n\nKegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri Pastikan Nomor Whatsapp P3S Mandiri ini telah tersimpan sebagai kontak HP Saudara/i, Agar link yang terdapat di dalamnya bisa langsung aktif dan dapat di “klik”. \n\nSetelah Nomor WA tersebut tersimpan, Silakan login dengan klik tombol login berikut ini https://srtf.p3sm.or.id/registrasi/login . \n\nTerima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.";
 
             $this->kirimPesanWA($nohp,$pesan);
@@ -476,7 +477,10 @@ class RegistController extends Controller
 
     }
 
-    public function test() {
+    public function test($test) {
+        $hashids = new Hashids();
+        $decode = $hashids->decode($test);
+        dd($decode);
         // $body = {
         //     "to_number": "081586604381",
         //     "to_name": "Arief Purwoko",
@@ -534,18 +538,18 @@ class RegistController extends Controller
 
         // return view('mail.regist-akun')->with(compact('pesan', 'seminar'));
 
-        $pesan = [
-                    'username' => 'USERNAME',
-                    'password' => 'PASSWORD',
-                    'email' => 'EMAIL@GMAIL.COM',
-                    'nama' => 'NAMA LENGKAP',
-                    'nope' => '08228734843',
-                    'tanggal' => 'TANGGAL KEJADIAN',
-                    'jam' => 'JAM MULAI',
-                    'tema' => 'TEMA TEMA TEMA TEMA TEMA TEMA TEMA TEMATEMA TEMA TEMA TEMA TEMA TEMA TEMA TEMA',
-        ];
+        // $pesan = [
+        //             'username' => 'USERNAME',
+        //             'password' => 'PASSWORD',
+        //             'email' => 'EMAIL@GMAIL.COM',
+        //             'nama' => 'NAMA LENGKAP',
+        //             'nope' => '08228734843',
+        //             'tanggal' => 'TANGGAL KEJADIAN',
+        //             'jam' => 'JAM MULAI',
+        //             'tema' => 'TEMA TEMA TEMA TEMA TEMA TEMA TEMA TEMATEMA TEMA TEMA TEMA TEMA TEMA TEMA TEMA',
+        // ];
 
-        return view('mail.signup')->with(compact('pesan'));
+        // return view('mail.signup')->with(compact('pesan'));
 
     }
 

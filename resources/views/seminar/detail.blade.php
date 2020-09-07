@@ -347,7 +347,7 @@
                     @endif
                 </div>
                 <div class="row" style="margin-bottom:50px;">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <form action="{{ url('seminar/upload-materi',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
                             method="post" enctype="multipart/form-data">
                             @csrf
@@ -376,6 +376,18 @@
                             {{-- <br/>
                             <button class="btn btn-success">Upload</button> --}}
                         </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Blast Seminar (Email & Whatsapp)</label>
+                            <div>
+                                <a data-toggle="modal" data-target="#modalBlast" id="konfirmasi">
+                                    <button class="btn btn-success" id="clickBlast">
+                                        <i class="fa fa-bullhorn" aria-hidden="true"></i> Blast Seminar
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -464,6 +476,61 @@
 	    </div>
 	  </div>
 	</div>
+
+{{-- Akhir Modal Foto --}}
+
+
+    {{-- Modal Foto --}}
+<!-- Modal -->
+<div class="modal fade" id="modalBlast" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Blast Seminar</h4>
+            </div>
+            <form action="{{ url('seminar/blast',$seminar->id) }}" id="formAdd" name="formAdd"
+                method="post" enctype="multipart/form-data"
+                style="display:inline">
+                @csrf
+                <div class="modal-body">
+                    {{-- Apakah Anda yakin? --}}
+                    {{-- <div class="form-group {{ $errors->first('google_form') ? 'has-error' : '' }}">
+                        <label for="google_form" class="label-control required">Link Google Form</label>
+                        <input type="text" id="google_form" class="form-control" name="google_form"
+                        placeholder="Link Google Form" required
+                        value="{{ old('google_form') ? old('google_form') : '' }}">
+                        <div id="google_form" class="invalid-feedback text-danger">
+                            {{ $errors->first('google_form') }}
+                        </div>
+                    </div> --}}
+                    <div class="form-group {{ $errors->first('link_daftar') ? 'has-error' : '' }}">
+                        <label for="link_daftar" class="label-control required">Link pendaftaran melalui aplikasi PPKB P3SM</label>
+                        <input type="text" id="link_daftar" class="form-control" name="link_daftar"
+                        placeholder="Link pendaftaran melalui aplikasi PPKB P3SM" required
+                        value="{{ old('link_daftar') ? old('link_daftar') : '' }}">
+                        <div id="link_daftar" class="invalid-feedback text-danger">
+                            {{ $errors->first('link_daftar') }}
+                        </div>
+                    </div>
+                    <div class="form-group {{ $errors->first('link_zoom') ? 'has-error' : '' }}">
+                        <label for="link_zoom" class="label-control required">Link ZOOM</label>
+                        <input type="text" id="link_zoom" class="form-control" name="link_zoom"
+                        placeholder="Link ZOOM" required
+                        value="{{ old('link_zoom') ? old('link_zoom') : '' }}">
+                        <div id="link_zoom" class="invalid-feedback text-danger">
+                            {{ $errors->first('link_zoom') }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
+                    <button type="submit" class="btn btn-success">Ya</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
 
 {{-- Akhir Modal Foto --}}
 </section>

@@ -17,9 +17,10 @@ class ReportBlasting extends Migration
         if (!Schema::hasTable('srtf_report_blasting')) {
             Schema::create('srtf_report_blasting', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('id_seminar');
-                $table->string('is_email_sent');
-                $table->string('is_wa_sent');
+                $table->string('id_target')->nullable();
+                $table->string('id_seminar')->nullable();
+                $table->string('is_email_sent')->nullable();
+                $table->string('is_wa_sent')->nullable();
                 $table->timestamps();
             });
         }

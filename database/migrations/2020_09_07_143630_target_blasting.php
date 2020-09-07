@@ -17,8 +17,9 @@ class TargetBlasting extends Migration
         if (!Schema::hasTable('srtf_target_blasting')) {
             Schema::create('srtf_target_blasting', function (Blueprint $table) {
                 $table->bigIncrements('id');
-                $table->string('email');
-                $table->string('no_hp');
+                $table->string('nama')->nullable();
+                $table->string('email')->nullable();
+                $table->string('no_hp')->nullable();
                 $table->timestamps();
             });
         }
