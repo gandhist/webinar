@@ -1,413 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifikasi</title>
 
-<!doctype html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Pendaftaran Pengguna Baru</title>
-    <style>
-      /* -------------------------------------
-          GLOBAL RESETS
-      ------------------------------------- */
+<style>
+/* This styles you should add to your html as inline-styles */
+/* You can easily do it with http://inlinestyler.torchboxapps.com/ */
+/* Copy this html-window code converter and click convert button */
+/* After that you can remove this style from your code */
 
-      /*All the styling goes here*/
+body {
+    margin: 0;
+    padding: 0;
+    mso-line-height-rule: exactly;
+    min-width: 100%;
+}
 
-      img {
-        border: none;
-        -ms-interpolation-mode: bicubic;
-        max-width: 100%;
-      }
+.wrapper {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    min-width: 620px;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
 
-      body {
-        background-color: #f6f6f6;
-        font-family: sans-serif;
-        -webkit-font-smoothing: antialiased;
-        font-size: 14px;
-        line-height: 1.4;
-        margin: 0;
-        padding: 0;
-        -ms-text-size-adjust: 100%;
-        -webkit-text-size-adjust: 100%;
-      }
+body, .wrapper {
+    background-color: #ffffff;
+}
 
-      table {
-        border-collapse: separate;
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-        width: 100%; }
-        table td {
-          font-family: sans-serif;
-          font-size: 14px;
-          vertical-align: top;
-      }
+/* Basic */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+table.center {
+    margin: 0 auto;
+    width: 602px;
+}
+td {
+    padding: 0;
+    vertical-align: top;
+}
 
-      /* -------------------------------------
-          BODY & CONTAINER
-      ------------------------------------- */
+.spacer,
+.border {
+    font-size: 1px;
+    line-height: 1px;
+}
+.spacer {
+    width: 100%;
+    line-height: 16px
+}
+.border {
+    background-color: #e0e0e0;
+    width: 1px;
+}
 
-      .body {
-        background-color: #f6f6f6;
-        width: 100%;
-      }
+.padded {
+    padding: 0 24px;
+}
+img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+}
+.image {
+    font-size: 12px;
+}
+.image img {
+    display: block;
+}
+strong, .strong {
+    font-weight: 700;
+}
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+li {
+    margin-top: 0;
+}
+ol,
+ul,
+li {
+    padding-left: 0;
+}
 
-      /* Set a max-width, and make it display as block so it will automatically stretch to that width, but will also shrink down on a phone or something */
-      .container {
-        display: block;
-        margin: 0 auto !important;
-        /* makes it centered */
-        max-width: 580px;
-        padding: 10px;
-        width: 580px;
-      }
+a {
+    text-decoration: none;
+    color: #616161;
+}
+.btn {
+    background-color:#2196F3;
+    border:1px solid #2196F3;
+    border-radius:2px;
+    color:#ffffff;
+    display:inline-block;
+    font-family:Roboto, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:400;
+    line-height:36px;
+    text-align:center;
+    text-decoration:none;
+    text-transform:uppercase;
+    width:200px;
+    height: 36px;
+    padding: 0 8px;
+    margin: 0;
+    outline: 0;
+    outline-offset: 0;
+    -webkit-text-size-adjust:none;
+    mso-hide:all;
+}
 
-      /* This should also be a block element, so that it will fill 100% of the .container */
-      .content {
-        box-sizing: border-box;
-        display: block;
-        margin: 0 auto;
-        max-width: 580px;
-        padding: 10px;
-      }
+/* Top panel */
+.title {
+    text-align: left;
+}
 
-      /* -------------------------------------
-          HEADER, FOOTER, MAIN
-      ------------------------------------- */
-      .main {
-        background: #ffffff;
-        border-radius: 3px;
-        width: 100%;
-      }
+.subject {
+    text-align: right;
+}
 
-      .wrapper {
-        box-sizing: border-box;
-        padding: 20px;
-      }
+.title, .subject {
+    width: 300px;
+    padding: 8px 0;
+    color: #616161;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+}
 
-      .content-block {
-        padding-bottom: 10px;
-        padding-top: 10px;
-      }
+/* Header */
+.logo {
+    padding: 16px 0;
+}
 
-      .footer {
-        clear: both;
-        margin-top: 10px;
-        text-align: center;
-        width: 100%;
-      }
-        .footer td,
-        .footer p,
-        .footer span,
-        .footer a {
-          color: #999999;
-          font-size: 12px;
-          text-align: center;
-      }
+/* Logo */
+.logo-image {
 
-      /* -------------------------------------
-          TYPOGRAPHY
-      ------------------------------------- */
-      h1,
-      h2,
-      h3,
-      h4 {
-        color: #000000;
-        font-family: sans-serif;
-        font-weight: 400;
-        line-height: 1.4;
-        margin: 0;
-        margin-bottom: 30px;
-      }
+}
 
-      h1 {
-        font-size: 35px;
-        font-weight: 300;
-        text-align: center;
-        text-transform: capitalize;
-      }
+/* Main */
+.main {
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+}
 
-      p,
-      ul,
-      ol {
-        font-family: sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        margin: 0;
-        margin-bottom: 15px;
-      }
-        p li,
-        ul li,
-        ol li {
-          list-style-position: inside;
-          margin-left: 5px;
-      }
+/* Content */
+.columns {
+    margin: 0 auto;
+    width: 600px;
+    background-color: #ffffff;
+    font-size: 14px;
+}
 
-      a {
-        color: #3498db;
-        text-decoration: underline;
-      }
+.column {
+    text-align: left;
+    background-color: #ffffff;
+    font-size: 14px;
+}
 
-      /* -------------------------------------
-          BUTTONS
-      ------------------------------------- */
-      .btn {
-        box-sizing: border-box;
-        width: 100%; }
-        .btn > tbody > tr > td {
-          padding-bottom: 15px; }
-        .btn table {
-          width: auto;
-      }
-        .btn table td {
-          background-color: #ffffff;
-          border-radius: 5px;
-          text-align: center;
-      }
-        .btn a {
-          background-color: #ffffff;
-          border: solid 1px #3498db;
-          border-radius: 5px;
-          box-sizing: border-box;
-          color: #3498db;
-          cursor: pointer;
-          display: inline-block;
-          font-size: 14px;
-          font-weight: bold;
-          margin: 0;
-          padding: 12px 25px;
-          text-decoration: none;
-          text-transform: capitalize;
-      }
+.column-top {
+    font-size: 24px;
+    line-height: 24px;
+}
 
-      .btn-primary table td {
-        background-color: #3498db;
-      }
+.content {
+    width: 100%;
+}
 
-      .btn-primary a {
-        background-color: #3498db;
-        border-color: #3498db;
-        color: #ffffff;
-      }
+.column-bottom {
+    font-size: 8px;
+    line-height: 8px;
+}
 
-      /* -------------------------------------
-          OTHER STYLES THAT MIGHT BE USEFUL
-      ------------------------------------- */
-      .last {
-        margin-bottom: 0;
-      }
+.content h1 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #212121;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+}
 
-      .first {
-        margin-top: 0;
-      }
+.content p {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #212121;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+.content .caption {
+    color: #616161;
+    font-size: 12px;
+    line-height: 20px;
+}
 
-      .align-center {
-        text-align: center;
-      }
+/* Footer */
+.signature, .subscription {
+    vertical-align: bottom;
+    width: 300px;
+    padding-top: 8px;
+    margin-bottom: 16px;
+}
 
-      .align-right {
-        text-align: right;
-      }
+.signature {
+    text-align: left;
+}
+.subscription {
+    text-align: right;
+}
 
-      .align-left {
-        text-align: left;
-      }
+.signature p, .subscription p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #616161;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+}
+</style>
 
-      .clear {
-        clear: both;
-      }
+</head>
+<body>
 
-      .mt0 {
-        margin-top: 0;
-      }
 
-      .mb0 {
-        margin-bottom: 0;
-      }
-
-      .preheader {
-        color: transparent;
-        display: none;
-        height: 0;
-        max-height: 0;
-        max-width: 0;
-        opacity: 0;
-        overflow: hidden;
-        mso-hide: all;
-        visibility: hidden;
-        width: 0;
-      }
-
-      .powered-by a {
-        text-decoration: none;
-      }
-
-      hr {
-        border: 0;
-        border-bottom: 1px solid #f6f6f6;
-        margin: 20px 0;
-      }
-
-      /* -------------------------------------
-          RESPONSIVE AND MOBILE FRIENDLY STYLES
-      ------------------------------------- */
-      @media only screen and (max-width: 620px) {
-        table[class=body] h1 {
-          font-size: 28px !important;
-          margin-bottom: 10px !important;
-        }
-        table[class=body] p,
-        table[class=body] ul,
-        table[class=body] ol,
-        table[class=body] td,
-        table[class=body] span,
-        table[class=body] a {
-          font-size: 16px !important;
-        }
-        table[class=body] .wrapper,
-        table[class=body] .article {
-          padding: 10px !important;
-        }
-        table[class=body] .content {
-          padding: 0 !important;
-        }
-        table[class=body] .container {
-          padding: 0 !important;
-          width: 100% !important;
-        }
-        table[class=body] .main {
-          border-left-width: 0 !important;
-          border-radius: 0 !important;
-          border-right-width: 0 !important;
-        }
-        table[class=body] .btn table {
-          width: 100% !important;
-        }
-        table[class=body] .btn a {
-          width: 100% !important;
-        }
-        table[class=body] .img-responsive {
-          height: auto !important;
-          max-width: 100% !important;
-          width: auto !important;
-        }
-      }
-
-      /* -------------------------------------
-          PRESERVE THESE STYLES IN THE HEAD
-      ------------------------------------- */
-      @media all {
-        .ExternalClass {
-          width: 100%;
-        }
-        .ExternalClass,
-        .ExternalClass p,
-        .ExternalClass span,
-        .ExternalClass font,
-        .ExternalClass td,
-        .ExternalClass div {
-          line-height: 100%;
-        }
-        .apple-link a {
-          color: inherit !important;
-          font-family: inherit !important;
-          font-size: inherit !important;
-          font-weight: inherit !important;
-          line-height: inherit !important;
-          text-decoration: none !important;
-        }
-        #MessageViewBody a {
-          color: inherit;
-          text-decoration: none;
-          font-size: inherit;
-          font-family: inherit;
-          font-weight: inherit;
-          line-height: inherit;
-        }
-        .btn-primary table td:hover {
-          background-color: #34495e !important;
-        }
-        .btn-primary a:hover {
-          background-color: #34495e !important;
-          border-color: #34495e !important;
-        }
-      }
-
-    </style>
-  </head>
-  <body class="">
-    <span class="preheader">Pendaftaran Pengguna Baru</span>
-    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
-      <tr>
-        <td>&nbsp;</td>
-        <td class="container">
-          <div class="content">
-
-            <!-- START CENTERED WHITE CONTAINER -->
-            <table role="presentation" class="main">
-
-              <!-- START MAIN CONTENT AREA -->
-              <tr>
-                <td class="wrapper">
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td>
-                        <p>Halo {{ $detail['nama'] }}</p>
-                        <p>Selamat, Anda telah terdaftar sebagai pengguna di website P3S Mandiri. Silahkan login pada link yang diberikut untuk mengakses akun Anda.</p>
-                        <table role="presentation" border="0" cellpadding="10" cellspacing="0">
-                          <tbody>
-                            <tr>
-                              <td align="left">Email : {{$detail['email']}}</td>
-                            </tr>
-                            <tr>
-                              <td align="left">Username : {{$detail['email']}}</td>
-                            </tr>
-                            <tr>
-                              <td align="left">Password : {{$detail['password']}}</td>
-                            </tr>
-                              <td align="left">
-                                <table role="presentation" border="0" cellpadding="0" cellspacing="0"  class="btn btn-primary">
-                                  <tbody>
-                                    <tr>
-                                      <td> <a href="http://srtf.p3sm.or.id/login" target="_blank">Login</a> </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <p>Terimakasih sudah mendaftar</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
-
-            <!-- END MAIN CONTENT AREA -->
-            </table>
-            <!-- END CENTERED WHITE CONTAINER -->
-
-            <!-- START FOOTER -->
-            <div class="footer">
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                {{-- <tr>
-                  <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
-                  </td>
-                </tr> --}}
-                <tr>
-                  <td class="content-block powered-by">
-                    <a href="http://srtf.p3sm.or.id">P3S Mandiri</a>.
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <!-- END FOOTER -->
-
-          </div>
-        </td>
-        <td>&nbsp;</td>
-      </tr>
+<center class="wrapper">
+    <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr>
+            <td class="title" width="300">P3SM</td>
+            <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id/" target="_blank">www.srtf.p3sm.or.id</a></td>
+        </tr>
+        <tr>
+            <td class="border" colspan="2">&nbsp;</td>
+        </tr>
+        </tbody>
     </table>
-  </body>
+
+    <div class="spacer">&nbsp;</div>
+
+    <table class="main center" width="602" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr>
+            <td class="column">
+                <div class="column-top">&nbsp;</div>
+                <table class="content" border="0" cellspacing="0" cellpadding="0">
+                    <tbody>
+                    <tr>
+                        <td class="padded">
+                            <h1>Halo {{$detail['nama']}},</h1>
+                            <p>Selamat, Anda sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data  sebagai berikut.</p>
+                            <p>Nama : {{$detail['nama']}}</p>
+                            <p>Nomor Hp (WA) : {{$detail['nope']}}</p>
+                            <p>Email : {{$detail['email']}}</p>
+                            <p>Dengan Username : {{$detail['username']}}</p>
+                            <p>Dan Password : {{$detail['password']}}</p>
+                            <br>
+                            <p>Anda berhasil terdaftar diseminar sebagai berikut, </p>
+                            <div style="display: flex; width:100%">
+                                <div style="display: inline-block; width:15%;">Tema :</div>
+                                <div style="display: inline-block;"><b>"{{$detail['tema']}}"</b> </div>
+                            </div>
+                            <p>Yang akan dilaksanakan pada </p>
+                            <p>Tanggal : {{$detail['tanggal']}}</p>
+                            <p>Jam : {{$detail['jam']}}</p>
+                            <br>
+                            <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
+                            <p>Silakan login dengan klik tombol login berikut ini, pada Tanggal “{{$detail['tanggal']}}” dan satu jam sebelum acara dimulai.</p>
+                            <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
+                            <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="column-bottom">&nbsp;</div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="spacer">&nbsp;</div>
+
+    <!-- <table class="footer center" width="602" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr>
+            <td class="border" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="signature" width="300">
+                <p>
+                    With best regards,<br>
+                    Company Name<br>
+                    +0 (000) 00-00-00, John Doe<br>
+                    </p>
+                <p>
+                    Support: <a class="strong" href="mailto:#" target="_blank">support@support.ru</a>
+                </p>
+            </td>
+            <td class="subscription" width="300">
+                <div class="logo-image">
+                    <a href="https://zavoloklom.github.io/material-design-iconic-font/" target="_blank"><img src="https://zavoloklom.github.io/material-design-iconic-font/icons/mstile-70x70.png" alt="logo-alt" width="70" height="70"></a>
+                </div>
+                <p>
+                    <a class="strong block" href="#" target="_blank">
+                        Unsubscribe
+                    </a>
+                    <span class="hide">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                    <a class="strong block" href="#" target="_blank">
+                        Account Settings
+                    </a>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table> -->
+</center>
+</body>
 </html>

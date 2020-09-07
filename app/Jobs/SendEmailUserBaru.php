@@ -18,7 +18,7 @@ class SendEmailUserBaru implements ShouldQueue
 
     protected $detail;
 
-    public $tries = 5;
+    public $tries = 1;
 
     /**
      * Create a new job instance.
@@ -41,21 +41,21 @@ class SendEmailUserBaru implements ShouldQueue
         //
         Mail::to($this->detail['email'])->send(new MailPeserta($this->detail));
 
-        $nohp = $this->detail['nope'];
-        // print_r($this->detail);
-        $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di P3S Mandiri. \nUsername : ".$this->detail['email']."\nPassword : ".$this->detail['nope']."\nAnda bisa login melalui :\nhttps://srtf.p3sm.or.id/login\nMohon segera mengganti password Anda.";
-        $status =  $this->kirimPesanWA($nohp,$pesan);
-        // print_r($status);
+        // $nohp = $this->detail['nope'];
+        // // print_r($this->detail);
+        // $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di P3S Mandiri. \nUsername : ".$this->detail['email']."\nPassword : ".$this->detail['nope']."\nAnda bisa login melalui :\nhttps://srtf.p3sm.or.id/login\nMohon segera mengganti password Anda.";
+        // $status =  $this->kirimPesanWA($nohp,$pesan);
+        // // print_r($status);
 
-        if($status['status'] == '1'){
-            $log = LogImportErr::where('id',$this->detail['im_id'])->first();
-            $log->status_daftar = '1';
-            $log->save();
-        } elseif ($status['status'] =='0') {
-            $log = LogImportErr::where('id',$this->detail['im_id'])->first();
-            $log->status_daftar = '0';
-            $log->save();
-        }
+        // if($status['status'] == '1'){
+        //     $log = LogImportErr::where('id',$this->detail['im_id'])->first();
+        //     $log->status_daftar = '1';
+        //     $log->save();
+        // } elseif ($status['status'] =='0') {
+        //     $log = LogImportErr::where('id',$this->detail['im_id'])->first();
+        //     $log->status_daftar = '0';
+        //     $log->save();
+        // }
 
     }
 }

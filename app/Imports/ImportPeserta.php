@@ -31,6 +31,7 @@ class ImportPeserta implements ToCollection,WithHeadingRow
         foreach ($rows as $row)
         {
             $err = [];
+            $userAda = 0;
             $import_err = new LogImportErr;
             $import_err->save();
             $user = User::where('email',$row['email'])->first();
@@ -44,8 +45,10 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $user->role_id                      = '2';
                 $user->save();
 
-                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] , 'email' => $row['email'], 'im_id' => $import_err->id];
-                dispatch(new \App\Jobs\SendEmailUserBaru($detail));
+                $password = $row['nomor_handphone'];
+
+                // $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] , 'email' => $row['email'], 'im_id' => $import_err->id];
+                // dispatch(new \App\Jobs\SendEmailUserBaru($detail));
                 // \Mail::to($row['email'])->send(new MailPeserta($detail));
 
             } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp != $row['nomor_handphone']) {
@@ -62,13 +65,16 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $duplicate_user->grup_id                      = $user->id;
                 $duplicate_user->save();
 
-                $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] ,'email' => $row['email'], 'im_id' => $import_err->id];
-                dispatch(new \App\Jobs\SendEmailUserBaru($detail));
+                $password = $row['nomor_handphone'];
+
+                // $detail = ['nama' => $row['nama'], 'password' => $row['nomor_handphone'], 'nope' => $row['nomor_handphone'] ,'email' => $row['email'], 'im_id' => $import_err->id];
+                // dispatch(new \App\Jobs\SendEmailUserBaru($detail));
 
                 array_push($err, 'Membuat user ganda');
 
             } elseif ($user->email ==  $row['email'] && $user->peserta->no_hp == $row['nomor_handphone']) {
                 array_push($err, 'User sudah ada');
+                $userAda = 1;
             }
 
             $peserta = Peserta::where('user_id',$user->id)->first();
@@ -131,12 +137,49 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $nama_seminar = Seminar::select('nama_seminar', 'tema')->where('id', '=',$this->id)->first();
 
 
-                $detail = ['nama' => $row['nama'],
-                'tema' => $nama_seminar->tema,
-                'email' => $row['email'], 'nope' => $row['nomor_handphone'] , 'im_id' => $import_err->id];
-                dispatch(new \App\Jobs\SendEmailTerdaftarSeminar($detail));
+                // $detail = ['nama' => $row['nama'],
+                // 'tema' => $nama_seminar->tema,
+                // 'email' => $row['email'], 'nope' => $row['nomor_handphone'] , 'im_id' => $import_err->id];
+                // dispatch(new \App\Jobs\SendEmailTerdaftarSeminar($detail));
+
                 // \Mail::to($row['email'])->send(new MailSeminar($detail));
                 // Mail::to($this->detail['email'])->send(new MailSeminar($this->detail));
+                $seminar = Seminar::where('id', $this->id)->first();
+                $tema = strip_tags(html_entity_decode($seminar->tema));
+                $tanggal = \Carbon\Carbon::parse($seminar->tgl_awal)->translatedFormat('d F Y');
+                $jam = $seminar->jam_awal;
+
+                if($userAda == 0){
+
+
+                    $detail = [
+                        'username' => $user->username,
+                        'password' => $password,
+                        'email' =>$peserta->email,
+                        'nama' => $peserta->nama,
+                        'nope' => $peserta->no_hp,
+                        'tanggal' => $tanggal,
+                        'jam' => $jam,
+                        'tema' => $tema,
+                        'im_id' => $import_err->id
+                    ];
+                    dispatch(new \App\Jobs\SendEmailUserBaru($detail));
+                } else {
+
+                    $detail = [
+                        'username' => $user->username,
+                        // 'password' => $password,
+                        'email' =>$peserta->email,
+                        'nama' => $peserta->nama,
+                        'nope' => $peserta->no_hp,
+                        'tanggal' => $tanggal,
+                        'jam' => $jam,
+                        'tema' => $tema,
+                        'im_id' => $import_err->id
+                    ];
+
+                    dispatch(new \App\Jobs\SendEmailTerdaftarSeminar($detail));
+                }
 
             } else {
                 array_push($err, 'sudah mengikuti seminar');
