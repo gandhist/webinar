@@ -70,9 +70,9 @@ class FrontendController extends Controller
     {    
         $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
-        $no_hp = '081294868833';
-        $nama = 'Nanda';
-        $username = 'noernanda@gmail.com';
+        $no_hp = '082241904510';
+        $nama = 'Rafi';
+        $username = 'rafi@gmail.com';
         $pass = '123456';
         $link = '\nhttps://srtf.p3sm.or.id/login\n';
 
@@ -89,13 +89,9 @@ class FrontendController extends Controller
         }
         
         $detail_seminar = "Nama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."";
-        $pesan = "Halo ".$nama.", \nSelamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut.\n\nNama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."\n\nKegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri Pastikan Nomor Whatsapp P3S Mandiri ini telah tersimpan sebagai kontak HP Saudara/i, Agar link yang terdapat di dalamnya bisa langsung aktif dan dapat di “klik”. \n\nSetelah Nomor WA tersebut tersimpan, Silakan login dengan klik tombol login berikut ini https://srtf.p3sm.or.id/registrasi/login . \n\nTerima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.";
-
-
-        return $this->kirimPesanWA($no_hp,$pesan);
 
         $token = $this->getToken(); 
-        $channel = '65038597-0de1-47e2-adcf-c7fd15acf0ea';
+        $channel = $this->setupChannel($token['access_token']);
         $template = $this->setupTemplate($token['access_token']);
         
         $lang = [
@@ -126,8 +122,8 @@ class FrontendController extends Controller
         $body = [
             'to_number' => $no_hp,
             'to_name' => $nama,
-            'message_template_id' => $template['data'][1]['id'],
-            'channel_integration_id' => $channel,
+            'message_template_id' => $template['data'][2]['id'],
+            'channel_integration_id' => $channel['data'][0]['id'],
             'language' => $lang,
             'parameters' => $param,
         ];
