@@ -70,7 +70,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputSuccess"> Title</label>
+                                            <label class="control-label" for="inputSuccess"> Judul Seminar</label>
                                             <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->nama_seminar }}">
                                         </div>
                                     </div>

@@ -269,7 +269,10 @@ a {
                             <p>Dan Password : {{$pesan['password']}}</p>
                             <br>
                             <p>Anda berhasil terdaftar diseminar sebagai berikut, </p>
-                            <p>Tema : <b>"{{$pesan['tema']}}"</b></p>
+                            <div style="display: flex; width:100%">
+                                <div style="display: inline-block; width:15%;">Tema :</div>
+                                <div style="display: inline-block;"><b>"{{$pesan['tema']}}"</b> </div>
+                            </div>
                             <p>Yang akan dilaksanakan pada </p>
                             <p>Tanggal : {{$pesan['tanggal']}}</p>
                             <p>Jam : {{$pesan['jam']}}</p>

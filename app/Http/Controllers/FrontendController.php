@@ -58,22 +58,21 @@ class FrontendController extends Controller
 
     public function berita()
     {
-        return view('berita');
+        return view('blogs.berita');
     }
 
     public function galeri()
     {
-        return view('galeri');
+        return view('blogs.galeri');
     }
 
     public function kirimWA()
     {    
         $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
-        $total = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->count();
 
         $no_hp = '082241904510';
         $nama = 'Rafi';
-        $username = 'noernanda@gmail.com';
+        $username = 'rafi@gmail.com';
         $pass = '123456';
         $link = '\nhttps://srtf.p3sm.or.id/login\n';
 
@@ -91,10 +90,8 @@ class FrontendController extends Controller
         
         $detail_seminar = "Nama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."";
 
-        return $this->kirimPesanWA($no_hp,$detail_seminar);
-
         $token = $this->getToken(); 
-        $channel = '65038597-0de1-47e2-adcf-c7fd15acf0ea';
+        $channel = $this->setupChannel($token['access_token']);
         $template = $this->setupTemplate($token['access_token']);
         
         $lang = [
@@ -125,8 +122,8 @@ class FrontendController extends Controller
         $body = [
             'to_number' => $no_hp,
             'to_name' => $nama,
-            'message_template_id' => $template['data'][1]['id'],
-            'channel_integration_id' => $channel,
+            'message_template_id' => $template['data'][2]['id'],
+            'channel_integration_id' => $channel['data'][0]['id'],
             'language' => $lang,
             'parameters' => $param,
         ];

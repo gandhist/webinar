@@ -144,53 +144,6 @@ trait GlobalFunction {
         curl_close($curlHandle);
         return $results;
     }
-    
-    public function discChannel($token,$channel){
-        $curl = curl_init();
-        $headers = array(
-            'Authorization: Bearer '.$token
-        );
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://service.qontak.com/api/open/v1/integrations/".$channel,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "DELETE",
-        CURLOPT_HTTPHEADER => $headers,
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return $response;
-    }
-
-    public function connChannel($token){
-        $username = env('USER_WA');
-        $password = env('PASS_WA');
-        $headers = array(
-            'Authorization: Bearer '.$token
-        );
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://service.qontak.com/api/open/v1/integrations/qontak",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => array(
-            'username' => $username,
-            'password' => $password
-        ),
-        CURLOPT_HTTPHEADER => $headers,
-        ));
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
-        curl_close($curl);
-        return $response;
-    }
     ////////////// END API QONTAK WHATSASPP /////////////////////////
 
 

@@ -51,7 +51,7 @@
 
                             </span>
                         </div>
-                        <button type="button" class="btn btn-secondary pull-right" id="btnStatistikl" name="btnStatistik">
+                        <button type="button" class="btn btn-default pull-right" id="btnStatistik" name="btnStatistik">
                             <i class="fa fa-area-chart"></i> Statistik</button>
                         <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
                             <i class="fa fa-eye"></i> Detail</button>
