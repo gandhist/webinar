@@ -47,20 +47,20 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
             $log->save();
         }
 
-        $nohp = $this->detail['nope'];
-        // print_r($this->detail);
-        $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di seminar P3S Mandiri, dengan tema *".strip_tags($this->detail['tema'])."*";
-        $status =  $this->kirimPesanWA($nohp,$pesan);
-        // print_r($status);
+        // $nohp = $this->detail['nope'];
+        // // print_r($this->detail);
+        // $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di seminar P3S Mandiri, dengan tema *".strip_tags($this->detail['tema'])."*";
+        // $status =  $this->kirimPesanWA($nohp,$pesan);
+        // // print_r($status);
 
-        if($status['status'] == '1'){
-            $log = LogImportErr::where('id',$this->detail['im_id'])->first();
-            $log->status = '1';
-            $log->save();
-        } elseif ($status['status'] =='0') {
-            $log = LogImportErr::where('id',$this->detail['im_id'])->first();
-            $log->status = '0';
-            $log->save();
-        }
+        // if($status['status'] == '1'){
+        //     $log = LogImportErr::where('id',$this->detail['im_id'])->first();
+        //     $log->status = '1';
+        //     $log->save();
+        // } elseif ($status['status'] =='0') {
+        //     $log = LogImportErr::where('id',$this->detail['im_id'])->first();
+        //     $log->status = '0';
+        //     $log->save();
+        // }
     }
 }
