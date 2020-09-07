@@ -3,46 +3,46 @@
 @section('content')
 <style>
 	.button-flash {
-  background-color: #004A7F;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  border: none;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Arial;
-  font-size: 20px;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  -webkit-animation: glowing 1500ms infinite;
-  -moz-animation: glowing 1500ms infinite;
-  -o-animation: glowing 1500ms infinite;
-  animation: glowing 1500ms infinite;
-}
-@-webkit-keyframes glowing {
-  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
-}
+		background-color: #004A7F;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+		border: none;
+		color: #FFFFFF;
+		cursor: pointer;
+		display: inline-block;
+		font-family: Arial;
+		font-size: 20px;
+		padding: 5px 10px;
+		text-align: center;
+		text-decoration: none;
+		-webkit-animation: glowing 1500ms infinite;
+		-moz-animation: glowing 1500ms infinite;
+		-o-animation: glowing 1500ms infinite;
+		animation: glowing 1500ms infinite;
+	}
+	@-webkit-keyframes glowing {
+		0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+		50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+		100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+	}
 
-@-moz-keyframes glowing {
-  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
-}
+	@-moz-keyframes glowing {
+		0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+		50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+		100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+	}
 
-@-o-keyframes glowing {
-  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-}
+	@-o-keyframes glowing {
+		0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+		50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+		100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+	}
 
-@keyframes glowing {
-  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-}
+	@keyframes glowing {
+		0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+		50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+		100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+	}
 
 
     .jumbotron {
@@ -96,7 +96,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-
 
 <script>
     FontAwesomeConfig = { autoReplaceSvg: false }
@@ -183,9 +182,9 @@
         <table id="example" class="table table-bordered table-striped dataTable customTable" role="grid">
             <thead>
                 <tr role="row">
-                    <th style="width:2%;text-align:center;">No</th>
-                    <th style="width:14%;text-align:center;">Tema</th>
-                    <th style="width:17%;text-align:center;">Judul Seminar</th>
+					<th style="width:2%;text-align:center;">No</th>
+					<th style="width:17%;text-align:center;">Jenis Kegiatan</th>
+                    <th style="width:14%;text-align:center;">Judul</th>       
                     {{-- <th style="width:10%;text-align:center;">Tanggal</th> --}}
 					<th style="width:5%;text-align:center;">Tempat</th>
 					<th style="width:5%;text-align:center;">Biaya</th>
@@ -196,8 +195,8 @@
                 @foreach($data as $key)
                 <tr>
 					<td style="text-align:center;">{{ $loop->iteration }}</td>
-					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
 					<td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
+					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>		
 					{{-- <td style="text-align:center;">{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td> --}}
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
 					<td>@if ($key->is_free == '0') Gratis @else Rp. {{ format_uang($key->biaya)}} @endif</td></td>

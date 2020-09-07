@@ -117,30 +117,112 @@ class RegistController extends Controller
             Mail::to($email)->send(new EmailRegistAkun(['pesan' => $pesan, 'seminar' => $seminar]));
 
             //kirim wa
-            $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
+            $seminar = Seminar::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
-            $nohp = $request->no_hp;
+            $no_hp = $request->no_hp;
             $nama = $request->nama;
-            $username = $request->email;
+            $email = $request->email;
             $pass = $password;
+            $username = "dengan Username : ".$email;
+            $password = "dan Password : ".$pass;
+            $login = 'https://srtf.p3sm.or.id/login';
 
-            $detail = '';
-            $nomor = 1;
-            foreach($seminar as $key){
-                $tema = strip_tags(html_entity_decode($key->tema));
-                $tgl_awal = \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY");
-                $det = $nomor.'. '.$tema.' tanggal '.$tgl_awal.' link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$key->slug;
-                $detail .= "\n".$det;
+            $seminar_1 = '-';
+            $seminar_2 = '-';
+            $seminar_3 = '-';
 
-                $nomor++;
+            if(isset($seminar[0])){
+                $tema_1 = strip_tags(html_entity_decode($seminar[0]['tema']));
+                $tgl_1 = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+                $link_1 = $seminar[0]['slug'];
+                $seminar_1 = $tema_1.' pada tanggal '.$tgl_1.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_1;
             }
+            if(isset($seminar[1])){
+                $tema_2 = strip_tags(html_entity_decode($seminar[1]['tema']));
+                $tgl_2 = \Carbon\Carbon::parse($seminar[1]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+                $link_2 = $seminar[1]['slug'];
+                $seminar_2 = $tema_2.' pada tanggal '.$tgl_2.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_2;
+            }
+            if(isset($seminar[2])){
+                $tema_3 = strip_tags(html_entity_decode($seminar[2]['tema']));
+                $tgl_3 = \Carbon\Carbon::parse($seminar[2]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+                $link_3 = $seminar[2]['slug'];
+                $seminar_3 = $tema_3.' pada tanggal '.$tgl_3.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_3;
+            }   
 
-            $pesan = "Halo ".$nama.", \nSelamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut,\n\nNama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."\n\nKegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri Pastikan Nomor Whatsapp P3S Mandiri ini telah tersimpan sebagai kontak HP Saudara/i, Agar link yang terdapat di dalamnya bisa langsung aktif dan dapat di “klik”. \n\nSetelah Nomor WA tersebut tersimpan, Silakan login dengan klik tombol login berikut ini https://srtf.p3sm.or.id/registrasi/login . \n\nTerima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.";
+            $token = $this->getToken(); 
+            $channel = $this->setupChannel($token['access_token']);
+            $template = '1f3a5e17-d51d-44a7-97c6-452afe122a38';
+            
+            $lang = [
+                'code' => 'id'
+            ];
+            $var1 = [
+                "key" => "1",
+                "value" => "full_name",
+                "value_text" => $nama,
+            ];
+            $var2 = [
+                "key" => "2",
+                "value" => "nomor_hp",
+                "value_text" => $no_hp,
+            ];
+            $var3 = [
+                "key" => "3",
+                "value" => "email",
+                "value_text" => $email,
+            ];
+            $var4 = [
+                "key" => "4",
+                "value" => "user",
+                "value_text" => $username,
+            ];
+            $var5 = [
+                "key" => "5",
+                "value" => "password",
+                "value_text" => $password,
+            ];
+            $var6 = [
+                "key" => "6",
+                "value" => "tema_1",
+                "value_text" => $seminar_1,
+            ];
+            $var7 = [
+                "key" => "7",
+                "value" => "tema_2",
+                "value_text" => $seminar_2,
+            ];
+            $var8 = [
+                "key" => "8",
+                "value" => "tema_3",
+                "value_text" => $seminar_3,
+            ];
+            $var9 = [
+                "key" => "9",
+                "value" => "login",
+                "value_text" => $login,
+            ];
 
-            $this->kirimPesanWA($nohp,$pesan);
+            $isiBody = [$var1,$var2,$var3,$var4,$var5,$var6,$var7,$var8,$var9];
+
+            $param = [
+                "body" => $isiBody
+            ];
+
+            $body = [
+                'to_number' => $no_hp,
+                'to_name' => $nama,
+                'message_template_id' => $template,
+                'channel_integration_id' => $channel['data'][0]['id'],
+                'language' => $lang,
+                'parameters' => $param,
+            ];
+
+            $pesan = $this->sendMessage($token['access_token'],$body);
+
         }
 
-        return redirect('')->with('success', 'Registrasi Akun berhasil, silahkan konfirmasi email');
+        return redirect('')->with('success', 'Selamat bergabung di App PPKB P3S Mandiri! Username dan Password telah dikirim melalui email dan Whatsapp.');
     }
 
     /**
@@ -288,9 +370,91 @@ class RegistController extends Controller
             Mail::to($peserta['email'])->send(new EmailRegist2($pesan));
 
             //kirim wa
-            $nohp = $request->no_hp;
-            $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
-            $this->kirimPesanWA($nohp,$pesan);
+            // $nohp = $request->no_hp;
+            // $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
+            // $this->kirimPesanWA($nohp,$pesan);
+            $no_hp = $request->no_hp;
+            $nama = $request->nama;
+            $email = $request->email;
+            $pass = '-';
+
+            $username = "dengan Username : ".$email;
+            $password = '';
+            $login = 'https://srtf.p3sm.or.id/login';
+
+            $tema = $tema;
+            $tgl_awal = $tanggal;
+            $jam_awal = $jam;
+
+            $token = $this->getToken(); 
+            $channel = $this->setupChannel($token['access_token']);
+            $template = '212f9ecc-52d5-4a98-b1bd-5e10d0a59804';
+            
+            $lang = [
+                'code' => 'id'
+            ];
+            $var1 = [
+                "key" => "1",
+                "value" => "full_name",
+                "value_text" => $nama,
+            ];
+            $var2 = [
+                "key" => "2",
+                "value" => "nomor_hp",
+                "value_text" => $no_hp,
+            ];
+            $var3 = [
+                "key" => "3",
+                "value" => "email",
+                "value_text" => $email,
+            ];
+            $var4 = [
+                "key" => "4",
+                "value" => "user",
+                "value_text" => $username,
+            ];
+            $var5 = [
+                "key" => "5",
+                "value" => "password",
+                "value_text" => $password,
+            ];
+            $var6 = [
+                "key" => "6",
+                "value" => "tema",
+                "value_text" => $tema,
+            ];
+            $var7 = [
+                "key" => "7",
+                "value" => "tanggal",
+                "value_text" => $tgl_awal,
+            ];
+            $var8 = [
+                "key" => "8",
+                "value" => "jam",
+                "value_text" => $jam_awal,
+            ];
+            $var9 = [
+                "key" => "9",
+                "value" => "login",
+                "value_text" => $login,
+            ];
+
+            $isiBody = [$var1,$var2,$var3,$var4,$var5,$var6,$var7,$var8,$var9];
+
+            $param = [
+                "body" => $isiBody
+            ];
+
+            $body = [
+                'to_number' => $no_hp,
+                'to_name' => $nama,
+                'message_template_id' => $template,
+                'channel_integration_id' => $channel['data'][0]['id'],
+                'language' => $lang,
+                'parameters' => $param,
+            ];
+
+            $status = $this->sendMessage($token['access_token'],$body);
 
             $user = User::find($peserta['user_id']);
             $user->is_login = 1;
@@ -405,9 +569,91 @@ class RegistController extends Controller
                 Mail::to($email)->send(new EmailRegist($pesan));
 
                 //kirim wa
-                $nohp = $request->no_hp;
-                $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
-                $this->kirimPesanWA($nohp,$pesan);
+                // $nohp = $request->no_hp;
+                // $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar di seminar P3SM dengan tema '$tema'";
+                // $this->kirimPesanWA($nohp,$pesan);
+                $no_hp = $request->no_hp;
+                $nama = $request->nama;
+                $email = $request->email;
+                $pass = $password;
+
+                $username = "dengan Username : ".$email;
+                $password = "dan Password : ".$pass;;
+                $login = 'https://srtf.p3sm.or.id/login';
+
+                $tema = $tema;
+                $tgl_awal = $tanggal->tgl_awal;
+                $jam_awal = $jam->jam_awal;
+
+                $token = $this->getToken(); 
+                $channel = $this->setupChannel($token['access_token']);
+                $template = '212f9ecc-52d5-4a98-b1bd-5e10d0a59804';
+                
+                $lang = [
+                    'code' => 'id'
+                ];
+                $var1 = [
+                    "key" => "1",
+                    "value" => "full_name",
+                    "value_text" => $nama,
+                ];
+                $var2 = [
+                    "key" => "2",
+                    "value" => "nomor_hp",
+                    "value_text" => $no_hp,
+                ];
+                $var3 = [
+                    "key" => "3",
+                    "value" => "email",
+                    "value_text" => $email,
+                ];
+                $var4 = [
+                    "key" => "4",
+                    "value" => "user",
+                    "value_text" => $username,
+                ];
+                $var5 = [
+                    "key" => "5",
+                    "value" => "password",
+                    "value_text" => $password,
+                ];
+                $var6 = [
+                    "key" => "6",
+                    "value" => "tema",
+                    "value_text" => $tema,
+                ];
+                $var7 = [
+                    "key" => "7",
+                    "value" => "tanggal",
+                    "value_text" => $tgl_awal,
+                ];
+                $var8 = [
+                    "key" => "8",
+                    "value" => "jam",
+                    "value_text" => $jam_awal,
+                ];
+                $var9 = [
+                    "key" => "9",
+                    "value" => "login",
+                    "value_text" => $login,
+                ];
+
+                $isiBody = [$var1,$var2,$var3,$var4,$var5,$var6,$var7,$var8,$var9];
+
+                $param = [
+                    "body" => $isiBody
+                ];
+
+                $body = [
+                    'to_number' => $no_hp,
+                    'to_name' => $nama,
+                    'message_template_id' => $template,
+                    'channel_integration_id' => $channel['data'][0]['id'],
+                    'language' => $lang,
+                    'parameters' => $param,
+                ];
+
+                $status = $this->sendMessage($token['access_token'],$body);
             }
 
             $user = User::find($peserta_id['user_id']);

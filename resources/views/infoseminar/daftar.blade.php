@@ -70,7 +70,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputSuccess"> Judul Seminar</label>
+                                            <label class="control-label" for="inputSuccess"> Jenis Kegiatan</label>
                                             <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->nama_seminar }}">
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputSuccess"> Tema</label>
+                                            <label class="control-label" for="inputSuccess"> Judul</label>
                                             <input type="text" class="form-control" id="inputSuccess" readonly value="{{ strip_tags(html_entity_decode($data->tema)) }}">
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputSuccess"> Tanggal & Waktu</label>
+                                            <label class="control-label" for="inputSuccess"> Jadwal Kegiatan</label>
                                             <input type="text" class="form-control" id="inputSuccess" readonly value="{{ isset($data->tgl_awal) ? \Carbon\Carbon::parse($data->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} / {{ $data->jam_awal }} - {{ $data->jam_akhir }}">
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputSuccess"> Nilai SKPK</label>
+                                            <label class="control-label" for="inputSuccess"> SKPK</label>
                                             <input type="text" class="form-control" id="inputSuccess" readonly value="{{ $data->skpk_nilai }}">
                                         </div>
                                     </div>

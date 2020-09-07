@@ -13,16 +13,16 @@
         <hr>
         @if($cek_in == false)
             Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
-            Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
-            Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
+            Judul Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
+            Jadwal Kegiatan : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
         
             <a target="_blank" href="{{ $peserta_seminar->seminar_p->url }}">LINK ZOOM!!!</a><br>
             <a target="_blank" href="{{ $peserta_seminar->seminar_p->url2 }}">LINK YOUTUBE!!!</a>
             <hr>
         @else
             Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
-            Tema Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
-            Tanggal & Waktu : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
+            Judul Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
+            Jadwal Kegiatan : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
             <hr>
             Klik link zoom untuk mengikuti seminar 
         @endif
