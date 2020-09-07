@@ -49,7 +49,7 @@
 		/* background-image: url("p3sm.jpeg");
   		background-size: 15%; */
 		background-repeat:no-repeat;
-		height: 350px;
+		height: 450px;
 		background-color: #f7f7f7 !important;
 		background-position-x: 98%;
 		background-position-y: 55%;
@@ -68,11 +68,12 @@
             /* background-image: url("p3sm.jpeg");
             background-size: 10%; */
             background-repeat:no-repeat;
-			height: 470px;
+			height: auto;
 			background-position-x: 50%;
 			background-position-y: 1%;
 			margin: 15px;
 			margin-top: 15px;
+			margin-bottom: 1rem !important;
         }
 		.welcome {
 			margin-top: -25px;
@@ -104,39 +105,44 @@
 	<div class="jumbotron">
 		<div class="d-flex justify-content-around logo">
 			<div>
-				<img src="{{ url('forum.png') }}" alt="logo" class="img-responsive" height="90px" style="margin-top: 23px;"></a>
+				<img src="{{ url('a.jpeg') }}" alt="logo" class="img-responsive" height="200px"></a>
+			</div>
+
+			{{-- <div>
+				<img src="{{ url('forum.png') }}" alt="logo" class="img-responsive" style="margin-left:-60px" height="90px" style="margin-top: 23px;"></a>
 			</div>
 			<div>
 				<img src="{{ url('p3sm.jpeg') }}" alt="logo" class="img-responsive" height="120px"></a>
 			</div>
 			<div>
-				<img src="{{ url('dk3n.png') }}" alt="logo" class="img-responsive"  height="100px" style="margin-bottom: -110px;"></a>
-			</div>
+				<img src="{{ url('dk3n.png') }}" alt="logo" class="img-responsive" height="100px" style="margin-bottom: -110px;"></a>
+			</div> --}}
 		</div>
 		<div class="welcome">
 			<br>	
-			<h2>Program Pengembangan Keprofesian Berkelanjutan</h2>
-			<p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p>
+			{{-- <h2>Program Pengembangan Keprofesian Berkelanjutan</h2> --}}
+			{{-- <p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p> --}}
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
-            @if(Auth::guest())
+			{{-- Login with Google Account --}}
+            {{-- @if(Auth::guest())
             <button href="#" class="btn btn-success btn-border-filled m-2" id="login" >Login</button>
             <a href="{{url('login/google')}}" style="color: white" class="btn btn-primary m-2">
-                <i class="fa fa-google fa-fw"></i> Login with Google Account
+				<i class="fa fa-google fa-fw"></i> 
             </a>
             @else
             <div style="height: 60px;"></div>
-            @endif
+            @endif --}}
 			{{-- <a href="{{ url('infoseminar') }}" class="btn btn-success">Daftar Seminar</a> --}}
 			{{-- <button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button> --}}
 		</div>
 		<div class="login">
-			<h2 class="head-title">Login</h2>
+			<h4 class="head-title">Login</h4>
 			<p>Silahkan Login dengan email yang sudah terverifikasi.</p>
 			<div class="col-sm-6">
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
 					<div class="form-group">
-						<input type="text" class="form-control select2" placeholder="Email" name="username" id="username">
+						<input type="text" class="form-control select2" placeholder="User(Email)" name="username" id="username">
 						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
 						<div id="name">
 
@@ -146,9 +152,10 @@
 						<input type="password" class="form-control" placeholder="Password" name="password">
 						<span class="glyphicon glyphicon-lock"></span>
 					</div> --}}
-					<button type="submit" class="btn btn-success btn-border-filled m-2">Login</button>
-					<a href="{{url('login/google')}}" style="color: white" class="btn btn-primary m-2">
-						<i class="fa fa-google fa-fw"></i> Login with Google Account
+					<button type="submit" class="btn btn-sm btn-success btn-border-filled m-2">Login</button>
+					<a href="{{url('login/google')}}" style="color: white" class="btn btn-sm btn-primary m-2">
+						<i class="fa fa-google fa-fw"></i> 
+						{{-- Login with Google Account --}}
 					</a>
 				{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
 				</form>
@@ -222,7 +229,7 @@
 
 <script type="text/javascript" >
 
-	$('.login').hide();
+	// $('.login').hide();
 	$('.welcome').fadeIn('slow');
 	// $('.seminar').hide();
 	$(function() {

@@ -72,7 +72,7 @@
   @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
-  <table id="example" class="table table-striped table-bordered dt-responsive wrap customTable" style="width:100%">
+  <table id="example" class="table table-striped table-bordered customTable" style="width:100%">
     <thead>
       <tr>
         <th style="width:2%;text-align:center">No</th>
@@ -89,7 +89,8 @@
       @foreach ($data as $key)
       <tr>
           <td>{{ $loop->iteration}}</td>
-          <td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td>
+          {{-- <td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td> --}}
+          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
           <td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
