@@ -116,9 +116,27 @@ class RegistController extends Controller
             Mail::to($email)->send(new EmailRegistAkun(['pesan' => $pesan, 'seminar' => $seminar]));
 
             //kirim wa
-            // $nohp = $request->no_hp;
-            // $pesan = "Selamat $request->nama! Anda telah berhasil mendaftar akun di sertifikat P3SM";
-            // $this->kirimPesanWA($nohp,$pesan);
+            $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
+            
+            $nohp = $request->no_hp;
+            $nama = $request->nama;
+            $username = $request->email;
+            $pass = $password;
+
+            $detail = '';
+            $nomor = 1;
+            foreach($seminar as $key){
+                $tema = strip_tags(html_entity_decode($key->tema));
+                $tgl_awal = \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY");
+                $det = $nomor.'. '.$tema.' tanggal '.$tgl_awal.' link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$key->slug;
+                $detail .= "\n".$det;
+
+                $nomor++;
+            }
+        
+            $pesan = "Halo ".$nama.", \nSelamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data sebagai berikut,\n\nNama : ".$nama."\nPassword : ".$pass."\nNomor Hp (WA) : ".$no_hp."\nEmail : ".$username."\ndengan Username : ".$username."\ndan Password : ".$pass."\nSilahkan mendaftar di seminar sebagai berikut,".$detail."\n\nKegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri Pastikan Nomor Whatsapp P3S Mandiri ini telah tersimpan sebagai kontak HP Saudara/i, Agar link yang terdapat di dalamnya bisa langsung aktif dan dapat di “klik”. \n\nSetelah Nomor WA tersebut tersimpan, Silakan login dengan klik tombol login berikut ini https://srtf.p3sm.or.id/registrasi/login . \n\nTerima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.";
+
+            $this->kirimPesanWA($nohp,$pesan);
         }
 
         return redirect('')->with('success', 'Registrasi Akun berhasil, silahkan konfirmasi email');
