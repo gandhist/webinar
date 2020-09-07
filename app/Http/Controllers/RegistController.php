@@ -252,9 +252,18 @@ class RegistController extends Controller
             }
 
             $tema = strip_tags(html_entity_decode($detailseminar['tema']));
+            $tanggal = \Carbon\Carbon::parse($detailseminar['tgl_awal'])->translatedFormat('d F Y');
+            $jam = $detailseminar['jam_awal'];
 
             //kirim email
             $pesan = [
+                'username' => $request->email,
+                // 'password' => 'PASSWORD',
+                'email' => $request->email,
+                'nama' => $request->email,
+                'nope' => $request->no_hp,
+                'tanggal' => $tanggal,
+                'jam' => $jam,
                 'tema' => $tema,
             ];
             Mail::to($peserta['email'])->send(new EmailRegist2($pesan));
@@ -271,8 +280,8 @@ class RegistController extends Controller
             Auth::login($user);
 
             return redirect()->route('profile.edit')
-            ->with('first', 'Akun berhasil dibuat! Username dan Password telah dikirim melalui email dan Whatsapp.')
-            ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
+            ->with('first', 'Mendaftar seminar berhasil!');
+            // ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
 
         } else{
             $data['nama'] = $request->nama;
@@ -494,18 +503,31 @@ class RegistController extends Controller
         // return $response;
 
 
-        $seminar = Seminar::where('status','=','published')->get();
-        // $seminar = null;
+        // $seminar = Seminar::where('status','=','published')->get();
+        // // $seminar = null;
+        // $pesan = [
+        //     'username' => "USERNAME",
+        //     'email' => 'EMAIL',
+        //     'password' => "PASSWORD",
+        //     'name' => "NAMA LENGKAP",
+        //     'no_hp' => "HO HP",
+        // ];
+
+
+        // return view('mail.regist-akun')->with(compact('pesan', 'seminar'));
+
         $pesan = [
-            'username' => "USERNAME",
-            'email' => 'EMAIL',
-            'password' => "PASSWORD",
-            'name' => "NAMA LENGKAP",
-            'no_hp' => "HO HP",
+                    'username' => 'USERNAME',
+                    'password' => 'PASSWORD',
+                    'email' => 'EMAIL@GMAIL.COM',
+                    'nama' => 'NAMA LENGKAP',
+                    'nope' => '08228734843',
+                    'tanggal' => 'TANGGAL KEJADIAN',
+                    'jam' => 'JAM MULAI',
+                    'tema' => 'TEMA TEMA TEMA TEMA TEMA TEMA TEMA TEMATEMA TEMA TEMA TEMA TEMA TEMA TEMA TEMA',
         ];
 
-
-        return view('mail.regist-akun')->with(compact('pesan', 'seminar'));
+        return view('mail.signup')->with(compact('pesan'));
 
     }
 

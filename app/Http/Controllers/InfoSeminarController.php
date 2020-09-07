@@ -165,9 +165,24 @@ class InfoSeminarController extends Controller
                 $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                 $total_nilai->update();
 
-                $detail = ['nama' => $peserta->nama,
-                'tema' => $detailseminar->tema,
-                'email' => $peserta->email, 'nope' => $peserta->nomor_handphone];
+                // $detail = ['nama' => $peserta->nama,
+                // 'tema' => $detailseminar->tema,
+                // 'email' => $peserta->email, 'nope' => $peserta->nomor_handphone];
+
+                $tema = strip_tags(html_entity_decode($detailseminar->tema));
+                $tanggal = \Carbon\Carbon::parse($detailseminar->tgl_awal)->translatedFormat('d F Y');
+                $jam = $detailseminar->jam_awal;
+
+                $detail = [
+                    'username' => $peserta->user_r->username,
+                    // 'password' => 'PASSWORD',
+                    'email' => $peserta->email,
+                    'nama' => $peserta->nama,
+                    'nope' => $peserta->nomor_handphone,
+                    'tanggal' => $tanggal,
+                    'jam' => $jam,
+                    'tema' => $tema,
+                ];
                 dispatch(new \App\Jobs\DaftarSeminarSudahLogin($detail));
 
             }
