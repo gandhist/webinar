@@ -10,6 +10,7 @@ use App\PesertaSeminar;
 use App\User;
 use App\BankModel;
 use App\InstansiModel;
+use App\ReportBlasting;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -87,6 +88,7 @@ class InfoSeminarController extends Controller
 
     public function store(Request $request, $id)
     {
+        // dd($request);
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $detailseminar = Seminar::where('id',$id)->first();
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
@@ -147,12 +149,25 @@ class InfoSeminarController extends Controller
         $data->created_by = Auth::id();
         $data->created_at = Carbon::now()->toDateTimeString();
 
+        if($request->magic_link){
+            $data->is_blasting = 1;
+
+            $blast = ReportBlasting::where('magic_link',$request->magic_link)->first();
+            $blast->is_daftar = 1;
+            $blast->daftar = \Carbon\Carbon::now();
+
+            $data->id_blasting = $blast->id;
+        }
+
         // validasi jika sudah pernah terdaftar
         if($cek > 0){
             return redirect('infoseminar')->with('warning', 'Anda Sudah Mendaftar Seminar ini');
         } else{
             $data = $data->save();
 
+            if($request->magic_link){
+                $blast->save();
+            }
             if($is_free['is_free'] == '0'){
                 // pengurangan kuota
                 // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);

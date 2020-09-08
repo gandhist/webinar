@@ -89,6 +89,13 @@
         <form action="{{ url('registrasi/save', $data->id) }}" class="form-horizontal" id="formRegist" name="formRegist"
                 method="post" enctype="multipart/form-data">
         @csrf
+
+        @if(session()->get('magic_link'))
+        <input type="hidden" name="magic_link" value="{{ session()->get('magic_link') }}">
+        @endif
+        @if(session()->get('blast_target_id'))
+        <input type="hidden" name="blast_target_id" value="{{ session()->get('blast_target_id') }}">
+        @endif
         <div class="row">
             <div class="col-lg-2">
             </div>

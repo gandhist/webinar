@@ -25,13 +25,14 @@
         <div class="box-body">
             @if(session()->get('success'))
             <div class="alert alert-success">
-              {{ session()->get('success') }}  
+              {{ session()->get('success') }}
             </div><br />
             @endif
             {{--  sub menu  --}}
             <div style="margin-bottom: 20px">
-                 <a href="{{url('users/create')}}" class="btn bg-olive"><span>Input</span></a>
-            </div>
+                <a href="{{url('users/create')}}" class="btn bg-olive"><span>Input</span></a>
+                <a href="{{url('force-logout')}}" class="btn btn-danger"><span>Force Logout</span></a>
+           </div>
             {{--  end of sub menu  --}}
 
             {{--  table data of user  --}}
@@ -67,10 +68,10 @@
                 </table>
             </div>
             {{--  end of user data  --}}
-            
+
 
             <!-- modal konfirmasi -->
-   
+
             <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -101,7 +102,21 @@
 @endsection
 
 @push('script')
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
+    $(document).ready(function() {
+        var msg = '{{Session::get('alert')}}';
+        var exist = '{{Session::has('alert')}}';
+        if(exist){
+            Swal.fire({
+                title: msg,
+                type: 'success',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        }
+    });
 $(function(){
     $(".delete").on("click", function(){
         $("#modal-konfirmasi").modal('show');

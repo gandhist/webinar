@@ -20,7 +20,7 @@ Route::get('tesWA', 'FrontendController@kirimWA');
 Route::get('tesWA2', 'FrontendController@kirimWA2');
 Route::get('tesWA3', 'FrontendController@kirimWA3');
 
-Route::get('blast/magic/{id}', 'BlastingController@click');
+Route::get('blast/{id}', 'BlastingController@click');
 
 Route::post('reset/update', 'FrontendController@update');
 Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');
@@ -196,7 +196,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 	Route::group(['middleware' => 'auth.admin'], function () {
 		Route::resources([
 			'users' => 'UserController',
-		]);
+        ]);
+		Route::get('/force-logout', 'UserController@forceLogout');
 
 		Route::resources([
 			'user_role' => 'UserRoleController',

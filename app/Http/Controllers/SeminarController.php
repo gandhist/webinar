@@ -1697,6 +1697,13 @@ class SeminarController extends Controller
 
     public function blast(Request $request, $id) {
         // dd($request);
+        $request->validate([
+            'link_zoom' => 'required|url',
+        ],[
+            'link_zoom.required' => 'Mohon isi link ZOOM',
+            'link_zoom.url' => 'Mohon isi link ZOOM dengan format url yang valid (diawali http:// atau https://)',
+        ]);
+
         $seminar = SeminarModel::where('id', $id)->first();
 
         $hashids = new Hashids();
