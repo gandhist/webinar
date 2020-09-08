@@ -34,7 +34,7 @@ class BlastingController extends Controller
 
             $user = User::where('id', $link[2])->first();
             Auth::login($user);
-            return redirect('infoseminar/daftar/'.$link[1])->with('blast_target_id',$link[0]);
+            return redirect('infoseminar/daftar/'.$link[1])->with('blast_target_id',$link[0])->with('magic_link',$magic_link);
 
         } else if ($jenis == 2){
             $report = ReportBlasting::where('id_target',$link[0])->where('id_seminar',$link[1])->first();
@@ -44,7 +44,7 @@ class BlastingController extends Controller
             }
             $report->last_click = \Carbon\Carbon::now();
             $report->save();
-            return redirect('registrasi/daftar/'.$link[1])->with('blast_target_id',$link[0]);
+            return redirect('registrasi/daftar/'.$link[1])->with('blast_target_id',$link[0])->with('magic_link',$magic_link);
         } else {
             return abort(404);
         }

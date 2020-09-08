@@ -57,13 +57,13 @@ class Blasting implements ShouldQueue
             Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link));
 
             if(empty($report_blasting)){
-                $report = new ReportBlasting;
-                $report->id_target = $this->detail['target']['id'];
-                $report->id_seminar = $this->detail['seminar']['id'];
-                $report->is_email_sent = 1;
-                $report->magic_link = $this->detail['magic'];
-                $report->created_at = \Carbon\Carbon::now();
-                $report->save();
+                $report_blasting = new ReportBlasting;
+                $report_blasting->id_target = $this->detail['target']['id'];
+                $report_blasting->id_seminar = $this->detail['seminar']['id'];
+                $report_blasting->is_email_sent = 1;
+                $report_blasting->magic_link = $this->detail['magic'];
+                $report_blasting->created_at = \Carbon\Carbon::now();
+                $report_blasting->save();
             } else {
                 $report_blasting->is_email_sent = 1;
                 $report_blasting->save();
@@ -71,7 +71,32 @@ class Blasting implements ShouldQueue
         }
 
         // Fungsi blasting untuk wa
+        if( !(isset($report_blasting->is_wa_sent))  ){
+            $nomor_hp = $this->detail['target']['no_hp'];
+            $nama = $this->detail['target']['nama'];
+            // Variable detail seminar $this->detail['seminar']['nama_kolom']
+            // LINK ZOOM (BISA KOSONG) $zoom = $this->link['link_zoom'];
 
+
+            // Fungsi blasting WA
+            //
+            //
+            //
+            //
+
+            if(empty($report_blasting)){
+                $report_blasting = new ReportBlasting;
+                $report_blasting->id_target = $this->detail['target']['id'];
+                $report_blasting->id_seminar = $this->detail['seminar']['id'];
+                $report_blasting->is_wa_sent = 1;           // Kondisi kalo sukses
+                $report_blasting->magic_link = $this->detail['magic'];
+                $report_blasting->created_at = \Carbon\Carbon::now();
+                $report_blasting->save();
+            } else {
+                $report_blasting->is_wa_sent = 1;       // Kondisi kalo sukses
+                $report_blasting->save();
+            }
+        }
 
     }
 }
