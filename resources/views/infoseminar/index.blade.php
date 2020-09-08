@@ -1,12 +1,6 @@
 @extends('frontend.main')
 
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
-<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-
 <style>
   .customTable thead {
     background-color: #b7d0ed;
@@ -17,49 +11,58 @@
     }
   }
 
-.button-flash {
-  background-color: #004A7F;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  border: none;
-  color: #FFFFFF;
-  cursor: pointer;
-  display: inline-block;
-  font-family: Arial;
-  font-size: 20px;
-  padding: 5px 10px;
-  text-align: center;
-  text-decoration: none;
-  -webkit-animation: glowing 1500ms infinite;
-  -moz-animation: glowing 1500ms infinite;
-  -o-animation: glowing 1500ms infinite;
-  animation: glowing 1500ms infinite;
-}
-@-webkit-keyframes glowing {
-  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
-}
+  .button-flash {
+    background-color: #004A7F;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 20px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-animation: glowing 1500ms infinite;
+    -moz-animation: glowing 1500ms infinite;
+    -o-animation: glowing 1500ms infinite;
+    animation: glowing 1500ms infinite;
+  }
+  @-webkit-keyframes glowing {
+    0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  }
 
-@-moz-keyframes glowing {
-  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
-}
+  @-moz-keyframes glowing {
+    0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  }
 
-@-o-keyframes glowing {
-  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-}
+  @-o-keyframes glowing {
+    0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  }
 
-@keyframes glowing {
-  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
-  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
-}
+  @keyframes glowing {
+    0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 
+<script>
+  FontAwesomeConfig = { autoReplaceSvg: false }
+</script>
 <div class="container-fluid" id="content">
   @if(session()->get('success'))
     <div class="alert alert-success"> {{ session()->get('success') }}
@@ -123,15 +126,15 @@
             @else
               @if($cek > 0)
                 @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
-                  {{-- @php $dec = DB:table('srtf_peserta_seminar')->where('id_seminar', $key->id_seminar)->where(); @endphp --}}
-                    <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button>
+                    <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button><br>
+                    (untuk mengikuti seminar, silahkan ke menu Kegiatan)
                 @else
                     <button class="btn btn-success disabled">Terdaftar</button>
                 @endif
               @else
-              <button class="btn btn-success button-flash">
-                <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn button-flash my-2 my-sm-0">Daftar</a>
-              </button>
+              {{-- <button class="btn btn-success button-flash"> --}}
+                <a href="{{ url('infoseminar/daftar',$key->id) }}" class="btn button-flash my-2 my-sm-0"><i class="fa fa-check-circle"> Daftar</i></a>
+              {{-- </button> --}}
 
                 {{-- <a href="{{ url('infoseminar/detail',$key->id) }}" class="btn btn-outline-primary my-2 my-sm-0" data-toggle="tooltip"
                 data-placement="top" title="Lihat Detail">Detail</a> --}}
