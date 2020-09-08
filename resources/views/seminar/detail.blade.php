@@ -34,10 +34,10 @@
     <div class="box box-content">
         <div class="container-fluid">
             <div class="jumbotron"  style='padding-top:1px'>
-                
+
                 <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black">
                     <span style="font-size: 50px;">Aplikasi PPKB Online</span></a>
-                
+
                 <div class="collapse" id="collapseExample">
                     @if($seminar->is_mulai == 0)
                         <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar</a><br><br>
@@ -47,7 +47,7 @@
                         <a href="{{ url('seminar/feedback',$seminar->id) }}" class="btn btn-success"> Hasil Kuisioner</a><br><br>
                     @endif
 
-                
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">
@@ -528,7 +528,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
+                    {{-- <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button> --}}
                     <button type="submit" class="btn btn-success">Ya</button>
                 </div>
             </form>
@@ -577,7 +577,7 @@
 	// 	$('#example').DataTable({
     //         lengthMenu: [100, 200, 500,2000],});
 	// } );
-	
+
     $(document).ready(function() {
         $('#example').DataTable( {
             "scrollY":        "200px",

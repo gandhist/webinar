@@ -63,23 +63,23 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container" id="content">
-     
+
     <div class="row">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
             @if(session()->get('success'))
             <div class="alert alert-success">{{ session()->get('success') }}
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             </div>
             @endif
-      
+
             @if(session()->get('pesan'))
               <div class="alert alert-warning">{!! session()->get('pesan') !!}
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               </div>
             @endif
-            
+
             <h2 style="margin-top: -15px;">Registrasi Akun App PPKB Online P3S Mandiri</h2>
             <hr>
         </div>
@@ -192,6 +192,9 @@
       <br> --}}
       <div class="row">
           <div class="col-lg-2">
+            @if(session()->get('magic_link'))
+            <input type="hidden" name="magic_link" value="{{ session()->get('magic_link') }}">
+            @endif
           </div>
           <div class="col-lg-8" style="width: 100%;">
               <button type="submit" class="btn button-flash btn-block">SUBMIT</button>
@@ -201,7 +204,7 @@
       </div>
       </form>
   </main>
-        
+
 </div>
 
 @endsection
@@ -219,15 +222,15 @@
         readURL(this);
     });
   })
-  
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
-      
+
       reader.onload = function(e) {
         $('#blah').attr('src', e.target.result);
       }
-      
+
       reader.readAsDataURL(input.files[0]); // convert to base64 string
     }
   }
