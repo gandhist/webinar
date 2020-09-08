@@ -229,7 +229,7 @@ class FrontendController extends Controller
         $detail_seminar = 'Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh P3S Mandiri. Free Webinar dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai';
         $link = $seminar[0]['slug'];
         $link_seminar = 'https://srtf.p3sm.or.id/registrasi/daftar/'.$link;
-        dd($detail_seminar);
+ 
         $token = $this->getToken(); 
         $channel = $this->setupChannel($token['access_token']);
         $template = 'c92e117a-a415-4910-b28a-aa626a078352';
@@ -245,7 +245,7 @@ class FrontendController extends Controller
         $var2 = [
             "key" => "2",
             "value" => "seminar",
-            "value_text" => $detal_seminar,
+            "value_text" => $detail_seminar,
         ];
         $var3 = [
             "key" => "3",

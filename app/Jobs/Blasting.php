@@ -74,11 +74,11 @@ class Blasting implements ShouldQueue
         if( !(isset($report_blasting->is_wa_sent))  ){
             $no_hp = $this->detail['target']['no_hp'];
             $nama = $this->detail['target']['nama'];
-            $link_zoom = $this->link;
+            $link_zoom = $this->link['link_zoom'];
             $website = 'https://srtf.p3sm.or.id';
 
             $tema = strip_tags(html_entity_decode($this->detail['seminar']['tema']));
-            $hari = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->format("l");
+            $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
             switch($hari){
                 case 'Sunday':
                     $hari = "Minggu";
@@ -112,18 +112,20 @@ class Blasting implements ShouldQueue
                     $hari = "Tidak di ketahui";		
                 break;
             }
+
+         
             $tgl = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->isoFormat("DD MMMM YYYY");
             $jam = $this->detail['seminar']['jam_awal'];
 
             $detail_seminar = 'Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh P3S Mandiri. Free Webinar dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai';
-        
+            
             $link = $this->detail['magic'];
             $link_seminar = 'https://srtf.p3sm.or.id/blast/'.$link;
 
             $token = $this->getToken();
             $channel = $this->setupChannel($token['access_token']);
             $template = 'c92e117a-a415-4910-b28a-aa626a078352';
-            
+         
             $lang = [
                 'code' => 'id'
             ];
@@ -167,7 +169,6 @@ class Blasting implements ShouldQueue
                 'language' => $lang,
                 'parameters' => $param,
             ];
-
             $pesan = $this->sendMessage($token['access_token'],$body);
 
             if(empty($report_blasting)){
