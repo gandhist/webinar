@@ -72,17 +72,70 @@ class Blasting implements ShouldQueue
 
         // Fungsi blasting untuk wa
         if( !(isset($report_blasting->is_wa_sent))  ){
-            $nomor_hp = $this->detail['target']['no_hp'];
+            $no_hp = $this->detail['target']['no_hp'];
             $nama = $this->detail['target']['nama'];
-            // Variable detail seminar $this->detail['seminar']['nama_kolom']
-            // LINK ZOOM (BISA KOSONG) $zoom = $this->link['link_zoom'];
+            $login = 'https://srtf.p3sm.or.id/login';
+            $website = 'https://srtf.p3sm.or.id';
 
+            $title = $this->detail['seminar']['nama_seminar'];
+            $tema = strip_tags(html_entity_decode($this->detail['seminar']['tema']));
+            $tgl = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->isoFormat("DD MMMM YYYY");
+            $jam = $this->detail['seminar']['jam_awal'];
+        
+            $detal_seminar = 'Free Webinar : '.$title.' dengan tema *'.$tema.'* yang akan diselenggarakan pada tanggal '.$tgl.' jam '.$jam.' WIB sampai selesai';
+            
+            $link = $this->detail['seminar']['slug'];
+            $link_seminar = 'https://srtf.p3sm.or.id/registrasi/daftar/'.$link;
 
-            // Fungsi blasting WA
-            //
-            //
-            //
-            //
+            $token = $this->getToken(); 
+            $channel = $this->setupChannel($token['access_token']);
+            $template = '487cd15b-8d66-4126-881c-c75cf14229a1';
+            
+            $lang = [
+                'code' => 'id'
+            ];
+            $var1 = [
+                "key" => "1",
+                "value" => "full_name",
+                "value_text" => $nama,
+            ];
+            $var2 = [
+                "key" => "2",
+                "value" => "seminar",
+                "value_text" => $detal_seminar,
+            ];
+            $var3 = [
+                "key" => "3",
+                "value" => "link_seminar",
+                "value_text" => $link_seminar,
+            ];
+            $var4 = [
+                "key" => "4",
+                "value" => "login",
+                "value_text" => $login,
+            ];
+            $var5 = [
+                "key" => "5",
+                "value" => "website",
+                "value_text" => $website,
+            ];
+
+            $isiBody = [$var1,$var2,$var3,$var4,$var5];
+
+            $param = [
+                "body" => $isiBody
+            ];
+
+            $body = [
+                'to_number' => $no_hp,
+                'to_name' => $nama,
+                'message_template_id' => $template,
+                'channel_integration_id' => $channel['data'][0]['id'],
+                'language' => $lang,
+                'parameters' => $param,
+            ];
+
+            $pesan = $this->sendMessage($token['access_token'],$body);
 
             if(empty($report_blasting)){
                 $report_blasting = new ReportBlasting;

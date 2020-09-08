@@ -380,7 +380,7 @@
                                 <button class="btn btn-success">Upload</button> --}}
                             </form>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Blast Seminar (Email & Whatsapp)</label>
                                 <div>
@@ -389,6 +389,14 @@
                                             <i class="fa fa-bullhorn" aria-hidden="true"></i> Blast Seminar
                                         </button>
                                     </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Email Sertifikat (Semua Peserta)</label>
+                                <div>
+                                    <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-md"><i class="fa fa-send"> Kirim</i></a>
                                 </div>
                             </div>
                         </div>
@@ -404,14 +412,14 @@
                       <thead>
                           <tr role="row">
                               {{-- <th style="width:4%;"><i class="fa fa-check-square-o"></i></th> --}}
-                              <th style="width:5%;">No</th>
-                              <th style="width:10%;">Status</th>
-                              <th style="width:10%;">No_srtf</th>
-                              <th style="width:25%;">Nama</th>
-                              <th style="width:15%;">No HP</th>
-                              <th style="width:15%;">Email</th>
-                              <th style="width:10%;">Sts_Bayar</th>
-                              <th style="width:1%;">Aksi</th>
+                              <th style="width:5%;font-weight: bold;">No</th>
+                              <th style="width:10%;font-weight: bold;">Status</th>
+                              <th style="width:10%;font-weight: bold;">No_srtf</th>
+                              <th style="width:25%;font-weight: bold;">Nama</th>
+                              <th style="width:15%;font-weight: bold;">No HP</th>
+                              <th style="width:15%;font-weight: bold;">Email</th>
+                              <th style="width:10%;font-weight: bold;">Sts_Bayar</th>
+                              <th style="width:1%;font-weight: bold;">Aksi</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -580,7 +588,7 @@
 
     $(document).ready(function() {
         $('#example').DataTable( {
-            "scrollY":        "200px",
+            "scrollY":        "500px",
             "scrollCollapse": true,
             "paging":         true,
             lengthMenu: [100, 200, 500,2000]
