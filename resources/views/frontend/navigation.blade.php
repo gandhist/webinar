@@ -48,13 +48,16 @@
                         <a class="nav-link" href= "{{ url('infoseminar') }}"><strong>Seminar</strong></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('profile.edit') }}"><strong>User Profile</strong></a>
-                    </li>
+                        <a class="nav-link" href= "{{ route('kegiatan.index') }}"><strong>Kegiatan</strong></a>
+                    </li>     
                     <li class="nav-item">
                         <a class="nav-link" href= "{{ url('berita') }}"><strong>Berita</strong></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href= "{{ url('galeri') }}"><strong>Galeri</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.edit') }}"><strong>User Profile</strong></a>
                     </li>
                     <li class="nav-item active">
                         {{-- <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
@@ -68,14 +71,14 @@
                                 <i class="fa fa-user"></i>
                                 {{ \Auth::user()->name }}
                             </button>
-                            <div class="dropdown-menu">
+                            <ul class="dropdown-menu">
                                 <!-- Dropdown menu links -->
                                 <form method="post" action="{{ url('logout') }}" style="display: inline">
                                 {{ csrf_field() }}
                                 <button class="btn btn-default" type="submit">Logout</button>
                                 </form>
-                            </div>
-                    </div>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>

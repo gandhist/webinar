@@ -58,7 +58,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-8">
-                                <h2 text-align="center">Detail Seminar P3SM</h2>
+                                <h2 text-align="center">Detail Seminar P<sub>3</sub>SM</h2>
                             </div>
                             <div class="col-md-4">
                                 <h2 onclick="location.href='{{ url($data->link) }}'">Brosur Seminar</h2>
