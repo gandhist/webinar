@@ -9,8 +9,8 @@
 /* This styles you should add to your html as inline-styles */
 /* You can easily do it with http://inlinestyler.torchboxapps.com/ */
 /* Copy this html-window code converter and click convert button */
-/* After that you can remove this style from your code */  
-  
+/* After that you can remove this style from your code */
+
 body {
     margin: 0;
     padding: 0;
@@ -234,13 +234,13 @@ a {
 
 </head>
 <body>
-    
+
 
 <center class="wrapper">
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <td class="title" width="300">P3SM</td>
+            <td class="title" width="300">PPKB P3S Mandiri</td>
             <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id//" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
@@ -265,7 +265,7 @@ a {
                         <p>Informasi Tambahan <br>
                             No Sertifikat : {{ $details->no_sertifikat }} <br>
                         </p>
-                        
+
                         <p>Untuk Download Sertifikat, silahkan klik tombol di bawah ini.</p>
                         @if($details->id_seminar == 3)
                           <p style="text-align:center;"><a href="{{ url('sertifikat_v2', [$details->no_sertifikat, $details->email]) }}" class="btn">Download Sertifikat</a></p>
@@ -291,7 +291,7 @@ a {
 
     <div class="spacer">&nbsp;</div>
 
-   
+
 </center>
 </body>
 </html>
