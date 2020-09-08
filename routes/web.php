@@ -196,7 +196,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 	Route::group(['middleware' => 'auth.admin'], function () {
 		Route::resources([
 			'users' => 'UserController',
-		]);
+        ]);
+		Route::get('/force-logout', 'UserController@forceLogout');
 
 		Route::resources([
 			'user_role' => 'UserRoleController',

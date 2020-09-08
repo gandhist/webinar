@@ -88,4 +88,11 @@ class UserController extends Controller
     	$data = User::all();
     	return response()->json(['data' => $data], 200);
     }
+
+    public function forceLogout(){
+        User::where("is_login", '1')
+        ->update(['is_login'=> '0']);
+        return redirect('/users')->with('alert', 'Berhasil Logout');
+        // return response()->json(['status'=>'Berhasil Logout']);
+    }
 }
