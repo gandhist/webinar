@@ -123,6 +123,7 @@
             @else
               @if($cek > 0)
                 @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
+                  {{-- @php $dec = DB:table('srtf_peserta_seminar')->where('id_seminar', $key->id_seminar)->where(); @endphp --}}
                     <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button>
                 @else
                     <button class="btn btn-success disabled">Terdaftar</button>

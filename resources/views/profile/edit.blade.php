@@ -17,7 +17,8 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="box-body">
-            <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black"><h2 text-align="center">Edit Profile</h2></a>
+            <h2 text-align="center">Edit Profile</h2>
+            {{-- <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black"><h2 text-align="center">Edit Profile</h2></a> --}}
             <hr>
             @if(session()->get('success'))
             <div class="alert alert-success"> {{ session()->get('success') }}
@@ -35,7 +36,7 @@
             </div>
             @endif
 
-            <div class="collapse" id="collapseExample">
+            {{-- <div class="collapse" id="collapseExample"> --}}
                 <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd"
                     method="post" enctype="multipart/form-data">
                     @csrf
@@ -128,12 +129,12 @@
                         <button type="submit" class="btn btn-sm btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
                     </div>
                 </form>
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
 
-    <br>
-    <div class="box-body">
+    {{-- <br> --}}
+    {{-- <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
         <br>
         <table id="example" class="table table-striped table-bordered dataTable customTable" role="grid">
@@ -143,7 +144,6 @@
                     <th style="width:14%;text-align:center;">Jenis Kegiatan</th>
                     <th style="width:17%;text-align:center;">Judul</th>
                     <th style="width:10%;text-align:center;">Jadwal</th>
-                    {{-- <th style="width:5%;text-align:center;">Waktu</th> --}}
                     <th style="width:8%;text-align:center;">SKPK</th>
                     <th style="width:10%;text-align:center;">Awal - Akhir Kegiatan</th>
                     <th style="width:5%;text-align:center;">Materi</th>
@@ -166,9 +166,6 @@
                     <td style="text-align:center;">
                         {{ isset($key->seminar_p) ? \Carbon\Carbon::parse($key->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}
                     </td>
-                    {{-- <td style="text-align:center;">
-                        {{$key->seminar_p->jam_awal}}
-                    </td> --}}
                     <td style="text-align:center;">
                         {{$key->seminar_p->skpk_nilai}}
                     </td>
@@ -203,10 +200,7 @@
                 @endforeach
             </tbody>
         </table>
-    </div>
-
-
-
+    </div> --}}
 
     <!-- /.box-body -->
     <div class="box-footer">

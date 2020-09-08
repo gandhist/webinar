@@ -45,6 +45,9 @@ Route::get('changepassword', 'ProfileController@changePassword')->name('profile.
 Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
 Route::get('detail_seminar/{id}','ProfileController@detail');
 
+Route::get('kegiatan', 'KegiatanController@index')->name('kegiatan.index');
+Route::get('kegiatan/detail/{id}','KegiatanController@detail');
+
 Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
 Route::get('iso/validity/{id}', 'Iso\IsoController@validity');

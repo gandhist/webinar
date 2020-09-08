@@ -35,11 +35,8 @@
             /* background-color: whitesmoke; */
             background-color: #b7d0ed;   
         }
-        #cont{
-            padding-top: 60px;
-        } 
         #content{
-            padding-top: 55px;
+            padding-top: 45px;
         } 
         #content-daftar{
             padding-top: 25px;
