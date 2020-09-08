@@ -44,11 +44,17 @@
             @else
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href= "{{ url('infoseminar') }}"><strong>Seminar</strong></a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('profile.edit') }}"><strong>User Profile</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ url('berita') }}"><strong>Berita</strong></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href= "{{ url('galeri') }}"><strong>Galeri</strong></a>
                     </li>
                     <li class="nav-item active">
                         {{-- <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
