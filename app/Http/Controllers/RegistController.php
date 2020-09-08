@@ -8,6 +8,7 @@ use App\Seminar;
 use App\User;
 use App\PesertaSeminar;
 use App\InstansiModel;
+use App\ReportBlasting;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -148,12 +149,12 @@ class RegistController extends Controller
                 $tgl_3 = \Carbon\Carbon::parse($seminar[2]['tgl_awal'])->isoFormat("DD MMMM YYYY");
                 $link_3 = $seminar[2]['slug'];
                 $seminar_3 = $tema_3.' pada tanggal '.$tgl_3.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_3;
-            }   
+            }
 
-            $token = $this->getToken(); 
+            $token = $this->getToken();
             $channel = $this->setupChannel($token['access_token']);
             $template = '1f3a5e17-d51d-44a7-97c6-452afe122a38';
-            
+
             $lang = [
                 'code' => 'id'
             ];
@@ -255,6 +256,7 @@ class RegistController extends Controller
      */
     public function save(Request $request, $id)
     {
+        // dd($request);
 
         // Create Peserta
         $request->validate([
@@ -324,6 +326,16 @@ class RegistController extends Controller
             $peserta_seminar->status = '1';
             $peserta_seminar->created_by = Auth::id();
             $peserta_seminar->created_at = Carbon::now()->toDateTimeString();
+
+            if($request->magic_link){
+                $peserta_seminar->is_blasting = 1;
+
+                $blast = ReportBlasting::where('magic_link',$request->magic_link)->first();
+                $blast->is_daftar = 1;
+                $blast->daftar = \Carbon\Carbon::now();
+
+                $peserta_seminar->id_blasting = $blast->id;
+            }
             // validasi jika sudah pernah terdaftar
             if($cek > 0){
 
@@ -338,6 +350,9 @@ class RegistController extends Controller
             } else{
                 $peserta_seminar = $peserta_seminar->save();
 
+                if($request->magic_link){
+                    $blast->save();
+                }
                 if($is_free['is_free'] == '0'){
                     // pengurangan kuota
                     // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
@@ -386,10 +401,10 @@ class RegistController extends Controller
             $tgl_awal = $tanggal;
             $jam_awal = $jam;
 
-            $token = $this->getToken(); 
+            $token = $this->getToken();
             $channel = $this->setupChannel($token['access_token']);
             $template = '212f9ecc-52d5-4a98-b1bd-5e10d0a59804';
-            
+
             $lang = [
                 'code' => 'id'
             ];
@@ -517,12 +532,25 @@ class RegistController extends Controller
             $peserta_seminar->status = '1';
             $peserta_seminar->created_by = Auth::id();
             $peserta_seminar->created_at = Carbon::now()->toDateTimeString();
+
+            if($request->magic_link){
+                $peserta_seminar->is_blasting = 1;
+
+                $blast = ReportBlasting::where('magic_link',$request->magic_link)->first();
+                $blast->is_daftar = 1;
+                $blast->daftar = \Carbon\Carbon::now();
+
+                $peserta_seminar->id_blasting = $blast->id;
+            }
+
             // validasi jika sudah pernah terdaftar
             if($cek > 0){
                 return redirect()->route('login')->with('warning', 'Anda Sudah Terdaftar Seminar');
             } else{
                 $peserta_seminar = $peserta_seminar->save();
-
+                if($request->magic_link){
+                    $blast->save();
+                }
                 if($is_free['is_free'] == '0'){
                     // pengurangan kuota
                     // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
@@ -585,10 +613,10 @@ class RegistController extends Controller
                 $tgl_awal = $tanggal->tgl_awal;
                 $jam_awal = $jam->jam_awal;
 
-                $token = $this->getToken(); 
+                $token = $this->getToken();
                 $channel = $this->setupChannel($token['access_token']);
                 $template = '212f9ecc-52d5-4a98-b1bd-5e10d0a59804';
-                
+
                 $lang = [
                     'code' => 'id'
                 ];
