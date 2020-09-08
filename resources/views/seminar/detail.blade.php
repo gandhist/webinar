@@ -494,7 +494,7 @@
 
     {{-- Modal Foto --}}
 <!-- Modal -->
-<div class="modal fade" id="modalBlast" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal {{ old('link_zoom') ? 'in' : 'fade'}}" id="modalBlast" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -516,7 +516,7 @@
                             {{ $errors->first('google_form') }}
                         </div>
                     </div> --}}
-                    <div class="form-group {{ $errors->first('link_daftar') ? 'has-error' : '' }}">
+                    {{-- <div class="form-group {{ $errors->first('link_daftar') ? 'has-error' : '' }}">
                         <label for="link_daftar" class="label-control required">Link pendaftaran melalui aplikasi PPKB P3SM</label>
                         <input type="text" id="link_daftar" class="form-control" name="link_daftar"
                         placeholder="Link pendaftaran melalui aplikasi PPKB P3SM" required
@@ -524,12 +524,12 @@
                         <div id="link_daftar" class="invalid-feedback text-danger">
                             {{ $errors->first('link_daftar') }}
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="form-group {{ $errors->first('link_zoom') ? 'has-error' : '' }}">
                         <label for="link_zoom" class="label-control required">Link ZOOM</label>
-                        <input type="text" id="link_zoom" class="form-control" name="link_zoom"
+                        <input type="url" id="link_zoom" class="form-control" name="link_zoom"
                         placeholder="Link ZOOM" required
-                        value="{{ old('link_zoom') ? old('link_zoom') : '' }}">
+                        value="{{ old('link_zoom') ? old('link_zoom') : ( (isset($seminar->url)) ? $seminar->url : '' ) }}">
                         <div id="link_zoom" class="invalid-feedback text-danger">
                             {{ $errors->first('link_zoom') }}
                         </div>
@@ -537,7 +537,7 @@
                 </div>
                 <div class="modal-footer">
                     {{-- <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button> --}}
-                    <button type="submit" class="btn btn-success">Ya</button>
+                    <button type="submit" class="btn btn-success">Kirim</button>
                 </div>
             </form>
         </div>
