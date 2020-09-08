@@ -1705,22 +1705,22 @@ class SeminarController extends Controller
         $tanggal = \Carbon\Carbon::parse($seminar->tgl_awal)->translatedFormat('d F Y');
         $jam = $seminar->jam_awal;
 
+        $counter_target = 0;
+        $counter_kirim = 0;
+
         $target = TargetBlasting::all();
         $link = null;
-        if($request->link_daftar) {
-            $link['link_daftar'] = $request->link_daftar;
-        }
 
         if($request->link_zoom) {
             $link['link_zoom'] = $request->link_zoom;
         }
 
         foreach($target as $key){
-            $magic = $hashids->encode($seminar->id);;
+            $magic = $hashids->encode($key->id, $seminar->id);
             $user = User::where('email', $key->email)->first();
             if(isset($user->peserta->id)){
                 $peserta = Peserta::where('id', $user->peserta->id)->first();
-                $magic = $hashids->encode($user->id, $seminar->id);
+                $magic = $hashids->encode($key->id, $seminar->id, $user->id);
             } else {
                 $peserta = NULL;
             }
@@ -1735,8 +1735,24 @@ class SeminarController extends Controller
                 'tema' => $tema,
             ];
             // dump($detail);
-//
-            dispatch(new \App\Jobs\Blasting($detail, $link));
+
+            if( (isset($peserta)) ){
+                $peserta_seminar = PesertaSeminar::where('id_peserta', $peserta->id)->where('id_seminar', $seminar->id)->first();
+            }
+
+            if( !(isset($peserta_seminar)) ){
+                dispatch(new \App\Jobs\Blasting($detail, $link));
+                $counter_kirim++;
+            }
+
+            $counter_target++;
         }
+
+        $log_blasting = new LogBlasting;
+        $log_blasting->id_seminar = $id;
+        $log_blasting->jumlah_target = $counter_target;
+        $log_blasting->jumlah_kirim = $counter_kirim;
+        $log_blasting->save();
+
     }
 }
