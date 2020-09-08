@@ -261,18 +261,23 @@ a {
                     <tr>
                         <td class="padded">
                             <p>Kepada Yth,</p>
-                            <p>{{$detail['nama']}}</p>
+                            <p>{{$detail['target']['nama']}}</p>
                             <p>Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh PPKB P3SM.</p>
-                            <p>Free Webinar : {{$detail['title']}} dengan tema <b>{{$detail['tema']}}</b> yang akan dilaksanakan pada hari Sabtu tanggal {{$detail['tanggal']}} jam {{$detail['jam']}} WIB sampai selesai.</p>
+                            <p>Free Webinar : {{$detail['title']}}</p>
+                            <p>Dengan tema : <b>{{$detail['tema']}}</b></p>
+                            <p>Yang akan dilaksanakan pada,</p>
+                            <p>Tanggal : {{$detail['tanggal']}}</p>
+                            <p>Jam : {{$detail['jam']}} WIB sampai selesai.</p>
                             <br>
                             <p>Silahkan mendaftar melalui link di bawah ini: </p>
-                            <p>Tanggal : {{$detail['tanggal']}}</p>
-                            <p>Jam : {{$detail['jam']}}</p>
                             <br>
-                            <p>Acara dapat diikuti oleh siapa saja melalui link zoom dibawah ini, tetapi hanya peserta yang mendaftar yang akan mendapat sertifikat.</p>
-                            <p>Silakan login dengan klik tombol login berikut ini, pada Tanggal “{{$detail['tanggal']}}” dan satu jam sebelum acara dimulai.</p>
-                            <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
-                            <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
+                            <p style="text-align:center;"><a href="{{ isset($detail['magic']) ? url('blast/magic',$detail['magic']) : url('login') }}" class="btn">Daftar</a></p>
+                            <br>
+                            @if(isset($link['link_zoom']))
+                                <p>Acara dapat diikuti oleh siapa saja melalui link zoom dibawah ini, tetapi hanya peserta yang mendaftar yang akan mendapat sertifikat.</p>
+                                <p style="text-align:center;"><a href="{{ isset($link['link_zoom']) ? url($link['link_zoom']) : url('login') }}" class="btn">LINK ZOOM</a></p>
+                            @endif
+                            <p>Terima kasih sudah menggunakan App PPKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>
                     </tbody>

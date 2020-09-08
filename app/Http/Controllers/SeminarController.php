@@ -1699,6 +1699,7 @@ class SeminarController extends Controller
         // dd($request);
         $seminar = SeminarModel::where('id', $id)->first();
 
+        $hashids = new Hashids();
         $title = strip_tags(html_entity_decode($seminar->nama_seminar));
         $tema = strip_tags(html_entity_decode($seminar->tema));
         $tanggal = \Carbon\Carbon::parse($seminar->tgl_awal)->translatedFormat('d F Y');
@@ -1715,11 +1716,10 @@ class SeminarController extends Controller
         }
 
         foreach($target as $key){
-            $magic = null;
+            $magic = $hashids->encode($seminar->id);;
             $user = User::where('email', $key->email)->first();
             if(isset($user->peserta->id)){
                 $peserta = Peserta::where('id', $user->peserta->id)->first();
-                $hashids = new Hashids();
                 $magic = $hashids->encode($user->id, $seminar->id);
             } else {
                 $peserta = NULL;
@@ -1729,6 +1729,7 @@ class SeminarController extends Controller
                 'target' => $key,
                 'peserta' => $peserta,
                 'magic' => $magic,
+                'title' => $title,
                 'tanggal' => $tanggal,
                 'jam' => $jam,
                 'tema' => $tema,
