@@ -2,9 +2,10 @@
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 
 <style>
   .customTable thead {
@@ -72,13 +73,13 @@
   @endif
   <h2>Info Seminar P3SM</h2>
   <hr>
-  <table id="example" class="table table-striped table-bordered customTable" style="width:100%">
+  <table id="example" class="table table-striped table-bordered dataTable customTable" style="width:100%">
     <thead>
       <tr>
         <th style="width:2%;text-align:center">No</th>
-        <th style="text-align:center">Tema</th>
-        <th style="text-align:center">Judul Seminar</th>
-        <th style="text-align:center">Tanggal</th>
+        <th style="text-align:center">Jenis Kegiatan</th>
+        <th style="text-align:center">Judul</th>
+        <th style="text-align:center">Jadwal Kegiatan</th>
         <th style="text-align:center">Tempat</th>
         <th style="text-align:center">Narasumber</th>
         <th style="width:7%;text-align:center;">Biaya</th>
@@ -90,8 +91,8 @@
       <tr>
           <td>{{ $loop->iteration}}</td>
           {{-- <td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td> --}}
-          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
           <td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
+          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>  
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}
@@ -150,9 +151,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script> --}}
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script>
 $(document).ready(function() {
     $('#example').DataTable();

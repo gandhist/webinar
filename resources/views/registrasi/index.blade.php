@@ -64,94 +64,28 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <div class="container" id="content">
      
-      <div class="row">
+    <div class="row">
         <div class="col-lg-2">
         </div>
         <div class="col-lg-8">
-          @if(session()->get('success'))
-          <div class="alert alert-success">{{ session()->get('success') }}
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
-          </div>
-           @endif
-  
-          @if(session()->get('pesan'))
-            <div class="alert alert-warning">{!! session()->get('pesan') !!}
+            @if(session()->get('success'))
+            <div class="alert alert-success">{{ session()->get('success') }}
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
             </div>
-          @endif
-          
-            <h2 style="margin-top: -15px;">Registrasi Akun PPKB Online</h2>
+            @endif
+      
+            @if(session()->get('pesan'))
+              <div class="alert alert-warning">{!! session()->get('pesan') !!}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+              </div>
+            @endif
+            
+            <h2 style="margin-top: -15px;">Registrasi Akun App PPKB Online P3S Mandiri</h2>
             <hr>
         </div>
         <div class="col-lg-2">
         </div>
     </div>
-  {{-- <h2>Registrasi Akun PPKB Online</h2>
-  <hr> --}}
-    {{-- <main role="main" class="container">
-        <form action="{{ url('registrasi/store') }}" class="form-horizontal" id="formRegist" name="formRegist"
-                method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="nama">Nama Lengkap*</label>
-              <input oninvalid="this.setCustomValidity('Masukkan Nama Lengkap')" oninput="setCustomValidity('')" value="{{ old('nama') }}" id="nama" name="nama" type="text" required class="form-control" placeholder="Nama Lengkap">
-              <span id="nama" class="invalid-feedback">{{ $errors->first('nama') }}</span>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="email">Email*</label>
-              <input oninvalid="this.setCustomValidity('Masukkan Email ')" oninput="setCustomValidity('')" value="{{ old('email') }}" id="email" name="email" type="email" required class="form-control {{ $errors->first('email') ? 'is-invalid' : '' }}" aria-describedby="emailHelp" placeholder="Alamat Email">
-              <span id="email" class="invalid-feedback">{{ $errors->first('email') }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="no_hp">No Handphone*</label>
-              <input oninvalid="this.setCustomValidity('Masukkan No HP')" oninput="setCustomValidity('')" value="{{ old('no_hp') }}" id="no_hp" name="no_hp" type="number" required class="form-control {{ $errors->first('no_hp') ? 'is-invalid' : '' }}" placeholder="No Handphone">
-              <span id="no_hp" class="invalid-feedback">{{ $errors->first('no_hp') }}</span>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="pekerjaan">Jabatan*</label>
-              <input oninvalid="this.setCustomValidity('Masukkan Nama Jabatan')" oninput="setCustomValidity('')" value="{{ old('pekerjaan') }}" id="pekerjaan" name="pekerjaan" type="text" required class="form-control" placeholder="Jabatan">
-              <span id="pekerjaan" class="invalid-feedback">{{ $errors->first('pekerjaan') }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label for="instansi">Institusi*</label>
-              <input oninvalid="this.setCustomValidity('Masukkan Nama Institusi')" oninput="setCustomValidity('')" value="{{ old('instansi') }}" id="instansi" name="instansi" type="text" required class="form-control" placeholder="Institusi (tempat kerja/sekolah)">
-              <div id="instansi" class="invalid-feedback">{{ $errors->first('instansi') }}</div>
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <div class="custom-file">
-              <label for="instansi">Foto*</label>
-              <div class="custom-file">
-                <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto" class="custom-file-input {{ $errors->first('foto') ? 'is-invalid' : '' }}" id="validatedCustomFile" required>
-                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-                <div id="foto" class="invalid-feedback">{{ $errors->first('foto') }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-outline-info pull-center">SUBMIT</button>
-      </form>
-    </main> --}}
 
     <main role="main" class="container">
       <form action="{{ url('registrasi/store') }}" class="form-horizontal" id="formRegist" name="formRegist"

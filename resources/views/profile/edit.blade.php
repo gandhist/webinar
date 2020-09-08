@@ -1,11 +1,17 @@
 @extends('frontend.main')
+<style>
+    .customTable thead {
+        background-color: #b7d0ed;
+    }
+</style>
 
 @section('content')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 
 <div class="container" id="content">
     <!-- Default box -->
@@ -129,17 +135,16 @@
     <div class="box-body">
         <b>Daftar Seminar yang telah di ikuti</b>
         <br>
-        <table id="example" class="table table-bordered table-hover dataTable" role="grid">
+        <table id="example" class="table table-striped table-bordered dataTable customTable" role="grid">
             <thead>
                 <tr role="row">
                     <th style="width:1%;text-align:center;">No</th>
-                    <th style="width:8%;text-align:center;">Title</th>
-                    <th style="width:15%;text-align:center;">Tema</th>
-                    <th style="width:10%;text-align:center;">Tanggal</th>
+                    <th style="width:14%;text-align:center;">Jenis Kegiatan</th>
+                    <th style="width:17%;text-align:center;">Judul</th>
+                    <th style="width:10%;text-align:center;">Jadwal</th>
                     {{-- <th style="width:5%;text-align:center;">Waktu</th> --}}
-                    <th style="width:10%;text-align:center;">Nilai SKPK</th>
-                    <th style="width:10%;text-align:center;">Absen Masuk</th>
-                    <th style="width:10%;text-align:center;">Absen Keluar</th>
+                    <th style="width:8%;text-align:center;">SKPK</th>
+                    <th style="width:10%;text-align:center;">Awal - Akhir Kegiatan</th>
                     <th style="width:5%;text-align:center;">Materi</th>
                     <th style="width:5%;text-align:center;">Sertifikat</th>
 
@@ -168,14 +173,16 @@
                     </td>
                     <td style="text-align:center;">
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
-                        @if(isset($key->presensi->jam_cek_in) == null)
-                            <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
+                        @if(isset($key->presensi->jam_cek_out) == null)
+                            @if(isset($key->presensi->jam_cek_in) == null)
+                                <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
+                            @else
+                            <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
+                            @endif
                         @else
-                        <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? $key->presensi->jam_cek_in : '' }} </a>
+                        <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>
+                        <button class="btn btn-sm btn-secondary pull-right">{{ isset($key->presensi->jam_cek_out) ? \Carbon\Carbon::parse($key->presensi->jam_cek_out)->isoFormat("DD MMMM YYYY H:m") : '' }}</button>
                         @endif
-                    </td>
-                    <td style="text-align:center;">
-                            {{ isset($key->presensi) ? $key->presensi->jam_cek_out : '' }}
                     </td>
                     <td style="text-align:center;">
                         @if(isset($key->presensi->jam_cek_out) == null)
@@ -188,7 +195,7 @@
                     </td>
                     <td>
                         @if(isset($key->presensi->jam_cek_out) != null)
-                            <a href="{{ url('sertifikat', Illuminate\Support\Facades\Crypt::encrypt($key->no_srtf)) }}" target="_blank" type="submit" class="btn btn-sm btn-success pull-right"> <i class="fa fa-file"></i> Sertifikat</a>
+                            <a href="{{ url('sertifikat', Illuminate\Support\Facades\Crypt::encrypt($key->no_srtf)) }}" target="_blank" type="submit" class="btn btn-sm btn-success pull-right"> <i class="fa fa-eye"></i> Sertifikat</a>
                         @endif
                     </td>
                 </tr>
@@ -239,9 +246,11 @@
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script> --}}
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" >
 $(document).ready(function() {
 		$('#example').DataTable();
