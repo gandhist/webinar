@@ -1754,5 +1754,6 @@ class SeminarController extends Controller
         $log_blasting->jumlah_kirim = $counter_kirim;
         $log_blasting->save();
 
+        return redirect()->back()->with('alert',"Blasting sukses");
     }
 }
