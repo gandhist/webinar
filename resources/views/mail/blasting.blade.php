@@ -240,7 +240,7 @@ a {
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <td class="title" width="300">PPKB P3S Mandiri</td>
+            <td class="title" width="300">P3S Mandiri</td>
             <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id/" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
@@ -262,14 +262,14 @@ a {
                         <td class="padded">
                             <p>Kepada Yth,</p>
                             <p>{{$detail['target']['nama']}}</p>
-                            <p>Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh PPKB P3S Mandiri.</p>
+                            <p>Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh P3S Mandiri.</p>
                             <p>Free Webinar : {{$detail['title']}}</p>
                             <p>Dengan tema : <b>{{$detail['tema']}}</b></p>
                             <p>Yang akan dilaksanakan pada,</p>
                             <p>Tanggal : {{$detail['tanggal']}}</p>
                             <p>Jam : {{$detail['jam']}} WIB sampai selesai.</p>
                             <br>
-                            <p>Silahkan mendaftar melalui link di bawah ini: </p>
+                            <p>Silahkan mendaftar melalui App PPKB P3S Mandiri menggunakan link di bawah ini: </p>
                             <br>
                             <p style="text-align:center;"><a href="{{ isset($detail['magic']) ? url('blast',$detail['magic']) : url('login') }}" class="btn">Daftar</a></p>
                             <br>
