@@ -40,7 +40,7 @@
                 
                 <div class="collapse" id="collapseExample">
                     @if($seminar->is_mulai == 0)
-                        <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar</a><br><br>
+                        <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar ({{ $seminar->jam_awal }})</a><br><br>
                     @elseif ($seminar->is_mulai == 1)
                         <a href="{{ url('seminar/selesai',$seminar->id) }}" class="btn btn-warning"> Akhiri Seminar</a><br><br>
                     @else
@@ -321,7 +321,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->first('link') ? 'has-error' : '' }} ">
-                                        <label>Link</label>
+                                        <label>Link ZOOM</label>
                                             <form action="{{ url('seminar/kirimlink',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
                                             method="post" enctype="multipart/form-data">
                                                 @csrf
@@ -333,7 +333,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group {{ $errors->first('link2') ? 'has-error' : '' }} ">
-                                        <label>Link 2 (Tidak dikirim ke peserta)</label>
+                                        <label>Link YOUTUBE (Tidak dikirim ke peserta)</label>
                                             <form action="{{ url('seminar/kirimlink2',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
                                             method="post" enctype="multipart/form-data">
                                                 @csrf
@@ -396,7 +396,7 @@
                 </div>
 
                 <div class="box-body">
-                  <b style="font-size: 20px">Daftar Peserta</b>
+                  <b style="font-size: 15px">Daftar Peserta</b>
                   {{-- <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-sm"> Send Bulk Email</a> --}}
                   {{-- <br> --}}
                   <br>
