@@ -271,7 +271,7 @@ a {
                             <br>
                             <p>Silahkan mendaftar melalui link di bawah ini: </p>
                             <br>
-                            <p style="text-align:center;"><a href="{{ isset($detail['magic']) ? url('blast/magic',$detail['magic']) : url('login') }}" class="btn">Daftar</a></p>
+                            <p style="text-align:center;"><a href="{{ isset($detail['magic']) ? url('blast',$detail['magic']) : url('login') }}" class="btn">Daftar</a></p>
                             <br>
                             @if(isset($link['link_zoom']))
                                 <p>Acara dapat diikuti oleh siapa saja melalui link zoom dibawah ini, tetapi hanya peserta yang mendaftar yang akan mendapat sertifikat.</p>

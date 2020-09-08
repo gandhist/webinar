@@ -81,16 +81,16 @@ class Blasting implements ShouldQueue
             $tema = strip_tags(html_entity_decode($this->detail['seminar']['tema']));
             $tgl = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->isoFormat("DD MMMM YYYY");
             $jam = $this->detail['seminar']['jam_awal'];
-        
-            $detal_seminar = 'Free Webinar : '.$title.' dengan tema *'.$tema.'* yang akan diselenggarakan pada tanggal '.$tgl.' jam '.$jam.' WIB sampai selesai';
-            
-            $link = $this->detail['seminar']['slug'];
-            $link_seminar = 'https://srtf.p3sm.or.id/registrasi/daftar/'.$link;
 
-            $token = $this->getToken(); 
+            $detal_seminar = 'Free Webinar : '.$title.' dengan tema *'.$tema.'* yang akan diselenggarakan pada tanggal '.$tgl.' jam '.$jam.' WIB sampai selesai';
+
+            $link = $this->detail['magic'];
+            $link_seminar = 'https://srtf.p3sm.or.id/blast/'.$link;
+
+            $token = $this->getToken();
             $channel = $this->setupChannel($token['access_token']);
             $template = '487cd15b-8d66-4126-881c-c75cf14229a1';
-            
+
             $lang = [
                 'code' => 'id'
             ];
