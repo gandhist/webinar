@@ -89,7 +89,7 @@ class Blasting implements ShouldQueue
 
             $token = $this->getToken(); 
             $channel = $this->setupChannel($token['access_token']);
-            $template = '487cd15b-8d66-4126-881c-c75cf14229a1';
+            $template = 'c92e117a-a415-4910-b28a-aa626a078352';
             
             $lang = [
                 'code' => 'id'

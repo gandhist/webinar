@@ -37,7 +37,7 @@
                         <a class="nav-link" href= "{{ url('galeri') }}"><strong>Galeri</strong></a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-success" href="{{ url('login') }}">Login</a>
+                        <a class="btn btn-success" href="{{ url('login') }}"><i class="fa fa-sign-in"></i> Login</a>
                     </li>
                 </ul>
             </div>

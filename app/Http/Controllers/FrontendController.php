@@ -182,22 +182,57 @@ class FrontendController extends Controller
 
         $no_hp = '081294868833';
         $nama = 'Noer Herinnanda Putra';
-        $login = 'https://srtf.p3sm.or.id/login';
+        $link_zoom = 'https://srtf.p3sm.or.id/login';
         $website = 'https://srtf.p3sm.or.id';
 
-        $title = $seminar[0]['nama_seminar'];
         $tema = strip_tags(html_entity_decode($seminar[0]['tema']));
+
+        $hari = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->format("l");
+        switch($hari){
+            case 'Sunday':
+                $hari = "Minggu";
+            break;
+    
+            case 'Monday':			
+                $hari = "Senin";
+            break;
+    
+            case 'Tuesday':
+                $hari = "Selasa";
+            break;
+    
+            case 'Wednesday':
+                $hari = "Rabu";
+            break;
+    
+            case 'Thursday':
+                $hari = "Kamis";
+            break;
+    
+            case 'Friday':
+                $hari = "Jumat";
+            break;
+    
+            case 'Saturday':
+                $hari = "Sabtu";
+            break;
+            
+            default:
+                $hari = "Tidak di ketahui";		
+            break;
+        }
+     
         $tgl = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->isoFormat("DD MMMM YYYY");
+              
         $jam = $seminar[0]['jam_awal'];
       
-        $detal_seminar = 'Free Webinar : '.$title.' dengan tema *'.$tema.'* yang akan diselenggarakan pada tanggal '.$tgl.' jam '.$jam.' WIB sampai selesai';
-        
+        $detail_seminar = 'Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh P3S Mandiri. Free Webinar dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai';
         $link = $seminar[0]['slug'];
         $link_seminar = 'https://srtf.p3sm.or.id/registrasi/daftar/'.$link;
-
+        dd($detail_seminar);
         $token = $this->getToken(); 
         $channel = $this->setupChannel($token['access_token']);
-        $template = $this->setupTemplate($token['access_token']);
+        $template = 'c92e117a-a415-4910-b28a-aa626a078352';
         
         $lang = [
             'code' => 'id'
@@ -219,8 +254,8 @@ class FrontendController extends Controller
         ];
         $var4 = [
             "key" => "4",
-            "value" => "login",
-            "value_text" => $login,
+            "value" => "link_zoom",
+            "value_text" => $link_zoom,
         ];
         $var5 = [
             "key" => "5",
@@ -237,7 +272,7 @@ class FrontendController extends Controller
         $body = [
             'to_number' => $no_hp,
             'to_name' => $nama,
-            'message_template_id' => '487cd15b-8d66-4126-881c-c75cf14229a1',
+            'message_template_id' => $template,
             'channel_integration_id' => $channel['data'][0]['id'],
             'language' => $lang,
             'parameters' => $param,

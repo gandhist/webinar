@@ -3,6 +3,47 @@
     .customTable thead {
         background-color: #b7d0ed;
     }
+    .button-flash {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
+
+@keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
 </style>
 
 @section('content')
@@ -12,6 +53,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+<script>
+    FontAwesomeConfig = { autoReplaceSvg: false }
+</script>
 
 <div class="container" id="content">
     <!-- Default box -->
@@ -80,7 +125,8 @@
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
                         @if(isset($key->presensi->jam_cek_out) == null)
                             @if(isset($key->presensi->jam_cek_in) == null)
-                                <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
+                                <a class="btn btn-sm btn-success button-flash pull-right" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
+                                data-placement="bottom" title="Klik untuk mengikuti kegiatan"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
                             @else
                             <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
                             @endif
