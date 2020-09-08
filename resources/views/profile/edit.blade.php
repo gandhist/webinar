@@ -17,7 +17,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="box-body">
-            <h2 text-align="center">Edit Profile</h2>
+            <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black"><h2 text-align="center">Edit Profile</h2></a>
             <hr>
             @if(session()->get('success'))
             <div class="alert alert-success"> {{ session()->get('success') }}
@@ -35,99 +35,100 @@
             </div>
             @endif
 
+            <div class="collapse" id="collapseExample">
+                <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd"
+                    method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <img style="width:70%;" src="{{ url('uploads/peserta/'.$user->peserta->foto) }}">
+                                <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"
+                                    {{ $errors->first('foto') ? 'is-invalid' : '' }} style="
+                                    padding-top: 5px;padding-bottom:5px;" class="img">
+                            </div>
+                            <div class="col-sm-6">
+                                <table>
+                                    <tr>
+                                        <th style="width:10%;text-align:left">Nama</th>
+                                        {{-- <td>:</td> --}}
+                                        <td><input name="nama" id="nama" type="text" class="form-control"
+                                                value="{{ old('nama', $user->peserta->nama) }}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:10%;text-align:left">Email</th>
+                                        {{-- <td>:</td> --}}
+                                        <td><input name="email" id="email" type="text" class="form-control"
+                                                value="{{old('email', $user->peserta->email)}}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:10%;text-align:left">No_HP</th>
+                                        {{-- <td>:</td> --}}
+                                        <td><input name="no_hp" id="no_hp" type="text" class="form-control"
+                                                value="{{old('no_hp', $user->peserta->no_hp)}}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:10%;text-align:left">Pekerjaan</th>
+                                        {{-- <td>:</td> --}}
+                                        <td><input name="pekerjaan" id="pekerjaan" type="text" class="form-control"
+                                                value="{{old('pekerjaan', $user->peserta->pekerjaan)}}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:10%;text-align:left">Instansi</th>
+                                        {{-- <td>:</td> --}}
+                                        <td><input name="instansi" id="instansi" type="text" class="form-control"
+                                                value="{{old('instansi', $user->peserta->instansi)}}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:40%;text-align:left">No Regist SKA</th>
+                                        {{-- <td>:</td> --}}
+                                        <td><input name="nrska" id="nrska" type="text" class="form-control"
+                                                value="{{old('nrska', $user->peserta->nrska)}}"></td>
+                                    </tr>
 
-            <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd"
-                method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <img style="width:70%;" src="{{ url('uploads/peserta/'.$user->peserta->foto) }}">
-                            <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"
-                                {{ $errors->first('foto') ? 'is-invalid' : '' }} style="
-                                padding-top: 5px;padding-bottom:5px;" class="img">
+                                    <tr>
+                                        <th style="width:40%;text-align:left">Total Nilai SKPI Pertahun</th>
+                                        {{-- <td>:</td> --}}
+                                        <td>
+                                            <input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control"
+                                        value="{{ $user->peserta->skpk_total }}" readonly>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width:30%;text-align:left">File KTP</th>
+                                        {{-- <td>:</td> --}}
+                                        <td>
+                                            @if (isset($user->peserta->ktp))
+                                            <a target="_blank" href="{{ $user->peserta->ktp }}" data-toggle="tooltip"
+                                            data-placement="top" title="Lihat KTP">Lihat</a>
+                                            @else
+                                            <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="ktp" name="ktp"
+                                            {{ $errors->first('ktp') ? 'is-invalid' : '' }}>
+                                            @endif
+                                        </td>
+                                        {{-- <td><input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="ktp" name="ktp"
+                                            {{ $errors->first('ktp') ? 'is-invalid' : '' }}></td> --}}
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <table>
-                                <tr>
-                                    <th style="width:10%;text-align:left">Nama</th>
-                                    {{-- <td>:</td> --}}
-                                    <td><input name="nama" id="nama" type="text" class="form-control"
-                                            value="{{ old('nama', $user->peserta->nama) }}"></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:10%;text-align:left">Email</th>
-                                    {{-- <td>:</td> --}}
-                                    <td><input name="email" id="email" type="text" class="form-control"
-                                            value="{{old('email', $user->peserta->email)}}"></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:10%;text-align:left">No_HP</th>
-                                    {{-- <td>:</td> --}}
-                                    <td><input name="no_hp" id="no_hp" type="text" class="form-control"
-                                            value="{{old('no_hp', $user->peserta->no_hp)}}"></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:10%;text-align:left">Pekerjaan</th>
-                                    {{-- <td>:</td> --}}
-                                    <td><input name="pekerjaan" id="pekerjaan" type="text" class="form-control"
-                                            value="{{old('pekerjaan', $user->peserta->pekerjaan)}}"></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:10%;text-align:left">Instansi</th>
-                                    {{-- <td>:</td> --}}
-                                    <td><input name="instansi" id="instansi" type="text" class="form-control"
-                                            value="{{old('instansi', $user->peserta->instansi)}}"></td>
-                                </tr>
-                                <tr>
-                                    <th style="width:40%;text-align:left">No Regist SKA</th>
-                                    {{-- <td>:</td> --}}
-                                    <td><input name="nrska" id="nrska" type="text" class="form-control"
-                                            value="{{old('nrska', $user->peserta->nrska)}}"></td>
-                                </tr>
-
-                                <tr>
-                                    <th style="width:40%;text-align:left">Total Nilai SKPI Pertahun</th>
-                                    {{-- <td>:</td> --}}
-                                    <td>
-                                        <input name="nilai_skpi" id="nilai_skpi" type="text" class="form-control"
-                                    value="{{ $user->peserta->skpk_total }}" readonly>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th style="width:30%;text-align:left">File KTP</th>
-                                    {{-- <td>:</td> --}}
-                                    <td>
-                                        @if (isset($user->peserta->ktp))
-                                        <a target="_blank" href="{{ $user->peserta->ktp }}" data-toggle="tooltip"
-                                        data-placement="top" title="Lihat KTP">Lihat</a>
-                                        @else
-                                        <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="ktp" name="ktp"
-                                        {{ $errors->first('ktp') ? 'is-invalid' : '' }}>
-                                        @endif
-                                    </td>
-                                    {{-- <td><input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="ktp" name="ktp"
-                                        {{ $errors->first('ktp') ? 'is-invalid' : '' }}></td> --}}
-                                </tr>
-                            </table>
-                        </div>
+                        {{-- <div class="row">
+                                <div class="col-sm-2">
+                                    <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"  {{ $errors->first('foto') ? 'is-invalid' : '' }}
+                        >
+                            </div>
+                        </div> --}}
                     </div>
-                    {{-- <div class="row">
-                            <div class="col-sm-2">
-                                <input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="foto" name="foto"  {{ $errors->first('foto') ? 'is-invalid' : '' }}
-                    >
-                         </div>
-                    </div> --}}
-                </div>
-                <br>
-                <div class="box-footer">
-                    <a href="{{ url('changepassword') }}" class="btn btn-sm btn-warning pull-left"><i class="fa fa-edit"></i>
-                        Ubah_Password</a>
-                    <a href="{{ url('infoseminar') }}" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i>
-                        Batal</a>
-                    <button type="submit" class="btn btn-sm btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
-                </div>
-            </form>
+                    <br>
+                    <div class="box-footer">
+                        <a href="{{ url('changepassword') }}" class="btn btn-sm btn-warning pull-left"><i class="fa fa-edit"></i>
+                            Ubah_Password</a>
+                        <a href="{{ url('infoseminar') }}" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i>
+                            Batal</a>
+                        <button type="submit" class="btn btn-sm btn-primary pull-right"> <i class="fa fa-save"></i> Simpan</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -175,7 +176,7 @@
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
                         @if(isset($key->presensi->jam_cek_out) == null)
                             @if(isset($key->presensi->jam_cek_in) == null)
-                                <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Absensi </a>
+                                <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> Ikut Kegiatan </a>
                             @else
                             <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
                             @endif

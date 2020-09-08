@@ -71,7 +71,7 @@
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     </div>
   @endif
-  <h2>Info Seminar P3SM</h2>
+  <h2>Info Seminar P<sub>3</sub>SM</h2>
   <hr>
   <table id="example" class="table table-striped table-bordered dataTable customTable" style="width:100%">
     <thead>
