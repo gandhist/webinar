@@ -13,16 +13,18 @@ class BlastingMail extends Mailable
 
     public $detail;
     public $link;
+    public $hari;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($detail, $link)
+    public function __construct($detail, $link, $hari)
     {
         $this->detail = $detail;
         $this->link = $link;
+        $this->hari = $hari;
     }
 
     /**

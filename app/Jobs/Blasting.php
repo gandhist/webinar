@@ -53,8 +53,42 @@ class Blasting implements ShouldQueue
 
 
         if( !(isset($report_blasting->is_email_sent))  ){
+            $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
+            switch($hari){
+                case 'Sunday':
+                    $hari = "Minggu";
+                break;
+
+                case 'Monday':
+                    $hari = "Senin";
+                break;
+
+                case 'Tuesday':
+                    $hari = "Selasa";
+                break;
+
+                case 'Wednesday':
+                    $hari = "Rabu";
+                break;
+
+                case 'Thursday':
+                    $hari = "Kamis";
+                break;
+
+                case 'Friday':
+                    $hari = "Jumat";
+                break;
+
+                case 'Saturday':
+                    $hari = "Sabtu";
+                break;
+
+                default:
+                    $hari = "Tidak di ketahui";
+                break;
+            }
             // Fungsi blasting email
-            Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link));
+            Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link, $hari));
 
             if(empty($report_blasting)){
                 $report_blasting = new ReportBlasting;
@@ -83,49 +117,49 @@ class Blasting implements ShouldQueue
                 case 'Sunday':
                     $hari = "Minggu";
                 break;
-        
-                case 'Monday':			
+
+                case 'Monday':
                     $hari = "Senin";
                 break;
-        
+
                 case 'Tuesday':
                     $hari = "Selasa";
                 break;
-        
+
                 case 'Wednesday':
                     $hari = "Rabu";
                 break;
-        
+
                 case 'Thursday':
                     $hari = "Kamis";
                 break;
-        
+
                 case 'Friday':
                     $hari = "Jumat";
                 break;
-        
+
                 case 'Saturday':
                     $hari = "Sabtu";
                 break;
-                
+
                 default:
-                    $hari = "Tidak di ketahui";		
+                    $hari = "Tidak di ketahui";
                 break;
             }
 
-         
+
             $tgl = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->isoFormat("DD MMMM YYYY");
             $jam = $this->detail['seminar']['jam_awal'];
 
             $detail_seminar = 'Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh P3S Mandiri. Free Webinar dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai';
-            
+
             $link = $this->detail['magic'];
             $link_seminar = 'https://srtf.p3sm.or.id/blast/'.$link;
 
             $token = $this->getToken();
             $channel = $this->setupChannel($token['access_token']);
             $template = 'c92e117a-a415-4910-b28a-aa626a078352';
-         
+
             $lang = [
                 'code' => 'id'
             ];
