@@ -168,7 +168,7 @@ class InfoSeminarController extends Controller
             if($request->magic_link){
                 $blast->save();
             }
-            if($is_free['is_free'] == '0'){
+            if(true){ //$is_free['is_free'] == '0'
                 // pengurangan kuota
                 // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
                 $kuota = Seminar::find($id);

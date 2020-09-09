@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Peserta;
 use App\Seminar;
+use App\TargetBlasting;
 use App\User;
 use App\PesertaSeminar;
 use App\InstansiModel;
@@ -100,6 +101,12 @@ class RegistController extends Controller
             $data['role_id'] = 2;
             $data['is_active'] = 1;
             $user = User::create($data);
+
+            $target = new TargetBlasting;
+            $target->nama  = $request->nama;
+            $target->email  = $request->email;
+            $target->no_hp  = $request->no_hp;
+            $target->save();
 
             $peserta_id['user_id'] = $user->id;
 
@@ -826,5 +833,6 @@ class RegistController extends Controller
         // return view('mail.signup')->with(compact('pesan'));
 
     }
+
 
 }

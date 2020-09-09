@@ -15,6 +15,7 @@ use App\Seminar;
 use App\LogImport;
 use App\LogImportErr;
 use App\User;
+use App\TargetBlasting;
 
 class ImportPeserta implements ToCollection,WithHeadingRow
 {
@@ -47,6 +48,12 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $user->name                         = $row['nama'];
                 $user->role_id                      = '2';
                 $user->save();
+
+                $target = new TargetBlasting;
+                $target->nama  = $row['nama'];
+                $target->email  = $row['email'];
+                $target->no_hp  = $row['nomor_handphone'];
+                $target->save();
 
                 $user_id = $user->id;
 
