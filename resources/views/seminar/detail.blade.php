@@ -33,12 +33,12 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron"  style='padding-top:1px'>
+            <div class="jumbotron"  style='padding-top:1px;overflow-y: scroll !important;position: relative;height: 795px;'>
 
                 <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black">
                     <span style="font-size: 50px;">Aplikasi PPKB Online</span></a>
 
-                <div class="collapse" id="collapseExample">
+                <div class="" id="collapseExample" >
                     @if($seminar->is_mulai == 0)
                         <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar ({{ $seminar->jam_awal }})</a><br><br>
                     @elseif ($seminar->is_mulai == 1)
@@ -591,7 +591,7 @@
             "scrollY":        "500px",
             "scrollCollapse": true,
             "paging":         true,
-            lengthMenu: [100, 200, 500,2000]
+            lengthMenu: [1000, 2000, 5000, 10000]
         } );
     } );
 var msg = '{{Session::get('alert')}}';

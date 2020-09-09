@@ -36,7 +36,7 @@
             background-color: #b7d0ed;   
         }
         #content{
-            padding-top: 45px;
+            padding-top: 50px;
         } 
         #content-daftar{
             padding-top: 25px;
@@ -137,6 +137,9 @@
             
         }
       </style>
+      <script>
+        FontAwesomeConfig = { autoReplaceSvg: false }
+      </script>
 </head>
 <body>
     @include('frontend.navigation')

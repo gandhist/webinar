@@ -94,16 +94,15 @@
 {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> --}}
 <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 
 <script>
     FontAwesomeConfig = { autoReplaceSvg: false }
 </script>
-<div class="container">
+<div class="container" id="content-home">
 	<div class="jumbotron">
-		<div class="d-flex justify-content-around logo">
+		<div class="d-flex justify-content-around logo" style="padding-top: 5px;">
 			<div>
 				<img src="{{ url('a.jpeg') }}" alt="logo" class="img-responsive" height="200px"></a>
 			</div>
@@ -137,7 +136,7 @@
 		</div>
 		<div class="login">
 			<h4 class="head-title">Login</h4>
-			<p>Silahkan Login dengan user bagi yang sudah memiliki akun, atau klik <button class="btn btn-sm button-flash my-2 my-sm-0">Daftar</button> pada kegiatan dibawah ini</p>
+			<p>Silahkan Login dengan user bagi yang sudah memiliki akun, atau klik <button class="btn btn-sm button-flash my-2 my-sm-0"><i class="fa fa-check-circle"> Daftar</i></button> pada kegiatan dibawah ini</p>
 			<div class="col-sm-6">
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
@@ -152,7 +151,7 @@
 						<input type="password" class="form-control" placeholder="Password" name="password">
 						<span class="glyphicon glyphicon-lock"></span>
 					</div> --}}
-					<button type="submit" class="btn btn-sm btn-success btn-border-filled m-2">Login</button>
+					<button type="submit" class="btn btn-sm btn-success btn-border-filled m-2"><i class="fa fa-sign-in"></i> Login</button>
 					<a href="{{url('login/google')}}" style="color: white" class="btn btn-sm btn-primary m-2">
 						<i class="fa fa-google fa-fw"></i> 
 						{{-- Login with Google Account --}}
@@ -207,7 +206,7 @@
 						@else
                         <a href="{{ isset($key->slug) ? url('registrasi/daftar',$key->slug) : url('registrasi/daftar',$key->id)}}"
                             class="btn button-flash my-2 my-sm-0" data-toggle="tooltip"
-						data-placement="top" title="Daftar disini bagi yang belum memiliki akun APP PPKB P3S Mandiri">Daftar</a>
+						data-placement="top" title="Daftar disini bagi yang belum memiliki akun APP PPKB P3S Mandiri"><i class="fa fa-check-circle"> Daftar</i></a>
 						@endif
 					</td>
                 </tr>
