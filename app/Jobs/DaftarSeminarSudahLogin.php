@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Mail\SeminarBaru as MailSeminar;
 use App\Traits\GlobalFunction;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class DaftarSeminarSudahLogin implements ShouldQueue
 {
@@ -52,7 +52,7 @@ class DaftarSeminarSudahLogin implements ShouldQueue
         $pass = '-';
 
         $username = "dengan Username : ".$email;
-        $password = '';
+        $password = '-';
         $login = 'https://srtf.p3sm.or.id/login';
 
         $tema = $this->detail['tema'];
@@ -126,7 +126,7 @@ class DaftarSeminarSudahLogin implements ShouldQueue
             'language' => $lang,
             'parameters' => $param,
         ];
-
+        
         $status = $this->sendMessage($token['access_token'],$body);
 
     }
