@@ -59,7 +59,7 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
         $pass = '-';
 
         $username = "dengan Username : ".$email;
-        $password = '';
+        $password = '-';
         $login = 'https://srtf.p3sm.or.id/login';
 
         $tema = $this->detail['tema'];

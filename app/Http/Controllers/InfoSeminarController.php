@@ -193,11 +193,12 @@ class InfoSeminarController extends Controller
                     // 'password' => 'PASSWORD',
                     'email' => $peserta->email,
                     'nama' => $peserta->nama,
-                    'nope' => $peserta->nomor_handphone,
+                    'nope' => $peserta->no_hp,
                     'tanggal' => $tanggal,
                     'jam' => $jam,
                     'tema' => $tema,
                 ];
+
                 dispatch(new \App\Jobs\DaftarSeminarSudahLogin($detail));
 
             }

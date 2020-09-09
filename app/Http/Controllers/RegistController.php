@@ -394,7 +394,7 @@ class RegistController extends Controller
             $pass = '-';
 
             $username = "dengan Username : ".$email;
-            $password = '';
+            $password = '-';
             $login = 'https://srtf.p3sm.or.id/login';
 
             $tema = $tema;
