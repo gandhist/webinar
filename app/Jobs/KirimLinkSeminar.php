@@ -54,22 +54,22 @@ class KirimLinkSeminar implements ShouldQueue
         $jam = $this->key->seminar_p->jam_awal;
         $url =  url('presensi', Hashids::encode($this->key->id));
 
-        $nohp = $this->data->no_hp;
-        $nama = $this->data->nama;
-        // print_r($this->detail);
-        // $pesan = 'test';
-        $pesan = "Salam Sehat Bapak/Ibu $nama serta rekan-rekan semua bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal $tgl dengan topik *$tema*. \nAcara dimulai pukul $jam WIB, harap menggunakan nama dengan format *\"nama_institusi\"*.\ncontoh : Budi_P3S mandiri \nLink : $url \nTerimakasih";
-        $status = $this->kirimPesanWA($nohp,$pesan);
-        // print_r($status);
+        // $nohp = $this->data->no_hp;
+        // $nama = $this->data->nama;
+        // // print_r($this->detail);
+        // // $pesan = 'test';
+        // $pesan = "Salam Sehat Bapak/Ibu $nama serta rekan-rekan semua bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal $tgl dengan topik *$tema*. \nAcara dimulai pukul $jam WIB, harap menggunakan nama dengan format *\"nama_institusi\"*.\ncontoh : Budi_P3S mandiri \nLink : $url \nTerimakasih";
+        // $status = $this->kirimPesanWA($nohp,$pesan);
+        // // print_r($status);
 
-        if($status['status'] == '1'){
-            $log = PesertaSeminar::where('id',$this->key->id)->first();
-            $log->status_wa = '1';
-            $log->save();
-        } elseif ($status['status'] =='0') {
-            $log = PesertaSeminar::where('id',$this->key->id)->first();
-            $log->status_wa = '0';
-            $log->save();
-        }
+        // if($status['status'] == '1'){
+        //     $log = PesertaSeminar::where('id',$this->key->id)->first();
+        //     $log->status_wa = '1';
+        //     $log->save();
+        // } elseif ($status['status'] =='0') {
+        //     $log = PesertaSeminar::where('id',$this->key->id)->first();
+        //     $log->status_wa = '0';
+        //     $log->save();
+        // }
     }
 }
