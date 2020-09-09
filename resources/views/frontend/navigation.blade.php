@@ -1,6 +1,6 @@
 <div id="navbar">
    <nav class="navbar navbar-expand-lg navbar-light">
-                
+
         <div class="container-fluid">
             @if(!Auth::user())
             {{-- <a class="home" href="{{ url('') }}"><h3>P<sub>3</sub>SM</h3></a> --}}
@@ -13,11 +13,11 @@
                 <a class="home" href="{{ url('infoseminar') }}"><img src="{{ url('p3sm_a.png') }}" class="img-responsive" alt="logo" width="100px"></a>
             </div>
             @endif
-      
+
             <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fa fa-align-justify"></i>
             </button>
-            
+
             @if(!Auth::user())
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav ml-auto">
@@ -36,7 +36,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href= "{{ url('galeri') }}"><strong>Galeri</strong></a>
                     </li>
-                    <li class="nav-item">
+                    <li style="padding-left: 10px;">
                         <a class="btn btn-success" href="{{ url('login') }}"><i class="fa fa-sign-in"></i> Login</a>
                     </li>
                 </ul>
@@ -49,7 +49,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href= "{{ route('kegiatan.index') }}"><strong>Kegiatan</strong></a>
-                    </li>     
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href= "{{ url('berita') }}"><strong>Berita</strong></a>
                     </li>
@@ -59,13 +59,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('profile.edit') }}"><strong>User Profile</strong></a>
                     </li>
-                    <li class="nav-item active">
-                        {{-- <a class="nav-link" href="javascript:void" onclick="$('#logout-form').submit();">
-                            Sign Out
-                        </a> --}}
-                        {{-- <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form> --}}
+                    <li style="padding-left: 10px;">
                         <div class="btn-group dropleft">
                             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user"></i>
@@ -84,5 +78,5 @@
             </div>
             @endif
         </div>
-    </nav>            
-</div>             
+    </nav>
+</div>
