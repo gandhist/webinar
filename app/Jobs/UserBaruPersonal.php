@@ -19,7 +19,7 @@ class UserBaruPersonal implements ShouldQueue
 
     protected $detail;
 
-    public $tries = 5;
+    public $tries = 1;
 
     /**
      * Create a new job instance.

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use Hashids\Hashids;
+
+use Vinkla\Hashids\Facades\Hashids;
 
 use App\TargetBlasting;
 use App\LogBlasting;

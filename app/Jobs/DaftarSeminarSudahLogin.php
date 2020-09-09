@@ -126,7 +126,7 @@ class DaftarSeminarSudahLogin implements ShouldQueue
             'language' => $lang,
             'parameters' => $param,
         ];
-        
+
         $status = $this->sendMessage($token['access_token'],$body);
 
     }

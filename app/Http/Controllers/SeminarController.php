@@ -38,7 +38,8 @@ use App\AbsensiModel;
 use App\FeedbackModel;
 use App\FeedbackRatingModel;
 use App\Exports\FeedbackExport;
-use Hashids\Hashids;
+
+use Vinkla\Hashids\Facades\Hashids;
 use Excel;
 
 class SeminarController extends Controller

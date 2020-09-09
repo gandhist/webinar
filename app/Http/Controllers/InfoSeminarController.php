@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Crypt;
 use Config;
+use Vinkla\Hashids\Facades\Hashids;
 
 class InfoSeminarController extends Controller
 {
@@ -188,9 +189,12 @@ class InfoSeminarController extends Controller
                 $tanggal = \Carbon\Carbon::parse($detailseminar->tgl_awal)->translatedFormat('d F Y');
                 $jam = $detailseminar->jam_awal;
 
+                $magic_link = Hashids::encode($peserta->user_r->id);
+
                 $detail = [
                     'username' => $peserta->user_r->username,
                     // 'password' => 'PASSWORD',
+                    'magic_link' => $magic_link,
                     'email' => $peserta->email,
                     'nama' => $peserta->nama,
                     'nope' => $peserta->no_hp,

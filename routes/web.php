@@ -12,6 +12,7 @@
 */
 Route::auth();
 Route::get('test/{id}', 'RegistController@test');
+Route::get('/notif/{magic}','UserController@notif');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');
@@ -44,9 +45,6 @@ Route::post('profile', 'ProfileController@update')->name('profile.update');
 Route::get('changepassword', 'ProfileController@changePassword')->name('profile.change');
 Route::post('savepassword', 'ProfileController@savePassword')->name('changepassword');
 Route::get('detail_seminar/{id}','ProfileController@detail');
-
-Route::get('kegiatan', 'KegiatanController@index')->name('kegiatan.index');
-Route::get('kegiatan/detail/{id}','KegiatanController@detail');
 
 Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
@@ -94,6 +92,9 @@ Route::namespace('Iso')->group(function(){
 
 
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('kegiatan', 'KegiatanController@index')->name('kegiatan.index');
+    Route::get('kegiatan/detail/{id}','KegiatanController@detail');
 
 // Seminar
 

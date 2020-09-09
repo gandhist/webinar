@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Drivers;
 use App\Role;
@@ -94,5 +96,14 @@ class UserController extends Controller
         ->update(['is_login'=> '0']);
         return redirect('/users')->with('alert', 'Berhasil Logout');
         // return response()->json(['status'=>'Berhasil Logout']);
+    }
+
+    public function notif($magic){
+        $id = Hashids::decode($magic);
+        $user = User::where('id',$id)->first();
+
+        Auth::login($user);
+
+        return redirect('kegiatan');
     }
 }

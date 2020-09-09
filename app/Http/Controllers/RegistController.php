@@ -22,7 +22,8 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\GlobalFunction;
 use Illuminate\Support\Facades\Http;
-use Hashids\Hashids;
+
+use Vinkla\Hashids\Facades\Hashids;
 use Session;
 
 class RegistController extends Controller
@@ -114,7 +115,10 @@ class RegistController extends Controller
 
             $seminar = Seminar::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
+            $magic_link = Hashids::encode($user->id);
+
             $pesan = [
+                'magic_link'  => $magic_link,
                 'username' => $request->email,
                 'email' => $request->email,
                 'password' => $password,
@@ -374,12 +378,17 @@ class RegistController extends Controller
                 }
             }
 
+            $user = User::find($peserta['user_id']);
+
             $tema = strip_tags(html_entity_decode($detailseminar['tema']));
             $tanggal = \Carbon\Carbon::parse($detailseminar['tgl_awal'])->translatedFormat('d F Y');
             $jam = $detailseminar['jam_awal'];
 
+            $magic_link = Hashids::encode($user->id);
+
             //kirim email
             $pesan = [
+                'magic_link' => $magic_link,
                 'username' => $request->email,
                 // 'password' => 'PASSWORD',
                 'email' => $request->email,
@@ -587,10 +596,13 @@ class RegistController extends Controller
 
                 $peserta_id['user_id'] = $user->id;
 
+                $magic_link = Hashids::encode($user->id);
+
                 Peserta::find($peserta->id)->update($peserta_id);
                 $tema = strip_tags(html_entity_decode($detailseminar['tema']));
                 //kirim email ikhi
                 $pesan = [
+                    'magic_link' => $magic_link,
                     'username' => $request->nama,
                     'password' => $password,
                     'email' => strtolower($request->email),
