@@ -17,6 +17,8 @@ use App\LogImportErr;
 use App\User;
 use App\TargetBlasting;
 
+use Vinkla\Hashids\Facades\Hashids;
+
 class ImportPeserta implements ToCollection,WithHeadingRow
 {
     public function  __construct($id)
@@ -173,9 +175,10 @@ class ImportPeserta implements ToCollection,WithHeadingRow
 
                 if($userAda == 0){
 
-
+                    $magic_link = Hashids::encode($user->id);
                     $detail = [
                         'username' => $user->username,
+                        'magic_link' => $magic_link,
                         'password' => $password,
                         'email' =>$peserta->email,
                         'nama' => $peserta->nama,
@@ -188,9 +191,11 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                     dispatch(new \App\Jobs\SendEmailUserBaru($detail));
                 } else {
 
+                    $magic_link = Hashids::encode($user->id);
                     $detail = [
                         'username' => $user->username,
                         // 'password' => $password,
+                        'magic_link' => $magic_link,
                         'email' =>$peserta->email,
                         'nama' => $peserta->nama,
                         'nope' => $peserta->no_hp,

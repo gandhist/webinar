@@ -24,7 +24,7 @@ class KirimLinkSeminar implements ShouldQueue
     protected $key;
 
 
-    public $tries = 5;
+    public $tries = 1;
 
 
     /**

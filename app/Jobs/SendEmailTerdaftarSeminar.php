@@ -18,7 +18,7 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
 
     protected $detail;
 
-    public $tries = 5;
+    public $tries = 1;
 
     /**
      * Create a new job instance.
@@ -66,10 +66,10 @@ class SendEmailTerdaftarSeminar implements ShouldQueue
         $tgl = $this->detail['tanggal'];
         $jam = $this->detail['jam'];
 
-        $token = $this->getToken(); 
+        $token = $this->getToken();
         $channel = $this->setupChannel($token['access_token']);
         $template = '212f9ecc-52d5-4a98-b1bd-5e10d0a59804';
-        
+
         $lang = [
             'code' => 'id'
         ];

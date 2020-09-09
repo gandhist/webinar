@@ -279,7 +279,7 @@ a {
                             <br>
                             <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
                             <p>Silakan login dengan klik tombol login berikut ini, pada Tanggal “{{$pesan['tanggal']}}” dan satu jam sebelum acara dimulai.</p>
-                            <p style="text-align:center;"><a href="{{ url('login') }}" class="btn">Halaman Login</a></p>
+                            <p style="text-align:center;"><a href="{{ url('notif', $pesan['magic_link']) }}" class="btn">Halaman Login</a></p>
                             <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>

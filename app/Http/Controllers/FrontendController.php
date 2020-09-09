@@ -15,6 +15,9 @@ class FrontendController extends Controller
 
     public function index()
     {
+        if(Auth::check()){
+            return redirect('infoseminar');
+        }
         $date = Carbon::now()->toDateTimeString();
         $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
         if(Auth::check())
@@ -67,7 +70,7 @@ class FrontendController extends Controller
     }
 
     public function kirimWA() // daftar only
-    {    
+    {
         $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
         $no_hp = '081294868833';
@@ -88,7 +91,7 @@ class FrontendController extends Controller
             $link_1 = $seminar[0]['slug'];
             $seminar_1 = $tema_1.' pada tanggal '.$tgl_1.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_1;
         }
-        
+
         if(isset($seminar[1])){
             $tema_2 = strip_tags(html_entity_decode($seminar[1]['tema']));
             $tgl_2 = \Carbon\Carbon::parse($seminar[1]['tgl_awal'])->isoFormat("DD MMMM YYYY");
@@ -101,12 +104,12 @@ class FrontendController extends Controller
             $tgl_3 = \Carbon\Carbon::parse($seminar[2]['tgl_awal'])->isoFormat("DD MMMM YYYY");
             $link_3 = $seminar[2]['slug'];
             $seminar_3 = $tema_3.' pada tanggal '.$tgl_3.' dengan link '.'https://srtf.p3sm.or.id/registrasi/daftar/'.$link_3;
-        }   
+        }
 
-        $token = $this->getToken(); 
+        $token = $this->getToken();
         $channel = $this->setupChannel($token['access_token']);
         $template = $this->setupTemplate($token['access_token']);
-        
+
         $lang = [
             'code' => 'id'
         ];
@@ -172,12 +175,12 @@ class FrontendController extends Controller
         ];
 
         $pesan = $this->sendMessage($token['access_token'],$body);
-        
-        return $pesan;   
+
+        return $pesan;
     }
 
     public function kirimWA2() // blasting
-    {    
+    {
         $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
         $no_hp = '081294868833';
@@ -192,48 +195,48 @@ class FrontendController extends Controller
             case 'Sunday':
                 $hari = "Minggu";
             break;
-    
-            case 'Monday':			
+
+            case 'Monday':
                 $hari = "Senin";
             break;
-    
+
             case 'Tuesday':
                 $hari = "Selasa";
             break;
-    
+
             case 'Wednesday':
                 $hari = "Rabu";
             break;
-    
+
             case 'Thursday':
                 $hari = "Kamis";
             break;
-    
+
             case 'Friday':
                 $hari = "Jumat";
             break;
-    
+
             case 'Saturday':
                 $hari = "Sabtu";
             break;
-            
+
             default:
-                $hari = "Tidak di ketahui";		
+                $hari = "Tidak di ketahui";
             break;
         }
-     
+
         $tgl = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->isoFormat("DD MMMM YYYY");
-              
+
         $jam = $seminar[0]['jam_awal'];
-      
+
         $detail_seminar = 'Bersama ini kami sampaikan tentang rencana jadwal kegiatan webinar yang akan diselenggarakan oleh P3S Mandiri. Free Webinar dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai';
         $link = $seminar[0]['slug'];
         $link_seminar = 'https://srtf.p3sm.or.id/registrasi/daftar/'.$link;
- 
-        $token = $this->getToken(); 
+
+        $token = $this->getToken();
         $channel = $this->setupChannel($token['access_token']);
         $template = 'c92e117a-a415-4910-b28a-aa626a078352';
-        
+
         $lang = [
             'code' => 'id'
         ];
@@ -279,12 +282,12 @@ class FrontendController extends Controller
         ];
 
         $pesan = $this->sendMessage($token['access_token'],$body);
-        
-        return $pesan;    
+
+        return $pesan;
     }
 
     public function kirimWA3() // daftar + join seminar
-    {    
+    {
         $seminar = SeminarModel::where('status','=','published')->orderByDesc('tgl_awal')->get();
 
         $no_hp = '081294868833';
@@ -299,10 +302,10 @@ class FrontendController extends Controller
         $tgl = \Carbon\Carbon::parse($seminar[0]['tgl_awal'])->isoFormat("DD MMMM YYYY");
         $jam = $seminar[0]['jam_awal'];
 
-        $token = $this->getToken(); 
+        $token = $this->getToken();
         $channel = $this->setupChannel($token['access_token']);
         $template = $this->setupTemplate($token['access_token']);
-        
+
         $lang = [
             'code' => 'id'
         ];
@@ -368,8 +371,8 @@ class FrontendController extends Controller
         ];
 
         $pesan = $this->sendMessage($token['access_token'],$body);
-        
+
         return $pesan;
-         
+
     }
 }
