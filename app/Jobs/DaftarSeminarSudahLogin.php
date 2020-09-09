@@ -45,7 +45,7 @@ class DaftarSeminarSudahLogin implements ShouldQueue
         // $pesan = "Selamat ".$this->detail['nama']."! Anda berhasil terdaftar di seminar P3S Mandiri, dengan tema *".strip_tags($this->detail['tema'])."*";
         // $status =  $this->kirimPesanWA($nohp,$pesan);
         // print_r($status);
-
+        $link = $this->detail['magic_link'];
         $no_hp = $this->detail['nope'];
         $nama = $this->detail['nama'];
         $email = $this->detail['email'];
@@ -53,7 +53,7 @@ class DaftarSeminarSudahLogin implements ShouldQueue
 
         $username = "dengan Username : ".$email;
         $password = '-';
-        $login = 'https://srtf.p3sm.or.id/login';
+        $login = 'https://srtf.p3sm.or.id/notif/'.$link;
 
         $tema = $this->detail['tema'];
         $tgl = $this->detail['tanggal'];

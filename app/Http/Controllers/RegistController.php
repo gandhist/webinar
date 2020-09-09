@@ -411,7 +411,7 @@ class RegistController extends Controller
 
             $username = "dengan Username : ".$email;
             $password = '-';
-            $login = 'https://srtf.p3sm.or.id/login';
+            $login = 'https://srtf.p3sm.or.id/notif/'.$magic_link;
 
             $tema = $tema;
             $tgl_awal = $tanggal;
@@ -626,7 +626,7 @@ class RegistController extends Controller
 
                 $username = "dengan Username : ".$email;
                 $password = "dan Password : ".$pass;;
-                $login = 'https://srtf.p3sm.or.id/login';
+                $login = 'https://srtf.p3sm.or.id/notif/'.$magic_link;
 
                 $tema = $tema;
                 $tgl_awal = $tanggal->tgl_awal;

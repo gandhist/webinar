@@ -13,6 +13,9 @@
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="{{ asset('frontend/style5.css') }}">
 
@@ -33,22 +36,58 @@
         }
         .navbar {
             /* background-color: whitesmoke; */
-            background-color: #b7d0ed;   
+            background-color: #b7d0ed;
         }
+        /* .navbar{background:#222222;} */
+        .nav-item::after{
+            content:'';
+            display:block;
+            width:0px;
+            height:2px;
+            background:#111111;
+            transition: 0.4s;
+        }
+        .nav-item:hover::after{
+            width:100%;
+        }
+        .nav-item::before{
+            content:'';
+            display:block;
+            width:0px;
+            height:2px;
+            background:#111111;
+            transition: 0.4s;
+        }
+        .nav-item:hover::before{
+            width:100%;
+        }
+        /* .navbar-dark .navbar-nav .active > .nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show > .nav-link,.navbar-dark .navbar-nav .nav-link:focus, .navbar-dark .navbar-nav .nav-link:hover{
+            color:#111111;
+            } */
+        /* .nav-link{
+            padding:15px 5px;transition:0.2s;
+            } */
+        /* .dropdown-item.active, .dropdown-item:active{
+            color:#212529;
+            } */
+        /* .dropdown-item:focus, .dropdown-item:hover{
+            background:#111111;
+            } */
+
         #content{
             padding-top: 50px;
-        } 
+        }
         #content-daftar{
             padding-top: 25px;
-        } 
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
         }
-        td, th { 
-            padding: 6px; 
-            border: 0px solid #ccc; 
-            text-align: left; 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td, th {
+            padding: 6px;
+            border: 0px solid #ccc;
+            text-align: left;
         }
         #myBtn {
             display: none;
@@ -64,7 +103,7 @@
             padding: 15px;
             border-radius: 20px;
             line-height: 1.2;
-        } 
+        }
         .footer {
             background-color: #b7d0ed;
             width:100%;
@@ -84,24 +123,24 @@
 
         @media only screen and (max-width: 760px),(min-device-width: 768px) and (max-device-width: 1024px)  {
             /* Force table to not be like tables anymore */
-            table, thead, tbody, th, td, tr { 
-                display: block; 
+            table, thead, tbody, th, td, tr {
+                display: block;
             }
             /* Hide table headers (but not display: none;, for accessibility) */
-            thead tr { 
+            thead tr {
                 position: absolute;
                 top: -9999px;
                 left: -9999px;
             }
-            tr { 
-                border: 1px solid #ccc; 
+            tr {
+                border: 1px solid #ccc;
             }
-            td { 
+            td {
                 /* Behave  like a "row" */
                 border: none;
-                border-bottom: 1px solid #eee; 
+                border-bottom: 1px solid #eee;
                 position: relative;
-            }  
+            }
             img {
                 display: block;
                 margin-left: auto;
@@ -134,7 +173,7 @@
                 border-radius: 20px;
                 line-height: 1.2;
             }
-            
+
         }
       </style>
       <script>
@@ -145,5 +184,5 @@
     @include('frontend.navigation')
     <div id="content">
         @yield('content')
-    </div> 
+    </div>
     @include('frontend.footer')
