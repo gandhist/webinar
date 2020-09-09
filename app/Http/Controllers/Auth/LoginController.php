@@ -14,6 +14,8 @@ use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 use Session;
 
+use App\TargetBlasting;
+
 class LoginController extends Controller
 {
     /*
@@ -185,6 +187,13 @@ class LoginController extends Controller
                 $data->provider_id  = $user->id;
                 $data->role_id      = '2';
                 $data->save();
+
+                $target = new TargetBlasting;
+                $target->nama  = $user->name;
+                $target->email  = $user->email;
+                // $target->no_hp  = $request->hp_pimp;
+                $target->save();
+
                 // handle upload Foto
                 $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $user->name);
                 $foto = '';

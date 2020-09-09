@@ -11,6 +11,7 @@ use App\BankModel;
 use App\Personal;
 use App\Peserta;
 use App\User;
+use App\TargetBlasting;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -213,6 +214,11 @@ class InstansiController extends Controller
             // $user->created_by   = Auth::id();
             $user->save();
 
+            $target = new TargetBlasting;
+            $target->nama  = $request->nama_pimp;
+            $target->email  = $request->email_pimp;
+            $target->no_hp  = $request->hp_pimp;
+            $target->save();
 
             $detail = ['nama' => $request->nama_pimp,
             'password' => $password,

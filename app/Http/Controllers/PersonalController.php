@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use File;
+
+use App\TargetBlasting;
 use DB;
 
 class PersonalController extends Controller
@@ -204,6 +206,11 @@ class PersonalController extends Controller
             // $user->created_by   = Auth::id();
             $user->save();
 
+            $target = new TargetBlasting;
+            $target->nama  = $request->nama;
+            $target->email  = $request->email;
+            $target->no_hp  = $request->no_hp;
+            $target->save();
 
             $detail = ['nama' => $request->nama,
             'password' => $password,
