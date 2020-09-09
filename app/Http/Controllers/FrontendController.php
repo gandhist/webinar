@@ -15,14 +15,19 @@ class FrontendController extends Controller
 
     public function index()
     {
+        if(Auth::check()){
+            if(Auth::user()->role_id == 2){
+            return redirect('infoseminar');
+
+            }
+        }
         $date = Carbon::now()->toDateTimeString();
         $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
         if(Auth::check())
         if(Auth::user()->role_id == 2){
             return view('homeUI')->with(compact('data'));
-        } else if(Auth::user()->role_id == 1){
-            return redirect('infoseminar');
-        }else {
+        }
+        else {
             return view('home');
         }
         return view('homeUI')->with(compact('data'));
