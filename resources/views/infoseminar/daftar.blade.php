@@ -196,26 +196,26 @@
 
             // is_free = {{$data->is_free}};
             // console.log(is_free);
-            snap.pay('{{$snapToken}}', {
-                // Optional
-                onSuccess: function(result){
-                    console.log('sukses :');
-                    console.log(result);
-                    //* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                },
-                // Optional
-                onPending: function(result){
-                    console.log('pending :');
-                    console.log(result);
-                    //* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                },
-                // Optional
-                onError: function(result){
-                    console.log('werror :');
-                    console.log(result);
-                    //* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                }
-            });
+            // snap.pay('', {
+            //     // Optional
+            //     onSuccess: function(result){
+            //         console.log('sukses :');
+            //         console.log(result);
+            //         //* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            //     },
+            //     // Optional
+            //     onPending: function(result){
+            //         console.log('pending :');
+            //         console.log(result);
+            //         //* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            //     },
+            //     // Optional
+            //     onError: function(result){
+            //         console.log('werror :');
+            //         console.log(result);
+            //         //* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+            //     }
+            // });
         });
     });
 
