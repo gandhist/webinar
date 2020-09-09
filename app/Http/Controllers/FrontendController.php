@@ -27,7 +27,7 @@ class FrontendController extends Controller
         if(Auth::user()->role_id == 2){
             return view('homeUI')->with(compact('data'));
         } else if (Auth::user()->role_id == 5){
-            return redirect('');
+            return view('home');
         } else {
             return view('home');
         }

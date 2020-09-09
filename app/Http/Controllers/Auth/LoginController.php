@@ -82,7 +82,18 @@ class LoginController extends Controller
 
                 return $this->sendFailedLoginResponse($request);
 
-            } else {
+            } 
+            else if ($user->role_id == 5){
+                $data = User::find($user->id);
+                $data->is_login = 1;
+                $data->save();
+
+                \Auth::login($user);
+
+                // dd('');
+                return redirect('/');
+            }
+            else {
                 if($user->is_login == 0) {
                     $data = User::find($user->id);
                     $data->is_login = 1;
