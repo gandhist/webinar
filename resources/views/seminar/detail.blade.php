@@ -587,7 +587,7 @@
 
     $(document).ready(function() {
         $('#example').DataTable( {
-            "scrollY":        "500px",
+            "scrollY":        "1000px",
             "scrollCollapse": true,
             "paging":         true,
             lengthMenu: [1000, 2000, 5000, 10000]
