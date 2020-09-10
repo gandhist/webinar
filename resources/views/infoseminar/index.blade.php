@@ -95,7 +95,7 @@
           <td>{{ $loop->iteration}}</td>
           {{-- <td>{{ str_limit(strip_tags(html_entity_decode($key->tema)),40) }}</td> --}}
           <td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
-          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>  
+          <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
           <td>
             {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} -
             {{ isset($key->tgl_akhir) ? \Carbon\Carbon::parse($key->tgl_akhir)->isoFormat("DD MMMM YYYY") : ''  }}
@@ -127,7 +127,7 @@
               @if($cek > 0)
                 @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
                     <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button><br>
-                    (untuk mengikuti seminar, silahkan ke menu Kegiatan)
+                    (untuk mengikuti seminar, silahkan ke menu Kegiatan <span class="d-inline d-lg-none">pada tombol <button class="btn btn-dark"><i class="fa fa-align-justify"></i></button></span> )
                 @else
                     <button class="btn btn-success disabled">Terdaftar</button>
                 @endif
