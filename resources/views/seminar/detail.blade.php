@@ -9,6 +9,9 @@
         color: red;
         content: " *";
     }
+    .form-group {
+        margin: 10px 15px !important;
+    }
     /* div.dataTables_wrapper {
         width: 1500px;
         margin: 0 auto;
@@ -29,11 +32,11 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section class="content" style="padding:0px !important;">
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron"  style='padding-top:1px;overflow-y: scroll !important;position: relative;height: 795px;'>
+            <div class="jumbotron"  style='padding-top:10px;overflow-y: scroll !important;position: relative;height: 100%; '>
 
                 <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black">
                     <span style="font-size: 50px;">Aplikasi PPKB Online</span></a>
@@ -178,11 +181,9 @@
                         <label for="narasumber" class="label-control required">Narasumber</label>
                             <div class="row">
                                 @foreach($narasumber as $key)
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" readonly class="form-control"
-                                            value="{{$key->nama}}">
-                                        </div>
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control"
+                                        value="{{$key->nama}}">
                                     </div>
                                 @endforeach
                             </div>
@@ -198,11 +199,9 @@
 
                             <div class="row">
                                 @foreach($moderator as $key)
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <input type="text" readonly class="form-control"
-                                            value="{{$key->nama}}">
-                                        </div>
+                                    <div class="form-group">
+                                        <input type="text" readonly class="form-control"
+                                        value="{{$key->nama}}">
                                     </div>
                                 @endforeach
                             </div>
@@ -221,11 +220,9 @@
                                 <div class="row">
                                     @foreach($instansi as $key)
                                         @if(isset($bu[$key->id_instansi]))
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="text" readonly class="form-control"
-                                                    value="{{$bu[$key->id_instansi]}}">
-                                                </div>
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control"
+                                                value="{{$bu[$key->id_instansi]}}">
                                             </div>
                                         @else
                                         @endif
@@ -239,11 +236,9 @@
                                 <div class="row">
                                     @foreach($pendukung as $key)
                                         @if(isset($bu[$key->id_instansi]))
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="text" readonly class="form-control"
-                                                    value="{{$bu[$key->id_instansi]}}">
-                                                </div>
+                                            <div class="form-group">
+                                                <input type="text" readonly class="form-control"
+                                                value="{{$bu[$key->id_instansi]}}">
                                             </div>
                                         @else
                                         @endif
@@ -253,7 +248,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="margin-bottom:50px;">
+                    <div class="row">
                         @if($seminar->is_online == 0)
                             <div class="col-md-12">
                                 <div class="row">
@@ -349,20 +344,19 @@
                         @endif
                     </div>
 
-                    <div class="row" style="margin-bottom:50px;">
-                        <div class="col-md-6">
-                            <form action="{{ url('seminar/upload-materi',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
-                                method="post" enctype="multipart/form-data">
-                                @csrf
+                    <form action="{{ url('seminar/upload-materi',$seminar->id) }}" class="form-horizontal" id="formAdd" name="formAdd"
+                    method="post" enctype="multipart/form-data">
+                    @csrf
+                        <div class="row" style="margin-bottom:50px;">
+                            <div class="col-md-3">
                                 <div class="form-group  {{ ($errors->first('materi')) ? ' has-error' : '' }}">
-                                    <div class="custom-file" style="padding-left:1.2rem">
+                                    <div class="custom-file">
                                         <div>
                                             <label class="label-control required" for="materi">Upload Materi Seminar</label>
                                             <br>
                                             <input type="file" id="materi" name="materi" required
                                             class="custom-file-input" id="materi" required
                                             style="display:inline">
-                                            <button class="btn btn-success">Upload</button>
                                             <div id="materi" class="invalid-feedback text-danger" >
                                                 {{ $errors->first('materi') }}
                                             </div>
@@ -370,33 +364,38 @@
                                         <div>
                                             <small class="form-text text-muted">Format: zip, rar, etc (archive).</small>
 
-
-
                                         </div>
 
                                     </div>
                                 </div>
                                 {{-- <br/>
                                 <button class="btn btn-success">Upload</button> --}}
-                            </form>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Blast Seminar (Email & Whatsapp)</label>
-                                <div>
-                                    <a data-toggle="modal" data-target="#modalBlast" id="konfirmasi">
-                                        <button class="btn btn-success" id="clickBlast">
-                                            <i class="fa fa-bullhorn" aria-hidden="true"></i> Blast Seminar
-                                        </button>
-                                    </a>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <div style="height:25px"></div>
+                                    <button class="btn btn-success">Upload</button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Email Sertifikat (Semua Peserta)</label>
-                                <div>
-                                    <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-md"><i class="fa fa-send"> Kirim</i></a>
+                    </form>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Blast Seminar (Email & Whatsapp)</label>
+                                    <div>
+                                        <a data-toggle="modal" data-target="#modalBlast" id="konfirmasi">
+                                            <button class="btn btn-success" id="clickBlast">
+                                                <i class="fa fa-bullhorn" aria-hidden="true"></i> Blast Seminar
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Email Sertifikat (Semua Peserta)</label>
+                                    <div>
+                                        <a href="{{ url('seminar/kirim_email', $seminar->id) }}" class="btn btn-primary btn-md"><i class="fa fa-send"> Kirim</i></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
