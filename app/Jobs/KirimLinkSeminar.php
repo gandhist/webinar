@@ -19,7 +19,7 @@ class KirimLinkSeminar implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, GlobalFunction;
 
 
-    protected $data;
+    protected $peserta;
 
     protected $key;
 
@@ -32,10 +32,10 @@ class KirimLinkSeminar implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data,$key)
+    public function __construct($peserta,$key)
     {
         //
-        $this->data = $data;
+        $this->peserta = $peserta;
         $this->key = $key;
     }
 
@@ -47,29 +47,88 @@ class KirimLinkSeminar implements ShouldQueue
     public function handle()
     {
         //
-        Mail::to($this->data->email)->send(new MailLink($this->key));
+        Mail::to($this->peserta->email)->send(new MailLink($this->key));
 
         $tgl = \Carbon\Carbon::parse($this->key->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY');
         $tema = strip_tags($this->key->seminar_p->tema);
         $jam = $this->key->seminar_p->jam_awal;
         $url =  url('presensi', Hashids::encode($this->key->id));
 
-        // $nohp = $this->data->no_hp;
-        // $nama = $this->data->nama;
-        // // print_r($this->detail);
-        // // $pesan = 'test';
-        // $pesan = "Salam Sehat Bapak/Ibu $nama serta rekan-rekan semua bersama ini kami sampaikan Link Presensi untuk acara Webinar pada tanggal $tgl dengan topik *$tema*. \nAcara dimulai pukul $jam WIB, harap menggunakan nama dengan format *\"nama_institusi\"*.\ncontoh : Budi_P3S mandiri \nLink : $url \nTerimakasih";
-        // $status = $this->kirimPesanWA($nohp,$pesan);
-        // // print_r($status);
+        $nama = $this->peserta->nama;
+        $no_hp = $this->peserta->no_hp;
 
-        // if($status['status'] == '1'){
-        //     $log = PesertaSeminar::where('id',$this->key->id)->first();
-        //     $log->status_wa = '1';
-        //     $log->save();
-        // } elseif ($status['status'] =='0') {
-        //     $log = PesertaSeminar::where('id',$this->key->id)->first();
-        //     $log->status_wa = '0';
-        //     $log->save();
-        // }
+        $email = $this->peserta->email;
+        $username = "dengan Username : ".$email;
+        $password = '-';
+
+        $token = $this->getToken();
+        $channel = $this->setupChannel($token['access_token']);
+        $template = '212f9ecc-52d5-4a98-b1bd-5e10d0a59804';
+
+        $lang = [
+            'code' => 'id'
+        ];
+        $var1 = [
+            "key" => "1",
+            "value" => "full_name",
+            "value_text" => $nama,
+        ];
+        $var2 = [
+            "key" => "2",
+            "value" => "nomor_hp",
+            "value_text" => $no_hp,
+        ];
+        $var3 = [
+            "key" => "3",
+            "value" => "email",
+            "value_text" => $email,
+        ];
+        $var4 = [
+            "key" => "4",
+            "value" => "user",
+            "value_text" => $username,
+        ];
+        $var5 = [
+            "key" => "5",
+            "value" => "password",
+            "value_text" => $password,
+        ];
+        $var6 = [
+            "key" => "6",
+            "value" => "tema",
+            "value_text" => $tema,
+        ];
+        $var7 = [
+            "key" => "7",
+            "value" => "tanggal",
+            "value_text" => $tgl,
+        ];
+        $var8 = [
+            "key" => "8",
+            "value" => "jam",
+            "value_text" => $jam,
+        ];
+        $var9 = [
+            "key" => "9",
+            "value" => "login",
+            "value_text" => $url,
+        ];
+
+        $isiBody = [$var1,$var2,$var3,$var4,$var5,$var6,$var7,$var8,$var9];
+
+        $param = [
+            "body" => $isiBody
+        ];
+
+        $body = [
+            'to_number' => $no_hp,
+            'to_name' => $nama,
+            'message_template_id' => $template,
+            'channel_integration_id' => $channel['data'][0]['id'],
+            'language' => $lang,
+            'parameters' => $param,
+        ];
+
+        $status = $this->sendMessage($token['access_token'],$body);
     }
 }

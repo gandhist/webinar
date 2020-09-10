@@ -1522,11 +1522,11 @@ class SeminarController extends Controller
         $seminar = SeminarModel::where('id',$id)->first();
         $seminar->url = $request->link;
         $seminar->save();
-        $emails = PesertaSeminar::where('id_seminar',$id)->whereNull('status_wa')->get();
+        $peserta_seminar = PesertaSeminar::where('id_seminar',$id)->whereNull('status_wa')->get();
 
-        foreach ($emails as $key) {
-            $data = Peserta::find($key->id_peserta);
-            dispatch(new \App\Jobs\KirimLinkSeminar($data, $key));
+        foreach ($peserta_seminar as $key) {
+            $peserta = Peserta::find($key->id_peserta);
+            dispatch(new \App\Jobs\KirimLinkSeminar($peserta, $key));
             // \Mail::to($data->email)->send(new MailLink($key));
         }
 
