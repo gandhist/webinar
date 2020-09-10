@@ -31,7 +31,7 @@
   <!-- FONT AWESOME -->
   <link rel="stylesheet" type="text/css" href="{{ asset('vendor') }}/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="{{ asset('global.css') }}">
-  <link rel="shortcut icon" href="favicon.jpg">
+  <link rel="shortcut icon" href="{{url('favicon.jpg')}}">
   @stack('style')
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
