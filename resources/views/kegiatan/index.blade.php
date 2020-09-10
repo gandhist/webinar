@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    
+
     <div class="box-body">
         <table id="example" class="table table-striped table-bordered dataTable customTable" role="grid">
             <thead>
@@ -125,7 +125,7 @@
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
                         @if(isset($key->presensi->jam_cek_out) == null)
                             @if(isset($key->presensi->jam_cek_in) == null)
-                                <a class="btn btn-sm btn-success button-flash pull-right" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
+                                <a class="btn btn-sm btn-success {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? "button-flash" : ''}} pull-right" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
                                 data-placement="bottom" title="Klik untuk mengikuti kegiatan"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
                             @else
                             <a class="btn btn-sm btn-primary pull-right" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
