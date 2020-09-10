@@ -127,7 +127,9 @@
               @if($cek > 0)
                 @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
                     <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button><br>
-                    (untuk mengikuti seminar, silahkan ke menu Kegiatan <span class="d-inline d-lg-none">pada tombol <button class="btn btn-dark"><i class="fa fa-align-justify"></i></button></span> )
+                    (untuk mengikuti seminar, silahkan ke menu Kegiatan <span class="d-inline d-lg-none">pada tombol <button class="btn btn-dark" type="button"
+                    data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-align-justify"></i></button></span> )
                 @else
                     <button class="btn btn-success disabled">Terdaftar</button>
                 @endif
