@@ -173,7 +173,7 @@
                     <th colspan="10">
                         <b>Pesan dan Kesan</b>
                     </th>
-                    <th>
+                    <th colspan="10">
                         <b>Saran</b>
                     </th>
                 </tr>
