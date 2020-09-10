@@ -171,6 +171,44 @@
                         <b>Nama Peserta</b>
                     </th>
                     <th colspan="10">
+                        <b>Pesan dan Kesan</b>
+                    </th>
+                    <th>
+                        <b>Saran</b>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($peserta as $key)
+                    @foreach($feedback as $s)
+                        @if($s->id_peserta_seminar == $key->id)
+                            <tr>
+                                <td colspan="1">{{$key->id}}</td>
+                                <td colspan="6">{{$key->peserta_r->nama}}</td>
+                                <td colspan="10">{{$s->kesan_pesan}}</td>
+                                <td colspan="10">{{$s->keterangan}}</td>
+                            </tr>
+                        @endif
+                    @endforeach
+                @endforeach
+            </tbody>
+        </table>
+
+        {{-- <table>
+            <thead>
+                <tr>
+                    <th colspan="10" height="30px">
+                        <b>Respon Peserta</b>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="1">
+                        <b>ID Peserta Seminar</b>
+                    </th>
+                    <th colspan="6">
+                        <b>Nama Peserta</b>
+                    </th>
+                    <th colspan="10">
                         <b>Pertanyaan</b>
                     </th>
                     <th>
@@ -208,6 +246,6 @@
                     @endforeach
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
     </body>
 </html>
