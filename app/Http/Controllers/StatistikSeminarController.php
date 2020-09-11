@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class StatistikSeminarController extends Controller
 {
-    //statistik seminar
+    // statistik seminar
     public function index($id){
         $seminar = SeminarModel::where('id',$id)->first();
         $id_peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::today() )->pluck('id_peserta');
@@ -36,5 +36,9 @@ class StatistikSeminarController extends Controller
         }
 
         return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru','peserta_baru','data_peserta_seminar','data_user_baru'));
+    }
+
+    public function filter($id) {
+        //
     }
 }

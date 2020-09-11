@@ -188,7 +188,11 @@
                                 fontSize: 20
                             }
                         }]
-                    }
+                    },
+            title: {
+                display: true,
+                text: '{{\Carbon\Carbon::today()->format("d F Y")}}'
+            }
         };
 
         var ctx = document.getElementById('chart').getContext('2d');
