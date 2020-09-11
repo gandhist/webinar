@@ -94,6 +94,7 @@ class Blasting implements ShouldQueue
                 $report_blasting = new ReportBlasting;
                 $report_blasting->id_target = $this->detail['target']['id'];
                 $report_blasting->id_seminar = $this->detail['seminar']['id'];
+                $report_blasting->id_blasting = $this->detail['id_blasting'];
                 $report_blasting->is_email_sent = 1;
                 $report_blasting->magic_link = $this->detail['magic'];
                 $report_blasting->created_at = \Carbon\Carbon::now();

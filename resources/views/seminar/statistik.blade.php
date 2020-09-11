@@ -265,7 +265,7 @@
             },
             success: function (data) {
                 // write your code
-                console.log(data);
+                // console.log(data);
                 myLineChart.destroy();
                 $("#pendaftar").dataTable().fnClearTable();
             },

@@ -1709,9 +1709,14 @@ class SeminarController extends Controller
 
         $counter_target = 0;
         $counter_kirim = 0;
+        $counter_kirim_ulang = 0;
 
         $target = TargetBlasting::all();
         $link = null;
+
+        $log_blasting = new LogBlasting;
+        $log_blasting->id_seminar = $id;
+        $log_blasting->save();
 
         if($request->link_zoom) {
             $link['link_zoom'] = $request->link_zoom;
@@ -1735,6 +1740,7 @@ class SeminarController extends Controller
                 'tanggal' => $tanggal,
                 'jam' => $jam,
                 'tema' => $tema,
+                'id_blasting' => $log_blasting->id,
             ];
             // dump($detail);
 
@@ -1744,16 +1750,23 @@ class SeminarController extends Controller
 
             if( !(isset($peserta_seminar)) ){
                 dispatch(new \App\Jobs\Blasting($detail, $link));
-                $counter_kirim++;
+                if($key->is_email_sent != 1 && $key->is_wa_sent != 1){
+                    $counter_kirim++;
+                }
+                if($key->is_email_sent != 1 && $key->is_wa_sent = 1){
+                    $counter_kirim_ulang++;
+                }
+                if($key->is_email_sent = 1 && $key->is_wa_sent != 1){
+                    $counter_kirim_ulang++;
+                }
             }
 
             $counter_target++;
         }
 
-        $log_blasting = new LogBlasting;
-        $log_blasting->id_seminar = $id;
         $log_blasting->jumlah_target = $counter_target;
         $log_blasting->jumlah_kirim = $counter_kirim;
+        $log_blasting->jumlah_kirim_ulang = $counter_kirim_ulang;
         $log_blasting->save();
 
         return redirect()->back()->with('alert',"Blasting sukses");
