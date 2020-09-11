@@ -84,7 +84,11 @@
         </a>
       </li>
 
-
+      <li class="treeview">
+        <a href="{{ url('statistik') }}">
+            <i class="fa fa-bar-chart" aria-hidden="true"></i> <span>Statistik</span>
+        </a>
+      </li>
 
       <li class="treeview">
         <a href="{{ url('instansi') }}">

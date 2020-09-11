@@ -109,6 +109,7 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script>
     var peserta_baru = @json($data_peserta_seminar);
     var user_baru = @json($data_user_baru);
@@ -196,11 +197,13 @@
         };
 
         var ctx = document.getElementById('chart').getContext('2d');
-        var myLineChart = new Chart(ctx, {
+        myLineChart = new Chart(ctx, {
             type: 'line',
             data: data,
             options: options,
         });
+
+
     } );
 
     $("#tgl_awal").datepicker();
@@ -244,7 +247,40 @@
         $("#tgl_awal").css('background-color', 'unset');
         $("#tgl_awal").css('font-weight', 'unset');
         $("#tgl_akhir").val(null).css('background-color', 'unset').css('font-weight', 'unset');
-    }) ;
+        // myLineChart.clear();
+    });
 
+    $('#btnFilter').on('click', function() {
+        // myLineChart.clear();
+        // $("#pendaftar").dataTable().fnClearTable();
+        // $('#chart').remove();
+        // $('#chart-container').append('<canvas id="chart"></canvas>');
+        $.ajax({
+            type: "GET",
+            url: '{{url("/statseminarfunc")}}',
+            data : {
+                "_token": "{{ csrf_token() }}",
+                "tgl_awal": $("#tgl_awal").val(),
+                "tgl_akhir": $("#tgl_akhir").val(),
+            },
+            success: function (data) {
+                // write your code
+                console.log(data);
+                myLineChart.destroy();
+                $("#pendaftar").dataTable().fnClearTable();
+            },
+            error: function (data) {
+                // write your code
+                // console.log(data);
+                Swal.fire({
+                    title: data['responseJSON']['errors'],
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+                // console.log(data['error'][0][0]);
+            }
+        });
+    });
 </script>
 @endpush

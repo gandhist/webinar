@@ -7,6 +7,7 @@ use App\PesertaSeminar;
 use App\SeminarModel;
 use App\Peserta;
 use Carbon\Carbon;
+use Validator;
 
 class StatistikSeminarController extends Controller
 {
@@ -38,7 +39,48 @@ class StatistikSeminarController extends Controller
         return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru','peserta_baru','data_peserta_seminar','data_user_baru'));
     }
 
-    public function filter($id) {
+    public function filter(Request $request) {
         //
+        // if(request()->ajax()){
+        //     $match = Match::find($match_id);
+        //     $validator = Validator::make($request->all(), [
+        //        'start_time'=>'required',
+        //     ]);
+
+        //     if($validator->passes())
+        //     {
+        //       $match->start_time = $request->start_time;
+        //       $match->save();
+
+        //       return response()->json(['msg'=>'Updated Successfully', 'success'=>true]);
+        //     }
+        //     return response()->json(['msg'=>$validator->errors()->all()]);
+        //   }
+
+        $rules = [
+            'tgl_awal' => 'required|date|before_or_equal:tgl_akhir',
+            'tgl_akhir' => 'required|date'
+        ];
+
+        $messages = [
+            'tgl_awal.required' => 'Mohon isi Tanggal Awal filter',
+            'tgl_awal.date' => 'Mohon isi Tanggal Awal filter',
+            'tgl_awal.before_or_equal' => 'Tanggal Awal harus sama dengan atau sebelum Tanggal Akhir',
+            'tgl_akhir.required' => 'Mohon isi Tanggal Awal filter',
+            'tgl_akhir.date' => 'Mohon isi Tanggal Awal filter',
+        ];
+
+        $validation = Validator::make($request->all(), $rules, $messages);
+
+        if($validation->fails()) {
+            return response()->json([
+                'errors' => $validation->messages()->first(),
+            ], 401);
+        }
+        return response()->json([
+            'success' => true,
+            'tgl_awal' => $request->tgl_awal,
+            'tgl_akhir' => $request->tgl_akhir,
+        ]);
     }
 }
