@@ -184,7 +184,7 @@
                             },
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Moola',
+                                labelString: 'P3S Mandiri',
                                 fontSize: 20
                             }
                         }]
