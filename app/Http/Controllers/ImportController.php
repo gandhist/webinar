@@ -10,7 +10,7 @@ class ImportController extends Controller
 {
     //
     public function index() {
-        $seminar = Seminar::where('is_actived','1')->get();
+        $seminar = Seminar::where('is_actived','1')->orderBy('tgl_awal', 'DESC')->get();
         return view('import.index')->with(compact('seminar'));
     }
 
@@ -24,7 +24,7 @@ class ImportController extends Controller
         }
 
         // try {
-            
+
         // }
         // catch(\Throwable $e) {
         //     return redirect('/import')

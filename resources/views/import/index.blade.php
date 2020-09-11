@@ -60,14 +60,14 @@
                                     @foreach($seminar as $key)
                                         <option value="{{$key->id}}"
                                             {{old('seminar') == $key->id ? 'selected' : ''}}>
-                                            {{$key->nama_seminar}}
+                                            {{$key->nama_seminar}} ({{\Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY")}})
                                         </option>
                                     @endforeach
                                 @else
                                     <option value="" selected hidden>Pilih Seminar</option>
                                     @foreach($seminar as $key)
                                         <option value="{{$key->id}}">
-                                            {{$key->nama_seminar}}
+                                            {{$key->nama_seminar}} ({{\Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY")}})
                                         </option>
                                     @endforeach
                                 @endif
