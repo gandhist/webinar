@@ -6,6 +6,8 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
     rel="stylesheet">
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
 <style>
     form label.required:after {
         color: red;
@@ -54,12 +56,41 @@
                     </span>
                 </div>
 
-                <div class="row" style="min-height:80vh;">
-                    <div class="col-md-12" style="text-align: center;">
-                        <h2>Statistik pendaftaran seminar "Nama Seminar"</h2>
+                <div class="row">
+                    <div class="col-md-12" style="text-align: center; margin-top:2rem">
+                        <h2>Statistik pendaftaran seminar</h2>
+                        <p> <b>{{$seminar->nama_seminar}} - {{strip_tags(html_entity_decode($seminar->tema))}}</b> </p>
                     </div>
-                    <div class="col-md-12 chart-container" style="min-height:70vh;">
-                        <canvas id="myChart" style="min-height:70vh;"></canvas>
+                    <div class="col-md-12 chart-container" style="min-height:50vh;">
+                        <canvas id="chart" style="height:50vh; ; width:100%"></canvas>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 1rem">
+                    <div class="col-md-12" style="text-align: center">
+                        <h2>Tabel Pendaftar Seminar</h2>
+                    </div>
+                    <div class="col-md-12">
+                        <table id="pendaftar" class="cell-border" style="width:100%; background-color: #BCBCBC; border: 1px solid black;">
+                            <thead>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>No. Hp</th>
+                                <th>Waktu Pendaftaran</th>
+                            </thead>
+                            <tbody>
+                                @foreach($peserta_seminar_baru as $key)
+                                    <tr>
+                                        <td style='text-align:center;'>{{ $loop->iteration}}</td>
+                                        <td>{{$key->peserta->nama}}</td>
+                                        <td>{{$key->peserta->email}}</td>
+                                        <td>{{$key->peserta->no_hp}}</td>
+                                        <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y h:m')}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -77,7 +108,96 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script>
+    var peserta_baru = @json($data_peserta_seminar);
+    var user_baru = @json($data_user_baru);
+
+    $(document).ready(function() {
+        $('#pendaftar').DataTable( {
+            // "scrollY":        "1000px",
+            "scrollCollapse": true,
+            "paging":         true,
+            lengthMenu: [10,20,50,100]
+        } );
+
+        var data = {
+            labels: [
+                "00.00",
+                "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00",
+                "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00", "24.00",
+            ],
+            datasets: [
+                {
+                    label: "User Baru",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(225,0,0,0.4)",
+                    borderColor: "red", // The main line color
+                    borderCapStyle: 'square',
+                    borderDash: [], // try [5, 15] for instance
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "black",
+                    pointBackgroundColor: "white",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 8,
+                    pointHoverBackgroundColor: "yellow",
+                    pointHoverBorderColor: "brown",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHitRadius: 10,
+                    // notice the gap in the data and the spanGaps: true
+                    data: user_baru,
+                    spanGaps: true,
+                }, {
+                    label: "Pendaftar Seminar",
+                    fill: true,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(167,105,0,0.4)",
+                    borderColor: "rgb(167, 105, 0)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "white",
+                    pointBackgroundColor: "black",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 8,
+                    pointHoverBackgroundColor: "brown",
+                    pointHoverBorderColor: "yellow",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHitRadius: 10,
+                    // notice the gap in the data and the spanGaps: false
+                    data: peserta_baru,
+                    spanGaps: true,
+                }
+            ]
+
+        };
+        var options = {
+            scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Moola',
+                                fontSize: 20
+                            }
+                        }]
+                    }
+        };
+
+        var ctx = document.getElementById('chart').getContext('2d');
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: options,
+        });
+    } );
 
     $("#tgl_awal").datepicker();
     $("#tgl_akhir").datepicker();

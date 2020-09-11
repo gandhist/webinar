@@ -1690,12 +1690,6 @@ class SeminarController extends Controller
         return Excel::download(new FeedbackExport($id), $nama.".xlsx");
     }
 
-    //statistik seminar
-    public function statistik($id){
-
-        return view('seminar.statistik');
-    }
-
     public function blast(Request $request, $id) {
         // dd($request);
         $request->validate([

@@ -18,6 +18,13 @@ class PesertaSeminar extends Model
         return $this->belongsTo('App\Peserta','id_peserta');
     }
 
+
+    // relasi many to many table peserta
+    public function peserta(){
+        return $this->hasOne('App\Peserta','id','id_peserta');
+    }
+
+
     // relasi many to many table peserta
     public function seminar_p(){
         return $this->belongsTo('App\Seminar','id_seminar','id');
