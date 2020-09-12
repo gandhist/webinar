@@ -80,12 +80,19 @@ class StatistikSeminarController extends Controller
 
         if($request->tgl_awal == $request->tgl_akhir) {
             $type = 1;
-            $id_peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::parse($request->tgl_awal) )->pluck('id_peserta');
+
+            $dari =   Carbon::parse($request->tgl_awal)->format('Y-d-m H:i:s');
+            $sampai = Carbon::parse($request->tgl_awal)->format('Y-d-m H:i:s');
+
+            $dari =   Carbon::parse($dari);
+            $sampai = Carbon::parse($sampai)->addHours(24);
+
+            $id_peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari, $sampai] )->pluck('id_peserta');
             // $id_peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereDate('created_at', Carbon::today() )>pluck('id');
 
 
-            $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::parse($request->tgl_awal) )->get();
-            $peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereDate('created_at', Carbon::parse($request->tgl_awal) )->get();
+            $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari, $sampai] )->get();
+            $peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereBetween('created_at', [$dari, $sampai] )->get();
             // $peserta = Peserta::whereIn('id', $id_peserta_seminar_baru)->get();
             // dd($pesertabaru);
 
@@ -107,7 +114,7 @@ class StatistikSeminarController extends Controller
                 array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
                 array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
             }
-            // dd("");
+            // dd($id_peserta_seminar_baru );
 
         } else {
             $type = 2;
