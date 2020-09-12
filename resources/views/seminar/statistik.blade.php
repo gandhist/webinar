@@ -169,7 +169,7 @@
         ]
 
     };
-    var options = {
+    var lineoptions = {
         scales: {
                     yAxes: [{
                         ticks: {
