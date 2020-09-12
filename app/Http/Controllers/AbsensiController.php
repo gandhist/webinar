@@ -10,6 +10,7 @@ use App\Peserta;
 use App\Personal;
 use App\SeminarModel;
 use App\PesertaSeminar;
+use App\User;
 use Illuminate\Support\Facades\Crypt;
 use Vinkla\Hashids\Facades\Hashids;
 use App\FeedbackModel;
@@ -32,6 +33,8 @@ class AbsensiController extends Controller
         $cek_out = $this->cek_out($peserta_seminar->id);
         $data = AbsensiModel::where('id_peserta_seminar', $peserta_seminar->id)->get();
         // dd($data);
+        $user = User::where('id', $peserta_seminar->peserta->user_id)->first();
+        Auth::login($user);
         return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar', 'id_encrypt'));
     }
 
