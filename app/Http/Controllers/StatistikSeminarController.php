@@ -125,7 +125,7 @@ class StatistikSeminarController extends Controller
             'type' => $type,
             'peserta' => $data_peserta_seminar,
             'user' => $data_user_baru,
-            'tgl' => Carbon::parse($request->tgl_awal)->format("d F Y"),
+            'tgl' => Carbon::parse($request->tgl_awal)->format('Y-d-m'),
         ]);
     }
 }
