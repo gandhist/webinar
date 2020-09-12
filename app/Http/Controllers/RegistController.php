@@ -286,7 +286,9 @@ class RegistController extends Controller
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
-        $cekPeserta = Peserta::selectRaw('COUNT(id) as jumlah,id')->where('email','=',$request->email)->orWhere('no_hp','=',$request->no_hp)->first();
+        $cekPeserta = Peserta::selectRaw('COUNT(id) as jumlah,id')->where('email','=',$request->email)
+        ->orWhere('no_hp','=',$request->no_hp)
+        ->first();
         $peserta = Peserta::find($cekPeserta->id);
 
         if($cekPeserta->jumlah > 0 ){

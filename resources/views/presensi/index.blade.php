@@ -229,6 +229,7 @@
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
 
 <script>
+$('#linkYT').hide();
 var home = "{{ url('presensi', $id_encrypt) }}";
 var home_url = "{{ $peserta_seminar->seminar_p->url }}";
 var home_rating = "{{ url('presensi/penilaian', $id_encrypt) }}";
@@ -249,6 +250,7 @@ var exist = '{{Session::has('alert')}}';
         }
 
 function absen_masuk() {
+    $('#linkYT').show();
     var formData = new FormData($('#formAdd')[0]);
     var url = "{{ url('presensi/datang', $peserta_seminar->id) }}";
     $.ajaxSetup({
@@ -271,6 +273,7 @@ function absen_masuk() {
             //     confirmButtonText: 'Close',
             //     confirmButtonColor: '#AAA',
             //     onClose: function() {
+
                     window.open(home_url);
                     window.location.replace(home);
                 // }
