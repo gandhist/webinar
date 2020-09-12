@@ -114,6 +114,81 @@
     var peserta_baru = @json($data_peserta_seminar);
     var user_baru = @json($data_user_baru);
 
+    function LineData(user_baru, peserta_baru) {
+        this.labels = [
+            "00.00",
+            "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00",
+            "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00", "24.00",
+        ],
+        this.datasets = [
+            {
+                label: "User Baru",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(225,0,0,0.4)",
+                borderColor: "red", // The main line color
+                borderCapStyle: 'square',
+                borderDash: [], // try [5, 15] for instance
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "black",
+                pointBackgroundColor: "white",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "yellow",
+                pointHoverBorderColor: "brown",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                // notice the gap in the data and the spanGaps: true
+                data: user_baru,
+                spanGaps: true,
+            }, {
+                label: "Pendaftar Seminar",
+                fill: true,
+                lineTension: 0.1,
+                backgroundColor: "rgba(167,105,0,0.4)",
+                borderColor: "rgb(167, 105, 0)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "white",
+                pointBackgroundColor: "black",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "brown",
+                pointHoverBorderColor: "yellow",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                // notice the gap in the data and the spanGaps: false
+                data: peserta_baru,
+                spanGaps: true,
+            }
+        ]
+
+    };
+    var options = {
+        scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'P3S Mandiri',
+                            fontSize: 20
+                        }
+                    }]
+                },
+        title: {
+            display: true,
+            text: '{{\Carbon\Carbon::today()->format("d F Y")}}'
+        }
+    };
+
+
     $(document).ready(function() {
         $('#pendaftar').DataTable( {
             // "scrollY":        "1000px",
@@ -122,97 +197,26 @@
             lengthMenu: [10,20,50,100]
         } );
 
-        var data = {
-            labels: [
-                "00.00",
-                "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00",
-                "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00", "24.00",
-            ],
-            datasets: [
-                {
-                    label: "User Baru",
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: "rgba(225,0,0,0.4)",
-                    borderColor: "red", // The main line color
-                    borderCapStyle: 'square',
-                    borderDash: [], // try [5, 15] for instance
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: "black",
-                    pointBackgroundColor: "white",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 8,
-                    pointHoverBackgroundColor: "yellow",
-                    pointHoverBorderColor: "brown",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHitRadius: 10,
-                    // notice the gap in the data and the spanGaps: true
-                    data: user_baru,
-                    spanGaps: true,
-                }, {
-                    label: "Pendaftar Seminar",
-                    fill: true,
-                    lineTension: 0.1,
-                    backgroundColor: "rgba(167,105,0,0.4)",
-                    borderColor: "rgb(167, 105, 0)",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: "white",
-                    pointBackgroundColor: "black",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 8,
-                    pointHoverBackgroundColor: "brown",
-                    pointHoverBorderColor: "yellow",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHitRadius: 10,
-                    // notice the gap in the data and the spanGaps: false
-                    data: peserta_baru,
-                    spanGaps: true,
-                }
-            ]
 
-        };
-        var options = {
-            scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'P3S Mandiri',
-                                fontSize: 20
-                            }
-                        }]
-                    },
-            title: {
-                display: true,
-                text: '{{\Carbon\Carbon::today()->format("d F Y")}}'
-            }
-        };
 
         var ctx = document.getElementById('chart').getContext('2d');
         myLineChart = new Chart(ctx, {
             type: 'line',
-            data: data,
+            data: new LineData(user_baru, peserta_baru),
             options: options,
         });
-
 
     } );
 
     $("#tgl_awal").datepicker({
         format: 'dd/mm/yyyy',
-        startDate: '-3d'
+        endDate: '+1d',
+        datesDisabled: '+1d',
     });
     $("#tgl_akhir").datepicker({
         format: 'dd/mm/yyyy',
-        startDate: '-3d'
+        endDate: '+1d',
+        datesDisabled: '+1d',
     });
 
     // Cache Warna Filter
@@ -263,7 +267,7 @@
         // $('#chart-container').append('<canvas id="chart"></canvas>');
         $.ajax({
             type: "GET",
-            url: '{{url("/statseminarfunc")}}',
+            url: '{{url("/statseminarfunc",$id)}}',
             data : {
                 "_token": "{{ csrf_token() }}",
                 "tgl_awal": $("#tgl_awal").val(),
@@ -274,6 +278,14 @@
                 console.log(data);
                 myLineChart.destroy();
                 $("#pendaftar").dataTable().fnClearTable();
+                if(data['type'] === 1){
+                    var ctx = document.getElementById('chart').getContext('2d');
+                    myLineChart = new Chart(ctx, {
+                        type: 'line',
+                        data: new LineData(data['user'], data['peserta']),
+                        options: options,
+                    });
+                }
             },
             error: function (data) {
                 // write your code

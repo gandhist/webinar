@@ -36,10 +36,10 @@ class StatistikSeminarController extends Controller
             array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
         }
 
-        return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru','peserta_baru','data_peserta_seminar','data_user_baru'));
+        return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru','peserta_baru','data_peserta_seminar','data_user_baru','id'));
     }
 
-    public function filter(Request $request) {
+    public function filter(Request $request, $id) {
         //
         // if(request()->ajax()){
         //     $match = Match::find($match_id);
@@ -80,6 +80,28 @@ class StatistikSeminarController extends Controller
 
         if($request->tgl_awal == $request->tgl_akhir) {
             $type = 1;
+            $id_peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::parse($request->tgl_awal) )->pluck('id_peserta');
+            // $id_peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereDate('created_at', Carbon::today() )>pluck('id');
+
+
+            $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::parse($request->tgl_awal) )->get();
+            $peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereDate('created_at', Carbon::parse($request->tgl_awal) )->get();
+            // $peserta = Peserta::whereIn('id', $id_peserta_seminar_baru)->get();
+            // dd($pesertabaru);
+
+            $data_peserta_seminar = [0];
+            $data_user_baru = [0];
+
+            for($i = 0 ; $i < 24 ; $i++){
+                $from = Carbon::parse($request->tgl_awal)->addHours($i);
+                $to = Carbon::parse($request->tgl_awal)->addHours($i+1);
+                $jumlah_pesertaseminar_jam_ini = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->count();
+                $jumlah_pesertabaru_jam_ini = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereBetween('created_at', [$from, $to])->count();
+
+                array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
+                array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
+            }
+
         } else {
             $type = 2;
         }
@@ -87,6 +109,9 @@ class StatistikSeminarController extends Controller
         return response()->json([
             'success' => true,
             'type' => $type,
+            'peserta' => $data_peserta_seminar,
+            'user' => $data_user_baru,
+            'tgl' => $request->tgl_awal,
         ]);
     }
 }
