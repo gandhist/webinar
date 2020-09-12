@@ -50,7 +50,7 @@ class KirimLinkSeminar implements ShouldQueue
         Mail::to($this->peserta->email)->send(new MailLink($this->key));
 
         $tgl = \Carbon\Carbon::parse($this->key->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY');
-        $tema = strip_tags($this->key->seminar_p->tema);
+        $tema = strip_tags(html_entity_decode($this->key->seminar_p->tema));
         $jam = $this->key->seminar_p->jam_awal;
         $url =  url('presensi', Hashids::encode($this->key->id));
 

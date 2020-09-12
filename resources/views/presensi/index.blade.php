@@ -1,7 +1,134 @@
 @extends('frontend.main')
 
 @section('content')
+<style>
+    .button-flash {
+        background-color: #004A7F;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border: none;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial;
+        font-size: 20px;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        -webkit-animation: glowing 1500ms infinite;
+        -moz-animation: glowing 1500ms infinite;
+        -o-animation: glowing 1500ms infinite;
+        animation: glowing 1500ms infinite;
+    }
+        @-webkit-keyframes glowing {
+            0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+            50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+            100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+        }
 
+        @-moz-keyframes glowing {
+            0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+            50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+            100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+        }
+
+        @-o-keyframes glowing {
+            0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+            50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+            100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+        }
+
+        @keyframes glowing {
+            0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+            50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+            100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+        }
+    }
+    .button-flash-blue {
+        background-color: #004A7F;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border: none;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial;
+        font-size: 20px;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        -webkit-animation: glowing-blue 1500ms infinite;
+        -moz-animation: glowing-blue 1500ms infinite;
+        -o-animation: glowing-blue 1500ms infinite;
+        animation: glowing-blue 1500ms infinite;
+    }
+    @-webkit-keyframes glowing-blue {
+        0% { background-color: #0c00b2; -webkit-box-shadow: 0 0 3px #0c00b2; }
+        50% { background-color: #2985ff; -webkit-box-shadow: 0 0 40px #2985ff; }
+        100% { background-color: #0c00b2; -webkit-box-shadow: 0 0 3px #0c00b2; }
+    }
+
+    @-moz-keyframes glowing-blue {
+        0% { background-color: #0c00b2; -moz-box-shadow: 0 0 3px #0c00b2; }
+        50% { background-color: #2985ff; -moz-box-shadow: 0 0 40px #2985ff; }
+        100% { background-color: #0c00b2; -moz-box-shadow: 0 0 3px #0c00b2; }
+    }
+
+    @-o-keyframes glowing-blue {
+        0% { background-color: #0c00b2; box-shadow: 0 0 3px #0c00b2; }
+        50% { background-color: #2985ff; box-shadow: 0 0 40px #2985ff; }
+        100% { background-color: #0c00b2; box-shadow: 0 0 3px #0c00b2; }
+    }
+
+    @keyframes glowing-blue {
+        0% { background-color: #0c00b2; box-shadow: 0 0 3px #0c00b2; }
+        50% { background-color: #2985ff; box-shadow: 0 0 40px #2985ff; }
+        100% { background-color: #0c00b2; box-shadow: 0 0 3px #0c00b2; }
+    }
+
+    .button-flash-red {
+        background-color: #ff1f1f;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        border: none;
+        color: #FFFFFF;
+        cursor: pointer;
+        display: inline-block;
+        font-family: Arial;
+        font-size: 20px;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        -webkit-animation:  glowing-red 1500ms infinite;
+        -moz-animation:  glowing-red 1500ms infinite;
+        -o-animation:  glowing-red 1500ms infinite;
+        animation:  glowing-red 1500ms infinite;
+    }
+    @-webkit-keyframes glowing-red {
+        0% { background-color: #ff0000; -webkit-box-shadow: 0 0 3px #ff0000; }
+        50% { background-color: #a00000; -webkit-box-shadow: 0 0 40px #a00000; }
+        100% { background-color: #ff0000; -webkit-box-shadow: 0 0 3px #ff0000; }
+    }
+
+    @-moz-keyframes glowing-red {
+        0% { background-color: #ff0000; -moz-box-shadow: 0 0 3px #ff0000; }
+        50% { background-color: #a00000; -moz-box-shadow: 0 0 40px #a00000; }
+        100% { background-color: #ff0000; -moz-box-shadow: 0 0 3px #ff0000; }
+    }
+
+    @-o-keyframes glowing-red {
+        0% { background-color: #ff0000; box-shadow: 0 0 3px #ff0000; }
+        50% { background-color: #a00000; box-shadow: 0 0 40px #a00000; }
+        100% { background-color: #ff0000; box-shadow: 0 0 3px #ff0000; }
+    }
+
+    @keyframes glowing-red {
+        0% { background-color: #ff0000; box-shadow: 0 0 3px #ff0000; }
+        50% { background-color: #a00000; box-shadow: 0 0 40px #a00000; }
+        100% { background-color: #ff0000; box-shadow: 0 0 3px #ff0000; }
+    }
+
+</style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
@@ -16,8 +143,8 @@
             Judul Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
             Jadwal Kegiatan : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
 
-            <a target="_blank" href="{{ $peserta_seminar->seminar_p->url }} " class="btn btn-info btn-sm m-1">LINK ZOOM!!!</a><br>
-            <a target="_blank" href="{{ $peserta_seminar->seminar_p->url2 }}" class="btn btn-danger btn-sm m-1">LINK YOUTUBE!!!</a>
+            <a target="_blank" href="{{ $peserta_seminar->seminar_p->url }} " class="btn btn-success btn-sm m-1 button-flash">LINK ZOOM!!!</a><br>
+            <a target="_blank" href="{{ $peserta_seminar->seminar_p->url2 }}" class="btn btn-info btn-sm m-1">LINK YOUTUBE!!!</a>
             <hr>
         @else
             Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
@@ -50,14 +177,14 @@
                     @endif --}}
                     @if(isset($data[0]->jam_cek_in) && !isset($data[0]->jam_cek_out))
                     Jika seminar sudah selesai mohon isi kuisioner dibawah<br>
-                    <input type="button" class="btn btn-sm btn-danger" onClick="absen_keluar()" value="KUISIONER">
+                    <input type="button" class="btn btn-sm btn-info button-flash-red" onClick="absen_keluar()" value="KUISIONER">
                     @elseif(isset($data[0]->jam_cek_in) && isset($data[0]->jam_cek_out))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             Terimakasih, Anda telah selesai mengikuti seminar.
                         </div>
                     @elseif((!isset($data[0]->jam_cek_in) && !isset($data[0]->jam_cek_out)))
 
-                    <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="ZOOM">
+                    <input type="button" class="btn btn-sm btn-success button-flash" onClick="absen_masuk()" value="ZOOM">
                     @endif
                 </div>
             </div>
