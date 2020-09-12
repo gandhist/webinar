@@ -206,8 +206,14 @@
 
     } );
 
-    $("#tgl_awal").datepicker();
-    $("#tgl_akhir").datepicker();
+    $("#tgl_awal").datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: '-3d'
+    });
+    $("#tgl_akhir").datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: '-3d'
+    });
 
     // Cache Warna Filter
     if ("{{request()->get('tgl_awal')}}" != "") {
@@ -265,7 +271,7 @@
             },
             success: function (data) {
                 // write your code
-                // console.log(data);
+                console.log(data);
                 myLineChart.destroy();
                 $("#pendaftar").dataTable().fnClearTable();
             },

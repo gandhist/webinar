@@ -15,19 +15,19 @@
             Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
             Judul Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
             Jadwal Kegiatan : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
-        
+
             <a target="_blank" href="{{ $peserta_seminar->seminar_p->url }}">LINK ZOOM!!!</a><br>
             <a target="_blank" href="{{ $peserta_seminar->seminar_p->url2 }}">LINK YOUTUBE!!!</a>
             <hr>
         @else
             Nama Peserta : {{ $peserta_seminar->peserta_r->nama }}<br><br>
-            Judul Seminar : {{ strip_tags($peserta_seminar->seminar_p->tema) }}<br><br>
+            Judul Seminar : {{ strip_tags(html_entity_decode($peserta_seminar->seminar_p->tema)) }}<br><br>
             Jadwal Kegiatan : {{ \Carbon\Carbon::parse($peserta_seminar->seminar_p->tgl_awal)->isoFormat('DD MMMM YYYY') }} / {{ $peserta_seminar->seminar_p->jam_awal }}<br>
             <hr>
-            Klik link zoom untuk mengikuti seminar 
+            Klik link zoom untuk mengikuti seminar
         @endif
-        
-       
+
+
         @if(session()->get('status'))
         <div class="row">
             <div class="col-lg-6">
@@ -56,7 +56,7 @@
                             Terimakasih, Anda telah selesai mengikuti seminar.
                         </div>
                     @elseif((!isset($data[0]->jam_cek_in) && !isset($data[0]->jam_cek_out)))
-                    
+
                     <input type="button" class="btn btn-sm btn-success" onClick="absen_masuk()" value="ZOOM">
                     @endif
                 </div>
@@ -203,7 +203,7 @@ function absen_keluar() {
             //     onClose: function() {
                     // if(response.code == 10) {
                         window.location.replace(home_rating);
-                    // }        
+                    // }
             //     }
             // })
         }  else {

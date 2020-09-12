@@ -77,10 +77,16 @@ class StatistikSeminarController extends Controller
                 'errors' => $validation->messages()->first(),
             ], 401);
         }
+
+        if($request->tgl_awal == $request->tgl_akhir) {
+            $type = 1;
+        } else {
+            $type = 2;
+        }
+
         return response()->json([
             'success' => true,
-            'tgl_awal' => $request->tgl_awal,
-            'tgl_akhir' => $request->tgl_akhir,
+            'type' => $type,
         ]);
     }
 }
