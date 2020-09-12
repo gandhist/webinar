@@ -50,6 +50,47 @@
   50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
   100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
 }
+    .button-flash-biru {
+  background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Arial;
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #1332bd; -webkit-box-shadow: 0 0 3px #1332bd; }
+  50% { background-color: #2854ce; -webkit-box-shadow: 0 0 40px #2854ce; }
+  100% { background-color: #1332bd; -webkit-box-shadow: 0 0 3px #1332bd; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #1332bd; -moz-box-shadow: 0 0 3px #1332bd; }
+  50% { background-color: #2854ce; -moz-box-shadow: 0 0 40px #2854ce; }
+  100% { background-color: #1332bd; -moz-box-shadow: 0 0 3px #1332bd; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #1332bd; box-shadow: 0 0 3px #1332bd; }
+  50% { background-color: #2854ce; box-shadow: 0 0 40px #2854ce; }
+  100% { background-color: #1332bd; box-shadow: 0 0 3px #1332bd; }
+}
+
+@keyframes glowing {
+  0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+  100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+}
 </style>
 
 @section('content')
@@ -136,7 +177,7 @@
                                 <a class="btn btn-sm btn-success {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? "button-flash" : ''}}" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
                                 data-placement="bottom" title="Klik untuk mengikuti kegiatan"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
                             @else
-                            <a class="btn btn-sm btn-primary" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
+                            <a class="btn btn-sm btn-primary  {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? 'button-flash-biru' : ''}}" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
                             @endif
                         @else
                         <a class="btn btn-sm btn-primary" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>

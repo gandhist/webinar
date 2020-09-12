@@ -17,7 +17,7 @@ Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 Route::get('', 'FrontendController@index')->name('homeUI');
 Route::get('reset', 'FrontendController@reset');
-Route::get('statseminarfunc', 'StatistikSeminarController@filter');
+Route::get('statseminarfunc/{id}', 'StatistikSeminarController@filter');
 Route::get('tesWA', 'FrontendController@kirimWA');
 Route::get('tesWA2', 'FrontendController@kirimWA2');
 Route::get('tesWA3', 'FrontendController@kirimWA3');
