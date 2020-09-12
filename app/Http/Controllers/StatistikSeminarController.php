@@ -92,15 +92,22 @@ class StatistikSeminarController extends Controller
             $data_peserta_seminar = [0];
             $data_user_baru = [0];
 
+
             for($i = 0 ; $i < 24 ; $i++){
-                $from = Carbon::parse($request->tgl_awal)->addHours($i);
-                $to = Carbon::parse($request->tgl_awal)->addHours($i+1);
+                $from = Carbon::parse($request->tgl_awal)->format('Y-d-m H:i:s');//->addHours($i);
+                $to = Carbon::parse($request->tgl_awal)->format('Y-d-m H:i:s');//->addHours($i+1);
+
+                $from = Carbon::parse($from)->addHours($i);
+                $to = Carbon::parse($to)->addHours($i+1);
+
                 $jumlah_pesertaseminar_jam_ini = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->count();
                 $jumlah_pesertabaru_jam_ini = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereBetween('created_at', [$from, $to])->count();
-
+                // dump($from);
+                // dump($to);
                 array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
                 array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
             }
+            // dd("");
 
         } else {
             $type = 2;
@@ -111,7 +118,7 @@ class StatistikSeminarController extends Controller
             'type' => $type,
             'peserta' => $data_peserta_seminar,
             'user' => $data_user_baru,
-            'tgl' => $request->tgl_awal,
+            'tgl' => Carbon::parse($request->tgl_awal)->format("d F Y"),
         ]);
     }
 }

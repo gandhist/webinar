@@ -169,8 +169,8 @@
         ]
 
     };
-    var lineoptions = {
-        scales: {
+    function lineoptions(title) {
+        this.scales = {
                     yAxes: [{
                         ticks: {
                             beginAtZero:true
@@ -181,10 +181,10 @@
                             fontSize: 20
                         }
                     }]
-                },
-        title: {
+                }
+        this.title = {
             display: true,
-            text: '{{\Carbon\Carbon::today()->format("d F Y")}}'
+            text: title
         }
     };
 
@@ -203,7 +203,7 @@
         myLineChart = new Chart(ctx, {
             type: 'line',
             data: new LineData(user_baru, peserta_baru),
-            options: options,
+            options: new lineoptions("{{\Carbon\Carbon::today()->format("d F Y")}}"),
         });
 
     } );
@@ -275,7 +275,8 @@
             },
             success: function (data) {
                 // write your code
-                console.log(data);
+                // console.log(data['user']);
+                // console.log(data['peserta']);
                 myLineChart.destroy();
                 $("#pendaftar").dataTable().fnClearTable();
                 if(data['type'] === 1){
@@ -283,7 +284,7 @@
                     myLineChart = new Chart(ctx, {
                         type: 'line',
                         data: new LineData(data['user'], data['peserta']),
-                        options: options,
+                        options: new lineoptions(data['tgl']),
                     });
                 }
             },
