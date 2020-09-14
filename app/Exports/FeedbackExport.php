@@ -89,31 +89,31 @@ class FeedbackExport implements FromView
                 $feedback_personal[$n->id_peserta]["persen_5"] = 0;
             }
         }
-        foreach($moderator as $m){
-            $feedback_personal[$m->id_peserta] = [      "1" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','1')),
-                                                        "2" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','2')),
-                                                        "3" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','3')),
-                                                        "4" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','4')),
-                                                        "5" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','5')),
-                                                        "jumlah" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)),
-                                                        "total" => array_sum($feedback_personal_raw->where('id_peserta',$m->id_peserta)->pluck('nilai')->toArray()),
-                                                    ];
-            if($feedback_personal[$m->id_peserta]['jumlah'] > 0){
-                $feedback_personal[$m->id_peserta]["rata_rata"] = round($feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'],2);
-                $feedback_personal[$m->id_peserta]["persen_1"] = round((($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_2"] = round((($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_3"] = round((($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_4"] = round((($feedback_personal[$m->id_peserta]['4']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-                $feedback_personal[$m->id_peserta]["persen_5"] = round((($feedback_personal[$m->id_peserta]['5']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
-            } else {
-                $feedback_personal[$m->id_peserta]["rata_rata"] = 0;
-                $feedback_personal[$m->id_peserta]["persen_1"] = 0;
-                $feedback_personal[$m->id_peserta]["persen_2"] = 0;
-                $feedback_personal[$m->id_peserta]["persen_3"] = 0;
-                $feedback_personal[$m->id_peserta]["persen_4"] = 0;
-                $feedback_personal[$m->id_peserta]["persen_5"] = 0;
-            }
-        }
+        // foreach($moderator as $m){
+        //     $feedback_personal[$m->id_peserta] = [      "1" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','1')),
+        //                                                 "2" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','2')),
+        //                                                 "3" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','3')),
+        //                                                 "4" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','4')),
+        //                                                 "5" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)->where('nilai','5')),
+        //                                                 "jumlah" => count($feedback_personal_raw->where('id_peserta',$m->id_peserta)),
+        //                                                 "total" => array_sum($feedback_personal_raw->where('id_peserta',$m->id_peserta)->pluck('nilai')->toArray()),
+        //                                             ];
+        //     if($feedback_personal[$m->id_peserta]['jumlah'] > 0){
+        //         $feedback_personal[$m->id_peserta]["rata_rata"] = round($feedback_personal[$m->id_peserta]['total']/$feedback_personal[$m->id_peserta]['jumlah'],2);
+        //         $feedback_personal[$m->id_peserta]["persen_1"] = round((($feedback_personal[$m->id_peserta]['1']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+        //         $feedback_personal[$m->id_peserta]["persen_2"] = round((($feedback_personal[$m->id_peserta]['2']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+        //         $feedback_personal[$m->id_peserta]["persen_3"] = round((($feedback_personal[$m->id_peserta]['3']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+        //         $feedback_personal[$m->id_peserta]["persen_4"] = round((($feedback_personal[$m->id_peserta]['4']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+        //         $feedback_personal[$m->id_peserta]["persen_5"] = round((($feedback_personal[$m->id_peserta]['5']/$feedback_personal[$m->id_peserta]["jumlah"])*100),2);
+        //     } else {
+        //         $feedback_personal[$m->id_peserta]["rata_rata"] = 0;
+        //         $feedback_personal[$m->id_peserta]["persen_1"] = 0;
+        //         $feedback_personal[$m->id_peserta]["persen_2"] = 0;
+        //         $feedback_personal[$m->id_peserta]["persen_3"] = 0;
+        //         $feedback_personal[$m->id_peserta]["persen_4"] = 0;
+        //         $feedback_personal[$m->id_peserta]["persen_5"] = 0;
+        //     }
+        // }
         // dd($feedback_personal);
 
         return view('exports.feedback',[

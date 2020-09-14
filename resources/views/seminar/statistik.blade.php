@@ -215,14 +215,17 @@
 
     $("#tgl_awal").datepicker({
         format: 'dd/mm/yyyy',
+        startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
         endDate: '+1d',
         datesDisabled: '+1d',
     });
     $("#tgl_akhir").datepicker({
         format: 'dd/mm/yyyy',
+        startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
         endDate: '+1d',
         datesDisabled: '+1d',
     });
+
 
     // Cache Warna Filter
     if ("{{request()->get('tgl_awal')}}" != "") {

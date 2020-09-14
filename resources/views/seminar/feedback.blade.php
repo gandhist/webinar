@@ -302,7 +302,7 @@
             <hr>
             @endforeach
 
-            @foreach($moderator as $m)
+            {{-- @foreach($moderator as $m)
             <div class="row">
                 <div class="col-lg-12 card">
                     <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
@@ -327,7 +327,7 @@
                 </div>
             </div>
             <hr>
-            @endforeach
+            @endforeach --}}
 
             <div class="row">
             <div class="col-lg-12 card">
