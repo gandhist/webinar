@@ -12,6 +12,11 @@ class SeminarModel extends Model
     protected $table = "srtf_seminar";
     protected $guarded = "id";
 
+    public function getLokasiPenyelenggaraAttribute($value)
+	{
+		return iconv('utf-8//TRANSLIT', 'UTF-8', $value);
+	}
+
     // relasi ke table peserta
     public function peserta(){
         return $this->hasMany('App\SertModel','id_seminar');

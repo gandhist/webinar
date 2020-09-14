@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sertifikat {{ $data->no_srtf }}</title>
-    
+
     <style>
         @page {
             margin: 0;
@@ -30,25 +30,25 @@
             margin-top: 20px;
             margin-bottom: 20px;
         }
-        
+
         .paper {
             width: 700px;
             height: 700px;
             margin: 20px auto;
             background-color: white;
             box-shadow: 0px 0px 5px 0px #888;
-            padding: 5px;    
+            padding: 5px;
         }
-    
+
         table {
             table-layout: fixed;
         }
-    
+
         td {
             vertical-align: top;
             overflow: hidden;
         }
-    
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'certificate2';
             font-size: 16px;
@@ -58,16 +58,16 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-    
+
         p {
             font-family: 'certificate2';
-            margin-top: -105px; 
-            margin-bottom: -5px; 
-            font-size: 80px; 
+            margin-top: -105px;
+            margin-bottom: -5px;
+            font-size: 80px;
             /* font-weight: bold; */
             /* line-height: 150%; */
         }
-    
+
         td {
             height: 15px;
         }
@@ -84,20 +84,20 @@
             <div class="header">
                 <table style="table-layout:fixed;" width=780 cellspacing=0 cellpadding=0>
                     <tr>
-                        <td colspan="14"></td>                   
+                        <td colspan="14"></td>
                         <td colspan="10"><span style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff; padding:15px">{{ $data->no_srtf }}</span></td>
                     </tr>
                     <tr>
-                        <td colspan="14"></td>                   
+                        <td colspan="14"></td>
                         <td colspan="10" style="padding-left:20px;"><img src="{{ public_path($data->qr_code)}}" height=110px></td>
                     </tr>
                     <tr>
-                        <td colspan="19" style="text-align: center;padding:10px 0">      
+                        <td colspan="19" style="text-align: center;padding:10px 0">
                             @foreach ($instansi as $index => $key)
                                 @if($key->is_tampil == 1)
                                     @if ($index == 1)
                                         <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
-                                    @elseif ($index == 6) 
+                                    @elseif ($index == 6)
                                     <br><img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px; margin-top:10px">
                                     @else
                                         <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:50px; height:50px">
@@ -109,13 +109,13 @@
                     </tr>
                 </table>
             </div>
-            
+
             <div class="box-body">
                 <table style="table-layout:fixed;" width=520 cellspacing=0 cellpadding=0>
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle; color: brown;">
-                            <p id="judul">Sertifikat</p>   
+                            <p id="judul">Sertifikat</p>
                         </td>
                     </tr>
                     <tr>
@@ -123,7 +123,7 @@
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             diberikan kepada :<br>
                             <h2 style="margin-top: 6px;margin-bottom: 6px; color:blue; text-transform: uppercase;">{{ $data->peserta_r->nama }}</h2>
-                        </td> 
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="6"></td>
@@ -159,11 +159,11 @@
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
                             <p style="margin-top: 0px; margin-bottom:9px ">
                                 <span style="font-size: 24px;font-weight: bold;">
-                                    @foreach ($instansi as $index => $key) 
-                                        @if(count($instansi) > $index + 1) 
+                                    @foreach ($instansi as $index => $key)
+                                        @if(count($instansi) > $index + 1)
                                         {{ $key->bu_instansi->singkat_bu }} *
                                         @else
-                                        {{ $key->bu_instansi->singkat_bu }} 
+                                        {{ $key->bu_instansi->singkat_bu }}
                                         @endif
                                     @endforeach
                                 </span>
@@ -173,7 +173,7 @@
                     <tr>
                         <td colspan="6"></td>
                         <td colspan="48" style="text-align: center; vertical-align: middle; padding-bottom: 15px; ">
-                            <b>{{ $data->seminar_p->lokasi_penyelenggara }}, {{ isset($data->seminar_p) ? \Carbon\Carbon::parse($data->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
+                            <b style="font-family: DejaVu Sans;" >{{ html_entity_decode(mb_convert_encoding($data->seminar_p->lokasi_penyelenggara, 'HTML-ENTITIES', 'UTF-8') )}}, {{ isset($data->seminar_p) ? \Carbon\Carbon::parse($data->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
                         </td>
                     </tr>
                     <tr>
@@ -181,8 +181,8 @@
                         @foreach ($ttd as $key)
                         <td colspan="18" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"><br>
-                            <b>{{ $key->bu_ttd->nama }} </b><br>            
-                            {{ $key->jabatan }} 
+                            <b>{{ $key->bu_ttd->nama }} </b><br>
+                            {{ $key->jabatan }}
                         </td>
                         @endforeach
                     </tr>
