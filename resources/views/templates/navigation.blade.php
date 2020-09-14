@@ -7,11 +7,11 @@
 <!-- jika sudah login -->
 <header class="main-header">
   <!-- Logo -->
-  <a href="{{ url('/dashboard') }}" class="logo">
+  <a href="{{ url('/dashboard') }}" class="logo" style="display:inline-block; min-height:100%; background-color: #48a2d7">
     <!-- mini logo for sidebar mini 50x50 pixels -->
-    <span class="logo-mini">P3SM</span>
+    <span class="logo-mini" style="display:inline-block; min-height:100%; "><img src="{{ url('p3sm_a.png') }}" alt="logo" class="img-responsive" width="100px" style="display:inline-block;  vertical-align: middle"></span>
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>P3SM</b></span>
+    <span class="logo-lg" style="display:inline-block; min-height:100%;"><img src="{{ url('p3sm_a.png') }}" alt="logo" class="img-responsive" width="100px" style="display:inline-block;  vertical-align: middle"></span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">

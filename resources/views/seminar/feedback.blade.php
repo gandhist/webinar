@@ -2,200 +2,214 @@
 
 @section('content')
 <style>
-
-  .line {
-    height:250px;
+.line {
+    height: 250px;
     overflow-y: auto;
-  }
+}
 
-  .box-body {
-      counter-reset: listCounter;
-  }
+.box-body {
+    counter-reset: listCounter;
+}
 
-  .continuous-list .nomor {
-        list-style: none;
-        font-size: 25px;
-        margin: 25px 0;
-  }
+.continuous-list .nomor {
+    list-style: none;
+    font-size: 25px;
+    margin: 25px 0;
+}
 
-  .continuous-list .nomor::before {
-        content: counter(listCounter) " . ";
-        counter-increment: listCounter;
-  }
-  canvas{
+.continuous-list .nomor::before {
+    content: counter(listCounter) " . ";
+    counter-increment: listCounter;
+}
+
+/* canvas { */
 
     /* width:700px !important; */
     /* height:500px !important; */
 
-  }
-  .chart-container{
-    position: relative;
-    height:40vh;
-  }
-  .custom-label{
-      display: inline-block;
-      height: 15px;
-      width: 50px;
-      content: '.';
-        /* visibility: hidden; */
-    }
-    .custom-label-container{
-    font-size: 20px;
-    }
-    .custom-label-container::after{
-        content: "";
-        border: 1px inset;
-        box-sizing: border-box;
-        color: gray;
-        display: block;
-        height: 2px;
-        margin: 0.5em auto;
-    }
-    .to-padd{
-        padding: 25px 0 ;
-    }
-    .start-div{
-        display: inline-block;
-        width: 150px;
-    }
-    .legend-div{
-        display: inline-block;
-        width: 150px;
-    }
-    .persen-div{
-        display: inline-block;
-        width: 300px;
-    }
-    .persen-div::before{
-        content: 'Persentase : ';
-        display: inline-block;
-        width: 208px;
-    }
-    .jumlah-div{
-        display: inline-block;
-        width: 300px;
-    }
-    .jumlah-div::before{
-        content: 'Jumlah : ';
-        display: inline-block;
-        width: 210px;
-    }
-    .jumlah-div::after{
-        content: ' Peserta';
-        display: inline-block;
-        padding-left: 1rem;
-    }
+/* } */
 
-    /* bar */
-    .start-div-bar{
-        display: inline-block;
-        width: 50px;
-    }
-    .legend-div-bar{
-        display: inline-block;
-        width: 200px;
-    }
-    .persen-div-bar{
-        display: inline-block;
-        width: 400px;
-    }
-    .persen-div-bar::before{
-        content: 'Persentase : ';
-        display: inline-block;
-        width: 110px;
-    }
-    .jumlah-div-bar{
-        display: inline-block;
-        width: 300px;
-    }
-    .jumlah-div-bar::before{
-        content: 'Jumlah : ';
-        display: inline-block;
-        width: 110px;
-    }
-    .jumlah-div-bar::after{
-        content: ' Peserta';
-        display: inline-block;
-        padding-left: 1rem;
-    }
-    .groupping {
-        border: 2px solid black;
-        padding: 50px;
-        margin: 50px;
-        margin-top: 75px;
-    }
-    /* FULL BINTANG */
-    .ratings {
+.chart-container {
+    position: relative;
+    height: 40vh;
+}
+
+.custom-label {
+    display: inline-block;
+    height: 15px;
+    width: 50px;
+    content: '.';
+    /* visibility: hidden; */
+}
+
+.custom-label-container {
+    font-size: 20px;
+}
+
+.custom-label-container::after {
+    content: "";
+    border: 1px inset;
+    box-sizing: border-box;
+    color: gray;
+    display: block;
+    height: 2px;
+    margin: 0.5em auto;
+}
+
+.to-padd {
+    padding: 25px 0;
+}
+
+.start-div {
+    display: inline-block;
+    width: 150px;
+}
+
+.legend-div {
+    display: inline-block;
+    width: 150px;
+}
+
+.persen-div {
+    display: inline-block;
+    width: 300px;
+}
+
+.persen-div::before {
+    content: 'Persentase : ';
+    display: inline-block;
+    width: 208px;
+}
+
+.jumlah-div {
+    display: inline-block;
+    width: 300px;
+}
+
+.jumlah-div::before {
+    content: 'Jumlah : ';
+    display: inline-block;
+    width: 210px;
+}
+
+.jumlah-div::after {
+    content: ' Peserta';
+    display: inline-block;
+    padding-left: 1rem;
+}
+
+/* bar */
+.start-div-bar {
+    display: inline-block;
+    width: 50px;
+}
+
+.legend-div-bar {
+    display: inline-block;
+    width: 200px;
+}
+
+.persen-div-bar {
+    display: inline-block;
+    width: 400px;
+}
+
+.persen-div-bar::before {
+    content: 'Persentase : ';
+    display: inline-block;
+    width: 110px;
+}
+
+.jumlah-div-bar {
+    display: inline-block;
+    width: 300px;
+}
+
+.jumlah-div-bar::before {
+    content: 'Jumlah : ';
+    display: inline-block;
+    width: 110px;
+}
+
+.jumlah-div-bar::after {
+    content: ' Peserta';
+    display: inline-block;
+    padding-left: 1rem;
+}
+
+.groupping {
+    border: 2px solid black;
+    padding: 50px;
+    margin: 50px;
+    margin-top: 75px;
+}
+
+/* FULL BINTANG */
+.ratings {
     position: relative;
     vertical-align: middle;
     display: inline-block;
     color: #b1b1b1;
     overflow: hidden;
-    margin-top:-5px;
-    }
+    margin-top: -5px;
+}
 
-    .full-stars{
+.full-stars {
     position: absolute;
     left: 0;
     top: 0;
     white-space: nowrap;
     overflow: hidden;
     color: #fde16d;
-    }
+}
 
-    .empty-stars:before,
-    .full-stars:before {
+.empty-stars:before,
+.full-stars:before {
     content: "\2605\2605\2605\2605\2605";
     font-size: 14pt;
-    }
+}
 
-    .empty-stars:before {
+.empty-stars:before {
     -webkit-text-stroke: 1px #848484;
-    }
+}
 
-    .full-stars:before {
+.full-stars:before {
     -webkit-text-stroke: 1px orange;
-    }
+}
 
-    /* Webkit-text-stroke is not supported on firefox or IE */
-    /* Firefox */
-    @-moz-document url-prefix() {
-    .full-stars{
+/* Webkit-text-stroke is not supported on firefox or IE */
+/* Firefox */
+@-moz-document url-prefix() {
+    .full-stars {
         color: #ECBE24;
     }
-    }
-    /* IE */
-    <!--[if IE]>
-    .full-stars{
-        color: #ECBE24;
-    }
-    <![endif]-->
+}
 
 
 </style>
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
+{{-- <section class="content-header">
     <h1>
         Feedback Seminar
     </h1>
-    {{-- <ol class="breadcrumb">
+    <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
         <li class="active"><a href="#"> Seminar</a></li>
         <li class="active"><a href="#"> Feedback</a></li>
-    </ol> --}}
-</section>
+    </ol>
+</section> --}}
 <section class="content-header">
   <h1>
-      Feedback Seminar ({{ $daftar }} daftar - {{ $absen }} absen - {{ $respons }} responses)
+      Feedback Kegiatan PPKB ({{$seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format('d F Y')}})
   </h1>
-  {{-- <ol class="breadcrumb">
+  <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a href="#"> Daftar</a></li>
       <li class="active"><a href="#"> Seminar</a></li>
       <li class="active"><a href="#"> Feedback</a></li>
-  </ol> --}}
+  </ol>
 </section>
 
 <!-- Main content -->

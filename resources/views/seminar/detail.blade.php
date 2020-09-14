@@ -16,12 +16,15 @@
         width: 1500px;
         margin: 0 auto;
     } */
+    table.dataTable tbody td {
+        padding: 0.2rem 0.5rem;
+    }
 
 </style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Detail Seminar
+        Detail Kegiatan PPKB
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

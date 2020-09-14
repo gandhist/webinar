@@ -1679,8 +1679,9 @@ class SeminarController extends Controller
                 $feedback_personal[$m->id_peserta]["persen_5"] = 0;
             }
         }
+        $seminar = SeminarModel::where('id',$id)->first();
         // dd($feedback_personal);
-        return view ('seminar.feedback')->with(compact('id','daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal','absen_persen','respons_persen'));
+        return view ('seminar.feedback')->with(compact('id','seminar','daftar','absen','respons','narasumber','moderator','feedback','feedback_seminar','feedback_personal','absen_persen','respons_persen'));
     }
 
     public function downloadFeedback($id) {

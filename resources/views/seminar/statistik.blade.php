@@ -13,11 +13,16 @@
         color: red;
         content: " *";
     }
+
+    table.dataTable tbody td {
+        padding: 0.2rem 0.5rem;
+    }
+
 </style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Statistik Seminar
+        Statistik Kegiatan PPKB
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -194,7 +199,7 @@
             // "scrollY":        "1000px",
             "scrollCollapse": true,
             "paging":         true,
-            lengthMenu: [10,20,50,100]
+            lengthMenu: [100,200,500,1000,2000,5000,10000]
         } );
 
 
