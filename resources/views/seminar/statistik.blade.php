@@ -2,6 +2,7 @@
 
 @section('content')
 
+<div class="loading">Loading&#8230;</div>
 <link
     href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
     rel="stylesheet">
@@ -17,9 +18,130 @@
     table.dataTable tbody td {
         padding: 0.2rem 0.5rem;
     }
+    /* Absolute Center Spinner */
+    .loading {
+        position: fixed;
+        z-index: 999;
+        height: 2em;
+        width: 2em;
+        overflow: visible;
+        margin: auto;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    /* Transparent Overlay */
+    .loading:before {
+        content: '';
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.3);
+    }
+
+    /* :not(:required) hides these rules from IE9 and below */
+    .loading:not(:required) {
+    /* hide "loading..." text */
+        font: 0/0 a;
+        color: transparent;
+        text-shadow: none;
+        background-color: transparent;
+        border: 0;
+    }
+
+    .loading:not(:required):after {
+        content: '';
+        display: block;
+        font-size: 10px;
+        width: 1em;
+        height: 1em;
+        margin-top: -0.5em;
+        -webkit-animation: spinner 1500ms infinite linear;
+        -moz-animation: spinner 1500ms infinite linear;
+        -ms-animation: spinner 1500ms infinite linear;
+        -o-animation: spinner 1500ms infinite linear;
+        animation: spinner 1500ms infinite linear;
+        border-radius: 0.5em;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+    }
+
+    /* Animation */
+
+    @-webkit-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    @-moz-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    @-o-keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes spinner {
+        0% {
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
 
 </style>
+
 <!-- Content Header (Page header) -->
+
 <section class="content-header">
     <h1>
         Statistik Kegiatan PPKB ({{ $seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format("d M Y")}})
@@ -36,6 +158,7 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
+
         <div class="container-fluid" style="min-height:90vh;">
             <div class="jumbotron"  style='padding-top:15px; min-height:90vh;'>
                 <div class="btn-group">
@@ -115,16 +238,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg==" crossorigin="anonymous"></script>
 <script>
     var peserta_baru = @json($data_peserta_seminar);
     var user_baru = @json($data_user_baru);
-
-    function LineData(user_baru, peserta_baru) {
-        this.labels = [
+    var jam = [
             "00.00",
             "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00",
             "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00", "24.00",
-        ],
+        ]
+
+    function LineData(user_baru, peserta_baru, labels) {
+        this.labels = labels,
         this.datasets = [
             {
                 label: "User Baru",
@@ -195,6 +320,7 @@
 
 
     $(document).ready(function() {
+        $(".loading").hide();
         $('#pendaftar').DataTable( {
             // "scrollY":        "1000px",
             "scrollCollapse": true,
@@ -207,7 +333,7 @@
         var ctx = document.getElementById('chart').getContext('2d');
         myLineChart = new Chart(ctx, {
             type: 'line',
-            data: new LineData(user_baru, peserta_baru),
+            data: new LineData(user_baru, peserta_baru, jam),
             options: new lineoptions("{{\Carbon\Carbon::today()->format("d F Y")}}"),
         });
 
@@ -273,13 +399,15 @@
         // $("#pendaftar").dataTable().fnClearTable();
         // $('#chart').remove();
         // $('#chart-container').append('<canvas id="chart"></canvas>');
+        var awal = $('#tgl_awal').val();
+        var akhir = $('#tgl_akhir').val();
         $.ajax({
             type: "GET",
             url: '{{url("/statseminarfunc",$id)}}',
             data : {
                 "_token": "{{ csrf_token() }}",
-                "tgl_awal": $("#tgl_awal").val(),
-                "tgl_akhir": $("#tgl_akhir").val(),
+                "tgl_awal":  awal,
+                "tgl_akhir":  akhir
             },
             success: function (data) {
                 // write your code
@@ -292,10 +420,30 @@
                     var ctx = document.getElementById('chart').getContext('2d');
                     myLineChart = new Chart(ctx, {
                         type: 'line',
-                        data: new LineData(data['user'], data['peserta']),
+                        data: new LineData(data['user'], data['peserta'], jam),
                         options: new lineoptions(data['tgl']),
                     });
 
+                    $(function() {
+                        $.each(data['detail'], function(i, item) {
+                            var $tr = $('<tr>').append(
+                                $('<td>').text(i+1),
+                                $('<td>').text(item[0]),
+                                $('<td>').text(item[1]),
+                                $('<td>').text(item[2]),
+                                $('<td>').text(item[3])
+                            );
+                            $tr.appendTo('#pendaftar');
+                            // console.log($tr.wrap('<p>').html());
+                        });
+                    });
+                } else if (data['type'] === 2) {
+                    var ctx = document.getElementById('chart').getContext('2d');
+                    myLineChart = new Chart(ctx, {
+                        type: 'line',
+                        data: new LineData(data['user'], data['peserta'], data['label']),
+                        options: new lineoptions(data['tgl'][0]+' - '+data['tgl'][1]),
+                    });
                     $(function() {
                         $.each(data['detail'], function(i, item) {
                             var $tr = $('<tr>').append(
@@ -323,6 +471,15 @@
                 // console.log(data['error'][0][0]);
             }
         });
+    });
+
+    $(document).ajaxStart(function(){
+        // Show image container
+        $(".loading").show();
+    });
+    $(document).ajaxComplete(function(){
+        // Hide image container
+        $(".loading").hide();
     });
 </script>
 @endpush
