@@ -307,7 +307,7 @@
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'P3S Mandiri',
+                            labelString: 'P\ua76aS Mandiri',
                             fontSize: 20
                         }
                     }]
