@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group {{ $errors->first('nama_seminar') ? 'has-error' : '' }}">
-                                <label for="nama_seminar" class="label-control required">Judul</label>
+                                <label for="nama_seminar" class="label-control required">Jenis Kegiatan</label>
                                 <input type="text" id="nama_seminar" class="form-control" name="nama_seminar"
                                     placeholder="Nama Seminar" value="{{$seminar->nama_seminar ? $seminar->nama_seminar : ''}}"  readonly>
                                 <div id="nama_seminar" class="invalid-feedback text-danger">
@@ -92,7 +92,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group {{ $errors->first('tema') ? 'has-error' : '' }}">
-                                <label for="tema" class="label-control required">Tema</label>
+                                <label for="tema" class="label-control required">Judul</label>
                                 <input type="text" id="tema_seminar" class="form-control" name="tema_seminar" placeholder=""
                                     value="{{ strip_tags(html_entity_decode($seminar->tema)) }}" readonly>
                                 <div id="tema" class="invalid-feedback text-danger">
