@@ -83,7 +83,7 @@
 
 .jumlah-div {
     display: inline-block;
-    width: 300px;
+    width: 500px;
 }
 
 .jumlah-div::before {
@@ -242,9 +242,9 @@
                     <canvas id="myBar"></canvas>
                 </div>
                 <div class="col-md-4">
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Peserta Terdaftar </div> <div class="jumlah-div-bar">{{$daftar}}</div></div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Kehadiran Peserta</div> <div class="persen-div-bar">({{$absen_persen}} %) Dari Jumlah Peserta</div> <div class="jumlah-div-bar">{{$absen}}</div></div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Feedback (Kuisioner)</div> <div class="persen-div-bar">({{$respons_persen}} %) Dari Kehadiran Peserta</div> <div class="jumlah-div-bar">{{$respons}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Peserta Terdaftar </div> <div class="jumlah-div-bar">{{ number_format($daftar,'0',",",".") }}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Kehadiran Peserta</div> <div class="persen-div-bar">({{$absen_persen}} %) Dari Jumlah Peserta</div> <div class="jumlah-div-bar">{{ number_format($absen,'0',",",".")}}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div-bar"></div> <div class="legend-div-bar">Feedback (Kuisioner)</div> <div class="persen-div-bar">({{$respons_persen}} %) Dari Kehadiran Peserta</div> <div class="jumlah-div-bar">{{ number_format($respons,'0',",",".")}}</div></div>
                 </div>
             </div>
         </div>
@@ -260,11 +260,11 @@
                     <canvas id="myChart"></canvas>
                 </div>
                 <div class="col-md-4">
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div> <div class="persen-div">({{$feedback_seminar['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['5']}}</div>   </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div> <div class="persen-div">({{$feedback_seminar['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['4']}}</div></div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div> <div class="persen-div">({{$feedback_seminar['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['3']}}</div>        </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div> <div class="persen-div">({{$feedback_seminar['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['2']}}</div>       </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div> <div class="persen-div">({{$feedback_seminar['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_seminar['1']}}</div>               </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div> <div class="persen-div">({{$feedback_seminar['persen_5']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_seminar['5'] ,'0',",",".") }}</div>   </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div> <div class="persen-div">({{$feedback_seminar['persen_4']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_seminar['4'] ,'0',",",".") }}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div> <div class="persen-div">({{$feedback_seminar['persen_3']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_seminar['3'] ,'0',",",".") }}</div>        </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div> <div class="persen-div">({{$feedback_seminar['persen_2']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_seminar['2'] ,'0',",",".") }}</div>       </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div> <div class="persen-div">({{$feedback_seminar['persen_1']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_seminar['1'] ,'0',",",".") }}</div>               </div>
                     <div class="custom-label-container">Rata-rata Nilai:
                         <div class="ratings">
                             <div class="empty-stars"></div>
@@ -286,11 +286,11 @@
                     <canvas id="narasumber-{{$n->id_peserta}}"></canvas>
                 </div>
                 <div class="col-md-4">
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['5']}}</div>   </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['4']}}</div></div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['3']}}</div>        </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['2']}}</div>       </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$n->id_peserta]['1']}}</div>               </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_personal[$n->id_peserta]['5'] ,'0',",",".") }}</div>   </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_personal[$n->id_peserta]['4'] ,'0',",",".") }}</div></div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_personal[$n->id_peserta]['3'] ,'0',",",".") }}</div>        </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_personal[$n->id_peserta]['2'] ,'0',",",".") }}</div>       </div>
+                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$n->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{ number_format($feedback_personal[$n->id_peserta]['1'] ,'0',",",".") }}</div>               </div>
                     <div class="custom-label-container">Rata-rata Nilai:
                         <div class="ratings">
                             <div class="empty-stars"></div>
@@ -387,7 +387,7 @@ var myBarChart = new Chart(ctx, {
     data: {
         labels: ['Peserta Terdaftar',
                  'Kehadiran Peserta',
-                 'Jumlah Feedback (Kuisioner)',],
+                 'Feedback (Kuisioner)',],
         datasets: [{
             // label: '# of Votes',
             data: [

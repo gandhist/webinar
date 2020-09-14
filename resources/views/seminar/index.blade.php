@@ -88,7 +88,7 @@
                                 <tr>
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
                                     <th><span class="indent">No</th>
-                                    <th><span class="indent">Title</th>
+                                    <th><span class="indent">Judul</th>
                                     <th><span class="indent">Tema</th>
                                     <th><span class="indent">Tanggal</th>
                                     <th><span class="indent">Jml_Daftar</th>
