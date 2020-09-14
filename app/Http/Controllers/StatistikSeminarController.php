@@ -116,6 +116,13 @@ class StatistikSeminarController extends Controller
             }
             // dd($id_peserta_seminar_baru );
 
+            $detail = [];
+
+            $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::today() )->get();
+            foreach($peserta_seminar_baru as $key){
+                array_push($detail, [$key->peserta->nama, $key->peserta->email, $key->peserta->no_hp, Carbon::parse($key->created_at)->format('d F Y h:m')]);
+            }
+
         } else {
             $type = 2;
         }
@@ -126,6 +133,7 @@ class StatistikSeminarController extends Controller
             'peserta' => $data_peserta_seminar,
             'user' => $data_user_baru,
             'tgl' => Carbon::parse($request->tgl_awal)->format('Y-d-m'),
+            'detail' => $detail,
         ]);
     }
 }

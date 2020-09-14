@@ -284,12 +284,27 @@
                 // console.log(data['peserta']);
                 myLineChart.destroy();
                 $("#pendaftar").dataTable().fnClearTable();
+                $("#pendaftar>tbody").empty();
                 if(data['type'] === 1){
                     var ctx = document.getElementById('chart').getContext('2d');
                     myLineChart = new Chart(ctx, {
                         type: 'line',
                         data: new LineData(data['user'], data['peserta']),
                         options: new lineoptions(data['tgl']),
+                    });
+
+                    $(function() {
+                        $.each(data['detail'], function(i, item) {
+                            var $tr = $('<tr>').append(
+                                $('<td>').text(i+1),
+                                $('<td>').text(item[0]),
+                                $('<td>').text(item[1]),
+                                $('<td>').text(item[2]),
+                                $('<td>').text(item[3])
+                            );
+                            $tr.appendTo('#pendaftar');
+                            // console.log($tr.wrap('<p>').html());
+                        });
                     });
                 }
             },
