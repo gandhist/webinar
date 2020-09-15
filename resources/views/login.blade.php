@@ -40,10 +40,10 @@
       font-family: Arial;
       text-align: center;
       text-decoration: none;
-      -webkit-animation: glowing 1500ms infinite;
-      -moz-animation: glowing 1500ms infinite;
-      -o-animation: glowing 1500ms infinite;
-      animation: glowing 1500ms infinite;
+      -webkit-animation: glowing 3000ms infinite;
+      -moz-animation: glowing 3000ms infinite;
+      -o-animation: glowing 3000ms infinite;
+      animation: glowing 3000ms infinite;
     }
     @-webkit-keyframes glowing {
       0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
@@ -72,7 +72,7 @@
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
-  
+
   @if(session()->get('warning'))
 		<div class="alert alert-warning"> {{ session()->get('warning') }}
 			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -88,7 +88,7 @@
   <div class="login-box-body">
     <div class="login-logo">
       <a href="#"><a class="home" href="{{ url('') }}"><img src="{{ url('p3sm_a.png') }}" alt="logo"  width="100px" ></a> - Login</a>
-      
+
     </div>
     {{-- <p class="login-box-msg">Login to start your session</p> --}}
 
@@ -114,14 +114,14 @@
         <div class="col-xs-12">
           <button type="submit" class="btn btn-sm btn-primary btn-block btn-flat button-flash">Login</button>
         </div>
-        
+
         </div>
         <div class="row" style="margin-top:10px">
           <div class="col-xs-12">
             {{-- <a href="{{url('')}}" class="btn btn-danger btn-block btn-flat">Cancel</a> --}}
             <button type="submit" class="btn btn-sm btn-primary btn-block btn-flat">
               <a href="{{url('login/google')}}" style="color: white">
-                  <i class="fa fa-google fa-fw"></i> 
+                  <i class="fa fa-google fa-fw"></i>
                   {{-- Login with Google Account --}}
               </a>
           </button>

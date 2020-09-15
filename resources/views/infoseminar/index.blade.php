@@ -24,10 +24,10 @@
     padding: 5px 10px;
     text-align: center;
     text-decoration: none;
-    -webkit-animation: glowing 1500ms infinite;
-    -moz-animation: glowing 1500ms infinite;
-    -o-animation: glowing 1500ms infinite;
-    animation: glowing 1500ms infinite;
+    -webkit-animation: glowing 3000ms infinite;
+    -moz-animation: glowing 3000ms infinite;
+    -o-animation: glowing 3000ms infinite;
+    animation: glowing 3000ms infinite;
   }
   @-webkit-keyframes glowing {
     0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }

@@ -15,10 +15,10 @@
         padding: 5px 10px;
         text-align: center;
         text-decoration: none;
-        -webkit-animation: glowing 1500ms infinite;
-        -moz-animation: glowing 1500ms infinite;
-        -o-animation: glowing 1500ms infinite;
-        animation: glowing 1500ms infinite;
+        -webkit-animation: glowing 3000ms infinite;
+        -moz-animation: glowing 3000ms infinite;
+        -o-animation: glowing 3000ms infinite;
+        animation: glowing 3000ms infinite;
     }
         @-webkit-keyframes glowing {
             0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
@@ -57,10 +57,10 @@
         padding: 5px 10px;
         text-align: center;
         text-decoration: none;
-        -webkit-animation: glowing-blue 1500ms infinite;
-        -moz-animation: glowing-blue 1500ms infinite;
-        -o-animation: glowing-blue 1500ms infinite;
-        animation: glowing-blue 1500ms infinite;
+        -webkit-animation: glowing-blue 3000ms infinite;
+        -moz-animation: glowing-blue 3000ms infinite;
+        -o-animation: glowing-blue 3000ms infinite;
+        animation: glowing-blue 3000ms infinite;
     }
     @-webkit-keyframes glowing-blue {
         0% { background-color: #0c00b2; -webkit-box-shadow: 0 0 3px #0c00b2; }
@@ -99,10 +99,10 @@
         padding: 5px 10px;
         text-align: center;
         text-decoration: none;
-        -webkit-animation:  glowing-red 1500ms infinite;
-        -moz-animation:  glowing-red 1500ms infinite;
-        -o-animation:  glowing-red 1500ms infinite;
-        animation:  glowing-red 1500ms infinite;
+        -webkit-animation:  glowing-red 3000ms infinite;
+        -moz-animation:  glowing-red 3000ms infinite;
+        -o-animation:  glowing-red 3000ms infinite;
+        animation:  glowing-red 3000ms infinite;
     }
     @-webkit-keyframes glowing-red {
         0% { background-color: #ff0000; -webkit-box-shadow: 0 0 3px #ff0000; }

@@ -15,10 +15,10 @@
 		padding: 5px 10px;
 		text-align: center;
 		text-decoration: none;
-		-webkit-animation: glowing 1500ms infinite;
-		-moz-animation: glowing 1500ms infinite;
-		-o-animation: glowing 1500ms infinite;
-		animation: glowing 1500ms infinite;
+		-webkit-animation: glowing 3000ms infinite;
+		-moz-animation: glowing 3000ms infinite;
+		-o-animation: glowing 3000ms infinite;
+		animation: glowing 3000ms infinite;
 	}
 	@-webkit-keyframes glowing {
 		0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
@@ -49,11 +49,12 @@
 		/* background-image: url("p3sm.jpeg");
   		background-size: 15%; */
 		background-repeat:no-repeat;
-		height: 450px;
+		height: auto;
 		background-color: #f7f7f7 !important;
 		background-position-x: 98%;
 		background-position-y: 55%;
 	    margin-top:1px;
+        padding-bottom: 1rem !important;
 	}
 	.logo {
 			margin-top: -55px;
@@ -104,7 +105,7 @@
 	<div class="jumbotron">
 		<div class="d-flex justify-content-around logo" style="padding-top: 5px;">
 			<div>
-				<img src="{{ url('a.jpeg') }}" alt="logo" class="img-responsive" height="200px"></a>
+				<img src="{{ url('P3SM_Baru.png') }}" alt="logo" class="img-responsive" height="200px"></a>
 			</div>
 
 			{{-- <div>
@@ -135,8 +136,8 @@
 			{{-- <button href="#" class="btn btn-success btn-border-filled" id="seminar" >Daftar Seminar</button> --}}
 		</div>
 		<div class="login">
-			<h4 class="head-title">Login</h4>
-			<p>Silahkan Login dengan user bagi yang sudah memiliki akun, atau klik <button class="btn btn-sm button-flash my-2 my-sm-0"><i class="fa fa-check-circle"> Daftar</i></button> pada kegiatan dibawah ini</p>
+			{{-- <h4 class="head-title">Login</h4> --}}
+			<p class="mx-3">Silahkan Login dengan user bagi yang sudah memiliki akun, atau klik <button class="btn btn-sm btn-success my-2 my-sm-0"><i class="fa fa-check-circle"> Daftar</i></button> pada kegiatan dibawah ini</p>
 			<div class="col-sm-6">
 				<form action="{{ url('login') }}" method="post">
 					{{ csrf_field() }}
@@ -151,7 +152,7 @@
 						<input type="password" class="form-control" placeholder="Password" name="password">
 						<span class="glyphicon glyphicon-lock"></span>
 					</div> --}}
-					<button type="submit" class="btn btn-sm btn-success btn-border-filled m-2"><i class="fa fa-sign-in"></i> Login</button>
+					<button type="submit" class="btn btn-sm btn-success btn-border-filled mr-2"><i class="fa fa-sign-in"></i> Login</button>
 					<a href="{{url('login/google')}}" style="color: white" class="btn btn-sm btn-primary m-2">
 						<i class="fa fa-google fa-fw"></i>
 						{{-- Login with Google Account --}}
@@ -177,7 +178,7 @@
 		</div>
   	@endif
 	<div class="seminar">
-        <b>Daftar Seminar</b>
+        {{-- <b>Daftar Seminar</b> --}}
 		<br>
         <table id="example" class="table table-bordered table-striped dataTable customTable" role="grid">
             <thead>
