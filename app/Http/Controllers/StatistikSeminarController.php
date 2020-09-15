@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PesertaSeminar;
 use App\SeminarModel;
 use App\Peserta;
+use App\User;
 use Carbon\Carbon;
 use Validator;
 
@@ -25,18 +26,34 @@ class StatistikSeminarController extends Controller
 
         $data_peserta_seminar = [0];
         $data_user_baru = [0];
+        $data_user_lama = [0];
+        // $total_user_baru = [0];
+        $total_user_keseluruhan = [ $user_jam_ini =  User::where('created_at', '<=', Carbon::today() )->count() ];
 
         for($i = 0 ; $i < 24 ; $i++){
             $from = Carbon::today()->addHours($i);
             $to = Carbon::today()->addHours($i+1);
+
             $jumlah_pesertaseminar_jam_ini = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->count();
             $jumlah_pesertabaru_jam_ini = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereBetween('created_at', [$from, $to])->count();
+            $pesertaseminar = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->pluck('id_peserta')->toArray();
+            $jumlah_user_lama = Peserta::whereIn('id', $pesertaseminar)->whereNotBetween('created_at', [$from, $to])->count();
+
+            $user_jam_ini =  User::all()->count();
+            $user_baru_jam_ini = User::whereBetween('created_at', [$from, $to])->count();
 
             array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
             array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
+            array_push($data_user_lama, $jumlah_user_lama);
+
+            // array_push($total_user_baru, $user_baru_jam_ini);
+            array_push($total_user_keseluruhan, $user_jam_ini + $user_baru_jam_ini);
         }
 
-        return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru','peserta_baru','data_peserta_seminar','data_user_baru','id'));
+        return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru',
+            'peserta_baru','data_peserta_seminar','data_user_lama','data_user_baru','id',
+            'total_user_keseluruhan', //'total_user_baru',
+        ));
     }
 
     public function filter(Request $request, $id) {
@@ -121,6 +138,7 @@ class StatistikSeminarController extends Controller
 
             $data_peserta_seminar = [0];
             $data_user_baru = [0];
+            $data_user_lama = [0];
 
 
             for($i = 0 ; $i < 24 ; $i++){
@@ -129,10 +147,14 @@ class StatistikSeminarController extends Controller
 
                 $jumlah_pesertaseminar_jam_ini = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->count();
                 $jumlah_pesertabaru_jam_ini = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereBetween('created_at', [$from, $to])->count();
+                $pesertaseminar = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->pluck('id_peserta')->toArray();
+                $jumlah_user_lama = Peserta::whereIn('id', $pesertaseminar)->whereNotBetween('created_at', [$from, $to])->count();
+
                 // dump($from);
                 // dump($to);
                 array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
                 array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
+                array_push($data_user_lama, $jumlah_user_lama);
             }
             // dd($id_peserta_seminar_baru );
 
@@ -163,22 +185,26 @@ class StatistikSeminarController extends Controller
             $label = [];
             $peserta = [];
             $user = [];
+            $user_lama = [];
 
             while(!$dari_temp->gt($sampai)) {
                 //
                 // dump($sampai);
-                $jumlah_pesertaseminar_hari_ini = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari_temp, $sampai_temp])->count();
+                $pesertaseminar = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari_temp, $sampai_temp])->pluck('id_peserta')->toArray();
                 $jumlah_pesertabaru_hari_ini = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereBetween('created_at', [$dari_temp, $sampai_temp])->count();
-
+                $jumlah_user_lama = Peserta::whereIn('id', $pesertaseminar)->whereNotBetween('created_at', [$dari_temp, $sampai_temp])->count();
+                $jumlah_pesertaseminar_hari_ini =  PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari_temp, $sampai_temp])->count();
 
                 array_push($data_jumlah,[ $dari_temp->format('d-M-Y') => [ $jumlah_pesertaseminar_hari_ini,  $jumlah_pesertabaru_hari_ini]]);
                 array_push($label,$dari_temp->format('d-M-Y'));
                 array_push($peserta,$jumlah_pesertaseminar_hari_ini);
                 array_push($user,$jumlah_pesertabaru_hari_ini);
+                array_push($user_lama, $jumlah_user_lama);
 
                 $sampai_temp->addDay();
                 $dari_temp->addDay();
             }
+            // dd($user_lama);
 
             return response()->json([
                 'success' => true,
@@ -187,6 +213,7 @@ class StatistikSeminarController extends Controller
                 'label' => $label,
                 'peserta' => $peserta,
                 'user' => $user,
+                'user_lama' => $user_lama,
                 'tgl' => [$dari->format('d F Y'),  $sampai->format('d F Y')],
                 'detail' => $detail,
             ]);
@@ -198,6 +225,7 @@ class StatistikSeminarController extends Controller
             'type' => $type,
             'peserta' => $data_peserta_seminar,
             'user' => $data_user_baru,
+            'user_lama' => $data_user_lama,
             'tgl' => Carbon::createFromFormat( "d/m/Y" , $request->tgl_awal )->format('d F Y'),
             'detail' => $detail,
         ]);

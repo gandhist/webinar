@@ -189,8 +189,11 @@
                         <h2>Statistik pendaftaran App PPKB P3SM Online</h2>
                         <p> <b>{{$seminar->nama_seminar}} - {{strip_tags(html_entity_decode($seminar->tema))}}</b> </p>
                     </div>
-                    <div class="col-md-12 chart-container" style="min-height:50vh;">
+                    <div class="col-md-6 chart-container" style="min-height:50vh;">
                         <canvas id="chart" style="height:50vh; ; width:100%"></canvas>
+                    </div>
+                    <div class="col-md-6 chart-container" style="min-height:50vh;">
+                        <canvas id="chart2" style="height:50vh; ; width:100%"></canvas>
                     </div>
                 </div>
 
@@ -242,15 +245,42 @@
 <script>
     var peserta_baru = @json($data_peserta_seminar);
     var user_baru = @json($data_user_baru);
+    var user_lama = @json($data_user_lama);
+
+    var total_user_keseluruhan = @json($total_user_keseluruhan);
     var jam = [
             "00.00",
             "01.00", "02.00", "03.00", "04.00", "05.00", "06.00", "07.00", "08.00", "09.00", "10.00", "11.00", "12.00",
             "13.00", "14.00", "15.00", "16.00", "17.00", "18.00", "19.00", "20.00", "21.00", "22.00", "23.00", "24.00",
         ]
 
-    function LineData(user_baru, peserta_baru, labels) {
+    function LineData(user_lama, user_baru, peserta_baru, labels) {
         this.labels = labels,
         this.datasets = [
+
+            {
+                label: "Pendaftar Dengan Akun",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(225,0,0,0.4)",
+                borderColor: "blue", // The main line color
+                borderCapStyle: 'square',
+                borderDash: [], // try [5, 15] for instance
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "black",
+                pointBackgroundColor: "green",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "white",
+                pointHoverBorderColor: "brown",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                // notice the gap in the data and the spanGaps: true
+                data: user_lama,
+                spanGaps: true,
+            },
             {
                 label: "User Baru",
                 fill: false,
@@ -274,7 +304,7 @@
                 data: user_baru,
                 spanGaps: true,
             }, {
-                label: "Pendaftar Seminar",
+                label: "Pendaftar",
                 fill: true,
                 lineTension: 0.1,
                 backgroundColor: "rgba(167,105,0,0.4)",
@@ -307,7 +337,77 @@
                         },
                         scaleLabel: {
                             display: true,
-                            labelString: 'P\ua76aS Mandiri',
+                            labelString: 'P3S Mandiri',
+                            fontSize: 20
+                        }
+                    }]
+                }
+        this.title = {
+            display: true,
+            text: title
+        }
+    };
+    function LineData2( total, labels) { //user_baru,
+        this.labels = labels,
+        this.datasets = [
+            // {
+            //     label: "User Baru",
+            //     fill: false,
+            //     lineTension: 0.1,
+            //     backgroundColor: "rgba(225,0,0,0.4)",
+            //     borderColor: "red", // The main line color
+            //     borderCapStyle: 'square',
+            //     borderDash: [], // try [5, 15] for instance
+            //     borderDashOffset: 0.0,
+            //     borderJoinStyle: 'miter',
+            //     pointBorderColor: "black",
+            //     pointBackgroundColor: "white",
+            //     pointBorderWidth: 1,
+            //     pointHoverRadius: 8,
+            //     pointHoverBackgroundColor: "yellow",
+            //     pointHoverBorderColor: "brown",
+            //     pointHoverBorderWidth: 2,
+            //     pointRadius: 4,
+            //     pointHitRadius: 10,
+            //     // notice the gap in the data and the spanGaps: true
+            //     data: user_baru,
+            //     spanGaps: true,
+            // },
+            {
+                label: "User Keseluruhan",
+                fill: true,
+                lineTension: 0.1,
+                backgroundColor: "rgba(13, 122, 124, 0.4)",
+                borderColor: "rgb(13, 122, 124)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "white",
+                pointBackgroundColor: "black",
+                pointBorderWidth: 1,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: "brown",
+                pointHoverBorderColor: "yellow",
+                pointHoverBorderWidth: 2,
+                pointRadius: 4,
+                pointHitRadius: 10,
+                // notice the gap in the data and the spanGaps: false
+                data: total,
+                spanGaps: true,
+            }
+        ]
+
+    };
+    function lineoptions2(title) {
+        this.scales = {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:false
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'P3S Mandiri',
                             fontSize: 20
                         }
                     }]
@@ -328,13 +428,18 @@
             lengthMenu: [100,200,500,1000,2000,5000,10000]
         } );
 
-
-
         var ctx = document.getElementById('chart').getContext('2d');
         myLineChart = new Chart(ctx, {
             type: 'line',
-            data: new LineData(user_baru, peserta_baru, jam),
-            options: new lineoptions("{{\Carbon\Carbon::today()->format("d F Y")}}"),
+            data: new LineData(user_lama,user_baru, peserta_baru, jam),
+            options: new lineoptions([ "Grafik Pendaftar Kegiatan", "{{\Carbon\Carbon::today()->format('d F Y')}}" ]),
+        });
+
+        var ctx2 = document.getElementById('chart2').getContext('2d');
+        myLineChart2 = new Chart(ctx2, {
+            type: 'line',
+            data: new LineData2( total_user_keseluruhan, jam), // total_user_baru
+            options: new lineoptions2([ "Grafik Pengguna App PPKB P3S Mandiri Online", "{{\Carbon\Carbon::today()->format('d F Y')}}" ]),
         });
 
     } );
@@ -420,8 +525,8 @@
                     var ctx = document.getElementById('chart').getContext('2d');
                     myLineChart = new Chart(ctx, {
                         type: 'line',
-                        data: new LineData(data['user'], data['peserta'], jam),
-                        options: new lineoptions(data['tgl']),
+                        data: new LineData(data['user_lama'],data['user'], data['peserta'], jam),
+                        options: new lineoptions([ "Grafik Pendaftar Kegiatan", data['tgl'] ]),
                     });
 
                     $(function() {
@@ -441,8 +546,8 @@
                     var ctx = document.getElementById('chart').getContext('2d');
                     myLineChart = new Chart(ctx, {
                         type: 'line',
-                        data: new LineData(data['user'], data['peserta'], data['label']),
-                        options: new lineoptions(data['tgl'][0]+' - '+data['tgl'][1]),
+                        data: new LineData(data['user_lama'], data['user'], data['peserta'], data['label']),
+                        options: new lineoptions([ "Grafik Pengguna App PPKB P3S Mandiri", data['tgl'][0]+' - '+data['tgl'][1] ]),
                     });
                     $(function() {
                         $.each(data['detail'], function(i, item) {
