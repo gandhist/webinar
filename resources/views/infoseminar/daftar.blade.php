@@ -188,9 +188,41 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 {{-- <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{$clientKey}}"></script> --}}
 <script>
     $(document).ready(function() {
+        var home_srtf = "{{ url('/') }}";
+
+        var msg = '{{Session::get('udahan')}}';
+        var exist = '{{Session::has('udahan')}}';
+        if(exist){
+            Swal.fire({
+                title: msg,
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA',
+                onClose: function() {
+                    window.location.replace(home_srtf);
+                    }
+                })
+            }
+
+
+        var msg2 = '{{isset($udahan) ? $udahan : ""}}';
+        var exist2 = '{{isset($udahan)}}';
+        if(exist2){
+            Swal.fire({
+                title: msg2,
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA',
+                onClose: function() {
+                    window.location.replace(home_srtf);
+                    }
+                })
+            }
+
         $('#btnDaftar').on('click', function(e) {
             e.preventDefault();
 

@@ -92,6 +92,9 @@ class InfoSeminarController extends Controller
         // dd($request);
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $detailseminar = Seminar::where('id',$id)->first();
+        if($detailseminar->is_mulai == 2){
+            return redirect()->back()->with('udahan',"Seminar telah selesai, silahkan mendaftar seminar lain");
+        }
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id)->first();
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();

@@ -280,6 +280,10 @@ class RegistController extends Controller
         ]);
 
         $detailseminar = Seminar::where('id',$id)->first();
+
+        if($detailseminar->is_mulai == 2){
+            return redirect()->back()->with('udahan',"Seminar telah selesai, silahkan mendaftar seminar lain");
+        }
         $is_free = Seminar::select('is_free')->where('id',$id)->first();
         $tanggal = Seminar::select('tgl_awal')->where('id', '=',$id)->first();
         $jam = Seminar::select('jam_awal')->where('id', '=',$id)->first();

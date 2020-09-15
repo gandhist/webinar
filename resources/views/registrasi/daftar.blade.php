@@ -192,6 +192,7 @@
 
 @endsection
 @push('script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -204,7 +205,37 @@
     $("#foto").change(function(){
         readURL(this);
     });
-  })
+
+    var home_srtf = "{{ url('/') }}";
+
+    var msg = '{{Session::get('udahan')}}';
+    var exist = '{{Session::has('udahan')}}';
+        if(exist){
+            Swal.fire({
+                title: msg,
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA',
+                onClose: function() {
+                        window.location.replace(home_srtf);
+                    }
+                });
+            }
+
+    var msg2 = '{{isset($udahan) ? $udahan : ""}}';
+    var exist2 = '{{isset($udahan)}}';
+        if(exist){
+            Swal.fire({
+                title: msg,
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA',
+                onClose: function() {
+                        window.location.replace(home_srtf);
+                    }
+                });
+            }
+    });
 
   function readURL(input) {
     if (input.files && input.files[0]) {
