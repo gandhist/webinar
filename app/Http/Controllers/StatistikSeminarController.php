@@ -138,7 +138,7 @@ class StatistikSeminarController extends Controller
 
             $detail = [];
 
-            $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::today() )->get();
+            $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari, $sampai])->get();
             foreach($peserta_seminar_baru as $key){
                 array_push($detail, [$key->peserta->nama, $key->peserta->email, $key->peserta->no_hp, Carbon::parse($key->created_at)->format('d F Y h:m')]);
             }

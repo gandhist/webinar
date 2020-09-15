@@ -1292,6 +1292,10 @@ class SeminarController extends Controller
 
         $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd','qr'));
         $pdf->setPaper('A4','potrait');
+        // foreach($instansi as $index => $key){
+        //     dump($index . " - " . $key->bu_instansi->logo);
+        // }
+        // dd('');
         return $pdf->stream("Sertifikat_$data->no_srtf.pdf");
         // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
     }
