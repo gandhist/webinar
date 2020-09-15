@@ -55,6 +55,7 @@
 		background-position-y: 55%;
 	    margin-top:1px;
         padding-bottom: 1rem !important;
+		margin-bottom: 0 !important;
 	}
 	.logo {
 			margin-top: -55px;
@@ -74,7 +75,7 @@
 			background-position-y: 1%;
 			margin: 15px;
 			margin-top: 15px;
-			margin-bottom: 1rem !important;
+			margin-bottom: 0 !important;
         }
 		.welcome {
 			margin-top: -25px;
