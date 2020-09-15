@@ -29,6 +29,7 @@ class StatistikSeminarController extends Controller
         $data_user_lama = [0];
         // $total_user_baru = [0];
         $total_user_keseluruhan = [ $user_jam_ini =  User::where('created_at', '<=', Carbon::today() )->count() ];
+        $counter_user = $total_user_keseluruhan[0];
 
         for($i = 0 ; $i < 24 ; $i++){
             $from = Carbon::today()->addHours($i);
@@ -39,15 +40,17 @@ class StatistikSeminarController extends Controller
             $pesertaseminar = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->pluck('id_peserta')->toArray();
             $jumlah_user_lama = Peserta::whereIn('id', $pesertaseminar)->whereNotBetween('created_at', [$from, $to])->count();
 
-            $user_jam_ini =  User::all()->count();
+            // $user_jam_ini =  User::all()->count();
             $user_baru_jam_ini = User::whereBetween('created_at', [$from, $to])->count();
+
+            $counter_user = $counter_user + $user_baru_jam_ini;
 
             array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
             array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
             array_push($data_user_lama, $jumlah_user_lama);
 
             // array_push($total_user_baru, $user_baru_jam_ini);
-            array_push($total_user_keseluruhan, $user_jam_ini + $user_baru_jam_ini);
+            array_push($total_user_keseluruhan, $counter_user);
         }
 
         return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru',
@@ -139,6 +142,9 @@ class StatistikSeminarController extends Controller
             $data_peserta_seminar = [0];
             $data_user_baru = [0];
             $data_user_lama = [0];
+            $total_user_keseluruhan = [  User::where('created_at', '<=', $dari )->count() ];
+
+            $counter_user = $total_user_keseluruhan[0];
 
 
             for($i = 0 ; $i < 24 ; $i++){
@@ -150,11 +156,17 @@ class StatistikSeminarController extends Controller
                 $pesertaseminar = PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$from, $to])->pluck('id_peserta')->toArray();
                 $jumlah_user_lama = Peserta::whereIn('id', $pesertaseminar)->whereNotBetween('created_at', [$from, $to])->count();
 
+
+                // $user_jam_ini =  User::all()->count();
+                $user_baru_jam_ini = User::whereBetween('created_at', [$from, $to])->count();
+                $counter_user = $counter_user + $user_baru_jam_ini;
                 // dump($from);
                 // dump($to);
                 array_push($data_peserta_seminar, $jumlah_pesertaseminar_jam_ini);
                 array_push($data_user_baru, $jumlah_pesertabaru_jam_ini);
                 array_push($data_user_lama, $jumlah_user_lama);
+
+                array_push($total_user_keseluruhan, $counter_user );
             }
             // dd($id_peserta_seminar_baru );
 
@@ -186,6 +198,9 @@ class StatistikSeminarController extends Controller
             $peserta = [];
             $user = [];
             $user_lama = [];
+            $user_total = [];
+
+            $counter_user = User::where('created_at', '<=', $dari )->count();
 
             while(!$dari_temp->gt($sampai)) {
                 //
@@ -195,11 +210,15 @@ class StatistikSeminarController extends Controller
                 $jumlah_user_lama = Peserta::whereIn('id', $pesertaseminar)->whereNotBetween('created_at', [$dari_temp, $sampai_temp])->count();
                 $jumlah_pesertaseminar_hari_ini =  PesertaSeminar::where('id_seminar',$id)->whereBetween('created_at', [$dari_temp, $sampai_temp])->count();
 
+                $user_baru_jam_ini = User::whereBetween('created_at', [$dari_temp, $sampai_temp])->count();
+                $counter_user = $counter_user + $user_baru_jam_ini;
+
                 array_push($data_jumlah,[ $dari_temp->format('d-M-Y') => [ $jumlah_pesertaseminar_hari_ini,  $jumlah_pesertabaru_hari_ini]]);
                 array_push($label,$dari_temp->format('d-M-Y'));
                 array_push($peserta,$jumlah_pesertaseminar_hari_ini);
                 array_push($user,$jumlah_pesertabaru_hari_ini);
                 array_push($user_lama, $jumlah_user_lama);
+                array_push($user_total, $counter_user);
 
                 $sampai_temp->addDay();
                 $dari_temp->addDay();
@@ -214,6 +233,7 @@ class StatistikSeminarController extends Controller
                 'peserta' => $peserta,
                 'user' => $user,
                 'user_lama' => $user_lama,
+                'user_total' => $user_total,
                 'tgl' => [$dari->format('d F Y'),  $sampai->format('d F Y')],
                 'detail' => $detail,
             ]);
@@ -226,6 +246,7 @@ class StatistikSeminarController extends Controller
             'peserta' => $data_peserta_seminar,
             'user' => $data_user_baru,
             'user_lama' => $data_user_lama,
+            'total_user' => $total_user_keseluruhan,
             'tgl' => Carbon::createFromFormat( "d/m/Y" , $request->tgl_awal )->format('d F Y'),
             'detail' => $detail,
         ]);

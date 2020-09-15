@@ -189,10 +189,10 @@
                         <h2>Statistik pendaftaran App PPKB P3SM Online</h2>
                         <p> <b>{{$seminar->nama_seminar}} - {{strip_tags(html_entity_decode($seminar->tema))}}</b> </p>
                     </div>
-                    <div class="col-md-6 chart-container" style="min-height:50vh;">
+                    <div class="col-md-6 chart-container" style="height:50vh;">
                         <canvas id="chart" style="height:50vh; ; width:100%"></canvas>
                     </div>
-                    <div class="col-md-6 chart-container" style="min-height:50vh;">
+                    <div class="col-md-6 chart-container" style="height:50vh;">
                         <canvas id="chart2" style="height:50vh; ; width:100%"></canvas>
                     </div>
                 </div>
@@ -519,6 +519,7 @@
                 // console.log(data['user']);
                 // console.log(data['peserta']);
                 myLineChart.destroy();
+                myLineChart2.destroy();
                 $("#pendaftar").dataTable().fnClearTable();
                 $("#pendaftar>tbody").empty();
                 if(data['type'] === 1){
@@ -527,6 +528,13 @@
                         type: 'line',
                         data: new LineData(data['user_lama'],data['user'], data['peserta'], jam),
                         options: new lineoptions([ "Grafik Pendaftar Kegiatan", data['tgl'] ]),
+                    });
+
+                    var ctx2 = document.getElementById('chart2').getContext('2d');
+                    myLineChart2 = new Chart(ctx2, {
+                        type: 'line',
+                        data: new LineData2( data['total_user'], jam), // total_user_baru
+                        options: new lineoptions2([ "Grafik Pengguna App PPKB P3S Mandiri Online",  data['tgl'] ]),
                     });
 
                     $(function() {
@@ -549,6 +557,13 @@
                         data: new LineData(data['user_lama'], data['user'], data['peserta'], data['label']),
                         options: new lineoptions([ "Grafik Pengguna App PPKB P3S Mandiri", data['tgl'][0]+' - '+data['tgl'][1] ]),
                     });
+                    var ctx2 = document.getElementById('chart2').getContext('2d');
+                    myLineChart2 = new Chart(ctx2, {
+                        type: 'line',
+                        data: new LineData2( data['user_total'], data['label']), // total_user_baru
+                        options: new lineoptions2([ "Grafik Pengguna App PPKB P3S Mandiri Online",  data['tgl'][0]+' - '+data['tgl'][1] ]),
+                    });
+
                     $(function() {
                         $.each(data['detail'], function(i, item) {
                             var $tr = $('<tr>').append(
