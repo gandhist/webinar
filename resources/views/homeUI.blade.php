@@ -55,7 +55,7 @@
 		background-position-y: 55%;
 	    margin-top:1px;
 	}
-	.logo { 
+	.logo {
 			margin-top: -55px;
 	}
 
@@ -85,9 +85,9 @@
 			margin-top: -15px;
 		}
 		img{
-			height: 50px;	
+			height: 50px;
 		}
-		
+
 	}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -118,7 +118,7 @@
 			</div> --}}
 		</div>
 		<div class="welcome">
-			<br>	
+			<br>
 			{{-- <h2>Program Pengembangan Keprofesian Berkelanjutan</h2> --}}
 			{{-- <p>Pusat Pembinaan Pelatihan & Sertifikasi Mandiri</p> --}}
 			{{-- <a href="{{ url('login') }}" id="login" class="btn btn-success">Login</a> --}}
@@ -126,7 +126,7 @@
             {{-- @if(Auth::guest())
             <button href="#" class="btn btn-success btn-border-filled m-2" id="login" >Login</button>
             <a href="{{url('login/google')}}" style="color: white" class="btn btn-primary m-2">
-				<i class="fa fa-google fa-fw"></i> 
+				<i class="fa fa-google fa-fw"></i>
             </a>
             @else
             <div style="height: 60px;"></div>
@@ -153,7 +153,7 @@
 					</div> --}}
 					<button type="submit" class="btn btn-sm btn-success btn-border-filled m-2"><i class="fa fa-sign-in"></i> Login</button>
 					<a href="{{url('login/google')}}" style="color: white" class="btn btn-sm btn-primary m-2">
-						<i class="fa fa-google fa-fw"></i> 
+						<i class="fa fa-google fa-fw"></i>
 						{{-- Login with Google Account --}}
 					</a>
 				{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
@@ -184,7 +184,7 @@
                 <tr role="row">
 					<th style="width:2%;text-align:center;">No</th>
 					<th style="width:17%;text-align:center;">Jenis Kegiatan</th>
-                    <th style="width:14%;text-align:center;">Judul</th>       
+                    <th style="width:14%;text-align:center;">Judul</th>
                     {{-- <th style="width:10%;text-align:center;">Tanggal</th> --}}
 					<th style="width:5%;text-align:center;">Tempat</th>
 					<th style="width:5%;text-align:center;">Biaya</th>
@@ -195,8 +195,8 @@
                 @foreach($data as $key)
                 <tr>
 					<td style="text-align:center;">{{ $loop->iteration }}</td>
-					<td>{{ $key->nama_seminar }} {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td>
-					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>		
+					<td>{{ $key->nama_seminar }} <br> {{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }} {{ isset($key->jam_awal) ? "( ".$key->jam_awal." )" : ''  }}</td>
+					<td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
 					{{-- <td style="text-align:center;">{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : ''  }}</td> --}}
 					<td style="text-align:center;">{{ $key->lokasi_penyelenggara }}</td>
 					<td>@if ($key->is_free == '0') Gratis @else Rp. {{ format_uang($key->biaya)}} @endif</td></td>

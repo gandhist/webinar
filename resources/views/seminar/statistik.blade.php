@@ -163,11 +163,11 @@
             <div class="jumbotron"  style='padding-top:15px; min-height:90vh;'>
                 <div class="btn-group">
                     <span class="form-group">
-                        <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">
+                        <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" autocomplete="off" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">
 
                         <span style="margin: 10px;"> s/d </span>
 
-                        <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir" value="{{ request()->get('tgl_akhir') }}" placeholder="Tanggal Akhir">
+                        <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir" autocomplete="off" value="{{ request()->get('tgl_akhir') }}" placeholder="Tanggal Akhir">
 
                         <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
                             <i class="fa fa-filter"></i> Filter
