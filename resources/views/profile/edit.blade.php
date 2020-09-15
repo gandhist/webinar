@@ -95,9 +95,9 @@
                                         value="{{ $user->peserta->skpk_total }}" readonly>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <th style="width:30%;text-align:left">File KTP</th>
-                                        {{-- <td>:</td> --}}
+                                        <td>:</td>
                                         <td>
                                             @if (isset($user->peserta->ktp))
                                             <a target="_blank" href="{{ $user->peserta->ktp }}" data-toggle="tooltip"
@@ -107,9 +107,9 @@
                                             {{ $errors->first('ktp') ? 'is-invalid' : '' }}>
                                             @endif
                                         </td>
-                                        {{-- <td><input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="ktp" name="ktp"
-                                            {{ $errors->first('ktp') ? 'is-invalid' : '' }}></td> --}}
-                                    </tr>
+                                        <td><input accept=".jpeg,.jpg,.pdf,.png,.gif,.svg" type="file" id="ktp" name="ktp"
+                                            {{ $errors->first('ktp') ? 'is-invalid' : '' }}></td>
+                                    </tr> --}}
                                 </table>
                             </div>
                         </div>
