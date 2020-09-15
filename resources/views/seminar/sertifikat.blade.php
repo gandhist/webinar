@@ -161,9 +161,9 @@
                                 <span style="font-size: 24px;font-weight: bold;">
                                     @foreach ($instansi as $index => $key)
                                         @if(count($instansi) > $index + 1)
-                                        {{ $key->bu_instansi->singkat_bu }} *
+                                        {{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_instansi->singkat_bu)) }} *
                                         @else
-                                        {{ $key->bu_instansi->singkat_bu }}
+                                        {{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_instansi->singkat_bu)) }}
                                         @endif
                                     @endforeach
                                 </span>
@@ -181,7 +181,7 @@
                         @foreach ($ttd as $key)
                         <td colspan="18" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"><br>
-                            <b>{{ $key->bu_ttd->nama }} </b><br>
+                            <b>{{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_ttd->nama)) }} </b><br>
                             {{ $key->jabatan }}
                         </td>
                         @endforeach
