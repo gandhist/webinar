@@ -176,10 +176,13 @@
                             <b style="font-family: DejaVu Sans;" >{{ html_entity_decode(mb_convert_encoding($data->seminar_p->lokasi_penyelenggara, 'HTML-ENTITIES', 'UTF-8') )}}, {{ isset($data->seminar_p) ? \Carbon\Carbon::parse($data->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }} </b>
                         </td>
                     </tr>
+                </table>
+            </div>
+            <div class="body-content" style=" margin-right: 10rem">
+                <table width=590 cellspacing=0 cellpadding=0>
                     <tr>
-                        <td colspan="6">
                         @foreach ($ttd as $key)
-                        <td colspan="18" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
+                        <td colspan="20" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"><br>
                             <b>{{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_ttd->nama)) }} </b><br>
                             {{ $key->jabatan }}
