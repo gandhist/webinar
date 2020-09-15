@@ -18,6 +18,7 @@ class StatistikSeminarController extends Controller
         $id_peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::today() )->pluck('id_peserta');
         // $id_peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereDate('created_at', Carbon::today() )>pluck('id');
 
+        $more = '';
 
         $peserta_seminar_baru = PesertaSeminar::where('id_seminar',$id)->whereDate('created_at', Carbon::today() )->get();
         $peserta_baru = Peserta::whereIn('id', $id_peserta_seminar_baru)->whereDate('created_at', Carbon::today() )->get();
@@ -53,9 +54,14 @@ class StatistikSeminarController extends Controller
             array_push($total_user_keseluruhan, $counter_user);
         }
 
+        if(Carbon::parse($seminar->tgl_akhir) >= Carbon::today()){
+            $more = '';
+        } else {
+            $more = Carbon::parse($seminar->tgl_akhir)->format('d/m/Y');
+        }
         return view('seminar.statistik')->with(compact('seminar','peserta_seminar_baru',
             'peserta_baru','data_peserta_seminar','data_user_lama','data_user_baru','id',
-            'total_user_keseluruhan', //'total_user_baru',
+            'total_user_keseluruhan', 'more'//'total_user_baru',
         ));
     }
 

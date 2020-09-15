@@ -243,10 +243,10 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg==" crossorigin="anonymous"></script>
 <script>
+    var more = '{{$more}}'
     var peserta_baru = @json($data_peserta_seminar);
     var user_baru = @json($data_user_baru);
     var user_lama = @json($data_user_lama);
-
     var total_user_keseluruhan = @json($total_user_keseluruhan);
     var jam = [
             "00.00",
@@ -444,18 +444,31 @@
 
     } );
 
-    $("#tgl_awal").datepicker({
-        format: 'dd/mm/yyyy',
-        startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
-        endDate: '+1d',
-        datesDisabled: '+1d',
-    });
-    $("#tgl_akhir").datepicker({
-        format: 'dd/mm/yyyy',
-        startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
-        endDate: '+1d',
-        datesDisabled: '+1d',
-    });
+    if(more){
+        $("#tgl_awal").datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
+            endDate: more,
+        });
+        $("#tgl_akhir").datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
+            endDate: more,
+        });
+    } else {
+        $("#tgl_awal").datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
+            endDate: '+1d',
+            datesDisabled: '+1d',
+        });
+        $("#tgl_akhir").datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '{{\Carbon\Carbon::parse($seminar->created_at)->format("d/m/Y")}}',
+            endDate: '+1d',
+            datesDisabled: '+1d',
+        });
+    }
 
 
     // Cache Warna Filter
