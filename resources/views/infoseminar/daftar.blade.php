@@ -97,7 +97,7 @@
                                         <div class="form-group">
                                             <label class="control-label" for="inputSuccess"> Narasumber</label>
                                             <input type="text" class="form-control" id="inputSuccess" readonly
-                                            value="@foreach($data->seminar_r as $index => $key)@if(count($data->seminar_r) > $index + 1){{ $key->peserta_r->nama }},@else{{ $key->peserta_r->nama }}@endif @endforeach">
+                                            value="@foreach($data->narasumber as $index => $key)@if(count($data->seminar_r) > $index + 1){{ $key->peserta_r->nama }},@else{{ $key->peserta_r->nama }}@endif @endforeach">
                                         </div>
                                     </div>
                                 </div>

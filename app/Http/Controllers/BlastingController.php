@@ -43,7 +43,8 @@ class BlastingController extends Controller
             if(isset($seminar->slug)) {
                 $blast_target_id = $link[0];
                 $magic_link = $magic_link;
-                $data = $seminar;
+                $data = SeminarModel::find($link[1]);
+                // dd($data->narasumber);
                 // return redirect('infoseminar/daftar/'.$seminar->slug)->with('blast_target_id',$link[0])->with('magic_link',$magic_link)->with('data', $seminar);
                 // return redirect('infoseminar/daftar/'.$seminar->slug)->with(compact('blast_target_id','magic_link','data'));
 
@@ -55,9 +56,10 @@ class BlastingController extends Controller
                 // return view('')->with(compact('blast_target_id','magic_link','data'));
             } else {
                 if($seminar->is_mulai == 2){
-                    return redirect('infoseminar/daftar/'.$link[1])->with('blast_target_id',$link[0])->with('magic_link',$magic_link)->with('data', $seminar)->with('udahan',"Seminar telah selesai, silahkan mendaftar seminar lain");
+
+                    return redirect('infoseminar/daftar/'.$link[1])->with('blast_target_id',$link[0])->with('magic_link',$magic_link)->with('data', $data)->with('udahan',"Seminar telah selesai, silahkan mendaftar seminar lain");
                 } else {
-                    return redirect('infoseminar/daftar/'.$link[1])->with('blast_target_id',$link[0])->with('magic_link',$magic_link)->with('data', $seminar);
+                    return redirect('infoseminar/daftar/'.$link[1])->with('blast_target_id',$link[0])->with('magic_link',$magic_link)->with('data', $data);
                 }
             }
 

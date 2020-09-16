@@ -48,9 +48,10 @@ class InfoSeminarController extends Controller
 
     public function daftar(Request $request, $id)
     {
-        $data = Seminar::find($id);
+        $data = SeminarModel::where('id',$id)->first();
         $peserta = Peserta::where('user_id',Auth::id())->first();
         $bank = BankModel::all();
+
 
         // dd($cek);
 
