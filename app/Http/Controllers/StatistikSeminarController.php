@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PesertaSeminar;
 use App\SeminarModel;
 use App\Peserta;
+use App\LogBlasting;
 use App\User;
 use Carbon\Carbon;
 use Validator;
@@ -256,5 +257,10 @@ class StatistikSeminarController extends Controller
             'tgl' => Carbon::createFromFormat( "d/m/Y" , $request->tgl_awal )->format('d F Y'),
             'detail' => $detail,
         ]);
+    }
+
+    public function treeview() {
+        $blasting = LogBlasting::all();
+        return view('statistik.index')->with(compact('blasting'));
     }
 }

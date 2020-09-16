@@ -8,4 +8,8 @@ class LogBlasting extends Model
 {
     //
     protected $table = "srtf_log_blasting";
+
+    public function seminar() {
+        return $this->hasOne('App\Seminar','id','id_seminar');
+    }
 }

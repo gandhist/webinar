@@ -23,6 +23,7 @@ Route::get('tesWA2', 'FrontendController@kirimWA2');
 Route::get('tesWA3', 'FrontendController@kirimWA3');
 
 Route::get('blast/{id}', 'BlastingController@click');
+Route::get('statistik','StatistikSeminarController@treeview');
 
 Route::post('reset/update', 'FrontendController@update');
 Route::post('/autocomplete/fetch', 'FrontendController@fetch')->name('autocomplete.fetch');
