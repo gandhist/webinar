@@ -153,22 +153,22 @@ function DataDetail(label, target, dikirim, diklik, didaftar) {
     this.datasets = [
         {
           label: "Target Blasting",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          backgroundColor: "blueviolet",
           data: target,
         },
         {
           label: "Blasting Dikirim",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          backgroundColor: "springgreen",
           data: dikirim,
         },
         {
           label: "Link Blasting Di-klik",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          backgroundColor: "brown",
           data: diklik,
         },
         {
           label: "Pendaftar Melalui Blasting",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          backgroundColor: "chrimson",
           data: didaftar,
         },
     ]
