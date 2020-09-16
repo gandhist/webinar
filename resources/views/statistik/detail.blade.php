@@ -195,7 +195,7 @@ $(document).ready(function () {
     chartDetail = new Chart(ctx2, {
         type: 'bar',
         data: new DataDetail(['Detail Blasting'],  [blasting_target], [blasting_dikirim] , [blasting_diklik.toString()],  [blasting_didaftar.toString()]),
-        options: new ChartOption( "Grafik Pendaftar Kegiatan" ),
+        options: new ChartOption( "Grafik Detail Blasting" ),
     });
     // var ctx = document.getElementById('info').getContext('2d');
     // chartInfo = new Chart(ctx, {
