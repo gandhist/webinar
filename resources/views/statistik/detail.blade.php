@@ -5,6 +5,7 @@
     .chart-container {
         /* border: 3px solid black; */
         margin-top : 3rem;
+        margin-bottom: 6rem;
         box-shadow: 5px 5px 25px;
     }
 </style>
@@ -41,7 +42,14 @@
                     <canvas id="blasting" style="height:50vh; ; width:100%"></canvas>
                 </div>
                 <div class="col-md-12 chart-container" style="height:50vh;">
-                    <canvas id="detail" style="height:50vh; ; width:100%"></canvas>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <canvas id="detail" style="height:50vh; ; width:100%"></canvas>
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+
                 </div>
                 {{-- <div class="col-md-12 chart-container" style="height:50vh;">
                     <canvas id="info" style="height:50vh; ; width:100%"></canvas>
@@ -71,7 +79,16 @@ var user = @json($user);
 var detail_blasting = @json($detail_blasting);
 var dikirim = @json($dikirim);
 
-console.log(dikirim);
+var blasting_target = @json($blasting->jumlah_target);
+var blasting_dikirim = @json($blasting->jumlah_kirim);
+var blasting_diklik = @json($blasting_diklik);
+var blasting_didaftar = @json($blasting_didaftar);
+
+// console.log((blasting_target));
+// console.log(blasting_dikirim);
+// console.log((blasting_diklik));
+// console.log(blasting_didaftar);
+
 
 function ChartOption(title) {
     this.scales = {
@@ -92,6 +109,7 @@ function ChartOption(title) {
             }
     this.title = {
         display: true,
+        fontSize: 20,
         text: title
     }
 };
@@ -110,8 +128,10 @@ function DataBlasting(label, blasting, pendaftar, user, blasting_dikirim) {
         }, {
           label: "User",
           type: "line",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          borderColor: "rgba(0,0,0,1)",
+          backgroundColor: "rgba(0,0,0,1)",
           data: user,
+          fill: false
         }, {
           label: "Target Blasting",
           type: "bar",
@@ -128,12 +148,31 @@ function DataBlasting(label, blasting, pendaftar, user, blasting_dikirim) {
     ]
 }
 
-// function DataDetail(label, blasting, pendaftar) {
-//     this.labels = labels,
-//     this.datasets = [
-//         {}
-//     ]
-// }
+function DataDetail(label, target, dikirim, diklik, didaftar) {
+    this.labels = label,
+    this.datasets = [
+        {
+          label: "Target Blasting",
+          backgroundColor: "rgba(0,0,0,0.6)",
+          data: target,
+        },
+        {
+          label: "Blasting Dikirim",
+          backgroundColor: "rgba(0,0,0,0.6)",
+          data: dikirim,
+        },
+        {
+          label: "Link Blasting Di-klik",
+          backgroundColor: "rgba(0,0,0,0.6)",
+          data: diklik,
+        },
+        {
+          label: "Pendaftar Melalui Blasting",
+          backgroundColor: "rgba(0,0,0,0.6)",
+          data: didaftar,
+        },
+    ]
+}
 
 
 // function DataBlasting(label, blasting, pendaftar) {
@@ -150,14 +189,14 @@ $(document).ready(function () {
     chartBlasting = new Chart(ctx, {
         type: 'bar',
         data: new DataBlasting(label, detail_blasting, peserta, user, dikirim),
-        options: new ChartOption( "Grafik Blasting Kegiatan" ),
+        options: new ChartOption( "Grafik Aktivitas Kegiatan" ),
     });
-    // var ctx2 = document.getElementById('detail').getContext('2d');
-    // chartDetail = new Chart(ctx2, {
-    //     type: 'line',
-    //     data: new DataDetail(user_lama,user_baru, peserta_baru, jam),
-    //     options: new ChartOption( "Grafik Pendaftar Kegiatan" ),
-    // });
+    var ctx2 = document.getElementById('detail').getContext('2d');
+    chartDetail = new Chart(ctx2, {
+        type: 'bar',
+        data: new DataDetail(['Detail Blasting'],  [blasting_target], [blasting_dikirim] , [blasting_diklik.toString()],  [blasting_didaftar.toString()]),
+        options: new ChartOption( "Grafik Pendaftar Kegiatan" ),
+    });
     // var ctx = document.getElementById('info').getContext('2d');
     // chartInfo = new Chart(ctx, {
     //     type: 'line',
