@@ -57,6 +57,7 @@ class InfoSeminarController extends Controller
 
         // if(isset($peserta)){
         //     //Set Your server key
+
         //     \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
 
         //     // Uncomment for production environment
