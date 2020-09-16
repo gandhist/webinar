@@ -86,13 +86,13 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
-                                    <th><span class="indent">No</th>
-                                    <th><span class="indent">Jenis Kegiatan</th>
-                                    <th><span class="indent">Judul</th>
-                                    <th><span class="indent">Tanggal</th>
-                                    <th><span class="indent">Jml_Daftar</th>
-                                    <th><span class="indent">Jml_Bayar</th>
+                                    <th><span><i class="fa fa-check-square-o"></i></span></th>
+                                    <th><span>No</th>
+                                    <th><span>Jenis Kegiatan</th>
+                                    <th><span>Judul</th>
+                                    <th><span>Tanggal</th>
+                                    <th><span>Jml_Daftar</th>
+                                    <th><span>Jml_Bayar</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -104,7 +104,7 @@
                                             id="selection[]" name="selection[]"></td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>{{ $key->nama_seminar }}</td>
-                                    <td>{{ strip_tags(html_entity_decode($key->tema)) }}</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ strip_tags(html_entity_decode($key->tema)) }}">{{ str_limit(strip_tags(html_entity_decode($key->tema)), 50) }}</td>
                                     <td style='text-align:center'>{{ isset($key->tgl_awal) ? \Carbon\Carbon::parse($key->tgl_awal)->isoFormat("DD MMMM YYYY") : '' }}</td>
                                     <td style='text-align:center'>{{ $key->seminar_r->count() }} Peserta</td>
                                     <td style='text-align:center'>@if ($key->is_free == '0') Gratis @else {{$key->seminar_paid->count()}} Peserta @endif</td>
