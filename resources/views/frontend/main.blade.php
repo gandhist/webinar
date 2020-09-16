@@ -179,6 +179,7 @@
       <script>
         FontAwesomeConfig = { autoReplaceSvg: false }
       </script>
+  <link rel="shortcut icon" href="{{url('favicon.png')}}">
 </head>
 <body>
     @include('frontend.navigation')
