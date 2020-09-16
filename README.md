@@ -8,21 +8,12 @@
         -nge-link antara foto diri di personal sama peserta
         
     *Rafi:
-    - EXCEL RESPON DAN KETERANGAN
     - GANTI MAIL VIEW EMAIL
-    - (WA NUNGGU QONTAK)
     - Re-code di parameter rata-rata & persen di feedback
 
         -Fungsi hapus
         -Handle kalau email udah ada (import)
         -Integrasi Midtrans
-        buat absensi
-        pennilaian :
-        1. inisiator
-        2. penyelenggara
-        3. narasumber
-        4. moderator
-        kesan dan pesan untuk semua
         
         tambah field/column 'url' di srtf_seminar (varchar)
 
