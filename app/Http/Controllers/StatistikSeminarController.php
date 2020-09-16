@@ -7,6 +7,7 @@ use App\PesertaSeminar;
 use App\SeminarModel;
 use App\Peserta;
 use App\LogBlasting;
+use App\ReportBlasting;
 use App\User;
 use Carbon\Carbon;
 use Validator;
@@ -260,7 +261,58 @@ class StatistikSeminarController extends Controller
     }
 
     public function treeview() {
-        $blasting = LogBlasting::all();
+        $blasting = LogBlasting::orderByDesc('created_at')->get();
         return view('statistik.index')->with(compact('blasting'));
+    }
+    public function detail($id) {
+        $blasting = LogBlasting::where('id', $id)->first();
+        $detail = ReportBlasting::where('id_blasting', $id)->get();
+        $seminar = SeminarModel::where('id', $blasting->id_seminar)->first();
+        $tanggal_blasting = Carbon::parse($blasting->created_at);
+
+        $is_mulai = False;
+
+        if(Carbon::today() > Carbon::parse($seminar->tgl_awal) ){
+            $is_mulai = True;
+        }
+
+        $dari_temp = Carbon::parse($seminar->created_at)->startOfDay();
+        $dari =   Carbon::parse($seminar->created_at)->startOfDay();
+        $sampai_temp = Carbon::parse($seminar->created_at)->endOfDay();
+        if($is_mulai){
+            $sampai = Carbon::parse($seminar->tgl_awal)->endOfDay();
+        } else {
+            $sampai = Carbon::today()->endOfDay();
+        }
+
+        $label = [];
+        $peserta = [];
+        $user = [];
+        $detail_blasting = [];
+        $dikirim = [];
+        while(!$dari_temp->gt($sampai)) {
+
+            $pesertaseminar = PesertaSeminar::where('id_seminar',$seminar->id)->where('created_at', '<=' ,$sampai_temp)->count();
+            $usertotal = User::where('created_at', '<=', $sampai_temp)->count();
+
+            array_push($label,$dari_temp->format('d-F-Y'));
+            array_push($peserta,$pesertaseminar);
+            array_push($user,$usertotal);
+
+            if($tanggal_blasting->startOfDay() == $dari_temp){
+                // dump(cuy);
+                array_push($detail_blasting, $blasting->jumlah_target);// [$blasting->target, $blasting->jumlah_kirim, $blasting->kirim_ulang]);
+                array_push($dikirim, (int)$blasting->jumlah_kirim);
+            } else {
+                array_push($detail_blasting, 0);
+                array_push($dikirim, 0);
+            }
+
+            $sampai_temp->addDay();
+            $dari_temp->addDay();
+        }
+
+        $report = ReportBlasting::where('id_blasting', $id)->first();
+        return view('statistik.detail')->with(compact('blasting', 'detail', 'seminar', 'report', 'label', 'user', 'peserta', 'detail_blasting', 'dikirim'));
     }
 }

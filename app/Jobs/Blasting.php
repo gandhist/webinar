@@ -210,12 +210,16 @@ class Blasting implements ShouldQueue
                 $report_blasting = new ReportBlasting;
                 $report_blasting->id_target = $this->detail['target']['id'];
                 $report_blasting->id_seminar = $this->detail['seminar']['id'];
-                $report_blasting->is_wa_sent = 1;           // Kondisi kalo sukses
                 $report_blasting->magic_link = $this->detail['magic'];
                 $report_blasting->created_at = \Carbon\Carbon::now();
                 $report_blasting->save();
+            }
+
+            if($pesan == 'success'){
+                $report_blasting->is_wa_sent = 1;           // Kondisi kalo sukses
+                $report_blasting->save();
             } else {
-                $report_blasting->is_wa_sent = 1;       // Kondisi kalo sukses
+                $report_blasting->is_wa_sent = 0;           // Kondisi kalo sukses
                 $report_blasting->save();
             }
         }

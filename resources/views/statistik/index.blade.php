@@ -19,38 +19,42 @@
 </section>
 
 <!-- Main content -->
-<section class="content">
+<section class="content" style="min-height: 100vh; padding-left: 0; padding-right :0">
     <!-- Default box -->
-    <div class="box box-content">
+    <div class="box box-content" style="min-height:90vh">
+        <div class="container-fluid" style="min-height:90vh">
 
-        <div class="row" style="margin-top: 1rem">
-            <div class="col-md-12" style="text-align: center">
-                <h2>Tabel Blasting Kegiatan PPKB P3S Mandiri</h2>
+            <div class="row" style="margin-top: 1rem">
+                <div class="col-md-12" style="text-align: center">
+                    <h2>Tabel Blasting Kegiatan PPKB P3S Mandiri</h2>
+                </div>
+                <div class="col-md-12">
+                    <table id="blasting" class="cell-border" style="width:100%; background-color: #BCBCBC; border: 1px solid black;">
+                        <thead>
+                            <th>No</th>
+                            <th>Nama Kegiatan</th>
+                            <th>Waktu Blasting</th>
+                            <th>Jumlah Target</th>
+                            <th>Jumlah Dikirim</th>
+                            <th>Jumlah Kirim Ulang</th>
+                        </thead>
+                        <tbody>
+                            @foreach($blasting as $key)
+                                <tr>
+                                    <td style='text-align:center;'>{{ $loop->iteration}}</td>
+                                    <td><a href="{{ url('statistik', $key->id) }}">{{$key->seminar->nama_seminar . " - " . \Carbon\Carbon::parse($key->seminar->tgl_awal)->format('d F Y')}}</a></td>
+                                    <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y H:i')}}</td>
+                                    <td>{{$key->jumlah_target}}</td>
+                                    <td>{{$key->jumlah_kirim}}</td>
+                                    <td>{{$key->jumlah_kirim_ulang}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-12">
-                <table id="pendaftar" class="cell-border" style="width:100%; background-color: #BCBCBC; border: 1px solid black;">
-                    <thead>
-                        <th>No</th>
-                        <th>Nama Kegiatan</th>
-                        <th>Waktu Blasting</th>
-                        <th>Jumlah Target</th>
-                        <th>Jumlah Dikirim</th>
-                    </thead>
-                    <tbody>
-                        @foreach($blasting as $key)
-                            <tr>
-                                <td style='text-align:center;'>{{ $loop->iteration}}</td>
-                                <td>{{$key->seminar->nama_seminar . " - " . \Carbon\Carbon::parse($key->seminar->tgl_awal)->format('d F Y')}}</td>
-                                <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y H:i')}}</td>
-                                <td>{{$key->jumlah_target}}</td>
-                                <td>{{$key->jumlah_kirim}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+
         </div>
-
     </div> {{-- Box-Content --}}
 </section>
 
@@ -59,14 +63,15 @@
 @endsection
 
 @push('script')
-<script type="text/javascript">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script> --}}
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
+<script type="text/javascript">
 $(document).ready(function () {
     //
+    $("#blasting").DataTable();
 });
 </script>
 @endpush

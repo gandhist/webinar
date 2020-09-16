@@ -257,7 +257,6 @@
     function LineData(user_lama, user_baru, peserta_baru, labels) {
         this.labels = labels,
         this.datasets = [
-
             {
                 label: "Pendaftar Dengan Akun",
                 fill: false,

@@ -1754,16 +1754,14 @@ class SeminarController extends Controller
             }
 
             if( !(isset($peserta_seminar)) ){
-                dispatch(new \App\Jobs\Blasting($detail, $link));
                 if($key->is_email_sent != 1 && $key->is_wa_sent != 1){
                     $counter_kirim++;
-                }
-                if($key->is_email_sent != 1 && $key->is_wa_sent = 1){
+                } else if($key->is_email_sent != 1 && $key->is_wa_sent = 1){
+                    $counter_kirim_ulang++;
+                } else if($key->is_email_sent = 1 && $key->is_wa_sent != 1){
                     $counter_kirim_ulang++;
                 }
-                if($key->is_email_sent = 1 && $key->is_wa_sent != 1){
-                    $counter_kirim_ulang++;
-                }
+                dispatch(new \App\Jobs\Blasting($detail, $link));
             }
 
             $counter_target++;
