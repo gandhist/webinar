@@ -314,8 +314,9 @@ class StatistikSeminarController extends Controller
 
         $report = ReportBlasting::where('id_blasting', $id)->get();
         $blasting_diklik = ReportBlasting::where('id_blasting', $id)->whereNotNull('first_click')->count();
+        $blasting_diklik2 = ReportBlasting::where('id_blasting', $id)->whereColumn('first_click','!=','last_click')->count();
         $blasting_didaftar = ReportBlasting::where('id_blasting', $id)->whereNotNull('is_daftar')->count();
-        return view('statistik.detail')->with(compact('blasting', 'detail', 'seminar', 'blasting_diklik',
+        return view('statistik.detail')->with(compact('blasting', 'detail', 'seminar', 'blasting_diklik','blasting_diklik2',
         'blasting_didaftar','report', 'label', 'user', 'peserta', 'detail_blasting', 'dikirim'));
     }
 }

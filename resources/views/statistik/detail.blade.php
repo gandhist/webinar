@@ -8,6 +8,34 @@
         margin-bottom: 6rem;
         box-shadow: 5px 5px 25px;
     }
+    .card {
+        height: 200px;
+        width: 200px;
+        margin: 2rem auto;
+        /* background-color: black; */
+        border: 1 solid black;
+        border-radius: 50%;
+        box-shadow: black 1rem 1rem 2.5rem;
+        font-size: 25px;
+        text-align: center;
+        padding: 1rem 3.5rem;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-content: center;
+        background-color: darkgray;    }
+    .card>span{
+        display: inline-block;
+        font-weight:600;
+        height: 75px;
+        margin-top: -2rem
+    }
+    .card>div{
+        /* margin-top: -1rem; */
+        font-weight: bold;
+        font-size: 40px;
+        border: 1px solid black
+    }
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
@@ -44,9 +72,19 @@
                 <div class="col-md-12 chart-container" style="height:50vh;">
                     <div class="row">
                         <div class="col-md-6">
-                            <canvas id="detail" style="height:50vh; ; width:100%"></canvas>
+                            <canvas id="detail" style="height:50vh ; width:100%"></canvas>
                         </div>
                         <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card card-shadow"><span>Blasting Dikirim:</span><div>{{$blasting->jumlah_kirim}}</div></div>
+                                    <div class="card card-shadow"><span>Link Diklik:</span><div>{{$blasting_diklik}}</div></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card card-shadow"><span>Klik Lebih dari Sekali:</span><div>{{$blasting_diklik2}}</div></div>
+                                    <div class="card card-shadow"><span>Pendaftar dari Link:</span><div>{{$blasting_didaftar}}</div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -82,6 +120,7 @@ var dikirim = @json($dikirim);
 var blasting_target = @json($blasting->jumlah_target);
 var blasting_dikirim = @json($blasting->jumlah_kirim);
 var blasting_diklik = @json($blasting_diklik);
+var blasting_diklik2 = @json($blasting_diklik2);
 var blasting_didaftar = @json($blasting_didaftar);
 
 // console.log((blasting_target));
@@ -148,7 +187,7 @@ function DataBlasting(label, blasting, pendaftar, user, blasting_dikirim) {
     ]
 }
 
-function DataDetail(label, target, dikirim, diklik, didaftar) {
+function DataDetail(label, target, dikirim, diklik, diklik2, didaftar) {
     this.labels = label,
     this.datasets = [
         {
@@ -167,7 +206,12 @@ function DataDetail(label, target, dikirim, diklik, didaftar) {
           data: diklik,
         },
         {
-          label: "Pendaftar Melalui Blasting",
+          label: "Klik Lebih dari Sekali",
+          backgroundColor: "orange",
+          data: diklik2,
+        },
+        {
+          label: "Pendaftar dari Link",
           backgroundColor: "chrimson",
           data: didaftar,
         },
@@ -194,7 +238,7 @@ $(document).ready(function () {
     var ctx2 = document.getElementById('detail').getContext('2d');
     chartDetail = new Chart(ctx2, {
         type: 'bar',
-        data: new DataDetail(['Detail Blasting'],  [blasting_target], [blasting_dikirim] , [blasting_diklik.toString()],  [blasting_didaftar.toString()]),
+        data: new DataDetail(['Detail Blasting'],  [blasting_target], [blasting_dikirim] , [blasting_diklik.toString()],[blasting_diklik2.toString()],  [blasting_didaftar.toString()]),
         options: new ChartOption( "Grafik Detail Blasting" ),
     });
     // var ctx = document.getElementById('info').getContext('2d');
