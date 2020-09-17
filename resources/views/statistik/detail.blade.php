@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12" style="margin-top: 2em">
                             <canvas id="blasting" style="height:50vh; ; width:100%"></canvas>
                         </div>
                     </div>
