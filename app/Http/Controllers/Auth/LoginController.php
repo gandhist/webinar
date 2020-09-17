@@ -82,7 +82,7 @@ class LoginController extends Controller
 
                 return $this->sendFailedLoginResponse($request);
 
-            } 
+            }
             else if ($user->role_id == 5){
                 $data = User::find($user->id);
                 $data->is_login = 1;
@@ -139,7 +139,7 @@ class LoginController extends Controller
             return redirect('infoseminar');
         }
         if (Auth::user()->role_id == 1){
-            return redirect('/');
+            return redirect('/dashboard');
         }
         $user = Auth::user();
         $user->last_login = date("Y-m-d H:i:s");
