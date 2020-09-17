@@ -316,7 +316,11 @@ class StatistikSeminarController extends Controller
         $blasting_diklik = ReportBlasting::where('id_blasting', $id)->whereNotNull('first_click')->count();
         $blasting_diklik2 = ReportBlasting::where('id_blasting', $id)->whereColumn('first_click','!=','last_click')->count();
         $blasting_didaftar = ReportBlasting::where('id_blasting', $id)->whereNotNull('is_daftar')->count();
+
+        $user_total = User::all()->count();
+        $peserta_total = PesertaSeminar::where('id_seminar',$seminar->id)->count();
+        $peserta_hari_ini = PesertaSeminar::where('id_seminar',$seminar->id)->whereDate('created_at', Carbon::today()->format('Y-m-d'))->count();
         return view('statistik.detail')->with(compact('blasting', 'detail', 'seminar', 'blasting_diklik','blasting_diklik2',
-        'blasting_didaftar','report', 'label', 'user', 'peserta', 'detail_blasting', 'dikirim'));
+        'blasting_didaftar','report', 'label', 'user', 'peserta', 'detail_blasting', 'dikirim', 'user_total', 'peserta_hari_ini', 'peserta_total'));
     }
 }

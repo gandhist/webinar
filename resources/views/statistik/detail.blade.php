@@ -36,6 +36,11 @@
         font-size: 40px;
         border: 1px solid black
     }
+    .d-flex-center {
+        display: flex;
+        justify-content: space-between;
+
+    }
 </style>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
@@ -63,11 +68,37 @@
 
             <div class="row" style="padding: 4rem 2rem">
                 <div class="col-md-12" style="text-align: center; margin-top: -3rem">
-                    <h2>Statistik Blasting App PPKB P3SM Online</h2>
+                    <h2>Statistik Blasting App PPKB P<sub>3</sub>SM Online</h2>
                     <p> <b>{{$seminar->nama_seminar}} - {{strip_tags(html_entity_decode($seminar->tema))}}</b> </p>
                 </div>
-                <div class="col-md-12 chart-container" style="height:50vh;">
-                    <canvas id="blasting" style="height:50vh; ; width:100%"></canvas>
+                <div class="col-md-12 chart-container" style="min-height:50vh;">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row d-flex-center">
+                                <div class="col-md-3">
+                                    <div class="card card-shadow">
+                                        <span>Peserta Kegiatan</span>
+                                        <div>{{$peserta_total}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-shadow">
+                                        <span>Pengguna App PPKB</span>
+                                        <div>{{$user_total}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card card-shadow">
+                                        <span>Pendaftar Hari Ini</span>
+                                        <div>{{$peserta_hari_ini}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <canvas id="blasting" style="height:50vh; ; width:100%"></canvas>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12 chart-container" style="height:50vh;">
                     <div class="row">
