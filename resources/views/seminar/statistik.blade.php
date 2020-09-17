@@ -186,7 +186,7 @@
 
                 <div class="row">
                     <div class="col-md-12" style="text-align: center; margin-top:2rem">
-                        <h2>Statistik pendaftaran App PPKB P3SM Online</h2>
+                        <h2>Statistik pendaftaran App PPKB P<sub>3</sub>SM Online</h2>
                         <p> <b>{{$seminar->nama_seminar}} - {{strip_tags(html_entity_decode($seminar->tema))}}</b> </p>
                     </div>
                     <div class="col-md-6 chart-container" style="height:50vh;">

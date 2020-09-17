@@ -26,7 +26,7 @@
 
             <div class="row" style="margin-top: 1rem">
                 <div class="col-md-12" style="text-align: center">
-                    <h2>Tabel Blasting Kegiatan PPKB P3S Mandiri</h2>
+                    <h2>Tabel Blasting Kegiatan PPKB P<sub>3</sub>S Mandiri</h2>
                 </div>
                 <div class="col-md-12">
                     <table id="blasting" class="cell-border" style="width:100%; background-color: #BCBCBC; border: 1px solid black;">

@@ -85,7 +85,7 @@
               </div>
             @endif
 
-            <h2 style="margin-top: -15px;">Registrasi Akun App PPKB Online P3S Mandiri</h2>
+            <h2 style="margin-top: -15px;">Registrasi Akun App PPKB Online P<sub>3</sub>S Mandiri</h2>
             <hr>
         </div>
         <div class="col-lg-2">
