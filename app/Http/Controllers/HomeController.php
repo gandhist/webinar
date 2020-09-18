@@ -23,7 +23,7 @@ class HomeController extends Controller
             $user_login = User::whereNotNull('is_login')->count();
             $user_hari_ini = User::whereDate('created_at', Carbon::today()->format('Y-m-d'))->count();
             $peserta_hari_ini = PesertaSeminar::whereDate('created_at', Carbon::today()->format('Y-m-d'))->count();
-            $seminar = SeminarModel::where('status','=','published')->count();
+            $seminar = SeminarModel::where('is_mulai','=','2')->count();
 
             return view('home')->with(compact('total_user', 'total_peserta', 'user_login', 'user_hari_ini', 'peserta_hari_ini', 'seminar'));
         }
