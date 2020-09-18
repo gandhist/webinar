@@ -2,6 +2,99 @@
 
 @section('content')
 <style>
+	#content {
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-bottom: 0px;
+		margin-bottom: 0 !important;
+	}
+    #container-yt {
+        background-color:  #B7D0ED;
+        padding-top:0.5rem !important;
+        /* padding-right: 0.5rem; */
+        display: block;
+        width: 18%;
+        height: auto;
+        position: fixed;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        right: 1.5rem;
+        bottom: 18%;
+		box-shadow: 0px 0px 10px 1px black;
+    }
+
+	.float{
+		position:fixed;
+		width:60px;
+		height:60px;
+        right: 1.5rem;
+        bottom: 18%;
+		background-color:#0C9;
+		color:#FFF;
+		border-radius:50px;
+		text-align:center;
+		box-shadow: 2px 2px 3px #999;
+		display: none;
+	}
+	.my-float{
+		display: inline-block;
+		margin-top: 0.9rem !important;
+		margin-left: 0.3rem !important;
+	}
+
+
+	@media only screen and (max-width: 600px) {
+		#container-yt {
+			width: 70%;
+			right: 1.5rem;
+			bottom: 23%;
+			box-shadow: -5px -5px 10px 3px black;
+			display: none;
+		}
+		#close {
+			margin-right: -1rem !important;
+		}
+		.float {
+			bottom: 22%;
+			width:50px;
+			height:50px;
+			display: block;
+		}
+		.my-float{
+			margin-top: 0.6rem !important;
+		}
+	}
+	@media only screen and (min-width: 600px) and (max-width: 1024px)  {
+		#container-yt {
+			width: 50%;
+			right: 1.5rem;
+			bottom: 15%;
+			box-shadow: 0px 0px 10px 1px black;
+			display: none;
+		}
+		#close {
+			margin-right: -4rem !important;
+		}
+		.float {
+			bottom: 15%;
+			display: block;
+		}
+	}
+    #yt {
+        width: 100%;
+        height:auto;
+		margin-bottom: -0.5rem;
+    }
+	#toolbox {
+		display: flex;
+		justify-content: space-around;
+		margin-right: 1rem;
+		margin-bottom: 0.5rem;
+	}
+	#close {
+		margin-right: -2.5rem;
+	}
+
 	.button-flash {
 		background-color: #004A7F;
 		-webkit-border-radius: 10px;
@@ -215,7 +308,21 @@
                 @endforeach
             </tbody>
         </table>
-	</div>
+
+        <div id="container-yt">
+            <div id="toolbox">
+				<span id="text">Petunjuk Penggunaan</span>
+				<a href="#" id="close">
+					<span>
+						<i class="fa fa-times"></i>
+					</span>
+				</a>
+			</div>
+            <iframe id="yt" width=720 src="https://www.youtube.com/embed/L9DTK-thAyI?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen autoplay></iframe>
+		</div>
+		<a class="float">
+			<i class="fa fa-2x fa-play my-float"></i>
+		</a>
 </div>
 
 @endsection
@@ -235,6 +342,16 @@
 	// $('.login').hide();
 	$('.welcome').fadeIn('slow');
 	// $('.seminar').hide();
+	$('#close').on('click', function(){
+		$('#container-yt').fadeOut(300);
+		$('.float').fadeIn(500);
+	});
+
+	$('.float').on('click', function(){
+		$('.float').fadeOut(300);
+		$('#container-yt').fadeIn(500);
+	});
+
 	$(function() {
 		$('#login').on('click', function(){
 			$('.welcome').fadeOut('slow', function(){
@@ -248,6 +365,7 @@
 	$(document).ready(function() {
 		$('#example').DataTable();
 	} );
+	// $('#container-yt').hide();
 	$('#username').keyup(function(){
         var query = $(this).val();
         if(query != '') {
