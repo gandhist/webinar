@@ -2,6 +2,113 @@
 
 @section('content')
 <style>
+
+.wrapper.kiri {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+ul.kiri {
+    list-style: none;
+}
+
+ul.kiri li.kiri  {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    background: #e59500;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+ul.kiri li.kiri .fa.kiri {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #fff;
+}
+
+ul.kiri li.facebook.kiri {
+    background: #3b5998;
+}
+
+ul.kiri li.twitter.kiri {
+    background: #00aced;
+}
+
+ul.kiri li.instagram.kiri {
+    background: #bc2a8d;
+}
+
+ul.kiri li.google.kiri {
+    background: #dd4b39;
+}
+
+ul.kiri li.whatsapp.kiri {
+    background: #4dc247;
+}
+
+ul.kiri li.facebook.kiri div.slider.kiri {
+    background: #627aac;
+}
+
+ul.kiri li.twitter.kiri div.slider.kiri {
+    background: #7fd5f6;
+}
+
+ul.kiri li.instagram.kiri div.slider.kiri {
+    background: #dd94c6;
+}
+
+ul.kiri li.google.kiri div.slider.kiri {
+    background: #eea59c;
+}
+
+ul.kiri li.whatsapp.kiri div.slider.kiri {
+    background: #82d47e;
+}
+
+.slider.kiri {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 51px;
+    width: 0px;
+    height: 50px;
+    background: #eebb5c;
+    border-radius: 3px;
+    transition: all 0.5s 0.3s ease;
+}
+
+.slider.kiri p.kiri {
+    font-family: arial;
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+ul.kiri li:hover.kiri .slider.kiri {
+    width: 180px;
+    transition: all 0.5s ease;
+}
+
+ul.kiri li:hover.kiri .slider.kiri p.kiri {
+    opacity: 1;
+    transition: all 1s 0.2s ease;
+}
+
+
     footer {
         position: absolute;
         bottom: 0;
@@ -312,6 +419,46 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="wrapper kiri">
+            <ul class="kiri">
+              <li class="facebook kiri">
+                <i class="fa fa-facebook kiri" aria-hidden="true"></i>
+                <div class="slider kiri">
+                  <p class="kiri">facebook</p>
+                </div>
+              </li>
+
+              <li class="twitter kiri">
+                <i class="fa fa-twitter kiri" aria-hidden="true"></i>
+                <div class="slider kiri">
+                  <p class="kiri">twitter</p>
+                </div>
+              </li>
+
+              <li class="instagram kiri">
+                <i class="fa fa-instagram kiri" aria-hidden="true"></i>
+                <div class="slider kiri">
+                  <p class="kiri">instagram</p>
+                </div>
+              </li>
+
+              <li class="google kiri">
+                <i class="fa fa-google kiri" aria-hidden="true"></i>
+                <div class="slider kiri">
+                  <p class="kiri">google</p>
+                </div>
+              </li>
+
+              <li class="whatsapp kiri">
+                <i class="fa fa-whatsapp kiri" aria-hidden="true"></i>
+                <div class="slider kiri">
+                  <p class="kiri">whatsapp</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
 
         <div id="container-yt">
             <div id="toolbox">
