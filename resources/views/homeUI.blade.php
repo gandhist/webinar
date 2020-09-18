@@ -476,7 +476,7 @@
 
         <div class="wrapper kiri">
             <ul class="kiri">
-            <a href="https://www.facebook.com/p3smandiri">
+            <a href="https://www.facebook.com/p3smandiri" target="blank"f>
               <li class="facebook kiri">
                 <i class="fa fa-facebook kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
@@ -486,7 +486,7 @@
             </a>
 
 
-            <a href="https://www.instagram.com/p3smandiri/">
+            <a href="https://www.instagram.com/p3smandiri/" target="blank">
               <li class="instagram kiri">
                 <i class="fa fa-instagram kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
@@ -495,7 +495,7 @@
               </li>
             </a>
 
-            <a href="https://www.youtube.com/channel/UCIvD37p_x8gUzC_JMDESLSA">
+            <a href="https://www.youtube.com/channel/UCIvD37p_x8gUzC_JMDESLSA" target="blank">
               <li class="google kiri">
                 <i class="fa fa-youtube-play kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
@@ -504,7 +504,7 @@
               </li>
             </a>
 
-            <a href="https://api.whatsapp.com/send?phone=628111096173">
+            <a href="https://api.whatsapp.com/send?phone=628111096173" target="blank">
               <li class="whatsapp kiri">
                 <i class="fa fa-whatsapp kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
@@ -513,7 +513,7 @@
               </li>
             </a>
 
-            <a href="https://p3sm.or.id/">
+            <a href="https://p3sm.or.id/" target="blank">
                 <li class="twitter kiri">
                 <i class="fa fa-globe kiri" aria-hidden="true"></i>
                     <div class="slider kiri">
