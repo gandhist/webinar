@@ -78,16 +78,16 @@
             <div class="col-md-4">
                 <div class="flex-container">
                     <div class="box">
-                        <div class="box-child"><div class="head">Total Pengguna</div></div>
-                        <div class="box-child"><div class="body">{{$total_user ?? 0}}</div></div>
+                        <div class="box-child"><div class="head">Pengguna</div></div>
+                        <div class="box-child"><div class="body">{{$total_user}}</div></div>
                     </div>
                     <div class="box">
-                        <div class="box-child"><div class="head">Total <br> Peserta</div></div>
-                        <div class="box-child"><div class="body">{{$total_peserta ?? 0}}</div></div>
+                        <div class="box-child"><div class="head">Peserta</div></div>
+                        <div class="box-child"><div class="body">{{$total_peserta}}</div></div>
                     </div>
                     <div class="box">
-                        <div class="box-child"><div class="head">Pengguna Login</div></div>
-                        <div class="box-child"><div class="body">{{$user_login ?? 0}}</div></div>
+                        <div class="box-child"><div class="head">Pengguna Aktif</div></div>
+                        <div class="box-child"><div class="body">{{$user_login}}</div></div>
                     </div>
                 </div>
             </div>
@@ -105,8 +105,8 @@
                         <div class="box-child"><div class="body">{{$peserta_hari_ini ?? 0}}</div></div>
                     </div>
                     <div class="box">
-                        <div class="box-child"><div class="head">Seminar Tersedia</div></div>
-                        <div class="box-child"><div class="body">{{$seminar ?? 0}}</div></div>
+                        <div class="box-child"><div class="head">Seminar Selesai</div></div>
+                        <div class="box-child"><div class="body">{{$seminar}}</div></div>
                     </div>
                 </div>
             </div>
