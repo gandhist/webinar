@@ -4,10 +4,10 @@
 <style>
 
 .wrapper.kiri {
-    width: 18%;
+    width: 4%;
     position: fixed;
     top: 50%;
-    left: 8%;
+    left:1%;
     transform: translate(-50%, -50%);
 }
 
