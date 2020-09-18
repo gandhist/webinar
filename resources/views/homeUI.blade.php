@@ -148,8 +148,40 @@
 		margin-left: 0.3rem !important;
 	}
 
+    @media only screen and (max-width: 400px) {
+		#container-yt {
+			width: 70%;
+			right: 1.5rem;
+			bottom: 23%;
+			box-shadow: -5px -5px 10px 3px black;
+			display: none;
+		}
+		#close {
+			margin-right: -1rem !important;
+		}
+		.float {
+			bottom: 22%;
+			width:50px;
+			height:50px;
+			display: block;
+		}
+		.my-float{
+			margin-top: 0.6rem !important;
+		}
+        .wrapper.kiri {
+            width:2rem;
+            top: 30%;
+            left: 0;
+            margin-left: -1rem;
+            margin-top: 4rem;
+        }
+        ul.kiri li.kiri  {
+            width: 30px;
+            height: 50px;
+        }
+    }
 
-	@media only screen and (max-width: 600px) {
+	@media only screen and (min-width: 400px) and (max-width: 600px) {
 		#container-yt {
 			width: 70%;
 			right: 1.5rem;
