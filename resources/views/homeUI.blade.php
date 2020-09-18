@@ -3,118 +3,112 @@
 @section('content')
 <style>
 
-.wrapper.kiri {
-    width: 4%;
-    position: fixed;
-    top: 50%;
-    left:1%;
-    transform: translate(-50%, -50%);
-}
-
-ul.kiri {
-    list-style: none;
-}
-
-ul.kiri li.kiri  {
-    width: 50px;
-    height: 50px;
-    position: relative;
-    background: #e59500;
-    margin: 10px 0;
-    cursor: pointer;
-    border-radius: 3px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
-
-ul.kiri li.kiri .fa.kiri {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    color: #fff;
-}
-
-ul.kiri li.facebook.kiri {
-    background: #3b5998;
-}
-
-ul.kiri li.twitter.kiri {
-    background: #00aced;
-}
-
-ul.kiri li.instagram.kiri {
-    background: #bc2a8d;
-}
-
-ul.kiri li.google.kiri {
-    background: #dd4b39;
-}
-
-ul.kiri li.whatsapp.kiri {
-    background: #4dc247;
-}
-
-ul.kiri li.facebook.kiri div.slider.kiri {
-    background: #627aac;
-}
-
-ul.kiri li.twitter.kiri div.slider.kiri {
-    background: #7fd5f6;
-}
-
-ul.kiri li.instagram.kiri div.slider.kiri {
-    background: #dd94c6;
-}
-
-ul.kiri li.google.kiri div.slider.kiri {
-    background: #eea59c;
-}
-
-ul.kiri li.whatsapp.kiri div.slider.kiri {
-    background: #82d47e;
-}
-
-.slider.kiri {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 51px;
-    width: 0px;
-    height: 50px;
-    background: #eebb5c;
-    border-radius: 3px;
-    transition: all 0.5s 0.3s ease;
-}
-
-.slider.kiri p.kiri {
-    font-family: arial;
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 900;
-    color: #fff;
-    text-align: center;
-    line-height: 50px;
-    opacity: 0;
-    transition: all 0.6s ease;
-}
-
-ul.kiri li:hover.kiri .slider.kiri {
-    width: 180px;
-    transition: all 0.5s ease;
-}
-
-ul.kiri li:hover.kiri .slider.kiri p.kiri {
-    opacity: 1;
-    transition: all 1s 0.2s ease;
-}
-
-
-    footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%
+    .wrapper.kiri {
+        width: 4%;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left:1%;
     }
+
+    ul.kiri {
+        list-style: none;
+    }
+
+    ul.kiri li.kiri  {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        background: #e59500;
+        margin: 10px 0;
+        cursor: pointer;
+        border-radius: 3px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    ul.kiri li.kiri .fa.kiri {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        color: #fff;
+    }
+
+    ul.kiri li.facebook.kiri {
+        background: #3b5998;
+    }
+
+    ul.kiri li.twitter.kiri {
+        background: #00aced;
+    }
+
+    ul.kiri li.instagram.kiri {
+        background: #bc2a8d;
+    }
+
+    ul.kiri li.google.kiri {
+        background: #dd4b39;
+    }
+
+    ul.kiri li.whatsapp.kiri {
+        background: #4dc247;
+    }
+
+    ul.kiri li.facebook.kiri div.slider.kiri {
+        background: #627aac;
+    }
+
+    ul.kiri li.twitter.kiri div.slider.kiri {
+        background: #7fd5f6;
+    }
+
+    ul.kiri li.instagram.kiri div.slider.kiri {
+        background: #dd94c6;
+    }
+
+    ul.kiri li.google.kiri div.slider.kiri {
+        background: #eea59c;
+    }
+
+    ul.kiri li.whatsapp.kiri div.slider.kiri {
+        background: #82d47e;
+    }
+
+    .slider.kiri {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 51px;
+        width: 0px;
+        height: 50px;
+        background: #eebb5c;
+        border-radius: 3px;
+        transition: all 0.5s 0.3s ease;
+    }
+
+    .slider.kiri p.kiri {
+        font-family: arial;
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: 900;
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+        opacity: 0;
+        transition: all 0.6s ease;
+    }
+
+    ul.kiri li:hover.kiri .slider.kiri {
+        width: 180px;
+        transition: all 0.5s ease;
+    }
+
+    ul.kiri li:hover.kiri .slider.kiri p.kiri {
+        opacity: 1;
+        transition: all 1s 0.2s ease;
+    }
+
 	#content {
 		padding-left: 0px;
 		padding-right: 0px;
@@ -175,6 +169,18 @@ ul.kiri li:hover.kiri .slider.kiri p.kiri {
 		.my-float{
 			margin-top: 0.6rem !important;
 		}
+        footer {
+        }
+        .wrapper.kiri {
+            width:2rem;
+            top: 30%;
+            left: 0;
+            margin-left: -1rem;
+        }
+        ul.kiri li.kiri  {
+            width: 30px;
+            height: 50px;
+        }
 	}
 	@media only screen and (min-width: 600px) and (max-width: 1024px)  {
 		#container-yt {
@@ -191,7 +197,22 @@ ul.kiri li:hover.kiri .slider.kiri p.kiri {
 			bottom: 15%;
 			display: block;
 		}
-	}
+
+        .wrapper.kiri {
+            width:2rem;
+            top: 23%;
+            left: 0;
+            margin-left: -1rem;
+        }
+    }
+
+    @media only screen and (min-width: 1024px)  {
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%
+        }
+    }
     #yt {
         width: 100%;
         height:auto;
@@ -445,9 +466,9 @@ ul.kiri li:hover.kiri .slider.kiri p.kiri {
               </li>
 
               <li class="google kiri">
-                <i class="fa fa-google kiri" aria-hidden="true"></i>
+                <i class="fa fa-youtube-play kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
-                  <p class="kiri">google</p>
+                  <p class="kiri">youtube</p>
                 </div>
               </li>
 
