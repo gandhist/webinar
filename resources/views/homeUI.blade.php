@@ -2,11 +2,15 @@
 
 @section('content')
 <style>
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%
+    }
 	#content {
 		padding-left: 0px;
 		padding-right: 0px;
 		padding-bottom: 0px;
-		margin-bottom: 0 !important;
 	}
     #container-yt {
         background-color:  #B7D0ED;
