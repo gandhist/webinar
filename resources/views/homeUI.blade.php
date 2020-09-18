@@ -476,40 +476,52 @@
 
         <div class="wrapper kiri">
             <ul class="kiri">
+            <a href="https://www.facebook.com/p3smandiri">
               <li class="facebook kiri">
                 <i class="fa fa-facebook kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
                   <p class="kiri">facebook</p>
                 </div>
               </li>
+            </a>
 
-              <li class="twitter kiri">
-                <i class="fa fa-twitter kiri" aria-hidden="true"></i>
-                <div class="slider kiri">
-                  <p class="kiri">twitter</p>
-                </div>
-              </li>
 
+            <a href="https://www.instagram.com/p3smandiri/">
               <li class="instagram kiri">
                 <i class="fa fa-instagram kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
                   <p class="kiri">instagram</p>
                 </div>
               </li>
+            </a>
 
+            <a href="https://www.youtube.com/channel/UCIvD37p_x8gUzC_JMDESLSA">
               <li class="google kiri">
                 <i class="fa fa-youtube-play kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
                   <p class="kiri">youtube</p>
                 </div>
               </li>
+            </a>
 
+            <a href="https://api.whatsapp.com/send?phone=628111096173">
               <li class="whatsapp kiri">
                 <i class="fa fa-whatsapp kiri" aria-hidden="true"></i>
                 <div class="slider kiri">
                   <p class="kiri">whatsapp</p>
                 </div>
               </li>
+            </a>
+
+            <a href="https://p3sm.or.id/">
+                <li class="twitter kiri">
+                <i class="fa fa-globe kiri" aria-hidden="true"></i>
+                    <div class="slider kiri">
+                  <p class="kiri">website</p>
+                </div>
+              </li>
+            </a>
+
             </ul>
           </div>
 
@@ -586,7 +598,7 @@
 			});
         }
     });
-	$(document).on('click', 'li', function(){
+	$(document).on('click', '#name>ul>li', function(){
         $('#username').val($(this).text());
         $('#name').fadeOut();
     });
