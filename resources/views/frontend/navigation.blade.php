@@ -5,12 +5,12 @@
             @if(!Auth::user())
             {{-- <a class="home" href="{{ url('') }}"><h3>P<sub>3</sub>SM</h3></a> --}}
             <div id="logo" class="pull-left">
-                <a class="home" href="{{ url('') }}"><img src="{{ url('p3sm_a.png') }}" alt="logo" class="img-responsive" width="100px" ></a>
+                <a class="home" href="{{ url('') }}"><img src="{{ url('p3sm_a.png') }}" alt="logo" class="img-responsive" height="33px" ></a>
             </div>
             @else
             {{-- <a class="home" href="{{ url('infoseminar') }}"><h3>P<sub>3</sub>SM</h3></a> --}}
             <div id="logo" class="pull-left">
-                <a class="home" href="{{ url('infoseminar') }}"><img src="{{ url('p3sm_a.png') }}" class="img-responsive" alt="logo" width="100px"></a>
+                <a class="home" href="{{ url('infoseminar') }}"><img src="{{ url('p3sm_a.png') }}" class="img-responsive" alt="logo" height="33px"></a>
             </div>
             @endif
 
