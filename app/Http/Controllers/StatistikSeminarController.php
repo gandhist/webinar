@@ -290,6 +290,7 @@ class StatistikSeminarController extends Controller
         $user = [];
         $detail_blasting = [];
         $dikirim = [];
+        $gagal = [];
         while(!$dari_temp->gt($sampai)) {
 
             $pesertaseminar = PesertaSeminar::where('id_seminar',$seminar->id)->where('created_at', '<=' ,$sampai_temp)->count();
@@ -303,9 +304,11 @@ class StatistikSeminarController extends Controller
                 // dump(cuy);
                 array_push($detail_blasting, $blasting->jumlah_target);// [$blasting->target, $blasting->jumlah_kirim, $blasting->kirim_ulang]);
                 array_push($dikirim, (int)$blasting->jumlah_kirim);
+                array_push($gagal, (int)$blasting->jumlah_target - (int)$blasting->jumlah_kirim);
             } else {
                 array_push($detail_blasting, 0);
                 array_push($dikirim, 0);
+                array_push($gagal, 0);
             }
 
             $sampai_temp->addDay();
@@ -320,7 +323,7 @@ class StatistikSeminarController extends Controller
         $user_total = User::all()->count();
         $peserta_total = PesertaSeminar::where('id_seminar',$seminar->id)->count();
         $peserta_hari_ini = PesertaSeminar::where('id_seminar',$seminar->id)->whereDate('created_at', Carbon::today()->format('Y-m-d'))->count();
-        return view('statistik.detail')->with(compact('blasting', 'detail', 'seminar', 'blasting_diklik','blasting_diklik2',
+        return view('statistik.detail')->with(compact('blasting', 'detail', 'seminar', 'blasting_diklik','blasting_diklik2', 'gagal',
         'blasting_didaftar','report', 'label', 'user', 'peserta', 'detail_blasting', 'dikirim', 'user_total', 'peserta_hari_ini', 'peserta_total'));
     }
 }
