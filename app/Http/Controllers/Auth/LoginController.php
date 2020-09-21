@@ -91,7 +91,7 @@ class LoginController extends Controller
                 \Auth::login($user);
 
                 // dd('');
-                return redirect('/');
+                return redirect('/dashboard');
             }
             else {
                 if($user->is_login == 0) {
@@ -126,6 +126,9 @@ class LoginController extends Controller
             return redirect('');
         }
         if($role == 1){
+            return redirect('');
+        }
+        if($role == 5){
             return redirect('');
         }
     }
