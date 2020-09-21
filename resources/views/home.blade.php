@@ -28,7 +28,7 @@
         align-items: center;
     }
     .flex-container.bott {
-        justify-content:end;
+        justify-content:flex-end;
     }
     .box {
         height: 250px;
