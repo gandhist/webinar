@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\PesertaSeminar;
 use App\SeminarModel;
+use App\TargetBlasting;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -23,9 +24,11 @@ class HomeController extends Controller
             $user_login = User::whereNotNull('is_login')->count();
             $user_hari_ini = User::whereDate('created_at', Carbon::today()->format('Y-m-d'))->count();
             $peserta_hari_ini = PesertaSeminar::whereDate('created_at', Carbon::today()->format('Y-m-d'))->count();
-            $seminar = SeminarModel::where('is_mulai','=','2')->count();
-
-            return view('home')->with(compact('total_user', 'total_peserta', 'user_login', 'user_hari_ini', 'peserta_hari_ini', 'seminar'));
+            $seminar_berjalan = SeminarModel::where('status','published')->count();
+            $seminar_selesai = SeminarModel::where('is_mulai','=','2')->count();
+            $target = TargetBlasting::pluck('email');
+            $calon = User::whereNotIn('email', $target)->count();
+            return view('home')->with(compact('total_user', 'total_peserta', 'user_login', 'user_hari_ini', 'peserta_hari_ini', 'calon','seminar_selesai', 'seminar_berjalan'));
         }
         return view('sert.dashboard')->with(compact('data'));
     }

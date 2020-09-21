@@ -21,6 +21,11 @@ class FrontendController extends Controller
 
             }
         }
+        if(Auth::check()){
+            if(Auth::user()->role_id == 1){
+                return redirect('dashboard');
+            }
+        }
         $date = Carbon::now()->toDateTimeString();
         $data = SeminarModel::where('status','=','published')->orderBy('id','desc')->get();
         if(Auth::check())
