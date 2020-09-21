@@ -82,15 +82,15 @@
                 <div class="flex-container">
                     <div class="box">
                         <div class="box-child"><div class="head">Seminar Berjalan</div></div>
-                        <div class="box-child"><div class="body">{{$seminar_berjalan}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($seminar_berjalan,0,",",".")}}</div></div>
                     </div>
                     <div class="box">
                         <div class="box-child"><div class="head">Peserta</div></div>
-                        <div class="box-child"><div class="body">{{$total_peserta}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($total_peserta,0,",",".")}}</div></div>
                     </div>
                     <div class="box">
                         <div class="box-child"><div class="head">Pengguna</div></div>
-                        <div class="box-child"><div class="body">{{$total_user}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($total_user,0,",",".")}}</div></div>
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                 <div class="flex-container bott">
                     <div class="box">
                         <div class="box-child"><div class="head">Pengguna Daftar Hari Ini</div></div>
-                        <div class="box-child"><div class="body">{{$user_hari_ini ?? 0}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($user_hari_ini,0,",",".")}}</div></div>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 <div class="flex-container bott">
                 <div class="box">
                     <div class="box-child"><div class="head">Pengguna Aktif</div></div>
-                    <div class="box-child"><div class="body">{{$user_login}}</div></div>
+                    <div class="box-child"><div class="body">{{number_format($user_login,0,",",".")}}</div></div>
                 </div>
                 </div>
             </div>
@@ -114,15 +114,15 @@
                 <div class="flex-container">
                     <div class="box">
                         <div class="box-child"><div class="head">Seminar Selesai</div></div>
-                        <div class="box-child"><div class="body">{{$seminar_selesai}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($seminar_selesai,0,",",".")}}</div></div>
                     </div>
                     <div class="box">
                         <div class="box-child"><div class="head">Peserta Daftar Hari Ini</div></div>
-                        <div class="box-child"><div class="body">{{$peserta_hari_ini ?? 0}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($peserta_hari_ini,0,",",".")}}</div></div>
                     </div>
                     <div class="box">
                         <div class="box-child"><div class="head">Calon Pengguna</div></div>
-                        <div class="box-child"><div class="body">{{$calon}}</div></div>
+                        <div class="box-child"><div class="body">{{number_format($calon,0,",",".")}}</div></div>
                     </div>
                 </div>
             </div>

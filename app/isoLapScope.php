@@ -13,6 +13,6 @@ class isoLapScope extends Model
 
     // belongsto observasi
     public function scope_r(){
-        return $this->belongsTo('App\isoScope','id_scope');
+        return $this->belongsTo('App\isoScope','id_scope')->withTrashed();
     }
 }
