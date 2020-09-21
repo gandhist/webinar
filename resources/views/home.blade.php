@@ -9,7 +9,7 @@
         background-image: url('{{url("favicon.png")}}');
         background-repeat: no-repeat;
         background-position-x: 50%;
-        background-position-y: 50%;
+        background-position-y: 25%;
     }
     .col-md-4{
         min-height: 100vh;
@@ -26,6 +26,9 @@
         justify-content: space-around;
         align-content: center;
         align-items: center;
+    }
+    .flex-container.bott {
+        justify-content:end;
     }
     .box {
         height: 250px;
@@ -75,38 +78,51 @@
 	</section>
 	<section class="content">
 		<div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="flex-container">
                     <div class="box">
-                        <div class="box-child"><div class="head">Pengguna</div></div>
-                        <div class="box-child"><div class="body">{{$total_user}}</div></div>
+                        <div class="box-child"><div class="head">Seminar Berjalan</div></div>
+                        <div class="box-child"><div class="body">{{$seminar_berjalan}}</div></div>
                     </div>
                     <div class="box">
                         <div class="box-child"><div class="head">Peserta</div></div>
                         <div class="box-child"><div class="body">{{$total_peserta}}</div></div>
                     </div>
                     <div class="box">
-                        <div class="box-child"><div class="head">Pengguna Aktif</div></div>
-                        <div class="box-child"><div class="body">{{$user_login}}</div></div>
+                        <div class="box-child"><div class="head">Pengguna</div></div>
+                        <div class="box-child"><div class="body">{{$total_user}}</div></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-
-            </div>
-            <div class="col-md-4">
-                <div class="flex-container">
+            <div class="col-md-3">
+                <div class="flex-container bott">
                     <div class="box">
                         <div class="box-child"><div class="head">Pengguna Daftar Hari Ini</div></div>
                         <div class="box-child"><div class="body">{{$user_hari_ini}}</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="flex-container bott">
+                <div class="box">
+                    <div class="box-child"><div class="head">Pengguna Aktif</div></div>
+                    <div class="box-child"><div class="body">{{$user_login}}</div></div>
+                </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="flex-container">
+                    <div class="box">
+                        <div class="box-child"><div class="head">Seminar Selesai</div></div>
+                        <div class="box-child"><div class="body">{{$seminar_selesai}}</div></div>
                     </div>
                     <div class="box">
                         <div class="box-child"><div class="head">Peserta Daftar Hari Ini</div></div>
                         <div class="box-child"><div class="body">{{$peserta_hari_ini}}</div></div>
                     </div>
                     <div class="box">
-                        <div class="box-child"><div class="head">Seminar Selesai</div></div>
-                        <div class="box-child"><div class="body">{{$seminar}}</div></div>
+                        <div class="box-child"><div class="head">Calon Pengguna</div></div>
+                        <div class="box-child"><div class="body">{{$calon}}</div></div>
                     </div>
                 </div>
             </div>

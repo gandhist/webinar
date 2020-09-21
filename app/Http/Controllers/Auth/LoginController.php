@@ -115,14 +115,19 @@ class LoginController extends Controller
 
     public function logout(Request $request){
         $user = User::where('id', Auth::id())->first();
-
+        $role = Auth::user()->role_id;
         $data = User::find($user->id);
         $data->is_login = 0;
         $data->save();
 
         Session::flush();
         Auth::logout();
-        return redirect('');
+        if($role == 2){
+            return redirect('');
+        }
+        if($role == 1){
+            return redirect('');
+        }
     }
 
     public function showLoginForm(){
