@@ -4,6 +4,39 @@
     window.location.replace("{{ route('login') }}");
 </script>
 @else
+<style>
+  .treeview {
+    height: auto;
+  }
+  .treeview>a {
+    display: block;
+    height: auto;
+    white-space: normal !important;
+  }
+  .treeview>a>i {
+    vertical-align: top;
+    padding-top: 0.25rem;
+  }
+  .treeview>a>span {
+    display: inline-block;
+    width: 85% !important;
+    height: auto;
+  }
+
+  /* These are technically the same, but use both */
+  /* overflow-wrap: break-word;
+  word-wrap: break-word; */
+
+  /* -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  /* word-break: break-all; */
+  /* Instead use this non-standard one: */
+  /* word-break: break-word; */
+
+  /* overflow: visible; */
+  /* overflow-wrap: break-word; */
+    /* word-wrap:break-word; */
+</style>
 <!-- jika sudah login -->
 <header class="main-header">
   <!-- Logo -->
@@ -91,22 +124,11 @@
       </li>
 
       <li class="treeview">
-        <a href="{{ url('instansi') }}">
-        <i class="fa fa-building-o" aria-hidden="true"></i></i> <span>Instansi</span>
-        </a>
-      </li>
-
-      <li class="treeview">
         <a href="{{ url('tuk') }}">
-        <i class="fa fa-map-marker" aria-hidden="true"></i></i> <span>TUK</span>
+        <i class="fa fa-map-marker" aria-hidden="true"></i> <span>TUK</span>
         </a>
       </li>
 
-      <li class="treeview">
-        <a href="{{ url('personals') }}">
-          <i class="fa fa-user"></i> <span>Personal</span>
-        </a>
-      </li>
 
       <li class="treeview">
         <a href="{{ url('pesertas') }}">
@@ -126,6 +148,50 @@
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>
         </a>
       </li>
+
+
+      <li class="treeview">
+        <a href="{{ url('/dashboard1') }}">
+          <i class="fa fa-dashboard"></i> <span>Kantor PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('instansi') }}">
+        <i class="fa fa-building-o" aria-hidden="true"></i> <span>Badan Usaha PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('/dashboard1') }}">
+          <i class="fa fa-gavel"></i> <span>Ijin PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('personals') }}">
+          <i class="fa fa-user"></i> <span>Personil PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('/dashboard1') }}">
+          <i class="fa fa-file"></i> <span>Dokumen Personil PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('/dashboard1') }}">
+          <i class="fa fa-industry"></i> <span>Tim Produksi PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('/dashboard1') }}">
+          <i class="fa fa-credit-card"></i> <span>Tim Marketing PJS_PPKB Mandiri</span>
+        </a>
+      </li>
+
       @endif
 
       @if(Auth::user()->role_id==1)

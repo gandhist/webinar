@@ -776,10 +776,14 @@ class RegistController extends Controller
 
     }
 
-    public function test($test) {
-        $hashids = new Hashids();
-        $decode = $hashids->decode($test);
-        dd($decode);
+    public function test() {
+        $cung = User::all()->pluck('email')->toArray();
+        // dd(TargetBlasting::all());
+        // dd($cung);
+        dd(TargetBlasting::whereNotIn('email', $cung)->get());
+        // $hashids = new Hashids();
+        // $decode = $hashids->decode($test);
+        // dd($decode);
         // $body = {
         //     "to_number": "081586604381",
         //     "to_name": "Arief Purwoko",
