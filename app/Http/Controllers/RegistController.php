@@ -777,10 +777,79 @@ class RegistController extends Controller
     }
 
     public function test() {
-        $cung = User::all()->pluck('email')->toArray();
+
+        // $seminar = Seminar::where('status','=','published')->orderByDesc('tgl_awal')->get();
+        // $user = User::where('email', 'muhamadrafipamungkas@gmail.com')->first();
+        // $magic_link = Hashids::encode($user->id);
+
+        // $password = str_random(8);
+        // $pesan = [
+        //     'magic_link'  => $magic_link,
+        //     'username' => 'muhamadrafipamungkas@gmail.com',
+        //     'email' => 'muhamadrafipamungkas@gmail.com',
+        //     'password' => $password,
+        //     'name' => 'Hajar cok',
+        //     'no_hp' => '082241904510',
+        // ];
+        // $email = strtolower('muhamadrafipamungkas@gmail.com');
+
+        // dispatch(new \App\Jobs\HajarCalon($email, 'Hajar cok', '082241904510', $pesan, $seminar));
+
+        // dd("done");
+        $calon = TargetBlasting::whereNotIn('email', TargetBlasting::whereIn('email', User::whereNotNull('email')->pluck('email')->unique() )->whereNotNull('email')->pluck('email') )->get();
         // dd(TargetBlasting::all());
-        // dd($cung);
-        dd(TargetBlasting::whereNotIn('email', $cung)->get());
+        // dd($calon[0]->no_hp);
+        $email = User::all()->pluck('email')->toArray();
+        $no_hp = User::all()->pluck('no_hp')->toArray();
+
+        foreach($calon as $key){
+            if(!in_array($key->email, $email) && !in_array($key->no_hp, $no_hp)){
+
+            $data['nama'] = $key->nama;
+            $data['no_hp'] = $key->no_hp;
+            $data['email'] = $key->email;
+            $data['pekerjaan'] = '';
+            $data['instansi'] = '';
+            // handle upload Foto
+            $data['foto'] ='';
+            $peserta = Peserta::create($data);
+            $password = str_random(8);
+            // $password = '123456'; // buat t\est masih hardcode
+
+            if ($peserta) {
+                $touser['username'] = strtolower($key->email);
+                $touser['email'] = strtolower($key->email);
+                $touser['password'] = Hash::make($password);
+                $touser['name'] = $key->nama;
+                $touser['role_id'] = 2;
+                $touser['is_active'] = 1;
+                $user = User::create($touser);
+
+                $peserta_id['user_id'] = $user->id;
+
+                Peserta::find($peserta->id)->update($peserta_id);
+
+                $seminar = Seminar::where('status','=','published')->orderByDesc('tgl_awal')->get();
+
+                $magic_link = Hashids::encode($user->id);
+
+                $pesan = [
+                    'magic_link'  => $magic_link,
+                    'username' => $key->email,
+                    'email' => $key->email,
+                    'password' => $password,
+                    'name' => $key->nama,
+                    'no_hp' => $key->no_hp,
+                ];
+                $email = strtolower($key->email);
+
+                dispatch(new \App\Jobs\HajarCalon($email, $key->nama, $key->no_hp, $pesan, $seminar));
+
+                }
+            }
+        }
+
+
         // $hashids = new Hashids();
         // $decode = $hashids->decode($test);
         // dd($decode);
