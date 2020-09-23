@@ -5,9 +5,12 @@
 </script>
 @else
 <style>
-  .treeview, .treeview-menu>li {
+  /* .treeview, .treeview-menu>li {
     height: auto;
-  }
+  } */
+  /* .treeview.active{
+    width: 1000px !important;
+  } */
   .treeview>a, .treeview-menu>li>a {
     display: block;
     height: auto;
@@ -17,7 +20,12 @@
     vertical-align: top;
     padding-top: 0.35rem;
   }
-  .treeview>a>span, .treeview-menu>li>a>span {
+  .treeview>a>span {
+    display: inline-block;
+    width: 12.85em !important;
+    height: auto;
+  }
+  .treeview-menu>li>a>span {
     display: inline-block;
     width: 85% !important;
     height: auto;
