@@ -5,37 +5,24 @@
 </script>
 @else
 <style>
-  .treeview {
+  .treeview, .treeview-menu>li {
     height: auto;
   }
-  .treeview>a {
+  .treeview>a, .treeview-menu>li>a {
     display: block;
     height: auto;
     white-space: normal !important;
   }
-  .treeview>a>i {
+  .treeview>a>i, .treeview-menu>li>a>i {
     vertical-align: top;
-    padding-top: 0.25rem;
+    padding-top: 0.35rem;
   }
-  .treeview>a>span {
+  .treeview>a>span, .treeview-menu>li>a>span {
     display: inline-block;
     width: 85% !important;
     height: auto;
   }
 
-  /* These are technically the same, but use both */
-  /* overflow-wrap: break-word;
-  word-wrap: break-word; */
-
-  /* -ms-word-break: break-all;
-  /* This is the dangerous one in WebKit, as it breaks things wherever */
-  /* word-break: break-all; */
-  /* Instead use this non-standard one: */
-  /* word-break: break-word; */
-
-  /* overflow: visible; */
-  /* overflow-wrap: break-word; */
-    /* word-wrap:break-word; */
 </style>
 <!-- jika sudah login -->
 <header class="main-header">
@@ -109,7 +96,156 @@
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
-      @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
+      @if(Auth::user()->role_id==1 )
+      <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>PJS_PPKB Mandiri</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/kantor') }}">
+                <i class="fa fa-building-o"></i> <span>[X] Kantor PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('instansi') }}">
+                <i class="fa fa-building-o" aria-hidden="true"></i> <span>Badan Usaha PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-gavel"></i> <span>[X] Ijin PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('personals') }}">
+                <i class="fa fa-user"></i> <span>Personil PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-file"></i> <span>[X] Dokumen Personil PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+        </ul>
+      </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>Tim Produksi PJS_PPKB</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-users"></i> <span>[X] Nara Sumber PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Jadwal & Kgt Produksi PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>Tim Marketing & Keuangan</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Jadwal & Kgt Marketing PJS_PPKB Mandiri</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-database"></i> <span>Master_1</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-clipboard"></i> <span>[X] Data Jenis Usaha</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Data Jenis Sertifikat</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Data Sub Bidang</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-database"></i> <span>Master_2</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-clipboard"></i> <span>[X] Data Provinsi</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Data Kota</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    @endif
+    @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
 
       <li class="treeview">
         <a href="{{ url('seminar') }}">
@@ -146,49 +282,6 @@
       <li class="treeview">
         <a href="{{ url('laporan') }}">
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>
-        </a>
-      </li>
-
-
-      <li class="treeview">
-        <a href="{{ url('/dashboard1') }}">
-          <i class="fa fa-dashboard"></i> <span>Kantor PJS_PPKB Mandiri</span>
-        </a>
-      </li>
-
-      <li class="treeview">
-        <a href="{{ url('instansi') }}">
-        <i class="fa fa-building-o" aria-hidden="true"></i> <span>Badan Usaha PJS_PPKB Mandiri</span>
-        </a>
-      </li>
-
-      <li class="treeview">
-        <a href="{{ url('/dashboard1') }}">
-          <i class="fa fa-gavel"></i> <span>Ijin PJS_PPKB Mandiri</span>
-        </a>
-      </li>
-
-      <li class="treeview">
-        <a href="{{ url('personals') }}">
-          <i class="fa fa-user"></i> <span>Personil PJS_PPKB Mandiri</span>
-        </a>
-      </li>
-
-      <li class="treeview">
-        <a href="{{ url('/dashboard1') }}">
-          <i class="fa fa-file"></i> <span>Dokumen Personil PJS_PPKB Mandiri</span>
-        </a>
-      </li>
-
-      <li class="treeview">
-        <a href="{{ url('/dashboard1') }}">
-          <i class="fa fa-industry"></i> <span>Tim Produksi PJS_PPKB Mandiri</span>
-        </a>
-      </li>
-
-      <li class="treeview">
-        <a href="{{ url('/dashboard1') }}">
-          <i class="fa fa-credit-card"></i> <span>Tim Marketing PJS_PPKB Mandiri</span>
         </a>
       </li>
 
