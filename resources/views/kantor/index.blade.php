@@ -23,11 +23,8 @@
                     <div class="col-12">
                         <div class="btn-group">
                             <span class="form-group">
-                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">
-
-                                <span style="margin: 10px;"> s/d </span>
-
-                                <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir" value="{{ request()->get('tgl_akhir') }}" placeholder="Tanggal Akhir">
+                                <input type="text" style="padding-bottom:5px;" name="filter_level" id="filter_level" value="{{ request()->get('filter_level') }}" placeholder="Level Kantor">
+                                <input type="text" style="padding-bottom:5px;" name="filter_prov" id="filter_prov" value="{{ request()->get('filter_prov') }}" placeholder="Provinsi">
 
                                 <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
                                     <i class="fa fa-filter"></i> Filter
@@ -51,6 +48,9 @@
                             <i class="fa fa-plus"></i> Tambah</a>
                     </div>
                     <div class="col-12" style="margin-top:10px">
+                        <input type="text" style="padding-bottom:5px;" name="filter_atasnya" id="filter_atasnya" value="{{ request()->get('filter_atasnya') }}" placeholder="Kantor Level Diatasnya">
+                        <input type="text" style="padding-bottom:5px;" name="filter_kota" id="filter_kota" value="{{ request()->get('filter_kota') }}" placeholder="Kota">
+
                         <div class="pull-right">
                         <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
                             <i class="fa fa-eye"></i> Detail</button>
