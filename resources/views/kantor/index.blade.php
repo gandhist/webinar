@@ -19,6 +19,44 @@
     <div class="box box-content">
         <div class="box-body">
             <div class="container-fluid">
+                <div class="row" style="margin-bottom:10px;">
+                    <div class="col-12">
+                        <div class="btn-group">
+                            <span class="form-group">
+                                <input type="text" style="padding-bottom:5px;" name="tgl_awal" id="tgl_awal" value="{{ request()->get('tgl_awal') }}" placeholder="Tanggal Awal">
+
+                                <span style="margin: 10px;"> s/d </span>
+
+                                <input type="text" style="padding-bottom:5px;" name="tgl_akhir" id="tgl_akhir" value="{{ request()->get('tgl_akhir') }}" placeholder="Tanggal Akhir">
+
+                                <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
+                                    <i class="fa fa-filter"></i> Filter
+                                </button>
+                                <button class="btn btn-success btn-bermargin" id="btnReset" name="btnReset">
+                                <i class="fa fa-refresh" aria-hidden="true"></i> Reset
+                                </button>
+                                {{-- <a href="{{ url('seminar') }}" class="btn btn-sm btn-default"> <i
+                                    class="fa fa-refresh"></i>
+                                Reset</a> --}}
+
+                                {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
+
+                            </span>
+                        </div>
+                        <button type="button" class="btn btn-danger pull-right" id="btnHapus" name="btnHapus">
+                            <i class="fa fa-trash"></i> Hapus</button>
+                        <button class="btn btn-success pull-right" id="btnEdit" name="btnEdit">
+                            <i class="fa fa-edit"></i> Ubah</button>
+                        <a href="{{ url('seminar/create') }}" class="btn btn-info pull-right">
+                            <i class="fa fa-plus"></i> Tambah</a>
+                    </div>
+                    <div class="col-12" style="margin-top:10px">
+                        <div class="pull-right">
+                        <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
+                            <i class="fa fa-eye"></i> Detail</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
@@ -57,6 +95,7 @@
             </div>
         </div>
     </div>
+
 </section>
 
 @endsection
