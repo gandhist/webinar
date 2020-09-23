@@ -140,6 +140,10 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 Route::group(['middleware' => 'auth.admin','prefix' => 'kantor'], function () {
 	Route::get('/', 'KantorController@index');
 	Route::get('create', 'KantorController@create');
+	Route::post('store', 'KantorController@store');
+	Route::get('edit/{id}', 'KantorController@edit');
+	Route::put('update', 'KantorController@update');
+	Route::get('detail/{id}', 'KantorController@detail');
 });
 // End Kantor
 

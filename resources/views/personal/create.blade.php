@@ -58,7 +58,7 @@
                                 <input type="text" name="nik" id="nik"
                                     onkeypress="return /[0-9]/i.test(event.key)"
                                     value="{{ old('nik') }}"
-                                    class="form-control
+                                    class="form-control"
                                     placeholder="Nomor Induk Kependudukan" required
                                     maxlength="16">
                                 <div id="nik" class="invalid-feedback text-danger">
@@ -369,7 +369,7 @@
                                     value="{{ old('npwp') }}"
                                     class="form-control"
                                     placeholder="Nomor Pokok Wajib Pajak"
-                                    {{ $errors->first('npwpClean') }}
+                                    {{ $errors->first('npwpClean') }}>
                                 </div>
                             </div>
                         </div>

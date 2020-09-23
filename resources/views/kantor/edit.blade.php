@@ -27,8 +27,9 @@
             <div class="container" style="min-height: 90vh">
                 <div class="row" style="margin-bottom:10px;">
                     <div class="col-12">
-                        <form method="POST" action="{{ url('kantor/store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('kantor/update') }}" enctype="multipart/form-data">
                         @csrf
+                        @method('put')
                         <div class="row">
                             <div class="col-md-12">
                                 {{-- Nama Kantor --}}
