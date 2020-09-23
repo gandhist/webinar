@@ -796,12 +796,15 @@ class RegistController extends Controller
         // dispatch(new \App\Jobs\HajarCalon($email, 'Hajar cok', '082241904510', $pesan, $seminar));
 
         // dd("done");
-        $calon = TargetBlasting::whereNotIn('email', TargetBlasting::whereIn('email', User::whereNotNull('email')->pluck('email')->unique() )->whereNotNull('email')->pluck('email') )->get();
+        // $calon = TargetBlasting::whereNotIn('email', TargetBlasting::whereIn('email', Peserta::whereNotNull('email')->pluck('email')->unique() )->whereNotNull('email')->pluck('email') )->get();
         // dd(TargetBlasting::all());
         // dd($calon[0]->no_hp);
-        $email = User::all()->pluck('email')->toArray();
-        $no_hp = User::all()->pluck('no_hp')->toArray();
-
+        $email = Peserta::all()->pluck('email')->unique()->toArray();
+        $no_hp = Peserta::all()->pluck('no_hp')->unique()->toArray();
+        // $email = array_map(function ($el){return strtolower($el);},$email);
+        // dd($no_hp);
+        $calon = TargetBlasting::whereNotIn('email', TargetBlasting::whereIn('email',$email)->pluck('email')->unique())->whereNotIn('no_hp', TargetBlasting::whereIn('no_hp',$no_hp)->pluck('no_hp')->unique())->whereNotNull('no_hp')->get();
+        $count = 0;
         foreach($calon as $key){
             if(!in_array($key->email, $email) && !in_array($key->no_hp, $no_hp)){
 
@@ -843,11 +846,12 @@ class RegistController extends Controller
                 ];
                 $email = strtolower($key->email);
 
-                dispatch(new \App\Jobs\HajarCalon($email, $key->nama, $key->no_hp, $pesan, $seminar));
+                dispatch(new \App\Jobs\DaftarCalonUser($email, $key->nama, $key->no_hp, $pesan, $seminar));
 
                 }
             }
         }
+        dd($count);
 
 
         // $hashids = new Hashids();
@@ -924,6 +928,5 @@ class RegistController extends Controller
         // return view('mail.signup')->with(compact('pesan'));
 
     }
-
 
 }

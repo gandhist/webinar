@@ -12,7 +12,7 @@ use Mail;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Mail\EmailRegistAkun;
 
-class HajarCalon implements ShouldQueue
+class DaftarCalonUser implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, GlobalFunction;
 
@@ -44,8 +44,8 @@ class HajarCalon implements ShouldQueue
      */
     public function handle()
     {
-            Mail::to($this->email)->send(new EmailRegistAkun(['pesan' => $this->pesan, 'seminar' => $this->seminar]));
 
+            Mail::to($this->email)->send(new EmailRegistAkun(['pesan' => $this->pesan, 'seminar' => $this->seminar]));
             $no_hp = $this->no_hp;
             $nama = $this->nama;
             $email = $this->email;
