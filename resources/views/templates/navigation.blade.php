@@ -107,7 +107,7 @@
         <ul class="treeview-menu">
             <li>
                 <a href="{{ url('/kantor') }}">
-                <i class="fa fa-building-o"></i> <span>Kantor PJS_PPKB Mandiri</span>
+                <i class="fa fa-building-o"></i> <span>[X] Kantor PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
@@ -119,7 +119,7 @@
 
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-gavel"></i> <span>Ijin PJS_PPKB Mandiri</span>
+                <i class="fa fa-gavel"></i> <span>[X] Ijin PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
@@ -131,19 +131,19 @@
 
             <li class="treeview">
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-file"></i> <span>Dokumen Personil PJS_PPKB Mandiri</span>
+                <i class="fa fa-file"></i> <span>[X] Dokumen Personil PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-industry"></i> <span>Tim Produksi PJS_PPKB Mandiri</span>
+                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-credit-card"></i> <span>Tim Marketing PJS_PPKB Mandiri</span>
+                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_PPKB Mandiri</span>
                 </a>
             </li>
         </ul>
@@ -159,17 +159,17 @@
         <ul class="treeview-menu">
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-industry"></i> <span>Tim Produksi PJS_PPKB Mandiri</span>
+                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-users"></i> <span>Nara Sumber PJS_PPKB Mandiri</span>
+                <i class="fa fa-users"></i> <span>[X] Nara Sumber PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                    <i class="fa fa-clipboard"></i> <span>Jadwal & Kgt Produksi PJS_PPKB Mandiri</span>
+                    <i class="fa fa-clipboard"></i> <span>[X] Jadwal & Kgt Produksi PJS_PPKB Mandiri</span>
                 </a>
             </li>
         </ul>
@@ -185,19 +185,67 @@
         <ul class="treeview-menu">
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-credit-card"></i> <span>Tim Marketing PJS_PPKB Mandiri</span>
+                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                    <i class="fa fa-clipboard"></i> <span>Jadwal & Kgt Marketing PJS_PPKB Mandiri</span>
+                    <i class="fa fa-clipboard"></i> <span>[X] Jadwal & Kgt Marketing PJS_PPKB Mandiri</span>
                 </a>
             </li>
         </ul>
     </li>
 
-      @endif
-      @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-database"></i> <span>Master_1</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-clipboard"></i> <span>[X] Data Jenis Usaha</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Data Jenis Sertifikat</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Data Sub Bidang</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-database"></i> <span>Master_2</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-clipboard"></i> <span>[X] Data Provinsi</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Data Kota</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    @endif
+    @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
 
       <li class="treeview">
         <a href="{{ url('seminar') }}">
