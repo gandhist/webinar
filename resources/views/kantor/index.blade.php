@@ -62,8 +62,8 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th><i class="fa fa-check-square-o"></i></th>
-                                    <th>No.</th>
+                                    <th style='padding-left: 3rem;'><i class="fa fa-check-square-o"></i></th>
+                                    <th style='padding-left: 3rem;'>No.</th>
                                     <th>Nama_Ktr</th>
                                     <th>Level_K</th>
                                     <th>Prov</th>
