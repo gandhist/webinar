@@ -44,7 +44,7 @@
                             <i class="fa fa-trash"></i> Hapus</button>
                         <button class="btn btn-success pull-right" id="btnEdit" name="btnEdit">
                             <i class="fa fa-edit"></i> Ubah</button>
-                        <a href="{{ url('seminar/create') }}" class="btn btn-info pull-right">
+                        <a href="{{ url('kantor/create') }}" class="btn btn-info pull-right">
                             <i class="fa fa-plus"></i> Tambah</a>
                     </div>
                     <div class="col-12" style="margin-top:10px">

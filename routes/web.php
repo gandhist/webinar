@@ -139,6 +139,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 
 Route::group(['middleware' => 'auth.admin','prefix' => 'kantor'], function () {
 	Route::get('/', 'KantorController@index');
+	Route::get('create', 'KantorController@create');
 });
 // End Kantor
 

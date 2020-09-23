@@ -12,4 +12,9 @@ class KantorController extends Controller
         $kantor = KantorModel::all();
         return view('kantor.index')->with(compact('kantor'));
     }
+
+    public function create() {
+        //
+        return view('kantor.create');
+    }
 }
