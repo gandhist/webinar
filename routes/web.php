@@ -133,6 +133,16 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 
 // End Seminar
 
+//
+
+// Kantor
+
+Route::group(['middleware' => 'auth.admin','prefix' => 'kantor'], function () {
+	Route::get('/', 'KantorController@index');
+});
+// End Kantor
+
+
 Route::namespace('Iso')->group(function(){
 	Route::post('iso/destroy', 'IsoController@destroy');
 	Route::resource('isos', 'IsoController');
