@@ -51,13 +51,20 @@
                         <input type="text" style="padding-bottom:5px;" name="filter_atasnya" id="filter_atasnya" value="{{ request()->get('filter_atasnya') }}" placeholder="Kantor Level Diatasnya">
                         <input type="text" style="padding-bottom:5px;" name="filter_kota" id="filter_kota" value="{{ request()->get('filter_kota') }}" placeholder="Kota">
 
-                        <div class="pull-right">
+                        {{-- <div class="pull-right">
                         <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
                             <i class="fa fa-eye"></i> Detail</button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-12">
+                        @if(session()->has('message'))
+                        <div class="alert alert-success alert-dismissible fade in"> {{ session()->get('message') }}
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        </div>
+                        @endif
+                    </div>
                     <div class="col-12">
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
@@ -71,6 +78,8 @@
                                     <th>Nama_Pimp</th>
                                     <th>Kontak_P</th>
                                     <th>Keterangan</th>
+                                    <th>User_Tgl_Tambah</th>
+                                    <th>User_Tgl_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,6 +95,8 @@
                                     <td>{{$key->nama_pimp}}</td>
                                     <td>{{$key->kontak_p}}</td>
                                     <td>{{$key->keterangan}}</td>
+                                    <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y')}}</td>
+                                    <td>{{\Carbon\Carbon::parse($key->updated_at)->format('d F Y')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

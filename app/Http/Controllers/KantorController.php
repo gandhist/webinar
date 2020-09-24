@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\KantorModel;
+use App\LevelModel;
+use App\ProvinsiModel;
+use App\KotaModel;
 
 class KantorController extends Controller
 {
@@ -15,6 +18,9 @@ class KantorController extends Controller
 
     public function create() {
         //
-        return view('kantor.create');
+        $prop = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        $level = LevelModel::all();
+        return view('kantor.create')->with(compact('level', 'prop', 'kota'));
     }
 }
