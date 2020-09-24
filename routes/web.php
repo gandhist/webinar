@@ -144,6 +144,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'kantor'], function () {
 	Route::get('{id}/edit', 'KantorController@edit');
 	Route::patch('update/{id}', 'KantorController@update');
 	Route::post('changelevelatas', 'KantorController@changelevelatas');
+	Route::post('filter', 'KantorController@filter');
 	Route::delete('/destroy','KantorController@destroy');
 	// Route::get('detail/{id}', 'KantorController@detail');
 });

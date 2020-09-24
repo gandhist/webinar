@@ -1,6 +1,14 @@
 @extends('templates.header')
 
 @section('content')
+<style>
+table#data-tables tbody tr {
+    background-color:rgba(137, 228, 255, 0.5);
+}
+table#data-tables tbody tr.even{
+    background-color:rgba(253, 255, 128, 0.5);
+}
+</style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
@@ -22,23 +30,87 @@
                 <div class="row" style="margin-bottom:10px;">
                     <div class="col-12">
                         <div class="btn-group">
-                            <span class="form-group">
-                                <input type="text" style="padding-bottom:5px;" name="filter_level" id="filter_level" value="{{ request()->get('filter_level') }}" placeholder="Level Kantor">
-                                <input type="text" style="padding-bottom:5px;" name="filter_prov" id="filter_prov" value="{{ request()->get('filter_prov') }}" placeholder="Provinsi">
+                        {{-- sub menu  --}}
+                        <form action="{{ url('kantor/filter') }}" enctype="multipart/form-data" name="filterData"
+                        id="filterData" method="post">
+                        @csrf
+                        <!-- Table Filter -->
+                        <table class="table table-condensed table-filter">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_level" id="f_level">
+                                                <option selected value="">Level_Kantor</option>
+                                                @foreach($level as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_level') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama_level }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_provinsi" id="f_provinsi">
+                                                <option value="">Provinsi</option>
+                                                @foreach($prov as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_provinsi') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td style="padding-right: 0px">
+                                        <button type="submit" class="btn btn-sm btn-info"> <i class="fa fa-filter"></i>
+                                            Filter</button>
+                                    </td>
+                                    <td style="padding-left: 0px">
+                                        <a href="{{ url('kantor') }}" class="btn btn-sm btn-default"> <i
+                                                class="fa fa-refresh"></i>
+                                            Reset</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_kantor" id="f_kantor">
+                                                <option selected value="">Kantor</option>
+                                                @foreach($kantor as $key)
+                                                <option value="{{ $key->nama_singkat }}"
+                                                    {{ request()->get('f_kantor') == $key->nama_singkat ? 'selected' : '' }}>
+                                                    {{ $key->nama_singkat }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
 
-                                <button class="btn btn-info btn-bermargin" id="btnFilter" name="btnFilter">
-                                    <i class="fa fa-filter"></i> Filter
-                                </button>
-                                <button class="btn btn-success btn-bermargin" id="btnReset" name="btnReset">
-                                <i class="fa fa-refresh" aria-hidden="true"></i> Reset
-                                </button>
-                                {{-- <a href="{{ url('seminar') }}" class="btn btn-sm btn-default"> <i
-                                    class="fa fa-refresh"></i>
-                                Reset</a> --}}
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_kota" id="f_kota">
+                                                <option selected value="">Kota</option>
+                                                @foreach($kota as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_kota') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
 
-                                {{-- https://datatables.net/examples/plug-ins/range_filtering.html --}}
+                                    <td>
 
-                            </span>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- End -->
+                        </form>
                         </div>
                         <button type="button" class="btn btn-danger pull-right" id="btnHapus" name="btnHapus">
                             <i class="fa fa-trash"></i> Hapus</button>
@@ -46,15 +118,6 @@
                             <i class="fa fa-edit"></i> Ubah</button>
                         <a href="{{ url('kantor/create') }}" class="btn btn-info pull-right">
                             <i class="fa fa-plus"></i> Tambah</a>
-                    </div>
-                    <div class="col-12" style="margin-top:10px">
-                        <input type="text" style="padding-bottom:5px;" name="filter_atasnya" id="filter_atasnya" value="{{ request()->get('filter_atasnya') }}" placeholder="Kantor Level Diatasnya">
-                        <input type="text" style="padding-bottom:5px;" name="filter_kota" id="filter_kota" value="{{ request()->get('filter_kota') }}" placeholder="Kota">
-
-                        {{-- <div class="pull-right">
-                        <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
-                            <i class="fa fa-eye"></i> Detail</button>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="row">
@@ -74,7 +137,6 @@
                                     <th>Nama_Ktr</th>
                                     <th>Level_K</th>
                                     <th>Prov</th>
-                                    <th>Kota</th>
                                     <th>Nama_Pimp</th>
                                     <th>Kontak_P</th>
                                     <th>Keterangan</th>
@@ -83,20 +145,47 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($kantor as $key)
+                                @foreach($data as $key)
                                 <tr>
-                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                        id="selection[]" name="selection[]"></td>
-                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                    <td>{{$key->nama_kantor}}</td>
-                                    <td>{{$key->level}}</td>
-                                    <td>{{$key->prop}}</td>
-                                    <td>{{$key->kota}}</td>
-                                    <td>{{$key->nama_pimp}}</td>
-                                    <td>{{$key->kontak_p}}</td>
-                                    <td>{{$key->keterangan}}</td>
-                                    <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y H:i')}}</td>
-                                    <td>{{\Carbon\Carbon::parse($key->updated_at)->format('d F Y H:i')}}</td>
+                                    <td style='text-align:center;width:1%'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
+                                            id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center;width:1%'>{{ $loop->iteration }}</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="Nama : {{$key->nama_kantor}}<br>
+                                            Singkatan Kantor : {{$key->nama_singkat}}
+                                        ">{{$key->nama_singkat}}</td>
+                                    <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="Level Atas : @if($key->level_atas) {{$key->level_atas_r->nama_kantor}} @else  @endif ">{{$key->levelkantor->nama_level}}</td>
+                                    <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="
+                                        Provinsi : {{$key->provinsi->nama}}<br>
+                                        Kab/Kota : {{$key->kotakantor->nama}}<br>
+                                        Alamat : {{$key->alamat}}<br>
+                                        No Telp : {{$key->no_telp}}<br>
+                                        Email : {{$key->email}}<br>
+                                        ">{{$key->provinsi->nama_singkat}}</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="Jabatan : {{$key->jab_pimp}}<br>
+                                        No HP : {{$key->hp_pimp}}<br>
+                                        Email : {{$key->email_pimp}}<br>
+                                        ">{{$key->nama_pimp}}</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="Jabatan : {{$key->jab_kontak_p}}<br>
+                                        No HP : {{$key->no_kontak_p}}<br>
+                                        Email : {{$key->email_kontak_p}}<br>
+                                        ">{{$key->kontak_p}}</td>
+                                    <td>{{$key->keterangan}}
+                                    </td>
+                                    <td style='text-align:right'>
+                                    @if (isset($key->created_at))
+                                        {{ \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
+                                        @endif
+                                    </td>
+                                    <td style='text-align:right'>
+                                    @if (isset($key->updated_at))
+                                        {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -188,6 +277,15 @@
             url = id[0];
             window.location.href = "{{ url('kantor') }}/" + url + "/edit";
         }
+    });
+
+    //Initialize Select2 Elements
+    $('.select2').select2();
+
+    //Initialize datetimepicker
+    $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+        autoclose: true
     });
 </script>
 @endpush

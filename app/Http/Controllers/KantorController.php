@@ -14,8 +14,14 @@ class KantorController extends Controller
 {
     //
     public function index() {
-        $kantor = KantorModel::all();
-        return view('kantor.index')->with(compact('kantor'));
+        $kantor = KantorModel::orderBy('id','asc')->groupBy('nama_kantor')->get();
+        $idlevel = KantorModel::select('level')->groupBy('level')->whereNotNull('level')->get()->toArray();
+        $level = LevelModel::whereIn('id',$idlevel)->get();
+        $idprop = KantorModel::select('prop')->groupBy('prop')->whereNotNull('prop')->get()->toArray();
+        $prov = ProvinsiModel::whereIn('id',$idprop)->get();
+        $kota = KotaModel::where('id','=','~')->get();
+        $data = KantorModel::orderBy('id','asc')->get();
+        return view('kantor.index')->with(compact('data','prov','kota','level','kantor'));
     }
 
     public function create() {
@@ -221,5 +227,44 @@ class KantorController extends Controller
 
     public function changelevelatas(Request $request) {
         return $data = KantorModel::where('level','=',$request->id_level_k-1)->get(['id','nama_kantor as text']);
+    }
+
+
+    public function filter(Request $request)
+    {
+        $idlevel = KantorModel::select('level')->groupBy('level')->get()->toArray();
+        $level = LevelModel::where('id',$idlevel)->get();
+        $idprop = KantorModel::select('prop')->groupBy('prop')->get()->toArray();
+        $prov = ProvinsiModel::where('id',$idprop)->get();
+
+        $kantor = KantorModel::orderBy('id','asc')->groupBy('nama_kantor')->get();
+        $data = KantorModel::orderBy('id','asc');
+
+        if (!$request->f_level===NULL || !$request->f_level==""){
+            $data->where('level', '=', $request->f_level);
+        }
+
+        if (!$request->f_provinsi===NULL || !$request->f_provinsi==""){
+            $data->where('prop', '=', $request->f_provinsi);
+            $idkota = KantorModel::select('kota')->groupBy('kota')->get()->toArray();
+            $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$request->f_provinsi)->get();
+        }else{
+            $kota = KotaModel::where('id','=','~')->get();
+        }
+
+        if (!$request->f_kantor===NULL || !$request->f_kantor==""){
+            $data->where('nama_singkat', '=', $request->f_kantor);
+        }
+
+        if (!$request->f_kota===NULL || !$request->f_kota==""){
+            $data->where('kota', '=', $request->f_kota);
+        }
+
+        $data->get();
+        $data = $data->get();
+
+        return redirect('kantor')->with(compact('data','prov','kota','level','kantor'));
+
+        // dd($request->f_naker_prov);
     }
 }
