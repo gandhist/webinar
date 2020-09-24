@@ -95,8 +95,8 @@
                                     <td>{{$key->nama_pimp}}</td>
                                     <td>{{$key->kontak_p}}</td>
                                     <td>{{$key->keterangan}}</td>
-                                    <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y')}}</td>
-                                    <td>{{\Carbon\Carbon::parse($key->updated_at)->format('d F Y')}}</td>
+                                    <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y H:i')}}</td>
+                                    <td>{{\Carbon\Carbon::parse($key->updated_at)->format('d F Y H:i')}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -109,5 +109,85 @@
 
 </section>
 
+{{-- modal konfirmasi hapus --}}
+<div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <form action="{{ url('kantor/destroy') }}" class="form-horizontal" id="formDelete" name="formDelete"
+        method="post" enctype="multipart/form-data">
+        @method("DELETE")
+        @csrf
+        <input type="hidden" value="" name="idHapusData" id="idHapusData">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Konfirmasi</h4>
+                </div>
+                <div class="modal-body" id="konfirmasi-body">
+                    Yakin ingin menghapus data terpilih?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-danger" data-id=""
+                        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting..."
+                        id="confirm-delete">Hapus</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{{-- end of modal konfirmasi hapus --}}
 @endsection
+@push('script')
+<script>
 
+    $('#btnHapus').on('click', function (e) {
+        e.preventDefault();
+        var id = [];
+        $('.selection:checked').each(function () {
+            id.push($(this).data('id'));
+        });
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    });
+    // Button edit click
+    $('#btnEdit').on('click', function (e) {
+        e.preventDefault();
+        var id = [];
+        $('.selection:checked').each(function () {
+            id.push($(this).data('id'));
+        });
+        if (id.length == 0) {
+            Swal.fire({
+                    title: "Tidak ada data yang terpilih",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // alert('Tidak ada data yang terpilih');
+        } else if (id.length > 1) {
+            Swal.fire({
+                    title: "Harap pilih satu data untuk di ubah",
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA'
+                });
+            // alert('Harap pilih satu data untuk di ubah');
+        } else {
+            url = id[0];
+            window.location.href = "{{ url('kantor') }}/" + url + "/edit";
+        }
+    });
+</script>
+@endpush

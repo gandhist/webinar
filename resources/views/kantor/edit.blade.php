@@ -111,7 +111,7 @@
                         <div class="input-group-addon">
                             <span class="bintang">*</span> Level Kantor
                         </div>
-                        <select class="form-control select2" name="level" id="level"
+                        <select class="form-control select2" name="level" id="level" disabled
                             style="width: 100%;">
                             <option value="" disabled selected>*Level Kantor</option>
                             @foreach($level as $key)
@@ -158,6 +158,11 @@
                         <select class="form-control select2" name="level_atas" id="level_atas"
                             style="width: 100%;">
                             <option value="" disabled selected>Kantor Level Diatasnya</option>
+                            @foreach($levelatas as $key)
+                            <option value="{{ $key->id }}"
+                                {{ $key->id == $data->level_atas ? 'selected' : '' }}>
+                                {{ $key->nama_kantor }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <span id="level_atas" class="help-block customspan">{{ $errors->first('level_atas') }}
@@ -173,7 +178,8 @@
                             <span class="bintang">*</span> Alamat
                         </div>
                         <input name="alamat" id="alamat" class="form-control"
-                            placeholder="*Alamat Jalan, Kelurahan, Kecamatan" value="{{old('alamat')}}">
+                            placeholder="*Alamat Jalan, Kelurahan, Kecamatan"
+                            value="{{old('alamat') ? old('alamat') : $data->alamat}}">
                     </div>
                     <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}
                     </span>
@@ -191,7 +197,7 @@
                         <select class="form-control select2" name="prop" id="prop" style="width: 100%;">
                             <option value="" disabled selected>*Provinsi</option>
                             @foreach($prop as $key)
-                            <option value="{{ $key->id }}" {{ $key->id == old('prop') ? 'selected' : '' }}>
+                            <option value="{{ $key->id }}" {{ $key->id == $data->prop ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
                             @endforeach
                         </select>
@@ -213,6 +219,10 @@
                         </div>
                         <select class="form-control select2" name="kota" id="kota" style="width: 100%;">
                             <option value="" disabled selected>*Kota</option>
+                            @foreach($kotapil as $key)
+                            <option value="{{ $key->id }}" {{ $key->id == $data->kota ? 'selected' : '' }}>
+                                {{ $key->nama }} </option>
+                            @endforeach
                         </select>
                     </div>
                     <span id="kota" class="help-block customspan">{{ $errors->first('kota') }}
@@ -228,7 +238,8 @@
                             <span class="bintang">*</span> No Tlp
                         </div>
                         <input name="no_tlp" id="no_tlp" type="text" class="form-control"
-                            placeholder="*No Tlp" value="{{old('no_tlp')}}">
+                            placeholder="*No Tlp"
+                            value="{{old('no_tlp') ? old('no_tlp') : $data->no_tlp}}">
                     </div>
                     <span id="no_tlp" class="help-block customspan">{{ $errors->first('no_tlp') }}
                     </span>
@@ -245,7 +256,8 @@
                             <span class="bintang">*</span> Email
                         </div>
                         <input name="email" id="email" type="email" class="form-control"
-                            placeholder="*Email" value="{{old('email')}}">
+                            placeholder="*Email"
+                            value="{{old('email') ? old('email') : $data->email}}">
                     </div>
                     <span id="email" class="help-block customspan">{{ $errors->first('email') }} </span>
                 </div>
@@ -259,7 +271,8 @@
                             Instansi Reff
                         </div>
                         <input name="instansi_reff" id="instansi_reff" type="text" class="form-control"
-                            placeholder="Instansi Reff" value="{{old('instansi_reff')}}">
+                            placeholder="Instansi Reff"
+                            value="{{old('instansi_reff') ? old('instansi_reff') : $data->instansi_reff}}">
                     </div>
                     <span id="instansi_reff" class="help-block customspan">{{ $errors->first('instansi_reff') }}
                     </span>
@@ -276,7 +289,7 @@
                             Web
                         </div>
                         <input name="web" id="web" type="text" class="form-control" placeholder="Web"
-                            value="{{old('web')}}">
+                            value="{{old('web') ? old('web') : $data->web}}">
                     </div>
                     <span id="web" class="help-block customspan">{{ $errors->first('web') }} </span>
                 </div>
@@ -290,7 +303,8 @@
                             Nama Pimpinan
                         </div>
                         <input name="nama_pimp" id="nama_pimp" type="text" class="form-control"
-                            placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
+                            placeholder="Nama Pimpinan"
+                            value="{{old('nama_pimp') ? old('nama_pimp') : $data->nama_pimp}}">
                     </div>
                     <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
                 </div>
@@ -306,7 +320,8 @@
                             Jabatan Pimpinan
                         </div>
                         <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                            placeholder="Jabatan Pimpinan" value="{{old('jab_pimp')}}">
+                            placeholder="Jabatan Pimpinan"
+                            value="{{old('jab_pimp') ? old('jab_pimp') : $data->jab_pimp}}">
                     </div>
                     <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
                 </div>
@@ -320,7 +335,8 @@
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                            placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}">
+                            placeholder="No Hp Pimpinan"
+                            value="{{old('hp_pimp') ? old('hp_pimp') : $data->hp_pimp}}">
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
                 </div>
@@ -336,7 +352,8 @@
                             Email Pimpinan
                         </div>
                         <input name="email_pimp" id="email_pimp" type="email" class="form-control"
-                            placeholder="Email Pimpinan" value="{{old('email_pimp')}}">
+                            placeholder="Email Pimpinan"
+                            value="{{old('email_pimp') ? old('email_pimp') : $data->email_pimp}}">
                     </div>
                     <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
                     </span>
@@ -351,7 +368,8 @@
                             <span class="bintang">*</span> Nama Kontak Person
                         </div>
                         <input name="kontak_p" id="kontak_p" type="text" class="form-control"
-                            placeholder="*Nama Kontak Person" value="{{old('kontak_p')}}">
+                            placeholder="*Nama Kontak Person"
+                            value="{{old('kontak_p') ? old('kontak_p') : $data->kontak_p}}">
                     </div>
                     <span id="kontak_p" class="help-block customspan">{{ $errors->first('kontak_p') }}
                     </span>
@@ -368,7 +386,8 @@
                             Jabatan Kontak Person
                         </div>
                         <input name="jab_kontak_p" id="jab_kontak_p" type="text" class="form-control"
-                            placeholder="Jabatan Kontak Person" value="{{old('jab_kontak_p')}}">
+                            placeholder="Jabatan Kontak Person"
+                            value="{{old('jab_kontak_p') ? old('jab_kontak_p') : $data->jab_kontak_p}}">
                     </div>
                     <span id="jab_kontak_p" class="help-block customspan">{{ $errors->first('jab_kontak_p') }} </span>
                 </div>
@@ -382,7 +401,8 @@
                             <span class="bintang">*</span> No HP Kontak Person
                         </div>
                         <input name="no_kontak_p" id="no_kontak_p" type="text" class="form-control"
-                            placeholder="*No HP Kontak Person" value="{{old('no_kontak_p')}}">
+                            placeholder="*No HP Kontak Person"
+                            value="{{old('no_kontak_p') ? old('no_kontak_p') : $data->no_kontak_p}}">
                     </div>
                     <span id="no_kontak_p" class="help-block customspan">{{ $errors->first('no_kontak_p') }} </span>
                 </div>
@@ -398,7 +418,8 @@
                             <span class="bintang">*</span> Email Kontak Person
                         </div>
                         <input name="email_kontak_p" id="email_kontak_p" type="email" class="form-control"
-                            placeholder="*Email Kontak Person" value="{{old('email_kontak_p')}}">
+                            placeholder="*Email Kontak Person"
+                            value="{{old('email_kontak_p') ? old('email_kontak_p') : $data->email_kontak_p}}">
                     </div>
                     <span id="email_kontak_p" class="help-block customspan">{{ $errors->first('email_kontak_p') }}
                     </span>
@@ -413,7 +434,8 @@
                                 Keterangan
                             </div>
                             <input name="keterangan" id="keterangan" class="form-control"
-                                placeholder="Keterangan" value="{{old('keterangan')}}">
+                                placeholder="Keterangan"
+                                value="{{old('keterangan') ? old('keterangan') : $data->keterangan}}">
                         </div>
                         <span id="keterangan" class="help-block customspan">{{ $errors->first('keterangan') }}
                         </span>
@@ -459,3 +481,90 @@
 </section>
 
 @endsection
+@push('script')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    //Initialize Select2 Elements
+    $('.select2').select2();
+
+
+    $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+        autoclose: true
+    });
+
+
+    // Ajax Untuk Kota, Onchange Provinsi
+    $('#prop').on('change', function(e){
+        $('select[name="kota"]').empty();
+        var id = e.target.value;
+        //
+        if(id) {
+            $.ajax({
+                url: '/personals/create/getKota/'+id,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    $('select[name="kota"]').empty();
+                    $.each(data, function(key, value) {
+                        $('select[name="kota"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    });
+                }
+            });
+        }else{
+            $('select[name="kota"]').empty();
+        }
+        //
+        $('#kota').select2();
+    });
+
+
+    $('#level').on('select2:select', function () {
+        changelevelatas();
+    });
+
+    function changelevelatas() {
+        var url = "{{ url('kantor/changelevelatas') }}";
+        var id_level_k = $("#level").val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                id_level_k: id_level_k
+            },
+            success: function (data) {
+                level = $('#level').val();
+                if (level != 1 && data.length <= 0) {
+                    alert('Level atas belum terdaftar');
+                    $('#level').val("").trigger('change.select2');
+                    $("#level_atas").html(
+                        "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                    );
+                } else {
+                    $("#level_atas").html(
+                        "<option value='' disabled>Kantor Level Diatasnya</option>");
+                    $("#level_atas").select2({
+                        data: data
+                    }).val(null).trigger('change');
+                    $('#level_atas').val($('#level_atas option:eq(1)').val()).trigger(
+                        'change.select2');
+                    // $('#timprodatas').select2("val", $('#timprodatas option:eq(1)').val());
+                }
+            },
+            error: function (xhr, status) {
+                alert('Error');
+            }
+        });
+    }
+});
+
+
+</script>
+@endpush
