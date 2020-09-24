@@ -115,7 +115,7 @@
         <ul class="treeview-menu">
             <li>
                 <a href="{{ url('/kantor') }}">
-                <i class="fa fa-building-o"></i> <span>[X] Kantor PJS_PPKB Mandiri</span>
+                <i class="fa fa-building-o"></i> <span>Kantor PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
