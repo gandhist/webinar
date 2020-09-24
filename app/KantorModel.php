@@ -9,4 +9,5 @@ class KantorModel extends Model
 {
     use SoftDeletes;
     protected $table = "kantor";
+    protected $guarded = ['id'];
 }

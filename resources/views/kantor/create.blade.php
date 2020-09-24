@@ -286,10 +286,10 @@
                         <div class="input-group-addon">
                             Nama Pimpinan
                         </div>
-                        <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                            placeholder="Nama Pimpinan" value="{{old('jab_pimp')}}">
+                        <input name="nama_pimp" id="nama_pimp" type="text" class="form-control"
+                            placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
                     </div>
-                    <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
+                    <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
                 </div>
                 {{-- Akhir Nama Pimpinan --}}
 
@@ -456,3 +456,91 @@
 </section>
 
 @endsection
+
+@push('script')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    //Initialize Select2 Elements
+    $('.select2').select2();
+
+
+    $('.datepicker').datepicker({
+        format: 'yyyy/mm/dd',
+        autoclose: true
+    });
+
+
+    // Ajax Untuk Kota, Onchange Provinsi
+    $('#prop').on('change', function(e){
+        $('select[name="kota"]').empty();
+        var id = e.target.value;
+        //
+        if(id) {
+            $.ajax({
+                url: '/personals/create/getKota/'+id,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    $('select[name="kota"]').empty();
+                    $.each(data, function(key, value) {
+                        $('select[name="kota"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    });
+                }
+            });
+        }else{
+            $('select[name="kota"]').empty();
+        }
+        //
+        $('#kota').select2();
+    });
+
+
+    $('#level').on('select2:select', function () {
+        changelevelatas();
+    });
+
+    function changelevelatas() {
+        var url = "{{ url('kantor/changelevelatas') }}";
+        var id_level_k = $("#level").val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                id_level_k: id_level_k
+            },
+            success: function (data) {
+                level = $('#level').val();
+                if (level != 1 && data.length <= 0) {
+                    alert('Level atas belum terdaftar');
+                    $('#level').val("").trigger('change.select2');
+                    $("#level_atas").html(
+                        "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                    );
+                } else {
+                    $("#level_atas").html(
+                        "<option value='' disabled>Kantor Level Diatasnya</option>");
+                    $("#level_atas").select2({
+                        data: data
+                    }).val(null).trigger('change');
+                    $('#level_atas').val($('#level_atas option:eq(1)').val()).trigger(
+                        'change.select2');
+                    // $('#timprodatas').select2("val", $('#timprodatas option:eq(1)').val());
+                }
+            },
+            error: function (xhr, status) {
+                alert('Error');
+            }
+        });
+    }
+});
+
+
+</script>
+@endpush

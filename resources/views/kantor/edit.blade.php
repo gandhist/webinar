@@ -64,7 +64,8 @@
 <section class="content">
     <div class="box box-content">
         <div class="box-body">
-            <form method="POST" action="{{ url('kantor/store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ url('kantor/update', $data->id) }}" enctype="multipart/form-data">
+            @method("PATCH")
             @csrf
             <div class="row">
                 {{-- Nama Kantor --}}
@@ -74,7 +75,8 @@
                             <span class="bintang">*</span> Nama Kantor
                         </div>
                         <input name="nama_kantor" id="nama_kantor" class="form-control"
-                            placeholder="*Nama Kantor" value="{{old('nama_kantor')}}">
+                            placeholder="*Nama Kantor"
+                            value="{{old('nama_kantor') ? old('nama_kantor') : $data->nama_kantor}}">
                     </div>
                     <span id="nama_kantor"
                         class="help-block customspan">{{ $errors->first('nama_kantor') }}
@@ -92,7 +94,8 @@
                             <span class="bintang">*</span> Singkat Nama Kantor
                         </div>
                         <input name="nama_singkat" id="nama_singkat" class="form-control"
-                            placeholder="*Singkat Nama Kantor" value="{{old('nama_singkat')}}">
+                            placeholder="*Singkat Nama Kantor"
+                            value="{{old('nama_singkat') ? old('nama_singkat') : $data->nama_singkat}}">
                     </div>
 
                     <span id="nama_singkat"
@@ -112,7 +115,7 @@
                             style="width: 100%;">
                             <option value="" disabled selected>*Level Kantor</option>
                             @foreach($level as $key)
-                            <option value="{{ $key->id }}"
+                            <option value="{{ $key->id }}" {{ $key->id == $data->level ? 'selected' : '' }}
                                 {{ $key->id == old('level') ? 'selected' : '' }}>
                                 {{ $key->nama_level }} </option>
                             @endforeach
@@ -286,10 +289,10 @@
                         <div class="input-group-addon">
                             Nama Pimpinan
                         </div>
-                        <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                            placeholder="Nama Pimpinan" value="{{old('jab_pimp')}}">
+                        <input name="nama_pimp" id="nama_pimp" type="text" class="form-control"
+                            placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
                     </div>
-                    <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
+                    <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
                 </div>
                 {{-- Akhir Nama Pimpinan --}}
 

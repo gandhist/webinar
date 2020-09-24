@@ -143,6 +143,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'kantor'], function () {
 	Route::post('store', 'KantorController@store');
 	Route::get('edit/{id}', 'KantorController@edit');
 	Route::put('update', 'KantorController@update');
+	Route::post('changelevelatas', 'KantorController@changelevelatas');
 	// Route::get('detail/{id}', 'KantorController@detail');
 });
 // End Kantor
