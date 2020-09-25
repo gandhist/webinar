@@ -2,18 +2,6 @@
 
 @section('content')
 <style>
-table#data-tables tbody tr {
-    background-color:rgba(137, 228, 255, 0.5);
-}
-table#data-tables tbody tr.even{
-    background-color:rgba(253, 255, 128, 0.5);
-}
-table#data-tables tbody tr:hover {
-    background-color:rgba(137, 228, 255, 1);
-}
-table#data-tables tbody tr.even:hover{
-    background-color:rgba(253, 255, 128, 1);
-}
 </style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
