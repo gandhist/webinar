@@ -42,17 +42,17 @@
   <style>
 
     table#data-tables tbody tr {
-        background-color:rgba(137, 228, 255, 1);
+        background-color:rgba(137, 228, 255, 0.3);
     }
     table#data-tables tbody tr.even{
-        background-color:rgba(255, 231, 125, 1);
+        background-color: white
     }
     table#data-tables tbody tr:hover {
-        background-color:rgba(137, 228, 255, 0.5);
+        background-color:rgba(137, 228, 255, 1);
     }
-    table#data-tables tbody tr.even:hover{
+    /* table#data-tables tbody tr.even:hover{
         background-color:rgba(255, 231, 125, 0.5);
-    }
+    } */
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
