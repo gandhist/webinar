@@ -206,6 +206,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
 	Route::get('/{id}/edit','InstansiController@edit');
     Route::get('/{id}','InstansiController@show');
 	Route::delete('/destroy','InstansiController@destroy');
+	Route::post('/changelevelatas','KantorController@changelevelatas');
 });
 // End Instansi
 
