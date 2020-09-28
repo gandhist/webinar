@@ -64,25 +64,29 @@ class PersonalController extends Controller
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
-            'nama' => 'required|min:3|max:100',
+            'nama' => 'required',
             'nik' => 'required|numeric|unique:personal|digits:16',
             'email' => 'required|email|unique:personal',
-            'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
+            'no_hp' => 'required',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
-            'instansi' => 'required',
-            'jabatan' => 'required|min:3,max:100',
-            'alamat' => 'required|min:3|max:100',
+            // 'instansi' => 'required',
+            // 'jabatan' => 'required|min:3,max:100',
+            'alamat' => 'required',
             'provinsi' => 'required',
             'kota' => 'required',
             'temp_lahir' => 'required',
-            'no_rek' => 'sometimes|nullable|numeric|digits_between:4,20',
+            'tgl_lahir' => 'required|date',
+            'no_rek' => 'sometimes|nullable|numeric',
             'bank_id' => 'required_with:no_rek',
-            'nama_rek' => 'sometimes|nullable|required_with:no_rek|min:3|max:50',
+            'nama_rek' => 'sometimes|nullable|required_with:no_rek',
             'npwpClean' => 'sometimes|nullable|numeric|digits:15',
+            'bpjs_no' => 'sometimes|nullable|numeric|digits:13',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
-            'reff_p' => 'sometimes|nullable|min:3|max:100',
+            'lampiran_bpjs' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
+            'reff_p' => 'required',
+            'status_p' => 'required'
         ],[
             'nama.required' => 'Mohon isi Nama',
             'nama.min' => 'Nama minimal 3 karakter',
@@ -106,12 +110,16 @@ class PersonalController extends Controller
             'jabatan.required' => 'Mohon isi Jabatan',
             'jabatan.min' => 'Jabatan minimal 3 karakter',
             'jabatan.max' => 'Jabatan maksimal 100 karakter',
+            'bpjs_no.numeric' => 'Mohon isi Nomor BPJS dengan format yang valid',
+            'bpjs_no.digits' => 'Mohon isi Nomor BPJS dengan format yang valid',
             'alamat.required' => 'Mohon isi Alamat',
             'alamat.min' => 'Alamat minimal 3 karakter',
             'alamat.max' => 'Alamat maksimal 100 karakter',
             'provinsi.required' => 'Mohon isi Provinsi',
             'kota.required' => 'Mohon isi Kota',
             'temp_lahir.required' => 'Mohon isi Tempat Lahir',
+            'tgl_lahir.required' => 'Mohon isi Tanggal Lahir',
+            'tgl_lahir.date' => 'Mohon isi Tanggal Lahir',
             'no_rek.numeric' => 'Mohon isi Nomor Rekening dengan format yang valid',
             'no_rek.digits_between' => 'Mohon isi Nomor Rekening dengan format yang valid',
             'no_rek.gt' => 'Mohon isi Nomor Rekening dengan format yang valid',
@@ -130,6 +138,8 @@ class PersonalController extends Controller
             'lampiran_npwp.max' => 'Lampiran NPWP maksimal berukuran 2MB',
             'lampiran_ktp.mimes' => 'Mohon masukkan Lampiran KTP dengan format yang valid (gambar / PDF)',
             'lampiran_ktp.max' => 'Lampiran KTP maksimal berukuran 2MB',
+            'reff_p.required' => 'Mohon isi Referensi Pendaftaran',
+            'status_p.required' => 'Mohon isi Status Personal',
             'reff_p.min' => 'Referensi Pendaftaran minimal 3 karakter',
             'reff_p.max' => 'Referensi Pendaftaran maksimal 100 karakter',
         ]);
@@ -141,8 +151,8 @@ class PersonalController extends Controller
         $data->email = $request->email;
         $data->no_hp = $request->no_hp;
         $data->jenis_kelamin = $request->jenis_kelamin;
-        $data->instansi = $request->instansi;
-        $data->jabatan = $request->jabatan;
+        // $data->instansi = $request->instansi;
+        // $data->jabatan = $request->jabatan;
         $data->alamat = $request->alamat;
         $data->provinsi_id = $request->provinsi;
         $data->kota_id = $request->kota;
@@ -152,7 +162,12 @@ class PersonalController extends Controller
         $data->id_bank = $request->bank_id;
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
+        $data->agama =  $request->agama;
+        $data->status_pajak =  $request->status_pajak;
+        $data->status_pernikahan =  $request->status_perni;
+        $data->bpjs =  $request->bpjs_no;
         $data->reff_p = $request->reff_p;
+        $data->status_p = $request->status_p;
         $data->is_activated = '1';
         $data->is_pimpinan = '0';
 
@@ -193,6 +208,13 @@ class PersonalController extends Controller
             $file = $dir_name."_lampiran_npwp_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $file);
             $data->lampiran_npwp = $destinationPath."/".$file;
+        }
+
+        if ($files = $request->file('lampiran_bpjs')) {
+            $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
+            $file = $dir_name."_lampiran_bpjs_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->lampiran_bpjs = $destinationPath."/".$file;
         }
 
         $data->save();
