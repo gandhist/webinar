@@ -23,23 +23,142 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
+            <div class="box-body" style="margin:25px 25px 25px 10px;">
                 <div class="row">
-                    <div class="col-12">
-                        <div class="btn-group">
-                            <a href="{{ url('personals/create') }}" class="btn btn-info">
-                                <i class="fa fa-plus"></i> Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
-                                <i class="fa fa-edit"></i> Ubah</button>
-                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
-                                <i class="fa fa-trash"></i> Hapus</button>
+                    <div class="col-sm-6">
+                        <!-- Table Filter -->
+                        <table class="table table-condensed table-filter">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon customInput">Tgl Ijasah</span>
+                                            <input id="f_awal_ijasah" name="f_awal_ijasah"
+                                                value="{{ request()->get('f_awal_ijasah') }}" autocomplete="off"
+                                                data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
+                                                class="form-control customInput" placeholder="Tgl Awal">
+                                            <span class="input-group-addon customInput">To</span>
+                                            <input id="f_akhir_ijasah" name="f_akhir_ijasah"
+                                                value="{{ request()->get('f_akhir_ijasah') }}" autocomplete="off"
+                                                data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
+                                                class="form-control customInput" placeholder="Tgl Akhir">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_status" id="f_status">
+                                                <option selected value="">Status_Personil</option>
+                                                <option value="1"
+                                                    {{ request()->get('f_status') == "1" ? 'selected' : '' }}>Internal
+                                                </option>
+                                                <option value="2"
+                                                    {{ request()->get('f_status') == "2" ? 'selected' : '' }}>External
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_provinsi" id="f_provinsi">
+                                                <option selected value="">Prov_Domisili</option>
+                                                @foreach($prov as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_provinsi') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_jenjang_pendidikan"
+                                                id="f_jenjang_pendidikan" placeholder="Jenjang Pendidikan">
+                                                <option selected value="">Jenjang Pendidikan</option>
+                                                @foreach($jenjang_pendidikan as $key)
+                                                <option value="{{ $key->id_jenjang }}"
+                                                    {{ request()->get('f_jenjang_pendidikan') == $key->id_jenjang ? 'selected' : '' }}>
+                                                    {{ $key->deskripsi }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <button type="submit" class="btn btn-info"> <i class="fa fa-filter"></i>
+                                                Filter</button>
+                                            <button type="button" class="btn btn-default"><a
+                                                    href="{{ url('personil') }}"> <i class="fa fa-refresh"></i>
+                                                    Reset</a></button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_kota" id="f_kota">
+                                                <option selected value="">Kota_Domisili</option>
+                                                @foreach($kota as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_kota') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_program_studi"
+                                                id="f_program_studi">
+                                                <option value="">Program Studi</option>
+                                                @foreach($prodi as $key)
+                                                <option value="{{ $key->jurusan }}"
+                                                    {{ request()->get('f_program_studi') == $key->jurusan ? 'selected' : '' }}>
+                                                    {{ $key->jurusan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-sm-3">
+                    </div>
+
+                    <div class="col-sm-3" style='text-align:right'>
+                        <div class="row" style="margin-top:-3px;margin-bottom:3px">
+                            <div class="col-xs-12">
+                                <div class="btn-group">
+                                    <span class="btn btn-primary" id="btnDetail"></i>
+                                        Detail_Personil</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <div class="btn-group">
+                                    <a href="{{ url('personals/create') }}" class="btn btn-info">
+                                        <i class="fa fa-plus"></i> Tambah</a>
+                                    <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                                        <i class="fa fa-edit"></i> Ubah</button>
+                                    <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
+                                        <i class="fa fa-trash"></i> Hapus</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="box-body" style="margin:25px 25px 25px 10px;">
-
-                <div class="row" style="margin-top:40px; margin-bottom: 25;">
+                <div class="row">
                     <div class="col-12">
                         @if(session()->get('pesan'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -50,8 +169,6 @@
                         </div>
                         @endif
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-12">
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
@@ -275,6 +392,7 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
+    $('.select2').select2();
     $('#btnHapus').on('click', function (e) {
             e.preventDefault();
             var id = [];

@@ -10,6 +10,7 @@ use App\BankModel;
 use App\NegaraModel;
 use App\Peserta;
 use App\User;
+use App\Sekolah;
 use App\PTKPModel;
 use App\JenjangPendidikan;
 use Illuminate\Http\Request;
@@ -30,24 +31,34 @@ class PersonalController extends Controller
 {
     //
     public function index() {
+
+        $ptkp = PTKPModel::all();
+        $data = Personal::where('is_activated','1')->get();
+        $bank = BankModel::all();
+        $negara = NegaraModel::all();
+        $jenjang_pendidikan = JenjangPendidikan::all();
+
         $prov = ProvinsiModel::all();
         $provinsi = $prov->pluck('nama', 'id');
         $provinsi->all();
 
-        $cities = KotaModel::all();
-        $kota = $cities->pluck('nama', 'id');
-        $kota->all();
+        $kota = KotaModel::all();
+        $kotas = $kota->pluck('nama', 'id');
+        $kotas->all();
 
         $bus = BuModel::all();
         $bu = $bus->pluck('nama_bu', 'id');
         $bu->all();
 
+        $idpers = Personal::select('id')->get()->toArray();
+        $prodi = Sekolah::select('jurusan')->whereIn('id_personal',$idpers)->groupBy('jurusan')->get();
+
         return view('personal.index',
             ['personals' => Personal::where('is_activated','1')->get(),
             'provinsis' => $provinsi,
-            'kotas' => $kota,
+            'kotas' => $kotas,
             'bu' => $bu]
-        );
+        )->with(compact('prov','bank','kota','negara','jenjang_pendidikan','prodi'));
     }
 
     public function create() {
