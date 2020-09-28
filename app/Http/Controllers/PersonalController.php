@@ -7,8 +7,11 @@ use App\ProvinsiModel;
 use App\KotaModel;
 use App\BuModel;
 use App\BankModel;
+use App\NegaraModel;
 use App\Peserta;
 use App\User;
+use App\PTKPModel;
+use App\JenjangPendidikan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
@@ -51,7 +54,10 @@ class PersonalController extends Controller
         return view('personal.create',['provinsis' => ProvinsiModel::all(),
                                         'kotas' => KotaModel::all(),
                                         'bus' => BuModel::where('deleted_at',NULL)->get(),
-                                        'banks' =>  BankModel::all()]);
+                                        'banks' =>  BankModel::all(),
+                                        'ptkp' => PTKPModel::all(),
+                                        'jenjang_pendidikan' => JenjangPendidikan::all(),
+                                        'negara' => NegaraModel::all()]);
     }
 
     public function store(Request $request) {
