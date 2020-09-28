@@ -106,12 +106,14 @@
                         <!-- End -->
                         </form>
                         </div>
-                        <button type="button" class="btn btn-danger pull-right" id="btnHapus" name="btnHapus">
-                            <i class="fa fa-trash"></i> Hapus</button>
-                        <button class="btn btn-success pull-right" id="btnEdit" name="btnEdit">
-                            <i class="fa fa-edit"></i> Ubah</button>
-                        <a href="{{ url('kantor/create') }}" class="btn btn-info pull-right">
-                            <i class="fa fa-plus"></i> Tambah</a>
+                        <div class="btn-group  pull-right">
+                            <a href="{{ url('kantor/create') }}" class="btn btn-info">
+                                <i class="fa fa-plus"></i> Tambah</a>
+                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                                <i class="fa fa-edit"></i> Ubah</button>
+                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
+                                <i class="fa fa-trash"></i> Hapus</button>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
