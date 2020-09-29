@@ -9,12 +9,12 @@
 </style>
 <section class="content-header">
     <h1>
-        Daftar Instansi
+        Daftar Badan Usaha
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
-        <li class="active"><a href="{{ url('/instansi') }}"> Instansi</a></li>
+        <li class="active"><a href="{{ url('/instansi') }}"> Badan Usaha</a></li>
     </ol>
 </section>
 

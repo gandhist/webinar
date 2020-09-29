@@ -5,6 +5,10 @@
 	overflow-y: hidden
 }
 
+.input-group-addon{
+	text-align:right !important;
+}
+
 .pdf-icon {
 	font-size: 100%;
 	box-sizing: border-box;
@@ -95,7 +99,7 @@ th {
 	/* align:"center"; */
 }
 
-	
+
 .select2-selection__rendered {
 	text-align: left;
 	/* margin-top: -1px !important; */
@@ -286,7 +290,7 @@ th {
 .has-error-select > .help-block {
 	color:#a94442;
 }
-	
+
 .image-upload > input {
 	display:none;
 }
