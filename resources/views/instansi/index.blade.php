@@ -23,20 +23,107 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
-                <div class="row">
-                    <div class="col-12">
-                        <div>
-                            <a href="{{ url('instansi/create') }}" class="btn btn-info">
-                                <i class="fa fa-plus"></i> Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
-                                <i class="fa fa-edit"></i> Ubah</button>
-                            <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
-                                <i class="fa fa-trash"></i> Hapus</button>
+            {{-- sub menu  --}}
+            <form action="{{ url('badanusaha/filter') }}" enctype="multipart/form-data" name="filterData"
+                id="filterData" method="post">
+                <!-- @method("PUT") -->
+                @csrf
+                <!-- <input type="hidden" name="key" id="key">
+                <input type="hidden" name="_method" id="_method"> -->
+                <div class="row" style="margin-top: 25px">
+                    <div class="col-sm-4">
+
+                        <!-- Table Filter -->
+                        <table class="table table-condensed table-filter">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_status" id="f_status">
+                                                <option selected value="">Status Kantor</option>
+                                                @foreach($statusmodel as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_status') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_provinsi" id="f_provinsi">
+                                                <option value="">Provinsi</option>
+                                                @foreach($provinsi as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_provinsi') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                    <td style="padding-right: 0px">
+                                        <button type="submit" class="btn btn-sm btn-info"> <i class="fa fa-filter"></i>
+                                            Filter</button>
+                                    </td>
+                                    <td style="padding-left: 0px">
+                                        <a href="{{ url('badanusaha') }}" class="btn btn-sm btn-default"> <i
+                                                class="fa fa-refresh"></i>
+                                            Reset</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_instansi" id="f_instansi">
+                                                <option selected value="">Instansi_Reff</option>
+                                                @foreach($instansi as $key)
+                                                <option value="{{ $key->instansi_reff }}"
+                                                    {{ request()->get('f_instansi') == $key->instansi_reff ? 'selected' : '' }}>
+                                                    {{ $key->instansi_reff }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="input-group customSelect2md">
+                                            <select class="form-control select2" name="f_kota" id="f_kota">
+                                                <option selected value="">Kota</option>
+                                                @foreach($kota as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_kota') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- End -->
+                    </div>
+
+
+
+                    <div class="col-sm-5">
+
+                    </div>
+
+                    <div class="col-sm-3" style='text-align:right'>
+                        <div class="btn-group">
+                            <a href="{{ url('instansi/create') }}" class="btn btn-info"> <i class="fa fa-plus"></i>
+                                Tambah</a>
+                            <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i class="fa fa-edit"></i>
+                                Ubah</button>
+                            <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i class="fa fa-trash"></i>
+                                Hapus</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
             <div class="box-body" style="margin:25px 25px 25px 10px;">
 
                 <div class="row" style="margin-top:40px; margin-bottom: 25;">
@@ -267,6 +354,7 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
+    $('.select2').select2()
     $('#btnHapus').on('click', function (e) {
             e.preventDefault();
             var id = [];

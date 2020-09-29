@@ -32,7 +32,10 @@ class InstansiController extends Controller
     //
     public function index () {
         $instansi = BuModel::all();
-        return view('instansi.index')->with(compact('instansi'));
+        $statusmodel = StatusBUModel::all();
+        $provinsi = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota'));
     }
     public function show ($id) {
         $instansi = BuModel::where('id', $id)->first();
@@ -40,6 +43,7 @@ class InstansiController extends Controller
         $provinsi = ProvinsiModel::where('id', $instansi->id_prop)->first();
         $kota = KotaModel::where('id', $instansi->id_kota)->first();
         $bank = BankModel::where('id_bank', $instansi->id_bank)->first();
+        $statusmodel = StatusBUModel::all();
         return view('instansi.show')->with(compact('instansi','provinsi','kota','bank','id'));
 
     }
