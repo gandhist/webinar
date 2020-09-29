@@ -57,14 +57,24 @@
                             <thead>
                                 <tr>
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
-                                    <th><span class="indent">No.</span></th>
-                                    <th><span class="indent">Nama Instansi</span></th>
+                                    <th><span>No.</span></th>
+                                    <th>Nama</th>
+                                    <th>Sts_Ktr</th>
+                                    <th>Prov</th>
+                                    <th>Instansi_Reff</th>
+                                    <th>Nama_Pimp</th>
+                                    <th>Kontak_P</th>
+                                    <th>NPWP</th>
+                                    <th>Keterangan</th>
+                                    <th>User_Tgl_Tambah</th>
+                                    <th>User_Tgl_Ubah</th>
+                                    {{-- <th><span class="indent">Nama Instansi</span></th>
                                     <th><span class="indent">Nomor Telepon</span></th>
                                     <th><span class="indent">Email</span></th>
                                     <th><span class="indent">Alamat</span></th>
                                     <th><span class="indent">Website</span></th>
                                     <th><span class="indent">Nama Pimpinan</span></th>
-                                    <th><span class="indent">Aksi</span></th>
+                                    <th><span class="indent">Aksi</span></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,7 +85,66 @@
 
                                     <td class="text-center">{{ $loop->iteration }}</td>
 
-                                    <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_bu   }}" >
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                        Bentuk BU : {{$key->bentukusaha->nama ?? ''}} <br>
+                                        Nama Lengkap : {{$key->nama_bu ?? ''}} <br>
+                                        Nama Singkat : {{$key->singkat_bu ?? ''}} <br>
+                                    ">{{$key->singkat_bu  ?? ''}}</td>
+
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                    title='{{ $key->status_kantor ? $key->status->nama : "" }}'>{{ $key->status_kantor ? $key->status->singkatan : "" }}</td>
+
+                                    <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                        title="
+                                            Provinsi : {{$key->provinsibu->nama}}<br>
+                                            Kab/Kota : {{$key->kota->nama}}<br>
+                                            Alamat : {{$key->alamat}}<br>
+                                            Telp : {{$key->telp}}<br>
+                                            Email : {{$key->email}}<br>
+                                            Web : {{$key->web}}">
+                                        {{ isset($key->provinsibu->nama) ? $key->provinsibu->nama_singkat : '' }}
+                                    </td>
+
+                                    <td>{{ $key->instansi_reff }}</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                        Nama : {{ $key->nama_pimp }} <br>
+                                        Jabatan : {{ $key->jab_pimp }} <br>
+                                        No Hp : {{ $key->hp_pimp }} <br>
+                                        Email : {{ $key->email_pimp }} <br>
+                                        ">{{ $key->nama_pimp }}</td>
+                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                        Nama : {{ $key->kontak_p }} <br>
+                                        Jabatan : {{ $key->jab_kontak_p }} <br>
+                                        No Hp : {{ $key->no_kontak_p }} <br>
+                                        Email : {{ $key->email_kontak_p }} <br>
+                                        ">{{ $key->kontak_p }}</td>
+                                    <td style="text-align:center" data-toggle="tooltip" data-placement="bottom" data-html="true" title="
+                                        NPWP : {{ $key->npwp }} <br>
+                                        No Rekening : {{ $key->no_rek  }} <br>
+                                        Atas Nama : {{ $key->nama_rek }} <br>
+                                        Bank : {{ isset($key->bank->nama_bank) ? '$key->bank->nama_bank' : '' }} <br>
+                                        ">
+                                        @if (isset($key->npwp))
+                                        @if (isset($key->npwp_pdf))
+                                        <button class="btn btn-success btn-xs"
+                                            onclick='tampilLampiran("{{ asset($key->npwp_pdf) }}","NPWP {{$key->nama_bu}}")'> {{ $key->npwp }} </button>
+                                        @else
+                                        <button class="btn btn-warning btn-xs"> {{ $key->npwp }} </button>
+                                        @endif
+                                        @endif
+                                        </td>
+                                    <td>{{ $key->keterangan }}</td>
+                                    <td style='text-align:right'>
+                                        @if (isset($key->created_at))
+                                        {{ \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
+                                        @endif
+                                    </td>
+                                    <td style='text-align:right'>
+                                        @if (isset($key->updated_at))
+                                        {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
+                                        @endif
+                                    </td>
+                                    {{-- <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_bu   }}" >
                                         <a href="{{ url('instansi/'.$key->id) }}">
                                             {{ str_limit($key->nama_bu  ,50) }}
                                         </a>
@@ -119,7 +188,7 @@
                                             </button>
                                         @endif
 
-                                    </td>
+                                    </td> --}}
 
                                 </tr>
                                 @endforeach
@@ -162,6 +231,32 @@
 </div>
 {{-- end of modal konfirmasi hapus --}}
 
+<!-- modal lampiran -->
+<div class="modal fade" id="modalLampiran" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="lampiranTitle"></h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <iframe src="" id="iframeLampiran" width="100%" height="500px" frameborder="0"
+                            allowtransparency="true"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end of modal lampiran -->
 @endsection
 @push('script')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>

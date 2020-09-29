@@ -530,7 +530,7 @@
                 </div>
 
                 <br>
-                {{-- <div class="input-group">
+                <div class="input-group">
                     <h4><b>Data Sekolah</b></h4>
                     <span class="input-group-btn">
                         <button id="addRow" type="button" class="btn btn-md btn-success pull-right"><i
@@ -562,7 +562,7 @@
                     </tbody>
                 </table>
                 <input type="hidden" name='id_detail_sekolah' id='id_detail_sekolah' value=''>
-                </div> --}}
+                </div>
 
                 <div class="box-footer" style="text-align:center">
                     <div class="row">
@@ -593,111 +593,167 @@
     var home = "{{ url('personals') }}";
 
 
-    // $(function() {
-    //    // Tambah Baris Data Sekolah
-    //    function add_Row(no) {
-    //         if (no == 1) {
-    //             a = `<option value="0">-- Pilih Default --</option>
-    //                  <option value="1" selected>Default</option>`;
-    //         } else {
-    //             a = `<option value="0" selected>-- Pilih Default --</option>
-    //                  <option value="1">Default</option>`;
-    //         }
+    $(function() {
+       // Tambah Baris Data Sekolah
+       function add_Row(no) {
+            if (no == 1) {
+                a = `<option value="0">-- Pilih Default --</option>
+                     <option value="1" selected>Default</option>`;
+            } else {
+                a = `<option value="0" selected>-- Pilih Default --</option>
+                     <option value="1">Default</option>`;
+            }
 
-    //         $('#data-sekolah > tbody:last').append(`
-    //             <tr class"odd" role="row">
-    //                 <td style="text-align:center;">` + no + `</td>
-    //                 <td>
-    //                     <select required class="form-control select2" name="id_jp_` + no + `" id="id_jp_` + no + `" style="width: 100%;">
-    //                         <option value="" disabled selected></option>
-    //                         @foreach($jenjang_pendidikan as $key)
-    //                         <option value="{{ $key->id_jenjang }}"> {{ $key->deskripsi }} </option>
-    //                         @endforeach
-    //                     </select>
-    //                 </td>
-    //                 <td><input required name="id_namasekolah_` + no + `" id="id_namasekolah_` + no + `" type="text" class="form-control " placeholder=""></td>
-    //                 <td>
-    //                     <select required class="form-control select2 negarasekolah" idprov="id_provsekolah_` + no +
-    //             `" name="id_negarasekolah_` + no + `" id="id_negarasekolah_` + no + `" style="width: 100%;">
-    //                         <option value="" disabled selected></option>
-    //                         @foreach($negara as $key)
-    //                         <option value="{{ $key->id }}"> {{ $key->country_name }} </option>
-    //                         @endforeach
-    //                     </select>
-    //                 </td>
-    //                 <td>
-    //                     <select required class="form-control select2 provsekolah" idkota="id_kotasekolah_` + no +
-    //             `" name="id_provsekolah_` + no + `" id="id_provsekolah_` + no + `" style="width: 100%;">
-    //                         <option value="" disabled selected></option>
-    //                         @foreach($provinsis as $key)
-    //                         <option value="{{ $key->id }}"> {{ $key->nama }} </option>
-    //                         @endforeach
-    //                     </select>
-    //                 </td>
-    //                 <td>
-    //                     <select required class="form-control select2" name="id_kotasekolah_` + no +
-    //             `" id="id_kotasekolah_` + no + `" style="width: 100%;">
-    //                         <option value="" selected></option>
-    //                     </select>
-    //                 </td>
-    //                 <td><input required name="id_prodi_` + no + `" id="id_prodi_` + no + `" type="text" class="form-control " placeholder=""></td>
-    //                 <td style="width:10%">
-    //                     <input required onkeypress="return isNumberKey(event)" name="id_tahuntamat_` + no +
-    //             `" id="id_tahuntamat_` + no + `" type="text"
-    //                         class="form-control " placeholder="" maxlength="4">
-    //                 </td>
-    //                 <td><input required name="id_noijasah_` + no + `" id="id_noijasah_` + no + `" type="text" class="form-control " placeholder=""></td>
-    //                 <td style="width:10%">
-    //                     <input required autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-    //                     class="form-control " id="id_tglijasah_` + no + `" name="id_tglijasah_` + no + `" placeholder="dd/mm/yyyyy">
-    //                 </td>
-    //                 <td>
-    //                     <select required class="form-control select2 selectdefault" nomor="` + no +
-    //             `" name="id_default_` + no +
-    //             `" id="id_default_` +
-    //             no + `" style="width: 100%;">
-    //                         ` + a + `
-    //                     </select>
-    //                 </td>
-    //                 <td  class="image-upload">
-    //                     <label for="id_pdfijasah_` + no + `">
-    //                             <i class="fa fa-upload" id="i_pdfijasah_` + no + `" style="padding-top:8px;padding-left:13px;color:grey" >  Upload</i>
-    //                     </label>
-    //                     <input accept=".pdf,.jpeg,.jpg" required idi="#i_pdfijasah_` + no + `" name="id_pdfijasah_` +
-    //             no + `" id="id_pdfijasah_` + no + `" type="file" class="form-control cstmfile" placeholder="">
+            $('#data-sekolah > tbody:last').append(`
+                <tr class"odd" role="row">
+                    <td style="text-align:center;">` + no + `</td>
+                    <td>
+                        <select required class="form-control select2" name="id_jp_` + no + `" id="id_jp_` + no + `" style="width: 100%;">
+                            <option value="" disabled selected></option>
+                            @foreach($jenjang_pendidikan as $key)
+                            <option value="{{ $key->id_jenjang }}"> {{ $key->deskripsi }} </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td><input required name="id_namasekolah_` + no + `" id="id_namasekolah_` + no + `" type="text" class="form-control " placeholder=""></td>
+                    <td>
+                        <select required class="form-control select2 negarasekolah" idprov="id_provsekolah_` + no +
+                `" name="id_negarasekolah_` + no + `" id="id_negarasekolah_` + no + `" style="width: 100%;">
+                            <option value="" disabled selected></option>
+                            @foreach($negara as $key)
+                            <option value="{{ $key->id }}"> {{ $key->country_name }} </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select required class="form-control select2 provsekolah" idkota="id_kotasekolah_` + no +
+                `" name="id_provsekolah_` + no + `" id="id_provsekolah_` + no + `" style="width: 100%;">
+                            <option value="" disabled selected></option>
+                            @foreach($provinsis as $key)
+                            <option value="{{ $key->id }}"> {{ $key->nama }} </option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select required class="form-control select2" name="id_kotasekolah_` + no +
+                `" id="id_kotasekolah_` + no + `" style="width: 100%;">
+                            <option value="" selected></option>
+                        </select>
+                    </td>
+                    <td><input required name="id_prodi_` + no + `" id="id_prodi_` + no + `" type="text" class="form-control " placeholder=""></td>
+                    <td style="width:10%">
+                        <input required onkeypress="return isNumberKey(event)" name="id_tahuntamat_` + no +
+                `" id="id_tahuntamat_` + no + `" type="text"
+                            class="form-control tahun_tamat" placeholder="" maxlength="4">
+                    </td>
+                    <td><input required name="id_noijasah_` + no + `" id="id_noijasah_` + no + `" type="text" class="form-control " placeholder=""></td>
+                    <td style="width:10%">
+                        <input required autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
+                        class="form-control " id="id_tglijasah_` + no + `" name="id_tglijasah_` + no + `" placeholder="dd/mm/yyyyy">
+                    </td>
+                    <td>
+                        <select required class="form-control select2 selectdefault" nomor="` + no +
+                `" name="id_default_` + no +
+                `" id="id_default_` +
+                no + `" style="width: 100%;">
+                            ` + a + `
+                        </select>
+                    </td>
+                    <td  class="image-upload">
+                        <label for="id_pdfijasah_` + no + `">
+                                <i class="fa fa-upload" id="i_pdfijasah_` + no + `" style="padding-top:8px;padding-left:13px;color:grey" >  Upload</i>
+                        </label>
+                        <input accept=".pdf,.jpeg,.jpg" required idi="#i_pdfijasah_` + no + `" name="id_pdfijasah_` +
+                no + `" id="id_pdfijasah_` + no + `" type="file" class="form-control cstmfile" placeholder="">
 
-    //                 </td>
-    //                 <td style="padding-top:4px">
-    //                     <button type="button" class="btn btn-block btn-danger btn-sm btn-detail-hapus" nomor=" ` + no + `" >
-    //                     <span class="fa fa-trash"></span></button>
-    //                 </td
-    //             </tr>
-    //         `);
-    //     };
+                    </td>
+                    <td style="padding-top:4px">
+                        <button type="button" class="btn btn-block btn-danger btn-sm btn-detail-hapus" nomor=" ` + no + `" >
+                        <span class="fa fa-trash"></span></button>
+                    </td
+                </tr>
+            `);
+            $('.tahun_tamat').datepicker({
+                format: "yyyy",
+                // viewMode: "years",
+                minViewMode: "years",
+                endDate: "today"
+            });
 
-    //     // Tambah Baris Data Sekolah
-    //     var no = 1;
-    //     var id_detail = [];
-    //     $('#addRow').on('click', function () {
-    //         add_Row(no);
-    //         id_detail.push(no);
-    //         $('#id_detail_sekolah').val(id_detail);
-    //         $('.select2').select2();
-    //         no++;
-    //     });
+        };
 
-    //     // Hapus Baris Data Sekolah
-    //     $(document).on('click', '.btn-detail-hapus', function (e) {
-    //         nomor = $(this).attr('nomor');
-    //         var removeItem = nomor;
-    //         id_detail = jQuery.grep(id_detail, function (value) {
-    //             return value != removeItem;
-    //         });
-    //         $('#id_detail_sekolah').val(id_detail);
-    //         $(this).closest('tr').remove();
-    //     });
 
-    // });
+        $(document).on('change', '.selectdefault', function (e) {
+            x = $(this).val();
+            nomor = $(this).attr('nomor');
+            if (x == 1) {
+                id_detail.forEach(function (entry) {
+                    if (nomor == entry) {
+
+                    } else {
+                        $('#id_default_' + entry).html(
+                            '<option value="0" selected>-- Pilih Default --</option><option value="1">Default</option>'
+                        );
+                    }
+                    // console.log(entry);
+                });
+            } else {
+                alert('Data Sekolah harus memiliki 1 default');
+                $(this).val('1');
+                $(this).trigger('change');
+            }
+        });
+
+
+        // Filter provinsi sekolah berdasarkan negara sekolah
+        $(document).on('change', '.negarasekolah', function (e) {
+            idnegara = $(this).attr('id');
+            idprov = $(this).attr('idprov');
+
+            var url = `{{ url('chainnegara') }}/` + idnegara;
+            chainedNegara(url, idnegara, idprov, "*Prov Sekolah");
+        });
+
+        // Filter kota sekolah berdasarkan provinsi sekolah
+        $(document).on('change', '.provsekolah', function (e) {
+            idprov = $(this).attr('id');
+            idkota = $(this).attr('idkota');
+
+            var url = `{{ url('personals/chain') }}`;
+            chainedProvinsi(url, idprov, idkota, "*Kota Sekolah");
+        });
+
+        // Filter kota berdasarkan provinsi
+        $('#id_prov').on('select2:select', function () {
+            var id = $(this).val();
+
+            var url = `{{ url('personals/chain') }}`;
+            chainedProvinsi(url, 'id_prov', 'id_kota', "*Kota Alamat (Domisili)");
+        });
+
+        // Tambah Baris Data Sekolah
+        var no = 1;
+        var id_detail = [];
+        $('#addRow').on('click', function () {
+            add_Row(no);
+            id_detail.push(no);
+            $('#id_detail_sekolah').val(id_detail);
+            $('.select2').select2();
+            no++;
+        });
+
+        // Hapus Baris Data Sekolah
+        $(document).on('click', '.btn-detail-hapus', function (e) {
+            nomor = $(this).attr('nomor');
+            var removeItem = nomor;
+            id_detail = jQuery.grep(id_detail, function (value) {
+                return value != removeItem;
+            });
+            $('#id_detail_sekolah').val(id_detail);
+            $(this).closest('tr').remove();
+        });
+
+    });
 
     $(document).ready(function () {
 

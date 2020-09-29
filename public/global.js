@@ -28,6 +28,37 @@ $(document).ready(function () {
     }).draw();
 });
 
+
+// Fungsi ajax untuk chained of negara
+function chainedNegara(url, idnegara, idprov, placeholder) {
+    var idnegara = $('#' + idnegara).val();
+    url = url + idnegara;
+
+    $('#' + idprov).empty();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+            id: idnegara
+        },
+        success: function (data) {
+            $("#" + idprov).html("<option value='' selected>" + placeholder + "</option>");
+            $("#" + idprov).select2({
+                data: data
+            }).val(null).trigger('change');
+        },
+        error: function (xhr, status) {
+            alert('terjadi error ketika menampilkan data');
+        }
+
+    });
+}
+
 // pop up pdf
 function tampilLampiran(url, title) {
     // alert('dumbass');
@@ -36,6 +67,16 @@ function tampilLampiran(url, title) {
     // $('#lampiranTitle').text(title);
     $('#lampiranTitle').html(` <a href="` + url + `" target="_blank" > ` + title + ` </a> `);
 }
+
+// pop up foto
+function tampilFoto(url, title) {
+    // alert('dumbass');
+    $('#modalFoto').modal('show');
+    $('#imgFoto').attr('src', url);
+    // $('#iframeLampiran').attr('src', url);
+    $('#lampiranTitle').html(` <a href="` + url + `" target="_blank" > ` + title + ` </a> `);
+}
+
 
 // fungsi ajax untuk chained of provinsi
 function chainedProvinsi(url, id_prov, id_kota, placeholder) {
@@ -139,7 +180,7 @@ function tanggal_indonesia(string) {
 function cekNull(value) {
     return (value==null ||  value=='null' ? '' : value);
   }
-  
+
   // Fungsi Rubah warna filter
 function selectFilter(name) {
     $('#' + name).on('change', function () {

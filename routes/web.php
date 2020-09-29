@@ -53,6 +53,9 @@ Route::get('sertifikat/{no_srtf}','SeminarController@scanSertifikat');
 Route::get('approved/{id_personal}/{id_seminar}','SeminarController@scanTTD');
 Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 
+Route::post('chainnegara/{id}','PersonalController@chainednegara');
+Route::post('personals/chain','PersonalController@chained_prov');
+
 Route::group(['prefix' => 'presensi'], function () {
 	Route::get('/{id}','AbsensiController@index')->name('presensi');
 	Route::get('datang/{id}','AbsensiController@datang');

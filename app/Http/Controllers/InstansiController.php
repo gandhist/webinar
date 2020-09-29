@@ -45,15 +45,17 @@ class InstansiController extends Controller
     }
     public function create() {
         // $negara = NegaraModel::all();
+        $personal = Personal::where('is_activated', '1')->get();
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
         $bank = BankModel::all();
         $bentukusaha = BentukBUModel::all();
         $statusmodel = StatusBUModel::all();
         // return view('instansi.create')->with(compact('negara','provinsi','kota'));
-        return view('instansi.create')->with(compact('provinsi','kota','bank', 'bentukusaha', 'statusmodel'));
+        return view('instansi.create')->with(compact('provinsi','kota','bank', 'bentukusaha', 'statusmodel', 'personal'));
     }
     public function store(Request $request) {
+        dd($request);
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
 
@@ -70,7 +72,7 @@ class InstansiController extends Controller
             "singkat_bu" => "required",
             // "nama_pimp" => "required",
             // "jab_pimp" => "required",
-            "email_pimp" => "sometimes|nullable|email|unique:badan_usaha",
+            // "email_pimp" => "sometimes|nullable|email|unique:badan_usaha",
             // "hp_pimp" => "required",
             "kontak_p" => "required|min:3|max:100",
             // "jab_kontak_p" => "required|min:3|max:100",
@@ -140,6 +142,7 @@ class InstansiController extends Controller
             'nama_rek.required_with' => 'Mohon lengkapi Nama Pada Rekening',
             'nama_rek.min' => 'Nama pada Rekening minimal 3 karakter',
             'nama_rek.max' => 'Nama pada Rekening maksimal 100 karakter',
+            'npwpClean.required' => 'Mohon isi NPWP',
             'npwpClean.numeric' => 'Mohon masukkan NPWP dengan format yang valid',
             'npwpClean.digits' => 'Mohon masukkan NPWP dengan format yang valid',
             'npwpClean.gt' => 'Mohon masukkan NPWP dengan format yang valid',
@@ -173,7 +176,9 @@ class InstansiController extends Controller
         $data->id_bank          = $request->id_bank        ;
         $data->nama_rek         = $request->nama_rek       ;
         $data->npwp             = $request->npwp           ;
-        $data->is_actived      = '0'                      ;
+        $data->is_actived      = '1'                       ;
+        $data->status_kantor             = $request->status_kantor  ;
+        $data->level_atas             = $request->bu_atas        ;
 
         $data->created_by       = Auth::id()               ;
 
@@ -208,69 +213,86 @@ class InstansiController extends Controller
         }
 
         $data->save();
+        if(!($request->isi_manual == "on") ) {
 
-        if($request->email_pimp && $request->email_pimp) {
-            $user = User::where('email',$request->email_pimp)->first();
+            if($request->email_pimp && $request->email_pimp) {
+                $user = User::where('email',$request->email_pimp)->first();
 
-            if(!isset($user)) {
-                $password = str_random(8);
+                if(!isset($user)) {
+                    $password = str_random(8);
 
-                $user               = new User;
-                $user->username     = $request->email_pimp;
-                $user->email        = $request->email_pimp;
-                $user->password     = Hash::make($password);
-                $user->name         = $request->nama_pimp;
-                $user->role_id      = 2;
-                $user->is_active    = 1;
-                // $user->created_by   = Auth::id();
-                $user->save();
+                    $user               = new User;
+                    $user->username     = $request->email_pimp;
+                    $user->email        = $request->email_pimp;
+                    $user->password     = Hash::make($password);
+                    $user->name         = $request->nama_pimp;
+                    $user->role_id      = 2;
+                    $user->is_active    = 1;
+                    // $user->created_by   = Auth::id();
+                    $user->save();
 
-                $target = new TargetBlasting;
-                $target->nama  = $request->nama_pimp;
-                $target->email  = $request->email_pimp;
-                $target->no_hp  = $request->hp_pimp;
-                $target->save();
+                    $target = new TargetBlasting;
+                    $target->nama  = $request->nama_pimp;
+                    $target->email  = $request->email_pimp;
+                    $target->no_hp  = $request->hp_pimp;
+                    $target->save();
 
-                $detail = ['nama' => $request->nama_pimp,
-                'password' => $password,
-                'email' => $request->email_pimp, 'nope' => $request->hp_pimp];
-                dispatch(new \App\Jobs\UserBaruPersonal($detail));
+                    $detail = ['nama' => $request->nama_pimp,
+                    'password' => $password,
+                    'email' => $request->email_pimp, 'nope' => $request->hp_pimp];
+                    dispatch(new \App\Jobs\UserBaruPersonal($detail));
 
-            }
+                }
 
-            $personal = Personal::where('email',$request->email_pimp)->first();
+                $personal = Personal::where('email',$request->email_pimp)->first();
 
-            if(!isset($personal)) {
-                $pimp = new Personal;
-                $pimp->instansi         = $data->id                ;
-                $pimp->user_id          = $user->id                ;
-                $pimp->nama             = $request->nama_pimp      ;
-                $pimp->jabatan          = $request->jab_pimp       ;
-                $pimp->email            = $request->email_pimp     ;
-                $pimp->no_hp            = $request->hp_pimp        ;
-                $pimp->is_activated     = '0'                       ;
-                $pimp->is_pimpinan      = '1'                      ;
+                if(!isset($personal)) {
+                    $pimp = new Personal;
+                    $pimp->instansi         = $data->id                ;
+                    $pimp->user_id          = $user->id                ;
+                    $pimp->nama             = $request->nama_pimp_textbox      ;
+                    $pimp->jabatan          = $request->jab_pimp       ;
+                    $pimp->email            = $request->email_pimp     ;
+                    $pimp->no_hp            = $request->hp_pimp        ;
+                    $pimp->is_activated     = '1'                       ;
+                    $pimp->is_pimpinan      = '1'                      ;
 
-                $pimp->created_by       = Auth::id()               ;
-                // dd($pimp);
-                $pimp->save()                                      ;
+                    $pimp->created_by       = Auth::id()               ;
+                    // dd($pimp);
+                    $pimp->save()                                      ;
 
-                $data->id_personal_pimp = $pimp->id                ;
-                $data->save();
+                    $data->id_personal_pimp = $pimp->id                ;
+                    $data->save();
 
-                return redirect('/instansi/lengkapi/'.$data->id.'/'.$pimp->id)
-                ->with('pesan',"Badan Usaha \"".$request->nama_bu.
-                "\" berhasil ditambahkan, mohon lengkapi data diri pimpinan");
+                    return redirect('/instansi')
+                    ->with('pesan',"Badan Usaha berhasil ditambahkan");
+                    // return redirect('/instansi/lengkapi/'.$data->id.'/'.$pimp->id)
+                    // ->with('pesan',"Badan Usaha \"".$request->nama_bu.
+                    // "\" berhasil ditambahkan, mohon lengkapi data diri pimpinan");
+                } else {
+                    $data->id_personal_pimp = $personal->id                ;
+                    $data->save();
+                    return redirect('/instansi')
+                    ->with('pesan',"Badan Usaha berhasil ditambahkan");
+                }
             } else {
-                $data->id_personal_pimp = $personal->id                ;
-                $data->save();
                 return redirect('/instansi')
                 ->with('pesan',"Badan Usaha berhasil ditambahkan");
             }
+
         } else {
-            return redirect('/instansi')
-            ->with('pesan',"Badan Usaha berhasil ditambahkan");
+            $data->id_personal_pimp = $request->nama_pimp_select                ;
+            $data->save();
+
+            if(isset($request->nama_pimp_select)) {
+                $pers = Personal::where('id', $request->nama_pimp_select)->first();
+                $pers->is_pimpinan = '1';
+                $pers->save();
+                return redirect('/instansi')
+                ->with('pesan',"Badan Usaha berhasil ditambahkan");
+            }
         }
+
 
     }
     public function lengkapi($id, $id_personal) {

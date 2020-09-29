@@ -11,3 +11,4 @@ class BentukBuModel extends Model
     //
     protected $table = 'ms_bentuk_usaha';
 }
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Personal;
+use App\PersonalSekolah;
 use App\ProvinsiModel;
 use App\KotaModel;
 use App\BuModel;
@@ -292,6 +293,43 @@ class PersonalController extends Controller
         }
 
         $peserta->save();
+
+
+        if (is_null($request->id_detail_sekolah) || $request->id_detail_sekolah=='' ) {
+
+        } else {
+            $detail_sekolah = explode(',', $request->id_detail_sekolah);
+            foreach($detail_sekolah as $sekolah) {
+                $dataSekolah['id_personal'] = $peserta->id;
+                $x = "id_jp_".$sekolah;
+                $dataSekolah['id_jenjang'] = $request->$x;
+                $x = "id_namasekolah_".$sekolah;
+                $dataSekolah['nama_sekolah'] = $request->$x;
+                $x = "id_negarasekolah_".$sekolah;
+                $dataSekolah['negara'] = $request->$x;
+                $x = "id_provsekolah_".$sekolah;
+                $dataSekolah['prop_sekolah'] = $request->$x;
+                $x = "id_kotasekolah_".$sekolah;
+                $dataSekolah['kota_sekolah'] = $request->$x;
+                $x = "id_prodi_".$sekolah;
+                $dataSekolah['jurusan'] = $request->$x;
+                $x = "id_tahuntamat_".$sekolah;
+                $dataSekolah['tahun'] = $request->$x;
+                $x = "id_noijasah_".$sekolah;
+                $dataSekolah['no_ijazah'] = $request->$x;
+                $x = "id_tglijasah_".$sekolah;
+                $dataSekolah['tgl_ijasah'] = Carbon::createFromFormat('d/m/Y',$request->$x);
+                $x = "id_default_".$sekolah;
+                $dataSekolah['default'] = $request->$x;
+                if ($files = $request->file('id_pdfijasah_'.$sekolah)) {
+                    $destinationPath = 'uploads/personal/'.$dir_name;
+                    $file = "ijasah_".$sekolah. "_" .$dir_name."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                    $files->move($destinationPath, $file);
+                    $dataSekolah['pdf_ijasah'] = $dir_name."/".$file;
+                }
+                PersonalSekolah::create($dataSekolah);
+            }
+        }
 
         return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
         "\" berhasil ditambahkan");
@@ -590,6 +628,28 @@ class PersonalController extends Controller
                     ->pluck("nama","id")
                     ->all();
         return json_encode($cities);
+    }
+
+    public function chainednegara(Request $request){
+        if($request->id == '102'){
+            return $data = ProvinsiModel::where('id','!=',99)->get(['id','nama as text']);
+        } else {
+            return $data = ProvinsiModel::where('id','=',99)->get(['id','nama as text']);
+        }
+
+    }
+
+    public function chained_prov(Request $req){
+        if ($req->prov) {
+            return $data = DB::table('ms_kota')
+                ->where('provinsi_id', '=', $req->prov)
+                ->get(['id','nama as text']);
+        }
+        else {
+            return $data = DB::table('ms_kota')
+                ->where('id', '=', $req->kota)
+                ->get(['provinsi_id']);
+        }
     }
 
 }

@@ -27,6 +27,12 @@
         width: 100%;
         /* border-color: #aaaaaa !important; */
     }
+    input[type="checkbox"] {
+        height: 16px !important;
+        border-radius: 4px !important;
+        width: 16px;
+        /* border-color: #aaaaaa !important; */
+    }
 
     input::placeholder {
         color: #444 !important;
@@ -118,7 +124,7 @@
                         </div>
                         <select class="form-control select2" name="bentuk_bu" id="bentuk_bu"
                             style="width: 100%;">
-                            <option value="" disabled selected>*Bentuk BU</option>
+                            <option value="" selected>*Bentuk BU</option>
                             @foreach($bentukusaha as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('bentuk_bu') ? 'selected' : '' }}>
                                 {{ $key->nama }} ({{$key->nama}})</option>
@@ -309,14 +315,25 @@
                         <div class="input-group-addon">
                             Nama Pimpinan
                         </div>
-                        <input name="nama_pimp" id="nama_pimp" type="text" class="form-control"
+                        <select name="nama_pimp_select" id="nama_pimp_select" type="text" class="form-control select2"
                         placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
+                            <option value="" disabled selected>Nama Pimpinan</option>
+                            @foreach($personal as $key)
+                            <option value="{{ $key->id }}" {{ $key->id == old('nama_pimp') ? 'selected' : '' }}>
+                                {{ $key->nama }} </option>
+                            @endforeach
+                        </select>
+                        <input name="nama_pimp_text" id="nama_pimp_text" type="text" class="form-control"
+                        placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}" style="display:none">
                     </div>
                     <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
                 </div>
                 {{-- Akhir Nama Pimpinan --}}
 
                 <div class="col-sm-2">
+                    <label for="isi_manual">
+                        <input type="checkbox" name="isi_manual" id="isi_manual"> <span>Isi manual</span>
+                    </label>
                 </div>
 
                 {{-- Jabatan Pimpinan --}}
@@ -326,7 +343,7 @@
                             Jabatan Pimpinan
                         </div>
                         <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                        placeholder="Jabatan Pimpinan" value="{{old('jab_pimp')}}">
+                        placeholder="Jabatan Pimpinan" value="{{old('jab_pimp')}}" readonly >
                     </div>
                     <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
                 </div>
@@ -342,7 +359,7 @@
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                        placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}">
+                        placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}" readonly>
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
                 </div>
@@ -358,7 +375,7 @@
                             Email Pimpinan
                         </div>
                         <input name="email_pimp" id="email_pimp" type="email" class="form-control"
-                        placeholder="Email Pimpinan" value="{{old('email_pimp')}}">
+                        placeholder="Email Pimpinan" value="{{old('email_pimp')}}" readonly >
                     </div>
                     <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
                     </span>
@@ -434,7 +451,7 @@
 
             <div class="row">
                 {{-- No NPWP --}}
-                <div class="col-sm-5 {{ $errors->first('npwp') ? 'has-error' : '' }}">
+                <div class="col-sm-5 {{ $errors->first('npwpClean') ? 'has-error' : '' }}">
                     <div class="input-group">
                         <div class="input-group-addon">
                             <span class="bintang">*</span> No NPWP
@@ -576,8 +593,50 @@
 @push('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script>
-
+    var personal = @json($personal);
+    $("#isi_manual").prop("checked", false);
     $(document).ready(function () {
+        $('#isi_manual').change(function() {
+            if($(this).is(":checked")) {
+                $('#nama_pimp_select').next(".select2-container").hide();
+                $('#nama_pimp_text').show();
+                $('#jab_pimp').prop('readonly', false);
+                $('#email_pimp').prop('readonly', false);
+                $('#hp_pimp').prop('readonly', false);
+                $('#jab_pimp').val('');
+                $('#email_pimp').val('');
+                $('#hp_pimp').val('');
+
+            } else {
+                $('#nama_pimp_select').next(".select2-container").show();
+                $('#nama_pimp_text').hide();
+                $('#jab_pimp').prop('readonly', true);
+                $('#email_pimp').prop('readonly', true);
+                $('#hp_pimp').prop('readonly', true);
+                $('#jab_pimp').val('');
+                $('#email_pimp').val('');
+                $('#hp_pimp').val('');
+                isi_om_jin()
+            }
+        });
+
+        $('#nama_pimp_select').on('select2:select', function() {
+            isi_om_jin()
+        });
+
+        function isi_om_jin() {
+            var isi = $('#nama_pimp_select').val();
+            // var coba = mana_nih(isi, personal);
+            var coba = personal.filter( obj => {
+                return obj.id == isi
+            })
+            coba = coba[0]
+
+            $('#jab_pimp').val(coba.jabatan);
+            $('#email_pimp').val(coba.email);
+            $('#hp_pimp').val(coba.no_hp);
+        }
+
         $('body').on('change', '.form-group', function() {
             // Action goes here.
         });
@@ -588,6 +647,7 @@
         $('#bentuk_bu').select2(); // Select2 Bank
         $('#status_kantor').select2(); // Select2 Bank
         $('#bu_atas').select2(); // Select2 Bank
+        $('#nama_pimp_select').select2(); // Select2 Bank
 
 
         // Ajax Untuk Kota, Onchange Provinsi
