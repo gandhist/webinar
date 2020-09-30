@@ -158,7 +158,7 @@ class InstansiController extends Controller
             'logo.max' => 'Logo maksimal berukuran 2MB',
         ]);
         if($request->isi_manual){
-            dd('masuk bos');
+            // dd('masuk bos');
             $request->validate([
                 "email_pimp" => "unique:personal,email"
             ],[
