@@ -126,7 +126,7 @@
             </form>
             <div class="box-body" style="margin:25px 25px 25px 10px;">
 
-                <div class="row" style="margin-top:40px; margin-bottom: 25;">
+                <div class="row" >
                     <div class="col-12">
                         @if(session()->get('pesan'))
                         <div class="alert alert-success alert-dismissible" role="alert">
@@ -354,6 +354,22 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
+    var errHapus = '';
+	@if(session()->get('errHapus'))
+        errHapus = `{{(session()->get('errHapus'))}}`;
+	@endif
+    if(errHapus){
+        Swal.fire({
+            title: errHapus,
+            type: 'warning',
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#AAA',
+            // onClose: function() {
+            //     window.location.replace(home_srtf);
+            //     }
+            // })
+        })
+    }
     $('.select2').select2()
     $('#btnHapus').on('click', function (e) {
             e.preventDefault();
