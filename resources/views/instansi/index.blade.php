@@ -24,7 +24,7 @@
     <div class="box box-content">
         <div class="container-fluid">
             {{-- sub menu  --}}
-            <form action="{{ url('badanusaha/filter') }}" enctype="multipart/form-data" name="filterData"
+            <form action="{{ url('instansi/filter') }}" enctype="multipart/form-data" name="filterData"
                 id="filterData" method="post">
                 <!-- @method("PUT") -->
                 @csrf
@@ -67,7 +67,7 @@
                                             Filter</button>
                                     </td>
                                     <td style="padding-left: 0px">
-                                        <a href="{{ url('badanusaha') }}" class="btn btn-sm btn-default"> <i
+                                        <a href="{{ url('instansi') }}" class="btn btn-sm btn-default"> <i
                                                 class="fa fa-refresh"></i>
                                             Reset</a>
                                     </td>
@@ -370,6 +370,13 @@
             // })
         })
     }
+
+    // Filter kota berdasarkan provinsi
+    $('#f_provinsi').on('select2:select', function () {
+        var url = `{{ url('chain/filterprovbu') }}`;
+        chainedProvinsiBu(url, 'f_provinsi', 'f_kota', "Kota");
+    });
+
     $('.select2').select2()
     $('#btnHapus').on('click', function (e) {
             e.preventDefault();

@@ -56,6 +56,9 @@ Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 Route::post('chainnegara/{id}','PersonalController@chainednegara');
 Route::post('personals/chain','PersonalController@chained_prov');
 
+
+Route::post('chain/filterprovbu','InstansiController@filterprovbu');
+
 Route::group(['prefix' => 'presensi'], function () {
 	Route::get('/{id}','AbsensiController@index')->name('presensi');
 	Route::get('datang/{id}','AbsensiController@datang');
@@ -199,6 +202,7 @@ Route::group(['middleware' => 'auth.admin', 'prefix' => 'pesertas'], function ()
 // Instansi
 Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () {
 	Route::get('/','InstansiController@index');
+	Route::get('/filter', 'InstansiController@index');
 	Route::get('/lengkapi/{id}/{id_personal}','InstansiController@lengkapi');
 	Route::get('/create','InstansiController@create');
 	Route::post('/store','InstansiController@store');
@@ -210,6 +214,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'instansi'], function () 
     Route::get('/{id}','InstansiController@show');
 	Route::delete('/destroy','InstansiController@destroy');
 	Route::post('/changelevelatas','KantorController@changelevelatas');
+	Route::post('/filter', 'InstansiController@filter');
 });
 // End Instansi
 

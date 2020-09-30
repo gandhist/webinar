@@ -38,6 +38,66 @@ class InstansiController extends Controller
         $kota = KotaModel::all();
         return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota', 'reff'));
     }
+
+    public function filter(Request $request)
+    {
+    //     $id_status = BUModel::select('status_kantor')->groupBy('status_kantor')->whereNotNull('status_kantor')->get()->toArray();
+    //     $statusmodel = StatusModel::whereIn('id',$id_status)->get();
+    //     $id_prop = BUModel::select('id_prop')->groupBy('id_prop')->whereNotNull('id_prop')->get()->toArray();
+    //     $prov = Provinsi::whereIn('id',$id_prop)->get();
+    //     $jenisusaha = masterJenisUsaha::orderBy('id', 'asc')->get();
+    //     $instansi = masterBadanUsaha::groupBy('instansi_reff')->whereNotNull('instansi_reff')->get();
+    //     $pjk3 = masterBadanUsaha::orderBy('id','asc')->get();
+    //     $data = masterBadanUsaha::orderBy('id','asc');
+        // $kota = Kota::where('id','=','~')->get();
+
+
+        $instansi = BuModel::all();
+        $reff = BuModel::whereNotNull('instansi_reff')->get();
+        $statusmodel = StatusBUModel::all();
+        $provinsi = ProvinsiModel::all();
+        $kota = KotaModel::all();
+
+        if (!$request->f_pjk3===NULL || !$request->f_pjk3==""){
+            $instansi->where('id', '=', $request->f_pjk3);
+        }
+
+        if (!$request->f_naker_prov===NULL || !$request->f_naker_prov==""){
+            $instansi->where('prop_naker', '=', $request->f_naker_prov);
+        }
+
+        if (!$request->f_provinsi===NULL || !$request->f_provinsi==""){
+            $instansi = $instansi->where('id_prop', '=', $request->f_provinsi);
+            $idkota = BUModel::select('id_kota')->groupBy('id_kota')->whereNotNull('id_kota')->get()->toArray();
+            $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$request->f_provinsi)->get();
+        }else{
+            $kota = KotaModel::where('id','=','~')->get();
+        }
+
+        if (!$request->f_kota===NULL || !$request->f_kota==""){
+            $instansi = $instansi->where('id_kota', '=', $request->f_kota);
+        }
+
+        if (!$request->f_instansi===NULL || !$request->f_instansi==""){
+            $instansi = $instansi->where('instansi_reff', '=', $request->f_instansi);
+        }
+
+        if (!$request->f_jenis_usaha===NULL || !$request->f_jenis_usaha==""){
+            $instansi = $instansi->where('jns_usaha', '=', $request->f_jenis_usaha);
+        }
+
+        if (!$request->f_status===NULL || !$request->f_status==""){
+            $instansi = $instansi->where('status_kantor', '=', $request->f_status);
+        }
+
+        // $instansi->all();
+        // $instansi = $instansi->all();
+
+        return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota', 'reff'));
+        // return view('suket.badanusaha.index')->with(compact('data','prov','kota','jenisusaha','instansi','pjk3','statusmodel'));
+
+        // dd($request->f_naker_prov);
+    }
     public function show ($id) {
         $instansi = BuModel::where('id', $id)->first();
         // $negara = NegaraModel::where('id', $id)->first();
@@ -863,4 +923,13 @@ class InstansiController extends Controller
     public function changelevelatas(Request $request){
         return $data = KantorModel::where('level','=',$request->id_level_k-1)->get(['id','nama_kantor as text']);
     }
+
+
+    public function filterprovbu(Request $req){
+        $idkota = BUModel::select('id_kota')->groupBy('id_kota')->get()->toArray();
+        $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$req->prov)->get(['id','nama as text']);
+        return $kota;
+    }
+
+
 }
