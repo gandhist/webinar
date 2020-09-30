@@ -32,10 +32,11 @@ class InstansiController extends Controller
     //
     public function index () {
         $instansi = BuModel::all();
+        $reff = BuModel::whereNotNull('instansi_reff')->get();
         $statusmodel = StatusBUModel::all();
         $provinsi = ProvinsiModel::all();
         $kota = KotaModel::all();
-        return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota'));
+        return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota', 'reff'));
     }
     public function show ($id) {
         $instansi = BuModel::where('id', $id)->first();

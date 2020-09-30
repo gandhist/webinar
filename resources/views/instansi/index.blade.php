@@ -77,7 +77,7 @@
                                         <div class="input-group customSelect2md">
                                             <select class="form-control select2" name="f_instansi" id="f_instansi">
                                                 <option selected value="">Instansi_Reff</option>
-                                                @foreach($instansi as $key)
+                                                @foreach($reff as $key)
                                                 <option value="{{ $key->instansi_reff }}"
                                                     {{ request()->get('f_instansi') == $key->instansi_reff ? 'selected' : '' }}>
                                                     {{ $key->instansi_reff }}</option>
