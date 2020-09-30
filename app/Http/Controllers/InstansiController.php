@@ -60,6 +60,7 @@ class InstansiController extends Controller
     }
     public function store(Request $request) {
         // dd($request);
+        // dd($request->isi_manual);
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
 
@@ -76,7 +77,7 @@ class InstansiController extends Controller
             "singkat_bu" => "required",
             "nama_pimp_text" => "required_with:isi_manual,on",
             "jab_pimp" => "required_with:isi_manual,on",
-            "email_pimp" => "sometimes|nullable|required_with:isi_manual,on|email|unique:badan_usaha",
+            "email_pimp" => "sometimes|nullable|required_with:isi_manual,on|email",
             // "hp_pimp" => "required",
             "kontak_p" => "required|min:3|max:100",
             // "jab_kontak_p" => "required|min:3|max:100",
@@ -156,6 +157,14 @@ class InstansiController extends Controller
             'logo.mimes' => 'Mohon lampirkan Logo berupa gambar',
             'logo.max' => 'Logo maksimal berukuran 2MB',
         ]);
+        if($request->isi_manual){
+            dd('masuk bos');
+            $request->validate([
+                "email_pimp" => "unique:personal,email"
+            ],[
+                'email_pimp.unique' => 'Email sudah terdaftar',
+            ]);
+        }
 
         $data = new BuModel;
         $data->nama_bu          = $request->nama_bu        ;

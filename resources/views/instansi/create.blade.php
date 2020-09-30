@@ -326,7 +326,7 @@
                             @endforeach
                         </select>
                         <input name="nama_pimp_text" id="nama_pimp_text" type="text" class="form-control"
-                        placeholder="Nama Pimpinan" value="{{old('nama_pimp_text')}}" style="display:none">
+                        placeholder="Nama Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('nama_pimp_text')}}" style="display:none">
                     </div>
                     <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp_text') }} </span>
                 </div>
@@ -345,7 +345,7 @@
                             Jabatan Pimpinan
                         </div>
                         <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                        placeholder="Jabatan Pimpinan" value="{{old('jab_pimp')}}" readonly >
+                        placeholder="Jabatan Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('jab_pimp')}}" readonly >
                     </div>
                     <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
                 </div>
@@ -361,7 +361,7 @@
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                        placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}" readonly
+                        placeholder="No Hp Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('hp_pimp')}}" readonly
                         onkeypress="return /[0-9]/i.test(event.key)">
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
@@ -378,7 +378,7 @@
                             Email Pimpinan
                         </div>
                         <input name="email_pimp" id="email_pimp" type="email" class="form-control"
-                        placeholder="Email Pimpinan" value="{{old('email_pimp')}}" readonly >
+                        placeholder="Email Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('email_pimp')}}" readonly >
                     </div>
                     <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
                     </span>
