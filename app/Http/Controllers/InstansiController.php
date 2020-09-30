@@ -842,10 +842,12 @@ class InstansiController extends Controller
             'deleted_at' => Carbon::now()->toDateTimeString()
         ];
         $pers = BuModel::whereIn('id', $idData)->pluck('id_personal_pimp');
-        $msg = "Gagal menghapus! \nMohon hapus personal yang terkait pada badan usaha terlebih dahulu!";
-        return redirect()->back()->with('errHapus',$msg);
 
-        // BuModel::whereIn('id', $idData)->update($user_data);
+        if($pers){
+            $msg = "Gagal menghapus! \nMohon hapus personal yang terkait pada badan usaha terlebih dahulu!";
+            return redirect()->back()->with('errHapus',$msg);
+        }
+        BuModel::whereIn('id', $idData)->update($user_data);
         return redirect('/instansi')
         ->with('pesan',"Berhasil menghapus instansi");
     }
