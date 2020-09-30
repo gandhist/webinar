@@ -249,7 +249,9 @@
                             <span class="bintang">*</span> No Tlp
                         </div>
                         <input name="telp" id="telp" type="text" class="form-control"
-                        placeholder="*No Tlp" value="{{old('telp')}}">
+                        placeholder="*No Tlp" value="{{old('telp')}}"
+                        onkeypress="return /[0-9]/i.test(event.key)">
+
                     </div>
                     <span id="telp" class="help-block customspan">{{ $errors->first('telp') }}
                     </span>
@@ -310,7 +312,7 @@
 
             <div class="row">
                 {{-- Nama Pimpinan --}}
-                <div class="col-sm-5">
+                <div class="col-sm-5  {{ $errors->first('nama_pimp_text') ? 'has-error' : '' }}">
                     <div class="input-group">
                         <div class="input-group-addon">
                             Nama Pimpinan
@@ -324,9 +326,9 @@
                             @endforeach
                         </select>
                         <input name="nama_pimp_text" id="nama_pimp_text" type="text" class="form-control"
-                        placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}" style="display:none">
+                        placeholder="Nama Pimpinan" value="{{old('nama_pimp_text')}}" style="display:none">
                     </div>
-                    <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
+                    <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp_text') }} </span>
                 </div>
                 {{-- Akhir Nama Pimpinan --}}
 
@@ -337,7 +339,7 @@
                 </div>
 
                 {{-- Jabatan Pimpinan --}}
-                <div class="col-sm-5">
+                <div class="col-sm-5  {{ $errors->first('jab_pimp') ? 'has-error' : '' }}">
                     <div class="input-group">
                         <div class="input-group-addon">
                             Jabatan Pimpinan
@@ -353,13 +355,14 @@
 
             <div class="row">
                 {{-- No Hp Pimpinan --}}
-                <div class="col-sm-5">
+                <div class="col-sm-5  {{ $errors->first('hp_pimp') ? 'has-error' : '' }}">
                     <div class="input-group">
                         <div class="input-group-addon">
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                        placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}" readonly>
+                        placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}" readonly
+                        onkeypress="return /[0-9]/i.test(event.key)">
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
                 </div>
@@ -369,7 +372,7 @@
                 </div>
 
                 {{-- Email Pimpinan --}}
-                <div class="col-sm-5">
+                <div class="col-sm-5  {{ $errors->first('email_pimp') ? 'has-error' : '' }}">
                     <div class="input-group">
                         <div class="input-group-addon">
                             Email Pimpinan
@@ -424,7 +427,8 @@
                             <span class="bintang">*</span> No HP Kontak Person
                         </div>
                         <input name="no_kontak_p" id="no_kontak_p" type="text" class="form-control"
-                        placeholder="*No HP Kontak Person" value="{{old('no_kontak_p')}}">
+                        placeholder="*No HP Kontak Person" value="{{old('no_kontak_p')}}"
+                        onkeypress="return /[0-9]/i.test(event.key)">
                     </div>
                     <span id="no_kontak_p" class="help-block customspan">{{ $errors->first('no_kontak_p') }} </span>
                 </div>
@@ -496,7 +500,8 @@
                             No Rekening Bank
                         </div>
                         <input name="no_rek" id="no_rek" type="text" class="form-control"
-                            placeholder="No Rekening Bank" value="{{old('no_rek')}}">
+                                onkeypress="return /[0-9]/i.test(event.key)"
+                                placeholder="No Rekening Bank" value="{{old('no_rek')}}">
                     </div>
                     <span id="no_rek" class="help-block customspan">{{ $errors->first('no_rek') }}
                     </span>
