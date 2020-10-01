@@ -21,7 +21,6 @@
     .input-group {
         width: 100%;
     }
-
     input {
         height: 28.8px !important;
         border-radius: 4px !important;
