@@ -217,8 +217,42 @@
                                         Email : {{ $personal->email }} <br>
                                         NIK : {{ $personal->nik }} <br>">
                                         {{ isset($personal->kota->provinsi->nama) ? $personal->kota->provinsi->nama_singkat : '' }}</td>
-                                    <td> . . . </td>
-                                    <td> . . . </td>
+                                    <td data-toggle="tooltip" data-placement="top" data-html="true" title="
+                                        No Ijasah : {{ isset($personal->sekolah_p) ? $personal->sekolah_p->no_ijazah : '' }} <br>
+                                        Tgl Ijasah : {{ isset($personal->sekolah_p) ? \Carbon\Carbon::parse($personal->sekolah_p->tgl_ijasah)->isoFormat("DD MMMM YYYY") : '' }} <br>
+                                        Nama Sekolah : {{ isset($personal->sekolah_p) ? $personal->sekolah_p->nama_sekolah : '' }}">
+                                        {{-- {{$personal->sekolah_p}} --}}
+                                        @if ( empty($personal->sekolah_p->id_jenjang)&&
+                                        empty($personal->sekolah_p->jurusan) &&
+                                        empty($personal->sekolah_p->tahun) )
+                                        @else
+                                        {{ isset($personal->sekolah_p->jp) ? $personal->sekolah_p->jp->deskripsi : '' }},
+                                        {{ isset($personal->sekolah_p->jurusan) ? $personal->sekolah_p->jurusan : '' }},
+                                        {{ isset($personal->sekolah_p->tahun) ? $personal->sekolah_p->tahun : '' }}
+                                        @endif
+                                    </td>
+                                    <td data-toggle="tooltip" data-placement="top" data-html="true" title="
+                                        @foreach ($sklh as $select)
+                                            @if($personal->id == $select->id_personal)
+                                            No Ijasah : {{ isset($personal->sekolah->no_ijazah) ? $select->no_ijazah : '' }} <br>
+                                            Tgl Ijasah : {{ isset($personal->sekolah) ? \Carbon\Carbon::parse($select->tgl_ijasah)->isoFormat("DD MMMM YYYY") : '' }} <br>
+                                            Nama Sekolah : {{ isset($personal->sekolah->nama_sekolah) ? $select->nama_sekolah : '' }} <br>
+                                            @endif
+                                        @endforeach ">
+                                        @foreach ($sklh as $select)
+                                            {{-- {{$personal->sekolah_p}} --}}
+                                            @if($personal->id == $select->id_personal)
+                                                @if ( empty($personal->sekolah_p->id_jenjang)&&
+                                                empty($personal->sekolah_p->jurusan) &&
+                                                empty($personal->sekolah_p->tahun) )
+                                                @else
+                                                {{ isset($personal->sekolah->jp) ? $select->jp->deskripsi : '' }},
+                                                {{ isset($personal->sekolah->jurusan) ? $select->jurusan : '' }},
+                                                {{ isset($personal->sekolah->tahun) ? $select->tahun : '' }}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>
                                         @if($personal->temp_lahir == '' || $personal->temp_lahir ==null && $personal->tgl_lahir== '' ||
                                         $personal->tgl_lahir==null)

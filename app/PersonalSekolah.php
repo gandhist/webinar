@@ -10,4 +10,10 @@ class PersonalSekolah extends Model
     //
     use SoftDeletes;
     protected $table = "daf_sekolah";
+    protected $guarded = [];
+
+    public function jp()
+    {
+        return $this->belongsTo('App\JenjangPendidikan', 'id_jenjang', 'id_jenjang');
+    }
 }

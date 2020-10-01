@@ -270,6 +270,7 @@
                                 <span class="bintang">*</span> No HP
                             </div>
                             <input name="no_hp" id="no_hp" type="text" class="form-control "
+                            onkeypress="return /[0-9]/i.test(event.key)"
                                 placeholder="*No HP" value="{{old('no_hp')}}">
                         </div>
                         <span id="no_hp"
@@ -411,7 +412,7 @@
                                 No BPJS Kesehatan
                             </div>
                             <input type="text"
-                                onkeypress="return /[0-9]/i.test(event.key)"
+                            onkeypress="return /[0-9]/i.test(event.key)"
                                 maxlength="13"
                                 id="bpjs_no" name="bpjs_no" class="form-control " placeholder="No BPJS Kesehatan"
                                 value="{{old('bpjs_no')}}" data-toggle="tooltip" data-placement="bottom"
@@ -562,7 +563,7 @@
                     </tbody>
                 </table>
                 <input type="hidden" name='id_detail_sekolah' id='id_detail_sekolah' value=''>
-                </div>
+
 
                 <div class="box-footer" style="text-align:center">
                     <div class="row">
@@ -642,7 +643,7 @@
                     </td>
                     <td><input required name="id_prodi_` + no + `" id="id_prodi_` + no + `" type="text" class="form-control " placeholder=""></td>
                     <td style="width:10%">
-                        <input required onkeypress="return isNumberKey(event)" name="id_tahuntamat_` + no +
+                        <input required onkeypress="return /[0-9]/i.test(event.key)" name="id_tahuntamat_` + no +
                 `" id="id_tahuntamat_` + no + `" type="text"
                             class="form-control tahun_tamat" placeholder="" maxlength="4">
                     </td>
@@ -663,7 +664,7 @@
                         <label for="id_pdfijasah_` + no + `">
                                 <i class="fa fa-upload" id="i_pdfijasah_` + no + `" style="padding-top:8px;padding-left:13px;color:grey" >  Upload</i>
                         </label>
-                        <input accept=".pdf,.jpeg,.jpg" required idi="#i_pdfijasah_` + no + `" name="id_pdfijasah_` +
+                        <input accept=".pdf,.jpeg,.jpg" required name="id_pdfijasah_` +
                 no + `" id="id_pdfijasah_` + no + `" type="file" class="form-control cstmfile" placeholder="">
 
                     </td>
@@ -673,12 +674,12 @@
                     </td
                 </tr>
             `);
-            $('.tahun_tamat').datepicker({
-                format: "yyyy",
-                // viewMode: "years",
-                minViewMode: "years",
-                endDate: "today"
-            });
+            // $('.tahun_tamat').datepicker({
+            //     format: "yyyy",
+            //     // viewMode: "years",
+            //     minViewMode: "years",
+            //     endDate: "today"
+            // });
 
         };
 

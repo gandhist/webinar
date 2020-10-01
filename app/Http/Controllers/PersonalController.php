@@ -54,11 +54,15 @@ class PersonalController extends Controller
         $idpers = Personal::select('id')->get()->toArray();
         $prodi = Sekolah::select('jurusan')->whereIn('id_personal',$idpers)->groupBy('jurusan')->get();
 
+
+        $sklh = PersonalSekolah::where('default','=','0')->get();
+
         return view('personal.index',
             ['personals' => Personal::where('is_activated','1')->get(),
             'provinsis' => $provinsi,
             'kotas' => $kotas,
-            'bu' => $bu]
+            'bu' => $bu,
+            'sklh' => $sklh]
         )->with(compact('prov','bank','kota','negara','jenjang_pendidikan','prodi'));
     }
 
@@ -325,7 +329,7 @@ class PersonalController extends Controller
                     $destinationPath = 'uploads/personal/'.$dir_name;
                     $file = "ijasah_".$sekolah. "_" .$dir_name."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
                     $files->move($destinationPath, $file);
-                    $dataSekolah['pdf_ijasah'] = $dir_name."/".$file;
+                    $dataSekolah['pdf_ijasah'] = $destinationPath."/".$file;
                 }
                 PersonalSekolah::create($dataSekolah);
             }

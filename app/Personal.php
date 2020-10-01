@@ -24,5 +24,13 @@ class Personal extends Model
     {
         return $this->belongsTo('App\KotaModel', 'temp_lahir' );
     }
+    public function sekolah()
+    {
+        return $this->belongsTo('App\PersonalSekolah', 'id', 'id_personal');
+    }
+    public function sekolah_p()
+    {
+        return $this->belongsTo('App\PersonalSekolah', 'id', 'id_personal')->where('default','=',1);
+    }
 
 }
