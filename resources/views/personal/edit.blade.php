@@ -550,19 +550,145 @@
                 </div>
 
                 <br>
-                <div class="input-group">
-                    <h4><b>Data Sekolah</b></h4>
-                    <span class="input-group-btn">
-                        <button id="addRow" type="button" class="btn btn-md btn-success pull-right"><i
-                                class="fa fa-plus-circle"></i> Tambah Baris</button>
-                    </span>
+                <div class="btn-group btn-lg pull-right">
+                    <button id="addRow" type="button" class="btn btn-success"><i class="fa fa-plus-circle"></i> Tambah Baris</button>
                 </div>
-                <input type="hidden" name="id" value="{{$id}}">
 
+                <div class="box-body">
+                    <table id="data-sekolah" class="table table-bordered table-hover dataTable customTable customTableDetail" role="grid">
+                        <thead>
+                            <tr role="row">
+                                <th>No</th>
+                                <th style="width:6%;">Jenjang_Pddk</th>
+                                <th style="width:19%;">Nama_Sklh</th>
+                                <th style="width:7%;">Negara_Sklh</th>
+                                <th style="width:10%;">Prov_Sklh</th>
+                                <th style="width:5%;">Kota_Sklh</th>
+                                <th style="width:10%;">Prodi</th>
+                                <th style="width:6%;">Tahun_Tamat</th>
+                                <th style="width:11%;">No_Ijasah</th>
+                                <th style="width:7%;">Tgl_Ijasah</th>
+                                <th style="width:5%;">Default</th>
+                                <th style="width:5%;">Pdf_Ijs</th>
+                                <th style="width:4%;">Hapus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($detail_sekolah as $key)
+                            <tr>
+                                <input type="hidden" name='type_detail_{{$loop->iteration}}' id='type_detail_{{$loop->iteration}}' value='{{$key->id}}'>
+
+                                <td style="text-align:center;">{{$loop->iteration}}</td>
+                                <td>
+                                    <select class="form-control select2" name="id_jp_{{$loop->iteration}}" id="id_jp_{{$loop->iteration}}" style="width: 100%;">
+                                        <option value="" disabled selected></option>
+                                        @foreach($jenjang_pendidikan as $select)
+                                        <option value="{{ $select->id_jenjang }}" {{ $select->id_jenjang == $key->id_jenjang ? "selected" : "1" }} > {{ $select->deskripsi }} </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                 <input type="text" class="form-control " placeholder="Nama Sekolah"
+                                        name="id_namasekolah_{{$loop->iteration}}" id="id_namasekolah_{{$loop->iteration}}"
+                                        value="{{$key->nama_sekolah}}"></td>
+                                </td>
+                                <td>
+                                    <select class="form-control select2 negara_sekolah" idprov_sekolah="id_provsekolah_{{$loop->iteration}}" name="id_negarasekolah_{{$loop->iteration}}" id="id_negarasekolah_{{$loop->iteration}}" style="width: 100%;">
+                                        <option value="" disabled selected></option>
+                                        @foreach($negara as $select)
+                                        <option value="{{ $select->id }}" {{ $select->id == $key->negara ? "selected" : "" }} > {{ $select->country_name }} </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control select2 prov_sekolah" idkota_sekolah="id_kotasekolah_{{$loop->iteration}}" name="id_provsekolah_{{$loop->iteration}}" id="id_provsekolah_{{$loop->iteration}}" style="width: 100%;">
+                                        <option value="" disabled selected></option>
+                                        @foreach($prov as $select)
+                                        <option value="{{ $select->id }}" {{ $select->id == $key->prop_sekolah ? "selected" : "" }} > {{ $select->nama }} </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control select2" name="id_kotasekolah_{{$loop->iteration}}" id="id_kotasekolah_{{$loop->iteration}}" style="width: 100%;">
+                                        <option value="" disabled selected></option>
+                                        @foreach($kota as $select)
+                                        <option value="{{ $select->id }}" {{ $select->id == $key->kota_sekolah ? "selected" : "" }} > {{ $select->nama }} </option>
+                                        @endforeach
+                                    </select>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control "
+                                        name="id_prodi_{{$loop->iteration}}" id="id_prodi_{{$loop->iteration}}"
+                                        value="{{$key->jurusan}}">
+                                </td>
+                                <td>
+                                    <input onkeypress="return isNumberKey(event)" type="text" class="form-control " placeholder="Tahun Tamat"
+                                        name="id_tahuntamat_{{$loop->iteration}}" id="id_tahuntamat_{{$loop->iteration}}"
+                                        value="{{$key->tahun}}" maxlength="4">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control " placeholder="No Ijasah"
+                                        name="id_noijasah_{{$loop->iteration}}" id="id_noijasah_{{$loop->iteration}}"
+                                        value="{{$key->no_ijazah}}">
+                                </td>
+                                <td>
+                                    <input autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" placeholder="dd/mm/yyyyy" type="text"
+                                        class="form-control " id="id_tglijasah_{{$loop->iteration}}" name="id_tglijasah_{{$loop->iteration}}" value="{{isset ($key->tgl_ijasah) ? date('d/m/Y', strtotime($key->tgl_ijasah)) : ''}}">
+                                </td>
+                                <td>
+                                    <select class="form-control select2 selectdefault" nomor="{{$loop->iteration}}" name="id_default_{{$loop->iteration}}" id="id_default_{{$loop->iteration}}" style="width: 100%;">
+                                    @if ($key->default == 1)
+                                        <option value="0">-- Pilih Default --</option>
+                                        <option value="1" selected>Default</option>
+                                    @else
+                                    <option value="0" selected>-- Pilih Default --</option>
+                                        <option value="1" >Default</option>
+                                    @endif
+                                    </select>
+                                </td>
+                                <td class="image-upload">
+                                    <input accept=".pdf,.jpeg,.jpg" class="cstmfile" type="file" idi="#i_pdfijasah_{{$loop->iteration}}" name="id_pdfijasah_{{$loop->iteration}}" id="id_pdfijasah_{{$loop->iteration}}">
+                                    <label for="id_pdfijasah_{{$loop->iteration}}">
+                                        <i id="i_pdfijasah_{{$loop->iteration}}" class="fa fa-upload" style="padding-top:7px;color:grey">  Upload</i>
+                                    </label>
+                                    @if($key->pdf_ijasah!="")
+                                            <button type="button" id="btnKtpPdf" id="btn-npwp"
+                                                onclick='tampilLampiran("/uploads/{{$key->pdf_ijasah}}","Ijasah")'
+                                                class="btn btn-primary btn-sm">
+                                                <i class="fa fa-file-pdf-o"></i></button>
+                                            @endif
+                                </td>
+                                {{-- <td style="border-left:0px !important;padding-top:8px">
+                                    <button type="button" id="btnIjsPdf" onclick='tampilLampiran("{{ asset("uploads/$key->pdf_ijasah") }}","Ijasah")' class="btn btn-primary btn-xs">
+                                        <i class="fa fa-file-pdf-o" ></i></button>
+
+                                </td> --}}
+                                <td style="padding-top:7px">
+                                    <button type="button" class="btn btn-block btn-danger btn-sm btn-detail-hapus" nomor="{{$loop->iteration}}" onclick=""><span
+                                            class="fa fa-trash"></span></button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div class="small text-danger">*) Wajib diisi</div>
-                <button type="submit" class="btn btn-success" style="margin-top:20px;">Edit</button>
 
+                <input type="hidden" name='id_detail_sekolah' id='id_detail_sekolah' value=''>
+
+                <div class="box-footer" style="text-align:center">
+                    <div class="row">
+                        <div class="col-sm-6" >
+                            <button type="submit" class="btn btn-md btn-info"> <i class="fa fa-save"></i>
+                                Simpan</button>
+                        </div>
+                        <div class="col-sm-6" >
+                            <button type="button" onclick="goBack()" class="btn btn-md btn-default"><i
+                                class="fa fa-times-circle"></i>
+                            Batal</button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -596,6 +722,7 @@
 @push('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
 <script>
+    $('.select2').select2();
 
   $(document).ready(function () {
         $("#foto").change(function(){
