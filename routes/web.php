@@ -181,6 +181,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'tuk'], function () {
 Route::group(['middleware' => 'auth.admin','prefix' => 'personals'], function () {
 	Route::get('/','PersonalController@index');
 	Route::get('/create','PersonalController@create');
+	Route::get('/filter', 'PersonalController@index');
 	Route::post('/store','PersonalController@store');
 	Route::patch('/update','PersonalController@update');
 	Route::get('/create/getKota/{id}','PersonalController@getKota');
