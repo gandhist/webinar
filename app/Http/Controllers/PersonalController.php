@@ -652,4 +652,11 @@ class PersonalController extends Controller
         }
     }
 
+
+    public function filterprovpersonil(Request $req){
+        $idkota = Personal::select('kota_id')->groupBy('kota_id')->get()->toArray();
+        $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$req->prov)->get(['id','nama as text']);
+        return $kota;
+    }
+
 }

@@ -87,7 +87,7 @@
                                             <button type="submit" class="btn btn-info"> <i class="fa fa-filter"></i>
                                                 Filter</button>
                                             <button type="button" class="btn btn-default"><a
-                                                    href="{{ url('personil') }}"> <i class="fa fa-refresh"></i>
+                                                    href="{{ url('personals') }}"> <i class="fa fa-refresh"></i>
                                                     Reset</a></button>
 
                                         </div>
@@ -393,6 +393,14 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
     $('.select2').select2();
+
+    // Filter kota berdasarkan provinsi
+    $('#f_provinsi').on('select2:select', function () {
+        var id = $(this).val();
+        var url = `{{ url('chain/filterprovpersonil') }}`;
+        chainedProvinsiPersonil(url, 'f_provinsi', 'f_kota', "Kota_Domisili");
+    });
+
     $('#btnHapus').on('click', function (e) {
             e.preventDefault();
             var id = [];
