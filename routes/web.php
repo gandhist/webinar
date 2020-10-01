@@ -56,6 +56,7 @@ Route::get('iso/validity/{id}', 'Iso\IsoController@validity');
 Route::post('chainnegara/{id}','PersonalController@chainednegara');
 Route::post('personals/chain','PersonalController@chained_prov');
 Route::post('chain/filterprovpersonil','PersonalController@filterprovpersonil');
+Route::post('detail_personil_modal','PersonalController@detail');
 
 
 

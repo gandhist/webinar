@@ -735,4 +735,12 @@ class PersonalController extends Controller
         )->with(compact('prov','bank','kota','negara','jenjang_pendidikan','prodi'));
     }
 
+
+    public function detail(Request $request)
+    {
+        $data = PersonalSekolah::with('personil.kota.provinsi')->with('personil.bank')->with('personil.tempLahir')->with('jp')->with('kota_s')->with('kota_s.provinsi')->with('negara_s')->where('id_personal','=',$request->id_personal)->get();
+
+        return $data;
+    }
+
 }
