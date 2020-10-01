@@ -659,4 +659,8 @@ class PersonalController extends Controller
         return $kota;
     }
 
+    public function filter(Request $req){
+        dd("x");
+    }
+
 }

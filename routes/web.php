@@ -187,6 +187,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'personals'], function ()
 	Route::get('/{id}/edit','PersonalController@edit');
     Route::get('/{id}','PersonalController@show');
 	Route::delete('/destroy', 'PersonalController@destroy');
+	Route::post('/filter', 'PersonalController@filter');
 });
 // End Personal
 
