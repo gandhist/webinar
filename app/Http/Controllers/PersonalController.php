@@ -663,8 +663,76 @@ class PersonalController extends Controller
         return $kota;
     }
 
-    public function filter(Request $req){
-        dd("x");
+    public function filter(Request $request){
+        $personals = Personal::where('is_activated','1');
+
+        $ptkp = PTKPModel::all();
+        // $personals = Personal::where('is_activated','1')->get();
+        $bank = BankModel::all();
+        $negara = NegaraModel::all();
+        $jenjang_pendidikan = JenjangPendidikan::all();
+
+        $prov = ProvinsiModel::all();
+        $provinsi = $prov->pluck('nama', 'id');
+        $provinsi->all();
+
+        $kota = KotaModel::all();
+        $kotas = $kota->pluck('nama', 'id');
+        $kotas->all();
+
+        $bus = BuModel::all();
+        $bu = $bus->pluck('nama_bu', 'id');
+        $bu->all();
+
+        $idpers = Personal::select('id')->get()->toArray();
+        $prodi = Sekolah::select('jurusan')->whereIn('id_personal',$idpers)->groupBy('jurusan')->get();
+
+        $sklh = PersonalSekolah::where('default','=','0')->get();
+
+        if($request->f_awal_ijasah != null && $request->f_akhir_ijasah != null){
+            $id_tglawal = $request->f_awal_ijasah;
+            $id_tglakhir = $request->f_akhir_ijasah;
+            $personals->whereHas('sekolah', function ($query) use($id_tglawal, $id_tglakhir) {
+                $query->whereBetween('tgl_ijasah', [Carbon::createFromFormat('d/m/Y',$id_tglawal), Carbon::createFromFormat('d/m/Y',$id_tglakhir)]);
+            });
+        }
+        if (!$request->f_provinsi===NULL || !$request->f_provinsi==""){
+            $id_prop = $request->f_provinsi;
+            $personals->whereHas('kota', function ($query) use($id_prop) {
+                $query->where('provinsi_id', '=', $id_prop);
+            });
+            $idkota = Personal::select('kota_id')->groupBy('kota_id')->get()->toArray();
+            $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$request->f_provinsi)->get();
+        } else{
+            $kota = KotaModel::where('id','=','~')->get();
+        }
+        if (!$request->f_kota===NULL || !$request->f_kota==""){
+            $personals->where('kota_id', '=', $request->f_kota);
+        }
+        if (!$request->f_jenjang_pendidikan===NULL || !$request->f_jenjang_pendidikan==""){
+            $id_jp = $request->f_jenjang_pendidikan;
+            $personals->whereHas('sekolah', function ($query) use($id_jp) {
+                $query->where('id_jenjang', '=', $id_jp);
+            });
+        }
+        if (!$request->f_program_studi===NULL || !$request->f_program_studi==""){
+            $pro_di = $request->f_program_studi;
+            $personals->whereHas('sekolah', function ($query) use($pro_di) {
+                $query->where ('jurusan', '=', $pro_di);
+            });
+        }
+        if (!$request->f_status===NULL || !$request->f_status==""){
+            $personals->where('status_p', '=', $request->f_status);
+        }
+
+        $personals = $personals->get();
+        return view('personal.index',
+            ['personals' => $personals,
+            'provinsis' => $provinsi,
+            'kotas' => $kotas,
+            'bu' => $bu,
+            'sklh' => $sklh]
+        )->with(compact('prov','bank','kota','negara','jenjang_pendidikan','prodi'));
     }
 
 }
