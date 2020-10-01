@@ -359,6 +359,26 @@ class PersonalController extends Controller
 
     public function edit($id) {
 
+        $ptkp = PTKPModel::all();
+        $personal = $data = Personal::find($id);
+        $provinsis = $prov = ProvinsiModel::all();
+        $kotas = $kota = KotaModel::all();
+        $provpil = KotaModel::select('provinsi_id')->where('id','=',$data->kota_id)->get();
+        $kotapil = KotaModel::whereIn('provinsi_id',$provpil)->get();
+        // $provpil2 = KotaModel::select('provinsi_id')->where('id','=',$data->kode_kota_ktp)->get();
+        // $kotapil2 = KotaModel::whereIn('provinsi_id',$provpil2)->get();
+        $negara = NegaraModel::all();
+        $banks = $bank = BankModel::all();
+        $bus = BUModel::all();
+        $jenjang_pendidikan = JenjangPendidikan::all();
+        $sekolah = Sekolah::all();
+        $detail_sekolah = PersonalSekolah::where('id_personal',$id)->get();
+        $jumlahdetail = PersonalSekolah::where('id_personal','=',$id)->count();
+
+        return view('personal.edit')->with(compact('ptkp','data','provinsis','kotas','banks','personal', 'bus', 'id',
+        'prov','kota','negara','bank','sekolah','jenjang_pendidikan','detail_sekolah','jumlahdetail','kotapil',));
+// 'kotapil2'
+
         $personal = Personal::where('id', $id)->first();
         $prov = ProvinsiModel::all();
         // $provinsi = $prov->pluck('nama', 'id');
