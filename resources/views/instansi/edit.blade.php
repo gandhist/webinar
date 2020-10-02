@@ -100,15 +100,15 @@
 
                 <div class="row">
                     {{-- Singkat Badan Usaha  --}}
-                    <div class="col-sm-5 {{ $errors->first('id_singkat_bu') ? 'has-error' : '' }}">
+                    <div class="col-sm-5 {{ $errors->first('singkat_bu') ? 'has-error' : '' }}">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 <span class="bintang">*</span> Singkat Badan Usaha
                             </div>
-                            <input name="id_singkat_bu" id="id_singkat_bu" type="text" class="form-control"
+                            <input name="singkat_bu" id="singkat_bu" type="text" class="form-control"
                                 placeholder="*Nama Singkat Badan Usaha" value="{{$data->singkat_bu}}">
                         </div>
-                        <span id="id_singkat_bu" class="help-block customspan">{{ $errors->first('id_singkat_bu') }}
+                        <span id="singkat_bu" class="help-block customspan">{{ $errors->first('singkat_bu') }}
                         </span>
                     </div>
                     {{-- Akhir Singkat Badan Usaha  --}}
@@ -120,11 +120,11 @@
                     {{-- Bentuk Badan Usaha --}}
                     <div class="col-sm-5">
                         <div
-                            class="input-group {{ $errors->first('singkat_bu') ? 'has-error has-error-select' : '' }}">
+                            class="input-group {{ $errors->first('bentuk_bu') ? 'has-error has-error-select' : '' }}">
                             <div class="input-group-addon">
                                 <span class="bintang">*</span> Bentuk BU
                             </div>
-                            <select class="form-control select2" name="singkat_bu" id="singkat_bu"
+                            <select class="form-control select2" name="bentuk_bu" id="bentuk_bu"
                                 style="width: 100%;">
                                 <option value="" {{empty($data->id_bentuk_usaha) ? 'disabled selected' : ''}}>*Bentuk BU</option>
                                 @foreach($bentukusaha as $key)
@@ -134,7 +134,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <span id="singkat_bu" class="help-block customspan">{{ $errors->first('singkat_bu') }}
+                        <span id="bentuk_bu" class="help-block customspan">{{ $errors->first('bentuk_bu') }}
                         </span>
                     </div>
                     {{-- Akhir Bentuk Badan Usaha --}}
@@ -499,7 +499,7 @@
                 <div class="col-sm-1" style="text-align:right">
                     @if($data->npwp_pdf)
                     <button type="button" id="btnKtpPdf" id="btn-npwp"
-                        onclick='tampilLampiran("{{$data->npwp_pdf}}","NPWP")'
+                        onclick='tampilLampiran("{{asset($data->npwp_pdf)}}","NPWP")'
                         class="btn btn-primary btn-sm">
                         <i class="fa fa-file-pdf-o"></i> NPWP</button>
                     @endif
@@ -582,13 +582,14 @@
                 <div class="col-sm-1" style="text-align:right">
                     @if($data->logo)
                     <button type="button" id="btnLogo"
-                        onclick='tampilLampiran("{{$data->logo}}","Logo")'
+                        onclick='tampilLampiran("{{asset($data->logo)}}","Logo")'
                         class="btn btn-primary btn-sm">
                         <i class="fa fa-file-pdf-o"></i> Logo</button>
                     @endif
                 </div>
                 {{-- Akhir Logo --}}
             </div>
+            <input type="hidden" name="id" value="{{$id}}">
 
             <div class="row" style="text-align:right">
                 <div class="col-sm-12">

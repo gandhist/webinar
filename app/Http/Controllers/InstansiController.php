@@ -40,8 +40,7 @@ class InstansiController extends Controller
         return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota', 'reff'));
     }
 
-    public function filter(Request $request)
-    {
+    public function filter(Request $request) {
     //     $id_status = BUModel::select('status_kantor')->groupBy('status_kantor')->whereNotNull('status_kantor')->get()->toArray();
     //     $statusmodel = StatusModel::whereIn('id',$id_status)->get();
     //     $id_prop = BUModel::select('id_prop')->groupBy('id_prop')->whereNotNull('id_prop')->get()->toArray();
@@ -121,7 +120,7 @@ class InstansiController extends Controller
         return view('instansi.create')->with(compact('provinsi','kota','bank', 'bentukusaha', 'statusmodel', 'personal'));
     }
     public function store(Request $request) {
-        $id = $data->id;
+        // $id = $data->id;
         // dd($request);
         // dd($request->isi_manual);
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
@@ -142,7 +141,7 @@ class InstansiController extends Controller
             "jab_pimp" => "required_with:isi_manual,on",
             "email_pimp" => "sometimes|nullable|required_with:isi_manual,on|email",
             // "hp_pimp" => "required",
-            "kontak_p" => "required|min:3|max:100",
+            "kontak_p" => "required",
             // "jab_kontak_p" => "required|min:3|max:100",
             // "email_kontak_p" => "required|email|unique:badan_usaha",
             "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha",
@@ -687,6 +686,7 @@ class InstansiController extends Controller
         }
     }
     public function update(Request $request) {
+        // dd($request);
         $instansi = BuModel::where('id', $request->id)->first();
 
         if($instansi->npwp_pdf){
@@ -700,25 +700,28 @@ class InstansiController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
 
         $request->validate([
-            "nama_bu" => "required|min:3|max:500",
+            "nama_bu" => "required",
             "email" => "required|email",
-            "telp" => "required|numeric|digits_between:6,20",
-            "web" => "required|url|min:3|max:100",
-            "alamat" => "required|min:3|max:100",
+            "telp" => "required|numeric",
+            "web" => "required|url",
+            "alamat" => "required",
             "id_prop" => "required",
             "id_kota" => "required",
-            "singkat_bu" => "required|min:2|max:100",
+            "singkat_bu" => "required",
             // "nama_pimp" => "required|min:3|max:50",
             // "jab_pimp" => "required|min:3|max:50",
             // "email_pimp" => "required|email",
             // "hp_pimp" => "required|numeric|digits_between:6,20",
-            "kontak_p" => "required|min:3|max:100",
-            "jab_kontak_p" => "required|min:3|max:100",
-            "email_kontak_p" => "required|email",
-            "no_kontak_p" => "required|numeric|digits_between:6,20",
+            "nama_pimp_text" => "required_with:isi_manual,on",
+            "jab_pimp" => "required_with:isi_manual,on",
+            "email_pimp" => "sometimes|nullable|required_with:isi_manual,on|email",
+            "kontak_p" => "required",
+            // "jab_kontak_p" => "required|min:3|max:100",
+            // "email_kontak_p" => "required|email",
+            "no_kontak_p" => "required|numeric",
             "no_rek" => "sometimes|nullable|min:4|max:20",
             "id_bank" => "sometimes|nullable|required_with:no_rek",
-            "nama_rek" => "sometimes|nullable|required_with:no_rek|min:3|max:100",
+            "nama_rek" => "sometimes|nullable|required_with:no_rek",
             'npwpClean' => 'sometimes|nullable|numeric|digits:15',
             "npwp_pdf" => "sometimes|nullable|mimes:pdf,jpeg,png,jpg,gif,svg|max:2048",
             "logo" => "mimes:jpeg,png,jpg,gif,svg|max:2048"
@@ -743,6 +746,10 @@ class InstansiController extends Controller
             'singkat_bu' => 'Mohon isi Nama Singkat Instansi',
             'singkat_bu.min' => 'Nama Singkat minimal 3 karakter',
             'singkat_bu.max' => 'Nama Singkat maksimal 100 karakter',
+            'nama_pimp_text.required_with' => 'Mohon isi Nama Pimpinan (Jika isi manual)',
+            'email_pimp.required_with' => 'Mohon isi Email Pimpinan (Jika isi manual)',
+            'jab_pimp.required_with' => 'Mohon isi Jabatan Pimpinan (Jika isi manual)',
+            'hp_pimp.required_with' => 'Mohon isi Nomor Telepon Pimpinan (Jika isi manual)',
             // 'nama_pimp.required' => 'Mohon isi Nama Pimpinan',
             // 'nama_pimp.min' => 'Nama Pimpinan minimal 3 karakter',
             // 'nama_pimp.max' => 'Nama Pimpinan maksimal 50 karakter',
@@ -826,6 +833,14 @@ class InstansiController extends Controller
         //         'hp_pimp.gt' => 'Mohon isi Nomor Telepon dengan format yang valid',
         //     ]);
         // }
+        if($request->isi_manual){
+            // dd('masuk bos');
+            $request->validate([
+                "email_pimp" => "unique:personal,email"
+            ],[
+                'email_pimp.unique' => 'Email sudah terdaftar',
+            ]);
+        }
 
         if($request->email_kontak_p != $instansi->email_kontak_p ) {
             $request->validate([
@@ -852,6 +867,8 @@ class InstansiController extends Controller
         $data = BuModel::find($request->id);
         $data->nama_bu          = $request->nama_bu                     ;
         $data->email            = $request->email                       ;
+        $data->instansi_reff    = $request->instansi_reff               ;
+        $data->id_bentuk_usaha  = $request->bentuk_bu                   ;
         $data->telp             = $request->telp                        ;
         $data->web              = $request->web                         ;
         $data->alamat           = $request->alamat                      ;
@@ -859,9 +876,9 @@ class InstansiController extends Controller
         $data->id_kota          = $request->id_kota                     ;
         $data->singkat_bu       = $request->singkat_bu                  ;
         // $data->nama_pimp        = $request->nama_pimp                   ;
-        // $data->jab_pimp         = $request->jab_pimp                    ;
-        // $data->email_pimp       = $request->email_pimp                  ;
-        // $data->hp_pimp          = $request->hp_pimp                     ;
+        $data->jab_pimp         = $request->jab_pimp                    ;
+        $data->email_pimp       = $request->email_pimp                  ;
+        $data->hp_pimp          = $request->hp_pimp                     ;
         $data->kontak_p         = $request->kontak_p                    ;
         $data->jab_kontak_p     = $request->jab_kontak_p                ;
         $data->email_kontak_p   = $request->email_kontak_p              ;
@@ -870,9 +887,12 @@ class InstansiController extends Controller
         $data->id_bank          = $request->id_bank                     ;
         $data->nama_rek         = $request->nama_rek                    ;
         $data->npwp             = $request->npwp                        ;
+        $data->is_actived       = '1'                                   ;
+        $data->status_kantor    = $request->status_kantor               ;
+        $data->level_atas       = $request->bu_atas                     ;
 
         $data->updated_by       = Auth::id()                            ;
-        $data->updated_at       = Carbon::now()->toDateTimeString()    ;
+        $data->updated_at       = Carbon::now()->toDateTimeString()     ;
 
         // handle upload Foto
         $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $request->nama_bu);
@@ -917,9 +937,97 @@ class InstansiController extends Controller
             // }
 
         }
-        $instansi = $data->save();
-        return redirect('/instansi')->with('pesan',"Instansi \"".$request->nama_bu.
-        "\" berhasil diubah");
+        $data->save();
+
+
+        if(($request->isi_manual == "on") ) {
+
+            if($request->email_pimp && $request->email_pimp) {
+                $user = User::where('email',$request->email_pimp)->first();
+
+                if(!isset($user)) {
+                    $password = str_random(8);
+
+                    $user               = new User;
+                    $user->username     = $request->email_pimp;
+                    $user->email        = $request->email_pimp;
+                    $user->password     = Hash::make($password);
+                    $user->name         = isset($request->nama_pimp_text) ? $request->nama_pimp_text : $request->email_pimp;
+                    $user->role_id      = 2;
+                    $user->is_active    = 1;
+                    // $user->created_by   = Auth::id();
+                    $user->save();
+
+                    $target = new TargetBlasting;
+                    $target->nama  = $request->nama_pimp_text;
+                    $target->email  = $request->email_pimp;
+                    $target->no_hp  = $request->hp_pimp;
+                    $target->save();
+
+                    $detail = ['nama' => $request->nama_pimp_text,
+                    'password' => $password,
+                    'email' => $request->email_pimp, 'nope' => $request->hp_pimp];
+                    dispatch(new \App\Jobs\UserBaruPersonal($detail));
+
+                }
+
+                $personal = Personal::where('email',$request->email_pimp)->first();
+
+                if(!isset($personal)) {
+                    $pimp = new Personal;
+                    $pimp->instansi         = $data->id                ;
+                    $pimp->user_id          = $user->id                ;
+                    $pimp->nama             = $request->nama_pimp_text ;
+                    $pimp->jabatan          = $request->jab_pimp       ;
+                    $pimp->email            = $request->email_pimp     ;
+                    $pimp->no_hp            = $request->hp_pimp        ;
+                    $pimp->is_activated     = '1'                       ;
+                    $pimp->is_pimpinan      = '1'                      ;
+
+                    $pimp->created_by       = Auth::id()               ;
+                    // dd($pimp);
+                    $pimp->save()                                      ;
+
+                    $data->id_personal_pimp = $pimp->id                ;
+                    $data->nama_pimp        = $request->nama_pimp_text      ;
+                    $data->save();
+
+                    return redirect('/instansi')
+                    ->with('pesan',"Badan Usaha berhasil diubah");
+                    // return redirect('/instansi/lengkapi/'.$data->id.'/'.$pimp->id)
+                    // ->with('pesan',"Badan Usaha \"".$request->nama_bu.
+                    // "\" berhasil ditambahkan, mohon lengkapi data diri pimpinan");
+                } else {
+                    $data->id_personal_pimp = $personal->id                ;
+                    $data->nama_pimp        = $request->nama_pimp_text      ;
+                    $data->save();
+
+                    $personal->instansi     = $data->id                ;
+                    $personal->save();
+                    return redirect('/instansi')
+                    ->with('pesan',"Badan Usaha berhasil diubah");
+                }
+            } else {
+                return redirect('/instansi')
+                ->with('pesan',"Badan Usaha berhasil diubah");
+            }
+
+        } else {
+            if(isset($request->nama_pimp_select)) {
+                $pers = Personal::where('id', $request->nama_pimp_select)->first();
+                $data->id_personal_pimp = $pers->id;
+                $data->nama_pimp        = $pers->nama;
+                $data->save();
+
+                $pers->is_pimpinan = '1';
+                $pers->instansi    = $data->id;
+                $pers->save();
+            }
+
+            return redirect('/instansi')
+            ->with('pesan',"Badan Usaha berhasil diubah");
+        }
+
     }
     public function destroy(Request $request) {
         $idData = explode(',', $request->idHapusData);
