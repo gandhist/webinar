@@ -420,29 +420,35 @@ class PersonalController extends Controller
 
     public function update(Request $request) {
         $personal = Personal::where('id', $request->id)->first();
-        // dd($personal);
+        $id = $request->id;
+        // dd($request->id);
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
         $request->validate([
-            'nama' => 'required|min:3|max:100',
+            'nama' => 'required',
             'nik' => 'required|numeric|digits:16',
-            'email' => 'required|email|max:100',
-            'no_hp' => 'required|numeric|digits_between:9,14',
+            'email' => 'required|email',
+            'no_hp' => 'required|numeric',
             'jenis_kelamin' => 'required',Rule::in(['L','P']),
-            'instansi' => 'required',
-            'jabatan' => 'required|min:3,max:100',
-            'alamat' => 'required|min:3|max:100',
+            // 'instansi' => 'required',
+            // 'jabatan' => 'required|min:3,max:100',
+            'alamat' => 'required',
             'provinsi' => 'required',
             'kota' => 'required',
+            'alamat_ktp' => 'required',
+            'provinsi_ktp' => 'required',
+            'kota_ktp' => 'required',
             'temp_lahir' => 'required',
-            'no_rek' => 'sometimes|nullable|numeric|digits_between:4,20',
+            'tgl_lahir' => 'required|date',
+            'no_rek' => 'sometimes|nullable|numeric',
             'bank_id' => 'required_with:no_rek',
-            'nama_rek' => 'sometimes|nullable|required_with:no_rek|min:3|max:100',
+            'nama_rek' => 'sometimes|nullable|required_with:no_rek',
             'npwpClean' => 'sometimes|nullable|numeric|digits:15',
             'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_npwp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
             'lampiran_ktp' => 'mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
-            'reff_p' => 'sometimes|nullable|min:3|max:100',
+            'reff_p' => 'required',
+            'status_p' => 'required'
         ],[
             'nama.required' => 'Mohon isi Nama',
             'nama.min' => 'Nama minimal 3 karakter',
@@ -468,7 +474,14 @@ class PersonalController extends Controller
             'alamat.max' => 'Alamat maksimal 100 karakter',
             'provinsi.required' => 'Mohon isi Provinsi',
             'kota.required' => 'Mohon isi Kota',
+            'alamat_ktp.required' => 'Mohon isi Alamat (KTP)',
+            'alamat_ktp.min' => 'Alamat minimal 3 karakter',
+            'alamat_ktp.max' => 'Alamat maksimal 100 karakter',
+            'provinsi_ktp.required' => 'Mohon isi Provinsi (KTP)',
+            'kota_ktp.required' => 'Mohon isi Kota (KTP)',
             'temp_lahir.required' => 'Mohon isi Tempat Lahir',
+            'tgl_lahir.required' => 'Mohon isi Tanggal Lahir',
+            'tgl_lahir.date' => 'Mohon isi Tanggal Lahir',
             'no_rek.numeric' => 'Mohon isi Nomor Rekening dengan format yang valid',
             'no_rek.digits_between' => 'Mohon isi Nomor Rekening dengan format yang valid',
             'no_rek.gt' => 'Mohon isi Nomor Rekening dengan format yang valid',
@@ -486,12 +499,14 @@ class PersonalController extends Controller
             'lampiran_npwp.max' => 'Lampiran NPWP maksimal berukuran 2MB',
             'lampiran_ktp.mimes' => 'Mohon masukkan Lampiran KTP dengan format yang valid (gambar / PDF)',
             'lampiran_ktp.max' => 'Lampiran KTP maksimal berukuran 2MB',
+            'reff_p.required' => 'Mohon isi Referensi Pendaftaran',
+            'status_p.required' => 'Mohon isi Status Personal',
             'reff_p.min' => 'Referensi Pendaftaran minimal 3 karakter',
             'reff_p.max' => 'Referensi Pendaftaran maksimal 100 karakter',
         ]);
 
         // simpan data peserta
-        $data = Personal::find($request->id);
+        $data = Personal::find($id);
         $data->nama = $request->nama;
         // dd($data->nama);
         if($request->nik != $personal->nik){
@@ -519,7 +534,7 @@ class PersonalController extends Controller
         }
         if($request->no_hp != $personal->no_hp){
             $request->validate([
-                'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
+                'no_hp' => 'required|numeric|unique:personal',
             ],[
                 'no_hp.required' => 'Mohon isi Nomor Telepon',
                 'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
@@ -534,16 +549,29 @@ class PersonalController extends Controller
         $data->jenis_kelamin = $request->jenis_kelamin;
         $data->instansi = $request->instansi;
         $data->jabatan = $request->jabatan;
+
         $data->alamat = $request->alamat;
         $data->provinsi_id = $request->provinsi;
         $data->kota_id = $request->kota;
+
+        $data->alamat_ktp = $request->alamat_ktp;
+        $data->provinsi_id_ktp = $request->provinsi_ktp;
+        $data->kota_id_ktp = $request->kota_ktp;
+
         $data->temp_lahir = $request->temp_lahir;
         $data->tgl_lahir = Carbon::parse($request->tgl_lahir);
         $data->no_rek = $request->no_rek;
         $data->id_bank = $request->bank_id;
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
+        $data->agama =  $request->agama;
+        $data->id_ptkp =  $request->status_pajak;
+        $data->status_pernikahan =  $request->status_perni;
+        $data->bpjs =  $request->bpjs_no;
         $data->reff_p = $request->reff_p;
+        $data->status_p = $request->status_p;
+        $data->is_activated = '1';
+        $data->is_pimpinan = '0';
 
         $data->updated_by = Auth::id();
         $data->updated_at = Carbon::now()->toDateTimeString();
@@ -606,6 +634,14 @@ class PersonalController extends Controller
             // }
         }
 
+        if ($files = $request->file('lampiran_bpjs')) {
+            $lampiran_bpjs_lama = $data->lampiran_bpjs;
+            $destinationPath = 'uploads/foto/personal/'.$dir_name; // upload path
+            $file = $dir_name."_lampiran_bpjs_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $file);
+            $data->lampiran_bpjs = $destinationPath."/".$file;
+        }
+
         $user = User::where('id',$personal->user_id)->first();
         if(isset($user) && $user->email != $request->email){
             $user->email = $request->email;
@@ -645,6 +681,68 @@ class PersonalController extends Controller
         $data->save();
 
         $instansi = $data->save();
+
+        $a=array();
+
+        if (is_null($request->id_detail_sekolah) || $request->id_detail_sekolah=='' )
+        {
+            $user_data = [
+                'deleted_by' => Auth::id(),
+                'deleted_at' => Carbon::now()->toDateTimeString()
+            ];
+            $data = PersonalSekolah::where('id_personal', $id)->update($user_data);
+        } else {
+            $detail_sekolah = explode(',', $request->id_detail_sekolah);
+
+            foreach($detail_sekolah as $sekolah) {
+                $dataSekolah['id_personal'] = $id;
+                $x = "id_jp_".$sekolah;
+                $dataSekolah['id_jenjang'] = $request->$x;
+                $x = "id_namasekolah_".$sekolah;
+                $dataSekolah['nama_sekolah'] = $request->$x;
+                $x = "id_negarasekolah_".$sekolah;
+                $dataSekolah['negara'] = $request->$x;
+                $x = "id_provsekolah_".$sekolah;
+                $dataSekolah['prop_sekolah'] = $request->$x;
+                $x = "id_kotasekolah_".$sekolah;
+                $dataSekolah['kota_sekolah'] = $request->$x;
+                $x = "id_prodi_".$sekolah;
+                $dataSekolah['jurusan'] = $request->$x;
+                $x = "id_tahuntamat_".$sekolah;
+                $dataSekolah['tahun'] = $request->$x;
+                $x = "id_noijasah_".$sekolah;
+                $dataSekolah['no_ijazah'] = $request->$x;
+                $x = "id_tglijasah_".$sekolah;
+                $dataSekolah['tgl_ijasah'] = Carbon::createFromFormat('d/m/Y',$request->$x);
+                $x = "id_default_".$sekolah;
+                $dataSekolah['default'] = $request->$x;
+
+                if ($files = $request->file('id_pdfijasah_'.$sekolah)) {
+                    $destinationPath = 'uploads/'.$dir_name;
+                    $file = "ijasah_".$sekolah. "_" .$dir_name."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                    $files->move($destinationPath, $file);
+                    $dataSekolah['pdf_ijasah'] = $dir_name."/".$file;
+                }
+                $x = "type_detail_".$sekolah;
+                $typeDetail = $request->$x;
+
+                if($typeDetail==''){
+                    $c = PersonalSekolah::create($dataSekolah);
+                    array_push($a,$c->id);
+                } else{
+                    array_push($a,$typeDetail);
+                    PersonalSekolah::find($typeDetail)->update($dataSekolah);
+                }
+            }
+            $b = PersonalSekolah::select('id')->where('id_personal','=',$id)->whereNotIn('id', $a)->get();
+
+            $user_data = [
+                'deleted_by' => Auth::id(),
+                'deleted_at' => Carbon::now()->toDateTimeString()
+            ];
+            $data = PersonalSekolah::whereIn('id', $b)->update($user_data);
+        }
+
         return redirect('/personals')->with('pesan',"Personal \"".$request->nama.
         "\" berhasil diubah");
     }
