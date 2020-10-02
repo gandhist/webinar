@@ -373,7 +373,7 @@
                                 <option value="" disabled selected>Status Pajak (PTKP)</option>
                                 @foreach($ptkp as $key)
                                 <option value="{{ $key->id }}"
-                                    {{ (old('status_pajak') ? ( $key->id == old('status_pajak') ) : ( $key->id == $data->status_pajak ) ) ? 'selected' : '' }}>
+                                    {{ (old('status_pajak') ? ( $key->id == old('status_pajak') ) : ( $key->id == $data->id_ptkp ) ) ? 'selected' : '' }}>
                                     {{ $key->nama_ptkp }} ({{$key->remarks}}) </option>
                                 @endforeach
                             </select>

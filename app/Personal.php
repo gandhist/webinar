@@ -16,6 +16,10 @@ class Personal extends Model
     {
         return $this->hasOne('App\KotaModel', 'id','kota_id');
     }
+    public function kota_ktp()
+    {
+        return $this->hasOne('App\KotaModel', 'id','kota_id_ktp');
+    }
     public function bank()
     {
         return $this->belongsTo('App\BankModel', 'id_bank' ,'id_bank');
@@ -31,6 +35,10 @@ class Personal extends Model
     public function sekolah_p()
     {
         return $this->belongsTo('App\PersonalSekolah', 'id', 'id_personal')->where('default','=',1);
+    }
+    public function ptkp_r()
+    {
+        return $this->belongsTo('App\PTKPModel', 'id_ptkp' );
     }
 
 }

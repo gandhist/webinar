@@ -90,6 +90,9 @@ class PersonalController extends Controller
             'alamat' => 'required',
             'provinsi' => 'required',
             'kota' => 'required',
+            'alamat_ktp' => 'required',
+            'provinsi_ktp' => 'required',
+            'kota_ktp' => 'required',
             'temp_lahir' => 'required',
             'tgl_lahir' => 'required|date',
             'no_rek' => 'sometimes|nullable|numeric',
@@ -128,11 +131,16 @@ class PersonalController extends Controller
             'jabatan.max' => 'Jabatan maksimal 100 karakter',
             'bpjs_no.numeric' => 'Mohon isi Nomor BPJS dengan format yang valid',
             'bpjs_no.digits' => 'Mohon isi Nomor BPJS dengan format yang valid',
-            'alamat.required' => 'Mohon isi Alamat',
+            'alamat.required' => 'Mohon isi Alamat (Domisili)',
             'alamat.min' => 'Alamat minimal 3 karakter',
             'alamat.max' => 'Alamat maksimal 100 karakter',
-            'provinsi.required' => 'Mohon isi Provinsi',
-            'kota.required' => 'Mohon isi Kota',
+            'provinsi.required' => 'Mohon isi Provinsi (Domisili)',
+            'kota.required' => 'Mohon isi Kota (Domisili)',
+            'alamat_ktp.required' => 'Mohon isi Alamat (KTP)',
+            'alamat_ktp.min' => 'Alamat minimal 3 karakter',
+            'alamat_ktp.max' => 'Alamat maksimal 100 karakter',
+            'provinsi_ktp.required' => 'Mohon isi Provinsi (KTP)',
+            'kota_ktp.required' => 'Mohon isi Kota (KTP)',
             'temp_lahir.required' => 'Mohon isi Tempat Lahir',
             'tgl_lahir.required' => 'Mohon isi Tanggal Lahir',
             'tgl_lahir.date' => 'Mohon isi Tanggal Lahir',
@@ -169,9 +177,15 @@ class PersonalController extends Controller
         $data->jenis_kelamin = $request->jenis_kelamin;
         // $data->instansi = $request->instansi;
         // $data->jabatan = $request->jabatan;
+
         $data->alamat = $request->alamat;
         $data->provinsi_id = $request->provinsi;
         $data->kota_id = $request->kota;
+
+        $data->alamat_ktp = $request->alamat_ktp;
+        $data->provinsi_id_ktp = $request->provinsi_ktp;
+        $data->kota_id_ktp = $request->kota_ktp;
+
         $data->temp_lahir = $request->temp_lahir;
         $data->tgl_lahir = Carbon::parse($request->tgl_lahir);
         $data->no_rek = $request->no_rek;
@@ -179,7 +193,7 @@ class PersonalController extends Controller
         $data->nama_rek = $request->nama_rek;
         $data->npwp =  $request->npwp;
         $data->agama =  $request->agama;
-        $data->status_pajak =  $request->status_pajak;
+        $data->id_ptkp =  $request->status_pajak;
         $data->status_pernikahan =  $request->status_perni;
         $data->bpjs =  $request->bpjs_no;
         $data->reff_p = $request->reff_p;

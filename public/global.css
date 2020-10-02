@@ -8,9 +8,9 @@
 .input-group-addon{
 	text-align:right !important;
 }
-.input-group input[type="file"] {
+/* .input-group input[type="file"] {
     padding: 0px !important;
-}
+} */
 
 
 .pdf-icon {

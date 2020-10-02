@@ -196,6 +196,8 @@
                                     <th>Pdf_KTP</th>
                                     <th>BPJS_Kes</th>
                                     <!-- <th>Pdf_NPWP</th> -->
+                                    <th>User_Waktu_Tambah</th>
+                                    <th>User_Waktu_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -208,11 +210,20 @@
                                         id="selection[]" name="selection[]"></td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>@if ($personal->status_p =='1') Internal @elseif ($personal->status_p =='2') External @endif</td>
-                                    <td>{{ $personal->nama }} </td>
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="top" data-html="true" title="
-                                        Provinsi : {{ isset($personal->kota->provinsi->nama) ? $personal->kota->provinsi->nama : '' }} <br>
-                                        Kota : {{ $personal->kota_id ? $personal->kota->nama : '' }} <br>
-                                        Alamat : {{ $personal->alamat }} <br>
+                                        Jenis Kelamin : @if ($personal->jenis_kelamin =='L') Laki-laki @elseif ($personal->jenis_kelamin =='P') Perempuan @endif<br>
+                                        Agama : {{ ucfirst($personal->agama) }}<br>
+                                        Sts Pernikahan : @if ($personal->status_pernikahan =='BK') Belum Kawin @elseif ($personal->status_pernikahan =='K') Kawin @elseif ($personal->status_pernikahan =='CH') Cerai Hidup @elseif ($personal->status_pernikahan =='CM') Cerai Mati @endif<br>
+                                        Sts PTKP : {{ $personal->ptkp_r->nama_ptkp ?? '' }}<br>
+                                        Alamat KTP : {{ $personal->alamat_ktp }}<br>
+                                        Prov KTP : {{ isset($personal->kota_ktp->provinsi->nama) ? $personal->kota_ktp->provinsi->nama : '' }}<br>
+                                        Kota KTP : {{ $personal->kota_id_ktp ? $personal->kota_ktp->nama : '' }}<br>">
+                                        {{ $personal->nama }}
+                                    </td>
+                                    <td style='text-align:center' data-toggle="tooltip" data-placement="top" data-html="true" title="
+                                        Provinsi Domisili : {{ isset($personal->kota->provinsi->nama) ? $personal->kota->provinsi->nama : '' }} <br>
+                                        Kota Domisili : {{ $personal->kota_id ? $personal->kota->nama : '' }} <br>
+                                        Alamat Domisili : {{ $personal->alamat }} <br>
                                         No HP : {{ $personal->no_hp }} <br>
                                         Email : {{ $personal->email }} <br>
                                         NIK : {{ $personal->nik }} <br>">
@@ -334,6 +345,20 @@
                                             Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                         </a>
                                     </td> --}}
+                                    <td>
+                                        @if (isset($personal->created_at))
+                                        {{ \Carbon\Carbon::parse($personal->created_at)->isoFormat("DD MMMM YYYY") }}
+                                        @else
+                                        {{''}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (isset($personal->updated_at))
+                                        {{ \Carbon\Carbon::parse($personal->updated_at)->isoFormat("DD MMMM YYYY") }}
+                                        @else
+                                        {{''}}
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

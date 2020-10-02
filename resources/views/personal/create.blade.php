@@ -205,31 +205,88 @@
                 </div>
 
                 <div class="row">
-                    {{-- Alamat --}}
+                    {{-- Alamat KTP --}}
                     <div class="col-sm-12">
-                        <div class="input-group {{ $errors->first('alamat') ? 'has-error' : '' }}">
+                        <div class="input-group {{ $errors->first('alamat_ktp') ? 'has-error' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Alamat
+                                <span class="bintang">*</span> Alamat (KTP)
                             </div>
-                            <input name="alamat" id="alamat" type="text" class="form-control "
-                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan" value="{{old('alamat')}}">
+                            <input name="alamat_ktp" id="alamat_ktp" type="text" class="form-control "
+                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan (KTP)" value="{{old('alamat_ktp')}}">
                         </div>
-                        <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}</span>
+                        <span id="alamat_ktp" class="help-block customspan">{{ $errors->first('alamat_ktp') }}</span>
                     </div>
-                    {{-- Akhir Alamat --}}
+                    {{-- Akhir Alamat KTP --}}
                 </div>
 
                 <div class="row">
-                    {{-- Provinsi --}}
+                    {{-- Provinsi KTP --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('provinsi_ktp') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Provinsi (KTP)
+                            </div>
+                            <select class="form-control select2" name="provinsi_ktp" id="provinsi_ktp" style="width: 100%;"
+                                placeholder="*Provinsi Alamat (KTP)">
+                                <option value="" disabled selected>*Provinsi (KTP)</option>
+                                @foreach($provinsis as $key)
+                                <option value="{{ $key->id }}" {{ $key->id == old('provinsi_ktp') ? 'selected' : '' }}>
+                                    {{ $key->nama }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <span id="provinsi_ktp" class="help-block customspan">{{ $errors->first('provinsi_ktp') }}</span>
+                    </div>
+                    {{-- Akhir Provinsi KTP --}}
+                    <div class="col-sm-2">
+                    </div>
+                    {{-- Kota KTP --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('kota_ktp') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Kota (KTP)
+                            </div>
+                            <select class="form-control select2" name="kota_ktp" id="kota_ktp" style="width: 100%;">
+                                <option value="" disabled selected>*Kota (KTP)</option>
+                                {{-- @foreach($kota as $key)
+                                <option value="{{ $key->id }}" {{ $key->id == old('kota') ? 'selected' : '' }}>
+                                {{ $key->nama }}</option>
+                                @endforeach --}}
+                            </select>
+                        </div>
+                        <span id="kota_ktp" class="help-block customspan">{{ $errors->first('kota_ktp') }}</span>
+                    </div>
+                    {{-- Akhir Kota KTP --}}
+                </div>
+
+                <div class="row">
+                    {{-- Alamat--}}
+                    <div class="col-sm-12">
+                        <div class="input-group {{ $errors->first('alamat') ? 'has-error' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Alamat (domisili)
+                            </div>
+                            <input name="alamat" id="alamat" type="text" class="form-control "
+                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan (domisili)" value="{{old('alamat')}}">
+                        </div>
+                        <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}</span>
+                    </div>
+                    {{-- Akhir Alamat--}}
+                </div>
+
+                <div class="row">
+                    {{-- Provinsi--}}
                     <div class="col-sm-5">
                         <div
                             class="input-group {{ $errors->first('provinsi') ? 'has-error has-error-select' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Provinsi
+                                <span class="bintang">*</span> Provinsi (domisili)
                             </div>
                             <select class="form-control select2" name="provinsi" id="provinsi" style="width: 100%;"
-                                placeholder="*Provinsi Alamat">
-                                <option value="" disabled selected>*Provinsi</option>
+                                placeholder="*Provinsi Alamat (domisili)">
+                                <option value="" disabled selected>*Provinsi (domisili)</option>
                                 @foreach($provinsis as $key)
                                 <option value="{{ $key->id }}" {{ $key->id == old('provinsi') ? 'selected' : '' }}>
                                     {{ $key->nama }} </option>
@@ -246,10 +303,10 @@
                         <div
                             class="input-group {{ $errors->first('kota') ? 'has-error has-error-select' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Kota
+                                <span class="bintang">*</span> Kota (domisili)
                             </div>
                             <select class="form-control select2" name="kota" id="kota" style="width: 100%;">
-                                <option value="" disabled selected>*Kota</option>
+                                <option value="" disabled selected>*Kota (domisili)</option>
                                 {{-- @foreach($kota as $key)
                                 <option value="{{ $key->id }}" {{ $key->id == old('kota') ? 'selected' : '' }}>
                                 {{ $key->nama }}</option>
@@ -260,6 +317,7 @@
                     </div>
                     {{-- Akhir Kota --}}
                 </div>
+
 
                 <div class="row">
                     {{-- No Hp --}}
@@ -793,6 +851,30 @@
             }
             //
             $('#kota').select2();
+        });
+
+        // Ajax Untuk Kota, Onchange Provinsi
+        $('#provinsi_ktp').on('change', function(e){
+            $('select[name="kota_ktp"]').empty();
+            var id = e.target.value;
+            //
+            if(id) {
+                $.ajax({
+                    url: '/personals/create/getKota/'+id,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('select[name="kota_ktp"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="kota_ktp"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                    }
+                });
+            }else{
+                $('select[name="kota_ktp"]').empty();
+            }
+            //
+            $('#kota_ktp').select2();
         });
 
         $('#tgl_lahir').datepicker({
