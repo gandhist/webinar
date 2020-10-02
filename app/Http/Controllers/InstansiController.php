@@ -121,6 +121,7 @@ class InstansiController extends Controller
         return view('instansi.create')->with(compact('provinsi','kota','bank', 'bentukusaha', 'statusmodel', 'personal'));
     }
     public function store(Request $request) {
+        $id = $data->id;
         // dd($request);
         // dd($request->isi_manual);
         $request->npwpClean = preg_replace('/\s+/', "",  $request->npwp);
@@ -349,6 +350,9 @@ class InstansiController extends Controller
                     $data->id_personal_pimp = $personal->id                ;
                     $data->nama_pimp        = $request->nama_pimp_text      ;
                     $data->save();
+
+                    $personal->instansi     = $data->id                ;
+                    $personal->save();
                     return redirect('/instansi')
                     ->with('pesan',"Badan Usaha berhasil ditambahkan");
                 }
@@ -359,15 +363,19 @@ class InstansiController extends Controller
 
         } else {
             $pers = Personal::where('id', $request->nama_pimp_select)->first();
-            $data->id_personal_pimp = $pers->nama;                ;
+            $data->id_personal_pimp = $pers->nama;
             $data->save();
+            $pers->instansi    = $data->id;
+            $pers->save();
 
             if(isset($request->nama_pimp_select)) {
                 $pers->is_pimpinan = '1';
+                $pers->instansi    = $data->id;
                 $pers->save();
-                return redirect('/instansi')
-                ->with('pesan',"Badan Usaha berhasil ditambahkan");
             }
+
+            return redirect('/instansi')
+            ->with('pesan',"Badan Usaha berhasil ditambahkan");
         }
 
 
