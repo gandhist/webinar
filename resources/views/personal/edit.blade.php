@@ -147,7 +147,7 @@
                             <input style="padding:2px" class="form-control " accept=".pdf,.jpeg,.jpg"
                                 name="foto" id="foto" type="file" placeholder="Pas Foto"
                                 value="{{old('foto')}}" />
-                            <span class="text-danger">Ukuran 3 x 4</span>
+                            <span class="text-muted">Ukuran 3 x 4</span>
                         </div>
                         <span id="foto"
                             class="help-block customspan">{{ $errors->first('foto') }}</span>
