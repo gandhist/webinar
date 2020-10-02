@@ -179,7 +179,7 @@
                                     ">{{$key->singkat_bu  ?? ''}}</td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" data-html="true"
-                                    title='{{ $key->status_kantor ? $key->status->nama : "" }}'>{{ $key->status_kantor ? $key->status->singkatan : "" }}</td>
+                                    title='{{ $key->status ? $key->status->nama : "" }}'>{{ $key->status ? $key->status->singkatan : "" }}</td>
 
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
                                         title="

@@ -888,8 +888,12 @@ class InstansiController extends Controller
         $data->nama_rek         = $request->nama_rek                    ;
         $data->npwp             = $request->npwp                        ;
         $data->is_actived       = '1'                                   ;
-        $data->status_kantor    = $request->status_kantor               ;
-        $data->level_atas       = $request->bu_atas                     ;
+        if($request->status_kantor){
+            $data->status_kantor    = $request->status_kantor           ;
+        }
+        if($request->bu_atas){
+            $data->level_atas       = $request->bu_atas                     ;
+        }
 
         $data->updated_by       = Auth::id()                            ;
         $data->updated_at       = Carbon::now()->toDateTimeString()     ;
@@ -1054,9 +1058,20 @@ class InstansiController extends Controller
     }
 
     public function changelevelatas(Request $request){
-        return $data = KantorModel::where('level','=',$request->id_level_k-1)->get(['id','nama_kantor as text']);
-    }
 
+        $levelatas = StatusBUModel::select('urutan')->where('id',$request->id_status)->first();
+        $urutanlevel = $levelatas['urutan'];
+
+        $data = BUModel::whereHas('status_model_r', function ($query) use($urutanlevel) {
+            $query->where('urutan', '=', $urutanlevel-1);
+        })->get(['id','nama_bu as text']);
+
+        return response()->json([
+            'data' => $data,
+            'level' => $urutanlevel
+        ]);
+
+    }
 
     public function filterprovbu(Request $req){
         $idkota = BUModel::select('id_kota')->groupBy('id_kota')->get()->toArray();

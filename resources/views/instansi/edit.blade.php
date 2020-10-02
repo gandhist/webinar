@@ -150,10 +150,10 @@
                                 <span class="bintang">*</span> Status Kantor
                             </div>
                             <select class="form-control select2" name="status_kantor" id="status_kantor"
-                                style="width: 100%;">
-                                <option value="" disabled selected>Status Kantor</option>
+                                style="width: 100%;" {{ empty($data->status_kantor) ? '' : 'disabled'}}>
+                                <option value="" disabled  {{empty($data->status_kantor) ? 'selected' : ''}}>Status Kantor</option>
                                 @foreach($statusmodel as $key)
-                                <option value="{{ $key->id }}"
+                                <option value="{{ $key->id }}"  urutan="{{ $key->urutan }}"
                                     {{ $key->id == $data->status_kantor ? 'selected' : '' }}>
                                     {{ $key->nama }} </option>
                                 @endforeach
@@ -168,12 +168,12 @@
                     </div>
 
                     {{-- Kantor Atas --}}
-                    <div class="col-sm-5 {{ $errors->first('id_bu_atas') ? 'has-error has-error-select' : '' }}">
+                    <div class="col-sm-5 {{ $errors->first('bu_atas') ? 'has-error has-error-select' : '' }}">
                         <div class="input-group">
                             <div class="input-group-addon">
                                 Kantor Level Atas
                             </div>
-                            <select class="form-control select2" name="id_bu_atas" id="id_bu_atas"
+                            <select class="form-control select2" name="bu_atas" id="bu_atas"
                                 style="width: 100%;">
                                 <option value="" disabled selected>Kantor Level Atas</option>
                                 @foreach($bulevelatas as $key)
@@ -183,7 +183,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <span id="id_bu_atas" class="help-block customspan">{{ $errors->first('id_bu_atas') }}
+                        <span id="bu_atas" class="help-block customspan">{{ $errors->first('bu_atas') }}
                         </span>
                     </div>
                     {{-- Akhir Kantor Atas --}}
@@ -768,14 +768,14 @@ var personal = @json($personal);
             //
             $('#id_kota').select2();
         });
+
         $('#status_kantor').on('select2:select', function () {
-            changelevelatas();
+            changelevelatas($(this).val());
         });
 
-        function changelevelatas() {
+        function changelevelatas(value) {
+
             var url = "{{ url('instansi/changelevelatas') }}";
-            var id_level_k = $("#status_kantor option:selected").attr("urutan"); // $("#status_kantor").attr('urutan');
-            console.log(id_level_k);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -785,25 +785,28 @@ var personal = @json($personal);
                 url: url,
                 method: 'POST',
                 data: {
-                    id_level_k: id_level_k
+                    id_status: value
                 },
-                success: function (data) {
-                    level =  $("#status_kantor option:selected").attr("urutan");
-                    if (level != 1 && data.length <= 0) {
-                        alert('Level atas belum terdaftar');
+                success: function (response) {
+                    console.log(response['data']);
+
+                    if (response['level'] != 1 && response['data'].length <= 0) {
                         $('#status_kantor').val("").trigger('change.select2');
+
+                        alert('Level atas belum terdaftar');
+                        $('#bu_atas').val("").trigger('change.select2');
                         $("#bu_atas").html(
-                            "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                            "<option value='' disabled selected>Kantor Level Atas</option>"
                         );
+
                     } else {
                         $("#bu_atas").html(
-                            "<option value='' disabled>Kantor Level Diatasnya</option>");
+                            "<option value='' disabled>Kantor Level Atas</option>");
                         $("#bu_atas").select2({
-                            data: data
+                            data: response['data']
                         }).val(null).trigger('change');
                         $('#bu_atas').val($('#bu_atas option:eq(1)').val()).trigger(
                             'change.select2');
-                        // $('#timprodatas').select2("val", $('#timprodatas option:eq(1)').val());
                     }
                 },
                 error: function (xhr, status) {

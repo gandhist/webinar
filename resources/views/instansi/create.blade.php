@@ -684,13 +684,12 @@
 
 
         $('#status_kantor').on('select2:select', function () {
-            changelevelatas();
+            changelevelatas($(this).val());
         });
 
-        function changelevelatas() {
+        function changelevelatas(value) {
+
             var url = "{{ url('instansi/changelevelatas') }}";
-            var id_level_k = $("#status_kantor option:selected").attr("urutan"); // $("#status_kantor").attr('urutan');
-            console.log(id_level_k);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -700,25 +699,28 @@
                 url: url,
                 method: 'POST',
                 data: {
-                    id_level_k: id_level_k
+                    id_status: value
                 },
-                success: function (data) {
-                    level =  $("#status_kantor option:selected").attr("urutan");
-                    if (level != 1 && data.length <= 0) {
-                        alert('Level atas belum terdaftar');
+                success: function (response) {
+                    console.log(response['data']);
+
+                    if (response['level'] != 1 && response['data'].length <= 0) {
                         $('#status_kantor').val("").trigger('change.select2');
+
+                        alert('Level atas belum terdaftar');
+                        $('#bu_atas').val("").trigger('change.select2');
                         $("#bu_atas").html(
-                            "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                            "<option value='' disabled selected>Kantor Level Atas</option>"
                         );
+
                     } else {
                         $("#bu_atas").html(
-                            "<option value='' disabled>Kantor Level Diatasnya</option>");
+                            "<option value='' disabled>Kantor Level Atas</option>");
                         $("#bu_atas").select2({
-                            data: data
+                            data: response['data']
                         }).val(null).trigger('change');
                         $('#bu_atas').val($('#bu_atas option:eq(1)').val()).trigger(
                             'change.select2');
-                        // $('#timprodatas').select2("val", $('#timprodatas option:eq(1)').val());
                     }
                 },
                 error: function (xhr, status) {
