@@ -206,6 +206,64 @@
                     {{-- Akhir File KTP --}}
                 </div>
 
+
+                <div class="row">
+                    {{-- Alamat KTP --}}
+                    <div class="col-sm-12">
+                        <div class="input-group {{ $errors->first('alamat_ktp') ? 'has-error' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Alamat Kota (KTP)
+                            </div>
+                            <input name="alamat_ktp" id="alamat_ktp" type="text" class="form-control "
+                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan Kota (KTP)" value="{{old('alamat_ktp') ?? $data->alamat_ktp}}">
+                        </div>
+                        <span id="alamat_ktp" class="help-block customspan">{{ $errors->first('alamat_ktp') }}</span>
+                    </div>
+                    {{-- Akhir Alamat KTP --}}
+                </div>
+
+                <div class="row">
+                    {{-- Provinsi KTP --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('provinsi_ktp') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Provinsi Kota (KTP)
+                            </div>
+                            <select class="form-control select2" name="provinsi_ktp" id="provinsi_ktp" style="width: 100%;"
+                                placeholder="*Provinsi Alamat Kota (KTP)">
+                                <option value="" disabled selected>*Provinsi Kota (KTP)</option>
+                                @foreach($provinsis as $key)
+                                <option value="{{ $key->id }}" {{ (old('provinsi_ktp') ? ( $key->id == old('provinsi_ktp') ) : ( $key->id == $data->provinsi_id_ktp ) ) ? 'selected' : '' }}> {{-- Nested If macam apa ini--}}
+                                    {{ $key->nama }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <span id="provinsi_ktp" class="help-block customspan">{{ $errors->first('provinsi_ktp') }}</span>
+                    </div>
+                    {{-- Akhir Provinsi KTP --}}
+                    <div class="col-sm-2">
+                    </div>
+                    {{-- Kota KTP --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('kota_ktp') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Kota (KTP)
+                            </div>
+                            <select class="form-control select2" name="kota_ktp" id="kota_ktp" style="width: 100%;">
+                                <option value="" disabled selected>*Kota Kota (KTP)</option>
+                                @foreach($kotapil2 as $key)
+                                <option value="{{ $key->id }}" {{ (old('kota_ktp') ? ( $key->id == old('kota_ktp') ) : ( $key->id == $data->kota_id_ktp ) ) ? 'selected' : '' }}>
+                                {{ $key->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <span id="kota_ktp" class="help-block customspan">{{ $errors->first('kota_ktp') }}</span>
+                    </div>
+                    {{-- Akhir Kota KTP --}}
+                </div>
+
                 <div class="row">
                     {{-- Alamat --}}
                     <div class="col-sm-12">
