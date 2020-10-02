@@ -362,13 +362,12 @@ class InstansiController extends Controller
             }
 
         } else {
-            $pers = Personal::where('id', $request->nama_pimp_select)->first();
-            $data->id_personal_pimp = $pers->nama;
-            $data->save();
-            $pers->instansi    = $data->id;
-            $pers->save();
-
             if(isset($request->nama_pimp_select)) {
+                $pers = Personal::where('id', $request->nama_pimp_select)->first();
+                $data->id_personal_pimp = $pers->id;
+                $data->nama_pimp        = $pers->nama;
+                $data->save();
+
                 $pers->is_pimpinan = '1';
                 $pers->instansi    = $data->id;
                 $pers->save();
