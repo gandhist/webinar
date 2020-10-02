@@ -797,7 +797,7 @@ class InstansiController extends Controller
 
         if($request->telp != $instansi->telp ) {
             $request->validate([
-                "telp" => "required|numeric|digits_between:6,20|unique:badan_usaha",
+                "telp" => "required|numeric|unique:badan_usaha",
             ],[
                 'telp.required' => 'Mohon isi Nomor Telepon Instansi',
                 'telp.numeric' => 'Mohon hanya isi dengan angka',
@@ -839,7 +839,7 @@ class InstansiController extends Controller
 
         if($request->no_kontak_p != $instansi->no_kontak_p ) {
             $request->validate([
-                "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha",
+                "no_kontak_p" => "required|numeric|unique:badan_usaha",
             ],[
                 'no_kontak_p.required' => 'Mohon isi Nomor Telepon Contact Person',
                 'no_kontak_p.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',

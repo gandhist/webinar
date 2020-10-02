@@ -376,7 +376,7 @@ class PersonalController extends Controller
         $jumlahdetail = PersonalSekolah::where('id_personal','=',$id)->count();
 
         return view('personal.edit')->with(compact('ptkp','data','provinsis','kotas','banks','personal', 'bus', 'id',
-        'prov','kota','negara','bank','sekolah','jenjang_pendidikan','detail_sekolah','jumlahdetail','kotapil',));
+        'prov','kota','negara','bank','sekolah','jenjang_pendidikan','detail_sekolah','jumlahdetail','kotapil'));
 // 'kotapil2'
 
         $personal = Personal::where('id', $id)->first();
