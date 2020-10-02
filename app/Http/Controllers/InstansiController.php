@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+// use App\StatusBUModel;
 use File;
 use DB;
 
@@ -648,14 +649,31 @@ class InstansiController extends Controller
 
 
     public function edit($id) {
-        $instansi = BuModel::where('id',$id)->first();
+        $data = $instansi = BuModel::where('id',$id)->first();
+        $bentukusaha = BentukBUModel::all();
+
+        $levelatas = StatusBUModel::select('urutan')->where('id',$data->status_kantor)->first();
+        $urutanlevel = $levelatas['urutan'] ?? null;
+        $bulevelatas = BUModel::whereHas('status_model_r', function ($query) use($urutanlevel) {
+            $query->where('urutan', '=', $urutanlevel-1);
+        })->get();
+
+        $provinsi = ProvinsiModel::all();
+        $kotapil = KotaModel::where('provinsi_id','=',$data->id_prop)->get();
+        $kota = KotaModel::all();
+        $bank = BankModel::all();
+        $personal = Personal::all();
+
+        $statusmodel = StatusBUModel::all();
+
         if($instansi->is_actived == '1'){
             // $negara = NegaraModel::all();
             $provinsi = ProvinsiModel::all();
             $kota = KotaModel::all();
             $bank = BankModel::all();
             // return view('instansi.edit')->with(compact('negara','provinsi','kota'));
-            return view('instansi.edit')->with(compact('instansi','provinsi','kota','bank','id'));
+            return view('instansi.edit')->with(compact('data','statusmodel','bulevelatas','instansi','provinsi','kota','bank','id',
+            'bentukusaha','provinsi','kota','kotapil','bank','personal'));
         } else {
             return redirect('/instansi/lengkapi/'.$instansi->id.'/'.$instansi->id_personal_pimp)
                 ->with('pesan',"Mohon lengkapi Data Pimpinan terlebih dulu");

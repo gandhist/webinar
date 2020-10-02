@@ -14,6 +14,43 @@
         1px solid gray;
         margin:45px auto;
     }
+    .input-group-addon::after {
+        content: " :";
+    }
+
+    .input-group-addon {
+        width: 180px;
+        border-radius: 4px !important;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .input-group-addon:after {
+        content: " :";
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    input {
+        height: 28.8px !important;
+        border-radius: 4px !important;
+        width: 100%;
+        /* border-color: #aaaaaa !important; */
+    }
+
+    input::placeholder {
+        color: #444 !important;
+    }
+
+    .bintang {
+        color: red;
+    }
+
+    .form-control {
+        border-color: #aaaaaa;
+    }
 </style>
 
 
@@ -21,13 +58,13 @@
 
 <section class="content-header">
     <h1>
-        Edit Instansi
+        Ubah Badan Usaha
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
-        <li class="active"><a href="#"> Instansi</a></li>
-        <li class="active"><a href="#"> Edit</a></li>
+        <li class="active"><a href="#"> Badan Usaha</a></li>
+        <li class="active"><a href="#"> Ubah</a></li>
     </ol>
 </section>
 
@@ -35,545 +72,548 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
-        <div class="container-fluid">
-            <div class="jumbotron"  style='padding-top:1px'>
-                <form method="POST" action="{{ url('instansi/update') }}" enctype="multipart/form-data">
-                @method('PATCH')
-                @csrf
-
-                    <h1 style="margin-bottom:50px;">Data Instansi</h1>
-
-                    <div class="row">
-
-                        {{-- Nama Instansi --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('nama_bu')) ? ' has-error' : '' }}">
-                                <label for="nama_bu" class="label-control required">Nama Instansi</label>
-                                <input type="text" name="nama_bu" id="nama_bu"
-                                    {{-- onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)" --}}
-                                    value="{{ old('nama_bu') ? old('nama_bu') : $instansi->nama_bu }}"
-                                    class="form-control"
-                                    placeholder="Nama Instansi"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('nama_bu') }}
-                                </div>
+        <div class="box-body">
+            <form method="POST" action="{{ url('instansi/update') }}" enctype="multipart/form-data">
+            @method('PATCH')
+            @csrf
+                <div class="row">
+                    {{-- Nama Instansi --}}
+                    <div class="col-sm-12 {{ $errors->first('nama_bu') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Nama Badan Usaha
                             </div>
+                            <input name="nama_bu" id="nama_bu" type="text" class="form-control"
+                                placeholder="*Nama Badan Usaha (Tanpa Bentuk Badan Usaha)"
+                                value="{{old('nama_bu') ? old('nama_bu') : $data->nama_bu}}">
                         </div>
-                        {{-- Akhir Nama Instansi --}}
+                        <span id="nama_bu"
+                            class="help-block customspan">{{ $errors->first('nama_bu') }}
+                        </span>
+                        @if(session()->get('nama_bu'))
+                        <span id="nama_bu"
+                            class="help-block customspan">{{ session()->get('nama_bu') }} </span>
+                        @endif
+                    </div>
+                    {{-- Akhir Nama Instansi --}}
+                </div>
 
-                        {{-- Email --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('email')) ? ' has-error' : '' }}">
-                                <label for="email" class="label-control required">Email</label>
-                                <input type="email" name="email" id="email"
-                                    value="{{ old('email') ? old('email') : $instansi->email}}"
-                                    class="form-control"
-                                    placeholder="Email Instansi"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('email') }}
-                                </div>
+                <div class="row">
+                    {{-- Singkat Badan Usaha  --}}
+                    <div class="col-sm-5 {{ $errors->first('id_singkat_bu') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Singkat Badan Usaha
                             </div>
+                            <input name="id_singkat_bu" id="id_singkat_bu" type="text" class="form-control"
+                                placeholder="*Nama Singkat Badan Usaha" value="{{$data->singkat_bu}}">
                         </div>
-                        {{-- Akhir Email --}}
+                        <span id="id_singkat_bu" class="help-block customspan">{{ $errors->first('id_singkat_bu') }}
+                        </span>
+                    </div>
+                    {{-- Akhir Singkat Badan Usaha  --}}
+
+                    <div class="col-sm-2">
 
                     </div>
 
-                    <div class="row">
-
-                        {{-- Nomor Telepon --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('telp')) ? ' has-error' : '' }}">
-                                <label for="telp" class="label-control required">Nomor Telepon</label>
-                                <input type="phone" name="telp" id="telp"
-                                    onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('telp') ? old('telp') : $instansi->telp }}"
-                                    class="form-control"
-                                    placeholder="Nomor Telepon Instansi"
-                                    maxlength="20"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('telp') }}
-                                </div>
+                    {{-- Bentuk Badan Usaha --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('singkat_bu') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Bentuk BU
                             </div>
+                            <select class="form-control select2" name="singkat_bu" id="singkat_bu"
+                                style="width: 100%;">
+                                <option value="" {{empty($data->id_bentuk_usaha) ? 'disabled selected' : ''}}>*Bentuk BU</option>
+                                @foreach($bentukusaha as $key)
+                                <option value="{{ $key->id }}"
+                                    {{ $key->id == $data->id_bentuk_usaha ? 'selected' : '' }}>
+                                    {{ $key->nama }} </option>
+                                @endforeach
+                            </select>
                         </div>
-                        {{-- Akhir Nomor Telepon --}}
+                        <span id="singkat_bu" class="help-block customspan">{{ $errors->first('singkat_bu') }}
+                        </span>
+                    </div>
+                    {{-- Akhir Bentuk Badan Usaha --}}
+                </div>
 
-                        {{-- Website Instansi --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('web')) ? ' has-error' : '' }}">
-                                <label for="web" class="label-control required">Website</label>
-                                <input type="url" name="web" id="web"
-                                    value="{{ old('web') ? old('web') : $instansi->web }}"
-                                    class="form-control"
-                                    placeholder="Website Instansi"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('web') }}
-                                </div>
+
+                <div class="row">
+                    {{--  Status Kantor --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('status_kantor') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Status Kantor
                             </div>
+                            <select class="form-control select2" name="status_kantor" id="status_kantor"
+                                style="width: 100%;">
+                                <option value="" disabled selected>Status Kantor</option>
+                                @foreach($statusmodel as $key)
+                                <option value="{{ $key->id }}"
+                                    {{ $key->id == $data->status_kantor ? 'selected' : '' }}>
+                                    {{ $key->nama }} </option>
+                                @endforeach
+                            </select>
                         </div>
-                        {{-- Akhir Nama Instansi --}}
+                        <span id="status_kantor"
+                            class="help-block customspan">{{ $errors->first('status_kantor') }} </span>
+                    </div>
+                    {{-- Akhir Status Kantor --}}
+
+                    <div class="col-sm-2">
                     </div>
 
-                    <div class="row">
-
-                        {{-- Alamat --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('alamat')) ? ' has-error' : '' }}">
-                                <label for="alamat" class="label-control required">Alamat</label>
-                                <input type="text" name="alamat" id="alamat"
-                                    value="{{ old('alamat') ? old('alamat') : $instansi->alamat }}"
-                                    class="form-control"
-                                    placeholder="Alamat Instansi"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('alamat') }}
-                                </div>
+                    {{-- Kantor Atas --}}
+                    <div class="col-sm-5 {{ $errors->first('id_bu_atas') ? 'has-error has-error-select' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                Kantor Level Atas
                             </div>
+                            <select class="form-control select2" name="id_bu_atas" id="id_bu_atas"
+                                style="width: 100%;">
+                                <option value="" disabled selected>Kantor Level Atas</option>
+                                @foreach($bulevelatas as $key)
+                                <option value="{{ $key->id }}"
+                                    {{ $key->id == $data->level_atas ? 'selected' : '' }}>
+                                    {{ $key->nama_bu }} </option>
+                                @endforeach
+                            </select>
                         </div>
-                        {{-- Akhir Alamat --}}
-
-                        {{-- Negara --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('id_negara')) ? ' has-error' : '' }}">
-                                <label for="id_negara" class="label-control required">Negara</label>
-                                <select class="form-control" required disabled
-                                id="id_negara" name="id_negara">
-                                    <option value="102">Indonesia</option>
-                                    {{--
-                                        @forelse($negara as $key)
-                                            <option value="{{$key->country_code}}"
-                                            {{ old('id_negara' ? old('id_negara') : "selected")}}
-                                            >
-                                                {{$key->country_name}}
-                                            </option>
-                                        @empty
-                                        @endforelse
-                                    --}}
-                                </select>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('id_negara') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Negara --}}
-
+                        <span id="id_bu_atas" class="help-block customspan">{{ $errors->first('id_bu_atas') }}
+                        </span>
                     </div>
+                    {{-- Akhir Kantor Atas --}}
+                </div>
 
-                    <div class="row">
 
+                <div class="row">
+                    {{-- Alamat --}}
+                    <div class="col-sm-12 {{ $errors->first('alamat') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Alamat
+                            </div>
+                            <input name="alamat" id="alamat" class="form-control"
+                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan" value="{{old('alamat') ?? $data->alamat}}">
+                        </div>
+                        <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}
+                        </span>
+                    </div>
+                    {{-- Akhir Alamat --}}
+                </div>
+
+                <div class="row">
                     {{-- Provinsi --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('id_prop')) ? ' has-error' : '' }}">
-                                <label for="id_prop" class="label-control required">Provinsi</label>
-                                <select class="form-control" required
-                                id="id_prop" name="id_prop">
-                                    @if(old('id_prop'))
-                                        @forelse($provinsi as $key)
-                                            <option value="{{ $key->id }}"
-                                                {{ old('id_prop') ? old('id_prop') : "selected" }}
-                                            >
-                                                {{ $key->nama }}
-                                            </option>
-                                        @empty
-                                        @endforelse
-                                    @else
-                                        @forelse($provinsi as $key)
-                                            <option value="{{ $key->id }}"
-                                            {{ ($instansi->id_prop == $key->id) ? "selected" : "" }}
-                                            >
-                                                {{ $key->nama }}
-                                            </option>
-                                        @empty
-                                        @endforelse
-                                    @endif
-                                </select>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('id_prop') }}
-                                </div>
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('id_prop') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Provinsi BU
                             </div>
+                            <select class="form-control select2" name="id_prop" id="id_prop"
+                                style="width: 100%;">
+                                <option value="" disabled>*Provinsi BU</option>
+                                @foreach($provinsi as $key)
+                                <option value="{{ $key->id }}"
+                                    {{ (old('id_prop') ?? $data->id_prop ) == $key->id ? 'selected' : '' }}>
+                                    {{ $key->nama }} </option>
+                                @endforeach
+                            </select>
                         </div>
-                        {{-- Akhir Provinsi --}}
+                        <span id="id_prop" class="help-block customspan">{{ $errors->first('id_prop') }}
+                        </span>
+                    </div>
+                    {{-- Akhir Provinsi --}}
 
-                        {{-- Kota --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('id_kota')) ? ' has-error' : '' }}">
-                                <label class="label-control required" for="id_kota">Kota</label>
-                                <select  class="form-control"
-                                required id="id_kota" name="id_kota">
-                                    @if(old('id_prop'))
-                                        @foreach($kota as $key)
-                                            @if($key->provinsi_id == old('id_prop'))
-                                                <option value="{{$key->id}}"
-                                                {{ (old('id_kota') == $key->id) ? "selected" : "" }}
-                                                >{{$key->nama}}</option>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        @foreach($kota as $key)
-                                            @if($key->provinsi_id == $instansi->id_prop)
-                                                <option value="{{$key->id}}"
-                                                {{ ($instansi->id_kota == $key->id) ? "selected" : "" }}
-                                                >{{$key->nama}}</option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                </select>
-                                <div id="id_kota" class="invalid-feedback text-danger">
-                                    {{ $errors->first('id_kota') }}
-                                </div>
+                    <div class="col-sm-2">
+                    </div>
+
+                    {{-- Kota --}}
+                    <div class="col-sm-5">
+                        <div
+                            class="input-group {{ $errors->first('id_kota') ? 'has-error has-error-select' : '' }}">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> Kota BU
                             </div>
+                            <select class="form-control select2" name="id_kota" id="id_kota"
+                                style="width: 100%;">
+                                <option value="" disabled>*Kota BU</option>
+                                @foreach($kotapil as $key)
+                                <option value="{{ $key->id }}" {{ $key->id == (old('kota') ?? $data->id_kota) ? 'selected' : '' }}>
+                                    {{ $key->nama }} </option>
+                                @endforeach
+                            </select>
                         </div>
-                        {{-- Akhir Kota --}}
+                        <span id="id_kota" class="help-block customspan">{{ $errors->first('id_kota') }}
+                        </span>
+                    </div>
+                    {{-- Akhir Kota --}}
+                </div>
 
+                <div class="row">
+                    {{-- No Telp --}}
+                    <div class="col-sm-5 {{ $errors->first('telp') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="bintang">*</span> No Tlp
+                            </div>
+                            <input name="telp" id="telp" type="text" class="form-control"
+                                placeholder="*No Tlp" value="{{old('telp') ?? $data->telp}}">
+                        </div>
+                        <span id="telp" class="help-block customspan">{{ $errors->first('telp') }}
+                        </span>
+                    </div>
+                    {{-- Akhir No Telp --}}
+
+                    <div class="col-sm-2">
 
                     </div>
 
-                    <div class="row">
-
-                        {{-- Nama Singkat --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('singkat_bu')) ? ' has-error' : '' }}">
-                                <label for="singkat_bu" class="label-control required">Nama Singkat</label>
-                                <input type="text" name="singkat_bu" id="singkat_bu"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('singkat_bu') ? old('singkat_bu') : $instansi->singkat_bu }}"
-                                    class="form-control"
-                                    placeholder="Nama Singkat Instansi"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('nama_bu') }}
-                                </div>
+                    {{-- Email --}}
+                    <div class="col-sm-5 {{ $errors->first('email') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                Email
                             </div>
+                            <input name="email" id="email" type="email" class="form-control"
+                                placeholder="Email" value="{{old('email') ?? $data->email}}">
                         </div>
-                        {{-- Akhir Nama Singkat --}}
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label style="margin-bottom:10px">Logo Instansi</label>
-                                <div>
-                                    <a data-toggle="modal" data-target="#myModal">
-                                        Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <span id="email" class="help-block customspan">{{ $errors->first('email') }} </span>
                     </div>
+                    {{-- Akhir Email --}}
+                </div>
 
-                    <div class="horizontal-line"></div>
-
-                    <div class="row">
-
-                        {{-- Contact Person --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('kontak_p')) ? ' has-error' : '' }}">
-                                <label for="kontak_p" class="label-control required">Contact Person</label>
-                                <input type="text" name="kontak_p" id="kontak_p"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('kontak_p') ? old('kontak_p') : $instansi->kontak_p }}"
-                                    class="form-control"
-                                    placeholder="Contact Person Instansi"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('kontak_p') }}
-                                </div>
+                <div class="row">
+                    {{-- Instansi Reff --}}
+                    <div class="col-sm-5 {{ $errors->first('instansi_reff') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                Instansi Reff
                             </div>
+                            <input name="instansi_reff" id="instansi_reff" type="text" class="form-control"
+                                placeholder="Instansi Reff" value="{{old('instansi_reff') ?? $data->instansi_reff}}">
                         </div>
-                        {{-- Akhir Contact Person --}}
+                        <span id="instansi_reff" class="help-block customspan">{{ $errors->first('instansi_reff') }}
+                        </span>
+                    </div>
+                    {{-- Akhir Instansi Reff --}}
 
-                        {{-- Jabatan Contact Person --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('jab_kontak_p')) ? ' has-error' : '' }}">
-                                <label for="jab_kontak_p" class="label-control required">Jabatan Contact Person</label>
-                                <input type="text" name="jab_kontak_p" id="jab_kontak_p"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('jab_kontak_p') ? old('jab_kontak_p') : $instansi->jab_kontak_p }}"
-                                    class="form-control"
-                                    placeholder="Jabatan Contact Person"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('jab_kontak_p') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Jabatan Contact Person --}}
+                    <div class="col-sm-2">
 
                     </div>
 
-                    <div class="row">
-
-                        {{-- Email Contact Person--}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('email_kontak_p')) ? ' has-error' : '' }}">
-                                <label for="email_kontak_p" class="label-control required">Email Contact Person</label>
-                                <input type="email" name="email_kontak_p" id="email_kontak_p"
-                                    value="{{ old('email_kontak_p') ? old('email_kontak_p') : $instansi->email_kontak_p }}"
-                                    class="form-control"
-                                    placeholder="Email Contact Person"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('email_kontak_p') }}
-                                </div>
+                    {{-- Web --}}
+                    <div class="col-sm-5 {{ $errors->first('web') ? 'has-error' : '' }}">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                Web
                             </div>
+                            <input name="web" id="web" type="text" class="form-control" placeholder="Web"
+                                value="{{old('web') ?? $data->web}}">
                         </div>
-                        {{-- Akhir Email Contact Person--}}
-
-                        {{-- Nomor Telepon Contact Person --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('no_kontak_p')) ? ' has-error' : '' }}">
-                                <label for="no_kontak_p" class="label-control required">Nomor Telepon Contact Person</label>
-                                <input type="phone" name="no_kontak_p" id="no_kontak_p"
-                                    onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('no_kontak_p') ? old('no_kontak_p') : $instansi->no_kontak_p }}"
-                                    class="form-control"
-                                    placeholder="Nomor Telepon Contact Person"
-                                    maxlength="20"
-                                    required>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('no_kontak_p') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Nomor Telepon Contact Person--}}
-
+                        <span id="web" class="help-block customspan">{{ $errors->first('web') }} </span>
                     </div>
+                    {{-- Akhir Web --}}
+                </div>
 
-                    <div class="horizontal-line"></div>
 
-                    <div class="row">
-
-                        {{-- Nomor Rekening --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('no_rek')) ? ' has-error' : '' }}">
-                                <label for="no_rek" class="label-control">Nomor Rekening</label>
-                                <input type="text" name="no_rek" id="no_rek"
-                                    onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('no_rek') ? old('no_rek') : $instansi->no_rek }}"
-                                    class="form-control"
-                                    placeholder="Nomor Rekening Instansi"
-                                    maxlength="20"
-                                >
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('no_rek') }}
-                                </div>
-                            </div>
+            <div class="row">
+                {{-- Nama Pimpinan --}}
+                <div class="col-sm-5  {{ $errors->first('nama_pimp_text') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Nama Pimpinan
                         </div>
-                        {{-- Akhir Nomor Rekening --}}
-
-                        {{-- Bank --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('id_bank')) ? ' has-error' : '' }}">
-                                <label class="label-control" for="id_bank" selected>Bank</label>
-                                <select
-                                class="form-control" id="id_bank" name="id_bank">
-                                    <option value=""> -- Pilih Bank -- </option>
-                                    @if(old('id_bank'))
-                                        @forelse($bank as $key)
-                                            <option value="{{ $key->id_bank }}"
-                                            {{ (old('id_bank') == $key->id_bank) ? "selected" : "" }}
-                                            >{{ $key->Nama_Bank }}</option>
-                                        @empty
-                                        @endforelse
-                                    @else
-                                        @forelse($bank as $key)
-                                            <option value="{{ $key->id_bank }}"
-                                            {{ ($instansi->id_bank == $key->id_bank) ? "selected" : "" }}
-                                            >{{ $key->Nama_Bank }}</option>
-                                        @empty
-                                        @endforelse
-                                    @endif
-                                </select>
-                                <div id="id_bank" class="invalid-feedback text-danger">
-                                    {{ $errors->first('id_bank') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Bank --}}
-
+                        <select name="nama_pimp_select" id="nama_pimp_select" type="text" class="form-control select2"
+                        placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
+                            <option value="" disabled selected>Nama Pimpinan</option>
+                            @foreach($personal as $key)
+                            <option value="{{ $key->id }}" {{ $key->id == (old('nama_pimp') ?? $data->id_personal_pimp) ? 'selected' : '' }}>
+                                {{ $key->nama }} </option>
+                            @endforeach
+                        </select>
+                        <input name="nama_pimp_text" id="nama_pimp_text" type="text" class="form-control"
+                        placeholder="Nama Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('nama_pimp_text')}}" style="display:none">
                     </div>
+                    <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp_text') }} </span>
+                </div>
+                {{-- Akhir Nama Pimpinan --}}
 
-                    <div class="row">
+                <div class="col-sm-2">
+                    <label for="isi_manual">
+                        <input type="checkbox" name="isi_manual" id="isi_manual"> <span>Isi manual</span>
+                    </label>
+                </div>
 
-                        {{-- Nama Rekening --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('nama_rek')) ? ' has-error' : '' }}">
-                                <label for="nama_rek" class="label-control">Nama pada Rekening</label>
-                                <input type="text" name="nama_rek" id="nama_rek"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('nama_rek') ? old('nama_rek') : $instansi->nama_rek  }}"
-                                    class="form-control"
-                                    placeholder="Nama pada Rekening"
-                                >
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('nama_rek') }}
-                                </div>
-                            </div>
+                {{-- Jabatan Pimpinan --}}
+                <div class="col-sm-5  {{ $errors->first('jab_pimp') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Jabatan Pimpinan
                         </div>
-                        {{-- Akhir Nama Rekening --}}
-
-                        {{-- NPWP --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('npwpClean')) ? ' has-error' : '' }}">
-                                <label for="npwp" class="label-control">NPWP</label>
-                                <input type="text" name="npwp" id="npwp"
-                                    onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('npwp') ? old('npwp') : $instansi->npwp  }}"
-                                    class="form-control"
-                                    placeholder="Nomor Pokok Wajib Pajak"
-                                >
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('npwpClean') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir NPWP --}}
-
+                        <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
+                        placeholder="Jabatan Pimpinan" value="{{old('isi_manual') ?? $data->jab_pimp}}" readonly >
                     </div>
+                    <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
+                </div>
+                {{-- Akhir Jabatan Pimpinan --}}
+            </div>
 
-                    <div class="row">
 
-                        {{-- Foto Lampiran NPWP --}}
-                        <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('npwp_pdf')) ? ' has-error' : '' }}">
-                                <div class="custom-file">
-                                    <label class="label-control" for="npwp_pdf">Foto NPWP</label>
-                                    <div class="custom-file">
-                                        <input type="file" id="npwp_pdf" name="npwp_pdf" class="custom-file-input" id="npwp_pdf">
-                                        <div id="npwp_pdf" class="invalid-feedback text-danger">
-                                            {{ $errors->first('npwp_pdf') }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">Upload Max: 2MB</small><br/>
-                                <small class="form-text text-muted">Format: pdf, jpeg, png, jpg, gif, svg</small>
-                            </div>
+            <div class="row">
+                {{-- No Hp Pimpinan --}}
+                <div class="col-sm-5  {{ $errors->first('hp_pimp') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            No Hp Pimpinan
                         </div>
-                        {{-- Akhir Lampiran NPWP --}}
-
-                        {{-- Logo Perusahaan --}}
-                        <div class="col-md-6">
-                            <div class="form-group  {{ ($errors->first('logo')) ? ' has-error' : '' }}">
-                                <div class="custom-file">
-                                    <label class="label-control" for="logo">Logo Instansi</label>
-                                    <div class="custom-file">
-                                        <input type="file" id="logo" name="logo" class="custom-file-input" id="logo">
-                                        <div id="logo" class="invalid-feedback text-danger">
-                                            {{ $errors->first('logo') }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="form-text text-muted">Upload Max: 2MB</small><br/>
-                                <small class="form-text text-muted">Format: jpeg, png, jpg, gif, svg</small>
-                            </div>
-                        </div>
-                        {{-- Akhir Logo Perusahaan --}}
-
+                        <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
+                        placeholder="No Hp Pimpinan" value="{{old('hp_pimp') ?? $data->hp_pimp}}" readonly
+                        onkeypress="return /[0-9]/i.test(event.key)">
                     </div>
+                    <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
+                </div>
+                {{-- Akhir No Hp Pimpinan --}}
 
-                    <input type="text" hidden name="id" value="{{$instansi->id}}">
+                <div class="col-sm-2">
+                </div>
 
-                    <div class="small text-danger pull-right">*) Wajib diisi</div>
-
-                    <br style="margin:10px;">
-
-                    <div class="pull-right">
-                        <button type="submit" class="btn btn-success">Edit</button>
+                {{-- Email Pimpinan --}}
+                <div class="col-sm-5  {{ $errors->first('email_pimp') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Email Pimpinan
+                        </div>
+                        <input name="email_pimp" id="email_pimp" type="email" class="form-control"
+                        placeholder="Email Pimpinan" value="{{old('email_pimp') ?? $data->email_pimp}}" readonly >
                     </div>
+                    <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
+                    </span>
+                </div>
+                {{-- Akhir Email Pimpinan --}}
+            </div>
 
-                    <br style="margin:20px;">
 
-                    <div class="horizontal-line"></div>
-
-                    <div class="row">
-
-                        {{-- Nama Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('nama_pimp')) ? ' has-error' : '' }}">
-                                <label for="nama_pimp" class="label-control required">Nama Pimpinan</label>
-                                <input type="text" name="nama_pimp" id="nama_pimp"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('nama_pimp') ? old('nama_pimp') : $instansi->nama_pimp}}"
-                                    class="form-control"
-                                    placeholder="Nama Pimpinan"
-                                    disabled>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('nama_pimp') }}
-                                </div>
-                            </div>
+            <div class="row">
+                {{-- Nama Kontak Person --}}
+                <div class="col-sm-5 {{ $errors->first('kontak_p') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="bintang">*</span> Nama Kontak Person
                         </div>
-                        {{-- Akhir Nama Pimpinan --}}
-
-                        {{-- Jabatan Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('jab_pimp')) ? ' has-error' : '' }}">
-                                <label for="jab_pimp" class="label-control required">Jabatan Pimpinan</label>
-                                <input type="text" name="jab_pimp" id="jab_pimp"
-                                    onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
-                                    value="{{ old('jab_pimp') ? old('jab_pimp') : $instansi->jab_pimp }}"
-                                    class="form-control"
-                                    placeholder="Jabatan Pimpinan"
-                                    disabled>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('jab_pimp') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Jabatan Pimpinan --}}
-
+                        <input name="kontak_p" id="kontak_p" type="text" class="form-control"
+                            placeholder="*Nama Kontak Person" value="{{old('kontak_p') ?? $data->kontak_p}}">
                     </div>
+                    <span id="kontak_p" class="help-block customspan">{{ $errors->first('kontak_p') }}
+                    </span>
+                </div>
+                {{-- Akhir Nama Kontak Person --}}
 
-                    <div class="row">
+                <div class="col-sm-2">
 
-                        {{-- Email Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('email_pimp')) ? ' has-error' : '' }}">
-                                <label for="email_pimp" class="label-control required">Email Pimpinan</label>
-                                <input type="email" name="email_pimp" id="email_pimp"
-                                    value="{{ old('email_pimp') ? old('email_pimp') : $instansi->email_pimp }}"
-                                    class="form-control"
-                                    placeholder="Email Pimpinan"
-                                    disabled>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('email_pimp') }}
-                                </div>
-                            </div>
+                </div>
+
+                {{-- Jabatan Kontak Person --}}
+                <div class="col-sm-5 {{ $errors->first('jab_kontak_p') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Jabatan Kontak Person
                         </div>
-                        {{-- Akhir Email Pimpinan--}}
-
-                        {{-- Nomor Telepon Pimpinan --}}
-                        <div class="col-md-6">
-                            <div class="form-group {{ ($errors->first('hp_pimp')) ? ' has-error' : '' }}">
-                                <label for="hp_pimp" class="label-control required">Nomor Telepon Pimpinan</label>
-                                <input type="phone" name="hp_pimp" id="hp_pimp"
-                                    onkeypress="return /[0-9]/i.test(event.key)"
-                                    value="{{ old('hp_pimp') ? old('hp_pimp') : $instansi->hp_pimp }}"
-                                    class="form-control"
-                                    placeholder="Nomor Telepon Pimpinan"
-                                    maxlength="20"
-                                    disabled>
-                                <div class="invalid-feedback text-danger">
-                                    {{ $errors->first('hp_pimp') }}
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Akhir Nomor Telepon Pimpinan --}}
-
+                        <input name="jab_kontak_p" id="jab_kontak_p" type="text" class="form-control"
+                            placeholder="Jabatan Kontak Person" value="{{old('jab_kontak_p') ?? $data->jab_kontak_p}}">
                     </div>
+                    <span id="jab_kontak_p" class="help-block customspan">{{ $errors->first('jab_kontak_p') }} </span>
+                </div>
+                {{-- Akhir Jabatan Kontak Person --}}
+            </div>
 
-                    @if($instansi->is_actived == "1")
-                        <button type="submit" class="btn btn-info pull-right">
-                            <a href="{{url('personals/'.$instansi->id_personal_pimp.'/edit')}}" style="color:white">
-                                Edit Pimpinan
-                            </a>
-                        </button>
+            <div class="row">
+                {{-- No Hp Kontak Person --}}
+                <div class="col-sm-5 {{ $errors->first('no_kontak_p') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="bintang">*</span> No HP Kontak Person
+                        </div>
+                        <input name="no_kontak_p" id="no_kontak_p" type="text" class="form-control"
+                            placeholder="*No HP Kontak Person" value="{{old('no_kontak_p') ?? $data->no_kontak_p}}">
+                    </div>
+                    <span id="no_kontak_p" class="help-block customspan">{{ $errors->first('no_kontak_p') }} </span>
+                </div>
+                {{-- Akhir No Hp Kontak Person --}}
+
+                <div class="col-sm-2">
+
+                </div>
+
+                {{-- Email Kontak Person --}}
+                <div class="col-sm-5 {{ $errors->first('email_kontak_p') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Email Kontak Person
+                        </div>
+                        <input name="email_kontak_p" id="email_kontak_p" type="email" class="form-control"
+                            placeholder="Email Kontak Person" value="{{old('email_kontak_p') ?? $data->email_kontak_p}}">
+                    </div>
+                    <span id="email_kontak_p" class="help-block customspan">{{ $errors->first('email_kontak_p') }}
+                    </span>
+                </div>
+                {{-- Akhir Email Kontak Person --}}
+            </div>
+
+            <div class="row">
+                {{-- No NPWP --}}
+                <div class="col-sm-5 {{ $errors->first('npwpClean') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="bintang">*</span> No NPWP
+                        </div>
+                        <input type="text" data-inputmask="'mask': ['99.999.999.9-999.999']" data-mask=""
+                            id="npwp" name="npwp" class="form-control" placeholder="*NO NPWP"
+                            value="{{preg_replace("/[\.-]/", "",  (old('npwp') ?? $data->npwp)) ?? ''}}">
+                    </div>
+                    <span id="npwp" class="help-block customspan">{{ $errors->first('npwpClean') }} </span>
+                </div>
+                {{-- Akhir No NPWP --}}
+
+                <div class="col-sm-2">
+
+                </div>
+
+                {{-- File NPWP --}}
+                <div class="col-sm-4 {{ $errors->first('npwp_pdf') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon" style="vertical-align:top;">
+                            File NPWP
+                        </div>
+                        <input style="padding:2px" type="file" class="form-control" id="npwp_pdf"
+                            name="npwp_pdf" placeholder="File NPWP">
+                        <span id="npwp_pdf"
+                            class="help-block customspan">{{ $errors->first('npwp_pdf') }}</span>
+                        <span style="color: #737373;">Format : pdf</span>
+                    </div>
+                </div>
+                <div class="col-sm-1" style="text-align:right">
+                    @if($data->npwp_pdf)
+                    <button type="button" id="btnKtpPdf" id="btn-npwp"
+                        onclick='tampilLampiran("{{$data->npwp_pdf}}","NPWP")'
+                        class="btn btn-primary btn-sm">
+                        <i class="fa fa-file-pdf-o"></i> NPWP</button>
                     @endif
-                </form>
+                </div>
+                {{-- Akhir File NPWP --}}
+            </div>
 
-            </div> {{-- Jumbotron --}}
-        </div> {{-- Container-fluid --}}
-    </div> {{-- Box-Content --}}
+
+            <div class="row">
+                {{-- Nama Rekening Bank --}}
+                <div class="col-sm-5 {{ $errors->first('no_rek') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            No Rekening Bank
+                        </div>
+                        <input name="no_rek" id="no_rek" type="text" class="form-control"
+                            placeholder="No Rekening Bank" value="{{old('no_rek') ?? $data->no_rek}}">
+                    </div>
+                    <span id="no_rek" class="help-block customspan">{{ $errors->first('no_rek') }}
+                    </span>
+                </div>
+
+                <div class="col-sm-2">
+
+                </div>
+
+                <div class="col-sm-5 {{ $errors->first('nama_rek') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Nama Rekening Bank
+                        </div>
+                        <input name="nama_rek" id="nama_rek" type="text" class="form-control"
+                            placeholder="Nama Rekening Bank" value="{{old('nama_rek') ?? $data->nama_rek}}">
+                    </div>
+                    <span id="nama_rek"
+                        class="help-block customspan">{{ $errors->first('nama_rek') }}
+                    </span>
+                </div>
+                {{-- Akhir Nama Rekening Bank --}}
+            </div>
+
+            <div class="row">
+                {{-- Nama Bank --}}
+                <div class="col-sm-12 {{ $errors->first('id_bank') ? 'has-error' : '' }}">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            Nama Bank
+                        </div>
+                        <select class="form-control select2" name="id_bank" id="id_bank"
+                            style="width: 100%;">
+                            <option value="" disabled selected>Nama Bank</option>
+                            @foreach($bank as $key)
+                            <option value="{{ $key->id_bank }}"
+                                {{ $key->id_bank == (old('id_bank') ?? $data->id_bank )? 'selected' : '' }}> {{ $key->Nama_Bank }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <span id="id_bank" class="help-block customspan">{{ $errors->first('id_bank') }}
+                    </span>
+                </div>
+                {{-- Akhir Nama Bank --}}
+            </div>
+
+            <div class="row">
+                {{-- Logo --}}
+                <div class="col-sm-4 {{ $errors->first('logo') ? 'has-error' : '' }}"
+                    style="margin-bottom: -15px;">
+                    <div class="input-group">
+                        <div class="input-group-addon" style="vertical-align:top;">
+                            Logo
+                        </div>
+                        <input style="padding:2px" type="file" class="form-control" id="logo" name="logo"
+                            placeholder="File Logo">
+                        <span id="logo" class="help-block customspan">{{ $errors->first('logo') }}</span>
+                        <span style="color: #737373;">Format : jpg,jpeg,png</span>
+                    </div>
+                </div>
+
+                <div class="col-sm-1" style="text-align:right">
+                    @if($data->logo)
+                    <button type="button" id="btnLogo"
+                        onclick='tampilLampiran("{{$data->logo}}","Logo")'
+                        class="btn btn-primary btn-sm">
+                        <i class="fa fa-file-pdf-o"></i> Logo</button>
+                    @endif
+                </div>
+                {{-- Akhir Logo --}}
+            </div>
+
+            <div class="row" style="text-align:right">
+                <div class="col-sm-12">
+                    <span class="bintang"><b>*</b></span> Wajib Diisi
+                </div>
+            </div>
+
+            <div class="box-footer" style="text-align:center">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-md btn-info"> <i class="fa fa-save"></i>
+                            Simpan</button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" onclick="goBack()" class="btn btn-md btn-default"><i
+                                class="fa fa-times-circle"></i>
+                            Batal</button>
+                    </div>
+                </div>
+            </div>
+
+            </form>
+
+        </div> {{-- Jumbotron --}}
+    </div> {{-- Container-fluid --}}
 </section>
 
 
@@ -601,8 +641,40 @@
 {{-- Akhir Modal Foto --}}
 @endsection
 
+    <!-- modal lampiran -->
+    <div class="modal fade" id="modalLampiran" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="lampiranTitle"></h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <iframe src="" id="iframeLampiran" width="100%" height="500px" frameborder="0"
+                                allowtransparency="true"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end of modal lampiran -->
+
 @push('script')
+<script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.js')}}"></script>
+<script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
+<script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
+
+$('.select2').select2();
 
 $(document).ready(function () {
         $('body').on('change', '.form-group', function() {
@@ -639,7 +711,9 @@ $(document).ready(function () {
         });
 
 
-        $('#npwp').mask("99.999.999.9-999.999",{placeholder:"Nomor Pokok Wajib Pajak"}).attr('maxlength','20');
+        // format input
+        $('[data-mask]').inputmask()
+        // $('#npwp').mask("99.999.999.9-999.999",{placeholder:"Nomor Pokok Wajib Pajak"}).attr('maxlength','20');
     });
 </script>
 @endpush

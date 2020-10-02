@@ -58,6 +58,9 @@ function chainedNegara(url, idnegara, idprov, placeholder) {
 
     });
 }
+function goBack() {
+    window.history.back();
+  }
 
 // pop up pdf
 function tampilLampiran(url, title) {

@@ -11,6 +11,10 @@ class BuModel extends Model
     use SoftDeletes;
     protected $table = "badan_usaha";
 
+    // relasi ke status model
+    public function status_model_r(){
+        return $this->belongsTo('App\StatusBUModel','status_kantor');
+    }
     // relasi belongs to badan usaha
     public function bu_p_r(){
         return $this->belongsTo('App\BuKontakP','id','id_bu');

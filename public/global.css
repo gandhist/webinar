@@ -303,3 +303,11 @@ th {
     color:#444;
     line-height:20px !important;
 }
+
+
+input[type="checkbox"] {
+    height: 16px !important;
+    border-radius: 4px !important;
+    width: 16px;
+    /* border-color: #aaaaaa !important; */
+}
