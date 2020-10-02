@@ -330,7 +330,7 @@
                         </div>
                         <select name="nama_pimp_select" id="nama_pimp_select" type="text" class="form-control select2"
                         placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
-                            <option value="" disabled selected>Nama Pimpinan</option>
+                            <option value="" disabled {{ !(old('nama_pimp') ?? $data->id_personal_pimp) ? 'selected' : ''}}>Nama Pimpinan</option>
                             @foreach($personal as $key)
                             <option value="{{ $key->id }}" {{ $key->id == (old('nama_pimp') ?? $data->id_personal_pimp) ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
@@ -675,6 +675,147 @@
 <script type="text/javascript">
 
 $('.select2').select2();
+
+var personal = @json($personal);
+    $("#isi_manual").prop("checked", false);
+    $(document).ready(function () {
+        $('#isi_manual').change(function() {
+            if($(this).is(":checked")) {
+                $('#nama_pimp_select').next(".select2-container").hide();
+                $('#nama_pimp_text').show();
+                $('#jab_pimp').prop('readonly', false);
+                $('#email_pimp').prop('readonly', false);
+                $('#hp_pimp').prop('readonly', false);
+                $('#jab_pimp').val('');
+                $('#email_pimp').val('');
+                $('#hp_pimp').val('');
+
+            } else {
+                $('#nama_pimp_select').next(".select2-container").show();
+                $('#nama_pimp_text').hide();
+                $('#jab_pimp').prop('readonly', true);
+                $('#email_pimp').prop('readonly', true);
+                $('#hp_pimp').prop('readonly', true);
+                $('#jab_pimp').val('');
+                $('#email_pimp').val('');
+                $('#hp_pimp').val('');
+                isi_om_jin()
+            }
+        });
+
+        $('#nama_pimp_select').on('select2:select', function() {
+            isi_om_jin()
+        });
+
+        function isi_om_jin() {
+            var isi = $('#nama_pimp_select').val();
+            // var coba = mana_nih(isi, personal);
+            var coba = personal.filter( obj => {
+                return obj.id == isi
+            })
+            coba = coba[0]
+
+            $('#jab_pimp').val(coba.jabatan);
+            $('#email_pimp').val(coba.email);
+            $('#hp_pimp').val(coba.no_hp);
+        }
+
+        // Ajax Untuk Kota, Onchange Provinsi
+        $('#id_prop').on('change', function(e){
+            $('select[name="id_kota"]').empty();
+            var id = e.target.value;
+            //
+            if(id) {
+                $.ajax({
+                    url: '/instansi/create/getKota/'+id,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('select[name="id_kota"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="id_kota"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                    }
+                });
+            }else{
+                $('select[name="id_kota"]').empty();
+            }
+            //
+            $('#id_kota').select2();
+        });
+
+        // Ajax Untuk Kota, Onchange Provinsi
+        $('#id_prop').on('change', function(e){
+            $('select[name="id_kota"]').empty();
+            var id = e.target.value;
+            //
+            if(id) {
+                $.ajax({
+                    url: '/instansi/create/getKota/'+id,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+                        $('select[name="id_kota"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="id_kota"]').append('<option value="'+ key +'">'+ value +'</option>');
+                        });
+                    }
+                });
+            }else{
+                $('select[name="id_kota"]').empty();
+            }
+            //
+            $('#id_kota').select2();
+        });
+        $('#status_kantor').on('select2:select', function () {
+            changelevelatas();
+        });
+
+        function changelevelatas() {
+            var url = "{{ url('instansi/changelevelatas') }}";
+            var id_level_k = $("#status_kantor option:selected").attr("urutan"); // $("#status_kantor").attr('urutan');
+            console.log(id_level_k);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    id_level_k: id_level_k
+                },
+                success: function (data) {
+                    level =  $("#status_kantor option:selected").attr("urutan");
+                    if (level != 1 && data.length <= 0) {
+                        alert('Level atas belum terdaftar');
+                        $('#status_kantor').val("").trigger('change.select2');
+                        $("#bu_atas").html(
+                            "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                        );
+                    } else {
+                        $("#bu_atas").html(
+                            "<option value='' disabled>Kantor Level Diatasnya</option>");
+                        $("#bu_atas").select2({
+                            data: data
+                        }).val(null).trigger('change');
+                        $('#bu_atas').val($('#bu_atas option:eq(1)').val()).trigger(
+                            'change.select2');
+                        // $('#timprodatas').select2("val", $('#timprodatas option:eq(1)').val());
+                    }
+                },
+                error: function (xhr, status) {
+                    alert('Error');
+                }
+            });
+        }
+    });
+
+
+
+
+
 
 $(document).ready(function () {
         $('body').on('change', '.form-group', function() {
