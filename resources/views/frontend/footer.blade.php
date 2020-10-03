@@ -1,4 +1,6 @@
-<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button> 
+<button onclick="topFunction()" id="myBtn" title="Go to top"><i class="fa fa-chevron-up"></i></button>
+
+<div id="WAButton"></div>
 <!--
 <section class="tentang pt-5 pb-5">
     <div class="container">
@@ -52,13 +54,20 @@
     <!-- Copyright End -->
     </section>
     <!-- Footer area End -->
-    
+
 </footer>
- <!-- Footer Section End --> 
+ <!-- Footer Section End -->
+
+<!--Jquery-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!--Floating WhatsApp css-->
+<link rel="stylesheet" href='{{asset("wa/floating-wpp.min.css")}}'>
+<!--Floating WhatsApp javascript-->
+<script type="text/javascript" src='{{asset("wa/floating-wpp.min.js")}}'></script>
 
 
 <!-- jQuery CDN - Slim version (=without AJAX) -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> --}}
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 <!-- Bootstrap JS -->
@@ -68,9 +77,19 @@
     //Get the button
     var mybutton = document.getElementById("myBtn");
 
+    $('#WAButton').floatingWhatsApp({
+        phone: '628111096173', //WhatsApp Business phone number
+        headerTitle: 'Join Chat', //Popup Title
+        popupMessage: 'Halo , Ada yang bisa kami bantu?', //Popup Message
+        showPopup: true, //Enables popup display
+        buttonImage: `<img src="{{asset('wa/whatsapp.svg')}}" />`,
+        position: "right", //Position: left | right
+        size: "50px"
+    });
+
     // When the user scrolls down 20px from the top of the document, show the button
     window.onscroll = function() {scrollFunction()};
-    
+
     function scrollFunction() {
         if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
             mybutton.style.display = "block";
@@ -85,13 +104,13 @@
         document.documentElement.scrollTop = 0;
     }
 
-    function initFreshChat() {
-      window.fcWidget.init({
-        token: "4a307164-690f-44ea-b930-f31ee9d818e3",
-        host: "https://wchat.freshchat.com"
-      });
-    }
-    function initialize(i,t){var e;i.getElementById(t)?initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,e.src="https://wchat.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}function initiateCall(){initialize(document,"freshchat-js-sdk")}window.addEventListener?window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
+    // function initFreshChat() {
+    //   window.fcWidget.init({
+    //     token: "4a307164-690f-44ea-b930-f31ee9d818e3",
+    //     host: "https://wchat.freshchat.com"
+    //   });
+    // }
+    // function initialize(i,t){var e;i.getElementById(t)?initFreshChat():((e=i.createElement("script")).id=t,e.async=!0,e.src="https://wchat.freshchat.com/js/widget.js",e.onload=initFreshChat,i.head.appendChild(e))}function initiateCall(){initialize(document,"freshchat-js-sdk")}window.addEventListener?window.addEventListener("load",initiateCall,!1):window.attachEvent("load",initiateCall,!1);
   </script>
 @stack('script')
 </body>
