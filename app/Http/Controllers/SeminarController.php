@@ -1774,4 +1774,12 @@ class SeminarController extends Controller
 
         return redirect()->back()->with('alert',"Blasting sukses");
     }
+
+    public function meeting(Request $request, $id) {
+        $seminar = SeminarModel::where('id',$id)->first();
+        $seminar->meet_id = $request->meet_id;
+        $seminar->meet_pass = $request->meet_pass;
+        $seminar->save();
+        return redirect()->back()->with('alert',"Berhasil disimpan");
+    }
 }

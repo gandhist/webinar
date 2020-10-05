@@ -402,6 +402,50 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6" style="border: 1px solid black">
+                            <div class="row">
+                                <form action="{{ url('seminar/meeting',$seminar->id) }}" class="form-horizontal"
+                                    method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label>Meeting ID</label>
+                                            <div>
+                                                <input name="meet_id" id="meet_id" type="text"
+                                                value="{{ old('meet_id') ? old('meet_id') : (isset($seminar->meet_id) ? $seminar->meet_id : '')}}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <div class="form-group">
+                                            <label>Meeting Password</label>
+                                            <div>
+                                                <input name="meet_pass" id="meet_pass" type="text"
+                                                value="{{ old('meet_pass') ? old('meet_pass') : (isset($seminar->meet_pass) ? $seminar->meet_pass : '')}}">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-2">
+
+                                        <div class="form-group">
+                                            <br>
+                                            <div>
+                                                <button class="btn btn-success">Simpan</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

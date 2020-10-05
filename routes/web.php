@@ -120,6 +120,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::delete('destroy', 'SeminarController@destroy');
 	Route::get('detail/{id}','SeminarController@detail');
 	Route::get('/{id}/publish', 'SeminarController@publish');
+	Route::post('/meeting/{id}','SeminarController@meeting');
 	Route::get('create/getKota/{id}','SeminarController@getKota');
 	Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
 	Route::get('kirim_email/{id}','SeminarController@kirimEmail');
