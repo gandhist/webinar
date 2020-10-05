@@ -107,33 +107,46 @@
       @if(Auth::user()->role_id==1 )
       <li class="treeview">
         <a href="#">
+            <i class="fa fa-tasks"></i> <span>P3S Mandiri</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li>
+                <a href="{{ url('/kantor') }}">
+                <i class="fa fa-building-o"></i> <span>Kantor P3S Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('instansi') }}">
+                <i class="fa fa-building-o" aria-hidden="true"></i> <span>Badan Usaha P3S Mandiri</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url('personals') }}">
+                <i class="fa fa-user"></i> <span>Personil P3S Mandiri</span>
+                </a>
+            </li>
+
+        </ul>
+      </li>
+
+      <li class="treeview">
+        <a href="#">
             <i class="fa fa-tasks"></i> <span>PJS_PPKB Mandiri</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
-            <li>
-                <a href="{{ url('/kantor') }}">
-                <i class="fa fa-building-o"></i> <span>Kantor PJS_PPKB Mandiri</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ url('instansi') }}">
-                <i class="fa fa-building-o" aria-hidden="true"></i> <span>Badan Usaha PJS_PPKB Mandiri</span>
-                </a>
-            </li>
 
             <li>
                 <a href="{{ url('/dashboard1') }}">
                 <i class="fa fa-gavel"></i> <span>[X] Ijin PJS_PPKB Mandiri</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ url('personals') }}">
-                <i class="fa fa-user"></i> <span>Personil PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
@@ -143,19 +156,8 @@
                 </a>
             </li>
 
-            <li>
-                <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_PPKB Mandiri</span>
-                </a>
-            </li>
         </ul>
-      </li>
+    </li>
 
     <li class="treeview">
         <a href="#">
@@ -172,7 +174,7 @@
             </li>
             <li>
                 <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-users"></i> <span>[X] Nara Sumber PJS_PPKB Mandiri</span>
+                <i class="fa fa-users"></i> <span>[X] Nara Sumber & Personil Kgt PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>
@@ -204,6 +206,77 @@
         </ul>
     </li>
 
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>PJS_KAN Mandiri</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-gavel"></i> <span>[X] Ijin PJS_KAN Mandiri</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-file"></i> <span>[X] Dokumen Personil PJS_KAN Mandiri</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>Tim Produksi PJS_KAN</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_KAN Mandiri</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-users"></i> <span>[X] Auditor PJS_KAN Mandiri</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Kgt Produksi Srtf PJS_KAN Mandiri</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>Tim Marketing & Keuangan PJS_KAN</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_KAN Mandiri</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('/dashboard1') }}">
+                    <i class="fa fa-clipboard"></i> <span>[X] Kgt Permohonan Srtf PJS_KAN Mandiri</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 
     <li class="treeview">
         <a href="#">
@@ -251,6 +324,8 @@
             </li>
         </ul>
     </li>
+
+
 
     @endif
     @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
