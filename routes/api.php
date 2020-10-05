@@ -14,13 +14,13 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    dd($request->user());
 });
-
 Route::group(['prefix' => 'v1'], function(){
 	Route::group(['prefix' => 'users'], function(){
 		Route::get('', 'UserController@getData');
-	});
+    });
+
 	// Route::group(['prefix' => 'tasks'], function(){
 	// 	Route::post('aprove/{id}', 'TaskController@aprove');
 	// 	Route::post('cancel/{id}', 'TaskController@cancel');
