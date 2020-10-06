@@ -316,3 +316,60 @@ function chainedProvinsiPersonil(url, id_prov, id_kota, placeholder) {
     });
 }
 
+
+function sugestPersonil(id_nama_p, id_hp_p, id_email_p,url) {
+    $('#' + id_nama_p).typeahead({
+        source: function (query, process) {
+            return $.get(url, {
+                query: query
+            }, function (data) {
+                return process(data);
+            });
+        },
+        displayText: function (item) {
+            return item.nama;
+        },
+        updater: function (item) {
+            if (id_hp_p == "" || id_email_p=="") {
+
+            } else {
+                $("#" + id_hp_p).val(item.hp_wa);
+                $("#" + id_email_p).val(item.email_p);
+
+                if(item.hp_wa==null || item.hp_wa==""){
+                    $("#" + id_hp_p).css('background-color', 'white');
+                }else{
+                    $("#" + id_hp_p).css('background-color', '#b9cae6');
+                }
+
+                if(item.email_p==null || item.email_p==""){
+                    $("#" + id_email_p).css('background-color', 'white');
+                }else{
+                    $("#" + id_email_p).css('background-color', '#b9cae6');
+                }
+            }
+            return item;
+        }
+    });
+}
+
+
+function setDateRangePicker(input1, input2) {
+    $(input1).datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+    }).on("change", function () {
+        $(input2).val("").datepicker('setStartDate', $(this).val());
+    }).css({
+        "cursor": "pointer",
+        "background": "white"
+    });
+    $(input2).datepicker({
+        autoclose: true,
+        format: "dd/mm/yyyy",
+        orientation: "top left"
+    }).css({
+        "cursor": "pointer",
+        "background": "white"
+    });
+}

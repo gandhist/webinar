@@ -145,13 +145,13 @@
         <ul class="treeview-menu">
 
             <li>
-                <a href="{{ url('/dashboard1') }}">
+                <a href="{{ url('/ijinppkb') }}">
                 <i class="fa fa-gavel"></i> <span>[X] Ijin PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
             <li class="treeview">
-                <a href="{{ url('/dashboard1') }}">
+                <a href="{{ url('/dokpersonal') }}">
                 <i class="fa fa-file"></i> <span>[X] Dokumen Personil PJS_PPKB Mandiri</span>
                 </a>
             </li>

@@ -35,7 +35,9 @@ class BuModel extends Model
     // Link ke table ms_provinsi dari field prop_naker
     public function provinsi()
     {
-        return $this->hasOne('App\ProvinsiModel', 'id' ,'prop_naker');
+        // return $this->hasOne('App\ProvinsiModel', 'id' ,'prop_naker');
+
+        return $this->hasOne('App\ProvinsiModel', 'id' ,'id_prop');
     }
 
     // Link ke table ms_provinsi dari field id_prop

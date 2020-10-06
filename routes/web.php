@@ -137,6 +137,20 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
     Route::post('blast/{id}', 'SeminarController@blast');
 
 });
+
+Route::resource('ijinppkb', 'IjinPPKBController');
+Route::get('chain/searchPersonilByName','IjinPPKBController@searchPersonilByName')->name('searchPersonilByName');
+Route::post('ijinppkb/get_pjk3/{id}','IjinPPKBController@getPjk3');
+
+Route::post('select_temp_skp_pjk3','IjinPPKBController@selectskppjk3');
+Route::post('add_temp_skp_pjk3','IjinPPKBController@addskppjk3');
+Route::post('delete_temp_skp_pjk3','IjinPPKBController@deleteskppjk3');
+Route::post('delete_all_temp_skp_pjk3','IjinPPKBController@deleteallskppjk3');
+
+
+Route::group(['middleware' => 'auth.admin','prefix' => 'dokpersonal'], function () {
+	Route::get('/', 'DokPersonalController@index');
+});
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
 // 	Route::get('kirim_email','SeminarController@kirimEmail');
 // 	Route::get('send_email/{id}','SeminarController@sendEmail');

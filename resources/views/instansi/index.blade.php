@@ -209,7 +209,7 @@
                                         NPWP : {{ $key->npwp }} <br>
                                         No Rekening : {{ $key->no_rek  }} <br>
                                         Atas Nama : {{ $key->nama_rek }} <br>
-                                        Bank : {{ isset($key->bank->nama_bank) ? '$key->bank->nama_bank' : '' }} <br>
+                                        Bank : {{ isset($key->bank->Nama_Bank) ? $key->bank->Nama_Bank : '' }} <br>
                                         ">
                                         @if (isset($key->npwp))
                                         @if (isset($key->npwp_pdf))

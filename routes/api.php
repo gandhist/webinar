@@ -16,9 +16,24 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     dd($request->user());
 });
+
+
+
 Route::group(['prefix' => 'v1'], function(){
 	Route::group(['prefix' => 'users'], function(){
 		Route::get('', 'UserController@getData');
+    });
+
+	// Route::group(['prefix' => 'tasks'], function(){
+	// 	Route::post('aprove/{id}', 'TaskController@aprove');
+	// 	Route::post('cancel/{id}', 'TaskController@cancel');
+	// });
+});
+
+Route::group(['prefix' => 'v1'], function(){
+	Route::group(['prefix' => 'seminar'], function(){
+		Route::get('', 'APIController@getData');
+		Route::post('', 'APIController@getData');
     });
 
 	// Route::group(['prefix' => 'tasks'], function(){
