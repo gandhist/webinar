@@ -226,6 +226,190 @@ class IjinPPKBController extends Controller
 
     }
 
+
+    public function edit($id)
+    {
+
+        // Hapus Data di temporary bu kontak p
+        TempSkpPjk3::where('id_user', '=', Auth::id())->delete();
+        $personil = Personal::all();
+        $data = SkpPjk3::find($id);
+        $prov = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        $jenisusaha = JenisUsaha::where('sektor','PPKB')->get();
+        $bentukusaha = BentukBuModel::all();
+        $bank = BankModel::all();
+        $badanusaha = BuModel::all();
+        $detailskp = SkpPjk3::where('kode_pjk3','=',$data->kode_pjk3)->get();
+        $jumlahdetail = SkpPjk3::where('kode_pjk3','=',$data->kode_pjk3)->count();
+
+        $skpPjk3 = SkpPjk3::where('id',$id)->get()->toArray();
+        // $cek_pimp = Personil::where('nama',$skpPjk3[0]['nama_pimp'])->count();
+        // $cek_kp = Personil::where('nama',$skpPjk3[0]['nama_kp'])->count();
+
+        return view('ijinppkb.edit')->with(compact('personil','badanusaha','prov','kota','jenisusaha','bentukusaha','bank','data','detailskp','jumlahdetail'));
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $request->validate([
+            'id_kode_pjk3' => 'required',
+            'id_nama_p' => 'required',
+            'id_nama_kp' => 'required'
+        ],
+        ['id_kode_pjk3.required'=>'Nama PJK3 harus diisi',
+        'id_nama_p.required'=>'Nama Pimpinan harus diisi',
+        'id_nama_kp.required'=>'Nama Kontak Person harus diisi'
+        ]
+        );
+
+        // Insert Ke Table Detail
+        $nama_bu = BuModel::selectRaw('nama_bu,prop_naker')->where('id','=',$request->id_kode_pjk3)->first();
+        $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $nama_bu->nama_bu);
+
+        $a=array();
+
+        if (is_null($request->id_jumlah_detail) || $request->id_jumlah_detail=='' )
+        {
+            // $datalog = SkpPjk3::where('kode_pjk3','=',$request->id_kode_pjk3)->get();
+            // foreach($datalog as $item) {
+            //     $user_data = [
+            //         'id_skp_pjk3' => $item['id'],
+            //         'deleted_by' => Auth::id(),
+            //         'deleted_at' => Carbon::now()->toDateTimeString()
+            //     ];
+            //     LogSkpPjk3::create($user_data);
+            // }
+
+            $user_data = [
+                'deleted_by' => Auth::id(),
+                'deleted_at' => Carbon::now()->toDateTimeString()
+            ];
+            SkpPjk3::where('kode_pjk3','=',$request->id_kode_pjk3)->update($user_data);
+
+        }else{
+
+            $jumlah_detail = explode(',', $request->id_jumlah_detail);
+
+            foreach($jumlah_detail as $jumlah_detail) {
+
+                $dataDetail['prop_naker'] = $nama_bu->prop_naker;
+                $dataDetail['kode_pjk3'] = $request->id_kode_pjk3;
+
+                $x = "bidang_detail_".$jumlah_detail;
+                $bid_sk = $request->$x;
+                $dataDetail['bid_sk'] = $request->$x;
+                $x = "no_skp_".$jumlah_detail;
+                $dataDetail['no_sk'] = $request->$x;
+                $x = "tgl_terbit_".$jumlah_detail;
+                if($request->$x==""){
+                    $dataDetail['tgl_sk'] = null;
+                }else{
+                $dataDetail['tgl_sk'] = Carbon::createFromFormat('d/m/Y',$request->$x);
+                }
+
+                $x = "tgl_akhir_".$jumlah_detail;
+                if($request->$x==""){
+                    $dataDetail['tgl_akhir_sk'] = null;
+                }else{
+                $dataDetail['tgl_akhir_sk'] = Carbon::createFromFormat('d/m/Y',$request->$x);
+                }
+                $x = "pdf_skp_".$jumlah_detail;
+
+                if($request->id_nama_p=="lain"){
+                    $dataDetail['nama_pimp'] = $request->nama_p_lain;
+                }else{
+                    $dataDetail['nama_pimp'] = $request->id_nama_p;
+                }
+                $dataDetail['jab_pimp'] = $request->id_jab_p;
+                $dataDetail['email_pimp'] = $request->id_email_p;
+                $dataDetail['no_pimp'] = $request->id_hp_p;
+
+                if($request->id_nama_kp=="lain"){
+                    $dataDetail['nama_kp'] = $request->nama_kp_lain;
+                }else{
+                    $dataDetail['nama_kp'] = $request->id_nama_kp;
+                }
+                $dataDetail['jab_kp'] = $request->id_jab_kp;
+                $dataDetail['no_kp'] = $request->id_hp_kp;
+                $dataDetail['email_kp'] = $request->id_email_kp;
+
+                $dataDetail['no_rek'] = $request->id_norek_bank;
+                $dataDetail['nama_rek'] = $request->id_namarek_bank;
+                $dataDetail['id_bank'] = $request->id_nama_bank;
+
+                $dataDetail['updated_by'] = Auth::id();
+                $dataDetail['updated_at'] = Carbon::now()->toDateTimeString();
+
+                  // handle upload skp
+                  if ($files = $request->file($x)) {
+                    $destinationPath = 'uploads/'.$dir_name.'/skp_pjk3'; // upload path
+                    $file = "SKP_Bidang_".$dataDetail['bid_sk'].'_'.Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                    $files->move($destinationPath, $file);
+                    $dataDetail['pdf_skp_pjk3'] = $dir_name.'/skp_pjk3/'.$file;
+                }
+
+                $x = "type_detail_".$jumlah_detail;
+                $typeDetail = $request->$x;
+
+                $cek_bidang = SkpPjk3::selectRaw('count(id) as jumlah,id')->where('kode_pjk3','=',$request->id_kode_pjk3)->where('bid_sk','=',$bid_sk)->first();
+
+                if($cek_bidang->jumlah>0){
+                    array_push($a,$typeDetail);
+
+                    // Select Data Untuk Table log_skp_pjk3
+                    // $old = SkpPjk3::find($typeDetail);
+                    // $olddata['id_skp_pjk3'] = $old->id;
+                    // $olddata['prop_naker'] = $old->prop_naker;
+                    // $olddata['kode_pjk3'] = $old->kode_pjk3;
+                    // $olddata['bid_sk'] = $old->bid_sk;
+                    // $olddata['no_sk'] = $old->no_sk;
+                    // $olddata['pdf_skp_pjk3'] = $old->pdf_skp_pjk3;
+                    // $olddata['tgl_sk'] = $old->tgl_sk;
+                    // $olddata['tgl_akhir_sk'] = $old->tgl_akhir_sk;
+                    // $olddata['sts_pjk3'] = $old->sts_pjk3;
+                    // $olddata['verified_1_by'] = $old->verified_1_by;
+                    // $olddata['verified_1_at'] = $old->verified_1_at;
+                    // $olddata['verified_2_by'] = $old->verified_2_by;
+                    // $olddata['verified_2_at'] = $old->verified_2_at;
+                    // $olddata['ok_by'] = $old->ok_by;
+                    // $olddata['ok_at'] = $old->ok_at;
+                    // $olddata['keterangan'] = $old->keterangan;
+                    // $olddata['is_actived'] = $old->is_actived;
+                    // $olddata['updated_by'] = Auth::id();
+                    // $olddata['updated_at'] = Carbon::now()->toDateTimeString();
+                    // LogSkpPjk3::create($olddata);
+                    // End
+
+                    SkpPjk3::find($typeDetail)->update($dataDetail);
+                }else{
+                    $c = SkpPjk3::create($dataDetail);
+                    array_push($a,$c->id);
+                }
+            }
+
+            $b = SkpPjk3::select('id')->where('kode_pjk3','=',$request->id_kode_pjk3)->whereNotIn('id', $a)->get();
+            // foreach($b as $item) {
+            //     $user_data = [
+            //         'id_skp_pjk3' => $item['id'],
+            //         'deleted_by' => Auth::id(),
+            //         'deleted_at' => Carbon::now()->toDateTimeString()
+            //     ];
+            //     LogSkpPjk3::create($user_data);
+            // }
+
+            $user_data = [
+                'deleted_by' => Auth::id(),
+                'deleted_at' => Carbon::now()->toDateTimeString()
+            ];
+            $data = SkpPjk3::whereIn('id', $b)->update($user_data);
+
+        }
+        return redirect('ijinppkb')->with('message', 'Data berhasil diubah');
+    }
+
+
     public function destroy(Request $request)
     {
         $idData = explode(',', $request->idHapusData);

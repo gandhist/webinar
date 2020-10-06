@@ -670,7 +670,7 @@
                 });
             } else {
                 url = id[0];
-                window.location.href = "{{ url('daftarpjk3') }}/" + url + "/edit";
+                window.location.href = "{{ url('ijinppkb') }}/" + url + "/edit";
             }
         });
 
