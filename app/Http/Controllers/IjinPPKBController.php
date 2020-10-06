@@ -12,7 +12,9 @@ use App\BankModel;
 use App\BuModel;
 use App\BidangModel;
 use App\SkpPjk3;
+use App\SkpAk3;
 use App\TempSkpPjk3;
+use App\TempSkpAk3;
 use Auth;
 use Carbon\Carbon;
 
@@ -499,6 +501,26 @@ class IjinPPKBController extends Controller
         // Hapus Data di temporary bu kontak p
         TempSkpPjk3::where('id_user', '=', Auth::id())->delete();
         return "berhasil";
+    }
+
+
+    public function dataPjk3Modal(Request $request){
+        $pjk3 = SkpPjk3::find($request->id_pjk3);
+        $idjenisusaha = $pjk3->bidang->jenis_usaha->id;
+        $data = SkpPjk3::with('bidang.jenis_usaha')->with('badan_usaha.provinsi')->with('badan_usaha.provinsibu')->with('badan_usaha.bank')->with('badan_usaha.kota')->where('kode_pjk3','=',$pjk3->kode_pjk3)->whereHas('bidang.jenis_usaha', function ($query) use($idjenisusaha) {
+            $query->where('id', '=', $idjenisusaha);
+        })->whereHas('bidang', function ($query) {
+            $query->orderby('sortby','asc');
+        })->get();
+        return $data;
+    }
+
+    public function dataAhli3Modal(Request $request){
+        $bidang = SkpPjk3::select('bid_sk')->where('id',$request->id_pjk3)->get()->toArray();
+        $idbu = SkpPjk3::select('kode_pjk3')->where('id',$request->id_pjk3)->first();
+        $id_pjk3 = SkpPjk3::select('id')->where('kode_pjk3',$idbu['kode_pjk3'])->get()->toArray();
+        $data = SkpAk3::with('skp_pjk3.bidang')->with('skp_pjk3.badan_usaha.provinsi')->with('skp_pjk3.badan_usaha.bank')->with('skp_pjk3.badan_usaha.provinsibu')->with('skp_pjk3.badan_usaha.kota')->with('bid_sertifikat_alat')->with('personal.kota.provinsi')->with('personal.sekolah')->with('jenisdok_ak3')->whereIn('id_skp_pjk3',$id_pjk3)->whereIn('id_bid_skp',$bidang)->get();
+        return $data;
     }
 
 }
