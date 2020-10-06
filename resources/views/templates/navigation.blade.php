@@ -146,7 +146,7 @@
 
             <li>
                 <a href="{{ url('/ijinppkb') }}">
-                <i class="fa fa-gavel"></i> <span>[X] Ijin PJS_PPKB Mandiri</span>
+                <i class="fa fa-gavel"></i> <span>Ijin PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
