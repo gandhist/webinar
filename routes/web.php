@@ -138,9 +138,11 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 
 });
 
+Route::get('ijinppkb/filter', 'IjinPPKBController@index');
 Route::resource('ijinppkb', 'IjinPPKBController');
 Route::get('chain/searchPersonilByName','IjinPPKBController@searchPersonilByName')->name('searchPersonilByName');
 Route::post('ijinppkb/get_pjk3/{id}','IjinPPKBController@getPjk3');
+Route::post('ijinppkb/filter', 'IjinPPKBController@filter');
 
 Route::post('select_temp_skp_pjk3','IjinPPKBController@selectskppjk3');
 Route::post('add_temp_skp_pjk3','IjinPPKBController@addskppjk3');

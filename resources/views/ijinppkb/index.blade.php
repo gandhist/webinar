@@ -27,7 +27,7 @@
             @endif
 
             {{-- sub menu  --}}
-            <form action="{{ url('daftarpjk3/filter') }}" enctype="multipart/form-data" name="filterData"
+            <form action="{{ url('ijinppkb/filter') }}" enctype="multipart/form-data" name="filterData"
                 id="filterData" method="post"  style="margin-top: 2rem">
                 <!-- @method("PUT") -->
                 @csrf
@@ -96,7 +96,7 @@
                                             Filter</button>
                                     </td>
                                     <td style="padding-left: 0px">
-                                        <a href="{{ url('daftarpjk3') }}" class="btn btn-sm btn-default"> <i
+                                        <a href="{{ url('ijinppkb') }}" class="btn btn-sm btn-default"> <i
                                                 class="fa fa-refresh"></i>
                                             Reset</a>
                                     </td>
@@ -508,7 +508,7 @@
 
 <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
-    <form action="{{ url('daftarpjk3/destroy') }}" class="form-horizontal" id="formDelete" name="formDelete"
+    <form action="{{ url('ijinppkb/destroy') }}" class="form-horizontal" id="formDelete" name="formDelete"
         method="post" enctype="multipart/form-data">
         @method("DELETE")
         @csrf

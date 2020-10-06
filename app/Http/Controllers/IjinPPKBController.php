@@ -41,6 +41,86 @@ class IjinPPKBController extends Controller
         return view('ijinppkb.index')->with(compact('data','prov','bidang','pjk3','jenisusaha','instansi','hitungjenisusaha'));
     }
 
+    public function filter(Request $request)
+    {
+        $idpjk3 =  SkpPjk3::select('kode_pjk3')->groupBy('kode_pjk3')->whereNotNull('kode_pjk3')->get()->toArray();
+        $idprov = BuModel::select('id_prop')->groupBy('id_prop')->whereIn('id',$idpjk3)->get();
+        $prov = ProvinsiModel::whereIn('id',$idprov)->get();
+        // $id_bid = SkpPjk3::select('bid_sk')->groupBy('bid_sk')->get()->toArray();
+
+        $idbidang =  SkpPjk3::select('bid_sk')->groupBy('bid_sk')->whereNotNull('bid_sk')->get()->toArray();
+        $bidang = BidangModel::whereIn('id',$idbidang)->get();
+
+        $idjenisusaha =  SkpPjk3::select('ms_bidang.id_jns_usaha')->join('ms_bidang','ms_bidang.id','=','skp_pjk3.bid_sk')->groupBy('ms_bidang.id_jns_usaha')->get()->toArray();
+        $jenisusaha = JenisUsaha::whereIn('id',$idjenisusaha)->get();
+
+        $instansi = BuModel::groupBy('instansi_reff')->whereNotNull('instansi_reff')->whereIn('id',$idpjk3)->get();
+        $data = SkpPjk3::orderBy('id', 'asc')->whereNotNull('no_sk');
+        $hitungjenisusaha = SkpPjk3::orderBy('id', 'asc')->whereNotNull('no_sk')->groupBy('kode_pjk3')->get();
+        // $jumlahbadanusaha = masterBadanUsaha::whereIn('jns_usaha',$hitungjenisusaha)->get();
+        $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
+
+
+
+        if($request->f_awal_terbit != null && $request->f_akhir_terbit != null){
+            $data->whereBetween('tgl_sk', [Carbon::createFromFormat('d/m/Y',$request->f_awal_terbit), Carbon::createFromFormat('d/m/Y',$request->f_akhir_terbit)]);
+        }
+
+
+        // tanggal akhir awal / akhir skp
+        if($request->f_awal_akhir != null && $request->f_akhir_akhir != null){
+            $data->whereBetween('tgl_akhir_sk', [Carbon::createFromFormat('d/m/Y',$request->f_awal_akhir), Carbon::createFromFormat('d/m/Y',$request->f_akhir_akhir)]);
+        }
+
+
+        if (!$request->f_bidang===NULL || !$request->f_bidang==""){
+            $data->where('bid_sk', '=', $request->f_bidang);
+        }
+
+
+        if (!$request->f_pjk3===NULL || !$request->f_pjk3==""){
+            $data->where('kode_pjk3', '=', $request->f_pjk3);
+        }
+
+
+        if (!$request->f_jenis_usaha===NULL || !$request->f_jenis_usaha==""){
+            $id_jns = $request->f_jenis_usaha;
+            $bidangpjk3 = BidangModel::select('id')->where('id_jns_usaha',$id_jns)->get()->toArray();
+            // dd($bidangpjk3);
+            // $badanusaha = masterBadanUsaha::select('id')->where('jns_usaha',$id_jns)->get()->toArray();
+            $data->whereIn('bid_sk',$bidangpjk3);
+        }
+
+
+        if (!$request->f_provinsi===NULL || !$request->f_provinsi==""){
+            $id_prop = $request->f_provinsi;
+            $data->whereHas('badan_usaha', function ($query) use($id_prop) {
+                $query->where('id_prop', '=', $id_prop);
+            });
+        }
+
+
+
+        if (!$request->f_instansi===NULL || !$request->f_instansi==""){
+            $instansi_id = $request->f_instansi;
+            $data->whereHas('badan_usaha', function ($query) use($instansi_id) {
+                $query->where('instansi_reff', '=', $instansi_id);
+            });
+        }
+
+
+        $data->get();
+
+        $x = $data;
+        $data = $data->get();
+
+        $x = $x->select('id')->get()->toArray();
+
+        $hitungjenisusaha = SkpPjk3::whereIn('id',$x)->whereNotNull('no_sk')->groupBy('kode_pjk3')->get();
+
+
+        return view('ijinppkb.index')->with(compact('data','prov','bidang','pjk3','jenisusaha','instansi','hitungjenisusaha'));
+    }
 
     public function create()
     {
@@ -144,6 +224,17 @@ class IjinPPKBController extends Controller
 
         return redirect('ijinppkb')->with('message', 'Data berhasil ditambahkan');
 
+    }
+
+    public function destroy(Request $request)
+    {
+        $idData = explode(',', $request->idHapusData);
+        $user_data = [
+            'deleted_by' => Auth::id(),
+            'deleted_at' => Carbon::now()->toDateTimeString()
+        ];
+        SkpPjk3::whereIn('id', $idData)->update($user_data);
+        return redirect('ijinppkb')->with('message', 'Data berhasil dihapus');
     }
 
     public function searchPersonilByName(Request $request){
