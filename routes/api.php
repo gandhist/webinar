@@ -31,13 +31,13 @@ Route::group(['prefix' => 'v1'], function(){
 });
 
 Route::group(['prefix' => 'v1'], function(){
-	Route::group(['prefix' => 'seminar'], function(){
-		Route::get('', 'APIController@getData');
-		Route::post('', 'APIController@getData');
-    });
-
 	// Route::group(['prefix' => 'tasks'], function(){
 	// 	Route::post('aprove/{id}', 'TaskController@aprove');
 	// 	Route::post('cancel/{id}', 'TaskController@cancel');
 	// });
+});
+
+Route::group(['prefix' => 'seminar'], function(){
+    Route::get('', 'APIController@getData');
+    Route::post('', 'APIController@fetchData');
 });
