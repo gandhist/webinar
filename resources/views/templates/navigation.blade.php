@@ -324,9 +324,36 @@
             </li>
         </ul>
     </li>
+    @elseif(Auth::user()->role_id==5)
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-tasks"></i> <span>P3S Mandiri</span>
+            <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
 
+            <li>
+                <a href="{{ url('/kantor') }}">
+                <i class="fa fa-building-o"></i> <span>Kantor P3S Mandiri</span>
+                </a>
+            </li>
 
+            <li>
+                <a href="{{ url('instansi') }}">
+                <i class="fa fa-building-o" aria-hidden="true"></i> <span>Badan Usaha P3S Mandiri</span>
+                </a>
+            </li>
 
+            <li>
+                <a href="{{ url('personals') }}">
+                <i class="fa fa-user"></i> <span>Personil P3S Mandiri</span>
+                </a>
+            </li>
+
+        </ul>
+      </li>
     @endif
     @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
 

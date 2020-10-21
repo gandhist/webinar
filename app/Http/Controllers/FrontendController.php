@@ -22,7 +22,7 @@ class FrontendController extends Controller
             }
         }
         if(Auth::check()){
-            if(Auth::user()->role_id == 1){
+            if(Auth::user()->role_id == 1 || Auth::user()->role_id == 5){
                 return redirect('dashboard');
             }
         }

@@ -4,7 +4,9 @@
 <!-- Content Header (Page header) -->
 <style>
     span.indent{
-        text-indent: 25px;
+        display: inline-block;
+        width: 100%;
+        text-align: center !important;
     }
 </style>
 <section class="content-header">

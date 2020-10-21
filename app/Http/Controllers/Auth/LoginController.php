@@ -146,7 +146,7 @@ class LoginController extends Controller
         if (Auth::user()->role_id == 2 ){
             return redirect('infoseminar');
         }
-        if (Auth::user()->role_id == 1){
+        if (Auth::user()->role_id == 1 ||Auth::user()->role_id == 5){
             return redirect('/dashboard');
         }
         $user = Auth::user();
