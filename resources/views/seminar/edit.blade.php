@@ -353,7 +353,7 @@
                                         <option value="{{$key->id_instansi}}"
                                             {{$key->is_tampil == '1' ? 'selected' : ''}}
                                         >
-                                        {{$pendukungArr[$key->id_instansi]}}</option>
+                                        {{($pendukungArr[$key->id_instansi] ?? '')}}</option>
                                     @endforeach
                                 @endif
                             </select>
