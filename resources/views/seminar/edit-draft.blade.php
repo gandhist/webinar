@@ -253,7 +253,7 @@
                                 @endforeach
                             @else
                                 @foreach($personal as $key)
-                                    @if($ttd[1]['id_personal']) != $key->id)
+                                    @if(isset($ttd[1]['id_personal']) ? ($ttd[1]['id_personal'] != $key->id) : false)
                                         <option value="{{$key->id}}"
                                         {{$ttd[0]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
                                     @endif
@@ -275,7 +275,7 @@
                             <label for="jab_ttd1" class="label-control required">Jabatan Penandatangan 1</label>
                             <input type="text" id="jab_ttd1" class="form-control" name="jab_ttd1"
                             placeholder="Jabatan Penandatangan 1"
-                            value="{{ old('jab_ttd1') ? old('jab_ttd1') : $ttd[0]['jabatan'] }}">
+                            value="{{ old('jab_ttd1') ? old('jab_ttd1') : ($ttd[0]['jabatan'] ?? '') }}">
                             <div id="jab_ttd1" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd1') }}
                             </div>
@@ -299,7 +299,7 @@
                                 @endforeach
                             @else
                                 @foreach($personal as $key)
-                                    @if($ttd[0]['id_personal']) != $key->id)
+                                    @if(isset($ttd[0]['id_personal']) ? ($ttd[0]['id_personal'] != $key->id) : false)
                                         <option value="{{$key->id}}"
                                         {{ $ttd[1]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
                                     @endif
@@ -321,7 +321,7 @@
                             <label for="jab_ttd2" class="label-control required">Jabatan Penandatangan 2</label>
                             <input type="text" id="jab_ttd2" class="form-control" name="jab_ttd2"
                             placeholder="Jabatan Penandatangan 2"
-                            value="{{ old('jab_ttd2') ? old('jab_ttd2') : $ttd[1]['jabatan'] }}">
+                            value="{{ old('jab_ttd2') ? old('jab_ttd2') : ($ttd[1]['jabatan'] ?? '') }}">
                             <div id="jab_ttd2" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd2') }}
                             </div>
@@ -350,7 +350,7 @@
                                     @foreach ($logo as $key)
                                         <option value="{{$key->id_instansi}}"
                                             {{$key->is_tampil == '1' ? 'selected' : ''}}>
-                                        {{$pendukungArr[$key->id_instansi]}}</option>
+                                        {{($pendukungArr[$key->id_instansi]) ?? ''}}</option>
                                     @endforeach
                                 @endif
                             </select>
