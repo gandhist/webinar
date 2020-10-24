@@ -41,4 +41,12 @@ class Personal extends Model
         return $this->belongsTo('App\PTKPModel', 'id_ptkp' );
     }
 
+    public function user_create()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by');
+    }
+    public function user_update()
+    {
+        return $this->hasOne('App\User', 'id', 'updated_by');
+    }
 }

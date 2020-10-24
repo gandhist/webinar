@@ -50,7 +50,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Tambah Kantor PJS_LPJK - Mandiri
+        Tambah Kantor P3S Mandiri
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

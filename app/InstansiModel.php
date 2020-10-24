@@ -12,4 +12,8 @@ class InstansiModel extends Model
     protected $table = "instansi";
     protected $guarded = "id";
 
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by');
+    }
 }

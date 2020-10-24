@@ -196,8 +196,8 @@
                                     <th>Pdf_KTP</th>
                                     <th>BPJS_Kes</th>
                                     <!-- <th>Pdf_NPWP</th> -->
-                                    <th>User_Waktu_Tambah</th>
-                                    <th>User_Waktu_Ubah</th>
+                                    <th>User_Tambah</th>
+                                    <th>User_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -345,14 +345,28 @@
                                             Lihat <i class="fa fa-external-link" aria-hidden="true"></i>
                                         </a>
                                     </td> --}}
-                                    <td>
+                                    <td
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-html="true" title="
+                                            {{isset($personal->user_create) ? $personal->user_create->name : ''}}
+                                            {{ ( isset($personal->user_create) && isset($personal->created_at) ) ? ' , ' : '' }}
+                                            {{ isset($personal->created_at) ? \Carbon\Carbon::parse($personal->created_at)->isoFormat("DD MMMM YYYY") : ''}}
+                                    ">
                                         @if (isset($personal->created_at))
                                         {{ \Carbon\Carbon::parse($personal->created_at)->isoFormat("DD MMMM YYYY") }}
                                         @else
                                         {{''}}
                                         @endif
                                     </td>
-                                    <td>
+                                    <td
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-html="true" title="
+                                            {{isset($personal->user_update) ? $personal->user_update->name : ''}}
+                                            {{ ( isset($personal->user_update) && isset($personal->updated_at) ) ? ' , ' : '' }}
+                                            {{ isset($personal->updated_at) ? \Carbon\Carbon::parse($personal->updated_at)->isoFormat("DD MMMM YYYY") : ''}}
+                                    ">
                                         @if (isset($personal->updated_at))
                                         {{ \Carbon\Carbon::parse($personal->updated_at)->isoFormat("DD MMMM YYYY") }}
                                         @else

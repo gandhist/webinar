@@ -57,4 +57,13 @@ class BuModel extends Model
     {
         return $this->hasOne('App\BankModel', 'id_bank' ,'id_bank');
     }
+
+    public function user_create()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by');
+    }
+    public function user_update()
+    {
+        return $this->hasOne('App\User', 'id', 'updated_by');
+    }
 }

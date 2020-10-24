@@ -32,4 +32,13 @@ class KantorModel extends Model
     {
         return $this->belongsTo('App\LevelModel', 'level','id');
     }
+
+    public function user_create()
+    {
+        return $this->hasOne('App\User', 'id', 'created_by');
+    }
+    public function user_update()
+    {
+        return $this->hasOne('App\User', 'id', 'updated_by');
+    }
 }

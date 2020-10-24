@@ -212,7 +212,7 @@
                     <div class="col-sm-12">
                         <div class="input-group {{ $errors->first('alamat_ktp') ? 'has-error' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Alamat Kota (KTP)
+                                <span class="bintang">*</span> Alamat (KTP)
                             </div>
                             <input name="alamat_ktp" id="alamat_ktp" type="text" class="form-control "
                                 placeholder="*Alamat Jalan, Kelurahan, Kecamatan Kota (KTP)" value="{{old('alamat_ktp') ?? $data->alamat_ktp}}">
@@ -228,11 +228,11 @@
                         <div
                             class="input-group {{ $errors->first('provinsi_ktp') ? 'has-error has-error-select' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Provinsi Kota (KTP)
+                                <span class="bintang">*</span> Provinsi (KTP)
                             </div>
                             <select class="form-control select2" name="provinsi_ktp" id="provinsi_ktp" style="width: 100%;"
-                                placeholder="*Provinsi Alamat Kota (KTP)">
-                                <option value="" disabled selected>*Provinsi Kota (KTP)</option>
+                                placeholder="*Provinsi Alamat (KTP)">
+                                <option value="" disabled selected>*Provinsi (KTP)</option>
                                 @foreach($provinsis as $key)
                                 <option value="{{ $key->id }}" {{ (old('provinsi_ktp') ? ( $key->id == old('provinsi_ktp') ) : ( $key->id == $data->provinsi_id_ktp ) ) ? 'selected' : '' }}> {{-- Nested If macam apa ini--}}
                                     {{ $key->nama }} </option>
@@ -252,7 +252,7 @@
                                 <span class="bintang">*</span> Kota (KTP)
                             </div>
                             <select class="form-control select2" name="kota_ktp" id="kota_ktp" style="width: 100%;">
-                                <option value="" disabled selected>*Kota Kota (KTP)</option>
+                                <option value="" disabled selected>*Kota (KTP)</option>
                                 @foreach($kotapil2 as $key)
                                 <option value="{{ $key->id }}" {{ (old('kota_ktp') ? ( $key->id == old('kota_ktp') ) : ( $key->id == $data->kota_id_ktp ) ) ? 'selected' : '' }}>
                                 {{ $key->nama }}</option>
@@ -269,7 +269,7 @@
                     <div class="col-sm-12">
                         <div class="input-group {{ $errors->first('alamat') ? 'has-error' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Alamat
+                                <span class="bintang">*</span> Alamat (domisili)
                             </div>
                             <input name="alamat" id="alamat" type="text" class="form-control "
                                 placeholder="*Alamat Jalan, Kelurahan, Kecamatan" value="{{old('alamat') ?? $data->alamat}}">
@@ -285,11 +285,11 @@
                         <div
                             class="input-group {{ $errors->first('provinsi') ? 'has-error has-error-select' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Provinsi
+                                <span class="bintang">*</span> Provinsi (domisili)
                             </div>
                             <select class="form-control select2" name="provinsi" id="provinsi" style="width: 100%;"
                                 placeholder="*Provinsi Alamat">
-                                <option value="" disabled selected>*Provinsi</option>
+                                <option value="" disabled selected>*Provinsi (domisili)</option>
                                 @foreach($provinsis as $key)
                                 <option value="{{ $key->id }}" {{ (old('provinsi') ? ( $key->id == old('provinsi') ) : ( $key->id == $data->provinsi_id ) ) ? 'selected' : '' }}> {{-- Nested If macam apa ini--}}
                                     {{ $key->nama }} </option>
@@ -306,10 +306,10 @@
                         <div
                             class="input-group {{ $errors->first('kota') ? 'has-error has-error-select' : '' }}">
                             <div class="input-group-addon">
-                                <span class="bintang">*</span> Kota
+                                <span class="bintang">*</span> Kota (domisili)
                             </div>
                             <select class="form-control select2" name="kota" id="kota" style="width: 100%;">
-                                <option value="" disabled selected>*Kota</option>
+                                <option value="" disabled selected>*Kota (domisili)</option>
                                 @foreach($kotapil as $key)
                                 <option value="{{ $key->id }}" {{ (old('kota') ? ( $key->id == old('kota') ) : ( $key->id == $data->kota_id ) ) ? 'selected' : '' }}>
                                 {{ $key->nama }}</option>

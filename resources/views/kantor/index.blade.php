@@ -6,7 +6,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Kantor PJS_LPJK - Mandiri
+        Kantor P3S Mandiri
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -136,8 +136,8 @@
                                     <th>Nama_Pimp</th>
                                     <th>Kontak_P</th>
                                     <th>Keterangan</th>
-                                    <th>User_Tgl_Tambah</th>
-                                    <th>User_Tgl_Ubah</th>
+                                    <th>User_Tambah</th>
+                                    <th>User_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,12 +172,28 @@
                                         ">{{$key->kontak_p}}</td>
                                     <td>{{$key->keterangan}}
                                     </td>
-                                    <td style='text-align:right'>
+                                    <td
+                                        style='text-align:right'
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-html="true" title="
+                                            {{isset($key->user_create) ? $key->user_create->name : ''}}
+                                            {{ ( isset($key->user_create) && isset($key->created_at) ) ? ' , ' : '' }}
+                                            {{ isset($key->created_at) ? \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
+                                    ">
                                     @if (isset($key->created_at))
                                         {{ \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
                                         @endif
                                     </td>
-                                    <td style='text-align:right'>
+                                    <td
+                                        style='text-align:right'
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-html="true" title="
+                                            {{isset($key->user_update) ? $key->user_update->name : ''}}
+                                            {{ ( isset($key->user_update) && isset($key->updated_at) ) ? ' , ' : '' }}
+                                            {{ isset($key->updated_at) ? \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
+                                    ">
                                     @if (isset($key->updated_at))
                                         {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
                                         @endif

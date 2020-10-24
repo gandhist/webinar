@@ -63,7 +63,7 @@
 
 <section class="content-header">
     <h1>
-        Tambahkan Badan Usaha
+        Tambah Data Badan Usaha P3S - Mandiri
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -143,11 +143,11 @@
                 <div class="col-sm-5">
                     <div class="input-group {{ $errors->first('status_kantor') ? 'has-error has-error-select' : '' }}">
                         <div class="input-group-addon">
-                            <span class="bintang">*</span> Status Kantor
+                            <span class="bintang">*</span> Status Badan Usaha
                         </div>
                         <select class="form-control select2" name="status_kantor" id="status_kantor"
                             style="width: 100%;">
-                            <option value="" disabled selected>*Status Kantor</option>
+                            <option value="" disabled selected>*Status Badan Usaha</option>
                             @foreach($statusmodel as $key)
                             <option value="{{ $key->id }}" urutan="{{ $key->urutan }}"
                                 {{ $key->id == old('status_kantor') ? 'selected' : '' }}>
@@ -168,11 +168,11 @@
                 <div class="col-sm-5 {{ $errors->first('bu_atas') ? 'has-error' : '' }} ">
                     <div class="input-group">
                         <div class="input-group-addon">
-                            Kantor Level Atas
+                            Badan Usaha Pusat
                         </div>
                         <select class="form-control select2" name="bu_atas" id="bu_atas"
                             style="width: 100%;">
-                            <option value="" disabled selected>Kantor Level Atas</option>
+                            <option value="" disabled selected>Badan Usaha Pusat</option>
 
                         </select>
                     </div>

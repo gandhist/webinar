@@ -9,7 +9,7 @@
 </style>
 <section class="content-header">
     <h1>
-        Badan Usaha
+        Badan Usaha P3S - Mandiri
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -40,7 +40,7 @@
                                     <td>
                                         <div class="input-group customSelect2md">
                                             <select class="form-control select2" name="f_status" id="f_status">
-                                                <option selected value="">Status Kantor</option>
+                                                <option selected value="">Status Badan Usaha</option>
                                                 @foreach($statusmodel as $key)
                                                 <option value="{{ $key->id }}"
                                                     {{ request()->get('f_status') == $key->id ? 'selected' : '' }}>
@@ -145,16 +145,16 @@
                                 <tr>
                                     <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
                                     <th><span>No.</span></th>
-                                    <th>Nama</th>
-                                    <th>Sts_Ktr</th>
+                                    <th>Nama_BU</th>
+                                    <th>Sts_BU</th>
                                     <th>Prov</th>
                                     <th>Instansi_Reff</th>
                                     <th>Nama_Pimp</th>
                                     <th>Kontak_P</th>
                                     <th>NPWP</th>
                                     <th>Keterangan</th>
-                                    <th>User_Tgl_Tambah</th>
-                                    <th>User_Tgl_Ubah</th>
+                                    <th>User_Tambah</th>
+                                    <th>User_Ubah</th>
                                     {{-- <th><span class="indent">Nama Instansi</span></th>
                                     <th><span class="indent">Nomor Telepon</span></th>
                                     <th><span class="indent">Email</span></th>
@@ -221,12 +221,28 @@
                                         @endif
                                         </td>
                                     <td>{{ $key->keterangan }}</td>
-                                    <td style='text-align:right'>
+                                    <td
+                                        style='text-align:right'
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-html="true" title="
+                                            {{isset($key->user_create) ? $key->user_create->name : ''}}
+                                            {{ ( isset($key->user_create) && isset($key->created_at) ) ? ' , ' : '' }}
+                                            {{ isset($key->created_at) ? \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
+                                        ">
                                         @if (isset($key->created_at))
                                         {{ \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
                                         @endif
                                     </td>
-                                    <td style='text-align:right'>
+                                    <td
+                                        style='text-align:right'
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        data-html="true" title="
+                                            {{isset($key->user_update) ? $key->user_update->name : ''}}
+                                            {{ ( isset($key->user_update) && isset($key->updated_at) ) ? ' , ' : '' }}
+                                            {{ isset($key->updated_at) ? \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
+                                    ">
                                         @if (isset($key->updated_at))
                                         {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
                                         @endif
