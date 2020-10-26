@@ -230,8 +230,8 @@
                                             {{ ( isset($key->user_create) && isset($key->created_at) ) ? ' , ' : '' }}
                                             {{ isset($key->created_at) ? \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
                                         ">
-                                        @if (isset($key->created_at))
-                                        {{ \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
+                                        @if (isset($key->user_create))
+                                        {{ $key->user_create->name }}
                                         @endif
                                     </td>
                                     <td
@@ -243,8 +243,8 @@
                                             {{ ( isset($key->user_update) && isset($key->updated_at) ) ? ' , ' : '' }}
                                             {{ isset($key->updated_at) ? \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
                                     ">
-                                        @if (isset($key->updated_at))
-                                        {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}
+                                        @if (isset($key->user_update))
+                                        {{ $key->user_update->name }}
                                         @endif
                                     </td>
                                     {{-- <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_bu   }}" >
