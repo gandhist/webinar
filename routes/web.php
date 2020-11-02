@@ -133,6 +133,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('selesai/{id}','SeminarController@selesai');
 	Route::get('feedback/{id}','SeminarController@feedback');
 	Route::get('download-feedback/{id}','SeminarController@downloadFeedback');
+	Route::get('download-kehadiran/{id}','SeminarController@downloadKehadiran');
     Route::get('statistik/{id}','StatistikSeminarController@index');
     Route::post('blast/{id}', 'SeminarController@blast');
 

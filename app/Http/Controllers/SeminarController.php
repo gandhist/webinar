@@ -38,6 +38,7 @@ use App\AbsensiModel;
 use App\FeedbackModel;
 use App\FeedbackRatingModel;
 use App\Exports\FeedbackExport;
+use App\Exports\KehadiranExport;
 
 use Vinkla\Hashids\Facades\Hashids;
 use Excel;
@@ -1693,6 +1694,13 @@ class SeminarController extends Controller
         $seminar = SeminarModel::where('id',$id)->first();
         $nama = "FEEDBACK_".$seminar->nama_seminar."_".strip_tags($seminar->tema)."_".Carbon::now()->timestamp;
         return Excel::download(new FeedbackExport($id), $nama.".xlsx");
+    }
+
+    public function downloadKehadiran($id) {
+        //
+        $seminar = SeminarModel::where('id',$id)->first();
+        $nama = "Kehadiran_".$seminar->nama_seminar."_".strip_tags($seminar->tema)."_".Carbon::now()->timestamp;
+        return Excel::download(new KehadiranExport($id), $nama.".xlsx");
     }
 
     public function blast(Request $request, $id) {

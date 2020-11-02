@@ -141,7 +141,7 @@
     border: 2px solid black;
     padding: 50px;
     margin: 50px;
-    margin-top: 75px;
+    margin-top: 90px;
 }
 
 /* FULL BINTANG */
@@ -216,12 +216,18 @@
 <section class="content">
     <!-- Default box -->
     <div class="box box-content">
-        <div class="box-tools pull-right" style="margin-top:25px; margin-right:35px;">
+        <div class="box-tools pull-right" style="margin-top:15px; margin-right:35px;">
             <div class="row">
                 <div class="col-12">
                     <div style="margin-bottom:10px">
                         <a href="{{ url('seminar/download-feedback/'.$id) }}" class="btn btn-success">
                             <i class="fa fa-save"></i> Download Data Feedback to Excel</a>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div style="margin-bottom:10px">
+                        <a href="{{ url('seminar/download-kehadiran/'.$id) }}" class="btn btn-info">
+                            <i class="fa fa-save"></i> Download Data Kehadiran to Excel</a>
                     </div>
                 </div>
             </div>
