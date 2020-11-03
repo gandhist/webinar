@@ -232,19 +232,19 @@ class KantorController extends Controller
 
     public function filter(Request $request)
     {
-        $idlevel = KantorModel::select('level')->groupBy('level')->get()->toArray();
-        $level = LevelModel::where('id',$idlevel)->get();
+        $idlevel = KantorModel::select('level')->groupBy('level')->whereNull('deleted_at')->get()->toArray();
+        $level = LevelModel::whereIn('id',$idlevel)->get();
         $idprop = KantorModel::select('prop')->groupBy('prop')->get()->toArray();
-        $prov = ProvinsiModel::where('id',$idprop)->get();
+        $prov = ProvinsiModel::whereIn('id',$idprop)->get();
 
         $kantor = KantorModel::orderBy('id','asc')->groupBy('nama_kantor')->get();
         $data = KantorModel::orderBy('id','asc');
 
-        if (!$request->f_level===NULL || !$request->f_level==""){
+        if (isset($request->f_level)){
             $data->where('level', '=', $request->f_level);
         }
 
-        if (!$request->f_provinsi===NULL || !$request->f_provinsi==""){
+        if (isset($request->f_provinsi)){
             $data->where('prop', '=', $request->f_provinsi);
             $idkota = KantorModel::select('kota')->groupBy('kota')->get()->toArray();
             $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$request->f_provinsi)->get();
@@ -252,18 +252,18 @@ class KantorController extends Controller
             $kota = KotaModel::where('id','=','~')->get();
         }
 
-        if (!$request->f_kantor===NULL || !$request->f_kantor==""){
+        if (isset($request->f_kantor)){
             $data->where('nama_singkat', '=', $request->f_kantor);
         }
 
-        if (!$request->f_kota===NULL || !$request->f_kota==""){
+        if (isset($request->f_kota)){
             $data->where('kota', '=', $request->f_kota);
         }
 
         $data->get();
         $data = $data->get();
 
-        return redirect('kantor')->with(compact('data','prov','kota','level','kantor'));
+        return view('kantor.index')->with(compact('data','prov','kota','level','kantor'));
 
         // dd($request->f_naker_prov);
     }

@@ -142,6 +142,7 @@
                             </thead>
                             <tbody>
                                 @foreach($data as $key)
+                                {{-- {{ $data }} --}}
                                 <tr>
                                     <td style='text-align:center;width:1%'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
                                             id="selection[]" name="selection[]"></td>
