@@ -65,7 +65,7 @@
                                             <div class="input-group customSelect2md">
                                                 <select class="form-control select2" name="f_provinsi" id="f_provinsi">
                                                     <option selected value="">Prov_Domisili</option>
-                                                    @foreach($prov as $key)
+                                                    @foreach($prov_fil as $key)
                                                     <option value="{{ $key->id }}"
                                                         {{ request()->get('f_provinsi') == $key->id ? 'selected' : '' }}>
                                                         {{ $key->nama }}</option>

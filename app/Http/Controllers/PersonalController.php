@@ -43,6 +43,9 @@ class PersonalController extends Controller
         $provinsi = $prov->pluck('nama', 'id');
         $provinsi->all();
 
+        $idprop = Personal::select('provinsi_id')->groupBy('provinsi_id')->whereNotNull('provinsi_id')->get()->toArray();
+        $prov_fil = ProvinsiModel::whereIn('id',$idprop)->get();
+
         $kota = KotaModel::all();
         $kotas = $kota->pluck('nama', 'id');
         $kotas->all();
@@ -63,7 +66,7 @@ class PersonalController extends Controller
             'kotas' => $kotas,
             'bu' => $bu,
             'sklh' => $sklh]
-        )->with(compact('prov','bank','kota','negara','jenjang_pendidikan','prodi'));
+        )->with(compact('prov','prov_fil','bank','kota','negara','jenjang_pendidikan','prodi'));
     }
 
     public function create() {
@@ -808,6 +811,11 @@ class PersonalController extends Controller
         $provinsi = $prov->pluck('nama', 'id');
         $provinsi->all();
 
+
+        $idprop = Personal::select('provinsi_id')->groupBy('provinsi_id')->whereNotNull('provinsi_id')->get()->toArray();
+        $prov_fil = ProvinsiModel::whereIn('id',$idprop)->get();
+
+
         $kota = KotaModel::all();
         $kotas = $kota->pluck('nama', 'id');
         $kotas->all();
@@ -864,7 +872,7 @@ class PersonalController extends Controller
             'kotas' => $kotas,
             'bu' => $bu,
             'sklh' => $sklh]
-        )->with(compact('prov','bank','kota','negara','jenjang_pendidikan','prodi'));
+        )->with(compact('prov','bank','prov_fil','kota','negara','jenjang_pendidikan','prodi'));
     }
 
 

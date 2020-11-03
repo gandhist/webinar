@@ -36,8 +36,12 @@ class InstansiController extends Controller
         $reff = BuModel::whereNotNull('instansi_reff')->get();
         $statusmodel = StatusBUModel::all();
         $provinsi = ProvinsiModel::all();
+
+        $idprop = BuModel::select('id_prop')->groupBy('id_prop')->whereNotNull('id_prop')->get()->toArray();
+        $prov_pil = ProvinsiModel::whereIn('id',$idprop)->get();
+
         $kota = KotaModel::all();
-        return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota', 'reff'));
+        return view('instansi.index')->with(compact('instansi', 'prov_pil', 'statusmodel','provinsi','kota', 'reff'));
     }
 
     public function filter(Request $request) {
@@ -56,7 +60,12 @@ class InstansiController extends Controller
         $reff = BuModel::whereNotNull('instansi_reff')->get();
         $statusmodel = StatusBUModel::all();
         $provinsi = ProvinsiModel::all();
+
+        $idprop = BuModel::select('id_prop')->groupBy('id_prop')->whereNotNull('id_prop')->get()->toArray();
+        $prov_pil = ProvinsiModel::whereIn('id',$idprop)->get();
+
         $kota = KotaModel::all();
+
 
         if (!$request->f_pjk3===NULL || !$request->f_pjk3==""){
             $instansi->where('id', '=', $request->f_pjk3);
@@ -93,7 +102,7 @@ class InstansiController extends Controller
         // $instansi->all();
         // $instansi = $instansi->all();
 
-        return view('instansi.index')->with(compact('instansi', 'statusmodel','provinsi','kota', 'reff'));
+        return view('instansi.index')->with(compact('instansi', 'prov_pil', 'statusmodel','provinsi','kota', 'reff'));
         // return view('suket.badanusaha.index')->with(compact('data','prov','kota','jenisusaha','instansi','pjk3','statusmodel'));
 
         // dd($request->f_naker_prov);
