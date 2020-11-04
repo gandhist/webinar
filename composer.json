@@ -13,15 +13,16 @@
         "dompdf/dompdf": "^0.8.3",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
-        "laravel/framework": "6.0.*",
+        "laravel/framework": "7.0.*",
         "laravel/socialite": "^4.4",
-        "laravel/tinker": "^1.0",
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "2.4",
         "maatwebsite/excel": "^3.1",
         "midtrans/midtrans-php": "^2.3",
         "nesbot/carbon": "2.27.0 as 1.39.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "tymon/jwt-auth": "^1.0.0",
-        "vinkla/hashids": "7.0.0",
+        "vinkla/hashids": "8.0.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
@@ -29,8 +30,8 @@
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
         "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^2.0",
-        "phpunit/phpunit": "^7.0"
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "config": {
         "optimize-autoloader": true,
