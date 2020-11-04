@@ -74,7 +74,7 @@
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_tuk }}">
                                         <a href="{{ url('tuk/'.$key->id) }}">
-                                            {{ str_limit($key->nama_tuk,20) }}
+                                            {{ \Illuminate\Support\Str::limit($key->nama_tuk,20) }}
                                         </a>
                                     </td>
                                     <td>
@@ -85,19 +85,19 @@
                                         @endif
                                     </td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->pengelola) ? $key->pengelola : 'Tidak Tersedia' }}">
-                                        {{ isset($key->pengelola) ? str_limit($key->pengelola,20) : 'Tidak Tersedia' }}
+                                        {{ isset($key->pengelola) ? \Illuminate\Support\Str::limit($key->pengelola,20) : 'Tidak Tersedia' }}
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->prov) ? $prov[$key->prov] : 'Tidak Tersedia' }}">
-                                        {{ isset($key->prov) ? str_limit($prov[$key->prov],20) : 'Tidak Tersedia' }}
+                                        {{ isset($key->prov) ? \Illuminate\Support\Str::limit($prov[$key->prov],20) : 'Tidak Tersedia' }}
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->kota) ? $kota[$key->kota] : 'Tidak Tersedia' }}">
-                                        {{ isset($key->kota) ? str_limit($kota[$key->kota],20) : 'Tidak Tersedia' }}
+                                        {{ isset($key->kota) ? \Illuminate\Support\Str::limit($kota[$key->kota],20) : 'Tidak Tersedia' }}
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ isset($key->alamat) ? $key->alamat : 'Tidak Tersedia' }}">
-                                        {{ isset($key->alamat) ? str_limit($key->alamat,20) : 'Tidak Tersedia' }}
+                                        {{ isset($key->alamat) ? \Illuminate\Support\Str::limit($key->alamat,20) : 'Tidak Tersedia' }}
                                     </td>
                                 </tr>
                                 @endforeach

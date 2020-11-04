@@ -22,7 +22,7 @@
         <div class="box-body">
             @if(session()->get('success'))
             <div class="alert alert-success">
-              {{ session()->get('success') }}  
+              {{ session()->get('success') }}
             </div>
             <br />
             @endif
@@ -193,7 +193,7 @@
                     @endif
                 </td>
                 <td>{{ $key->nama_bu }}</td>
-                <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->alamat }}">{{ str_limit($key->alamat,20) }}</td>
+                <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->alamat }}">{{ \Illuminate\Support\Str::limit($key->alamat,20) }}</td>
                 {{-- <td
                 data-toggle="tooltip" data-placement="top" data-html="true" title="
                             negara : {{ $key->id_negara ? $key->negara_r->country_name : '' }} <br>
@@ -210,13 +210,13 @@
                             @if($loop->last)
                                 {{ $key->scope_r->nama_en }}
                             @else
-                                {{ $key->scope_r->nama_en }}, 
+                                {{ $key->scope_r->nama_en }},
                             @endif
                         @endforeach
                     @endif
-                    {{-- {{ str_limit($key->scope, 20) }} --}}
+                    {{-- {{ \Illuminate\Support\Str::limit($key->scope, 20) }} --}}
                 </td>
-                
+
             </tr>
             @endforeach
         </tbody>
@@ -310,7 +310,7 @@
         inputFilter("tgl_akhir");
         inputFilter("jenis_usaha");
 
-        
+
         // Cache Warna Filter
         if ("{{request()->get('f_awalakhir')}}" != "") {
             selectFilterCache("f_awalakhir");

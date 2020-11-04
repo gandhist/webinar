@@ -75,22 +75,22 @@
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->nama }}">
                                     <a href="{{ url('pesertas/'.$peserta->id) }}">
-                                        {{ str_limit($peserta->nama,40) }}
+                                        {{ \Illuminate\Support\Str::limit($peserta->nama,40) }}
                                     </a>
                                 </td>
                                 <td> {{ $peserta->no_hp }} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->email }}">
-                                    {{ str_limit($peserta->email,30) }} </td>
+                                    {{ \Illuminate\Support\Str::limit($peserta->email,30) }} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->instansi }}">
                                     @if($peserta->user_id != null)
-                                    {{ str_limit($peserta->instansi,20 )}}
+                                    {{ \Illuminate\Support\Str::limit($peserta->instansi,20 )}}
                                     @else
                                     {{ isset($peserta->badan_usaha) ? $peserta->badan_usaha->nama_bu : ''}}
                                     @endif
                                 </td>
-                                <td> {{ str_limit($peserta->pekerjaan, 20)}} </td>
+                                <td> {{ \Illuminate\Support\Str::limit($peserta->pekerjaan, 20)}} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->alamat.', '.$peserta->kota.', '.$peserta->provinsi}}">
-                                    {{ str_limit($peserta->alamat, 20) }} </td>
+                                    {{ \Illuminate\Support\Str::limit($peserta->alamat, 20) }} </td>
                                 <td class="text-center">  {{ isset($peserta->tgl_lahir) ? \Carbon\Carbon::parse($peserta->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''  }} </td>
                                 <td class="text-center">
                                     {{-- <a href="{{ url('uploads/peserta/'.$peserta->foto)}}">Lihat</a> --}}
