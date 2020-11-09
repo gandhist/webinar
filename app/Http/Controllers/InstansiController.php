@@ -136,9 +136,10 @@ class InstansiController extends Controller
         $request->npwpClean = preg_replace("/[\.-]/", "",  $request->npwpClean);
 
         $request->validate([
+            // Validasi unique email & telp dihilangkan atas permintaan mas QQ, 9-10-2020
             "nama_bu" => "required",
-            "email" => "sometimes|nullable|email|unique:badan_usaha",
-            "telp" => "required|numeric|unique:badan_usaha",
+            "email" => "sometimes|nullable|email", // |unique:badan_usaha
+            "telp" => "required|numeric", // |unique:badan_usaha
             "web" => "sometimes|nullable|url",
             "bentuk_bu" => "required",
             "status_kantor" => "required",
@@ -153,7 +154,7 @@ class InstansiController extends Controller
             "kontak_p" => "required",
             // "jab_kontak_p" => "required|min:3|max:100",
             // "email_kontak_p" => "required|email|unique:badan_usaha",
-            "no_kontak_p" => "required|numeric|digits_between:6,20|unique:badan_usaha",
+            "no_kontak_p" => "required|numeric|digits_between:6,20", //|unique:badan_usaha
             "no_rek" => "sometimes|nullable|min:4|max:20",
             "id_bank" => "sometimes|required_with:no_rek",
             "nama_rek" => "sometimes|nullable|required_with:no_rek",
@@ -231,7 +232,7 @@ class InstansiController extends Controller
         if($request->isi_manual){
             // dd('masuk bos');
             $request->validate([
-                "email_pimp" => "unique:personal,email"
+                "email_pimp" => "email" //unique:personal
             ],[
                 'email_pimp.unique' => 'Email sudah terdaftar',
             ]);
@@ -590,7 +591,7 @@ class InstansiController extends Controller
         }
         if($request->nik != $data->nik){
             $request->validate([
-                'nik' => 'required|numeric|unique:personal|digits:16',
+                'nik' => 'required|numeric|digits:16', //|unique:personal|
             ], [
                 'nik.required' => 'Mohon isi NIK',
                 'nik.numeric' => 'Mohon isi NIK dengan format yang valid',
@@ -602,7 +603,7 @@ class InstansiController extends Controller
         }
         if($request->email != $data->email){
             $request->validate([
-                'email' => 'required|email|unique:personal',
+                'email' => 'required|email', //|unique:personal
             ], [
                 'email.required' => 'Mohon isi Email',
                 'email.email' => 'Mohon isi Email dengan format yang valid',
@@ -614,7 +615,7 @@ class InstansiController extends Controller
         }
         if($request->no_hp != $data->no_hp){
             $request->validate([
-                'no_hp' => 'required|numeric|unique:personal|digits_between:9,14',
+                'no_hp' => 'required|numeric|digits_between:9,14', //|unique:personal
             ],[
                 'no_hp.required' => 'Mohon isi Nomor Telepon',
                 'no_hp.numeric' => 'Mohon isi Nomor Telepon dengan format yang valid',
@@ -802,7 +803,7 @@ class InstansiController extends Controller
 
         if($request->email != $instansi->email ) {
             $request->validate([
-                'email' => "required|email|unique:badan_usaha",
+                'email' => "required|email", //|unique:badan_usaha
             ],[
                 'email.required' => 'Mohon isi Email Instansi',
                 'email.email' => 'Mohon isi dengan format email yang valid',
@@ -813,7 +814,7 @@ class InstansiController extends Controller
 
         if($request->telp != $instansi->telp ) {
             $request->validate([
-                "telp" => "required|numeric|unique:badan_usaha",
+                "telp" => "required|numeric", //|unique:badan_usaha
             ],[
                 'telp.required' => 'Mohon isi Nomor Telepon Instansi',
                 'telp.numeric' => 'Mohon hanya isi dengan angka',
@@ -845,7 +846,7 @@ class InstansiController extends Controller
         if($request->isi_manual){
             // dd('masuk bos');
             $request->validate([
-                "email_pimp" => "unique:personal,email"
+                "email_pimp" => "email" //unique:personal
             ],[
                 'email_pimp.unique' => 'Email sudah terdaftar',
             ]);
@@ -853,7 +854,7 @@ class InstansiController extends Controller
 
         if($request->email_kontak_p != $instansi->email_kontak_p ) {
             $request->validate([
-                "email_kontak_p" => "required|email|unique:badan_usaha",
+                "email_kontak_p" => "required|email", //|unique:badan_usaha
             ],[
                 'email_kontak_p.required' => 'Mohon isi Email Contact Person',
                 'email_kontak_p.email' => 'Mohon isi dengan format Email yang valid',
@@ -863,7 +864,7 @@ class InstansiController extends Controller
 
         if($request->no_kontak_p != $instansi->no_kontak_p ) {
             $request->validate([
-                "no_kontak_p" => "required|numeric|unique:badan_usaha",
+                "no_kontak_p" => "required|numeric", //|unique:badan_usaha
             ],[
                 'no_kontak_p.required' => 'Mohon isi Nomor Telepon Contact Person',
                 'no_kontak_p.digits_between' => 'Mohon isi Nomor Telepon dengan format yang valid',
