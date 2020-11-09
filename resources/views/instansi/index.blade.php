@@ -249,13 +249,13 @@
                                     </td>
                                     {{-- <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_bu   }}" >
                                         <a href="{{ url('instansi/'.$key->id) }}">
-                                            {{ str_limit($key->nama_bu  ,50) }}
+                                            {{ \Illuminate\Support\Str::limit($key->nama_bu  ,50) }}
                                         </a>
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->telp      }}"
                                     style="text-align:center;">
-                                        {{ str_limit($key->telp     ,20) }}
+                                        {{ \Illuminate\Support\Str::limit($key->telp     ,20) }}
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->email     }}"
@@ -264,7 +264,7 @@
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->alamat    }}" >
-                                        {{ str_limit($key->alamat   ,40) }}
+                                        {{ \Illuminate\Support\Str::limit($key->alamat   ,40) }}
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->web       }}"
@@ -277,7 +277,7 @@
                                     </td>
 
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_pimp }}" >
-                                    <a href="{{ url('personals/'.$key->id_personal_pimp) }}">{{ str_limit($key->nama_pimp,40) }}</a>
+                                    <a href="{{ url('personals/'.$key->id_personal_pimp) }}">{{ \Illuminate\Support\Str::limit($key->nama_pimp,40) }}</a>
                                     </td>
 
                                     <td>

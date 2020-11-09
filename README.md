@@ -1,6 +1,28 @@
 # Webinar
- webinar
+webinar
 
+    upgrade to laravel 5.8
+
+    "vinkla/hashids": "5.2.0",
+    "yajra/laravel-datatables-oracle": "~9.0",
+
+    upgrade to laravel 6.0
+
+    "php": "^7.2.5",
+    "vinkla/hashids": "7.0.0",
+    "tymon/jwt-auth": "^1.0.0",
+    delete "yoeunes/rateable"
+    str_limit to \Illuminate\Support\Str::limit
+
+    upgrade to laravel 7.0
+
+    "vinkla/hashids": "8.0.0",
+    "laravel/tinker": "^2.0",
+    "nunomaduro/collision": "^4.1",
+    "phpunit/phpunit": "^8.5"
+    add "laravel/ui": "2.4",
+    app/Exceptions/Handler.php change Exception to Throwable
+    
 #To Do
 
     *masih belum jelas:
