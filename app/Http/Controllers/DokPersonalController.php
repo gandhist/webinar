@@ -10,12 +10,15 @@ use App\JenjangPendidikan;
 use App\BankModel;
 use App\NegaraModel;
 use App\PersonalSekolah;
+use App\Sekolah;
 use App\SkpPjk3;
 use App\SkpAk3;
 use App\JenisUsaha;
 use App\BuModel;
 use App\JenisDok;
 use App\JenisDokSertifikat;
+use App\masterBidang;
+use App\masterBidSertifikatAlat;
 
 
 class DokPersonalController extends Controller
@@ -47,9 +50,58 @@ class DokPersonalController extends Controller
         $instansidok = SkpAk3::select('instansi_skp')->whereNotNull('instansi_skp')->groupBy('instansi_skp')->get();
         $penyelenggara = SkpAk3::select('penyelenggara')->whereNotNull('penyelenggara')->groupBy('penyelenggara')->get();
 
-        return view('dokpersonil.index')
+        return view('dokpersonal.index')
                 ->with(compact('data','personil','prov','kota','bank','sekolah','sklh','pjk3','instansi','jenisusaha','jenisdok','bidang','jenisdoksrtf','instansidok','penyelenggara','negara'));
 
     }
 
+    public function create() {
+        // TempSkpAk3::where('id_user', '=', Auth::id())->delete();
+
+        $data = SkpAk3::all();
+        $prov = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        $bank = BankModel::all();
+        $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
+        $jenisusaha = JenisUsaha::all();
+        $personil = Personal::all();
+        $instansi = BuModel::all();
+        $bidang = masterBidang::orderBy('id_jns_usaha','asc')->get();
+        $sertifikatalat = masterBidSertifikatAlat::all();
+        $jenisdok = JenisDok::all();
+        $jenisdoksrtf = JenisDokSertifikat::all();
+
+        return view('dokpersonal.create')
+                ->with(compact('data','prov','kota','bank','pjk3','jenisusaha',
+                                'personil','instansi','bidang','sertifikatalat',
+                                'jenisdok','jenisdoksrtf'));
+    }
+
+    public function getPersonal($idpjk3,$id)
+    {
+        $dataPersonil = Personal::where('id','=',$id)->with('kota_ktp')->with('kota_ktp.provinsi')->first();
+        if (!$dataPersonil->kota_id===NULL || !$dataPersonil->kota_id==""){
+            $dataPersonil->kota_id = $dataPersonil->kota->provinsi->nama;
+        }
+        if (!$dataPersonil->kota_id===NULL || !$dataPersonil->kota_id==""){
+            $dataPersonil->kota_id = $dataPersonil->kota->nama;
+        }
+        if (!$dataPersonil->id_bank===NULL || !$dataPersonil->id_bank==""){
+            $dataPersonil->id_bank = $dataPersonil->bank->Nama_Bank;
+        }
+        if (!$dataPersonil->temp_lahir===NULL || !$dataPersonil->temp_lahir==""){
+            $dataPersonil->temp_lahir = $dataPersonil->tempLahir->ibu_kota;
+        }
+        if (!$dataPersonil->id_ptkp===NULL || !$dataPersonil->id_ptkp==""){
+            $dataPersonil->id_ptkp = $dataPersonil->ptkp_r;
+        }
+        // dd($dataPersonil);
+        $dataSekolah = Sekolah::with('personil.kota.provinsi')->with('personil.bank')->with('personil.tempLahir')->with('jp')->with('kota_s')->with('kota_s.provinsi')->with('negara_s')
+                            ->where('id_personal','=',$id)->get();
+
+        $dataSkpAk3 = SkpAk3::with('instansi_ak3')->with('bidang_ak3.jenis_usaha')->with('bid_sertifikat_alat')->with('jenisdok_ak3')->where('id_personal','=',$id)->where('id_skp_pjk3','=',$idpjk3)->get();
+
+        return response()->json(['dataPersonil' => $dataPersonil,'dataSekolah' => $dataSekolah, 'dataSkpAk3' => $dataSkpAk3]);
+
+    }
 }

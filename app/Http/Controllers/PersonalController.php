@@ -321,7 +321,7 @@ class PersonalController extends Controller
         } else {
             $detail_sekolah = explode(',', $request->id_detail_sekolah);
             foreach($detail_sekolah as $sekolah) {
-                $dataSekolah['id_personal'] = $peserta->id;
+                $dataSekolah['id_personal'] = $data->id;
                 $x = "id_jp_".$sekolah;
                 $dataSekolah['id_jenjang'] = $request->$x;
                 $x = "id_namasekolah_".$sekolah;

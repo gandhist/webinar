@@ -373,3 +373,12 @@ function setDateRangePicker(input1, input2) {
         "background": "white"
     });
 }
+
+
+function capitalizeFirstLetter(string) {
+    if(string==null){
+      return "";
+    }else{
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+}

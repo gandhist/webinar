@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sertifikat</title>
-    
+    <title>Aplikasi PPKB P3S Mandiri</title>
+
     <style>
 
         .header{
@@ -13,7 +13,7 @@
             margin-top: 1px;
             margin-bottom: 10px;
         }
-        
+
         .paper {
             width: 700px;
             height: 700px;
@@ -21,83 +21,83 @@
             background-color: white;
             box-shadow: 0px 0px 5px 0px #888;
             padding: 5px;
-            
-            
+
+
         }
-    
+
         table {
             table-layout: fixed;
         }
-    
+
         td {
             vertical-align: top;
             overflow: hidden;
         }
-    
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 16px;
             -webkit-print-color-adjust: exact !important;
         }
-    
+
         input[type="text"] {
             border: none;
         }
-    
+
         @media print {
-            
+
             .noprint {
                 display: none;
             }
-    
+
             .nobg {
                 box-shadow: 0px 0px 5px 0px rgb(255, 255, 255);
             }
-    
+
             .addheader {
                 padding-top: 5px;
             }
-    
+
             .pagebreak {
                 page-break-before: always;
             }
-    
+
             ::-webkit-input-placeholder {
                 /* WebKit browsers */
                 color: transparent;
             }
-    
+
             :-moz-placeholder {
                 /* Mozilla Firefox 4 to 18 */
                 color: transparent;
             }
-    
+
             ::-moz-placeholder {
                 /* Mozilla Firefox 19+ */
                 color: transparent;
             }
-    
+
             :-ms-input-placeholder {
                 /* Internet Explorer 10+ */
                 color: transparent;
             }
-    
-    
+
+
         }
-    
+
         p {
             line-height: 150%;
         }
-    
+
         td {
             height: 15px;
         }
-    
+
         input {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
+
         }
-    
+
         textarea {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
@@ -128,11 +128,11 @@
                         <td colspan="42"></td>
                         <td colspan="6" style="background-color: #000; vertical-align: middle; font-weight: bold; text-align: center;color: #fff;">{{ $data->no_srtf }}</td>
                     </tr>
-                    
+
                 </table>
             </div>
             <div class="p3sm-image">
-            
+
                 <table style="table-layout: fixed;" width=780 border=0 cellspacing=0 cellpadding=0>
                     <tr>
                         <td colspan="6" style="text-align: center;vertical-align: middle;">
@@ -177,7 +177,7 @@
                                     <h2 style="margin-top: -2px; ">MODERATOR</h2>
                                     @break
                                 @default
-                                    
+
                             @endswitch
                         </td>
                         <td colspan="6" style="text-align: center; vertical-align: middle;">
@@ -219,16 +219,16 @@
                     </tr>
                     <tr>
                         <td colspan="48" style="text-align: center; vertical-align: middle;">
-                            
+
                                 <b>Jakarta, 13 Juni 2020</b>
-                            
+
                         </td>
                     </tr>
                     <tr>
                         <td colspan="16" style="margin-top: -3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src= "QR_adji.png" height=60px><br>
                             <b>Elfin Adji Nasution</b><br>
-                            Ketua Pengarah 
+                            Ketua Pengarah
                         </td>
                         <td colspan="16" style=" margin-top: -3px; text-align: center; vertical-align: top;">
                             {{-- <img src= "qr.png" width=60px><br>
@@ -249,9 +249,9 @@
         </div>
 
     </div>
-        
+
     {{-- @endforeach --}}
-    
-    
+
+
 </body>
 </html>

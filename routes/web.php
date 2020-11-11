@@ -59,6 +59,22 @@ Route::post('chain/filterprovpersonil','PersonalController@filterprovpersonil');
 Route::post('detail_personil_modal','PersonalController@detail');
 
 
+// Chained
+
+
+Route::get('chain/searchPersonilByName','ChainedController@searchPersonilByName')->name('searchPersonilByName');
+Route::get('chain/searchInstansiByName','ChainedController@searchInstansiByName')->name('searchInstansiByName');
+
+
+Route::post('select_temp_bidang_skp_ak3','ChainedController@selectbidangskpak3');
+Route::post('select_temp_namasrtf_skp_ak3','ChainedController@selectnamasrtfskpak3');
+Route::post('select_temp_jnsdok_skp_ak3','ChainedController@selectjnsdokskpak3');
+Route::post('add_temp_skp_ak3','ChainedController@addskpak3');
+Route::post('delete_temp_skp_ak3','ChainedController@deleteskpak3');
+Route::post('delete_all_temp_skp_ak3','ChainedController@deleteallskpak3');
+
+// End Chained
+
 
 Route::post('chain/filterprovbu','InstansiController@filterprovbu');
 
@@ -155,6 +171,12 @@ Route::post('delete_all_temp_skp_pjk3','IjinPPKBController@deleteallskppjk3');
 
 Route::group(['middleware' => 'auth.admin','prefix' => 'dokpersonal'], function () {
 	Route::get('/', 'DokPersonalController@index');
+	Route::get('/create', 'DokPersonalController@create');
+	Route::get('/edit', 'DokPersonalController@edit');
+	Route::post('/store', 'DokPersonalController@store');
+    Route::post('/update', 'DokPersonalController@update');
+	Route::post('/get_personal/{idpjk3}/{id}','DokPersonalController@getPersonal');
+
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
 // 	Route::get('kirim_email','SeminarController@kirimEmail');
