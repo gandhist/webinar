@@ -31,8 +31,9 @@ class ChainedController extends Controller
     public function selectbidangskpak3(Request $request){
         $id_user = Auth::id();
         $jnsusaha = BidangModel::select('id_jns_usaha')->where('id','=', $request->id_bidang)->first();
+        // return $jnsusaha['id_jns_usaha'];
         if($jnsusaha['id_jns_usaha'] == 1 ){
-            return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
+            return $data = JenisDokSertifikat::all();
         }
         if($jnsusaha['id_jns_usaha'] == 2 ){
             return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->whereIn('rik_uji',['1'])->get(['id_srft_alat as id','nama_srft_alat as text']);
@@ -40,6 +41,8 @@ class ChainedController extends Controller
         if($jnsusaha['id_jns_usaha'] == 3 ){
             return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
         }
+        return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
+
     }
 
     public function selectnamasrtfskpak3(Request $request){
