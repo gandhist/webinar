@@ -1194,6 +1194,7 @@
                 }
             });
             $.ajax({
+
                 url: url,
                 method: 'POST',
                 data: {

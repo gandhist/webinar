@@ -351,7 +351,7 @@
                                         data-html="true" title="
                                             {{isset($personal->user_create) ? $personal->user_create->name : ''}}
                                             {{ ( isset($personal->user_create) && isset($personal->created_at) ) ? ' , ' : '' }}
-                                            {{ isset($personal->created_at) ? \Carbon\Carbon::parse($personal->created_at)->isoFormat("DD MMMM YYYY") : ''}}
+                                            {{ isset($personal->created_at) ? \Carbon\Carbon::parse($personal->created_at)->translatedFormat("d F Y H:i") : ''}}
                                     ">
                                         @if (isset($personal->user_create))
                                         {{ $personal->user_create->name }}
@@ -365,7 +365,7 @@
                                         data-html="true" title="
                                             {{isset($personal->user_update) ? $personal->user_update->name : ''}}
                                             {{ ( isset($personal->user_update) && isset($personal->updated_at) ) ? ' , ' : '' }}
-                                            {{ isset($personal->updated_at) ? \Carbon\Carbon::parse($personal->updated_at)->isoFormat("DD MMMM YYYY") : ''}}
+                                            {{ isset($personal->updated_at) ? \Carbon\Carbon::parse($personal->updated_at)->translatedFormat("d F Y H:i") : ''}}
                                     ">
                                         @if (isset($personal->user_update))
                                         {{ $personal->user_update->name }}
