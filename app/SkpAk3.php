@@ -19,7 +19,7 @@ class SkpAk3 extends Model
 
     // relasi ke table personal
     public function personal(){
-        return $this->belongsTo('App\Personil','id_personal','id');
+        return $this->belongsTo('App\Personal','id_personal','id');
     }
 
     // relasi ke table ms_bid_sertifikat_alat
@@ -34,7 +34,7 @@ class SkpAk3 extends Model
 
     // relasi ke master jenis_dok
     public function jenisdok_ak3(){
-        return $this->belongsTo('App\masterJenisDok','jns_dok');
+        return $this->belongsTo('App\JenisDok','jns_dok');
     }
 
     // relasi ke table skp_pjk3
@@ -50,6 +50,18 @@ class SkpAk3 extends Model
     // relasi ke table badan_usaha
     public function instansi_ak3(){
         return $this->belongsTo('App\BuModel','instansi_skp','id');
+    }
+
+    // Link ke table user dari field created_by
+    public function created_r()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    // Link ke table user dari field updated_by
+    public function updated_r()
+    {
+        return $this->belongsTo('App\User', 'updated_by');
     }
 
 }

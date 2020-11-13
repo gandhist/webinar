@@ -61,6 +61,9 @@ Route::post('detail_personil_modal','PersonalController@detail');
 
 // Chained
 
+Route::post('select_jns_usaha_skp_ak3','ChainedController@selectjnsusahaskpak3');
+Route::post('chain/filterprovdokperson','ChainedController@filterprovdokperson');
+Route::post('select_bidang_skp_ak3','ChainedController@selectbidangdokkpak3');
 
 Route::get('chain/searchPersonilByName','ChainedController@searchPersonilByName')->name('searchPersonilByName');
 Route::get('chain/searchInstansiByName','ChainedController@searchInstansiByName')->name('searchInstansiByName');
@@ -176,6 +179,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'dokpersonal'], function 
 	Route::post('/store', 'DokPersonalController@store');
     Route::post('/update', 'DokPersonalController@update');
 	Route::post('/get_personal/{idpjk3}/{id}','DokPersonalController@getPersonal');
+	Route::post('/filter', 'DokPersonalController@filter');
+	Route::get('/filter', 'DokPersonalController@index');
 
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');

@@ -311,3 +311,37 @@ input[type="checkbox"] {
     width: 16px;
     /* border-color: #aaaaaa !important; */
 }
+
+.customInputXg {
+	height: 28px;
+	border-radius: 4px !important;
+	border-color: #a5a5a0;
+	width: 390px !important;
+}
+
+.customInputLg {
+	height: 28px;
+	border-radius: 4px !important;
+	border-color: #a5a5a0;
+	width: 270px !important;
+}
+
+.customSelect2sm .select2-container {
+	width: 120px !important;
+}
+
+.customSelect2md .select2-container {
+	width: 180px !important;
+	/* height: 15px !important; */
+}
+
+.customSelect2dp .select2-container {
+	width: 160px !important;
+}
+
+.customInput {
+	width:100px !important;
+	height: 28px;
+	border-radius: 4px !important;
+	border-color: #a5a5a0;
+}

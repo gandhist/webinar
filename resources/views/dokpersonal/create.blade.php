@@ -60,7 +60,7 @@
             </div>
             @endif
 
-            <form action="{{ url('dokpersonil/store') }}" class="form-horizontal" id="formAdd" name="formAdd"
+            <form action="{{ url('dokpersonal/store') }}" class="form-horizontal" id="formAdd" name="formAdd"
                 method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="box-body">

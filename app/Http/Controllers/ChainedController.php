@@ -9,6 +9,11 @@ use App\BidangModel;
 use App\JenisDokSertifikat;
 use App\JenisDok;
 use App\TempSkpAk3;
+use App\SkpAk3;
+use App\KotaModel;
+use App\masterBidang;
+use App\JenisUsaha;
+
 
 use Auth;
 
@@ -33,7 +38,7 @@ class ChainedController extends Controller
         $jnsusaha = BidangModel::select('id_jns_usaha')->where('id','=', $request->id_bidang)->first();
         // return $jnsusaha['id_jns_usaha'];
         if($jnsusaha['id_jns_usaha'] == 1 ){
-            return $data = JenisDokSertifikat::all();
+            return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
         }
         if($jnsusaha['id_jns_usaha'] == 2 ){
             return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->whereIn('rik_uji',['1'])->get(['id_srft_alat as id','nama_srft_alat as text']);
@@ -41,9 +46,10 @@ class ChainedController extends Controller
         if($jnsusaha['id_jns_usaha'] == 3 ){
             return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
         }
-        return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
+        // return $data = JenisDokSertifikat::distinct('nama_srft_alat')->where('id_bidang','=',$request->id_bidang)->whereNotIn('id_srft_alat',['0'])->get(['id_srft_alat as id','nama_srft_alat as text']);
 
     }
+
 
     public function selectnamasrtfskpak3(Request $request){
         $id_user = Auth::id();
@@ -76,5 +82,43 @@ class ChainedController extends Controller
         TempSkpAk3::where('id_user', '=', Auth::id())->delete();
         return "Sukses";
     }
+
+
+    public function selectjnsusahaskpak3(Request $request){
+        $id_user = Auth::id();
+        $jnsusaha = JenisUsaha::select('id', 'kode_jns_usaha')->where('id','=', $request->id_jnsusaha)->first();
+        $idbid = SkpAk3::select('id_bid_skp')->groupBy('id_bid_skp')->get()->toArray();
+        if (isset($jnsusaha['id'])) {
+            $bid = masterBidang::where('id_jns_usaha',$jnsusaha['id'])->whereIn('id',$idbid)->get(['id','nama_bidang as text']);
+            return response()->json(['dataJnsUsaha' => $jnsusaha,'dataBidang' => $bid]);
+        } else {
+            return response()->json(['dataJnsUsaha' => false,'dataBidang' => false]);
+        }
+        $bid = masterBidang::where('id_jns_usaha',$jnsusaha['id'])->whereIn('id',$idbid)->get(['id','nama_bidang as text']);
+        return response()->json(['dataJnsUsaha' => $jnsusaha,'dataBidang' => $bid]);
+    }
+
+    public function filterprovdokperson(Request $req){
+        $id_personil = SkpAk3::select('id_personal')->groupBy('id_personal')->get()->toArray();
+        $idkota = Personal::select('kota_id')->groupBy('kota_id')->whereIn('id',$id_personil)->get()->toArray();
+        $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$req->prov)->get(['id','nama as text']);
+        return $kota;
+    }
+
+
+    public function selectbidangdokkpak3(Request $request){
+        $id_user = Auth::id();
+        $idjnsdok = SkpAk3::select('jns_dok')->where('id_bid_skp','=', $request->id_bidangdok)->groupBy('jns_dok')->get()->toArray();
+
+        $data1 = JenisDok::whereIn('id',$idjnsdok)->get(['id','kode_jns_dok as text']);
+        $data2 = JenisDok::whereIn('id',$idjnsdok)->get(['id','Nama_jns_dok as text']);
+
+        return response()->json(['data1' => $data1,'data2' => $data2]);
+
+        // $data1 = masterBidSertifikatAlat::select('id', 'kode_srtf_alat')->where('id_bid','=',$request->id_bidang);
+        // $data2 = masterBidSertifikatAlat::select('id', 'kode_srtf_alat as text')->where('id_bid','=',$request->id_bidang)->union($data1)->get();
+        // return $data2;
+    }
+
 
 }

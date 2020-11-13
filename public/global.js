@@ -382,3 +382,36 @@ function capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     }
 }
+
+
+// fungsi ajax untuk chained of provinsi filter
+function chainedProvinsiDokpersonil(url, id_prov, id_kota, placeholder) {
+    var prov = $('#' + id_prov).val();
+    var kota = $('#' + id_kota).val();
+
+    $('#' + id_kota).empty();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+            prov: prov,
+            kota: kota
+        },
+        success: function (datapro) {
+            $("#" + id_kota).html("<option value='' selected>" + placeholder + "</option>");
+            $("#" + id_kota).select2({
+                data: datapro
+            }).val(null).trigger('change');
+        },
+        error: function (xhr, status) {
+            alert('terjadi error ketika menampilkan data kota');
+            console.log(xhr);
+        }
+
+    });
+}
