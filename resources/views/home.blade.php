@@ -6,7 +6,7 @@
         min-height: 100vh !important;
     }
     .content-wrapper{
-        background-image: url('{{url("favicon.png")}}');
+        background-image: url('{{url("p3sm_a.png")}}');
         background-repeat: no-repeat;
         background-position-x: 50%;
         background-position-y: 25%;
