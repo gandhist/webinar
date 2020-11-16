@@ -31,7 +31,7 @@ class FeedbackExport implements FromView
         $absen = AbsensiModel::whereIn('id_peserta_seminar',$seminar)->whereNotNull('jam_cek_in')->count();
         $respons = AbsensiModel::whereIn('id_peserta_seminar',$seminar)->where('is_review','=', 1)->count();
         $narasumber = PesertaSeminar::where('id_seminar',$this->id)->where('status','2')->get();
-        $moderator = PesertaSeminar::where('id_seminar',$this->id)->where('status','4')->get();
+        // $moderator = PesertaSeminar::where('id_seminar',$this->id)->where('status','4')->get();
         $id_nara = PesertaSeminar::where('id_seminar',$this->id)->where('status','2')->pluck('id_peserta')->toArray();
         $id_mode = PesertaSeminar::where('id_seminar',$this->id)->where('status','4')->pluck('id_peserta')->toArray();
         $feedback = FeedbackModel::whereIn('id_peserta_seminar',$seminar)->get();
@@ -61,7 +61,7 @@ class FeedbackExport implements FromView
             $feedback_seminar["persen_5"] = 0;
         }
 
-        // dd($feedback_seminar);
+        // dd($narasumber);
 
         $feedback_personal_raw = FeedbackRatingModel::whereIn('id_peserta_seminar',$seminar)->where('tipe','1')->get();
         foreach($narasumber as $n){
@@ -124,7 +124,7 @@ class FeedbackExport implements FromView
             'respons' => $respons,
             'peserta' => $peserta,
             'narasumber' => $narasumber,
-            'moderator' => $moderator,
+            // 'moderator' => $moderator,
             'id_nara' => $id_nara,
             'id_mode' => $id_mode,
             'feedback' => $feedback,

@@ -113,7 +113,7 @@
             </tbody>
         </table>
         @endforeach
-
+{{--
         @foreach($moderator as $key)
         <table>
             <thead>
@@ -154,7 +154,7 @@
                 </tr>
             </tbody>
         </table>
-        @endforeach
+        @endforeach --}}
 
         <table>
             <thead>
