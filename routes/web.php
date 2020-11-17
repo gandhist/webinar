@@ -178,9 +178,9 @@ Route::post('delete_all_temp_skp_pjk3','IjinPPKBController@deleteallskppjk3');
 Route::group(['middleware' => 'auth.admin','prefix' => 'dokpersonal'], function () {
 	Route::get('/', 'DokPersonalController@index');
 	Route::get('/create', 'DokPersonalController@create');
-	Route::get('/edit', 'DokPersonalController@edit');
+	Route::get('/{id}/edit', 'DokPersonalController@edit');
 	Route::post('/store', 'DokPersonalController@store');
-    Route::post('/update', 'DokPersonalController@update');
+    Route::patch('/update/{id}', 'DokPersonalController@update');
 	Route::post('/get_personal/{idpjk3}/{id}','DokPersonalController@getPersonal');
 	Route::post('/filter', 'DokPersonalController@filter');
 	Route::get('/filter', 'DokPersonalController@index');

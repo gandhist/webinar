@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Personal;
-use App\BuModal;
+use App\BuModel;
 use App\BidangModel;
 use App\JenisDokSertifikat;
 use App\JenisDok;
@@ -28,7 +28,7 @@ class ChainedController extends Controller
 
     public function searchInstansiByName(Request $request){
         $param = $request->input('query');
-        $data = BuModal::where('singkat_bu','LIKE',"%$param%")->get();
+        $data = BuModel::where('singkat_bu','LIKE',"%$param%")->get();
         return $data;
     }
 
