@@ -74,8 +74,9 @@ class DokPersonalController extends Controller
         $sklh = Sekolah::where('default','=','0')->get();
         $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
         $personil = Personal::all();
-        $instansi = BuModel::all();
-        $jenisusaha = JenisUsaha::all();
+        $idinstansi = SkpAk3::select('id_skp_pjk3')->groupBy('id_skp_pjk3')->get()->toArray();
+        $instansi = BuModel::whereIn('id',$idinstansi)->get();
+        $jenisusaha = JenisUsaha::whereIn('id',$x)->orderBy('id','asc')->get();
         $idjnsdok = SkpAk3::select('jns_dok')->groupBy('jns_dok')->get()->toArray();
         $jenisdok = JenisDok::whereIn('id',$idjnsdok)->get();
         $idbid = SkpAk3::select('id_bid_skp')->groupBy('id_bid_skp')->get()->toArray();
@@ -189,8 +190,15 @@ class DokPersonalController extends Controller
         $data->get();
         $data = $data->get();
 
+
+        $idinstansi = SkpAk3::select('id_skp_pjk3')->groupBy('id_skp_pjk3')->get()->toArray();
+        $instansi = BuModel::whereIn('id',$idinstansi)->get();
+        $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
+        $jenisusaha = JenisUsaha::whereIn('id',$x)->orderBy('id','asc')->get();
+
         return view('dokpersonal.index')->with(compact('data','prov','kota','sekolah','pjk3','instansi','jenisusaha','jenisdok','bidang','sklh','personil','instansidok','penyelenggara','jenisdoksrtf','jp','prodi'));
     }
+
 
     public function create() {
         // TempSkpAk3::where('id_user', '=', Auth::id())->delete();
@@ -319,4 +327,161 @@ class DokPersonalController extends Controller
         return response()->json(['dataPersonil' => $dataPersonil,'dataSekolah' => $dataSekolah, 'dataSkpAk3' => $dataSkpAk3]);
 
     }
+
+    public function show(){
+        $data = SkpAk3::all();
+        $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
+        $bidang = masterBidang::orderBy('id_jns_usaha','asc')->get();
+        $jenisdok = JenisDok::all();
+        $jenisdoksrtf = JenisDokSertifikat::whereNotIn('id_srft_alat',[0])->get();
+        return view('dokpersonal.detail') ->with(compact('data','pjk3','bidang','jenisdok','jenisdoksrtf'));
+    }
+
+    public function edit($id)
+    {
+        $data = SkpAk3::find($id);
+        $prov = ProvinsiModel::all();
+        $kota = KotaModel::all();
+        $negara = NegaraModel::all();
+        $bank = BankModel::all();
+        $personil = Personal::all();
+        $sekolah = Sekolah::all();
+        $detail_sekolah = Sekolah::where('id_personal','=',$data->personal->id)->get();
+        $jumlahdetail = Sekolah::where('id_personal','=',$id)->count();
+        $instansi = BuModel::all();
+        $jenisusaha = JenisUsaha::orderBy('kode_jns_usaha', 'desc')->get();
+        $jenisdok = JenisDok::all();
+        $bidang = masterBidang::orderBy('id_jns_usaha','asc')->get();
+        $detailAk3 = SkpAk3::where('id_personal','=',$data->id_personal)->where('id_skp_pjk3','=',$data->id_skp_pjk3)->get();
+        $jumlahdetailAk3 = SkpAk3::where('id_personal','=',$data->id_personal)->where('id_skp_pjk3','=',$data->id_skp_pjk3)->count();
+        $pjk3 = SkpPjk3::all();
+
+        return view('dokpersonal.edit')
+                ->with(compact('data','prov','kota','bank','sekolah','detail_sekolah','jumlahdetail','personil','instansi','jenisusaha','jenisdok','bidang','detailAk3','jumlahdetailAk3','pjk3','negara'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $personil = Personal::find($request->id_personal);
+        $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $personil->nama);
+
+        $id_nama_pjk3 = $request->id_nama_pjk3;
+        $id_personal = $request->id_personal;
+
+        $a=array();
+
+        if (is_null($request->id_detail_dokpersonil) || $request->id_detail_dokpersonil=='' )
+        {
+            return back();
+        } else {
+            $jumlah_detail = explode(',', $request->id_detail_dokpersonil);
+            foreach($jumlah_detail as $jumlah_detail) {
+                // $kode_pjk3 = SkpPjk3::select('kode_pjk3')->where('id', '=',$id_nama_pjk3)->first();
+                // $pjk3 = SkpPjk3::select('id')->where('kode_pjk3', '=',$kode_pjk3['kode_pjk3'])->where('bid_sk', '=', $request->$x)->first();
+                $dataDetail['id_skp_pjk3'] = $id_nama_pjk3;
+                $dataDetail['id_personal'] = $id_personal;
+                $dataDetail['prov_naker'] = '31';
+                $dataDetail['is_actived'] = '2'; // data yg dirubah
+                $dataDetail['created_by'] = Auth::id();
+                $dataDetail['created_at'] = Carbon::now()->toDateTimeString();
+                $dataDetail['updated_by'] = Auth::id();
+                $dataDetail['updated_at'] = Carbon::now()->toDateTimeString();
+                $x = "id_bidang_".$jumlah_detail;
+                $dataDetail['id_bid_skp'] = $request->$x;
+                $x = "id_srtfalat_".$jumlah_detail;
+                $dataDetail['id_srtf_alat'] = $request->$x;
+                $x = "id_jenisdok_".$jumlah_detail;
+                $dataDetail['jns_dok'] = $request->$x;
+                $x = "id_instansidok_".$jumlah_detail;
+                // if($request->$x == 'lain'){
+                //     $x = "id_instansidok2_".$jumlah_detail;
+                //     $dataDetail['instansi_skp'] = $request->$x;
+                // } else{
+                //     $dataDetail['instansi_skp'] = $request->$x;
+                // }
+                $dataDetail['instansi_skp'] = $request->$x;
+                $x = "id_penyelenggara_".$jumlah_detail;
+                // if($request->$x == 'lain'){
+                //     $x = "id_penyelenggara2_".$jumlah_detail;
+                //     $dataDetail['penyelenggara'] = $request->$x;
+                // } else{
+                //     $dataDetail['penyelenggara'] = $request->$x;
+                // }
+                $dataDetail['penyelenggara'] = $request->$x;
+                $x = "id_nodokumen_".$jumlah_detail;
+                $dataDetail['no_skp'] = $request->$x;
+                $x = "id_tglterbit_".$jumlah_detail;
+                if($request->$x=="" || $request->$x==null){
+                    $tanggal = $request->$x;
+                }else{
+                    $tanggal = Carbon::createFromFormat('d/m/Y',$request->$x);
+                }
+                $dataDetail['tgl_skp'] = $tanggal;
+                $x = "id_tglakhir_".$jumlah_detail;
+                if($request->$x=="" || $request->$x==null){
+                    $tanggal = $request->$x;
+                }else{
+                    $tanggal = Carbon::createFromFormat('d/m/Y',$request->$x);
+                }
+                $dataDetail['tgl_akhir_skp'] = $tanggal;
+                if ($files = $request->file('id_pdfdok_'.$jumlah_detail)) {
+                    $destinationPath = 'uploads/'.$dir_name;
+                    $file = "dok_skp_ak3_".$jumlah_detail. "_" .$dir_name."_".Carbon::now()->timestamp. "." . $files->getClientOriginalExtension();
+                    $files->move($destinationPath, $file);
+                    $dataDetail['pdf_skp_ak3'] = $dir_name."/".$file;
+                }
+                $x = "type_detail_".$jumlah_detail;
+                $typeDetail = $request->$x;
+
+                if($typeDetail==''){
+                    $c = SkpAk3::create($dataDetail);
+                    array_push($a,$c->id);
+                } else {
+                    array_push($a,$typeDetail);
+
+                    // $old = SkpAk3::find($typeDetail);
+                    // $olddata['id_skp_ak3'] = $old->id;
+                    // $olddata['prov_naker'] = '31';
+                    // $olddata['id_skp_pjk3'] = $old->id_skp_pjk3;
+                    // $olddata['id_personal'] = $old->id_personal;
+                    // $olddata['id_srtf_alat'] = $old->id_srtf_alat;
+                    // $olddata['jns_dok'] = $old->jns_dok;
+                    // $olddata['tgl_skp'] = $old->tgl_skp;
+                    // $olddata['tgl_akhir_skp'] = $old->tgl_akhir_skp;
+                    // $olddata['id_bid_skp'] = $old->id_bid_skp;
+                    // $olddata['is_actived'] = '2'; // data yg dirubah
+                    // $olddata['created_by'] = Auth::id();
+                    // $olddata['created_at'] = Carbon::now()->toDateTimeString();
+                    // $olddata['updated_by'] = Auth::id();
+                    // $olddata['updated_at'] = Carbon::now()->toDateTimeString();
+                    // LogSkpAk3::create($olddata);
+
+                    SkpAk3::find($typeDetail)->update($dataDetail);
+                }
+
+            }
+
+            $b = SkpAk3::select('id')->where('id_personal','=',$id_personal)->where('id_skp_pjk3',$id_nama_pjk3)->whereNotIn('id', $a)->get()->toArray();
+            $datadelete['deleted_by'] = Auth::id();
+            $datadelete['deleted_at'] = Carbon::now()->toDateTimeString();
+            SkpAk3::whereIn('id',$b)->update($datadelete);
+        }
+        return redirect('dokpersonal')->with('success', 'Data Dok Personil berhasil diubah');
+    }
+
+    public function getSkpAk3(Request $request,$id)
+    {
+        $nama_pjk3 = $request->id_nama_pjk3;
+        $namadok = $request->id_namadok;
+        $bidangdok = $request->id_bidangdok;
+        $namasrtf = JenisDokSertifikat::select('id_srft_alat')->where('id','=',$namadok)->get();
+        $dataSkpAk3 = SkpAk3::with('personal.sekolah.jp')->with('personal.kota_ktp.provinsi')
+                        ->with('personal.kota.provinsi')->where('id_bid_skp','=',$bidangdok)
+                        ->where('id_skp_pjk3','=',$nama_pjk3)//->whereIn('id_srtf_alat',$namasrtf)
+                        ->where('jns_dok',$id)
+                        ->get();
+
+        return response()->json(['dataSkpAk3' => $dataSkpAk3]);
+    }
+
 }

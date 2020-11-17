@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Personal;
-use App\BuModal;
+use App\BuModel;
 use App\BidangModel;
 use App\JenisDokSertifikat;
 use App\JenisDok;
@@ -28,7 +28,7 @@ class ChainedController extends Controller
 
     public function searchInstansiByName(Request $request){
         $param = $request->input('query');
-        $data = BuModal::where('singkat_bu','LIKE',"%$param%")->get();
+        $data = BuModel::where('singkat_bu','LIKE',"%$param%")->get();
         return $data;
     }
 
@@ -120,5 +120,17 @@ class ChainedController extends Controller
         // return $data2;
     }
 
+    public function selectnamadokskpak3(Request $request){
+        $id_user = Auth::id();
+        $bidang = JenisDokSertifikat::select('id_bidang')->where('id', '=', $request->id_namadok);
+        return $data = masterBidang::whereIn('id',$bidang)->get(['id','nama_bidang as text']);
+    }
+
+    public function selectbidangdokskpak3(Request $request){
+        $id_user = Auth::id();
+        $jnsdoksrtf = JenisDokSertifikat::select('id_srft_alat')->where('id','=',$request->id_namadok)->first();
+        $jnsdok = JenisDokSertifikat::select('id_jns_dok')->where('id_srft_alat','=',$jnsdoksrtf['id_srft_alat']);
+        return $data = JenisDok::whereIn('id',$jnsdok)->get(['id','Nama_jns_dok as text']);
+    }
 
 }

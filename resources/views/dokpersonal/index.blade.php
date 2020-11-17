@@ -400,12 +400,12 @@
                             @endif
                         </td>
                         <td style='text-align:center' data-toggle="tooltip" data-placement="top" data-html="true" title="
-                            Prov : {{ isset($key->personal->kode_kota) ? $key->personal->kota->provinsi->nama : '' }} <br>
-                            Nama Kota : {{ isset($key->personal->kode_kota) ? $key->personal->kota->nama : '' }} <br>
+                            Prov : {{ isset($key->personal->kota_id) ? $key->personal->kota->provinsi->nama : '' }} <br>
+                            Nama Kota : {{ isset($key->personal->kota_id) ? $key->personal->kota->nama : '' }} <br>
                             Alamat : {{ isset($key->personal->alamat) ? $key->personal->alamat : '' }} <br>
-                            No HP : {{ isset($key->personal->hp_wa) ? $key->personal->hp_wa : '' }} <br>
-                            Email : {{ isset($key->personal->email_p) ? $key->personal->email_p : '' }}">
-                            {{ isset($key->personal->kode_kota) ? $key->personal->kota->provinsi->nama_singkat : '' }}
+                            No HP : {{ isset($key->personal->no_hp) ? $key->personal->np_hp : '' }} <br>
+                            Email : {{ isset($key->personal->email) ? $key->personal->email : '' }}">
+                            {{ isset($key->personal->kota_id) ? $key->personal->kota->provinsi->nama_singkat : '' }}
                         </td>
                         <td data-toggle="tooltip" data-placement="top" data-html="true"
                             title="
