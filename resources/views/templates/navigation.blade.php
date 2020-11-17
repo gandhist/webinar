@@ -152,7 +152,7 @@
 
             <li class="treeview">
                 <a href="{{ url('/dokpersonal') }}">
-                <i class="fa fa-file"></i> <span>[X] Dokumen Personil PJS_PPKB Mandiri</span>
+                <i class="fa fa-file"></i> <span>Dokumen Personil PJS_PPKB Mandiri</span>
                 </a>
             </li>
 
