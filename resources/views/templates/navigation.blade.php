@@ -168,8 +168,8 @@
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
+                <a href="{{ url('/timpro') }}">
+                <i class="fa fa-industry"></i> <span>Tim Produksi PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>
