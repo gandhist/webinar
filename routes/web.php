@@ -76,6 +76,9 @@ Route::post('add_temp_skp_ak3','ChainedController@addskpak3');
 Route::post('delete_temp_skp_ak3','ChainedController@deleteskpak3');
 Route::post('delete_all_temp_skp_ak3','ChainedController@deleteallskpak3');
 
+Route::post('select_temp_namadok_skp_ak3','ChainedController@selectnamadokskpak3');
+Route::post('select_temp_bidangdok_skp_ak3','ChainedController@selectbidangdokskpak3');
+
 // End Chained
 
 
@@ -181,7 +184,8 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'dokpersonal'], function 
 	Route::post('/get_personal/{idpjk3}/{id}','DokPersonalController@getPersonal');
 	Route::post('/filter', 'DokPersonalController@filter');
 	Route::get('/filter', 'DokPersonalController@index');
-
+	Route::get('/detail','DokPersonalController@show');
+	Route::post('/get_skpak3/{id}','DokPersonalController@getSkpAk3');
 });
 // Route::get('cetak_sertifikat/{no_srtf}','SeminarController@cetakSertifikat');
 // 	Route::get('kirim_email','SeminarController@kirimEmail');

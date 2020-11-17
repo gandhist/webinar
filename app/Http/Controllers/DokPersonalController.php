@@ -74,8 +74,9 @@ class DokPersonalController extends Controller
         $sklh = Sekolah::where('default','=','0')->get();
         $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
         $personil = Personal::all();
-        $instansi = BuModel::all();
-        $jenisusaha = JenisUsaha::all();
+        $idinstansi = SkpAk3::select('id_skp_pjk3')->groupBy('id_skp_pjk3')->get()->toArray();
+        $instansi = BuModel::whereIn('id',$idinstansi)->get();
+        $jenisusaha = JenisUsaha::whereIn('id',$x)->orderBy('id','asc')->get();
         $idjnsdok = SkpAk3::select('jns_dok')->groupBy('jns_dok')->get()->toArray();
         $jenisdok = JenisDok::whereIn('id',$idjnsdok)->get();
         $idbid = SkpAk3::select('id_bid_skp')->groupBy('id_bid_skp')->get()->toArray();
@@ -189,8 +190,15 @@ class DokPersonalController extends Controller
         $data->get();
         $data = $data->get();
 
+
+        $idinstansi = SkpAk3::select('id_skp_pjk3')->groupBy('id_skp_pjk3')->get()->toArray();
+        $instansi = BuModel::whereIn('id',$idinstansi)->get();
+        $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
+        $jenisusaha = JenisUsaha::whereIn('id',$x)->orderBy('id','asc')->get();
+
         return view('dokpersonal.index')->with(compact('data','prov','kota','sekolah','pjk3','instansi','jenisusaha','jenisdok','bidang','sklh','personil','instansidok','penyelenggara','jenisdoksrtf','jp','prodi'));
     }
+
 
     public function create() {
         // TempSkpAk3::where('id_user', '=', Auth::id())->delete();
@@ -319,4 +327,29 @@ class DokPersonalController extends Controller
         return response()->json(['dataPersonil' => $dataPersonil,'dataSekolah' => $dataSekolah, 'dataSkpAk3' => $dataSkpAk3]);
 
     }
+
+    public function show(){
+        $data = SkpAk3::all();
+        $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
+        $bidang = masterBidang::orderBy('id_jns_usaha','asc')->get();
+        $jenisdok = JenisDok::all();
+        $jenisdoksrtf = JenisDokSertifikat::whereNotIn('id_srft_alat',[0])->get();
+        return view('dokpersonal.detail') ->with(compact('data','pjk3','bidang','jenisdok','jenisdoksrtf'));
+    }
+
+    public function getSkpAk3(Request $request,$id)
+    {
+        $nama_pjk3 = $request->id_nama_pjk3;
+        $namadok = $request->id_namadok;
+        $bidangdok = $request->id_bidangdok;
+        $namasrtf = JenisDokSertifikat::select('id_srft_alat')->where('id','=',$namadok)->get();
+        $dataSkpAk3 = SkpAk3::with('personal.sekolah.jp')->with('personal.kota_ktp.provinsi')
+                        ->with('personal.kota.provinsi')->where('id_bid_skp','=',$bidangdok)
+                        ->where('id_skp_pjk3','=',$nama_pjk3)//->whereIn('id_srtf_alat',$namasrtf)
+                        ->where('jns_dok',$id)
+                        ->get();
+
+        return response()->json(['dataSkpAk3' => $dataSkpAk3]);
+    }
+
 }
