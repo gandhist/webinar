@@ -495,7 +495,7 @@
                             <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Simpan</button>
                         </div>
                         <div class="col-sm-6">
-                            <a href="{{ url('dokpersonil') }}" class="btn btn-md btn-default"><i
+                            <a href="{{ url('dokpersonal') }}" class="btn btn-md btn-default"><i
                                     class="fa fa-times-circle"></i>
                                 Batal</a>
                         </div>
@@ -1312,5 +1312,10 @@
         maxDate: new Date('2020-9-10')
     })
 
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+        alert(msg);
+    }
 </script>
 @endpush

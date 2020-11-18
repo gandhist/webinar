@@ -9,12 +9,12 @@
 </style>
 <section class="content-header">
     <h1>
-        Daftar Personal
+        Personil P3S Mandiri
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#"> Daftar</a></li>
-        <li class="active"><a href="{{ url('/personals') }}"> Personal</a></li>
+        <li class="active"><a href="{{ url('/personals') }}"> Personil</a></li>
     </ol>
 </section>
 
@@ -23,7 +23,7 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="box-body" style="margin:25px 25px 25px 10px;">
+            <div class="box-body" >
                 {{-- sub menu  --}}
                 <form action="{{ url('personals/filter') }}" enctype="multipart/form-data" name="filterData" id="filterData"
                 method="post">
@@ -210,7 +210,8 @@
                                         id="selection[]" name="selection[]"></td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>@if ($personal->status_p =='1') Internal @elseif ($personal->status_p =='2') External @endif</td>
-                                    <td style='text-align:center' data-toggle="tooltip" data-placement="top" data-html="true" title="
+                                    <td data-toggle="tooltip" data-placement="top" data-html="true" title="
+                                        Nama : {{ $personal->nama }} <br>
                                         Jenis Kelamin : @if ($personal->jenis_kelamin =='L') Laki-laki @elseif ($personal->jenis_kelamin =='P') Perempuan @endif<br>
                                         Agama : {{ ucfirst($personal->agama) }}<br>
                                         Sts Pernikahan : @if ($personal->status_pernikahan =='BK') Belum Kawin @elseif ($personal->status_pernikahan =='K') Kawin @elseif ($personal->status_pernikahan =='CH') Cerai Hidup @elseif ($personal->status_pernikahan =='CM') Cerai Mati @endif<br>
@@ -218,7 +219,7 @@
                                         Alamat KTP : {{ $personal->alamat_ktp }}<br>
                                         Prov KTP : {{ isset($personal->kota_ktp->provinsi->nama) ? $personal->kota_ktp->provinsi->nama : '' }}<br>
                                         Kota KTP : {{ $personal->kota_id_ktp ? $personal->kota_ktp->nama : '' }}<br>">
-                                        {{ $personal->nama }}
+                                        {{ str_limit($personal->nama,12) }}
                                     </td>
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="top" data-html="true" title="
                                         Provinsi Domisili : {{ isset($personal->kota->provinsi->nama) ? $personal->kota->provinsi->nama : '' }} <br>
@@ -229,37 +230,42 @@
                                         NIK : {{ $personal->nik }} <br>">
                                         {{ isset($personal->kota->provinsi->nama) ? $personal->kota->provinsi->nama_singkat : '' }}</td>
                                     <td data-toggle="tooltip" data-placement="top" data-html="true" title="
+                                        @if($personal->sekolah_p)
+                                        Nama Sekolah : {{ isset($personal->sekolah_p) ? $personal->sekolah_p->nama_sekolah : '' }} <br>
+                                        Jenjang : {{ isset($personal->sekolah_p->jp) ? $personal->sekolah_p->jp->deskripsi : '' }} <br>
+                                        Prodi : {{ isset($personal->sekolah_p->jurusan) ? $personal->sekolah_p->jurusan : '' }} <br>
+                                        Tahun : {{ isset($personal->sekolah_p->tahun) ? $personal->sekolah_p->tahun : '' }} <br>
                                         No Ijasah : {{ isset($personal->sekolah_p) ? $personal->sekolah_p->no_ijazah : '' }} <br>
-                                        Tgl Ijasah : {{ isset($personal->sekolah_p) ? \Carbon\Carbon::parse($personal->sekolah_p->tgl_ijasah)->isoFormat("DD MMMM YYYY") : '' }} <br>
-                                        Nama Sekolah : {{ isset($personal->sekolah_p) ? $personal->sekolah_p->nama_sekolah : '' }}">
-                                        {{-- {{$personal->sekolah_p}} --}}
-                                        @if ( empty($personal->sekolah_p->id_jenjang)&&
-                                        empty($personal->sekolah_p->jurusan) &&
-                                        empty($personal->sekolah_p->tahun) )
-                                        @else
-                                        {{ isset($personal->sekolah_p->jp) ? $personal->sekolah_p->jp->deskripsi : '' }},
-                                        {{ isset($personal->sekolah_p->jurusan) ? $personal->sekolah_p->jurusan : '' }},
-                                        {{ isset($personal->sekolah_p->tahun) ? $personal->sekolah_p->tahun : '' }}
+                                        Tgl Ijasah : {{ isset($personal->sekolah_p) ? \Carbon\Carbon::parse($personal->sekolah_p->tgl_ijasah)->isoFormat("DD MMMM YYYY") : '' }}
+                                        @endif ">
+                                        @php
+                                            $jp = isset($personal->sekolah_p->jp) ? $personal->sekolah_p->jp->deskripsi : '';
+                                            $prodi = isset($personal->sekolah_p->jurusan) ? $personal->sekolah_p->jurusan : '';
+                                            $tahun =  isset($personal->sekolah_p->tahun) ? $personal->sekolah_p->tahun : '';
+                                            $sekolah_p = $jp.", ".$prodi.", ".$tahun;
+                                        @endphp
+                                        @if (isset($personal->sekolah_p->jp))
+                                        {{ str_limit($sekolah_p,30) }}
                                         @endif
                                     </td>
                                     <td data-toggle="tooltip" data-placement="top" data-html="true" title="
                                         @foreach ($sklh as $select)
                                             @if($personal->id == $select->id_personal)
+                                            Nama Sekolah : {{ isset($personal->sekolah->nama_sekolah) ? $select->nama_sekolah : '' }} <br>
+                                            Jenjang : {{ isset($personal->sekolah->jp) ? $select->jp->deskripsi : '' }} <br>
+                                            Prodi : {{ isset($personal->sekolah->jurusan) ? $select->jurusan : '' }} <br>
+                                            Tahun : {{ isset($personal->sekolah->tahun) ? $select->tahun : '' }} <br>
                                             No Ijasah : {{ isset($personal->sekolah->no_ijazah) ? $select->no_ijazah : '' }} <br>
                                             Tgl Ijasah : {{ isset($personal->sekolah) ? \Carbon\Carbon::parse($select->tgl_ijasah)->isoFormat("DD MMMM YYYY") : '' }} <br>
-                                            Nama Sekolah : {{ isset($personal->sekolah->nama_sekolah) ? $select->nama_sekolah : '' }} <br>
                                             @endif
                                         @endforeach ">
                                         @foreach ($sklh as $select)
-                                            {{-- {{$personal->sekolah_p}} --}}
                                             @if($personal->id == $select->id_personal)
-                                                @if ( empty($personal->sekolah_p->id_jenjang)&&
-                                                empty($personal->sekolah_p->jurusan) &&
-                                                empty($personal->sekolah_p->tahun) )
-                                                @else
-                                                {{ isset($personal->sekolah->jp) ? $select->jp->deskripsi : '' }},
-                                                {{ isset($personal->sekolah->jurusan) ? $select->jurusan : '' }},
-                                                {{ isset($personal->sekolah->tahun) ? $select->tahun : '' }}
+                                                @php
+                                                    $ket_p = $select->jp->deskripsi.", ".$select->jurusan.", ".$select->tahun;
+                                                @endphp
+                                                @if (isset($personal->sekolah))
+                                                {{ str_limit($ket_p,30) }}
                                                 @endif
                                             @endif
                                         @endforeach
@@ -276,7 +282,6 @@
                                         Nama_Rek : {{ isset($personal->no_rek) ? $personal->no_rek : '' }} <br>
                                         Nama_Rek: {{ isset($personal->nama_rek) ? $personal->nama_rek : '' }} <br>
                                         Bank_Rek : {{ isset($personal->id_bank) ? $personal->bank->Nama_Bank : '' }}">
-
                                         @if (isset($personal->npwp))
                                         @if (isset($personal->lampiran_npwp))
                                         <button type="button" id="btnNpwpPdf"
