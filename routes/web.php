@@ -131,7 +131,27 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('kegiatan', 'KegiatanController@index')->name('kegiatan.index');
     Route::get('kegiatan/detail/{id}','KegiatanController@detail');
 
+    Route::group(['middleware' => 'auth.admin','prefix' => 'timmarketing'], function () {
 
+		// Tim Marketing
+
+		Route::get('/create', 'TimMarketingController@create');
+		Route::post('/save','TimMarketingController@store');
+		Route::get('/{id}/edit','TimMarketingController@edit');
+		Route::post('/update','TimMarketingController@update');
+		Route::post('/destroy','TimMarketingController@destroy');
+		Route::post('/filter', 'TimMarketingController@filter');
+		Route::get('/{id}', 'TimMarketingController@index');
+
+		// Route::post('timproduksi/changepjk3','ChainedController@changepjk3');
+		Route::post('/changelevelatas','TimMarketingController@changelevelatas');
+		Route::post('/changetimprod','TimMarketingController@changetimprod');
+		Route::post('/changebadanusaha','TimMarketingController@changebadanusaha');
+		Route::post('/autofillnpwp','TimMarketingController@autofillnpwp');
+		Route::post('/autofilltimprod','TimMarketingController@autofilltimprod');
+        // end
+
+    });
 
     Route::group(['middleware' => 'auth.admin','prefix' => 'timproduksi'], function () {
         // Tim Produksi
