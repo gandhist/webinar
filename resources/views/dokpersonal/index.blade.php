@@ -301,9 +301,9 @@
                         <th>Sekolah_P</th>
                         <th>Ket_P</th>
                         <th>NPWP</th>
-                        <th>User_Tambah</th>
+                        <th>U_Tambah</th>
                         <!-- <th>User_Tgl_Tambah</th> -->
-                        <th>User_Ubah</th>
+                        <th>U_Ubah</th>
                         <!-- <th>User_Tgl_Ubah</th> -->
                         <!-- <th>Pdf_Dok</th> -->
                     </tr>

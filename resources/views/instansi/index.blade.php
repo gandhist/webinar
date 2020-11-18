@@ -153,8 +153,8 @@
                                     <th>Kontak_P</th>
                                     <th>NPWP</th>
                                     <th>Keterangan</th>
-                                    <th>User_Tambah</th>
-                                    <th>User_Ubah</th>
+                                    <th>U_Tambah</th>
+                                    <th>U_Ubah</th>
                                     {{-- <th><span class="indent">Nama Instansi</span></th>
                                     <th><span class="indent">Nomor Telepon</span></th>
                                     <th><span class="indent">Email</span></th>

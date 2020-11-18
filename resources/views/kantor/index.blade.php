@@ -136,8 +136,8 @@
                                     <th>Nama_Pimp</th>
                                     <th>Kontak_P</th>
                                     <th>Keterangan</th>
-                                    <th>User_Tambah</th>
-                                    <th>User_Ubah</th>
+                                    <th>U_Tambah</th>
+                                    <th>U_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>

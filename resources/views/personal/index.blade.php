@@ -196,8 +196,8 @@
                                     <th>Pdf_KTP</th>
                                     <th>BPJS_Kes</th>
                                     <!-- <th>Pdf_NPWP</th> -->
-                                    <th>User_Tambah</th>
-                                    <th>User_Ubah</th>
+                                    <th>U_Tambah</th>
+                                    <th>U_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>

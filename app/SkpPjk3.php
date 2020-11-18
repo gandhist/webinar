@@ -43,4 +43,16 @@ class SkpPjk3 extends Model
         return $this->belongsTo('App\User','ok_by');
     }
 
+    // Link ke table user dari field created_by
+    public function created_r()
+    {
+        return $this->belongsTo('App\User', 'created_by');
+    }
+
+    // Link ke table user dari field updated_by
+    public function updated_r()
+    {
+        return $this->belongsTo('App\User', 'updated_by');
+    }
+
 }
