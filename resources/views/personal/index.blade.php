@@ -351,11 +351,11 @@
                                         </a>
                                     </td> --}}
                                     <td
+                                        style='text-align:center'
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-html="true" title="
-                                            {{isset($personal->user_create) ? $personal->user_create->name : ''}}
-                                            {{ ( isset($personal->user_create) && isset($personal->created_at) ) ? ' , ' : '' }}
+                                            Tanggal Tambah :
                                             {{ isset($personal->created_at) ? \Carbon\Carbon::parse($personal->created_at)->translatedFormat("d F Y H:i") : ''}}
                                     ">
                                         @if (isset($personal->user_create))
@@ -365,11 +365,11 @@
                                         @endif
                                     </td>
                                     <td
+                                        style='text-align:center'
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-html="true" title="
-                                            {{isset($personal->user_update) ? $personal->user_update->name : ''}}
-                                            {{ ( isset($personal->user_update) && isset($personal->updated_at) ) ? ' , ' : '' }}
+                                            Tanggal Ubah :
                                             {{ isset($personal->updated_at) ? \Carbon\Carbon::parse($personal->updated_at)->translatedFormat("d F Y H:i") : ''}}
                                     ">
                                         @if (isset($personal->user_update))

@@ -203,7 +203,7 @@ class PersonalController extends Controller
         $data->status_p = $request->status_p;
         $data->is_activated = '1';
         $data->is_pimpinan = '0';
-
+        
         $data->created_by = Auth::id();
 
 
