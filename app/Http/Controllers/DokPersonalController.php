@@ -29,11 +29,14 @@ class DokPersonalController extends Controller
     public function index() {
 
         $data = SkpAk3::where('is_actived','>','0')->orWhereNull('is_actived')->get();
-        $idpersonal = SkpAk3::select('id_personal')->where('is_actived','>','0')->orWhereNull('is_actived')->groupBy('id_personal')->get()->toArray();
-        $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
-        $prov = ProvinsiModel::whereIn('id',$x)->get();
-        $personil = Personal::all();
+        // $idpersonal = SkpAk3::select('id_personal')->where('is_actived','>','0')->orWhereNull('is_actived')->groupBy('id_personal')->get()->toArray();
+        // $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
+        // $prov = ProvinsiModel::whereIn('id',$x)->get();
+        $idpers = SkpAk3::select('id_personal')->groupBy('id_personal')->get()->toArray();
+        $idprov = Personal::select('provinsi_id')->whereIn('id',$idpers)->get()->toArray();
+        $prov = ProvinsiModel::whereIn('id',$idprov)->get();
         $kota =  KotaModel::where('id','=','~')->get();
+        $personil = Personal::all();
         $negara = NegaraModel::all();
         $bank = BankModel::all();
         $sekolah = PersonalSekolah::all();
@@ -51,7 +54,6 @@ class DokPersonalController extends Controller
         $jenisdoksrtf = JenisDokSertifikat::groupBy('id_srft_alat')->whereIn('id_srft_alat',$idjnsdoksrtf)->get();
         $instansidok = SkpAk3::select('instansi_skp')->whereNotNull('instansi_skp')->groupBy('instansi_skp')->get();
         $penyelenggara = SkpAk3::select('penyelenggara')->whereNotNull('penyelenggara')->groupBy('penyelenggara')->get();
-
         $idpers = SkpAk3::select('id_personal')->groupBy('id_personal')->get()->toArray();
         $idjenjang = Sekolah::select('id_jenjang')->whereIn('id_personal',$idpers)->groupBy('id_jenjang')->whereNotNull('id_jenjang');
         $person = Personal::select('id')->whereNotIn('id',$idpers)->get()->toArray();
@@ -67,15 +69,20 @@ class DokPersonalController extends Controller
     public function filter(Request $request)
     {
         $data = SkpAk3::orderBy('id','asc')->where('is_actived','>','0');
-        $idpersonal = SkpAk3::select('id_personal')->where('is_actived','>','0')->orWhereNull('is_actived')->groupBy('id_personal')->get()->toArray();
-        $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
-        $prov = ProvinsiModel::whereIn('id',$x)->get();
+        // $idpersonal = SkpAk3::select('id_personal')->where('is_actived','>','0')->orWhereNull('is_actived')->groupBy('id_personal')->get()->toArray();
+        // $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
+        // $prov = ProvinsiModel::whereIn('id',$x)->get();
+        $idpers = SkpAk3::select('id_personal')->groupBy('id_personal')->get()->toArray();
+        $idprov = Personal::select('provinsi_id')->whereIn('id',$idpers)->get()->toArray();
+        $prov = ProvinsiModel::whereIn('id',$idprov)->get();
+        $kota =  KotaModel::where('id','=','~')->get();
         $sekolah = Sekolah::where('default','=','1')->get();
         $sklh = Sekolah::where('default','=','0')->get();
         $pjk3 = SkpPjk3::groupBy('kode_pjk3')->get();
         $personil = Personal::all();
         $idinstansi = SkpAk3::select('id_skp_pjk3')->groupBy('id_skp_pjk3')->get()->toArray();
         $instansi = BuModel::whereIn('id',$idinstansi)->get();
+        $x = SkpAk3::join('ms_bidang','skp_ak3.id_bid_skp','ms_bidang.id')->select('ms_bidang.id_jns_usaha')->groupBy('ms_bidang.id_jns_usaha')->get()->toArray();
         $jenisusaha = JenisUsaha::whereIn('id',$x)->orderBy('id','asc')->get();
         $idjnsdok = SkpAk3::select('jns_dok')->groupBy('jns_dok')->get()->toArray();
         $jenisdok = JenisDok::whereIn('id',$idjnsdok)->get();
@@ -99,19 +106,13 @@ class DokPersonalController extends Controller
             $data->whereBetween('tgl_akhir_skp', [Carbon::createFromFormat('d/m/Y',$request->f_awal_akhir), Carbon::createFromFormat('d/m/Y',$request->f_akhir_akhir)]);
         }
         if (!$request->f_provinsi===NULL || !$request->f_provinsi==""){
-            $kode_kota = Kota::where('provinsi_id',$request->f_provinsi)->get(['id'])->toArray();
-            $personil = Personal::whereIn('kode_kota',$kode_kota)->get(['id'])->toArray();
+            $kode_prov = ProvinsiModel::where('id',$request->f_provinsi)->get(['id'])->toArray();
+            $personil = Personal::whereIn('provinsi_id',$kode_prov)->get(['id'])->toArray();
             $data->whereIn('id_personal', $personil);
-
-            $id_personil = SkpAk3::select('id_personal')->groupBy('id_personal')->get()->toArray();
-            $idkota = Personil::select('kode_kota')->groupBy('kode_kota')->whereIn('id',$id_personil)->get()->toArray();
-            $kota = KotaModel::whereIn('id',$idkota)->where('provinsi_id',$request->f_provinsi)->get();
-        } else{
-            $kota = KotaModel::where('id','=','~')->get();
         }
         if (!$request->f_kota===NULL || !$request->f_kota==""){
             $kode_kota = KotaModel::where('id', $request->f_kota)->get(['id'])->toArray();
-            $personil = Personal::whereIn('kode_kota',$kode_kota)->get(['id'])->toArray();
+            $personil = Personal::whereIn('kota_id',$kode_kota)->get(['id'])->toArray();
             $data->whereIn('id_personal', $personil);
         }
         if (!$request->f_jenis_usaha===NULL || !$request->f_jenis_usaha==""){
@@ -190,12 +191,6 @@ class DokPersonalController extends Controller
         $data->get();
         $data = $data->get();
 
-
-        $idinstansi = SkpAk3::select('id_skp_pjk3')->groupBy('id_skp_pjk3')->get()->toArray();
-        $instansi = BuModel::whereIn('id',$idinstansi)->get();
-        $x = Personal::join('ms_kota','personal.kota_id','ms_kota.id')->select('ms_kota.provinsi_id')->whereIn('personal.id',$idpersonal)->groupBy('ms_kota.provinsi_id')->get()->toArray();
-        $jenisusaha = JenisUsaha::whereIn('id',$x)->orderBy('id','asc')->get();
-
         return view('dokpersonal.index')->with(compact('data','prov','kota','sekolah','pjk3','instansi','jenisusaha','jenisdok','bidang','sklh','personil','instansidok','penyelenggara','jenisdoksrtf','jp','prodi'));
     }
 
@@ -239,7 +234,7 @@ class DokPersonalController extends Controller
         $id_personal = $request->id_personal;
 
         if (is_null($request->id_detail_dokpersonil) || $request->id_detail_dokpersonil=='' ) {
-            return back();
+            return back()->with('alert', 'Dokumen harus di isi minimal 1');
         } else {
             $jumlah_detail = explode(',', $request->id_detail_dokpersonil);
             foreach($jumlah_detail as $jumlah_detail) {
@@ -372,7 +367,7 @@ class DokPersonalController extends Controller
 
         if (is_null($request->id_detail_dokpersonil) || $request->id_detail_dokpersonil=='' )
         {
-            return back();
+            return back()->with('alert', 'Dokumen harus di isi minimal 1');
         } else {
             $jumlah_detail = explode(',', $request->id_detail_dokpersonil);
             foreach($jumlah_detail as $jumlah_detail) {
