@@ -178,7 +178,7 @@
                                         Nama Singkat : {{$key->singkat_bu ?? ''}} <br>
                                     ">{{$key->singkat_bu  ?? ''}}</td>
 
-                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                    <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
                                     title='{{ $key->status ? $key->status->nama : "" }}'>{{ $key->status ? $key->status->singkatan : "" }}</td>
 
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
