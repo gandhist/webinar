@@ -40,12 +40,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Ubah Dokumen Personal PPKB P3S Mandiri
+        Ubah Dokumen Personil PPKB P3S Mandiri
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="/dokpersonal">Dok Personal</a></li>
+        <li class="active"><a href="/dokpersonal">Dok Personil</a></li>
     </ol>
 
 </section>
@@ -1363,5 +1363,10 @@
         autoclose: true
     })
 
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
+    if(exist){
+        alert(msg);
+    }
 </script>
 @endpush
