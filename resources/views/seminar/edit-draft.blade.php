@@ -538,6 +538,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
+                            <br>
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
                                 @if(old('narasumber'))
                                     @foreach($personal as $key)
@@ -569,6 +570,8 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
+                            <br>
+
                             <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
                                 @if(old('narasumber') || old('moderator'))
                                     @foreach($personal as $key)
@@ -634,6 +637,7 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('is_free') ? 'has-error' : '' }} ">
                             <label for="is-free" class="label-control required">Jenis</label>
+                            <br>
                             <select name="is_free" id="is_free" class="form-control">
                                 <option value="0"
                                 {{old('is_free') ? (old('is_free') == '0' ? 'selected' : '') : ($seminar->is_free == '0' ? 'selected' : '')}}
