@@ -751,6 +751,12 @@
                                 <label class="label-control" for="foto">Brosur Seminar</label>
                                 <div class="custom-file">
                                     <input type="file" id="foto" name="foto" class="custom-file-input" id="foto">
+                                    @if (isset($seminar->link))
+                                        <button type="button" class="btn btn-success btn-xs" style="display: inline"
+                                        id="lihatBrosur">
+                                            <span class="glyphicon glyphicon-eye-open"></span> Lihat
+                                        </button>
+                                    @endif
                                     <div id="foto" class="invalid-feedback text-danger">
                                         {{ $errors->first('foto') }}
                                     </div>
@@ -773,6 +779,25 @@
 </section>
 @endsection
 
+<div class="modal" tabindex="-1" role="dialog" id="brosurModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Brosur Seminar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
@@ -784,6 +809,9 @@
     CKEDITOR.replace('tema');
 
     $(document).ready(function () {
+        $("#lihatBrosur").on('click', function() {
+            $('#brosurModal').modal('show');
+        });
         $("form").children().each(function(){
             this.value=$(this).val().trim();
         }) // trim semua spasi

@@ -362,6 +362,6 @@ table#data-tables tbody tr:hover {
     background-color: #1c8fb3;
     color: white;
 }
-.select2 {
-    width: 100%;
+.select2, .select2-container {
+    width: 100% !important;
 }
