@@ -82,6 +82,7 @@ Route::post('select_temp_bidangdok_skp_ak3','ChainedController@selectbidangdoksk
 
 
 Route::post('chain/filterprovbu','InstansiController@filterprovbu');
+Route::post('register_perusahaan/chain','CompRegister@chained_prov');
 
 Route::group(['prefix' => 'presensi'], function () {
 	Route::get('/{id}','AbsensiController@index')->name('presensi');
@@ -129,8 +130,44 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('kegiatan', 'KegiatanController@index')->name('kegiatan.index');
     Route::get('kegiatan/detail/{id}','KegiatanController@detail');
 
-// Seminar
+    Route::group(['middleware' => 'auth.admin','prefix' => 'timmarketing'], function () {
 
+		// Tim Marketing
+
+		Route::get('/create', 'TimMarketingController@create');
+		Route::post('/save','TimMarketingController@store');
+		Route::get('/{id}/edit','TimMarketingController@edit');
+		Route::post('/update','TimMarketingController@update');
+		Route::post('/destroy','TimMarketingController@destroy');
+		Route::post('/filter', 'TimMarketingController@filter');
+		Route::get('/{id}', 'TimMarketingController@index');
+
+		// Route::post('timproduksi/changepjk3','ChainedController@changepjk3');
+		Route::post('/changelevelatas','TimMarketingController@changelevelatas');
+		Route::post('/changetimprod','TimMarketingController@changetimprod');
+		Route::post('/changebadanusaha','TimMarketingController@changebadanusaha');
+		Route::post('/autofillnpwp','TimMarketingController@autofillnpwp');
+		Route::post('/autofilltimprod','TimMarketingController@autofilltimprod');
+        // end
+
+    });
+
+    Route::group(['middleware' => 'auth.admin','prefix' => 'timproduksi'], function () {
+        // Tim Produksi
+        Route::get('/create', 'TimProduksiController@create');
+        Route::post('/save','TimProduksiController@store');
+        Route::get('/{id}/edit','TimProduksiController@edit');
+        Route::post('/update','TimProduksiController@update');
+        Route::post('/destroy','TimProduksiController@destroy');
+        Route::post('/filter', 'TimProduksiController@filter');
+        Route::post('/changepjk3','ChainedController@changepjk3');
+        Route::post('/changelevelatas','ChainedController@changelevelatas');
+        Route::post('/autofillnpwp','TimProduksiController@autofillnpwp');
+        Route::get('/{id}', 'TimProduksiController@index');
+        // end
+    });
+
+// Seminar
 Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('/', 'SeminarController@index');
 	Route::get('create','SeminarController@create');

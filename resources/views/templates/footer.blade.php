@@ -50,6 +50,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('body').addClass('sidebar-collapse');
+
         /** add active class and stay opened when selected */
         var host = window.location.origin;
         var single_sub = window.location;

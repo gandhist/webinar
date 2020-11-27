@@ -139,6 +139,74 @@ function chainedKota(url, id_prov, id_kota) {
     });
 }
 
+
+// fungsi ajax untuk chained of provinsi filter
+function chainedProvinsiTimP(url, id_prov, id_kota, placeholder,id_jenis_usaha) {
+    var prov = $('#' + id_prov).val();
+    var kota = $('#' + id_kota).val();
+
+    $('#' + id_kota).empty();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+            prov: prov,
+            kota: kota,
+            id_jenis_usaha:id_jenis_usaha
+        },
+        success: function (datapro) {
+            $("#" + id_kota).html("<option value='' selected>" + placeholder + "</option>");
+            $("#" + id_kota).select2({
+                data: datapro
+            }).val(null).trigger('change');
+        },
+        error: function (xhr, status) {
+            alert('terjadi error ketika menampilkan data kota');
+            console.log(xhr);
+        }
+
+    });
+}
+
+function chainedProvinsiTimM(url, id_prov, id_kota, placeholder,id_jenis_usaha) {
+    console.log(id_jenis_usaha);
+    var prov = $('#' + id_prov).val();
+    var kota = $('#' + id_kota).val();
+
+    $('#' + id_kota).empty();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: {
+            prov: prov,
+            kota: kota,
+            id_jenis_usaha:id_jenis_usaha
+        },
+        success: function (datapro) {
+            $("#" + id_kota).html("<option value='' selected>" + placeholder + "</option>");
+            $("#" + id_kota).select2({
+                data: datapro
+            }).val(null).trigger('change');
+        },
+        error: function (xhr, status) {
+            alert('terjadi error ketika menampilkan data kota');
+            console.log(xhr);
+        }
+
+    });
+}
+
+
 // Fungsi ajax untuk chained of jenis_usaha
 function chainedBidangSkp(url, idjenis, idbid) {
     var valjenis = $('#' + idjenis).val();

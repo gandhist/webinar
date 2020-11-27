@@ -1241,7 +1241,7 @@ class SeminarController extends Controller
         // $data->ttd_pemangku              =              $request->ttd_pemangku           ;
 
         $data->is_online                 =              $request->is_online              ;
-        $data->url                       =              $request->url                    ;
+        $data->url                       =              $request->link                    ;
         $data->tuk                       =              $request->tuk                    ;
 
 

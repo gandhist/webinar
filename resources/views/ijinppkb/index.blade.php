@@ -226,8 +226,8 @@
                         <th>Email_Kontak_P</th> -->
                         {{-- <th>Pdf_SKP</th> --}}
                         <th>NPWP</th>
-                        <th>User_Waktu_Tambah</th>
-                        <th>User_Waktu_Ubah</th>
+                        <th>U_Tambah</th>
+                        <th>U_Ubah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -374,8 +374,28 @@
                                 @endif
                             @endif
                         </td>
-                        <td>{{ \Carbon\Carbon::parse($key->badan_usaha->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}</td>
-                        <td>{{ \Carbon\Carbon::parse($key->badan_usaha->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}</td>
+                        <td
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            data-html="true" title="
+                                {{isset($key->created_r) ? $key->created_r->username : ''}}
+                                {{ ( isset($key->created_r) && isset($key->created_at) ) ? ' , ' : '' }}
+                                {{ isset($key->created_at) ? \Carbon\Carbon::parse($key->created_at)->translatedFormat("d F Y H:i") : ''}}
+                        ">
+                            {{$key->created_r ? $key->created_r->username : ''}}
+                        </td>
+                        <td
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            data-html="true" title="
+                                {{isset($key->updated_r) ? $key->updated_r->username : ''}}
+                                {{ ( isset($key->updated_r) && isset($key->updated_at) ) ? ' , ' : '' }}
+                                {{ isset($key->updated_at) ? \Carbon\Carbon::parse($key->updated_at)->translatedFormat("d F Y H:i") : ''}}
+                        ">
+                            {{$key->updated_r ? $key->updated_r->username : ''}}
+                        </td>
+                        {{-- <td>{{ \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") }}</td>
+                        <td>{{ \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") }}</td> --}}
                     </tr>
                     @endforeach
                 </tbody>

@@ -136,8 +136,8 @@
                                     <th>Nama_Pimp</th>
                                     <th>Kontak_P</th>
                                     <th>Keterangan</th>
-                                    <th>User_Tambah</th>
-                                    <th>User_Ubah</th>
+                                    <th>U_Tambah</th>
+                                    <th>U_Ubah</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -174,12 +174,11 @@
                                     <td>{{$key->keterangan}}
                                     </td>
                                     <td
-                                        style='text-align:right'
+                                        style='text-align:center'
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-html="true" title="
-                                            {{isset($key->user_create) ? $key->user_create->name : ''}}
-                                            {{ ( isset($key->user_create) && isset($key->created_at) ) ? ' , ' : '' }}
+                                            Tanggal Tambah :
                                             {{ isset($key->created_at) ? \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
                                     ">
                                     @if (isset($key->user_create))
@@ -187,12 +186,11 @@
                                         @endif
                                     </td>
                                     <td
-                                        style='text-align:right'
+                                        style='text-align:center'
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-html="true" title="
-                                            {{isset($key->user_update) ? $key->user_update->name : ''}}
-                                            {{ ( isset($key->user_update) && isset($key->updated_at) ) ? ' , ' : '' }}
+                                            Tanggal Ubah :
                                             {{ isset($key->updated_at) ? \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
                                     ">
                                     @if (isset($key->user_update))

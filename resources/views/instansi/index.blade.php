@@ -153,8 +153,8 @@
                                     <th>Kontak_P</th>
                                     <th>NPWP</th>
                                     <th>Keterangan</th>
-                                    <th>User_Tambah</th>
-                                    <th>User_Ubah</th>
+                                    <th>U_Tambah</th>
+                                    <th>U_Ubah</th>
                                     {{-- <th><span class="indent">Nama Instansi</span></th>
                                     <th><span class="indent">Nomor Telepon</span></th>
                                     <th><span class="indent">Email</span></th>
@@ -178,7 +178,7 @@
                                         Nama Singkat : {{$key->singkat_bu ?? ''}} <br>
                                     ">{{$key->singkat_bu  ?? ''}}</td>
 
-                                    <td data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                    <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
                                     title='{{ $key->status ? $key->status->nama : "" }}'>{{ $key->status ? $key->status->singkatan : "" }}</td>
 
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
@@ -222,12 +222,11 @@
                                         </td>
                                     <td>{{ $key->keterangan }}</td>
                                     <td
-                                        style='text-align:right'
+                                        style='text-align:center'
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-html="true" title="
-                                            {{isset($key->user_create) ? $key->user_create->name : ''}}
-                                            {{ ( isset($key->user_create) && isset($key->created_at) ) ? ' , ' : '' }}
+                                            Tanggal Tambah :
                                             {{ isset($key->created_at) ? \Carbon\Carbon::parse($key->created_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
                                         ">
                                         @if (isset($key->user_create))
@@ -235,12 +234,11 @@
                                         @endif
                                     </td>
                                     <td
-                                        style='text-align:right'
+                                        style='text-align:center'
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         data-html="true" title="
-                                            {{isset($key->user_update) ? $key->user_update->name : ''}}
-                                            {{ ( isset($key->user_update) && isset($key->updated_at) ) ? ' , ' : '' }}
+                                            Tanggal Ubah :
                                             {{ isset($key->updated_at) ? \Carbon\Carbon::parse($key->updated_at)->isoFormat("DD MMMM YYYY H:mm:s") : ''}}
                                     ">
                                         @if (isset($key->user_update))

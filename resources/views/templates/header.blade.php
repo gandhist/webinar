@@ -39,21 +39,6 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <style>
-
-    table#data-tables tbody tr {
-        background-color:rgba(137, 228, 255, 0.3);
-    }
-    table#data-tables tbody tr.even{
-        background-color: white
-    }
-    table#data-tables tbody tr:hover {
-        background-color:rgba(137, 228, 255, 1);
-    }
-    /* table#data-tables tbody tr.even:hover{
-        background-color:rgba(255, 231, 125, 0.5);
-    } */
-  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->

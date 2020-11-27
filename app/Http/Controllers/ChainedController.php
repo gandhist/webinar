@@ -13,7 +13,7 @@ use App\SkpAk3;
 use App\KotaModel;
 use App\masterBidang;
 use App\JenisUsaha;
-
+use App\TimProduksi;
 
 use Auth;
 
@@ -32,6 +32,15 @@ class ChainedController extends Controller
         return $data;
     }
 
+    public function changepjk3(Request $request){
+        $data = BuModel::find($request->id_pjk3);
+        return $data;
+    }
+
+
+    public function changelevelatas(Request $request){
+        return $data = TimProduksi::where('level_p','=',$request->leveltimprod-1)->get(['id','nama_tim_p as text']);
+    }
 
     public function selectbidangskpak3(Request $request){
         $id_user = Auth::id();

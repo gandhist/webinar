@@ -4,6 +4,18 @@
         margin-left: 2px;
         margin-right: -20px;
     }
+    .customInputLg {
+        height: 28px;
+        border-radius: 4px !important;
+        border-color: #a5a5a0;
+        width: 270px !important;
+    }
+    .input-group-addon{
+        text-align:right !important;
+    }
+    .customSelect2dp .select2-container {
+        width: 160px !important;
+    }
 </style>
 @section('content')
 <section class="content-header">
@@ -37,7 +49,7 @@
                 <!-- @method("PUT") -->
                 @csrf
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-2">
                         <!-- Table Filter -->
                         <table class="table table-condensed table-filter">
                             <tbody>
@@ -247,8 +259,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="col-sm-8"></div>
-                    <div class="col-sm-4" style='text-align:right'>
+                    <div class="col-sm-8">
+                    </div>
+                    <div class="col-sm-2" style='text-align:right'>
                         <div class="row" style="margin-top:-3px;margin-bottom:3px">
                             <div class="col-xs-12">
                                 <div class="btn-group">
@@ -301,9 +314,9 @@
                         <th>Sekolah_P</th>
                         <th>Ket_P</th>
                         <th>NPWP</th>
-                        <th>User_Tambah</th>
+                        <th>U_Tambah</th>
                         <!-- <th>User_Tgl_Tambah</th> -->
-                        <th>User_Ubah</th>
+                        <th>U_Ubah</th>
                         <!-- <th>User_Tgl_Ubah</th> -->
                         <!-- <th>Pdf_Dok</th> -->
                     </tr>

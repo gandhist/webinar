@@ -161,15 +161,15 @@
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-tasks"></i> <span>Tim Produksi PJS_PPKB</span>
+            <i class="fa fa-tasks"></i> <span>Tim Produksi PJS_PPKB </span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-industry"></i> <span>[X] Tim Produksi PJS_PPKB Mandiri</span>
+                <a href="{{ url('/timproduksi/all') }}">
+                <i class="fa fa-industry"></i> <span>Tim Produksi PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>
@@ -187,15 +187,15 @@
 
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-tasks"></i> <span>Tim Marketing & Keuangan</span>
+            <i class="fa fa-tasks"></i> <span>Tim Marketing & Keuangan PJS_PPKB</span>
             <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
             <li>
-                <a href="{{ url('/dashboard1') }}">
-                <i class="fa fa-credit-card"></i> <span>[X] Tim Marketing PJS_PPKB Mandiri</span>
+                <a href="{{ url('/timmarketing/all') }}">
+                <i class="fa fa-credit-card"></i> <span>Tim Marketing PJS_PPKB Mandiri</span>
                 </a>
             </li>
             <li>

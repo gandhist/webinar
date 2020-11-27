@@ -538,6 +538,7 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('narasumber') ? 'has-error' : '' }}">
                             <label for="narasumber" class="label-control required">Narasumber</label>
+                            <br>
                             <select name="narasumber[]" multiple="multiple" class="form-control" id="narasumber">
                                 @if(old('narasumber'))
                                     @foreach($personal as $key)
@@ -569,6 +570,8 @@
                     <div class="col-md-6">
                         <div class="form-group {{ $errors->first('moderator') ? 'has-error' : '' }}">
                             <label for="moderator" class="label-control required">Moderator</label>
+                            <br>
+
                             <select name="moderator[]" multiple="multiple" class="form-control" id="moderator">
                                 @if(old('narasumber') || old('moderator'))
                                     @foreach($personal as $key)
@@ -634,6 +637,7 @@
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('is_free') ? 'has-error' : '' }} ">
                             <label for="is-free" class="label-control required">Jenis</label>
+                            <br>
                             <select name="is_free" id="is_free" class="form-control">
                                 <option value="0"
                                 {{old('is_free') ? (old('is_free') == '0' ? 'selected' : '') : ($seminar->is_free == '0' ? 'selected' : '')}}
@@ -755,8 +759,15 @@
                         <div class="form-group  {{ ($errors->first('foto')) ? ' has-error' : '' }}">
                             <div class="custom-file">
                                 <label class="label-control" for="foto">Brosur Seminar</label>
+                                @if (isset($seminar->link))
+                                    <button type="button" class="btn btn-success btn-xs" style="display: inline"
+                                    id="lihatBrosur">
+                                        <span class="glyphicon glyphicon-eye-open"></span> Lihat
+                                    </button>
+                                @endif
                                 <div class="custom-file">
                                     <input type="file" id="foto" name="foto" class="custom-file-input" id="foto">
+
                                     <div id="foto" class="invalid-feedback text-danger">
                                         {{ $errors->first('foto') }}
                                     </div>
@@ -778,6 +789,25 @@
 </section>
 @endsection
 
+<div class="modal" tabindex="-1" role="dialog" id="brosurModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Brosur Seminar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
 @push('script')
 <script src="{{ asset('AdminLTE-2.3.11/plugins/ckeditor/ckeditor.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.13.4/jquery.mask.min.js"></script>
@@ -789,6 +819,9 @@
     CKEDITOR.replace('tema');
 
     $(document).ready(function () {
+        $("#lihatBrosur").on('click', function() {
+            $('#brosurModal').modal('show');
+        });
         $("form").children().each(function(){
             this.value=$(this).val().trim();
         }) // trim semua spasi
