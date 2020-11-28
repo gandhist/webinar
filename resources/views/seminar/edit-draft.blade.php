@@ -799,7 +799,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar">
+            <img style="width: 100%" src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
