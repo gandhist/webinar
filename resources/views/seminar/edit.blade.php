@@ -749,14 +749,14 @@
                         <div class="form-group  {{ ($errors->first('foto')) ? ' has-error' : '' }}">
                             <div class="custom-file">
                                 <label class="label-control" for="foto">Brosur Seminar</label>
+                                @if (isset($seminar->link))
+                                    <button type="button" class="btn btn-success btn-xs" style="display: inline"
+                                    id="lihatBrosur">
+                                        <span class="glyphicon glyphicon-eye-open"></span> Lihat
+                                    </button>
+                                @endif
                                 <div class="custom-file">
                                     <input type="file" id="foto" name="foto" class="custom-file-input" id="foto">
-                                    @if (isset($seminar->link))
-                                        <button type="button" class="btn btn-success btn-xs" style="display: inline"
-                                        id="lihatBrosur">
-                                            <span class="glyphicon glyphicon-eye-open"></span> Lihat
-                                        </button>
-                                    @endif
                                     <div id="foto" class="invalid-feedback text-danger">
                                         {{ $errors->first('foto') }}
                                     </div>
@@ -789,7 +789,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <img src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar">
+            <img style="width: 100%" src="{{$seminar->link ? url($seminar->link) : ''}}" alt="Brosur Seminar">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
