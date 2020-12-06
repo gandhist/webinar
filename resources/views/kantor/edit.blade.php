@@ -75,7 +75,7 @@
                             <span class="bintang">*</span> Nama Kantor
                         </div>
                         <input name="nama_kantor" id="nama_kantor" class="form-control"
-                            placeholder="*Nama Kantor"
+                            placeholder=""
                             value="{{old('nama_kantor') ? old('nama_kantor') : $data->nama_kantor}}">
                     </div>
                     <span id="nama_kantor"
@@ -94,7 +94,7 @@
                             <span class="bintang">*</span> Singkat Nama Kantor
                         </div>
                         <input name="nama_singkat" id="nama_singkat" class="form-control"
-                            placeholder="*Singkat Nama Kantor"
+                            placeholder=""
                             value="{{old('nama_singkat') ? old('nama_singkat') : $data->nama_singkat}}">
                     </div>
 
@@ -113,7 +113,7 @@
                         </div>
                         <select class="form-control select2" name="level" id="level" disabled
                             style="width: 100%;">
-                            <option value="" disabled selected>*Level Kantor</option>
+                            <option value="" disabled selected></option>
                             @foreach($level as $key)
                             <option value="{{ $key->id }}" {{ $key->id == $data->level ? 'selected' : '' }}
                                 {{ $key->id == old('level') ? 'selected' : '' }}>
@@ -133,7 +133,7 @@
                         </div>
                         <select class="form-control select2" name="id_level_k" id="id_level_k"
                             style="width: 100%;">
-                            <option value="" disabled selected>Level_K</option>
+                            <option value="" disabled selected></option>
                             @foreach($level as $key)
                             <option value="{{ $key->id }}"
                                 {{ $key->id == old('id_level_k') ? 'selected' : '' }}>
@@ -157,7 +157,7 @@
                         </div>
                         <select class="form-control select2" name="level_atas" id="level_atas"
                             style="width: 100%;">
-                            <option value="" disabled selected>Kantor Level Diatasnya</option>
+                            <option value="" disabled selected></option>
                             @foreach($levelatas as $key)
                             <option value="{{ $key->id }}"
                                 {{ $key->id == $data->level_atas ? 'selected' : '' }}>
@@ -178,7 +178,7 @@
                             <span class="bintang">*</span> Alamat
                         </div>
                         <input name="alamat" id="alamat" class="form-control"
-                            placeholder="*Alamat Jalan, Kelurahan, Kecamatan"
+                            placeholder=""
                             value="{{old('alamat') ? old('alamat') : $data->alamat}}">
                     </div>
                     <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}
@@ -195,7 +195,7 @@
                             <span class="bintang">*</span> Provinsi
                         </div>
                         <select class="form-control select2" name="prop" id="prop" style="width: 100%;">
-                            <option value="" disabled selected>*Provinsi</option>
+                            <option value="" disabled selected></option>
                             @foreach($prop as $key)
                             <option value="{{ $key->id }}" {{ $key->id == $data->prop ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
@@ -218,7 +218,7 @@
                             <span class="bintang">*</span> Kota
                         </div>
                         <select class="form-control select2" name="kota" id="kota" style="width: 100%;">
-                            <option value="" disabled selected>*Kota</option>
+                            <option value="" disabled selected></option>
                             @foreach($kotapil as $key)
                             <option value="{{ $key->id }}" {{ $key->id == $data->kota ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
@@ -238,7 +238,7 @@
                             <span class="bintang">*</span> No Tlp
                         </div>
                         <input name="no_tlp" id="no_tlp" type="text" class="form-control"
-                            placeholder="*No Tlp"
+                            placeholder=""
                             value="{{old('no_tlp') ? old('no_tlp') : $data->no_tlp}}">
                     </div>
                     <span id="no_tlp" class="help-block customspan">{{ $errors->first('no_tlp') }}
@@ -256,7 +256,7 @@
                             <span class="bintang">*</span> Email
                         </div>
                         <input name="email" id="email" type="email" class="form-control"
-                            placeholder="*Email"
+                            placeholder=""
                             value="{{old('email') ? old('email') : $data->email}}">
                     </div>
                     <span id="email" class="help-block customspan">{{ $errors->first('email') }} </span>
@@ -271,7 +271,7 @@
                             Instansi Reff
                         </div>
                         <input name="instansi_reff" id="instansi_reff" type="text" class="form-control"
-                            placeholder="Instansi Reff"
+                            placeholder=""
                             value="{{old('instansi_reff') ? old('instansi_reff') : $data->instansi_reff}}">
                     </div>
                     <span id="instansi_reff" class="help-block customspan">{{ $errors->first('instansi_reff') }}
@@ -288,7 +288,7 @@
                         <div class="input-group-addon">
                             Web
                         </div>
-                        <input name="web" id="web" type="text" class="form-control" placeholder="Web"
+                        <input name="web" id="web" type="text" class="form-control" placeholder=""
                             value="{{old('web') ? old('web') : $data->web}}">
                     </div>
                     <span id="web" class="help-block customspan">{{ $errors->first('web') }} </span>
@@ -303,7 +303,7 @@
                             Nama Pimpinan
                         </div>
                         <input name="nama_pimp" id="nama_pimp" type="text" class="form-control"
-                            placeholder="Nama Pimpinan"
+                            placeholder=""
                             value="{{old('nama_pimp') ? old('nama_pimp') : $data->nama_pimp}}">
                     </div>
                     <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
@@ -320,7 +320,7 @@
                             Jabatan Pimpinan
                         </div>
                         <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                            placeholder="Jabatan Pimpinan"
+                            placeholder=""
                             value="{{old('jab_pimp') ? old('jab_pimp') : $data->jab_pimp}}">
                     </div>
                     <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
@@ -335,7 +335,7 @@
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                            placeholder="No Hp Pimpinan"
+                            placeholder=""
                             value="{{old('hp_pimp') ? old('hp_pimp') : $data->hp_pimp}}">
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
@@ -352,7 +352,7 @@
                             Email Pimpinan
                         </div>
                         <input name="email_pimp" id="email_pimp" type="email" class="form-control"
-                            placeholder="Email Pimpinan"
+                            placeholder=""
                             value="{{old('email_pimp') ? old('email_pimp') : $data->email_pimp}}">
                     </div>
                     <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
@@ -368,7 +368,7 @@
                             <span class="bintang">*</span> Nama Kontak Person
                         </div>
                         <input name="kontak_p" id="kontak_p" type="text" class="form-control"
-                            placeholder="*Nama Kontak Person"
+                            placeholder=""
                             value="{{old('kontak_p') ? old('kontak_p') : $data->kontak_p}}">
                     </div>
                     <span id="kontak_p" class="help-block customspan">{{ $errors->first('kontak_p') }}
@@ -386,7 +386,7 @@
                             Jabatan Kontak Person
                         </div>
                         <input name="jab_kontak_p" id="jab_kontak_p" type="text" class="form-control"
-                            placeholder="Jabatan Kontak Person"
+                            placeholder=""
                             value="{{old('jab_kontak_p') ? old('jab_kontak_p') : $data->jab_kontak_p}}">
                     </div>
                     <span id="jab_kontak_p" class="help-block customspan">{{ $errors->first('jab_kontak_p') }} </span>
@@ -401,7 +401,7 @@
                             <span class="bintang">*</span> No HP Kontak Person
                         </div>
                         <input name="no_kontak_p" id="no_kontak_p" type="text" class="form-control"
-                            placeholder="*No HP Kontak Person"
+                            placeholder=""
                             value="{{old('no_kontak_p') ? old('no_kontak_p') : $data->no_kontak_p}}">
                     </div>
                     <span id="no_kontak_p" class="help-block customspan">{{ $errors->first('no_kontak_p') }} </span>
@@ -418,7 +418,7 @@
                             <span class="bintang">*</span> Email Kontak Person
                         </div>
                         <input name="email_kontak_p" id="email_kontak_p" type="email" class="form-control"
-                            placeholder="*Email Kontak Person"
+                            placeholder=""
                             value="{{old('email_kontak_p') ? old('email_kontak_p') : $data->email_kontak_p}}">
                     </div>
                     <span id="email_kontak_p" class="help-block customspan">{{ $errors->first('email_kontak_p') }}
@@ -434,7 +434,7 @@
                                 Keterangan
                             </div>
                             <input name="keterangan" id="keterangan" class="form-control"
-                                placeholder="Keterangan"
+                                placeholder=""
                                 value="{{old('keterangan') ? old('keterangan') : $data->keterangan}}">
                         </div>
                         <span id="keterangan" class="help-block customspan">{{ $errors->first('keterangan') }}
@@ -545,11 +545,11 @@ $(document).ready(function() {
                     alert('Level atas belum terdaftar');
                     $('#level').val("").trigger('change.select2');
                     $("#level_atas").html(
-                        "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                        "<option value='' disabled selected></option>"
                     );
                 } else {
                     $("#level_atas").html(
-                        "<option value='' disabled>Kantor Level Diatasnya</option>");
+                        "<option value='' disabled></option>");
                     $("#level_atas").select2({
                         data: data
                     }).val(null).trigger('change');

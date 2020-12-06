@@ -90,7 +90,7 @@
                                 <span class="bintang">*</span> Nama Personil
                             </div>
                             <input name="nama" id="nama" type="text" class="form-control "
-                                placeholder="*Nama Personil" value="{{old('nama')}}">
+                                placeholder="" value="{{old('nama')}}">
                         </div>
                         <span id="nama"
                             class="help-block customspan">{{ $errors->first('nama') }}
@@ -107,7 +107,7 @@
                                 <span class="bintang">*</span> Refferensi
                             </div>
                             <input name="reff_p" id="reff_p" type="text" class="form-control "
-                                placeholder="*Refferensi" value="{{old('reff_p')}}">
+                                placeholder="" value="{{old('reff_p')}}">
                         </div>
                         <span id="reff_p" class="help-block customspan">{{ $errors->first('reff_p') }}</span>
                     </div>
@@ -122,8 +122,8 @@
                                 <span class="bintang">*</span> Status
                             </div>
                             <select class="form-control select2" name="status_p" id="status_p"
-                                placeholder="*Status" style="width: 100%;">
-                                <option value="" disabled selected>*Status</option>
+                                placeholder="" style="width: 100%;">
+                                <option value="" disabled selected></option>
                                 <option value="1" {{ old('status_p') == '1' ? 'selected' : '' }}>Internal</option>
                                 <option value="2" {{ old('status_p') == '2' ? 'selected' : '' }}>External</option>
                             </select>
@@ -142,8 +142,8 @@
                                 <span class="bintang">*</span> Jenis Kelamin
                             </div>
                             <select class="form-control select2" name="jenis_kelamin" id="jenis_kelamin"
-                                placeholder="*Jenis Kelamin" style="width: 100%;" value="{{old('jenis_kelamin')}}">
-                                <option value="" disabled selected>*Jenis Kelamin</option>
+                                placeholder="" style="width: 100%;" value="{{old('jenis_kelamin')}}">
+                                <option value="" disabled selected></option>
                                 <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
                                 <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                             </select>
@@ -161,7 +161,7 @@
                                 <span class="bintang">*</span> File Foto
                             </div>
                             <input style="padding:2px" class="form-control " accept=".pdf,.jpeg,.jpg"
-                                name="foto" id="foto" type="file" placeholder="Pas Foto"
+                                name="foto" id="foto" type="file" placeholder=""
                                 value="{{old('foto')}}" />
                             <span class="text-muted">Ukuran 3 x 4</span>
                         </div>
@@ -178,7 +178,7 @@
                             <div class="input-group-addon">
                                 <span class="bintang">*</span> NIK
                             </div>
-                            <input name="nik" id="nik" type="text" class="form-control " placeholder="*NIK"
+                            <input name="nik" id="nik" type="text" class="form-control " placeholder=""
                                 onkeypress="return /[0-9]/i.test(event.key)"
                                 value="{{old('nik')}}" maxlength="16">
                         </div>
@@ -195,7 +195,7 @@
                                 <span class="bintang">*</span> File KTP
                             </div>
                             <input style="padding:2px" class="form-control " accept=".pdf,.jpeg,.jpg"
-                                name="lampiran_ktp" id="lampiran_ktp" type="file" placeholder="KTP"
+                                name="lampiran_ktp" id="lampiran_ktp" type="file" placeholder=""
                                 value="{{old('lampiran_ktp')}}" />
                         </div>
                         <span id="lampiran_ktp"
@@ -212,7 +212,7 @@
                                 <span class="bintang">*</span> Alamat (KTP)
                             </div>
                             <input name="alamat_ktp" id="alamat_ktp" type="text" class="form-control "
-                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan (KTP)" value="{{old('alamat_ktp')}}">
+                                placeholder="" value="{{old('alamat_ktp')}}">
                         </div>
                         <span id="alamat_ktp" class="help-block customspan">{{ $errors->first('alamat_ktp') }}</span>
                     </div>
@@ -228,8 +228,8 @@
                                 <span class="bintang">*</span> Provinsi (KTP)
                             </div>
                             <select class="form-control select2" name="provinsi_ktp" id="provinsi_ktp" style="width: 100%;"
-                                placeholder="*Provinsi Alamat (KTP)">
-                                <option value="" disabled selected>*Provinsi (KTP)</option>
+                                placeholder="">
+                                <option value="" disabled selected></option>
                                 @foreach($provinsis as $key)
                                 <option value="{{ $key->id }}" {{ $key->id == old('provinsi_ktp') ? 'selected' : '' }}>
                                     {{ $key->nama }} </option>
@@ -249,7 +249,7 @@
                                 <span class="bintang">*</span> Kota (KTP)
                             </div>
                             <select class="form-control select2" name="kota_ktp" id="kota_ktp" style="width: 100%;">
-                                <option value="" disabled selected>*Kota (KTP)</option>
+                                <option value="" disabled selected></option>
                                 {{-- @foreach($kota as $key)
                                 <option value="{{ $key->id }}" {{ $key->id == old('kota') ? 'selected' : '' }}>
                                 {{ $key->nama }}</option>
@@ -269,7 +269,7 @@
                                 <span class="bintang">*</span> Alamat (domisili)
                             </div>
                             <input name="alamat" id="alamat" type="text" class="form-control "
-                                placeholder="*Alamat Jalan, Kelurahan, Kecamatan (domisili)" value="{{old('alamat')}}">
+                                placeholder="" value="{{old('alamat')}}">
                         </div>
                         <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}</span>
                     </div>
@@ -285,8 +285,8 @@
                                 <span class="bintang">*</span> Provinsi (domisili)
                             </div>
                             <select class="form-control select2" name="provinsi" id="provinsi" style="width: 100%;"
-                                placeholder="*Provinsi Alamat (domisili)">
-                                <option value="" disabled selected>*Provinsi (domisili)</option>
+                                placeholder="">
+                                <option value="" disabled selected></option>
                                 @foreach($provinsis as $key)
                                 <option value="{{ $key->id }}" {{ $key->id == old('provinsi') ? 'selected' : '' }}>
                                     {{ $key->nama }} </option>
@@ -306,7 +306,7 @@
                                 <span class="bintang">*</span> Kota (domisili)
                             </div>
                             <select class="form-control select2" name="kota" id="kota" style="width: 100%;">
-                                <option value="" disabled selected>*Kota (domisili)</option>
+                                <option value="" disabled selected></option>
                                 {{-- @foreach($kota as $key)
                                 <option value="{{ $key->id }}" {{ $key->id == old('kota') ? 'selected' : '' }}>
                                 {{ $key->nama }}</option>
@@ -329,7 +329,7 @@
                             </div>
                             <input name="no_hp" id="no_hp" type="text" class="form-control "
                             onkeypress="return /[0-9]/i.test(event.key)"
-                                placeholder="*No HP" value="{{old('no_hp')}}">
+                                placeholder="" value="{{old('no_hp')}}">
                         </div>
                         <span id="no_hp"
                             class="help-block customspan">{{ $errors->first('no_hp') }}</span>
@@ -345,7 +345,7 @@
                                 <span class="bintang">*</span> Email
                             </div>
                             <input name="email" id="email" type="email" class="form-control "
-                                placeholder="*Email" value="{{old('email')}}">
+                                placeholder="" value="{{old('email')}}">
                         </div>
                         <span id="email" class="help-block customspan">{{ $errors->first('email') }}</span>
                     </div>
@@ -361,8 +361,8 @@
                                 <span class="bintang">*</span> Tempat Lahir
                             </div>
                             <select class="form-control select2" name="temp_lahir" id="temp_lahir"
-                                style="width: 100%;" placeholder="*Tempat Lahir">
-                                <option value="" disabled selected>*Tempat Lahir</option>
+                                style="width: 100%;" placeholder="">
+                                <option value="" disabled selected></option>
                                 @foreach($kotas as $key)
                                 <option value="{{ $key->id }}"
                                     {{ $key->id == old('temp_lahir') ? 'selected' : '' }}>
@@ -385,7 +385,7 @@
                             </div>
                             <input autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy"
                                 type="text" class="form-control " id="tgl_lahir" name="tgl_lahir"
-                                placeholder="*Tanggal Lahir ( dd/mm/yyyy )" value="{{old('tgl_lahir')}}">
+                                placeholder="" value="{{old('tgl_lahir')}}">
                         </div>
                         <span id="tgl_lahir"
                             class="help-block customspan">{{ $errors->first('tgl_lahir') }}</span>
@@ -402,8 +402,8 @@
                                 Agama
                             </div>
                             <select class="form-control select2" name="agama" id="agama" style="width: 100%;"
-                                placeholder="Agama">
-                                <option value="" disabled selected>Agama</option>
+                                placeholder="">
+                                <option value="" disabled selected></option>
                                 <option value="islam" >Islam</option>
                                 <option value="protestan" >Protestan</option>
                                 <option value="katolik" >Katolik</option>
@@ -425,8 +425,8 @@
                                 Status Pajak
                             </div>
                             <select class="form-control select2" name="status_pajak" id="status_pajak" style="width: 100%;"
-                                placeholder="Status Pajak">
-                                <option value="islam" disabled selected>Status Pajak (PTKP)</option>
+                                placeholder="">
+                                <option value="" disabled selected></option>
                                 @foreach($ptkp as $key)
                                 <option value="{{ $key->id }}"
                                     {{ $key->id == old('status_pajak') ? 'selected' : '' }}>
@@ -449,7 +449,7 @@
                             </div>
                             <select class="form-control select2" name="status_perni" id="status_perni" style="width: 100%;"
                                 placeholder="Status Pernikahan">
-                                <option value="" disabled selected>Status Pernikahan</option>
+                                <option value="" disabled selected></option>
                                 <option value="BK" >Belum Kawin</option>
                                 <option value="K" >Kawin</option>
                                 <option value="CH" >Cerai Hidup</option>
@@ -472,7 +472,7 @@
                             <input type="text"
                             onkeypress="return /[0-9]/i.test(event.key)"
                                 maxlength="13"
-                                id="bpjs_no" name="bpjs_no" class="form-control " placeholder="No BPJS Kesehatan"
+                                id="bpjs_no" name="bpjs_no" class="form-control " placeholder=""
                                 value="{{old('bpjs_no')}}" data-toggle="tooltip" data-placement="bottom"
                                 title="Kosongkan Jika Tidak Ada No BPJS Kesehatan">
                         </div>
@@ -488,7 +488,7 @@
                                 File BPJS Kesehatan
                             </div>
                             <input style="padding: 2px;" class="form-control" accept=".pdf,.jpeg,.jpg,.png"
-                                name="lampiran_bpjs" id="lampiran_bpjs" type="file" placeholder="No BPJS Kesehatan"
+                                name="lampiran_bpjs" id="lampiran_bpjs" type="file" placeholder=""
                                 value="{{old('lampiran_bpjs')}}" />
                         </div>
                         <span id="lampiran_bpjs"
@@ -505,7 +505,7 @@
                                 NPWP
                             </div>
                             <input type="text"
-                                id="npwp" name="npwp" class="form-control " placeholder="*NPWP"
+                                id="npwp" name="npwp" class="form-control " placeholder=""
                                 value="{{old('npwp')}}" data-toggle="tooltip" data-placement="bottom"
                                 title="Kosongkan Jika Tidak Ada NPWP">
                         </div>
@@ -521,7 +521,7 @@
                                 File NPWP
                             </div>
                             <input style="padding: 2px;" class="form-control" accept=".pdf,.jpeg,.jpg"
-                                name="lampiran_npwp" id="lampiran_npwp" type="file" placeholder="NPWP"
+                                name="lampiran_npwp" id="lampiran_npwp" type="file" placeholder=""
                                 value="{{old('lampiran_npwp')}}" />
                         </div>
                         <span id="lampiran_npwp"
@@ -539,7 +539,7 @@
                             </div>
                             <input name="no_rek" id="no_rek" type="text" class="form-control "
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                placeholder="No Rekening Bank" value="{{old('no_rek')}}">
+                                placeholder="" value="{{old('no_rek')}}">
                         </div>
                         <span id="no_rek"
                             class="help-block customspan">{{ $errors->first('no_rek') }}</span>
@@ -553,7 +553,7 @@
                                 Nama Rekening Bank
                             </div>
                             <input name="nama_rek" id="nama_rek" type="text" class="form-control "
-                                placeholder="Nama Rekening Bank" value="{{old('nama_rek')}}">
+                                placeholder="" value="{{old('nama_rek')}}">
                         </div>
                         <span id="nama_rek"
                             class="help-block customspan">{{ $errors->first('nama_rek') }}</span>
@@ -567,8 +567,8 @@
                                 Nama Bank
                             </div>
                             <select class="form-control select2" name="bank_id" id="bank_id"
-                                style="width: 100%;" placeholder="Nama Bank">
-                                <option value="" disabled selected>Nama Bank</option>
+                                style="width: 100%;" placeholder="">
+                                <option value="" disabled selected></option>
                                 @foreach($banks as $key)
                                 <option value="{{ $key->id_bank }}"
                                     {{ $key->id_bank == old('bank_id') ? 'selected' : '' }}>
@@ -659,7 +659,7 @@
                 a = `<option value="0">-- Pilih Default --</option>
                      <option value="1" selected>Default</option>`;
             } else {
-                a = `<option value="0" selected>-- Pilih Default --</option>
+                a = `<option value="0" selected></option>
                      <option value="1">Default</option>`;
             }
 
@@ -708,7 +708,7 @@
                     <td><input required name="id_noijasah_` + no + `" id="id_noijasah_` + no + `" type="text" class="form-control " placeholder=""></td>
                     <td style="width:10%">
                         <input required autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                        class="form-control " id="id_tglijasah_` + no + `" name="id_tglijasah_` + no + `" placeholder="dd/mm/yyyyy">
+                        class="form-control " id="id_tglijasah_` + no + `" name="id_tglijasah_` + no + `" placeholder="">
                     </td>
                     <td>
                         <select required class="form-control select2 selectdefault" nomor="` + no +
@@ -751,7 +751,7 @@
 
                     } else {
                         $('#id_default_' + entry).html(
-                            '<option value="0" selected>-- Pilih Default --</option><option value="1">Default</option>'
+                            '<option value="0" selected></option><option value="1">Default</option>'
                         );
                     }
                     // console.log(entry);
@@ -882,9 +882,9 @@
             format: 'dd-mm-yyyy',
         });
 
-        $('#tgl_lahir').mask("99-99-9999",{placeholder:"HH-BB-TTTT"});
+        $('#tgl_lahir').mask("99-99-9999",{placeholder:""});
 
-        $('#npwp').mask("99.999.999.9-999.999",{placeholder:"Nomor Pokok Wajib Pajak"}).attr('maxlength','20');
+        $('#npwp').mask("99.999.999.9-999.999",{placeholder:""}).attr('maxlength','20');
     });
 
 </script>
