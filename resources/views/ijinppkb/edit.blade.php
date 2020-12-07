@@ -84,7 +84,7 @@
                                 </div>
                                 <select disabled class="form-control select2" name="id_kode_pjk3_tmp"
                                     id="id_kode_pjk3_tmp" style="width: 100%;">
-                                    <option value="" disabled selected>Nama PJS_PPKB</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($badanusaha as $key)
                                     <option value="{{ $key->id }}" {{ $key->id == $data->kode_pjk3 ? 'selected' : '' }}>
                                         {{ $key->nama_bu }} </option>
@@ -104,7 +104,7 @@
                                     Provinsi Naker
                                 </div>
                                 <input name="id_prov_naker" id="id_prov_naker" type="text" class="form-control"
-                                    placeholder="Provinsi Naker" value="{{$data->badan_usaha->provinsi->nama}}"
+                                    placeholder="" value="{{$data->badan_usaha->provinsi->nama}}"
                                     disabled>
                             </div>
                             <span id="id_prov_naker" class="help-block customspan">{{ $errors->first('id_prov_naker') }}
@@ -120,7 +120,7 @@
                                     Alamat
                                 </div>
                                 <input name="id_alamat_bu" id="id_alamat_bu" class="form-control"
-                                    placeholder="Alamat Jalan, Kelurahan, Kecamatan"
+                                    placeholder=""
                                     value="{{$data->badan_usaha->alamat}}" disabled>
                             </div>
                             <span id="id_alamat_bu" class="help-block customspan">{{ $errors->first('id_alamat_bu') }}
@@ -135,7 +135,7 @@
                                     Provinsi BU
                                 </div>
                                 <input name="id_prov_bu" id="id_prov_bu" type="text" class="form-control"
-                                    placeholder="Provinsi BU" value="{{$data->badan_usaha->provinsibu->nama}}" disabled>
+                                    placeholder="" value="{{$data->badan_usaha->provinsibu->nama}}" disabled>
                             </div>
                             <span id="id_prov_bu" class="help-block customspan">{{ $errors->first('id_prov_bu') }}
                             </span>
@@ -150,7 +150,7 @@
                                     Kota BU
                                 </div>
                                 <input name="id_kota_bu" id="id_kota_bu" type="text" class="form-control"
-                                    placeholder="Kota BU" value="{{$data->badan_usaha->kota->nama}}" disabled>
+                                    placeholder="" value="{{$data->badan_usaha->kota->nama}}" disabled>
                             </div>
                             <span id="id_kota_bu" class="help-block customspan">{{ $errors->first('id_kota_bu') }}
                             </span>
@@ -164,7 +164,7 @@
                                     No Tlp
                                 </div>
                                 <input name="id_no_telp" id="id_no_telp" type="text" class="form-control"
-                                    placeholder="No Tlp" value="{{$data->badan_usaha->telp}}" disabled>
+                                    placeholder="" value="{{$data->badan_usaha->telp}}" disabled>
                             </div>
                             <span id="id_no_telp" class="help-block customspan">{{ $errors->first('id_no_telp') }}
                             </span>
@@ -179,7 +179,7 @@
                                     Email
                                 </div>
                                 <input name="id_email" id="id_email" type="email" class="form-control"
-                                    placeholder="Email" value="{{$data->badan_usaha->email}}" disabled>
+                                    placeholder="" value="{{$data->badan_usaha->email}}" disabled>
                             </div>
                             <span id="id_email" class="help-block customspan">{{ $errors->first('id_email') }} </span>
                         </div>
@@ -192,7 +192,7 @@
                                     Instansi Reff
                                 </div>
                                 <input name="id_instansi" id="id_instansi" type="text" class="form-control"
-                                    placeholder="Instansi Reff" value="{{$data->badan_usaha->instansi_reff}}" disabled>
+                                    placeholder="" value="{{$data->badan_usaha->instansi_reff}}" disabled>
                             </div>
                             <span id="id_instansi" class="help-block customspan">{{ $errors->first('id_instansi') }}
                             </span>
@@ -206,7 +206,7 @@
                                 <div class="input-group-addon">
                                     Web
                                 </div>
-                                <input name="id_web" id="id_web" type="text" class="form-control" placeholder="Web"
+                                <input name="id_web" id="id_web" type="text" class="form-control" placeholder=""
                                     value="{{$data->badan_usaha->web}}" disabled>
                             </div>
                             <span id="id_web" class="help-block customspan">{{ $errors->first('id_web') }} </span>
@@ -220,10 +220,10 @@
                                     <span class="bintang">*</span> Nama Pimpinan
                                 </div>
                                 <input name="id_nama_p" id="id_nama_p" type="text" class="form-control"
-                                    autocomplete="off" placeholder="Nama Pimpinan" value="{{$data->nama_pimp}}">
+                                    autocomplete="off" placeholder="" value="{{$data->nama_pimp}}">
                                 <!-- <select class="form-control select2" name="id_nama_p" id="id_nama_p"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Nama Pimpinan</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($personil as $key)
                                     <option id-personil="{{ $key->id }}" value="{{ $key->nama }}">
                                         {{ $key->nama }}
@@ -249,7 +249,7 @@
                                     Jabatan Pimpinan
                                 </div>
                                 <input name="id_jab_p" id="id_jab_p" type="text" class="form-control"
-                                    placeholder="Jabatan Pimpinan" value="{{$data->jab_pimp}}">
+                                    placeholder="" value="{{$data->jab_pimp}}">
                             </div>
                             <span id="id_jab_p" class="help-block customspan">{{ $errors->first('id_jab_p') }} </span>
                         </div>
@@ -262,7 +262,7 @@
                                     No Hp Pimpinan
                                 </div>
                                 <input name="id_hp_p" id="id_hp_p" type="text" class="form-control"
-                                    placeholder="No Hp Pimpinan" value="{{$data->no_pimp}}">
+                                    placeholder="" value="{{$data->no_pimp}}">
                             </div>
                             <span id="id_hp_p" class="help-block customspan">{{ $errors->first('id_hp_p') }} </span>
                         </div>
@@ -276,7 +276,7 @@
                                     Email Pimpinan
                                 </div>
                                 <input name="id_email_p" id="id_email_p" type="email" class="form-control"
-                                    placeholder="Email Pimpinan" value="{{$data->email_pimp}}">
+                                    placeholder="" value="{{$data->email_pimp}}">
                             </div>
                             <span id="id_email_p" class="help-block customspan">{{ $errors->first('id_email_p') }}
                             </span>
@@ -290,10 +290,10 @@
                                     <span class="bintang">*</span> Nama Kontak Person
                                 </div>
                                 <input name="id_nama_kp" id="id_nama_kp" type="text" class="form-control"
-                                    autocomplete="off" placeholder="Nama Kontak Person" value="{{$data->nama_kp}}">
+                                    autocomplete="off" placeholder="" value="{{$data->nama_kp}}">
                                 <!-- <select class="form-control select2" name="id_nama_kp" id="id_nama_kp"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Nama Kontak Person</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($personil as $key)
                                     <option id-personil="{{ $key->id }}" value="{{ $key->nama }}">
                                         {{ $key->nama }}
@@ -302,7 +302,7 @@
                                     <option id-personil="lain" value="lain">Lainnya</option>
                                 </select> -->
                                 <!-- <input name="id_nama_kp" id="id_nama_kp" type="text" class="form-control"
-                                    placeholder="Nama Kontak Person" value="{{$data->badan_usaha->kontak_p}}" disabled> -->
+                                    placeholder="" value="{{$data->badan_usaha->kontak_p}}" disabled> -->
                             </div>
                             <span id="id_nama_kp" class="help-block customspan">{{ $errors->first('id_nama_kp') }}
                             </span>
@@ -322,7 +322,7 @@
                                     Jabatan Kontak Person
                                 </div>
                                 <input name="id_jab_kp" id="id_jab_kp" type="text" class="form-control"
-                                    placeholder="Jabatan Kontak Person" value="{{$data->jab_kp}}">
+                                    placeholder="" value="{{$data->jab_kp}}">
                             </div>
                             <span id="id_jab_kp" class="help-block customspan">{{ $errors->first('id_jab_kp') }} </span>
                         </div>
@@ -335,7 +335,7 @@
                                     No HP Kontak Person
                                 </div>
                                 <input name="id_hp_kp" id="id_hp_kp" type="text" class="form-control"
-                                    placeholder="No HP Kontak Person" value="{{$data->no_kp}}">
+                                    placeholder="" value="{{$data->no_kp}}">
                             </div>
                             <span id="id_hp_kp" class="help-block customspan">{{ $errors->first('id_hp_kp') }} </span>
                         </div>
@@ -349,7 +349,7 @@
                                     Email Kontak Person
                                 </div>
                                 <input name="id_email_kp" id="id_email_kp" type="email" class="form-control"
-                                    placeholder="Email Kontak Person" value="{{$data->email_kp}}">
+                                    placeholder="" value="{{$data->email_kp}}">
                             </div>
                             <span id="id_email_kp" class="help-block customspan">{{ $errors->first('id_email_kp') }}
                             </span>
@@ -363,7 +363,7 @@
                                     No NPWP
                                 </div>
                                 <input type="text" id="id_npwp" name="id_npwp" class="form-control"
-                                    placeholder="NO NPWP" value="{{$data->badan_usaha->npwp}}" disabled>
+                                    placeholder="" value="{{$data->badan_usaha->npwp}}" disabled>
                             </div>
                             <span id="id_npwp" class="help-block customspan">{{ $errors->first('id_npwp') }} </span>
                         </div>
@@ -376,7 +376,7 @@
                                     No Rekening Bank
                                 </div>
                                 <input name="id_norek_bank" id="id_norek_bank" type="text" class="form-control"
-                                    placeholder="No Rekening Bank" value="{{ $data->no_rek }}">
+                                    placeholder="" value="{{ $data->no_rek }}">
                             </div>
                             <span id="id_norek_bank" class="help-block customspan">{{ $errors->first('id_norek_bank') }}
                             </span>
@@ -391,7 +391,7 @@
                                     Nama Rekening Bank
                                 </div>
                                 <input name="id_namarek_bank" id="id_namarek_bank" type="text" class="form-control"
-                                    placeholder="Nama Rekening Bank" value="{{$data->nama_rek}}">
+                                    placeholder="" value="{{$data->nama_rek}}">
                             </div>
                             <span id="id_namarek_bank"
                                 class="help-block customspan">{{ $errors->first('id_namarek_bank') }}
@@ -407,7 +407,7 @@
                                 </div>
                                 <select class="form-control select2" name="id_nama_bank" id="id_nama_bank"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Nama Bank</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($bank as $key)
                                     <option value="{{ $key->id_bank }}"
                                         {{$data->id_bank == $key->id_bank ? 'selected' : '' }}>
@@ -417,7 +417,7 @@
                                 </select>
 
                                 <!-- <input name="id_nama_bank" id="id_nama_bank" type="text" class="form-control"
-                                    placeholder="Nama Bank"
+                                    placeholder=""
                                     value="{{ isset($data->badan_usaha->bank->Nama_Bank) ? $data->badan_usaha->bank->Nama_Bank : '' }}"
                                     disabled> -->
                             </div>
@@ -489,18 +489,18 @@
                                         <option value="{{$key->bidang->id}}">{{$key->bidang->nama_bidang}}</option>
                                     </select>
                                 </td>
-                                <td><input type="text" class="form-control" placeholder="No SKP"
+                                <td><input type="text" class="form-control" placeholder=""
                                         name="no_skp_{{$loop->iteration}}" id="no_skp_{{$loop->iteration}}"
                                         value="{{$key->no_sk}}"></td>
                                 <td style="width:10%"> <input autocomplete="off" data-provide="datepicker"
                                         data-date-format="dd/mm/yyyy" type="text" class="form-control"
-                                        placeholder="Tgl_Terbit SKP" name="tgl_terbit_{{$loop->iteration}}"
+                                        placeholder="" name="tgl_terbit_{{$loop->iteration}}"
                                         id="tgl_terbit_{{$loop->iteration}}"
                                         value="@if($key->tgl_sk=='')  @else {{date('d/m/Y', strtotime($key->tgl_sk))}} @endif">
                                 </td>
                                 <td style="width:10%"> <input autocomplete="off" data-provide="datepicker"
                                         data-date-format="dd/mm/yyyy" type="text" class="form-control"
-                                        placeholder="Tgl_Akhir SKP" name="tgl_akhir_{{$loop->iteration}}"
+                                        placeholder="" name="tgl_akhir_{{$loop->iteration}}"
                                         id="tgl_akhir_{{$loop->iteration}}"
                                         value="@if($key->tgl_akhir_sk=='')  @else {{date('d/m/Y', strtotime($key->tgl_akhir_sk))}} @endif">
                                 </td>
@@ -508,7 +508,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-10">
                                             <input type="file" style="padding: 3px 3px;" class="form-control cstmfile"
-                                                placeholder="Pdf SKP" name="pdf_skp_{{$loop->iteration}}"
+                                                placeholder="" name="pdf_skp_{{$loop->iteration}}"
                                                 id="pdf_skp_{{$loop->iteration}}">
                                         </div>
                                         <label for="inputEmail3" class="col-sm-2 control-label"
@@ -644,7 +644,7 @@
                                     <select class="form-control select2 jns_usaha" name="jns_usaha_detail_` + no + `"
                                         id="jns_usaha_detail_` + no +
                 `" style="width: 100%;" idbidang="bidang_detail_` + no + `" required>
-                                        <option value="" disabled selected>Pilih Jenis Usaha</option>
+                                        <option value="" disabled selected></option>
                                         @foreach($jenisusaha as $key)
                                         <option value="{{ $key->id }}">
                                             {{ $key->kode_jns_usaha }} </option>
@@ -654,19 +654,19 @@
                                 <td>
                                     <select class="form-control select2" name="bidang_detail_` + no +
                 `" id="bidang_detail_` + no + `" style="width: 100%;" required>
-                                        <option value="" disabled selected>Pilih Bidang SKP</option>
+                                        <option value="" disabled selected></option>
                                     </select>
                                 </td>
-                                <td><input type="text" class="form-control" placeholder="No SKP" name="no_skp_` + no +
+                                <td><input type="text" class="form-control" placeholder="" name="no_skp_` + no +
                 `" id="no_skp_` + no + `"></td>
                                 <td style="width:10%"> <input required autocomplete="off" data-provide="datepicker"
                                         data-date-format="dd/mm/yyyy" type="text" class="form-control"
-                                        placeholder="Tgl_Terbit SKP" name="tgl_terbit_` + no + `" id="tgl_terbit_` +
+                                        placeholder="" name="tgl_terbit_` + no + `" id="tgl_terbit_` +
                 no + `"></td>
                                 <td style="width:10%"> <input required autocomplete="off" data-provide="datepicker"
                                         data-date-format="dd/mm/yyyy" type="text" class="form-control"
-                                        placeholder="Tgl_Akhir SKP" name="tgl_akhir_` + no + `" id="tgl_akhir_` + no + `"></td>
-                                <td style="width:15%"><input style="padding: 3px 3px;" required type="file" class="form-control cstmfile" placeholder="Pdf SKP"
+                                        placeholder="" name="tgl_akhir_` + no + `" id="tgl_akhir_` + no + `"></td>
+                                <td style="width:15%"><input style="padding: 3px 3px;" required type="file" class="form-control cstmfile" placeholder=""
                                         name="pdf_skp_` + no + `" id="pdf_skp_` + no + `"></td>
                                 <td style="width:5%"><button type="button"
                                         class="btn btn-block btn-danger btn-sm btn-detail-hapus" nomor="` + no + `" onclick=""><span class="fa fa-trash"></span></button></td>
@@ -918,7 +918,7 @@
                 },
                 success: function (data) {
                     $("#" + idbidang).html(
-                        "<option value='' selected disabled>Pilih Bidang SKP</option>");
+                        "<option value='' selected disabled></option>");
                     $("#" + idbidang).select2({
                         data: data
                     }).val(null).trigger('change');

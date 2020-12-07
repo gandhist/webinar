@@ -31,8 +31,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <select class="form-control select2" name="id_nama_pjk3" id="id_nama_pjk3" style="width: 100%;"
-                            placeholder="Nama PJK3">
-                            <option value="" disabled selected>Nama PJK3</option>
+                            placeholder="">
+                            <option value="" disabled selected></option>
                             @foreach($pjk3 as $key)
                             <option value="{{ $key->kode_pjk3 }}"
                                 {{ $key->kode_pjk3 == old('id_nama_pjk3') ? 'selected' : '' }}>
@@ -47,8 +47,8 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <select class="form-control select2" id_bidangdok="id_bidangdok" name="id_namadok"
-                            id="id_namadok" style="width: 100%;" placeholder="Nama Dokumen">
-                            <option value="" disabled selected>Nama Dokumen</option>
+                            id="id_namadok" style="width: 100%;" placeholder="">
+                            <option value="" disabled selected></option>
                             @foreach($jenisdoksrtf as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('id_namadok') ? 'selected' : '' }}>
                                 {{ $key->nama_srft_alat }} </option>
@@ -61,8 +61,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <select id_jenisdok="id_jenisdok" id_namadok="id_namadok" name="id_bidangdok" id="id_bidangdok"
-                            type="text" class="form-control select2" style="width: 100%;" placeholder="Bidang Dok">
-                            <option value="" disabled selected>Bidang Dok</option>
+                            type="text" class="form-control select2" style="width: 100%;" placeholder="">
+                            <option value="" disabled selected></option>
                             {{-- @foreach($bidang as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('id_namadok') ? 'selected' : '' }}>
                             {{ $key->kode_bidang }} </option>
@@ -74,7 +74,7 @@
                     <div class="col-sm-6">
                         <select class="form-control select2" name="id_jenisdok" id="id_jenisdok" style="width: 100%;"
                             placeholder="Jenis Dok">
-                            <option value="" disabled selected>Jenis Dok</option>
+                            <option value="" disabled selected></option>
                             {{-- @foreach($jenisdok as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('id_jenisdok') ? 'selected' : '' }}>
                             {{ $key->Nama_jns_dok }} </option>
@@ -206,7 +206,7 @@
                 },
                 success: function (data) {
                     $("#" + id_bidangdok).html(
-                        "<option value='' selected disabled>Pilih Bidang</option>");
+                        "<option value='' selected disabled></option>");
                     $("#" + id_bidangdok).select2({
                         data: data
                     }).val(null).trigger('change');
@@ -246,7 +246,7 @@
                 },
                 success: function (data) {
                     $("#" + id_jnsdok).html(
-                        "<option value='' selected disabled>Pilih Jenis Dok</option>");
+                        "<option value='' selected disabled></option>");
                     $("#" + id_jnsdok).select2({
                         data: data
                     }).val(null).trigger('refresh');
@@ -340,33 +340,33 @@
                                 <tr>
                                     <td style="text-align:center;">` + no + `</td>
                                     <td>
-                                        <input disabled value="` + response['dataSkpAk3'][i]['personal']['nama'] + `" type="text" class="form-control" placeholder="Nama"
+                                        <input disabled value="` + response['dataSkpAk3'][i]['personal']['nama'] + `" type="text" class="form-control" placeholder=""
                                             name="id_namapersonil_` + no + `" id="id_namapersonil_` + no + `">
                                     </td>
                                     <td>
                                         <input disabled value="` + response['dataSkpAk3'][i]['personal']['kota'][
                                 'provinsi'
-                            ]['nama'] + `" type="text" class="form-control" placeholder="Prov"
+                            ]['nama'] + `" type="text" class="form-control" placeholder=""
                                             name="id_provpersonil_` + no + `" id="id_provpersonil_` + no + `">
                                     </td>
                                     <td>
-                                        <input disabled value="` + response['dataSkpAk3'][i]['instansi_skp'] + `" type="text" class="form-control" placeholder="Instansi Dok"
+                                        <input disabled value="` + response['dataSkpAk3'][i]['instansi_skp'] + `" type="text" class="form-control" placeholder=""
                                             name="id_instansi_` + no + `" id="id_instansi_` + no + `">
                                     </td>
                                     <td>
-                                        <input disabled value="` + response['dataSkpAk3'][i]['no_skp'] + `" type="text" class="form-control" placeholder="No Dok"
+                                        <input disabled value="` + response['dataSkpAk3'][i]['no_skp'] + `" type="text" class="form-control" placeholder=""
                                             name="id_nodokumen_` + no + `" id="id_nodokumen_` + no + `">
                                     </td>
                                     <td>
-                                        <input disabled value="` + tgl_skp + `" type="text" class="form-control" placeholder="Tgl Terbit"
+                                        <input disabled value="` + tgl_skp + `" type="text" class="form-control" placeholder=""
                                             name="id_tglterbit_` + no + `" id="id_tglterbit_` + no + `">
                                     </td>
                                     <td>
-                                        <input disabled value="` + tgl_akhir_skp + `" type="text" class="form-control" placeholder="Tgl Akhir"
+                                        <input disabled value="` + tgl_akhir_skp + `" type="text" class="form-control" placeholder=""
                                             name="id_tglakhir_` + no + `" id="id_tglakhir_` + no + `">
                                     </td>
                                     <td>
-                                        <input disabled value="` + jp + ` ` + prodi + ` ` + tahun_tamat + `" type="text" class="form-control" placeholder="Sekolah_P"
+                                        <input disabled value="` + jp + ` ` + prodi + ` ` + tahun_tamat + `" type="text" class="form-control" placeholder=""
                                             name="id_sekolahp_` + no + `" id="id_sekolahp_` + no + `">
                                     </td>
                                     <td style="width:10%">
@@ -377,7 +377,7 @@
                                         <a target="_blank" href="/uploads/` + response['dataSkpAk3'][i][
                                 'pdf_skp_ak3'
                             ] + `" type="button" class="btn btn-primary btn-sm"
-                                            placeholder="Pdf Dok" name="id_pdfdok_` + no + `" id="id_pdfdok_` + no + `" style="margin-top:2px;margin-left:6px;">
+                                            placeholder="" name="id_pdfdok_` + no + `" id="id_pdfdok_` + no + `" style="margin-top:2px;margin-left:6px;">
                                             <i class="fa fa-file-pdf-o" ></i> Lihat</a>
                                     </td>
                                 </tr>
