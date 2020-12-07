@@ -141,10 +141,10 @@
                         <div class="col-sm-3" style='text-align:right'>
                             <div class="row" style="margin-top:-3px;margin-bottom:3px">
                                 <div class="col-xs-12">
-                                    <div class="btn-group">
+                                    {{-- <div class="btn-group">
                                         <span class="btn btn-primary" id="btnDetail"></i>
                                             Detail_Personil</span>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="row">
@@ -152,10 +152,10 @@
                                     <div class="btn-group">
                                         <a href="{{ url('personals/create') }}" class="btn btn-info">
                                             <i class="fa fa-plus"></i> Tambah</a>
-                                        <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                                        {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                             <i class="fa fa-edit"></i> Ubah</button>
                                         <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
-                                            <i class="fa fa-trash"></i> Hapus</button>
+                                            <i class="fa fa-trash"></i> Hapus</button> --}}
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th style="text-indent: 12px;"><i class="fa fa-check-square-o"></i></th>
+                                    <th style="text-indent: 12px;">Action</th>
                                     <th style="text-indent: 22px;">No</th>
                                     <!-- <th>Reff</th> -->
                                     <th>Status</th>
@@ -206,8 +206,11 @@
                                     $username =  preg_replace('/[^a-zA-Z0-9()]/', '_', $personal->nama);
                                 @endphp
                                 <tr>
-                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $personal->id }}" class="selection"
-                                        id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center'>
+                                        <a href="{{ url('personals/'.$personal->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $personal->id }}")'><span class="fa fa-trash"></span></button>
+                                        <a class="btn btn-xs btn-success" onclick='showData("{{ $personal->id }}")'><span class="fa fa-eye"></i></a>
+                                    </td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>@if ($personal->status_p =='1') Internal @elseif ($personal->status_p =='2') External @endif</td>
                                     <td data-toggle="tooltip" data-placement="top" data-html="true" title="
@@ -518,6 +521,29 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
     $('.select2').select2();
+
+
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
+
+    function showData(id) {
+        url = id;
+        // window.location.href = "{{ url('personil') }}/" + url + "/show";
+        getDataDetail(id);
+
+    }
 
     // Filter kota berdasarkan provinsi
     $('#f_provinsi').on('select2:select', function () {
