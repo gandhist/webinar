@@ -170,7 +170,7 @@
                                     <td style='text-align:center'>
                                         <a href="{{ url('instansi/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
                                         <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
-                                        <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a>
+                                        {{-- <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a> --}}
                                     </td>
 
                                     <td class="text-center">{{ $loop->iteration }}</td>

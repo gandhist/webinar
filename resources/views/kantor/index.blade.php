@@ -147,7 +147,7 @@
                                     <td style='text-align:center;width:1%'>
                                         <a href="{{ url('kantor/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
                                         <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
-                                        <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a>
+                                        {{-- <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a> --}}
                                     </td>
                                     <td style='text-align:center;width:1%'>{{ $loop->iteration }}</td>
                                     <td data-toggle="tooltip" data-placement="bottom" data-html="true"
