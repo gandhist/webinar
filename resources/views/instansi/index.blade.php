@@ -116,10 +116,10 @@
                         <div class="btn-group">
                             <a href="{{ url('instansi/create') }}" class="btn btn-info"> <i class="fa fa-plus"></i>
                                 Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i class="fa fa-edit"></i>
+                            {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i class="fa fa-edit"></i>
                                 Ubah</button>
                             <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i class="fa fa-trash"></i>
-                                Hapus</button>
+                                Hapus</button> --}}
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
+                                    <th><span class="indent">Action</span></th>
                                     <th><span>No.</span></th>
                                     <th>Nama_BU</th>
                                     <th>Sts_BU</th>
@@ -167,8 +167,11 @@
                             <tbody>
                                 @foreach($instansi as $key)
                                 <tr>
-                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                        id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center'>
+                                        <a href="{{ url('instansi/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                                        <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a>
+                                    </td>
 
                                     <td class="text-center">{{ $loop->iteration }}</td>
 
@@ -383,6 +386,21 @@
             //     }
             // })
         })
+    }
+
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
     }
 
     // Filter kota berdasarkan provinsi
