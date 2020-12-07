@@ -264,12 +264,12 @@
                     <div class="col-sm-2" style='text-align:right'>
                         <div class="row" style="margin-top:-3px;margin-bottom:3px">
                             <div class="col-xs-12">
-                                <div class="btn-group">
-                                    {{-- <span class="btn btn-primary" id="btnDetail"></i>
-                                        Detail_Dok</span> --}}
+                                {{-- <div class="btn-group">
+                                    <span class="btn btn-primary" id="btnDetail"></i>
+                                        Detail_Dok</span>
                                     <a href="{{ url('dokpersonal/detail') }}" class="btn btn-primary">
                                         Detail_Dok</a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="row">
@@ -278,12 +278,12 @@
                                     <a href="{{ url('dokpersonal/create') }}" class="btn btn-info"> <i
                                             class="fa fa-user-plus"></i>
                                         Tambah</a>
-                                    <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
+                                    {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
                                             class="fa fa-edit"></i>
                                         Ubah</a>
                                         <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i
                                                 class="fa fa-trash"></i>
-                                            Hapus</button>
+                                            Hapus</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -324,8 +324,11 @@
                 <tbody>
                     @foreach($data as $key)
                     <tr>
-                        <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                id="selection[]" name="selection[]"></td>
+                        <td style='text-align:center'>
+                            <a href="{{ url('dokpersonal/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                            <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                            <a class="btn btn-xs btn-success" href="{{ url('dokpersonal/detail') }}"><span class="fa fa-eye"></i></a>
+                        </td>
                         <td style='text-align:center'>{{ $loop->iteration }}</td>
                         <td style='text-align:center' data-toggle="tooltip" data-placement="top" data-html="true"
                             title="
@@ -636,6 +639,29 @@
 <script type="text/javascript">
     var save_method = "add";
 
+
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
+
+    function showData(id) {
+        url = id;
+        // window.location.href = "{{ url('personil') }}/" + url + "/show";
+        getDataDetail(id);
+
+    }
+
     $(function () {
         //Pilih Filter Jns Usaha on Change
         $(document).on('change', '#f_jenis_usaha', function (e) {
@@ -683,6 +709,60 @@
             bidangdokchange(id_bidangdok);
         });
 
+
+        // Fungsi Get Data Detail
+        function getDataDetail(id) {
+            var url = "{{ url('detail_dokpersonil_modal') }}";
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    id_skp_ak3: id
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#tableModalDetail > tbody').html(`
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Prov</th>
+                            <th>Instansi_Dok</th>
+                            <th>No_Dok</th>
+                            <th>Tgl_Terbit</th>
+                            <th>Tgl_Akhir</th>
+                            <th>Sekolah_P</th>
+                            <th>Ket_P</th>
+                            <th>Pdf_Dok</th>
+                        </tr>
+                    `);
+
+                    if (data.length > 0) {
+                        data.forEach(function (item, index) {
+                            // if(index == 0) {
+                            changedata(index, data);
+                            // add_row(index, data);
+                            // }
+                        });
+                        $('#modaldetail').modal('show');
+                    } else {
+                        Swal.fire({
+                            title: "Data Dokumen Personil tidak ditemukan !",
+                            type: 'error',
+                            confirmButtonText: 'Close',
+                            confirmButtonColor: '#AAA'
+                        });
+                    }
+                },
+                error: function (xhr, status) {
+                    Swal.fire('terjadi Error');
+                }
+            });
+        }
         // Fungsi Filter ketika memilih jenis usaha menampilkan bidang
         function bidangdokchange(id_bidangdok) {
             var url = "{{ url('select_bidang_skp_ak3') }}";
@@ -877,59 +957,6 @@
             }
         });
 
-        // Fungsi Get Data Detail
-        function getDataDetail(id) {
-            var url = "{{ url('detail_dokpersonil_modal') }}";
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: {
-                    id_skp_ak3: id
-                },
-                success: function (data) {
-                    console.log(data);
-                    $('#tableModalDetail > tbody').html(`
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Prov</th>
-                            <th>Instansi_Dok</th>
-                            <th>No_Dok</th>
-                            <th>Tgl_Terbit</th>
-                            <th>Tgl_Akhir</th>
-                            <th>Sekolah_P</th>
-                            <th>Ket_P</th>
-                            <th>Pdf_Dok</th>
-                        </tr>
-                    `);
-
-                    if (data.length > 0) {
-                        data.forEach(function (item, index) {
-                            // if(index == 0) {
-                            changedata(index, data);
-                            // add_row(index, data);
-                            // }
-                        });
-                        $('#modaldetail').modal('show');
-                    } else {
-                        Swal.fire({
-                            title: "Data Dokumen Personil tidak ditemukan !",
-                            type: 'error',
-                            confirmButtonText: 'Close',
-                            confirmButtonColor: '#AAA'
-                        });
-                    }
-                },
-                error: function (xhr, status) {
-                    Swal.fire('terjadi Error');
-                }
-            });
-        }
 
         // Fungsi Change Data Modal
         function changedata(index, data) {
