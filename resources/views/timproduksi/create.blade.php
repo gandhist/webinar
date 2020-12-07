@@ -213,7 +213,7 @@
                         <div class="col-sm-12">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    Alamat
+                                    <span class="bintang">*</span> Alamat
                                 </div>
                                 <input type="text" name="id_alamat" id="id_alamat" class="form-control"
                                     placeholder="">
