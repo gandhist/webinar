@@ -164,12 +164,12 @@
                     <div class="col-sm-3" style='text-align:right'>
                         <div class="row" style="margin-top:-3px;margin-bottom:3px">
                             <div class="col-xs-12">
-                                <div class="btn-group">
+                                {{-- <div class="btn-group">
                                     <span class="btn btn-primary" id="btnDetailPjk3"></i>
                                         Detail_PJS_PPKB</span>
                                     <span class="btn btn-warning" id="btnTenagaAhli"></i>
                                         Tenaga Ahli</span>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="row">
