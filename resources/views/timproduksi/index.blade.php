@@ -286,12 +286,12 @@
                         </td> -->
                         <td>{{$key->keterangan}}
                         </td>
-                        <td style="width:5%" data-toggle="tooltip" data-placement="bottom" data-html="true"
+                        <td style="width:5%; text-align: center;" data-toggle="tooltip" data-placement="bottom" data-html="true"
                             title=" @if (isset($key->created_at))
                             Tanggal Tambah : {{ \Carbon\Carbon::parse($key->created_at)->isoFormat('DD MMMM YYYY H:mm:s') }} @endif">
                             @if($key->created_by) {{ucfirst($key->created_r->name)}} @endif
                         </td>
-                        <td style="width:5%" data-toggle="tooltip" data-placement="bottom" data-html="true"
+                        <td style="width:5%; text-align: center;" data-toggle="tooltip" data-placement="bottom" data-html="true"
                             title="  @if (isset($key->updated_at))
                         Tanggal Ubah : {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat('DD MMMM YYYY H:mm:s') }} @endif">
                             @if($key->updated_by) {{ucfirst($key->updated_r->name)}} @endif</td>

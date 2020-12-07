@@ -375,6 +375,7 @@
                             @endif
                         </td>
                         <td
+                            style="text-align: center;"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             data-html="true" title="
@@ -385,6 +386,7 @@
                             {{$key->created_r ? $key->created_r->username : ''}}
                         </td>
                         <td
+                            style="text-align: center;"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             data-html="true" title="
