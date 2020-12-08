@@ -482,9 +482,9 @@
                                 @endif
                             </td>
                             <td>{{ $key->no_srtf }}</td>
-                            <td>{{ $key->peserta_r->nama }}</td>
-                            <td>{{$key->peserta_r->no_hp}}</td>
-                            <td>{{$key->peserta_r->email}}</td>
+                            <td>{{ isset($key->peserta_r) ? $key->peserta_r->nama : '' }}</td>
+                            <td>{{ isset($key->peserta_r) ? $key->peserta_r->no_hp : ''}}</td>
+                            <td>{{ isset($key->peserta_r) ? $key->peserta_r->email : ''}}</td>
                             <td style='text-align:center;'>@if ($key->is_paid == null) - @elseif ($key->is_paid == '1') Sudah Bayar @else Belum Bayar @endif </td>
                             <td>@if($key->seminar_p->is_actived == 0)
                                 @else

@@ -29,10 +29,10 @@
                         <div>
                             <a href="{{ url('tuk/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                            {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                 <i class="fa fa-edit"></i> Ubah</button>
                             <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
-                                <i class="fa fa-trash"></i> Hapus</button>
+                                <i class="fa fa-trash"></i> Hapus</button> --}}
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
+                                    <th><span class="indent">Action</th>
                                     <th><span class="indent">No.</span></th>
                                     <th><span class="indent">Nama</span></th>
                                     <th><span class="indent">Status</span></th>
@@ -69,8 +69,10 @@
                             <tbody>
                                 @foreach($tuk as $key)
                                 <tr>
-                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                        id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center'>
+                                        <a href="{{ url('tuk/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                                        <a class="btn btn-xs btn-success" href="{{ url('tuk/'.$key->id)}}"><span class="fa fa-eye"></i></a></td>
                                     <td class="text-center">{{ $loop->iteration }}</td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ $key->nama_tuk }}">
                                         <a href="{{ url('tuk/'.$key->id) }}">
@@ -150,6 +152,22 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script> --}}
 <script type="text/javascript">
+
+function hapusData(id) {
+    $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
+
     $('#btnHapus').on('click', function (e) {
             e.preventDefault();
             var id = [];

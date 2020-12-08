@@ -52,7 +52,7 @@
                     <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                         <thead>
                             <tr>
-                                <th><span class="indent"><i class="fa fa-check-square-o"></i></span></th>
+                                <th><span class="indent">Action</th>
                                 <th><span class="indent">No.</span></th>
                                 <th><span class="indent">Nama</span></th>
                                 <th><span class="indent">No. Hp</span></th>
@@ -70,13 +70,12 @@
                                 $username =  preg_replace('/[^a-zA-Z0-9()]/', '_', $peserta->nama);
                             @endphp
                             <tr>
-                                <td style='text-align:center'><input type="checkbox" data-id="{{ $peserta->id }}" class="selection"
-                                    id="selection[]" name="selection[]"></td>
+                                <td style='text-align:center'>
+                                    <a class="btn btn-xs btn-success" href="{{ url('pesertas/'.$peserta->id)}}"><span class="fa fa-eye"></i></a></td>
+                                </td>
                                 <td class="text-center">{{ $loop->iteration }}</td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->nama }}">
-                                    <a href="{{ url('pesertas/'.$peserta->id) }}">
-                                        {{ \Illuminate\Support\Str::limit($peserta->nama,40) }}
-                                    </a>
+                                    {{ \Illuminate\Support\Str::limit($peserta->nama,40) }}
                                 </td>
                                 <td> {{ $peserta->no_hp }} </td>
                                 <td data-toggle="tooltip" data-placement="bottom" title="{{ $peserta->email }}">

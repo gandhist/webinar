@@ -51,20 +51,18 @@
 
                             </span>
                         </div>
-                        <button type="button" class="btn btn-default pull-right" id="btnStatistik" name="btnStatistik">
+                        {{-- <button type="button" class="btn btn-default pull-right" id="btnStatistik" name="btnStatistik">
                             <i class="fa fa-area-chart"></i> Statistik</button>
                         <button type="button" class="btn btn-primary pull-right" id="btnDetail" name="btnDetail">
-                            <i class="fa fa-eye"></i> Detail</button>
-                    </div>
-                    <div class="col-12" style="margin-top:10px">
+                            <i class="fa fa-eye"></i> Detail</button> --}}
                         <div class="pull-right">
 
                             <a href="{{ url('seminar/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                            {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                 <i class="fa fa-edit"></i> Ubah</button>
                             <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
-                                <i class="fa fa-trash"></i> Hapus</button>
+                                <i class="fa fa-trash"></i> Hapus</button> --}}
                         </div>
                     </div>
                 </div>
@@ -86,7 +84,7 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th><span><i class="fa fa-check-square-o"></i></span></th>
+                                    <th><span>Action</th>
                                     <th><span>No</th>
                                     <th><span>Jenis Kegiatan</th>
                                     <th><span>Judul</th>
@@ -100,8 +98,12 @@
                             <tbody>
                             @foreach ($seminar as $key)
                                 <tr>
-                                    <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                            id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center'>
+                                        <a href="{{ url('seminar/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                                        <a class="btn btn-xs btn-success" href="{{ url('seminar/detail/'.$key->id)}}" ><span class="fa fa-eye"></i></a>
+                                        <a class="btn btn-xs btn-default" href="{{ url('seminar/statistik/'.$key->id)}}" ><i class="fa fa-area-chart"></i></a>
+                                    </td>
                                     <td style='text-align:center'>{{ $loop->iteration }}</td>
                                     <td>{{ $key->nama_seminar }}</td>
                                     <td data-toggle="tooltip" data-placement="bottom" title="{{ strip_tags(html_entity_decode($key->tema)) }}">{{ \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($key->tema)), 50) }}</td>
@@ -197,6 +199,24 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.date.extensions.js')}}"></script>
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
+
+
+
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
+
     $('#myModal').on('show.bs.modal', function(e) {
         let link = $(e.relatedTarget).data('link');
         let filename = $(e.relatedTarget).data('filename');
