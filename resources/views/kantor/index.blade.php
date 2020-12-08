@@ -109,10 +109,10 @@
                         <div class="btn-group  pull-right">
                             <a href="{{ url('kantor/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit">
+                            {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit">
                                 <i class="fa fa-edit"></i> Ubah</button>
                             <button type="button" class="btn btn-danger" id="btnHapus" name="btnHapus">
-                                <i class="fa fa-trash"></i> Hapus</button>
+                                <i class="fa fa-trash"></i> Hapus</button> --}}
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                         <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                             <thead>
                                 <tr>
-                                    <th style='padding-left: 3rem;'><i class="fa fa-check-square-o"></i></th>
+                                    <th style='padding-left: 3rem;'>Action</th>
                                     <th style='padding-left: 3rem;'>No.</th>
                                     <th>Nama_Ktr</th>
                                     <th>Level_K</th>
@@ -144,15 +144,18 @@
                                 @foreach($data as $key)
                                 {{-- {{ $data }} --}}
                                 <tr>
-                                    <td style='text-align:center;width:1%'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                            id="selection[]" name="selection[]"></td>
+                                    <td style='text-align:center;width:1%'>
+                                        <a href="{{ url('kantor/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                                        <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                                        {{-- <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a> --}}
+                                    </td>
                                     <td style='text-align:center;width:1%'>{{ $loop->iteration }}</td>
                                     <td data-toggle="tooltip" data-placement="bottom" data-html="true"
                                         title="Nama : {{$key->nama_kantor}}<br>
                                             Singkatan Kantor : {{$key->nama_singkat}}
                                         ">{{$key->nama_singkat}}</td>
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
-                                        title="Level Atas : @if($key->level_atas) {{$key->level_atas_r->nama_kantor}} @else  @endif ">{{$key->levelkantor->nama_level}}</td>
+                                        title="Level Atas : @if($key->level_atas) {{isset($key->level_atas_r) ? $key->level_atas_r->nama_kantor : ''}} @else  @endif ">{{$key->levelkantor->nama_level}}</td>
                                     <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
                                         title="
                                         Provinsi : {{$key->provinsi->nama}}<br>
@@ -241,6 +244,21 @@
 @endsection
 @push('script')
 <script>
+
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
 
     $('#btnHapus').on('click', function (e) {
         e.preventDefault();

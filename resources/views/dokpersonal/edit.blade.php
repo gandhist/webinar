@@ -75,7 +75,7 @@
                                 </div>
                                 <select disabled class="form-control select2" name="id_nama_pjk3" id="id_nama_pjk3"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Nama PJK3</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($instansi as $key)
                                     <option value="{{ $key->id }}"
                                         {{ $key->id == $data->id_skp_pjk3 ? 'selected' : '' }}>
@@ -97,7 +97,7 @@
                                 </div>
                                 <select disabled class="form-control select2" name="id_personal" id="id_personal"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Nama Personil</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($personil as $key)
                                     <option value="{{ $key->id }}"
                                         {{ $key->id == $data->id_personal ? 'selected' : '' }}>
@@ -118,7 +118,7 @@
                                     Refferensi
                                 </div>
                                 <input name="id_reff" id="id_reff" type="text" class="form-control"
-                                    placeholder="Refferensi" value="{{$data->personal->reff_p}}" disabled>
+                                    placeholder="" value="{{$data->personal->reff_p}}" disabled>
                             </div>
                             <span id="id_reff" class="help-block customspan">{{ $errors->first('id_reff') }}</span>
                         </div>
@@ -129,7 +129,7 @@
                                 <div class="input-group-addon">
                                     Status
                                 </div>
-                                <input class="form-control" name="id_status" id="id_status" placeholder="Status"
+                                <input class="form-control" name="id_status" id="id_status" placeholder=""
                                     value="@if ($data->personal->status_p == '1') Internal @else External @endif"
                                     disabled>
                             </div>
@@ -143,7 +143,7 @@
                                 <div class="input-group-addon">
                                     Jenis Kelamin
                                 </div>
-                                <input class="form-control" name="id_jenkel" id="id_jenkel" placeholder="Jenis Kelamin"
+                                <input class="form-control" name="id_jenkel" id="id_jenkel" placeholder=""
                                     value="@if ($data->personal->jns_kelamin == 'L') Laki-laki @else Perempuan @endif"
                                     disabled>
                             </div>
@@ -167,7 +167,7 @@
                                 <div class="input-group-addon">
                                     NIK
                                 </div>
-                                <input name="nik" id="nik" type="text" class="form-control" placeholder="NIK"
+                                <input name="nik" id="nik" type="text" class="form-control" placeholder=""
                                     value="{{$data->personal->nik}}" disabled>
                             </div>
                             <span id="nik" class="help-block customspan">{{ $errors->first('nik') }} </span>
@@ -191,7 +191,7 @@
                                     Alamat (KTP)
                                 </div>
                                 <input name="id_ktp_alamat" id="id_ktp_alamat" type="text" class="form-control"
-                                    placeholder="Alamat Jalan, Kelurahan, Kecamatan (KTP)" value="{{$data->personal->alamat_ktp}}"
+                                    placeholder="" value="{{$data->personal->alamat_ktp}}"
                                     disabled>
                             </div>
                             <span id="id_ktp_alamat" class="help-block customspan">{{ $errors->first('id_ktp_alamat') }}</span>
@@ -204,7 +204,7 @@
                                 <div class="input-group-addon">
                                     Prov Alamat (KTP)
                                 </div>
-                                <input class="form-control" name="id_ktp_prov" id="id_ktp_prov" placeholder="Provinsi Alamat (KTP)"
+                                <input class="form-control" name="id_ktp_prov" id="id_ktp_prov" placeholder=""
                                     value="{{$data->personal->kode_kota_ktp ? $data->personal->kota_ktp->provinsi->nama :''}}" disabled>
                             </div>
                             <span id="id_ktp_prov" class="help-block customspan">{{ $errors->first('id_ktp_prov') }}</span>
@@ -216,7 +216,7 @@
                                 <div class="input-group-addon">
                                     Kota Alamat (KTP)
                                 </div>
-                                <input class="form-control" name="id_ktp_kota" id="id_ktp_kota" placeholder="Kota Alamat (KTP)"
+                                <input class="form-control" name="id_ktp_kota" id="id_ktp_kota" placeholder=""
                                     value="{{$data->personal->kode_kota_ktp ? $data->personal->kota_ktp->nama :''}}" disabled>
                             </div>
                             <span id="id_ktp_kota" class="help-block customspan">{{ $errors->first('id_ktp_kota') }}</span>
@@ -230,7 +230,7 @@
                                     Alamat (Domisili)
                                 </div>
                                 <input name="id_alamat" id="id_alamat" type="text" class="form-control"
-                                    placeholder="Alamat Jalan, Kelurahan, Kecamatan (Domisili)" value="{{$data->personal->alamat}}"
+                                    placeholder="" value="{{$data->personal->alamat}}"
                                     disabled>
                             </div>
                             <span id="id_alamat" class="help-block customspan">{{ $errors->first('id_alamat') }}</span>
@@ -243,7 +243,7 @@
                                 <div class="input-group-addon">
                                     Prov Alamat (Domisili)
                                 </div>
-                                <input class="form-control" name="id_prov" id="id_prov" placeholder="Provinsi Alamat (Domisili)"
+                                <input class="form-control" name="id_prov" id="id_prov" placeholder=""
                                     value="{{$data->personal->kota->provinsi->nama}}" disabled>
                             </div>
                             <span id="id_prov" class="help-block customspan">{{ $errors->first('id_prov') }}</span>
@@ -255,7 +255,7 @@
                                 <div class="input-group-addon">
                                     Kota Alamat (Domisili)
                                 </div>
-                                <input class="form-control" name="id_kota" id="id_kota" placeholder="Kota Alamat (Domisili)"
+                                <input class="form-control" name="id_kota" id="id_kota" placeholder=""
                                     value="{{$data->personal->kota->nama}}" disabled>
                             </div>
                             <span id="id_kota" class="help-block customspan">{{ $errors->first('id_kota') }}</span>
@@ -269,7 +269,7 @@
                                     No HP
                                 </div>
                                 <input name="id_no_telp" id="id_no_telp" type="text" class="form-control"
-                                    placeholder="No HP" value="{{$data->personal->hp_wa}}" disabled>
+                                    placeholder="" value="{{$data->personal->hp_wa}}" disabled>
                             </div>
                             <span id="id_no_telp"
                                 class="help-block customspan">{{ $errors->first('id_no_telp') }}</span>
@@ -282,7 +282,7 @@
                                     Email
                                 </div>
                                 <input name="id_email" id="id_email" type="email" class="form-control"
-                                    placeholder="Email" value="{{$data->personal->email_p}}" disabled>
+                                    placeholder="" value="{{$data->personal->email_p}}" disabled>
                             </div>
                             <span id="id_email" class="help-block customspan">{{ $errors->first('id_email') }}</span>
                         </div>
@@ -295,7 +295,7 @@
                                     Tempat Lahir
                                 </div>
                                 <input class="form-control" name="id_temp_lahir" id="id_temp_lahir"
-                                    placeholder="*Tempat Lahir" value="{{$data->personal->tempLahir->ibu_kota}}"
+                                    placeholder="" value="{{$data->personal->tempLahir->ibu_kota}}"
                                     disabled>
                             </div>
                             <span id="id_temp_lahir"
@@ -309,7 +309,7 @@
                                     Tanggal Lahir
                                 </div>
                                 <input class="form-control" id="id_tgl_lahir" name="id_tgl_lahir"
-                                    placeholder="*Tanggal Lahir"
+                                    placeholder=""
                                     value="{{ isset($data->personal->tgl_lahir) ? \Carbon\Carbon::parse($data->personal->tgl_lahir)->isoFormat("DD MMMM YYYY") : ''}}"
                                     disabled>
                             </div>
@@ -324,7 +324,7 @@
                                 <div class="input-group-addon">
                                     Agama
                                 </div>
-                                <input class="form-control" name="agama" id="agama" placeholder="Agama"
+                                <input class="form-control" name="agama" id="agama" placeholder=""
                                     value="{{ucfirst($data->personal->agama)}}" disabled>
                             </div>
                             <span id="agama" class="help-block customspan">{{ $errors->first('agama') }}</span>
@@ -337,7 +337,7 @@
                                     Status Pajak
                                 </div>
                                 <input class="form-control" id="status_pajak" name="status_pajak"
-                                    placeholder="Status Pajak"
+                                    placeholder=""
                                     value="@if($data->personal->id_ptkp!=null) {{$data->personal->ptkp_r->nama_ptkp}} ( {{$data->personal->ptkp_r->remarks}} ) @else @endif"
                                     disabled>
                             </div>
@@ -374,7 +374,7 @@
                                 @endphp
                                 @endif
                                 <input class="form-control" name="status_perni" id="status_perni"
-                                    placeholder="Status Pernikahan" value="{{$st_pernikahan}}" disabled>
+                                    placeholder="" value="{{$st_pernikahan}}" disabled>
                             </div>
                             <span id="status_perni"
                                 class="help-block customspan">{{ $errors->first('status_perni') }}</span>
@@ -387,7 +387,7 @@
                                 <div class="input-group-addon">
                                     No BPJS Kesehatan
                                 </div>
-                                <input class="form-control" name="bpjs_no" id="bpjs_no" placeholder="No BPJS Kesehatan"
+                                <input class="form-control" name="bpjs_no" id="bpjs_no" placeholder=""
                                     value="{{$data->personal->bpjs_no}}" disabled>
                             </div>
                             <span id="bpjs_no" class="help-block customspan">{{ $errors->first('bpjs_no') }}</span>
@@ -412,7 +412,7 @@
                                 <div class="input-group-addon">
                                     NPWP
                                 </div>
-                                <input id="npwp" name="npwp" class="form-control" placeholder="NPWP"
+                                <input id="npwp" name="npwp" class="form-control" placeholder=""
                                     value="{{$data->personal->npwp}}" disabled>
                             </div>
                             <span id="npwp" class="help-block customspan">{{ $errors->first('npwp') }} </span>
@@ -436,7 +436,7 @@
                                     No Rekening Bank
                                 </div>
                                 <input name="id_norek_bank" id="id_norek_bank" type="text" class="form-control"
-                                    placeholder="No Rekening Bank" value="{{$data->personal->no_rek}}" disabled>
+                                    placeholder="" value="{{$data->personal->no_rek}}" disabled>
                             </div>
                             <span id="id_norek_bank"
                                 class="help-block customspan">{{ $errors->first('id_norek_bank') }}</span>
@@ -449,7 +449,7 @@
                                     Nama Rekening Bank
                                 </div>
                                 <input name="id_namarek_bank" id="id_namarek_bank" type="text" class="form-control"
-                                    placeholder="Nama Rekening Bank" value="{{$data->personal->nama_rek}}" disabled>
+                                    placeholder="" value="{{$data->personal->nama_rek}}" disabled>
                             </div>
                             <span id="id_namarek_bank"
                                 class="help-block customspan">{{ $errors->first('id_namarek_bank') }}</span>
@@ -464,7 +464,7 @@
                                         Nama Bank
                                     </div>
                                     <input class="form-control" name="id_nama_bank" id="id_nama_bank"
-                                        placeholder="Nama Bank"
+                                        placeholder=""
                                         value="{{ isset($data->personal->bank->Nama_Bank) ? $data->personal->bank->Nama_Bank : ''}}"
                                         disabled>
                                 </div>
@@ -507,11 +507,11 @@
                                     <td style="text-align:center;">{{$loop->iteration}}</td>
                                     <td>
                                         <input disabled type="text" class="form-control"
-                                            placeholder="Jenjang Pendidikan" name="id_jp_{{$loop->iteration}}"
+                                            placeholder="" name="id_jp_{{$loop->iteration}}"
                                             id="id_jp_{{$loop->iteration}}" value="{{$key->jp->deskripsi}}">
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control " placeholder="Nama Sekolah"
+                                        <input disabled type="text" class="form-control " placeholder=""
                                             name="id_namasekolah_{{$loop->iteration}}"
                                             id="id_namasekolah_{{$loop->iteration}}" value="{{$key->nama_sekolah}}">
                                     </td>
@@ -522,12 +522,12 @@
                                             value="{{ isset($key->negara_s->country_name) ?$key->negara_s->country_name : '' }}">
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control" placeholder="Prov Sekolah"
+                                        <input disabled type="text" class="form-control" placeholder=""
                                             name="id_provsekolah_{{$loop->iteration}}"
                                             id="id_provsekolah_{{$loop->iteration}}" value="{{$key->prov_s->nama}}">
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control" placeholder="Kota Sekolah"
+                                        <input disabled type="text" class="form-control" placeholder=""
                                             name="id_kotasekolah_{{$loop->iteration}}"
                                             id="id_kotasekolah_{{$loop->iteration}}" value="{{$key->kota_s->nama}}">
                                     </td>
@@ -538,13 +538,13 @@
                                     </td>
                                     <td>
                                         <input disabled onkeypress="return isNumberKey(event)" type="text"
-                                            class="form-control " placeholder="Tahun Tamat"
+                                            class="form-control " placeholder=""
                                             name="id_tahuntamat_{{$loop->iteration}}"
                                             id="id_tahuntamat_{{$loop->iteration}}" value="{{$key->tahun}}"
                                             maxlength="4">
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control " placeholder="No Ijasah"
+                                        <input disabled type="text" class="form-control " placeholder=""
                                             name="id_noijasah_{{$loop->iteration}}"
                                             id="id_noijasah_{{$loop->iteration}}" value="{{$key->no_ijazah}}">
                                     </td>
@@ -556,7 +556,7 @@
                                             value="{{isset ($key->tgl_ijasah) ? \Carbon\Carbon::parse($data->personal->tgl_ijasah)->isoFormat("DD MMMM YYYY") : ''}}">
                                     </td>
                                     <td>
-                                        <input disabled type="text" class="form-control" placeholder="Default"
+                                        <input disabled type="text" class="form-control" placeholder=""
                                             name="id_default_{{$loop->iteration}}" id="id_default_{{$loop->iteration}}"
                                             value=" @if ($loop->iteration > 1) @else Default @endif ">
                                     </td>
@@ -736,14 +736,14 @@
                                             <input autocomplete="off"
                                                 data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
                                                 class="form-control" id="id_tglterbit_{{$loop->iteration}}"
-                                                name="id_tglterbit_{{$loop->iteration}}" placeholder="dd/mm/yyyy"
+                                                name="id_tglterbit_{{$loop->iteration}}" placeholder=""
                                                 value="{{isset ($key->tgl_skp) ?  date('d/m/Y', strtotime($key->tgl_skp)) : ''}}">
                                         </td>
                                         <td style="width:10%">
                                             <input autocomplete="off"
                                                 data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
                                                 class="form-control" id="id_tglakhir_{{$loop->iteration}}"
-                                                name="id_tglakhir_{{$loop->iteration}}" placeholder="dd/mm/yyyy"
+                                                name="id_tglakhir_{{$loop->iteration}}" placeholder=""
                                                 value="{{isset ($key->tgl_akhir_skp) ? date('d/m/Y', strtotime($key->tgl_akhir_skp)) : ''}}">
                                         </td>
                                         <td class="image-upload">
@@ -929,11 +929,11 @@
                         oninvalid="this.setCustomValidity('Masukkan No Dokumen')" oninput="setCustomValidity('')"></td>
                     <td style="width:10%">
                         <input required autocomplete="off" data-provide="datepicker" data-date-format="dd-mm-yyyy" type="text"
-                        class="form-control" id="id_tglterbit_` + no + `" name="id_tglterbit_` + no + `" placeholder="dd-mm-yyyy">
+                        class="form-control" id="id_tglterbit_` + no + `" name="id_tglterbit_` + no + `" placeholder="">
                     </td>
                     <td style="width:10%">
                         <input autocomplete="off" data-provide="datepicker" data-date-format="dd-mm-yyyy" type="text"
-                            class="form-control" id="id_tglakhir_` + no + `" name="id_tglakhir_` + no + `" placeholder="dd-mm-yyyy">
+                            class="form-control" id="id_tglakhir_` + no + `" name="id_tglakhir_` + no + `" placeholder="">
                     </td>
                     <td class="image-upload">
                         <label required for="id_pdfdok_` + no + `">

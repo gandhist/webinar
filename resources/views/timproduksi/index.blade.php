@@ -171,10 +171,10 @@
                         <div class="btn-group">
                             <a href="{{ url('timproduksi/create') }}" class="btn btn-info"> <i class="fa fa-plus"></i>
                                 Tambah</a>
-                            <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i class="fa fa-edit"></i>
+                            {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i class="fa fa-edit"></i>
                                 Ubah</button>
                             <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i class="fa fa-trash"></i>
-                                Hapus</button>
+                                Hapus</button> --}}
                         </div>
                     </div>
                     @endif
@@ -188,7 +188,7 @@
             <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                 <thead>
                     <tr>
-                        <th style="text-indent: 12px;"><i class="fa fa-check-square-o"></i></th>
+                        <th style="text-indent: 12px;">Action</th>
                         <th style="text-indent: 22px;">No</th>
                         <th>Jns_Usaha</th>
                         <th>PJS_LPJK</th>
@@ -213,8 +213,11 @@
                 <tbody>
                     @foreach($data as $key)
                     <tr>
-                        <td style='text-align:center;width:1%'><input type="checkbox" data-id="{{ $key->id }}"
-                                class="selection" id="selection[]" name="selection[]"></td>
+                        <td style='text-align:center;width:1%'>
+                            <a href="{{ url('timproduksi/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                            <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                            {{-- <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a> --}}
+                        </td>
                         <td style='text-align:center;width:1%'>{{ $loop->iteration }}</td>
                         <td data-toggle="tooltip" data-placement="bottom" data-html="true"
                             title="@if($key->jenis_usaha) {{$key->jenisusaha->nama_jns_usaha}} @endif">
@@ -286,12 +289,12 @@
                         </td> -->
                         <td>{{$key->keterangan}}
                         </td>
-                        <td style="width:5%" data-toggle="tooltip" data-placement="bottom" data-html="true"
+                        <td style="width:5%; text-align: center;" data-toggle="tooltip" data-placement="bottom" data-html="true"
                             title=" @if (isset($key->created_at))
                             Tanggal Tambah : {{ \Carbon\Carbon::parse($key->created_at)->isoFormat('DD MMMM YYYY H:mm:s') }} @endif">
                             @if($key->created_by) {{ucfirst($key->created_r->name)}} @endif
                         </td>
-                        <td style="width:5%" data-toggle="tooltip" data-placement="bottom" data-html="true"
+                        <td style="width:5%; text-align: center;" data-toggle="tooltip" data-placement="bottom" data-html="true"
                             title="  @if (isset($key->updated_at))
                         Tanggal Ubah : {{ \Carbon\Carbon::parse($key->updated_at)->isoFormat('DD MMMM YYYY H:mm:s') }} @endif">
                             @if($key->updated_by) {{ucfirst($key->updated_r->name)}} @endif</td>
@@ -406,6 +409,21 @@
 <!-- <script type="text/javascript" src="{{ asset('chained.js') }}"></script> -->
 <script type="text/javascript">
     var save_method = "add";
+
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
     $(function () {
 
         // Rubah Warna Filter

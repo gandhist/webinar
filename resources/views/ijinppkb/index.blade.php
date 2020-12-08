@@ -164,12 +164,12 @@
                     <div class="col-sm-3" style='text-align:right'>
                         <div class="row" style="margin-top:-3px;margin-bottom:3px">
                             <div class="col-xs-12">
-                                <div class="btn-group">
+                                {{-- <div class="btn-group">
                                     <span class="btn btn-primary" id="btnDetailPjk3"></i>
                                         Detail_PJS_PPKB</span>
                                     <span class="btn btn-warning" id="btnTenagaAhli"></i>
                                         Tenaga Ahli</span>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="row">
@@ -178,12 +178,12 @@
                                     <a href="{{ route('ijinppkb.create') }}" class="btn btn-info"> <i
                                             class="fa fa-plus"></i>
                                         Tambah</a>
-                                    <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
+                                    {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
                                             class="fa fa-edit"></i>
                                         Ubah</button>
                                     <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i
                                             class="fa fa-trash"></i>
-                                        Hapus</button>
+                                        Hapus</button> --}}
                                 </div>
                             </div>
                         </div>
@@ -198,7 +198,9 @@
             <table id="data-tables" class="table table-striped table-bordered dataTable customTable">
                 <thead>
                     <tr>
-                        <th style="text-indent: 12px;"><i class="fa fa-check-square-o"></i></th>
+                        <th style="text-indent: 12px;">
+                            Action
+                        </th>
                         <th style="text-indent: 22px;">No</th>
                         <th>Jns_Usaha</th>
                         <th>PJS_LPJK</th>
@@ -233,8 +235,11 @@
                 <tbody>
                     @foreach($data as $key)
                     <tr>
-                        <td style='text-align:center'><input type="checkbox" data-id="{{ $key->id }}" class="selection"
-                                id="selection[]" name="selection[]"></td>
+                        <td style='text-align:center'>
+                            <a href="{{ url('ijinppkb/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
+                            <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
+                            <a class="btn btn-xs btn-success" onclick='showData("{{ $key->id }}")'><span class="fa fa-eye"></i></a>
+                        </td>
                         <td style='text-align:center'>{{ $loop->iteration }}</td>
                         <td style='text-align:center' data-toggle="tooltip" data-placement="bottom" data-html="true"
                             title="
@@ -375,6 +380,7 @@
                             @endif
                         </td>
                         <td
+                            style="text-align: center;"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             data-html="true" title="
@@ -385,6 +391,7 @@
                             {{$key->created_r ? $key->created_r->username : ''}}
                         </td>
                         <td
+                            style="text-align: center;"
                             data-toggle="tooltip"
                             data-placement="bottom"
                             data-html="true" title="
@@ -405,6 +412,86 @@
         </div>
 
         <!-- Modal Detail PJK3 -->
+        <div class="modal fade" id="showDataModal" role="dialog">
+            <div class="modal-dialog modal-lg" style="width:1500px">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs" style="margin-bottom: 10px">
+                            <li class="active"><a data-toggle="tab" href="#menu1"><b>Detail Data PJK3</b></a></li>
+                            <li><a data-toggle="tab" href="#menu2"><b>Detail Data Tenaga Ahli PJK3</b></a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="menu1" class="tab-pane fade in active">
+                                <div id="menu1tiada" style="display: none; width: 100%; height: 100%; text-align: center">
+                                    <h4>
+                                        Data tidak ditemukan
+                                    </h4>
+                                </div>
+                                <div id="menu1ada">
+                                    <!-- Modal Body -->
+                                    <div class="box">
+                                        <div class="box-body no-padding">
+                                            <table id="masterModalPjk3" class="table table-condensed tableModal">
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="box-body no-padding">
+                                            <table class="table table-condensed tableModalDetail" id="tableModalDetail">
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- End -->
+                                </div>
+                            </div>
+                            <div id="menu2" class="tab-pane fade">
+                                <div id="menu2tiada" style="display: none; width: 100%; height: 100%; text-align: center">
+                                    <h4>
+                                        Data tidak ditemukan
+                                    </h4>
+                                </div>
+                                <div id="menu2ada">
+                                    <!-- Modal Body -->
+                                    <div class="box">
+                                        <div class="box-body no-padding">
+                                            <table id="masterModalAhli" class="table table-condensed tableModal">
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div class="box-body no-padding withscroll">
+                                            <table class="table table-condensed tableModalDetail" id="tableModalDetailAhli">
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!-- End -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- End -->
+
+        {{-- <!-- Modal Detail PJK3 -->
         <div class="modal fade" id="modaldetailPjk3" role="dialog">
             <div class="modal-dialog modal-lg" style="width:1500px">
 
@@ -486,7 +573,7 @@
 
             </div>
         </div>
-        <!-- End -->
+        <!-- End --> --}}
 
         <!-- modal lampiran -->
         <div class="modal fade" id="modalLampiran" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -567,6 +654,433 @@
 <!-- <script type="text/javascript" src="{{ asset('chained.js') }}"></script> -->
 <script type="text/javascript">
     var save_method = "add";
+    function hapusData(id) {
+        $("#idHapusData").val(id);
+        if (id.length == 0) {
+            Swal.fire({
+                title: "Tidak ada data yang terpilih",
+                type: 'warning',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#AAA'
+            });
+        // Swal.fire('Tidak ada data yang terpilih');
+        } else {
+            $('#modal-konfirmasi').modal('show');
+        }
+    }
+
+    function showData(id) {
+        showDataModal
+        url = id;
+        $('#tableModalDetail > tbody').empty();
+        $('#tableModalDetailAhli > tbody').empty();
+        $('#masterModalPjk3 > tbody').empty();
+        $('#masterModalAhli > tbody').empty();
+        getDataDetail(id);
+        getDataDetailAhli(id);
+        $('#showDataModal').modal('show');
+    }
+
+    // Mengambil data Detail PJK3
+    function getDataDetail(id) {
+        var url = "{{ url('data_skp_pjk3_modal') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                id_pjk3: id
+            },
+            success: function (data) {
+                console.log(data);
+                $('#tableModalDetail > tbody').html(`
+                <tr>
+                    <th>No</th>
+                    <th>Jenis Usaha</th>
+                    <th>Bidang SKP</th>
+                    <th>No SKP</th>
+                    <th>Tgl Terbit SKP</th>
+                    <th>Tgl Akhir SKP</th>
+                </tr>
+                `);
+                data.forEach(function (item, index) {
+                    if (index == 0) {
+                        changedatapjk3(index, data);
+                    }
+                    add_row(index, data);
+                });
+            },
+            error: function (xhr, status) {
+                $('#menu1tiada').show();
+                $('#menu1ada').hide();
+            }
+        });
+    }
+
+    // Mengambil data detail tenaga ahli
+    function getDataDetailAhli(id) {
+        var url = "{{ url('data_ahli_pjk3_modal') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                id_pjk3: id
+            },
+            success: function (data) {
+                console.log(data);
+                $('#tableModalDetailAhli > tbody').html(`
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Bidang Srtf_Alat</th>
+                    <th>Jns_Dok</th>
+                    <th>Nama_Dok</th>
+                    <th>Instansi_Dok</th>
+                    <th>Penyelenggara</th>
+                    <th>No_Dok</th>
+                    <th>Tgl_Terbit</th>
+                    <th>Tgl_Akhir</th>
+                    <th>Prov</th>
+                    <th>Kota</th>
+                    <th>Sekolah_P</th>
+                    <th>Ket_P</th>
+                    <th>NPWP</th>
+                    <th>Pdf_NPWP</th>
+                </tr>
+                `);
+                if (data.length > 0) {
+                    data.forEach(function (item, index) {
+                        if (index == 0) {
+                            changedataahli(index, data);
+                        }
+                        add_row_ahli(index, data);
+                    });
+                    $('#modaldetailAhli').modal('show');
+                } else {
+                    $('#menu2tiada').show();
+                    $('#menu2ada').hide();
+                    // Swal.fire({
+                    //     title: "Data tenaga ahli tidak ditemukan !",
+                    //     type: 'error',
+                    //     confirmButtonText: 'Close',
+                    //     confirmButtonColor: '#AAA'
+                    // });
+                    // Swal.fire('Data tenaga ahli tidak ditemukan !')
+                }
+
+            },
+            error: function (xhr, status) {
+                alert('terjadi error ketika menampilkan data');
+            }
+        });
+    }
+
+    // Fungsi Change Data Modal
+    function changedatapjk3(index, data) {
+        $('#masterModalPjk3 > tbody').html(`
+        <tr>
+                                        <th colspan="5" style="text-align:center">` + data[index]['badan_usaha'][
+            'nama_bu'
+        ] + `</th>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                        <th style="width:15%;text-align:right">Provinsi Naker :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['provinsi']['nama'] + `</td>
+                                        <th style="width:15%;text-align:right">Alamat :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['alamat'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Provinsi Badan Usaha :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['provinsibu'][
+            'nama'
+        ] + `</td>
+                                        <th style="width:15%;text-align:right">Kota Badan Usaha :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['kota']['nama'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No Tlp :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['telp'] + `</td>
+                                        <th style="width:15%;text-align:right">Email :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['email'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Instansi Reff :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['instansi_reff'] + `</td>
+                                        <th style="width:15%;text-align:right">Web :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['web'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Nama Pimpinan :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['nama_pimp'] + `</td>
+                                        <th style="width:15%;text-align:right">Jabatan Pimpinan :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['jab_pimp'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No Hp Pimpinan :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['hp_pimp'] + `</td>
+                                        <th style="width:15%;text-align:right">Email Pimpinan :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['email_pimp'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Nama Kontak Person :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['kontak_p'] + `</td>
+                                        <th style="width:15%;text-align:right">Jabatan Kontak Person :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['jab_kontak_p'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No HP Kontak Person :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['no_kontak_p'] + `</td>
+                                        <th style="width:15%;text-align:right">Email Kontak Person :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['email_kontak_p'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">NPWP :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['npwp'] + `</td>
+                                        <th style="width:15%;text-align:right">Pdf_NPWP :</th>
+                                        <td style="width:35%;">
+                                        <a class="fa fa-file-pdf-o" target="_blank" href="uploads/` + data[index][
+            'badan_usaha'
+        ]['npwp_pdf'] + `"></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No Rekening Bank :</th>
+                                        <td style="width:20%;">` + data[index]['badan_usaha']['no_rek'] + `</td>
+                                        <th style="width:15%;text-align:right">Nama Rekening Bank :</th>
+                                        <td style="width:35%;">` + data[index]['badan_usaha']['nama_rek'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right"></th>
+                                        <td style="width:20%;"></td>
+                                        <th style="width:15%;text-align:right">Nama Bank :</th>
+                                        <td style="width:35%;">` + (data[index]['badan_usaha']['bank'] ? data[index]['badan_usaha']['bank']['Nama_Bank'] : '')  + `</td>
+                                    </tr>
+        `);
+    }
+
+    // Fungsi Change Data Modal
+    function changedataahli(index, data) {
+        $('#masterModalAhli > tbody').html(`
+        <tr>
+                                        <th colspan="5" style="text-align:center">` + data[index]['skp_pjk3'][
+                'badan_usaha'
+            ][
+                'nama_bu'
+            ] + `</th>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                        <th style="width:15%;text-align:right">Provinsi Naker :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'provinsi'
+            ]['nama'] + `</td>
+                                        <th style="width:15%;text-align:right">Alamat :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'alamat'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Provinsi Badan Usaha :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'provinsibu'
+            ]['nama'] + `</td>
+                                        <th style="width:15%;text-align:right">Kota Badan Usaha :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha']['kota'][
+                'nama'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No Tlp :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha']['telp'] + `</td>
+                                        <th style="width:15%;text-align:right">Email :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'email'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Instansi Reff :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'instansi_reff'
+            ] + `</td>
+                                        <th style="width:15%;text-align:right">Web :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha']['web'] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Nama Pimpinan :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'nama_pimp'
+            ] + `</td>
+                                        <th style="width:15%;text-align:right">Jabatan Pimpinan :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'jab_pimp'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No Hp Pimpinan :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'hp_pimp'
+            ] + `</td>
+                                        <th style="width:15%;text-align:right">Email Pimpinan :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'email_pimp'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">Nama Kontak Person :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'kontak_p'
+            ] + `</td>
+                                        <th style="width:15%;text-align:right">Jabatan Kontak Person :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'jab_kontak_p'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No HP Kontak Person :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'no_kontak_p'
+            ] + `</td>
+                                        <th style="width:15%;text-align:right">Email Kontak Person :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'email_kontak_p'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">NPWP :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha']['npwp'] +
+            `</td>
+                                        <th style="width:15%;text-align:right">Pdf_NPWP :</th>
+                                        <td style="width:35%;"><a class="fa fa-file-pdf-o" target="_blank" href="uploads/` +
+            data[index][
+                'skp_pjk3'
+            ]['badan_usaha']['npwp_pdf'] + `"></a></td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right">No Rekening Bank :</th>
+                                        <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'no_rek'
+            ] + `</td>
+                                        <th style="width:15%;text-align:right">Nama Rekening Bank :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
+                'nama_rek'
+            ] + `</td>
+                                    </tr>
+                                    <tr>
+                                    <td style="width:15%"></td>
+                                    <th style="width:15%;text-align:right"></th>
+                                        <td style="width:20%;"></td>
+                                        <th style="width:15%;text-align:right">Nama Bank :</th>
+                                        <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha']['bank'][
+                'Nama_Bank'
+            ] + `</td>
+                                    </tr>
+        `);
+    }
+
+    // Fungsi menambah baris modal detail PJK3
+    function add_row(index, data) {
+        if (data[index]['pdf_skp_pjk3'] == null || data[index]['pdf_skp_pjk3'] == "") {
+            npwpPdf = `<span>` + cekNull(data[index]['no_sk']) + `</span>`;
+        } else {
+            npwpPdf = `<a target="_blank" href="uploads/` + data[index][
+                    'pdf_skp_pjk3'
+                ] +
+                `">` + cekNull(data[index]['no_sk']) + `</a>`;
+        }
+
+        $('#tableModalDetail > tbody:last').append(`
+        <tr>
+                                        <td align="center">` + (index + 1) + `</td>
+                                        <td>` + cekNull(data[index]['bidang']['jenis_usaha']['nama_jns_usaha']) + `</td>
+                                        <td>` + cekNull(data[index]['bidang']['nama_bidang']) + `</td>
+                                        <td>` + npwpPdf + `</td>
+                                        <td align="right">` + cekNull(data[index]['tgl_sk']) + `</td>
+                                        <td align="right">` + cekNull(data[index]['tgl_akhir_sk']) + `</td>
+                                    </tr>
+        `);
+    }
+
+    // Fungsi menambah baris modal detail ahli
+    function add_row_ahli(index, data) {
+        if (data[index]['personal']['kota'] == null || data[index]['personal']['kota'] == "") {
+            namaKota = "null";
+            namaProv = "null";
+        } else {
+            namaKota = data[index]['personal']['kota']['nama'];
+            namaProv = data[index]['personal']['kota']['provinsi']['nama'];
+        }
+
+        if (data[index]['personal']['sekolah'] == null || data[index]['personal']['sekolah'] == "") {
+            namaSekolah = "null";
+        } else {
+            namaSekolah = data[index]['personal']['sekolah']['nama_sekolah'];
+        }
+
+        if (data[index]['personal']['npwp_pdf'] == null || data[index]['personal']['npwp_pdf'] == "") {
+            npwpPdf = "null";
+        } else {
+            npwpPdf = `<a class="fa fa-file-pdf-o" target="_blank" href="uploads/` + data[index]['personal']
+                ['npwp_pdf'] +
+                `"></a>`;
+        }
+
+        $('#tableModalDetailAhli > tbody:last').append(`
+        <tr>
+                                        <td align="center">` + (index + 1) + `</td>
+                                        <td>` + cekNull(data[index]['personal']['nama']) + `</td>
+                                        <td data-toggle="tooltip" data-placement="bottom" title="` + cekNull(data[
+            index]['bid_sertifikat_alat']['kode_srtf_alat']) + ` | ` + cekNull(data[index][
+            'bid_sertifikat_alat'
+        ]['nama_srtf_alat']) + `">` + cekNull(data[index]['bid_sertifikat_alat'][
+            'kode_srtf_alat'
+        ]) + `</td>
+                                        <td>` + cekNull(data[index]['jenisdok_ak3']['Nama_jns_dok']) + `</td>
+                                        <td></td>
+                                        <td>` + cekNull(data[index]['instansi_skp']) + `</td>
+                                        <td>` + cekNull(data[index]['penyelenggara']) + `</td>
+                                        <td>` + cekNull(data[index]['no_skp']) + `</td>
+                                        <td align="right">` + cekNull(tanggal_indonesia(data[index]['tgl_skp'])) + `</td>
+                                        <td align="right">` + cekNull(tanggal_indonesia(data[index][
+            'tgl_akhir_skp'
+        ])) + `</td>
+                                        <td>` + cekNull(namaProv) + `</td>
+                                        <td>` + cekNull(namaKota) + `</td>
+                                        <td>` + cekNull(namaSekolah) + `</td>
+                                        <td>` + cekNull(data[index]['keterangan']) + `</td>
+                                        <td>` + cekNull(data[index]['personal']['npwp']) + `</td>
+                                        <td align="center">` + cekNull(npwpPdf) + `</td>
+                                    </tr>
+        `);
+    }
     $(function () {
 
         // Rubah Warna Filter
@@ -714,405 +1228,6 @@
             }
         });
 
-        // Mengambil data Detail PJK3
-        function getDataDetail(id) {
-            var url = "{{ url('data_skp_pjk3_modal') }}";
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: {
-                    id_pjk3: id
-                },
-                success: function (data) {
-                    console.log(data);
-                    $('#tableModalDetail > tbody').html(`
-                    <tr>
-                                            <th>No</th>
-                                            <th>Jenis Usaha</th>
-                                            <th>Bidang SKP</th>
-                                            <th>No SKP</th>
-                                            <th>Tgl Terbit SKP</th>
-                                            <th>Tgl Akhir SKP</th>
-                                        </tr>
-                    `);
-                    data.forEach(function (item, index) {
-                        if (index == 0) {
-                            changedatapjk3(index, data);
-                        }
-                        add_row(index, data);
-                    });
-                },
-                error: function (xhr, status) {
-                    alert('terjadi error ketika menampilkan data');
-                }
-            });
-        }
-
-        // Mengambil data detail tenaga ahli
-        function getDataDetailAhli(id) {
-            var url = "{{ url('data_ahli_pjk3_modal') }}";
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: url,
-                method: 'POST',
-                data: {
-                    id_pjk3: id
-                },
-                success: function (data) {
-                    console.log(data);
-                    $('#tableModalDetailAhli > tbody').html(`
-                    <tr>
-                                            <th>No</th>
-                                            <th>Nama</th>
-                                            <th>Bidang Srtf_Alat</th>
-                                            <th>Jns_Dok</th>
-                                            <th>Nama_Dok</th>
-                                            <th>Instansi_Dok</th>
-                                            <th>Penyelenggara</th>
-                                            <th>No_Dok</th>
-                                            <th>Tgl_Terbit</th>
-                                            <th>Tgl_Akhir</th>
-                                            <th>Prov</th>
-                                            <th>Kota</th>
-                                            <th>Sekolah_P</th>
-                                            <th>Ket_P</th>
-                                            <th>NPWP</th>
-                                            <th>Pdf_NPWP</th>
-                                        </tr>
-                    `);
-                    if (data.length > 0) {
-                        data.forEach(function (item, index) {
-                            if (index == 0) {
-                                changedataahli(index, data);
-                            }
-                            add_row_ahli(index, data);
-                        });
-                        $('#modaldetailAhli').modal('show');
-                    } else {
-                        Swal.fire({
-                            title: "Data tenaga ahli tidak ditemukan !",
-                            type: 'error',
-                            confirmButtonText: 'Close',
-                            confirmButtonColor: '#AAA'
-                        });
-                        // Swal.fire('Data tenaga ahli tidak ditemukan !')
-                    }
-
-                },
-                error: function (xhr, status) {
-                    alert('terjadi error ketika menampilkan data');
-                }
-            });
-        }
-
-        // Fungsi Change Data Modal
-        function changedatapjk3(index, data) {
-            $('#masterModalPjk3 > tbody').html(`
-            <tr>
-                                            <th colspan="5" style="text-align:center">` + data[index]['badan_usaha'][
-                'nama_bu'
-            ] + `</th>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                            <th style="width:15%;text-align:right">Provinsi Naker :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['provinsi']['nama'] + `</td>
-                                            <th style="width:15%;text-align:right">Alamat :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['alamat'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Provinsi Badan Usaha :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['provinsibu'][
-                'nama'
-            ] + `</td>
-                                            <th style="width:15%;text-align:right">Kota Badan Usaha :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['kota']['nama'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No Tlp :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['telp'] + `</td>
-                                            <th style="width:15%;text-align:right">Email :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['email'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Instansi Reff :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['instansi_reff'] + `</td>
-                                            <th style="width:15%;text-align:right">Web :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['web'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Nama Pimpinan :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['nama_pimp'] + `</td>
-                                            <th style="width:15%;text-align:right">Jabatan Pimpinan :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['jab_pimp'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No Hp Pimpinan :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['hp_pimp'] + `</td>
-                                            <th style="width:15%;text-align:right">Email Pimpinan :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['email_pimp'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Nama Kontak Person :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['kontak_p'] + `</td>
-                                            <th style="width:15%;text-align:right">Jabatan Kontak Person :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['jab_kontak_p'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No HP Kontak Person :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['no_kontak_p'] + `</td>
-                                            <th style="width:15%;text-align:right">Email Kontak Person :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['email_kontak_p'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">NPWP :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['npwp'] + `</td>
-                                            <th style="width:15%;text-align:right">Pdf_NPWP :</th>
-                                            <td style="width:35%;">
-                                            <a class="fa fa-file-pdf-o" target="_blank" href="uploads/` + data[index][
-                'badan_usaha'
-            ]['npwp_pdf'] + `"></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No Rekening Bank :</th>
-                                            <td style="width:20%;">` + data[index]['badan_usaha']['no_rek'] + `</td>
-                                            <th style="width:15%;text-align:right">Nama Rekening Bank :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['nama_rek'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right"></th>
-                                            <td style="width:20%;"></td>
-                                            <th style="width:15%;text-align:right">Nama Bank :</th>
-                                            <td style="width:35%;">` + data[index]['badan_usaha']['bank'][
-                'Nama_Bank'
-            ] + `</td>
-                                        </tr>
-            `);
-        }
-
-        // Fungsi Change Data Modal
-        function changedataahli(index, data) {
-            $('#masterModalAhli > tbody').html(`
-            <tr>
-                                            <th colspan="5" style="text-align:center">` + data[index]['skp_pjk3'][
-                    'badan_usaha'
-                ][
-                    'nama_bu'
-                ] + `</th>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                            <th style="width:15%;text-align:right">Provinsi Naker :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'provinsi'
-                ]['nama'] + `</td>
-                                            <th style="width:15%;text-align:right">Alamat :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'alamat'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Provinsi Badan Usaha :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'provinsibu'
-                ]['nama'] + `</td>
-                                            <th style="width:15%;text-align:right">Kota Badan Usaha :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha']['kota'][
-                    'nama'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No Tlp :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha']['telp'] + `</td>
-                                            <th style="width:15%;text-align:right">Email :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'email'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Instansi Reff :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'instansi_reff'
-                ] + `</td>
-                                            <th style="width:15%;text-align:right">Web :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha']['web'] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Nama Pimpinan :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'nama_pimp'
-                ] + `</td>
-                                            <th style="width:15%;text-align:right">Jabatan Pimpinan :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'jab_pimp'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No Hp Pimpinan :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'hp_pimp'
-                ] + `</td>
-                                            <th style="width:15%;text-align:right">Email Pimpinan :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'email_pimp'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">Nama Kontak Person :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'kontak_p'
-                ] + `</td>
-                                            <th style="width:15%;text-align:right">Jabatan Kontak Person :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'jab_kontak_p'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No HP Kontak Person :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'no_kontak_p'
-                ] + `</td>
-                                            <th style="width:15%;text-align:right">Email Kontak Person :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'email_kontak_p'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">NPWP :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha']['npwp'] +
-                `</td>
-                                            <th style="width:15%;text-align:right">Pdf_NPWP :</th>
-                                            <td style="width:35%;"><a class="fa fa-file-pdf-o" target="_blank" href="uploads/` +
-                data[index][
-                    'skp_pjk3'
-                ]['badan_usaha']['npwp_pdf'] + `"></a></td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right">No Rekening Bank :</th>
-                                            <td style="width:20%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'no_rek'
-                ] + `</td>
-                                            <th style="width:15%;text-align:right">Nama Rekening Bank :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha'][
-                    'nama_rek'
-                ] + `</td>
-                                        </tr>
-                                        <tr>
-                                        <td style="width:15%"></td>
-                                        <th style="width:15%;text-align:right"></th>
-                                            <td style="width:20%;"></td>
-                                            <th style="width:15%;text-align:right">Nama Bank :</th>
-                                            <td style="width:35%;">` + data[index]['skp_pjk3']['badan_usaha']['bank'][
-                    'Nama_Bank'
-                ] + `</td>
-                                        </tr>
-            `);
-        }
-
-        // Fungsi menambah baris modal detail PJK3
-        function add_row(index, data) {
-            if (data[index]['pdf_skp_pjk3'] == null || data[index]['pdf_skp_pjk3'] == "") {
-                npwpPdf = `<span>` + cekNull(data[index]['no_sk']) + `</span>`;
-            } else {
-                npwpPdf = `<a target="_blank" href="uploads/` + data[index][
-                        'pdf_skp_pjk3'
-                    ] +
-                    `">` + cekNull(data[index]['no_sk']) + `</a>`;
-            }
-
-            $('#tableModalDetail > tbody:last').append(`
-            <tr>
-                                            <td align="center">` + (index + 1) + `</td>
-                                            <td>` + cekNull(data[index]['bidang']['jenis_usaha']['nama_jns_usaha']) + `</td>
-                                            <td>` + cekNull(data[index]['bidang']['nama_bidang']) + `</td>
-                                            <td>` + npwpPdf + `</td>
-                                            <td align="right">` + cekNull(data[index]['tgl_sk']) + `</td>
-                                            <td align="right">` + cekNull(data[index]['tgl_akhir_sk']) + `</td>
-                                        </tr>
-            `);
-        }
-
-        // Fungsi menambah baris modal detail ahli
-        function add_row_ahli(index, data) {
-            if (data[index]['personal']['kota'] == null || data[index]['personal']['kota'] == "") {
-                namaKota = "null";
-                namaProv = "null";
-            } else {
-                namaKota = data[index]['personal']['kota']['nama'];
-                namaProv = data[index]['personal']['kota']['provinsi']['nama'];
-            }
-
-            if (data[index]['personal']['sekolah'] == null || data[index]['personal']['sekolah'] == "") {
-                namaSekolah = "null";
-            } else {
-                namaSekolah = data[index]['personal']['sekolah']['nama_sekolah'];
-            }
-
-            if (data[index]['personal']['npwp_pdf'] == null || data[index]['personal']['npwp_pdf'] == "") {
-                npwpPdf = "null";
-            } else {
-                npwpPdf = `<a class="fa fa-file-pdf-o" target="_blank" href="uploads/` + data[index]['personal']
-                    ['npwp_pdf'] +
-                    `"></a>`;
-            }
-
-            $('#tableModalDetailAhli > tbody:last').append(`
-            <tr>
-                                            <td align="center">` + (index + 1) + `</td>
-                                            <td>` + cekNull(data[index]['personal']['nama']) + `</td>
-                                            <td data-toggle="tooltip" data-placement="bottom" title="` + cekNull(data[
-                index]['bid_sertifikat_alat']['kode_srtf_alat']) + ` | ` + cekNull(data[index][
-                'bid_sertifikat_alat'
-            ]['nama_srtf_alat']) + `">` + cekNull(data[index]['bid_sertifikat_alat'][
-                'kode_srtf_alat'
-            ]) + `</td>
-                                            <td>` + cekNull(data[index]['jenisdok_ak3']['Nama_jns_dok']) + `</td>
-                                            <td></td>
-                                            <td>` + cekNull(data[index]['instansi_skp']) + `</td>
-                                            <td>` + cekNull(data[index]['penyelenggara']) + `</td>
-                                            <td>` + cekNull(data[index]['no_skp']) + `</td>
-                                            <td align="right">` + cekNull(tanggal_indonesia(data[index]['tgl_skp'])) + `</td>
-                                            <td align="right">` + cekNull(tanggal_indonesia(data[index][
-                'tgl_akhir_skp'
-            ])) + `</td>
-                                            <td>` + cekNull(namaProv) + `</td>
-                                            <td>` + cekNull(namaKota) + `</td>
-                                            <td>` + cekNull(namaSekolah) + `</td>
-                                            <td>` + cekNull(data[index]['keterangan']) + `</td>
-                                            <td>` + cekNull(data[index]['personal']['npwp']) + `</td>
-                                            <td align="center">` + cekNull(npwpPdf) + `</td>
-                                        </tr>
-            `);
-        }
 
         // $('#confirm-delete').click(function () {
         //     var deleteButton = $(this);

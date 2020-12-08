@@ -518,7 +518,7 @@ class SeminarController extends Controller
     }
 
     public function edit($id) {
-        $seminar = SeminarModel::where('id',$id)->first();
+        $seminar = SeminarModel::findOrFail($id);
         if($seminar->status == 'published'){
             $instansi = BuModel::where('is_actived','1')->get();
             $ins = BuModel::where('is_actived','1')->pluck('nama_bu','id');
@@ -657,7 +657,7 @@ class SeminarController extends Controller
 
         ]);
         // dd($request);
-        $dataAwal = SeminarModel::where('id',$id)->first();
+        $dataAwal = SeminarModel::findOrFail($id);
         $naraAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','2')->pluck('id_peserta');
         $modeAwalAsPeserta = PesertaSeminar::where('id_seminar',$id)->where('status','4')->pluck('id_peserta');
         $naraAwal = Peserta::Wherein('id',$naraAwalAsPeserta)->get();
@@ -950,7 +950,7 @@ class SeminarController extends Controller
 
     //detail seminar
     public function detail($id){
-        $seminar = SeminarModel::where('id',$id)->first();
+        $seminar = SeminarModel::findOrFail($id);
         $bu = BuModel::all()->pluck('nama_bu','id');
         $instansi = SertInstansiModel::where('id_seminar',$id)->where('status','1')->where('deleted_at',NULL)->get();
         $pendukung = SertInstansiModel::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
@@ -976,7 +976,6 @@ class SeminarController extends Controller
     }
     public function updateDraft(Request $request) {
         // dd($request);
-        $id = $request->id;
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
@@ -1053,15 +1052,17 @@ class SeminarController extends Controller
             'link.required_if' => 'Untuk seminar online (webinar), mohon isi link seminar',
             'tuk' => 'Mohon isi Tempat Uji Komptensi'
 
-        ]);
+            ]);
 
-        $dataAwal = SeminarModel::where('id',$id)->first();
-        $naraAwal = PesertaSeminar::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
-        $modeAwal = PesertaSeminar::where('id_seminar',$id)->where('status','4')->where('deleted_at',NULL)->get();
-        // dd($naraAwal);
+            $id = $request->id;
 
-        // Dari sini, tambah ke tabel srtf_narasumber dan srtf_peserta_seminar
-        // Kalo ada narasumber baru, sekaligus bikin sertifikat
+            $dataAwal = SeminarModel::findOrFail($id);
+            $naraAwal = PesertaSeminar::where('id_seminar',$id)->where('status','2')->where('deleted_at',NULL)->get();
+            $modeAwal = PesertaSeminar::where('id_seminar',$id)->where('status','4')->where('deleted_at',NULL)->get();
+            // dd($naraAwal);
+
+            // Dari sini, tambah ke tabel srtf_narasumber dan srtf_peserta_seminar
+            // Kalo ada narasumber baru, sekaligus bikin sertifikat
         foreach($request->narasumber as $key) {
             if(!$naraAwal->contains('id_personal',$key)){
                 $narasumber = Peserta::where('id_personal',$key)->first();
@@ -1333,7 +1334,7 @@ class SeminarController extends Controller
     }
 
     public function publish($id) {
-        $data = SeminarModel::where('id',$id)->first();
+        $data = SeminarModel::findOrFail($id);
         $data->is_actived = "1";
         $data->status = "published";
         $data->is_mulai = '0';

@@ -71,8 +71,8 @@
                                     <span class="bintang">*</span> Nama PJK3
                                 </div>
                                 <select class="form-control select2" name="id_nama_pjk3" id="id_nama_pjk3"
-                                    style="width: 100%;" placeholder="*Nama PJK3">
-                                    <option value="" disabled selected>*Nama PJK3</option>
+                                    style="width: 100%;" placeholder="">
+                                    <option value="" disabled selected></option>
                                     @foreach($instansi as $key)
                                     <option value="{{ $key->id }}" {{ $key->id == old('id_nama_pjk3') ? 'selected' : '' }}>
                                         {{ $key->nama_bu }} </option>
@@ -91,8 +91,8 @@
                                     <span class="bintang">*</span> Nama Personil
                                 </div>
                                 <select class="form-control select2" name="id_personal" id="id_personal"
-                                    style="width: 100%;" placeholder="*Nama Personil">
-                                    <option value="" disabled selected>*Nama Personil</option>
+                                    style="width: 100%;" placeholder="">
+                                    <option value="" disabled selected></option>
                                     @foreach($personil as $key)
                                     <option value="{{ $key->id }}" {{ $key->id == old('id_personal') ? 'selected' : '' }}>
                                         {{ $key->nama }}
@@ -112,7 +112,7 @@
                                     Refferensi
                                 </div>
                                 <input name="id_reff" id="id_reff" type="text" class="form-control"
-                                    placeholder="Refferensi" value="{{old('id_reff')}}" disabled>
+                                    placeholder="" value="{{old('id_reff')}}" disabled>
                             </div>
                             <span id="id_reff" class="help-block customspan">{{ $errors->first('id_reff') }}</span>
                         </div>
@@ -123,7 +123,7 @@
                                 <div class="input-group-addon">
                                     Status
                                 </div>
-                                <input class="form-control" name="id_status" id="id_status" placeholder="Status"
+                                <input class="form-control" name="id_status" id="id_status" placeholder=""
                                     value="{{old('id_status')}}" disabled>
                             </div>
                             <span id="id_status" class="help-block customspan">{{ $errors->first('id_status') }}</span>
@@ -136,7 +136,7 @@
                                 <div class="input-group-addon">
                                     Jenis Kelamin
                                 </div>
-                                <input class="form-control" name="id_jenkel" id="id_jenkel" placeholder="Jenis Kelamin"
+                                <input class="form-control" name="id_jenkel" id="id_jenkel" placeholder=""
                                     value="{{old('id_jenkel')}}" disabled>
                             </div>
                             <span id="id_jenkel" class="help-block customspan">{{ $errors->first('id_jenkel') }}</span>
@@ -155,7 +155,7 @@
                                 <div class="input-group-addon">
                                     NIK
                                 </div>
-                                <input name="nik" id="nik" type="text" class="form-control" placeholder="NIK"
+                                <input name="nik" id="nik" type="text" class="form-control" placeholder=""
                                     value="{{old('nik')}}" disabled>
                             </div>
                             <span id="nik" class="help-block customspan">{{ $errors->first('nik') }} </span>
@@ -175,7 +175,7 @@
                                     Alamat (KTP)
                                 </div>
                                 <input name="id_ktp_alamat" id="id_ktp_alamat" type="text" class="form-control"
-                                    placeholder="Alamat Jalan, Kelurahan, Kecamatan (KTP)" value="{{old('id_ktp_alamat')}}" disabled>
+                                    placeholder="" value="{{old('id_ktp_alamat')}}" disabled>
                             </div>
                             <span id="id_ktp_alamat" class="help-block customspan">{{ $errors->first('id_ktp_alamat') }}</span>
                         </div>
@@ -187,7 +187,7 @@
                                 <div class="input-group-addon">
                                     Prov Alamat (KTP)
                                 </div>
-                                <input class="form-control" name="id_ktp_prov" id="id_ktp_prov" placeholder="Prov Alamat (KTP)"
+                                <input class="form-control" name="id_ktp_prov" id="id_ktp_prov" placeholder=""
                                     value="{{old('id_ktp_prov')}}" disabled>
                             </div>
                             <span id="id_ktp_prov" class="help-block customspan">{{ $errors->first('id_ktp_prov') }}</span>
@@ -199,7 +199,7 @@
                                 <div class="input-group-addon">
                                     Kota Alamat (KTP)
                                 </div>
-                                <input class="form-control" name="id_ktp_kota" id="id_ktp_kota" placeholder="Kota Alamat (KTP)"
+                                <input class="form-control" name="id_ktp_kota" id="id_ktp_kota" placeholder=""
                                     value="{{old('id_ktp_kota')}}" disabled>
                             </div>
                             <span id="id_ktp_kota" class="help-block customspan">{{ $errors->first('id_ktp_kota') }}</span>
@@ -213,7 +213,7 @@
                                     Alamat (Domisili)
                                 </div>
                                 <input name="id_alamat" id="id_alamat" type="text" class="form-control"
-                                    placeholder="Alamat Jalan, Kelurahan, Kecamatan (Domisili)" value="{{old('id_alamat')}}" disabled>
+                                    placeholder="" value="{{old('id_alamat')}}" disabled>
                             </div>
                             <span id="id_alamat" class="help-block customspan">{{ $errors->first('id_alamat') }}</span>
                         </div>
@@ -225,7 +225,7 @@
                                 <div class="input-group-addon">
                                     Prov Alamat (Domisili)
                                 </div>
-                                <input class="form-control" name="id_prov" id="id_prov" placeholder="Prov Alamat (Domisili)"
+                                <input class="form-control" name="id_prov" id="id_prov" placeholder=""
                                     value="{{old('id_prov')}}" disabled>
                             </div>
                             <span id="id_prov" class="help-block customspan">{{ $errors->first('id_prov') }}</span>
@@ -237,7 +237,7 @@
                                 <div class="input-group-addon">
                                     Kota Alamat (Domisili)
                                 </div>
-                                <input class="form-control" name="id_kota" id="id_kota" placeholder="Kota Alamat (Domisili)"
+                                <input class="form-control" name="id_kota" id="id_kota" placeholder=""
                                     value="{{old('id_kota')}}" disabled>
                             </div>
                             <span id="id_kota" class="help-block customspan">{{ $errors->first('id_kota') }}</span>
@@ -251,7 +251,7 @@
                                     No HP
                                 </div>
                                 <input name="id_no_telp" id="id_no_telp" type="text" class="form-control"
-                                    placeholder="No HP" value="{{old('id_no_telp')}}" disabled>
+                                    placeholder="" value="{{old('id_no_telp')}}" disabled>
                             </div>
                             <span id="id_no_telp"
                                 class="help-block customspan">{{ $errors->first('id_no_telp') }}</span>
@@ -263,7 +263,7 @@
                                 <div class="input-group-addon">
                                     Email
                                 </div>
-                                <input name="id_email" id="id_email" type="email" class="form-control" placeholder="Email"
+                                <input name="id_email" id="id_email" type="email" class="form-control" placeholder=""
                                     value="{{old('id_email')}}" disabled>
                             </div>
                             <span id="id_email" class="help-block customspan">{{ $errors->first('id_email') }}</span>
@@ -277,7 +277,7 @@
                                     Tempat Lahir
                                 </div>
                                 <input class="form-control" name="id_temp_lahir" id="id_temp_lahir"
-                                    placeholder="Tempat Lahir" value="{{old('id_temp_lahir')}}" disabled>
+                                    placeholder="" value="{{old('id_temp_lahir')}}" disabled>
                             </div>
                             <span id="id_temp_lahir"
                                 class="help-block customspan">{{ $errors->first('id_temp_lahir') }}</span>
@@ -290,7 +290,7 @@
                                     Tanggal Lahir
                                 </div>
                                 <input class="form-control" id="id_tgl_lahir" name="id_tgl_lahir"
-                                    placeholder="Tanggal Lahir" value="{{old('id_tgl_lahir')}}" disabled>
+                                    placeholder="" value="{{old('id_tgl_lahir')}}" disabled>
                             </div>
                             <span id="id_tgl_lahir"
                                 class="help-block customspan">{{ $errors->first('id_tgl_lahir') }}</span>
@@ -304,7 +304,7 @@
                                     Agama
                                 </div>
                                 <input class="form-control" name="agama" id="agama"
-                                    placeholder="Agama" value="{{old('agama')}}" disabled>
+                                    placeholder="" value="{{old('agama')}}" disabled>
                             </div>
                             <span id="agama"
                                 class="help-block customspan">{{ $errors->first('agama') }}</span>
@@ -317,7 +317,7 @@
                                     Status Pajak
                                 </div>
                                 <input class="form-control" id="status_pajak" name="status_pajak"
-                                    placeholder="Status Pajak" value="{{old('status_pajak')}}" disabled>
+                                    placeholder="" value="{{old('status_pajak')}}" disabled>
                             </div>
                             <span id="status_pajak"
                                 class="help-block customspan">{{ $errors->first('status_pajak') }}</span>
@@ -331,7 +331,7 @@
                                     Status Pernikahan
                                 </div>
                                 <input class="form-control" name="status_perni" id="status_perni"
-                                    placeholder="Status Pernikahan" value="{{old('status_perni')}}" disabled>
+                                    placeholder="" value="{{old('status_perni')}}" disabled>
                             </div>
                             <span id="status_perni"
                                 class="help-block customspan">{{ $errors->first('status_perni') }}</span>
@@ -345,7 +345,7 @@
                                     No BPJS Kesehatan
                                 </div>
                                 <input class="form-control" name="bpjs_no" id="bpjs_no"
-                                    placeholder="No BPJS Kesehatan" value="{{old('bpjs_no')}}" disabled>
+                                    placeholder="" value="{{old('bpjs_no')}}" disabled>
                             </div>
                             <span id="bpjs_no"
                                 class="help-block customspan">{{ $errors->first('bpjs_no') }}</span>
@@ -364,7 +364,7 @@
                                 <div class="input-group-addon">
                                     NPWP
                                 </div>
-                                <input id="npwp" name="npwp" class="form-control" placeholder="NPWP"
+                                <input id="npwp" name="npwp" class="form-control" placeholder=""
                                     value="{{old('npwp')}}" disabled>
                             </div>
                             <span id="npwp" class="help-block customspan">{{ $errors->first('npwp') }} </span>
@@ -384,7 +384,7 @@
                                     No Rekening Bank
                                 </div>
                                 <input name="id_norek_bank" id="id_norek_bank" type="text" class="form-control"
-                                    placeholder="No Rekening Bank" value="{{old('id_norek_bank')}}" disabled>
+                                    placeholder="" value="{{old('id_norek_bank')}}" disabled>
                             </div>
                             <span id="id_norek_bank"
                                 class="help-block customspan">{{ $errors->first('id_norek_bank') }}</span>
@@ -397,7 +397,7 @@
                                     Nama Rekening Bank
                                 </div>
                                 <input name="id_namarek_bank" id="id_namarek_bank" type="text" class="form-control"
-                                    placeholder="Nama Rekening Bank" value="{{old('id_namarek_bank')}}" disabled>
+                                    placeholder="" value="{{old('id_namarek_bank')}}" disabled>
                             </div>
                             <span id="id_namarek_bank"
                                 class="help-block customspan">{{ $errors->first('id_namarek_bank') }}</span>
@@ -410,7 +410,7 @@
                                 <div class="input-group-addon">
                                     Nama Bank
                                 </div>
-                                <input class="form-control" name="id_nama_bank" id="id_nama_bank" placeholder="Nama Bank"
+                                <input class="form-control" name="id_nama_bank" id="id_nama_bank" placeholder=""
                                     value="{{old('id_nama_bank')}}" disabled>
                             </div>
                             <span id="id_nama_bank"
@@ -543,7 +543,7 @@
 
 {{-- <td style="border-right:0px !important;">
     <select required class="form-control select2 instansi" name="id_instansidok_` + urutan + `" id="id_instansidok_` + urutan + `" style="width: 100%;">
-        <option value="" disabled selected>Pilih Instansi</option>
+        <option value="" disabled selected></option>
         @foreach($instansi as $key)
         <option value="{{ $key->singkat_bu }}">{{ $key->singkat_bu }}</option>
         @endforeach
@@ -554,7 +554,7 @@
     oninvalid="this.setCustomValidity('Masukkan Nama Instansi')" oninput="setCustomValidity('')"></td>
 <td style="border-right:0px !important;">
     <select required class="form-control select2 penyelenggara" name="id_penyelenggara_` + urutan + `" id="id_penyelenggara_` + urutan + `" style="width: 100%;">
-        <option value="" disabled selected>Pilih Penyelenggara</option>
+        <option value="" disabled selected></option>
         @foreach($instansi as $key)
         <option value="{{ $key->singkat_bu }}">{{ $key->singkat_bu }}</option>
         @endforeach
@@ -593,7 +593,7 @@
 
         $(document).on('change', '#id_nama_pjk3', function (e) {
             $("#id_personal").select2({
-                // placeholder: "*Nama Personil",
+                // placeholder: "",
                 // allowClear: true
             }).val('').trigger('change.select2');
         });
@@ -748,41 +748,41 @@
                             <tr>
                                 <td style="text-align:center;">` + urut + `</td>
                                 <td>
-                                    <input disabled value="` + response['dataSekolah'][i]['jp']['deskripsi'] + `" type="text" class="form-control" placeholder="Jenjang Pendidikan"
+                                    <input disabled value="` + response['dataSekolah'][i]['jp']['deskripsi'] + `" type="text" class="form-control" placeholder=""
                                         name="id_jp_` + urut + `" id="id_jp_` + urut + `">
                                 </td>
                                 <td>
-                                    <input disabled value="` + response['dataSekolah'][i]['nama_sekolah'] + `" type="text" class="form-control" placeholder="Nama Sekolah"
+                                    <input disabled value="` + response['dataSekolah'][i]['nama_sekolah'] + `" type="text" class="form-control" placeholder=""
                                         name="id_namasekolah_` + urut + `" id="id_namasekolah_` + urut + `">
                                 </td>
                                 <td>
-                                    <input disabled value="` + negara + `" type="text" class="form-control" placeholder="Negara Sekolah"
+                                    <input disabled value="` + negara + `" type="text" class="form-control" placeholder=""
                                         name="id_negarasekolah_` + urut + `" id="id_negarasekolah_` + urut + `">
                                 </td>
                                 <td>
                                     <input disabled value="` + response['dataSekolah'][i]['kota_s']['provinsi'][
                                 'nama'
-                            ] + `" type="text" class="form-control" placeholder="Prov Sekolah"
+                            ] + `" type="text" class="form-control" placeholder=""
                                         name="id_provsekolah_` + urut + `" id="id_provsekolah_` + urut + `">
                                 </td>
                                 <td>
-                                    <input disabled value="` + response['dataSekolah'][i]['kota_s']['nama'] + `" type="text" class="form-control" placeholder="Kota Sekolah"
+                                    <input disabled value="` + response['dataSekolah'][i]['kota_s']['nama'] + `" type="text" class="form-control" placeholder=""
                                         name="id_kotasekolah_` + urut + `" id="id_kotasekolah_` + urut + `">
                                 </td>
                                 <td>
-                                    <input disabled value="` + response['dataSekolah'][i]['jurusan'] + `" type="text" class="form-control" placeholder="Prodi"
+                                    <input disabled value="` + response['dataSekolah'][i]['jurusan'] + `" type="text" class="form-control" placeholder=""
                                         name="id_prodi_` + urut + `" id="id_prodi_` + urut + `">
                                 </td>
                                 <td>
-                                    <input disabled value="` + response['dataSekolah'][i]['tahun'] + `" type="text" class="form-control" placeholder="Tahun Tamat"
+                                    <input disabled value="` + response['dataSekolah'][i]['tahun'] + `" type="text" class="form-control" placeholder=""
                                         name="id_tahuntamat_` + urut + `" id="id_tahuntamat_` + urut + `">
                                 </td>
                                 <td>
-                                    <input disabled value="` + response['dataSekolah'][i]['no_ijazah'] + `" type="text" class="form-control" placeholder="No Ijasah"
+                                    <input disabled value="` + response['dataSekolah'][i]['no_ijazah'] + `" type="text" class="form-control" placeholder=""
                                         name="id_noijasah_` + urut + `" id="id_noijasah_` + urut + `">
                                 </td>
                                 <td style="width:10%">
-                                    <input disabled value="` + tanggal_indonesia(tgl_ijasah) + `"type="text" class="form-control" placeholder="id_tglijasah_"
+                                    <input disabled value="` + tanggal_indonesia(tgl_ijasah) + `"type="text" class="form-control" placeholder=""
                                         name="id_tglijasah_` + urut + `" id="id_tglijasah_` + urut + `">
                                 </td>
                                 <td>
@@ -791,7 +791,7 @@
                                 </td>
                                 <td >
                                     <a target="_blank" href="/uploads/` + response['dataSekolah'][i]['pdf_ijasah'] + `" type="button" class="btn btn-primary btn-sm"
-                                        placeholder="Pdf Ijasah" name="id_pdfijasah_` + urut + `" id="id_pdfijasah_` +
+                                        placeholder="" name="id_pdfijasah_` + urut + `" id="id_pdfijasah_` +
                             urut + `" style="margin-top:2px;margin-left:6px;">
                                         <i class="fa fa-file-pdf-o" ></i> Lihat</a>
                                 </td>
@@ -846,20 +846,20 @@
                                         name="id_penyelenggara_` + urutan + `" id="id_penyelenggara_` + urutan + `">
                                 </td>
                                 <td>
-                                    <input readonly value="` + response['dataSkpAk3'][i]['no_skp'] + `" type="text" class="form-control" placeholder="Prodi"
+                                    <input readonly value="` + response['dataSkpAk3'][i]['no_skp'] + `" type="text" class="form-control" placeholder=""
                                         name="id_nodokumen_` + urutan + `" id="id_nodokumen_` + urutan + `">
                                 </td>
                                 <td style="width:10%">
-                                    <input readonly value="` + tanggal_indonesia(tgl_terbit) + `"type="text" class="form-control" placeholder="id_tglijasah_"
+                                    <input readonly value="` + tanggal_indonesia(tgl_terbit) + `"type="text" class="form-control" placeholder=""
                                         name="id_tglterbit_` + urutan + `" id="id_tglterbit_` + urutan + `">
                                 </td>
                                 <td style="width:10%">
-                                    <input readonly value="` + tgl_akhir + `"type="text" class="form-control" placeholder="id_tglijasah_"
+                                    <input readonly value="` + tgl_akhir + `"type="text" class="form-control" placeholder=""
                                         name="id_tglakhir_` + urutan + `" id="id_tglakhir_` + urutan + `">
                                 </td>
                                 <td>
                                     <a target="_blank" href="/uploads/` + response['dataSkpAk3'][i]['pdf_skp_ak3'] + `" type="button" class="btn btn-primary btn-sm"
-                                        placeholder="Pdf Dok" name="id_pdfdok_` + urutan + `" id="id_pdfdok_` +
+                                        placeholder="" name="id_pdfdok_` + urutan + `" id="id_pdfdok_` +
                                         urutan + `" style="margin-top:2px;margin-left:6px;">
                                         <i class="fa fa-file-pdf-o" ></i> Lihat</a>
                                 </td>
@@ -920,11 +920,11 @@
                         oninvalid="this.setCustomValidity('Masukkan No Dokumen')" oninput="setCustomValidity('')"></td>
                     <td style="width:10%">
                         <input required  autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                        class="form-control" id="id_tglterbit_` + urutan + `" name="id_tglterbit_` + urutan + `" placeholder="dd/mm/yyyy">
+                        class="form-control" id="id_tglterbit_` + urutan + `" name="id_tglterbit_` + urutan + `" placeholder="">
                     </td>
                     <td style="width:10%">
                         <input autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" type="text"
-                            class="form-control inputtgl" id="id_tglakhir_` + urutan + `" name="id_tglakhir_` + urutan + `" placeholder="dd/mm/yyyy">
+                            class="form-control inputtgl" id="id_tglakhir_` + urutan + `" name="id_tglakhir_` + urutan + `" placeholder="">
                     </td>
                     <td class="image-upload">
                         <label required for="id_pdfdok_` + urutan + `">

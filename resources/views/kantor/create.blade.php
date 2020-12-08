@@ -74,7 +74,7 @@
                             <span class="bintang">*</span> Nama Kantor
                         </div>
                         <input name="nama_kantor" id="nama_kantor" class="form-control"
-                            placeholder="*Nama Kantor" value="{{old('nama_kantor')}}">
+                            placeholder="" value="{{old('nama_kantor')}}">
                     </div>
                     <span id="nama_kantor"
                         class="help-block customspan">{{ $errors->first('nama_kantor') }}
@@ -92,7 +92,7 @@
                             <span class="bintang">*</span> Singkat Nama Kantor
                         </div>
                         <input name="nama_singkat" id="nama_singkat" class="form-control"
-                            placeholder="*Singkat Nama Kantor" value="{{old('nama_singkat')}}">
+                            placeholder="" value="{{old('nama_singkat')}}">
                     </div>
 
                     <span id="nama_singkat"
@@ -110,7 +110,7 @@
                         </div>
                         <select class="form-control select2" name="level" id="level"
                             style="width: 100%;">
-                            <option value="" disabled selected>*Level Kantor</option>
+                            <option value="" disabled selected></option>
                             @foreach($level as $key)
                             <option value="{{ $key->id }}"
                                 {{ $key->id == old('level') ? 'selected' : '' }}>
@@ -130,7 +130,7 @@
                         </div>
                         <select class="form-control select2" name="id_level_k" id="id_level_k"
                             style="width: 100%;">
-                            <option value="" disabled selected>Level_K</option>
+                            <option value="" disabled selected></option>
                             @foreach($level as $key)
                             <option value="{{ $key->id }}"
                                 {{ $key->id == old('id_level_k') ? 'selected' : '' }}>
@@ -154,7 +154,7 @@
                         </div>
                         <select class="form-control select2" name="level_atas" id="level_atas"
                             style="width: 100%;">
-                            <option value="" disabled selected>Kantor Level Diatasnya</option>
+                            <option value="" disabled selected></option>
                         </select>
                     </div>
                     <span id="level_atas" class="help-block customspan">{{ $errors->first('level_atas') }}
@@ -170,7 +170,7 @@
                             <span class="bintang">*</span> Alamat
                         </div>
                         <input name="alamat" id="alamat" class="form-control"
-                            placeholder="*Alamat Jalan, Kelurahan, Kecamatan" value="{{old('alamat')}}">
+                            placeholder="" value="{{old('alamat')}}">
                     </div>
                     <span id="alamat" class="help-block customspan">{{ $errors->first('alamat') }}
                     </span>
@@ -186,7 +186,7 @@
                             <span class="bintang">*</span> Provinsi
                         </div>
                         <select class="form-control select2" name="prop" id="prop" style="width: 100%;">
-                            <option value="" disabled selected>*Provinsi</option>
+                            <option value="" disabled selected></option>
                             @foreach($prop as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('prop') ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
@@ -209,7 +209,7 @@
                             <span class="bintang">*</span> Kota
                         </div>
                         <select class="form-control select2" name="kota" id="kota" style="width: 100%;">
-                            <option value="" disabled selected>*Kota</option>
+                            <option value="" disabled selected></option>
                         </select>
                     </div>
                     <span id="kota" class="help-block customspan">{{ $errors->first('kota') }}
@@ -225,7 +225,7 @@
                             <span class="bintang">*</span> No Tlp
                         </div>
                         <input name="no_tlp" id="no_tlp" type="text" class="form-control"
-                            placeholder="*No Tlp" value="{{old('no_tlp')}}">
+                            placeholder="" value="{{old('no_tlp')}}">
                     </div>
                     <span id="no_tlp" class="help-block customspan">{{ $errors->first('no_tlp') }}
                     </span>
@@ -242,7 +242,7 @@
                             <span class="bintang">*</span> Email
                         </div>
                         <input name="email" id="email" type="email" class="form-control"
-                            placeholder="*Email" value="{{old('email')}}">
+                            placeholder="" value="{{old('email')}}">
                     </div>
                     <span id="email" class="help-block customspan">{{ $errors->first('email') }} </span>
                 </div>
@@ -256,7 +256,7 @@
                             Instansi Reff
                         </div>
                         <input name="instansi_reff" id="instansi_reff" type="text" class="form-control"
-                            placeholder="Instansi Reff" value="{{old('instansi_reff')}}">
+                            placeholder="" value="{{old('instansi_reff')}}">
                     </div>
                     <span id="instansi_reff" class="help-block customspan">{{ $errors->first('instansi_reff') }}
                     </span>
@@ -272,7 +272,7 @@
                         <div class="input-group-addon">
                             Web
                         </div>
-                        <input name="web" id="web" type="text" class="form-control" placeholder="Web"
+                        <input name="web" id="web" type="text" class="form-control" placeholder=""
                             value="{{old('web')}}">
                     </div>
                     <span id="web" class="help-block customspan">{{ $errors->first('web') }} </span>
@@ -287,7 +287,7 @@
                             Nama Pimpinan
                         </div>
                         <input name="nama_pimp" id="nama_pimp" type="text" class="form-control"
-                            placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
+                            placeholder="" value="{{old('nama_pimp')}}">
                     </div>
                     <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp') }} </span>
                 </div>
@@ -303,7 +303,7 @@
                             Jabatan Pimpinan
                         </div>
                         <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                            placeholder="Jabatan Pimpinan" value="{{old('jab_pimp')}}">
+                            placeholder="" value="{{old('jab_pimp')}}">
                     </div>
                     <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
                 </div>
@@ -317,7 +317,7 @@
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                            placeholder="No Hp Pimpinan" value="{{old('hp_pimp')}}">
+                            placeholder="" value="{{old('hp_pimp')}}">
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
                 </div>
@@ -333,7 +333,7 @@
                             Email Pimpinan
                         </div>
                         <input name="email_pimp" id="email_pimp" type="email" class="form-control"
-                            placeholder="Email Pimpinan" value="{{old('email_pimp')}}">
+                            placeholder="" value="{{old('email_pimp')}}">
                     </div>
                     <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
                     </span>
@@ -348,7 +348,7 @@
                             <span class="bintang">*</span> Nama Kontak Person
                         </div>
                         <input name="kontak_p" id="kontak_p" type="text" class="form-control"
-                            placeholder="*Nama Kontak Person" value="{{old('kontak_p')}}">
+                            placeholder="" value="{{old('kontak_p')}}">
                     </div>
                     <span id="kontak_p" class="help-block customspan">{{ $errors->first('kontak_p') }}
                     </span>
@@ -365,7 +365,7 @@
                             Jabatan Kontak Person
                         </div>
                         <input name="jab_kontak_p" id="jab_kontak_p" type="text" class="form-control"
-                            placeholder="Jabatan Kontak Person" value="{{old('jab_kontak_p')}}">
+                            placeholder="" value="{{old('jab_kontak_p')}}">
                     </div>
                     <span id="jab_kontak_p" class="help-block customspan">{{ $errors->first('jab_kontak_p') }} </span>
                 </div>
@@ -379,7 +379,7 @@
                             <span class="bintang">*</span> No HP Kontak Person
                         </div>
                         <input name="no_kontak_p" id="no_kontak_p" type="text" class="form-control"
-                            placeholder="*No HP Kontak Person" value="{{old('no_kontak_p')}}">
+                            placeholder="" value="{{old('no_kontak_p')}}">
                     </div>
                     <span id="no_kontak_p" class="help-block customspan">{{ $errors->first('no_kontak_p') }} </span>
                 </div>
@@ -395,7 +395,7 @@
                             <span class="bintang">*</span> Email Kontak Person
                         </div>
                         <input name="email_kontak_p" id="email_kontak_p" type="email" class="form-control"
-                            placeholder="*Email Kontak Person" value="{{old('email_kontak_p')}}">
+                            placeholder="" value="{{old('email_kontak_p')}}">
                     </div>
                     <span id="email_kontak_p" class="help-block customspan">{{ $errors->first('email_kontak_p') }}
                     </span>
@@ -410,7 +410,7 @@
                                 Keterangan
                             </div>
                             <input name="keterangan" id="keterangan" class="form-control"
-                                placeholder="Keterangan" value="{{old('keterangan')}}">
+                                placeholder="" value="{{old('keterangan')}}">
                         </div>
                         <span id="keterangan" class="help-block customspan">{{ $errors->first('keterangan') }}
                         </span>
@@ -521,11 +521,11 @@ $(document).ready(function() {
                     alert('Level atas belum terdaftar');
                     $('#level').val("").trigger('change.select2');
                     $("#level_atas").html(
-                        "<option value='' disabled selected>Kantor Level Diatasnya</option>"
+                        "<option value='' disabled selected></option>"
                     );
                 } else {
                     $("#level_atas").html(
-                        "<option value='' disabled>Kantor Level Diatasnya</option>");
+                        "<option value='' disabled></option>");
                     $("#level_atas").select2({
                         data: data
                     }).val(null).trigger('change');

@@ -73,7 +73,7 @@
                                 <div class="input-group-addon">
                                     <span class="bintang">*</span> Nama Tim Marketing
                                 </div>
-                                <input name="nama" id="nama" class="form-control" placeholder="*Nama Tim Marketing">
+                                <input name="nama" id="nama" class="form-control" placeholder="">
                             </div>
                             <span id="nama" class="help-block customspan"></span>
                         </div>
@@ -119,9 +119,9 @@
                                 </div>
                                 <select class="form-control select2" name="id_bu" id="id_bu" style="width: 100%;">
                                     <option value="" disabled selected>Non BU</option>
-                                    <!-- @foreach($bentukbu as $key)
+                                    {{-- @foreach($bentukbu as $key)
                                     <option value="{{ $key->id }}">{{ $key->nama }}</option>
-                                    @endforeach -->
+                                    @endforeach --}}
                                 </select>
                             </div>
                             <span id="id_bu" class="help-block customspan"></span>
@@ -136,7 +136,7 @@
                                 </div>
                                 <select class="form-control select2" name="leveltimmkt" id="leveltimmkt"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>*Level_M</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($leveltimmkt as $key)
                                     <option value="{{ $key->id }}">{{ $key->nama_level }}</option>
                                     @endforeach
@@ -153,7 +153,7 @@
                                 </div>
                                 <select class="form-control select2" name="timmktatas" id="timmktatas"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Tim Marketing Level Diatasnya</option>
+                                    <option value="" disabled selected></option>
                                 </select>
                             </div>
                             <span id="timmktatas" class="help-block customspan"></span>
@@ -167,7 +167,7 @@
                                     <span class="bintang">*</span> Alamat
                                 </div>
                                 <input type="text" name="id_alamat" id="id_alamat" class="form-control"
-                                    placeholder="*Alamat Jalan dan Nomor, Kelurahan, Kecamatan (Tanpa Kota)">
+                                    placeholder="">
                             </div>
                             <span id="id_alamat" class="help-block customspan"></span>
                         </div>
@@ -180,7 +180,7 @@
                                     <span class="bintang">*</span> Provinsi
                                 </div>
                                 <select class="form-control select2" name="id_prov" id="id_prov" style="width: 100%;">
-                                    <option value="" disabled selected>*Provinsi</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($prov as $key)
                                     <option value="{{ $key->id }}">
                                         {{ $key->nama }} </option>
@@ -197,7 +197,7 @@
                                     <span class="bintang">*</span> Kota
                                 </div>
                                 <select class="form-control select2" name="id_kota" id="id_kota" style="width: 100%;">
-                                    <option value="" disabled selected>*Kota</option>
+                                    <option value="" disabled selected></option>
                                 </select>
                             </div>
                             <span id="id_kota" class="help-block customspan"></span>
@@ -211,7 +211,7 @@
                                     <span class="bintang">*</span> No Tlp
                                 </div>
                                 <input name="id_no_telp" id="id_no_telp" type="text" class="form-control"
-                                    placeholder="*No Tlp">
+                                    placeholder="">
                             </div>
                             <span id="id_no_telp" class="help-block customspan"></span>
                         </div>
@@ -223,7 +223,7 @@
                                     <span class="bintang">*</span> Email
                                 </div>
                                 <input name="id_email" id="id_email" type="email" class="form-control"
-                                    placeholder="*Email" value="{{old('id_email')}}">
+                                    placeholder="" value="{{old('id_email')}}">
                             </div>
                             <span id="id_email" class="help-block customspan"></span>
                         </div>
@@ -236,7 +236,7 @@
                                     Instansi Reff
                                 </div>
                                 <input name="id_instansi" id="id_instansi" type="text" class="form-control"
-                                    placeholder="Instansi Reff">
+                                    placeholder="">
                             </div>
                             <span id="id_instansi" class="help-block customspan"></span>
                         </div>
@@ -247,7 +247,7 @@
                                 <div class="input-group-addon">
                                     Web
                                 </div>
-                                <input name="id_web" id="id_web" type="text" class="form-control" placeholder="Web">
+                                <input name="id_web" id="id_web" type="text" class="form-control" placeholder="">
                             </div>
                             <span id="id_web" class="help-block customspan"></span>
                         </div>
@@ -260,7 +260,7 @@
                                     Nama Pimpinan
                                 </div>
                                 <input name="id_nama_p" id="id_nama_p" type="text" class="form-control"
-                                    placeholder="Nama Pimpinan">
+                                    placeholder="">
                             </div>
                             <span id="id_nama_p" class="help-block customspan"></span>
                         </div>
@@ -272,7 +272,7 @@
                                     Jabatan Pimpinan
                                 </div>
                                 <input name="id_jab_p" id="id_jab_p" type="text" class="form-control"
-                                    placeholder="Jabatan Pimpinan">
+                                    placeholder="">
                             </div>
                             <span id="id_jab_p" class="help-block customspan"></span>
                         </div>
@@ -284,7 +284,7 @@
                                     No Hp Pimpinan
                                 </div>
                                 <input name="id_hp_p" id="id_hp_p" type="text" class="form-control"
-                                    placeholder="No Hp Pimpinan">
+                                    placeholder="">
                             </div>
                             <span id="id_hp_p" class="help-block customspan"></span>
                         </div>
@@ -296,7 +296,7 @@
                                     Email Pimpinan
                                 </div>
                                 <input name="id_eml_p" id="id_eml_p" type="email" class="form-control"
-                                    placeholder="Email Pimpinan">
+                                    placeholder="">
                             </div>
                             <span id="id_eml_p" class="help-block customspan"></span>
                         </div>
@@ -309,7 +309,7 @@
                                     <span class="bintang">*</span> Nama Kontak Person
                                 </div>
                                 <input name="id_nama_kp" id="id_nama_kp" type="text" class="form-control"
-                                    placeholder="*Nama Kontak Person">
+                                    placeholder="">
                             </div>
                             <span id="id_nama_kp" class="help-block customspan"></span>
                         </div>
@@ -321,7 +321,7 @@
                                     Jabatan Kontak Person
                                 </div>
                                 <input name="id_jab_kp" id="id_jab_kp" type="text" class="form-control"
-                                    placeholder="Jabatan Kontak Person">
+                                    placeholder="">
                             </div>
                             <span id="id_jab_kp" class="help-block customspan"></span>
                         </div>
@@ -334,7 +334,7 @@
                                     <span class="bintang">*</span> No HP Kontak Person
                                 </div>
                                 <input name="id_hp_kp" id="id_hp_kp" type="text" class="form-control"
-                                    placeholder="*No HP Kontak Person">
+                                    placeholder="">
                             </div>
                             <span id="id_hp_kp" class="help-block customspan"></span>
                         </div>
@@ -346,7 +346,7 @@
                                     <span class="bintang">*</span> Email Kontak Person
                                 </div>
                                 <input name="id_email_kp" id="id_email_kp" type="email" class="form-control"
-                                    placeholder="*Email Kontak Person">
+                                    placeholder="">
                             </div>
                             <span id="id_email_kp" class="help-block customspan"></span>
                         </div>
@@ -359,7 +359,7 @@
                                     No NPWP
                                 </div>
                                 <input type="text" data-inputmask="'mask': ['99.999.999.9-999.999']" data-mask=""
-                                    id="id_npwp" name="id_npwp" class="form-control" placeholder="No NPWP">
+                                    id="id_npwp" name="id_npwp" class="form-control" placeholder="">
                             </div>
                             <span id="id_npwp" class="help-block customspan"></span>
                         </div>
@@ -371,7 +371,7 @@
                                     File NPWP
                                 </div>
                                 <input style="padding:2px" type="file" class="form-control" id="id_file_npwp"
-                                    name="id_file_npwp" placeholder="File NPWP">
+                                    name="id_file_npwp" placeholder="">
                             </div>
                             <span id="id_file_npwp" class="help-block customspan"></span>
                         </div>
@@ -384,7 +384,7 @@
                                     No Rekening Bank
                                 </div>
                                 <input name="id_no_rek" id="id_no_rek" type="text" class="form-control"
-                                    placeholder="No Rekening Bank">
+                                    placeholder="">
                             </div>
                             <span id="id_no_rek" class="help-block customspan"></span>
                         </div>
@@ -396,7 +396,7 @@
                                     Nama Rekening Bank
                                 </div>
                                 <input name="id_nama_rek" id="id_nama_rek" type="email" class="form-control"
-                                    placeholder="Nama Rekening Bank">
+                                    placeholder="">
                             </div>
                             <span id="id_nama_rek" class="help-block customspan"></span>
                         </div>
@@ -409,7 +409,7 @@
                                     Nama Bank
                                 </div>
                                 <select class="form-control select2" name="id_bank" id="id_bank" style="width: 100%;">
-                                    <option value="" selected>Nama Bank</option>
+                                    <option value="" selected></option>
                                     @foreach($bank as $key)
                                     <option value="{{ $key->id_bank }}">
                                         {{ $key->Nama_Bank }} </option>
@@ -428,7 +428,7 @@
                                 </div>
                                 <select class="form-control select2" name="id_jenis_usaha" id="id_jenis_usaha"
                                     style="width: 100%;">
-                                    <option value="" disabled selected>Jenis Usaha</option>
+                                    <option value="" disabled selected></option>
                                     @foreach($jenisusaha as $key)
                                     <option value="{{ $key->id }}">
                                         {{ $key->nama_jns_usaha }} </option>
@@ -445,7 +445,7 @@
                                     Tim Produksi
                                 </div>
                                 <select class="form-control select2" name="tim_prod" id="tim_prod" style="width: 100%;">
-                                    <option value="" selected>Tim Produksi</option>
+                                    <option value="" selected></option>
                                     <!-- @foreach($timproduksi as $key)
                                     <option value="{{ $key->id }}">{{ $key->nama_tim_p }}</option>
                                     @endforeach -->
@@ -463,7 +463,7 @@
                                 </div>
                                 <select class="form-control select2" name="gol_harga" id="gol_harga"
                                     style="width: 100%;">
-                                    <option value="" selected>Golongan Harga Marketing</option>
+                                    <option value="" selected></option>
                                     @foreach($golharga as $key)
                                     <option value="{{ $key->kode }}">
                                         {{ $key->kode }} </option>
@@ -480,7 +480,7 @@
                                     Keterangan
                                 </div>
                                 <input name="id_keterangan" id="id_keterangan" type="email" class="form-control"
-                                    placeholder="Keterangan">
+                                    placeholder="">
                             </div>
                             <span id="id_keterangan" class="help-block customspan"></span>
                         </div>
@@ -492,21 +492,21 @@
                         </div>
                     </div>
 
-                    <!-- <div class="row">
+                    {{-- <div class="row">
                         <div class="col-sm-6">
                             <select class="form-control select2" name="tim_prod" id="tim_prod" style="width: 100%;">
-                                <option value="" disabled selected>Tim Produksi</option>
+                                <option value="" disabled selected></option>
                                 @foreach($timproduksi as $key)
                                 <option value="{{ $key->id }}">{{ $key->nama_tim_p }}</option>
                                 @endforeach
                             </select>
                             <span id="tim_prod" class="help-block customspan"></span>
                         </div>
-                    </div> -->
+                    </div> --}}
 
                     <!-- <div class="row">
                         <div class="col-sm-12">
-                            <input name="ket" id="ket" class="form-control" placeholder="Keterangan">
+                            <input name="ket" id="ket" class="form-control" placeholder="">
                             <span id="ket" class="help-block customspan"></span>
                         </div>
                     </div> -->
@@ -779,11 +779,11 @@
                         alert('Level atas belum terdaftar');
                         $('#leveltimmkt').val("").trigger('change.select2');
                         $("#timmktatas").html(
-                            "<option value='' disabled selected>Tim Marketing Level Diatasnya</option>"
+                            "<option value='' disabled selected></option>"
                         );
                     } else {
                         $("#timmktatas").html(
-                            "<option value='' disabled>Tim Marketing Level Diatasnya</option>");
+                            "<option value='' disabled></option>");
                         $("#timmktatas").select2({
                             data: data
                         }).val(null).trigger('change');
@@ -831,12 +831,12 @@
                     //     alert('Level atas belum terdaftar');
                     //     $('#leveltimprod').val("").trigger('change.select2');
                     //     $("#timprodatas").html(
-                    //         "<option value='' disabled selected>Tim Produksi Level Diatasnya</option>"
+                    //         "<option value='' disabled selected></option>"
                     //     );
                     // } else {
                     // $("#id_jenis_usaha").html();
                     $("#id_jenis_usaha").html(
-                        "<option value='' disabled selected>Jenis Usaha</option>"
+                        "<option value='' disabled selected></option>"
                     ).trigger('change');
                     // $('#id_jenis_usaha').html("").trigger('change');
                     $("#id_jenis_usaha").select2({
@@ -876,7 +876,7 @@
                     success: function (data) {
                         // console.log(data);
                         $("#id_bu").html(
-                            "<option value='' selected>-- Pilih Badan Usaha --</option>"
+                            "<option value='' selected></option>"
                         ).trigger('change');
 
                         $("#id_bu").select2({

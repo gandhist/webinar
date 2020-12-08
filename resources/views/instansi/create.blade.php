@@ -88,7 +88,7 @@
                             <span class="bintang">*</span> Nama Badan Usaha
                         </div>
                         <input name="nama_bu" id="nama_bu" class="form-control"
-                            placeholder="*Nama Badan Usaha (Tanpa Bentuk Badan Usaha)" value="{{old('nama_bu')}}">
+                            placeholder="" value="{{old('nama_bu')}}">
                     </div>
                     <span id="nama_bu"
                         class="help-block customspan">{{ $errors->first('nama_bu') }}
@@ -105,7 +105,7 @@
                             <span class="bintang">*</span> Singkat Badan Usaha
                         </div>
                         <input name="singkat_bu" id="singkat_bu" type="text" class="form-control"
-                        placeholder="*Nama Singkat Badan Usaha" value="{{old('singkat_bu')}}">
+                        placeholder="" value="{{old('singkat_bu')}}">
                     </div>
 
                     <span id="singkat_bu" class="help-block customspan">{{ $errors->first('singkat_bu') }}
@@ -124,7 +124,7 @@
                         </div>
                         <select class="form-control select2" name="bentuk_bu" id="bentuk_bu"
                             style="width: 100%;">
-                            <option value="" selected>*Bentuk BU</option>
+                            <option value="" selected></option>
                             @foreach($bentukusaha as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('bentuk_bu') ? 'selected' : '' }}>
                                 {{ $key->nama }} ({{$key->nama}})</option>
@@ -147,7 +147,7 @@
                         </div>
                         <select class="form-control select2" name="status_kantor" id="status_kantor"
                             style="width: 100%;">
-                            <option value="" disabled selected>*Status Badan Usaha</option>
+                            <option value="" disabled selected></option>
                             @foreach($statusmodel as $key)
                             <option value="{{ $key->id }}" urutan="{{ $key->urutan }}"
                                 {{ $key->id == old('status_kantor') ? 'selected' : '' }}>
@@ -172,7 +172,7 @@
                         </div>
                         <select class="form-control select2" name="bu_atas" id="bu_atas"
                             style="width: 100%;">
-                            <option value="" disabled selected>Badan Usaha Pusat</option>
+                            <option value="" disabled selected></option>
 
                         </select>
                     </div>
@@ -192,7 +192,7 @@
                             <span class="bintang">*</span> Alamat
                         </div>
                         <input name="alamat" id="alamat" class="form-control"
-                            placeholder="*Alamat Jalan, Kelurahan, Kecamatan" value="{{old('alamat')}}">
+                            placeholder="" value="{{old('alamat')}}">
                     </div>
                     <span id="alamat"
                         class="help-block customspan">{{ $errors->first('alamat') }}
@@ -209,7 +209,8 @@
                             <span class="bintang">*</span> Provinsi BU
                         </div>
                             <select class="form-control select2" name="id_prop" id="id_prop" style="width: 100%;">
-                            <option value="" disabled selected>*Provinsi BU</option>
+                            <option value="" disabled selected>
+                            </option>
                             @foreach($provinsi as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('id_prop') ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
@@ -231,7 +232,7 @@
                             <span class="bintang">*</span> Kota BU
                         </div>
                         <select class="form-control select2" name="id_kota" id="id_kota" style="width: 100%;">
-                            <option value="" disabled selected>*Kota BU</option>
+                            <option value="" disabled selected></option>
                         </select>
                     </div>
                     <span id="id_kota" class="help-block customspan">{{ $errors->first('id_kota') }}
@@ -249,7 +250,7 @@
                             <span class="bintang">*</span> No Tlp
                         </div>
                         <input name="telp" id="telp" type="text" class="form-control"
-                        placeholder="*No Tlp" value="{{old('telp')}}"
+                        placeholder="" value="{{old('telp')}}"
                         onkeypress="return /[0-9]/i.test(event.key)">
 
                     </div>
@@ -269,7 +270,7 @@
                         <div class="input-group-addon">
                             Email
                         </div>
-                        <input name="email" id="email" type="email" class="form-control" placeholder="Email"
+                        <input name="email" id="email" type="email" class="form-control" placeholder=""
                         value="{{old('email')}}">
                     </div>
                     <span id="email" class="help-block customspan">{{ $errors->first('email') }} </span>
@@ -285,7 +286,7 @@
                             Instansi Reff
                         </div>
                         <input name="instansi_reff" id="instansi_reff" type="text" class="form-control"
-                        placeholder="Instansi Reff" value="{{old('instansi_reff')}}">
+                        placeholder="" value="{{old('instansi_reff')}}">
                     </div>
                     <span id="instansi_reff" class="help-block customspan">{{ $errors->first('instansi_reff') }}
                     </span>
@@ -301,7 +302,7 @@
                         <div class="input-group-addon">
                             Web
                         </div>
-                        <input name="web" id="web" type="text" class="form-control" placeholder="Web"
+                        <input name="web" id="web" type="text" class="form-control" placeholder=""
                         value="{{old('web')}}">
                     </div>
                     <span id="web" class="help-block customspan">{{ $errors->first('web') }} </span>
@@ -318,15 +319,15 @@
                             Nama Pimpinan
                         </div>
                         <select name="nama_pimp_select" id="nama_pimp_select" type="text" class="form-control select2"
-                        placeholder="Nama Pimpinan" value="{{old('nama_pimp')}}">
-                            <option value="" disabled selected>Nama Pimpinan</option>
+                        placeholder="" value="{{old('nama_pimp')}}">
+                            <option value="" disabled selected></option>
                             @foreach($personal as $key)
                             <option value="{{ $key->id }}" {{ $key->id == old('nama_pimp') ? 'selected' : '' }}>
                                 {{ $key->nama }} </option>
                             @endforeach
                         </select>
                         <input name="nama_pimp_text" id="nama_pimp_text" type="text" class="form-control"
-                        placeholder="Nama Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('nama_pimp_text')}}" style="display:none">
+                        placeholder="" value="{{(null !== old('isi_manual')) ? '' : old('nama_pimp_text')}}" style="display:none">
                     </div>
                     <span id="nama_pimp" class="help-block customspan">{{ $errors->first('nama_pimp_text') }} </span>
                 </div>
@@ -345,7 +346,7 @@
                             Jabatan Pimpinan
                         </div>
                         <input name="jab_pimp" id="jab_pimp" type="text" class="form-control"
-                        placeholder="Jabatan Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('jab_pimp')}}" readonly >
+                        placeholder="" value="{{(null !== old('isi_manual')) ? '' : old('jab_pimp')}}" readonly >
                     </div>
                     <span id="jab_pimp" class="help-block customspan">{{ $errors->first('jab_pimp') }} </span>
                 </div>
@@ -361,7 +362,7 @@
                             No Hp Pimpinan
                         </div>
                         <input name="hp_pimp" id="hp_pimp" type="text" class="form-control"
-                        placeholder="No Hp Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('hp_pimp')}}" readonly
+                        placeholder="" value="{{(null !== old('isi_manual')) ? '' : old('hp_pimp')}}" readonly
                         onkeypress="return /[0-9]/i.test(event.key)">
                     </div>
                     <span id="hp_pimp" class="help-block customspan">{{ $errors->first('hp_pimp') }} </span>
@@ -378,7 +379,7 @@
                             Email Pimpinan
                         </div>
                         <input name="email_pimp" id="email_pimp" type="email" class="form-control"
-                        placeholder="Email Pimpinan" value="{{(null !== old('isi_manual')) ? '' : old('email_pimp')}}" readonly >
+                        placeholder="" value="{{(null !== old('isi_manual')) ? '' : old('email_pimp')}}" readonly >
                     </div>
                     <span id="email_pimp" class="help-block customspan">{{ $errors->first('email_pimp') }}
                     </span>
@@ -395,7 +396,7 @@
                             <span class="bintang">*</span> Nama Kontak Person
                         </div>
                         <input name="kontak_p" id="kontak_p" type="text" class="form-control"
-                        placeholder="*Nama Kontak Person" value="{{old('kontak_p')}}">
+                        placeholder="" value="{{old('kontak_p')}}">
                     </div>
                     <span id="kontak_p" class="help-block customspan">{{ $errors->first('kontak_p') }}
                     </span>
@@ -412,7 +413,7 @@
                             Jabatan Kontak Person
                         </div>
                         <input name="jab_kontak_p" id="jab_kontak_p" type="text" class="form-control"
-                        placeholder="Jabatan Kontak Person" value="{{old('jab_kontak_p')}}">
+                        placeholder="" value="{{old('jab_kontak_p')}}">
                     </div>
                     <span id="jab_kontak_p" class="help-block customspan">{{ $errors->first('jab_kontak_p') }} </span>
                 </div>
@@ -427,7 +428,7 @@
                             <span class="bintang">*</span> No HP Kontak Person
                         </div>
                         <input name="no_kontak_p" id="no_kontak_p" type="text" class="form-control"
-                        placeholder="*No HP Kontak Person" value="{{old('no_kontak_p')}}"
+                        placeholder="" value="{{old('no_kontak_p')}}"
                         onkeypress="return /[0-9]/i.test(event.key)">
                     </div>
                     <span id="no_kontak_p" class="help-block customspan">{{ $errors->first('no_kontak_p') }} </span>
@@ -444,7 +445,7 @@
                             Email Kontak Person
                         </div>
                         <input name="email_kontak_p" id="email_kontak_p" type="email" class="form-control"
-                        placeholder="Email Kontak Person" value="{{old('email_kontak_p')}}">
+                        placeholder="" value="{{old('email_kontak_p')}}">
                     </div>
                     <span id="email_kontak_p" class="help-block customspan">{{ $errors->first('email_kontak_p') }}
                     </span>
@@ -461,7 +462,7 @@
                             <span class="bintang">*</span> No NPWP
                         </div>
                         <input type="text"
-                        id="npwp" name="npwp" class="form-control" placeholder="*No NPWP"
+                        id="npwp" name="npwp" class="form-control" placeholder=""
                         value="{{old('npwp') ? preg_replace("/[\.-]/", "",  old('npwp')) : ''}}">
                     </div>
                     <span id="npwp" class="help-block customspan">{{ $errors->first('npwpClean') }} </span>
@@ -479,7 +480,7 @@
                         </div>
                         {{-- <div class="col-sm-6"> --}}
                             <input style="padding:2px" type="file" class="form-control" id="npwp_pdf"
-                                name="npwp_pdf" placeholder="File NPWP">
+                                name="npwp_pdf" placeholder="">
                         {{-- </div> --}}
                         {{-- <label for="npwp_pdf" class="control-label"> File NPWP (.PDF)</label> --}}
                         <span id="npwp_pdf" class="help-block customspan"></span>
@@ -501,7 +502,7 @@
                         </div>
                         <input name="no_rek" id="no_rek" type="text" class="form-control"
                                 onkeypress="return /[0-9]/i.test(event.key)"
-                                placeholder="No Rekening Bank" value="{{old('no_rek')}}">
+                                placeholder="" value="{{old('no_rek')}}">
                     </div>
                     <span id="no_rek" class="help-block customspan">{{ $errors->first('no_rek') }}
                     </span>
@@ -517,7 +518,7 @@
                             Nama Rekening Bank
                         </div>
                         <input name="nama_rek" id="nama_rek" type="text" class="form-control"
-                            placeholder="Nama Rekening Bank" value="{{old('nama_rek')}}">
+                            placeholder="" value="{{old('nama_rek')}}">
                     </div>
                     <span id="nama_rek"
                         class="help-block customspan">{{ $errors->first('nama_rek') }}
@@ -534,7 +535,7 @@
                         </div>
                         <select class="form-control select2" name="id_bank" id="id_bank"
                             style="width: 100%;">
-                            <option value="" disabled selected>Nama Bank</option>
+                            <option value="" disabled selected></option>
                             @foreach($bank as $key)
                             <option value="{{ $key->id_bank }}"
                                 {{ $key->id_bank == old('id_bank') ? 'selected' : '' }}> {{ $key->Nama_Bank }}
@@ -557,7 +558,7 @@
                             Logo
                         </div>
                         <input style="padding:2px" type="file" class="form-control" id="logo" name="logo"
-                            placeholder="File Logo">
+                            placeholder="">
                         <span id="logo" class="help-block customspan">{{ $errors->first('logo') }}</span>
                         <span style="color: #737373;">Format : jpg,jpeg,png</span>
                     </div>
@@ -680,7 +681,7 @@
         });
 
 
-        $('#npwp').mask("99.999.999.9-999.999",{placeholder:"Nomor Pokok Wajib Pajak"}).attr('maxlength','20');
+        $('#npwp').mask("99.999.999.9-999.999",{placeholder:""}).attr('maxlength','20');
 
 
         $('#status_kantor').on('select2:select', function () {
@@ -710,12 +711,12 @@
                         alert('Level atas belum terdaftar');
                         $('#bu_atas').val("").trigger('change.select2');
                         $("#bu_atas").html(
-                            "<option value='' disabled selected>Kantor Level Atas</option>"
+                            "<option value='' disabled selected></option>"
                         );
 
                     } else {
                         $("#bu_atas").html(
-                            "<option value='' disabled>Kantor Level Atas</option>");
+                            "<option value='' disabled></option>");
                         $("#bu_atas").select2({
                             data: response['data']
                         }).val(null).trigger('change');

@@ -56,7 +56,7 @@
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama') ? old('nama') : $personal->nama }}"
                                     class="form-control"
-                                    placeholder="Nama Lengkap" required>
+                                    placeholder="" required>
                                 <div id="nama" class="invalid-feedback text-danger">
                                     {{ $errors->first('nama') }}
                                 </div>
@@ -75,7 +75,7 @@
                                         @if($errors->first('nik'))
                                             has-error
                                         @endif"
-                                    placeholder="Nomor Induk Kependudukan" required
+                                    placeholder="" required
                                     maxlength="16">
                                 <div id="nik" class="invalid-feedback text-danger">
                                     {{ $errors->first('nik') }}
@@ -95,7 +95,7 @@
                                 <input type="email" name="email" id="email"
                                     value="{{ old('email') ? old('email') : $personal->email}}"
                                     class="form-control"
-                                    placeholder="Email" required>
+                                    placeholder="" required>
                                 <div id="email" class="invalid-feedback text-danger">
                                     {{ $errors->first('email') }}
                                 </div>
@@ -114,7 +114,7 @@
                                         @if($errors->first('no_hp'))
                                             has-error
                                         @endif"
-                                    placeholder="Nomor Telepon" required
+                                    placeholder="" required
                                     maxlength="14">
                                 <div id="no_hp" class="invalid-feedback text-danger">
                                     {{ $errors->first('no_hp') }}
@@ -151,7 +151,7 @@
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{  old('jabatan') ? old('jabatan') : $personal->jabatan }}"
                                     class="form-control"
-                                    placeholder="Jabatan" required>
+                                    placeholder="" required>
                                 <div id="jabatan" class="invalid-feedback text-danger">
                                     {{ $errors->first('jabatan') }}
                                 </div>
@@ -170,7 +170,7 @@
                                 <select required
                                 class="form-control" id="jenis_kelamin" name="jenis_kelamin">
                                     <option value="" hidden>
-                                        --Pilih Jenis Kelamin--
+
                                     </option>
                                     @if(old('jenis_kelamin'))
                                         <option value="L"
@@ -206,7 +206,7 @@
                                 <input type="alamat" name="alamat" id="alamat"
                                     value="{{ old('alamat') ? old('alamat') : $personal->alamat }}"
                                     class="form-control"
-                                    placeholder="Alamat" required>
+                                    placeholder="" required>
                                 <div id="email" class="invalid-feedback text-danger">
                                     {{ $errors->first('alamat') }}
                                 </div>
@@ -226,7 +226,7 @@
                                 class="form-control" id="provinsi" name="provinsi">
                                     <option value="" hidden
                                     {{ (old('provinsi')) ? '' : 'selected' }}>
-                                        -- Pilih Provinsi --
+
                                     </option>
                                     @if(old('provinsi'))
                                         @forelse($provinsis as $provinsi)
@@ -259,7 +259,7 @@
                                 class="form-control" id="kota" name="kota">
                                     <option value="" hidden
                                     {{ (old('kota')) ? '' : 'selected' }}>
-                                        -- Pilih Kota --
+
                                     </option>
                                     @if(old('provinsi'))
                                         @foreach($kotas as $kota)
@@ -299,7 +299,7 @@
                                 class="form-control" id="temp_lahir" name="temp_lahir">
                                     <option value="" hidden
                                     {{ (old('temp_lahir')) ? '' : 'selected' }}>
-                                    -- Pilih Tempat Lahir --
+
                                     </option>
                                     @if(old('kota_id'))
                                         @forelse($kotas as $kota)
@@ -364,7 +364,7 @@
                                         @if($errors->first('no_rek'))
                                             has-error
                                         @endif"
-                                    placeholder="Nomor Rekening"
+                                    placeholder=""
                                     maxlength="20">
                                 <div id="no_rek" class="invalid-feedback text-danger">
                                     {{ $errors->first('no_rek') }}
@@ -381,7 +381,7 @@
                                 class="form-control" id="bank_id" name="bank_id">
                                     <option value="" hidden
                                     {{ (old('bank_id')) ? '' : 'selected' }}>
-                                        -- Pilih Bank --
+
                                     </option>
                                     @if(old('bank_id'))
                                         @forelse($banks as $bank)
@@ -419,7 +419,7 @@
                                     onkeypress="return /[a-zA-Z\.\,\'\-\s]/i.test(event.key)"
                                     value="{{ old('nama_rek') ? old('nama_rek') : $personal->nama_rek }}"
                                     class="form-control"
-                                    placeholder="Nama Rekening">
+                                    placeholder="">
                                 <div id="nama" class="invalid-feedback text-danger">
                                     {{ $errors->first('nama_rek') }}
                                 </div>
@@ -438,7 +438,7 @@
                                         @if($errors->first('npwpClean'))
                                             has-error
                                         @endif"
-                                    placeholder="Nomor Pokok Wajib Pajak"
+                                    placeholder=""
                                     {{ $errors->first('npwpClean') }}
                                 </div>
                             </div>
@@ -517,7 +517,7 @@
                                 <input type="text" name="reff_p" id="reff_p"
                                     value="{{ old('reff_p') ? old('reff_p') : $personal->reff_p }}"
                                     class="form-control"
-                                    placeholder="Referensi Pendaftaran">
+                                    placeholder="">
                                 <div id="reff_p" class="invalid-feedback text-danger">
                                     {{ $errors->first('reff_p') }}
                                 </div>
@@ -583,7 +583,7 @@
         autoclose: true,
         format: 'dd-mm-yyyy',
     });
-    $('#tgl_lahir').mask("99-99-9999",{placeholder:"HH-BB-TTTT"});
+    $('#tgl_lahir').mask("99-99-9999",{placeholder:""});
 
     $('#no_hp').attr('maxlength','15')
     $('#npwp').mask("99.999.999.9-999.999").attr('maxlength','20');
