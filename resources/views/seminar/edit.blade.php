@@ -7,6 +7,44 @@
         color: red;
         content: " *";
     }
+    form label.required:after {
+        color: red;
+        content: " *";
+    }
+
+    .input-group-addon {
+        width: 180px;
+        border-radius: 4px !important;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .input-group-addon::after {
+        content: " :";
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    input {
+        height: 28.8px !important;
+        border-radius: 4px !important;
+        width: 100%;
+        /* border-color: #aaaaaa !important; */
+    }
+
+    input::placeholder {
+        color: #444 !important;
+    }
+
+    .form-control {
+        border-color: #aaaaaa;
+    }
+
+    .bintang {
+        color: red;
+    }
 </style>
 {{-- {{dd($klasifikasi)}} --}}
 <!-- Content Header (Page header) -->
@@ -27,9 +65,9 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron"  style='padding-top:1px'>
-                <h1 style="margin-bottom:50px;">Aplikasi PPKB Online</h1>
-                <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data">
+            {{-- <div class="jumbotron"  style='padding-top:1px'>
+                <h1 style="margin-bottom:50px;">Aplikasi PPKB Online</h1> --}}
+                <form method="POST" action="{{ url('seminar/'.$id.'/update') }}" enctype="multipart/form-data" style="padding-top: 20px;">
                 @method('patch')
                 @csrf
 
@@ -767,13 +805,15 @@
                         </div>
                     </div>
                     {{-- Akhir Brosur --}}
+                    <div class="col-md-8">
+                        <button class="btn btn-success" name="store" value="publish">Save</button>
+                    </div>
                 </div>
 
 
-                <button class="btn btn-success" name="store" value="publish">Save</button>
                 {{--<button class="btn btn-info pull-right" name="store" value="draft">Save</button>--}}
                 </form>
-            </div> {{-- Jumbotron --}}
+            {{-- </div> Jumbotron --}}
         </div> {{-- Container-fluid --}}
     </div> {{-- Box-Content --}}
 </section>

@@ -100,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12 chart-container" style="height:50vh;">
+                <div class="col-md-12 chart-container" style="height:60vh;">
                     <div class="row">
                         <div class="col-md-6">
                             <canvas id="detail" style="height:50vh ; width:100%"></canvas>

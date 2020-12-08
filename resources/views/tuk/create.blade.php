@@ -6,6 +6,45 @@
         color: red;
         content: " *";
     }
+
+    form label.required:after {
+        color: red;
+        content: " *";
+    }
+
+    .input-group-addon {
+        width: 180px;
+        border-radius: 4px !important;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .input-group-addon::after {
+        content: " :";
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    input {
+        height: 28.8px !important;
+        border-radius: 4px !important;
+        width: 100%;
+        /* border-color: #aaaaaa !important; */
+    }
+
+    input::placeholder {
+        color: #444 !important;
+    }
+
+    .form-control {
+        border-color: #aaaaaa;
+    }
+
+    .bintang {
+        color: red;
+    }
 </style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -25,9 +64,9 @@
     <!-- Default box -->
     <div class="box box-content">
         <div class="container-fluid">
-            <div class="jumbotron" style='padding-top:1px'>
-                <h1 style="margin-bottom:50px;">Tempat Uji Kompetensi</h1>
-                <form method="POST" action="{{ url('tuk/store') }}" enctype="multipart/form-data">
+            {{-- <div class="jumbotron" style='padding-top:1px'>
+                <h1 style="margin-bottom:50px;">Tempat Uji Kompetensi</h1> --}}
+                <form method="POST" action="{{ url('tuk/store') }}" enctype="multipart/form-data" style="padding-top: 20px; padding-bottom: 20px">
                 @csrf
 
                     <div class="row">
@@ -205,7 +244,7 @@
                     <button class="btn btn-success">Tambah</button>
 
                 </form>
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
     <!-- END Default BOX -->
