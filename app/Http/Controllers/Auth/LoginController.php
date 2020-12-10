@@ -122,15 +122,17 @@ class LoginController extends Controller
 
         Session::flush();
         Auth::logout();
-        if($role == 2){
-            return redirect('');
-        }
-        if($role == 1){
-            return redirect('');
-        }
-        if($role == 5){
-            return redirect('');
-        }
+        // if($role == 2){
+        //     return redirect('/');
+        // }
+        // if($role == 1){
+        //     return redirect('/');
+        // }
+        // if($role == 5){
+        //     return redirect('/');
+        // }
+        return redirect('/');
+
     }
 
     public function showLoginForm(){

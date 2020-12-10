@@ -16,6 +16,50 @@
             padding: 0px 0px;
         }
     }
+    .payButton {
+        color: white !important;
+    }
+  .button-flash {
+    background-color: #004A7F;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial;
+    font-size: 20px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-animation: glowing 3000ms infinite;
+    -moz-animation: glowing 3000ms infinite;
+    -o-animation: glowing 3000ms infinite;
+    animation: glowing 3000ms infinite;
+  }
+  @-webkit-keyframes glowing {
+    0% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; -webkit-box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; -webkit-box-shadow: 0 0 3px #38b200; }
+  }
+
+  @-moz-keyframes glowing {
+    0% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; -moz-box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; -moz-box-shadow: 0 0 3px #38b200; }
+  }
+
+  @-o-keyframes glowing {
+    0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  }
+
+  @keyframes glowing {
+    0% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+    50% { background-color: #15ff00; box-shadow: 0 0 40px #15ff00; }
+    100% { background-color: #38b200; box-shadow: 0 0 3px #38b200; }
+  }
 
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
@@ -48,10 +92,11 @@
         <thead>
             <tr>
                 <th style="width:5%;">No</th>
-                <th style="width:65%;">Nama Kegiatan</th>
+                <th style="width:55%;">Nama Kegiatan</th>
                 <th style="width:20%;">Jenis Pembayaran</th>
                 <th style="width:20%;">No Transaksi</th>
                 <th style="width:10%;">Status</th>
+                <th style="width:10%;">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -72,9 +117,46 @@
                 <td style="text-align: center">{{ $key->no_transaksi}}</td>
                 {{-- <td>{{ $key->status }}</td> --}}
                 <td style="text-align: center">
-                    <button class="btn btn-sm btn-outline-success payButton">
-                        Menunggu Pembayaran
-                    </button>
+                    @if ($key->peserta_seminar_r !== null)
+                        @if ( $key->peserta_seminar_r->is_paid == 0 )
+                            <button class="btn btn-sm btn-outline-success">
+                                Menunggu Pembayaran
+                            </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 1)
+                            <button class="btn btn-sm btn-outline-success">
+                                Pembayaran Berhasil
+                            </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 2)
+                            <button class="btn btn-sm btn-outline-warning">
+                                Sedang Diproses
+                            </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 3)
+                            <button class="btn btn-sm btn-outline-warning">
+                                Pembayaran Gagal
+                            </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 4)
+                            <button class="btn btn-sm btn-outline-danger">
+                                Pembayaran Kadaluwarsa
+                            </button>
+                        @endif
+                    @else
+                        <button class="btn btn-sm btn-outline-danger">
+                            Transaksi Error
+                        </button>
+                    @endif
+                </td>
+                <td style="text-align: center; color: black;">
+                    @if ($key->peserta_seminar_r !== null)
+                        @if ( $key->peserta_seminar_r->is_paid == 0 )
+                            <button class="btn btn-sm btn-outline-success button-flash payButton">
+                                Bayar
+                            </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 3 )
+                            <button class="btn btn-sm btn-outline-success button-flash payButton">
+                                Coba Lagi
+                            </button>
+                        @endif
+                    @endif
                 </td>
             </tr>
             @endforeach
@@ -90,7 +172,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 {{-- <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script> --}}
 <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
@@ -111,7 +193,23 @@
         let tr = $(this).closest('tr');
         let token = $(tr).find('.token')[0].value;
         // console.log(token);
-        snap.pay(token);
+        snap.pay(token, {
+            onSuccess: function(result){
+                console.log('success');
+                console.log(result);
+            },
+            onPending: function(result){
+                console.log('pending');
+                console.log(result);
+            },
+            onError: function(result){
+                console.log('error');
+                console.log(result);
+            },
+            onClose: function(){
+                console.log('customer closed the popup without finishing the payment');
+            }
+        });
 
     });
 </script>

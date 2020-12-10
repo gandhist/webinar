@@ -90,10 +90,10 @@ trait GlobalFunction {
 
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
-        $params = array(
-            'transaction_details' => $details
-        );
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // $params = array(
+        //     'transaction_details' => $details
+        // );
+        $snapToken = \Midtrans\Snap::getSnapToken($details);
         // $clientKey = config('services.midtrans.clientKey');
 
         return $snapToken;

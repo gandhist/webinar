@@ -35,6 +35,11 @@
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             </div>
             @endif
+            @if(session()->get('third'))
+            <div class="alert alert-warning"> {{ session()->get('third') }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </div>
+            @endif
 
             {{-- <div class="collapse" id="collapseExample"> --}}
                 <form action="{{ route('profile.update') }}" class="form-horizontal" id="formAdd" name="formAdd"
