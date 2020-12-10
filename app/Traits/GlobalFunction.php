@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 namespace App\Traits;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 
 trait GlobalFunction {
 
-    // generate qr code untuk penanda tangan 
+    // generate qr code untuk penanda tangan
     public function generateTtd($data){
          // save barcode permohonan sebagai validitas
          $dir_name =  preg_replace('/[^a-zA-Z0-9()]/', '_', $data->nama);
@@ -72,9 +72,36 @@ trait GlobalFunction {
         return $results;
 
     }
-    
+
+    // Midtrans
+    public function generateSnap($details) {
+        // Minimal details
+        // [
+        //     'order_id' => string,
+        //     'gross_amount' => int,
+        // ]
+
+        //Set Your server key
+
+        \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
+
+        // Uncomment for production environment
+        // \Midtrans\Config::$isProduction = true;
+
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+        $params = array(
+            'transaction_details' => $details
+        );
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        // $clientKey = config('services.midtrans.clientKey');
+
+        return $snapToken;
+    }
+    // End Midtrans
+
     ////////////// BEGIN API QONTAK WHATSASPP /////////////////////////
-    public function getToken(){   
+    public function getToken(){
         $url = env('URL_TOKEN');
         $username = env('USER_WA');
         $password = env('PASS_WA');
@@ -97,7 +124,7 @@ trait GlobalFunction {
         return $results;
     }
 
-    public function setupChannel($token){  
+    public function setupChannel($token){
         $url = env('URL_CHAN');
         $headers = array(
             'Authorization: Bearer '.$token
@@ -112,7 +139,7 @@ trait GlobalFunction {
         return $results;
     }
 
-    public function setupTemplate($token){   
+    public function setupTemplate($token){
         $url = env('URL_TEMP');
         $headers = array(
             'Authorization: Bearer '.$token
@@ -127,7 +154,7 @@ trait GlobalFunction {
         return $results;
     }
 
-    public function sendMessage($token,$body){   
+    public function sendMessage($token,$body){
         $url = env('URL_MESS');
         $headers = array(
             'Authorization: Bearer '.$token,

@@ -49,7 +49,7 @@ class SeminarController extends Controller
     use GlobalFunction;
     //
     public function index() {
-        $seminar = SeminarModel::all();
+        $seminar = SeminarModel::orderBy('created_at', 'desc')->get();
         return view('seminar.index')->with(compact('seminar'));
     }
 

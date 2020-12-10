@@ -128,6 +128,8 @@ Route::namespace('Iso')->group(function(){
 
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('pembayaran', 'PembayaranController@index' );
+
     Route::get('kegiatan', 'KegiatanController@index')->name('kegiatan.index');
     Route::get('kegiatan/detail/{id}','KegiatanController@detail');
 
