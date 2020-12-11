@@ -151,6 +151,7 @@
             </thead>
             <tbody>
                 @foreach($detailseminar as $key)
+
                 <tr>
                     <td style="text-align:center;">{{$loop->iteration}}</td>
                     <td style="text-align:center;">
@@ -172,17 +173,52 @@
                     </td>
                     <td style="text-align:center;">
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
-                        @if(isset($key->presensi->jam_cek_out) == null)
-                            @if(isset($key->presensi->jam_cek_in) == null)
-                                <a class="btn btn-sm btn-success {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? "button-flash" : ''}}" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
-                                data-placement="bottom" title="Klik untuk mengikuti kegiatan"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
+
+                        @if ($key->is_paid == '1')
+                            @if(isset($key->presensi->jam_cek_out) == null)
+                                @if(isset($key->presensi->jam_cek_in) == null)
+                                    <a class="btn btn-sm btn-success {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? "button-flash" : ''}}" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
+                                    data-placement="bottom" title="Klik untuk mengikuti kegiatan"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
+                                @else
+                                <a class="btn btn-sm btn-primary  {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? 'button-flash-biru' : ''}}" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
+                                @endif
                             @else
-                            <a class="btn btn-sm btn-primary  {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? 'button-flash-biru' : ''}}" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
+                            <a class="btn btn-sm btn-primary" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>
+                            <button class="btn btn-sm btn-secondary">{{ isset($key->presensi->jam_cek_out) ? \Carbon\Carbon::parse($key->presensi->jam_cek_out)->isoFormat("DD MMMM YYYY H:m") : '' }}</button>
                             @endif
-                        @else
-                        <a class="btn btn-sm btn-primary" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>
-                        <button class="btn btn-sm btn-secondary">{{ isset($key->presensi->jam_cek_out) ? \Carbon\Carbon::parse($key->presensi->jam_cek_out)->isoFormat("DD MMMM YYYY H:m") : '' }}</button>
+
+                        @elseif ($key->is_paid == '0')
+                            <button class="btn btn-warning">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                    Menunggu Pembayaran
+                                </a>
+                            </button>
+                        @elseif ($key->is_paid == '2')
+                            <button class="btn btn-warning">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                    Sedang Diproses
+                                </a>
+                            </button>
+                        @elseif ($key->is_paid == '3')
+                            <button class="btn btn-warning">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                    Pembayaran Gagal
+                                </a>
+                            </button>
+                        @elseif ($key->is_paid == '4')
+                            <button class="btn btn-danger">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: black">
+                                    Pembayaran Kadaluwarsa
+                                </a>
+                            </button>
+                        @elseif ($key->is_paid == '5')
+                            <button class="btn btn-danger">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: black">
+                                    Pembayaran Dibatalkan
+                                </a>
+                            </button>
                         @endif
+
                     </td>
                     <td style="text-align:center;">
                         @if(isset($key->presensi->jam_cek_out) == null)
@@ -199,6 +235,7 @@
                         @endif
                     </td>
                 </tr>
+
                 @endforeach
             </tbody>
         </table>

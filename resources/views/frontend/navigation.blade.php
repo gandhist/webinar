@@ -51,6 +51,9 @@
                         <a class="nav-link" href= "{{ route('kegiatan.index') }}"><strong>Kegiatan</strong></a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href= "{{ url('pembayaran') }}"><strong>Pembayaran</strong></a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href= "{{ url('berita') }}"><strong>Berita</strong></a>
                     </li>
                     <li class="nav-item">

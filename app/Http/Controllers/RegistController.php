@@ -8,6 +8,8 @@ use App\Seminar;
 use App\TargetBlasting;
 use App\User;
 use App\PesertaSeminar;
+use App\Pembayaran;
+use App\LogTransaksi;
 use App\InstansiModel;
 use App\ReportBlasting;
 use Illuminate\Support\Facades\Hash;
@@ -280,6 +282,7 @@ class RegistController extends Controller
         ]);
 
         $detailseminar = Seminar::where('id',$id)->first();
+        // dd($detailseminar);
 
         if($detailseminar->is_mulai == 2){
             return redirect()->back()->with('udahan',"Seminar telah selesai, silahkan mendaftar seminar lain");
@@ -305,7 +308,7 @@ class RegistController extends Controller
             $cek = PesertaSeminar::where('id_peserta',$cekPeserta->id)->where('id_seminar', $id)->count();
 
             $peserta_seminar = new PesertaSeminar;
-            if($is_free['is_free'] == '0'){
+            if($detailseminar->is_free == '0'){
                 $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id)->first();
                 $urut = PesertaSeminar::where('id_seminar',$id)->max('no_urut_peserta'); //Counter nomor urut for peserta
                 if($urut == null) {
@@ -324,8 +327,8 @@ class RegistController extends Controller
             }
             $peserta_seminar->id_seminar = $id;
             $peserta_seminar->id_peserta = $cekPeserta->id;
-            $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
-            if($is_free['is_free'] == '0'){
+            // $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
+            if($detailseminar->is_free == '0'){
                 $peserta_seminar->is_paid = '1';
                 $peserta_seminar->no_srtf = $no_sert;
 
@@ -365,13 +368,19 @@ class RegistController extends Controller
                 return redirect()->route('profile.edit')->with('second', 'Anda Sudah Terdaftar Seminar');
 
             } else{
-                $peserta_seminar = $peserta_seminar->save();
+                $peserta_seminar->save();
 
                 if($request->magic_link){
                     $blast->save();
                 }
-                if($is_free['is_free'] == '0'){
+                // dd('tekan');
+                if($detailseminar->is_free == '0'){
+
+                    $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
+                    $peserta_seminar->save();
+
                     // pengurangan kuota
+                    // dd('x');
                     // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
                     $kuota = Seminar::find($id);
                     $kuota->kuota_temp = $kuota->kuota_temp - 1;
@@ -381,6 +390,86 @@ class RegistController extends Controller
                     $total_nilai = Peserta::find($cekPeserta->id);
                     $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                     $total_nilai->update();
+                } else if ($detailseminar->is_free == '1') {
+
+                    $peserta_seminar->skpk_nilai = 0;
+                    $peserta_seminar->save();
+
+                    // dd('paid');
+                    $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
+
+                    $start_pay_date = Carbon::now();
+                    $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);
+                    // in minutes
+                    $exp_date = $start_pay_date->diffInMinutes($end_pay_date);
+
+                    $detail_snap = [
+                        "transaction_details" => [
+                            "order_id" => $no_trans,
+                            "gross_amount" => (int)$detailseminar->biaya ?? 0
+                        ],
+                        "item_details" => [
+                            [
+                                "id" => $detailseminar->id,
+                                "price" => (int)$detailseminar->biaya ?? 0,
+                                "quantity" => 1,
+                                "name" => "Fee Pendaftaran ".strip_tags($detailseminar->tema),
+                                "brand" => "P3SM",
+                                "merchant_name" => "P3SM"
+                            ]
+                        ],
+                        "customer_details" => [
+                            "first_name" => $request->name,
+                            "last_name" => '',
+                            "email" => $request->email,
+                            "phone" => $request->no_hp
+                        ],
+                        "expiry" => [
+                            "start_time"=> $start_pay_date->format('Y-m-d H:i:s').' +0700',
+                            "unit"=> "minutes",
+                            "duration"=> $exp_date
+                        ]
+                        // , "enabled_payments" => []
+                    ];
+                    // dd($detail_snap);
+
+                    try {
+                        $token = $this->generateSnap($detail_snap);
+
+                        $pembayaran = new Pembayaran;
+                        $pembayaran->no_transaksi = $no_trans;
+                        $pembayaran->id_peserta_seminar = $data->id;
+                        $pembayaran->token = $token;
+                        $pembayaran->jenis = '1';
+                        $pembayaran->status = 0;
+                        $pembayaran->created_by = Auth::id();
+                        $pembayaran->created_at = Carbon::now()->toDateTimeString();
+                        $pembayaran->save();
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $detail_snap,
+                            'subjek' => 'berhasil membuat transaksi',
+                            'status' => 'WAITING',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+
+                    } catch (Exception $e) {
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $e,
+                            'subjek' => 'gagal membuat transaksi',
+                            'status' => 'FAIL',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+                    }
                 }
             }
 
@@ -499,9 +588,16 @@ class RegistController extends Controller
 
             Auth::login($user);
 
-            return redirect()->route('profile.edit')
-            ->with('first', 'Mendaftar seminar berhasil!');
-            // ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
+            if ($detailseminar->is_free == '0') {
+                return redirect()->route('profile.edit')
+                ->with('first', 'Mendaftar seminar berhasil!');
+                // ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
+            } else if ($detailseminar->is_free == '1') {
+                return redirect()->route('profile.edit')
+                ->with('first', 'Mendaftar seminar berhasil!')
+                ->with('third', 'Selesaikan transaksi di menu "Pembayaran"');
+                // ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
+            }
 
         } else{
             $data['nama'] = $request->nama;
@@ -535,7 +631,7 @@ class RegistController extends Controller
 
             $peserta_seminar->id_seminar = $id;
             $peserta_seminar->id_peserta = $peserta['id'];
-            $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
+            // $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
             if($is_free['is_free'] == '0'){
                 $peserta_seminar->is_paid = '1';
                 $peserta_seminar->no_srtf = $no_sert;
@@ -569,11 +665,15 @@ class RegistController extends Controller
             if($cek > 0){
                 return redirect()->route('login')->with('warning', 'Anda Sudah Terdaftar Seminar');
             } else{
-                $peserta_seminar = $peserta_seminar->save();
+                $peserta_seminar->save();
                 if($request->magic_link){
                     $blast->save();
                 }
                 if($is_free['is_free'] == '0'){
+
+                    $peserta_seminar->skpk_nilai = $detailseminar['skpk_nilai'];
+                    $peserta_seminar->save();
+
                     // pengurangan kuota
                     // $kuota = DB::table('srtf_seminar')->update(['kuota_temp' => DB::raw('GREATEST(kuota_temp - 1, 0)')]);
                     $kuota = Seminar::find($id);
@@ -584,6 +684,86 @@ class RegistController extends Controller
                     $total_nilai = Peserta::find($peserta['id']);
                     $total_nilai->skpk_total = $total_nilai->skpk_total + $detailseminar['skpk_nilai'];
                     $total_nilai->update();
+                } else if ($detailseminar->is_free == '1') {
+
+                    $peserta_seminar->skpk_nilai = 0;
+                    $peserta_seminar->save();
+
+                    $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
+
+                    $start_pay_date = Carbon::now();
+                    $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);
+                    // in minutes
+                    $exp_date = $start_pay_date->diffInMinutes($end_pay_date);
+
+                    $detail_snap = [
+                        "transaction_details" => [
+                            "order_id" => $no_trans,
+                            "gross_amount" => (int)$detailseminar->biaya ?? 0
+                        ],
+                        "item_details" => [
+                            [
+                                "id" => $detailseminar->id,
+                                "price" => (int)$detailseminar->biaya ?? 0,
+                                "quantity" => 1,
+                                "name" => "Fee Pendaftaran ".strip_tags($detailseminar->tema),
+                                "brand" => "P3SM",
+                                "merchant_name" => "P3SM"
+                            ]
+                        ],
+                        "customer_details" => [
+                            "first_name" => $request->name,
+                            "last_name" => '',
+                            "email" => $request->email,
+                            "phone" => $request->no_hp
+                        ],
+                        "expiry" => [
+                            "start_time"=> $start_pay_date->format('Y-m-d H:i:s').' +0700',
+                            "unit"=> "minutes",
+                            "duration"=> $exp_date
+                        ]
+                        // , "enabled_payments" => []
+                    ];
+                    // dd($detail_snap);
+
+                    try {
+                        $token = $this->generateSnap($detail_snap);
+
+                        $pembayaran = new Pembayaran;
+                        $pembayaran->no_transaksi = $no_trans;
+                        $pembayaran->id_peserta_seminar = $data->id;
+                        $pembayaran->token = $token;
+                        $pembayaran->jenis = '1';
+                        $pembayaran->status = 0;
+                        $pembayaran->created_by = Auth::id();
+                        $pembayaran->created_at = Carbon::now()->toDateTimeString();
+                        $pembayaran->save();
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $detail_snap,
+                            'subjek' => 'berhasil membuat transaksi',
+                            'status' => 'WAITING',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+
+                    } catch (Exception $e) {
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $e,
+                            'subjek' => 'gagal membuat transaksi',
+                            'status' => 'FAIL',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+                    }
+
                 }
             }
             // Create User
@@ -715,10 +895,16 @@ class RegistController extends Controller
 
             Auth::login($user);
 
-            return redirect()->route('profile.edit')
-            ->with('first', 'Akun berhasil dibuat! Username dan Password telah dikirim melalui email dan Whatsapp.')
-            ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
-
+            if ($detailseminar->is_free == '0') {
+                return redirect()->route('profile.edit')
+                ->with('first', 'Akun berhasil dibuat! Username dan Password telah dikirim melalui email dan Whatsapp.')
+                ->with('second', 'Pastikan email dan nomor handphone telah sesuai!');
+            } else if ($detailseminar->is_free == '1') {
+                return redirect()->route('profile.edit')
+                ->with('first', 'Akun berhasil dibuat! Username dan Password telah dikirim melalui email dan Whatsapp.')
+                ->with('second', 'Pastikan email dan nomor handphone telah sesuai!')
+                ->with('third', 'Selesaikan transaksi di menu "Pembayaran"');
+            }
             // return redirect()->route('login')->with('success', 'Anda Berhasil Terdaftar! Silahkan coba login dengan username dan password yang telah dikirim melalui email dan Whatsapp');
             // return redirect('')->with('success', 'Pendaftaran Seminar berhasil, silahkan konfirmasi email untuk username dan password');
         }

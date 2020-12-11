@@ -119,19 +119,52 @@
                 $cek = 0;
               } else {
                 $cek = DB::table('srtf_peserta_seminar')->where('id_peserta',$user['id'])->where('id_seminar', $key->id)->where('deleted_at',null)->count();
+                $detail_ps = DB::table('srtf_peserta_seminar')->where('id_peserta',$user['id'])->where('id_seminar', $key->id)->where('deleted_at',null)->first();
               }
             @endphp
             @if($key->kuota_temp == 0)
             <button class="btn btn-primary disabled"> Kuota Peserta Sudah Penuh</button>
             @else
               @if($cek > 0)
-                @if (isset($peserta->where('id_seminar',$key->id)->first()->created_at))
-                    <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button><br>
-                    (untuk mengikuti seminar, silahkan ke menu Kegiatan <span class="d-inline d-lg-none">pada tombol <button class="btn btn-dark" type="button"
-                    data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-align-justify"></i></button></span> )
-                @else
-                    <button class="btn btn-success disabled">Terdaftar</button>
+                @if ($peserta->where('id_seminar',$key->id)->first() !== null )
+                    @if($peserta->where('id_seminar',$key->id)->first()->is_paid == '1')
+                        <button class="btn btn-success disabled">Terdaftar ({{\Carbon\Carbon::parse($peserta->where('id_seminar',$key->id)->first()->created_at)->format('d M Y H:i')}} )</button><br>
+                        (untuk mengikuti seminar, silahkan ke menu Kegiatan <span class="d-inline d-lg-none">pada tombol <button class="btn btn-dark" type="button"
+                        data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-align-justify"></i></button></span> )
+                    @elseif($peserta->where('id_seminar',$key->id)->first()->is_paid == '0')
+                        <button class="btn btn-warning">
+                            <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                Menunggu Pembayaran
+                            </a>
+                        </button>
+                    @elseif($peserta->where('id_seminar',$key->id)->first()->is_paid == '2')
+                        <button class="btn btn-warning">
+                            <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                Sedang Diproses
+                            </a>
+                        </button>
+                    @elseif($peserta->where('id_seminar',$key->id)->first()->is_paid == '3')
+                        <button class="btn btn-warning">
+                            <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                Pembayaran Gagal
+                            </a>
+                        </button>
+                    @elseif($peserta->where('id_seminar',$key->id)->first()->is_paid == '4')
+                        <button class="btn btn-danger">
+                            <a href="{{url('pembayaran')}}" style="text-decoration: none; color: white">
+                                Pembayaran Kadaluwarsa
+                            </a>
+                        </button>
+                    @elseif($peserta->where('id_seminar',$key->id)->first()->is_paid == '5')
+                        <button class="btn btn-danger">
+                            <a href="{{url('pembayaran')}}" style="text-decoration: none; color: white">
+                                Pembayaran Dibatalkan
+                            </a>
+                        </button>
+                    @endif
+                        {{-- @else
+                    <button class="btn btn-success disabled">Terdaftar</button> --}}
                 @endif
               @else
               {{-- <button class="btn btn-success button-flash"> --}}
