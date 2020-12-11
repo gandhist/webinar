@@ -22,6 +22,15 @@ Route::get('tesWA', 'FrontendController@kirimWA');
 Route::get('tesWA2', 'FrontendController@kirimWA2');
 Route::get('tesWA3', 'FrontendController@kirimWA3');
 
+// Midtrans
+
+Route::post('trxi/callback', 'PembayaranController@callback'); // callbacks midtrans
+Route::get('trxi/finish', 'PembayaranController@finish');
+Route::get('trxi/unfinish', 'PembayaranController@unfinish');
+Route::get('trxi/error', 'PembayaranController@error');
+
+// End Midtrans
+
 Route::get('blast/{id}', 'BlastingController@click');
 Route::get('statistik','StatistikSeminarController@treeview');
 Route::get('statistik/{id}','StatistikSeminarController@detail');

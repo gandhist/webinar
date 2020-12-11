@@ -8,6 +8,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\InstansiModel;
+use App\PesertaSeminar;
+use App\Seminar;
+
 
 trait GlobalFunction {
 
@@ -84,12 +89,13 @@ trait GlobalFunction {
         //Set Your server key
 
         \Midtrans\Config::$serverKey = config('services.midtrans.serverKey');
+        \Midtrans\Config::$isProduction = config('services.midtrans.isProduction');
+        \Midtrans\Config::$isSanitized = config('services.midtrans.isSanitized');
+        \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
 
-        // Uncomment for production environment
-        // \Midtrans\Config::$isProduction = true;
+        \Midtrans\Config::$appendNotifUrl = url('trxi/callback');
+        \Midtrans\Config::$overrideNotifUrl = url('trxi/callback');
 
-        \Midtrans\Config::$isSanitized = true;
-        \Midtrans\Config::$is3ds = true;
         // $params = array(
         //     'transaction_details' => $details
         // );
@@ -173,5 +179,45 @@ trait GlobalFunction {
     }
     ////////////// END API QONTAK WHATSASPP /////////////////////////
 
+    public function generateNoSert($id_seminar, $id_peserta_seminar) {
+        // Nilai return fungsi ini berupa array
+        // Value pertama berisi string "No. Sertifikat"
+        // Value kedua berisi string "No. Urut Peserta"
 
+
+        $kode_inisiator = Seminar::select('inisiator')->where('id',$id_seminar)->first();
+
+        $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
+
+        $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id_seminar)->first();
+
+        $urut = PesertaSeminar::where('id_seminar',$id_seminar)->max('no_urut_peserta'); //Counter nomor urut for peserta
+
+        if($urut == null) {
+            $no_urut_peserta = '1';
+        } else {
+            $no_urut_peserta = $urut + 1;
+        }
+
+        // $urutan = PesertaSeminar::select('no_urut_peserta')->where('id', '=',$id)->first();
+        // generate no sertifikat
+        $inisiator = $kode_instansi['kode_instansi'];
+        $status = '1';
+        $tahun = substr($detailseminar['tgl_awal'],2,2);
+        $bulan = substr($detailseminar['tgl_awal'],5,2);
+
+        $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($no_urut_peserta, 3, "0", STR_PAD_LEFT);
+        return [$no_sert, $no_urut_peserta];
+    }
+
+
+    public function generateQrSertPeserta($no_sert) {
+        // generate qr code
+        $url = url("sertifikat/".Crypt::encrypt($no_sert));
+        $nama = "QR_Sertifikat_".$no_sert.".png";
+        $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+
+        $dir_name = "file_seminar";
+        return $dir_name."/".$nama;
+    }
 }

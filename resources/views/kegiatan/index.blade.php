@@ -211,6 +211,12 @@
                                     Pembayaran Kadaluwarsa
                                 </a>
                             </button>
+                        @elseif ($key->is_paid == '5')
+                            <button class="btn btn-danger">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: black">
+                                    Pembayaran Dibatalkan
+                                </a>
+                            </button>
                         @endif
 
                     </td>

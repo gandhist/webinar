@@ -156,6 +156,12 @@
                                 Pembayaran Kadaluwarsa
                             </a>
                         </button>
+                    @elseif($peserta->where('id_seminar',$key->id)->first()->is_paid == '5')
+                        <button class="btn btn-danger">
+                            <a href="{{url('pembayaran')}}" style="text-decoration: none; color: white">
+                                Pembayaran Dibatalkan
+                            </a>
+                        </button>
                     @endif
                         {{-- @else
                     <button class="btn btn-success disabled">Terdaftar</button> --}}

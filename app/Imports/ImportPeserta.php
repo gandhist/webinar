@@ -16,11 +16,14 @@ use App\LogImport;
 use App\LogImportErr;
 use App\User;
 use App\TargetBlasting;
+use App\Traits\GlobalFunction;
 
 use Vinkla\Hashids\Facades\Hashids;
 
 class ImportPeserta implements ToCollection,WithHeadingRow
 {
+    use GlobalFunction;
+
     public function  __construct($id)
     {
         $this->id= $id;

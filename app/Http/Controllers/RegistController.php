@@ -9,6 +9,7 @@ use App\TargetBlasting;
 use App\User;
 use App\PesertaSeminar;
 use App\Pembayaran;
+use App\LogTransaksi;
 use App\InstansiModel;
 use App\ReportBlasting;
 use Illuminate\Support\Facades\Hash;
@@ -395,7 +396,7 @@ class RegistController extends Controller
                     $peserta_seminar->save();
 
                     // dd('paid');
-                    $no_trans = "P3SM/srtf-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
+                    $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
 
                     $start_pay_date = Carbon::now();
                     $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);
@@ -431,18 +432,44 @@ class RegistController extends Controller
                         // , "enabled_payments" => []
                     ];
                     // dd($detail_snap);
-                    $token = $this->generateSnap($detail_snap);
 
-                    $pembayaran = new Pembayaran;
-                    $pembayaran->no_transaksi = $no_trans;
-                    $pembayaran->id_peserta_seminar = $peserta_seminar->id;
-                    $pembayaran->token = $token;
-                    $pembayaran->jenis = '1';
-                    $pembayaran->status = 0;
-                    $pembayaran->created_by = Auth::id();
-                    $pembayaran->created_at = Carbon::now()->toDateTimeString();
-                    $pembayaran->save();
+                    try {
+                        $token = $this->generateSnap($detail_snap);
 
+                        $pembayaran = new Pembayaran;
+                        $pembayaran->no_transaksi = $no_trans;
+                        $pembayaran->id_peserta_seminar = $data->id;
+                        $pembayaran->token = $token;
+                        $pembayaran->jenis = '1';
+                        $pembayaran->status = 0;
+                        $pembayaran->created_by = Auth::id();
+                        $pembayaran->created_at = Carbon::now()->toDateTimeString();
+                        $pembayaran->save();
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $detail_snap,
+                            'subjek' => 'berhasil membuat transaksi',
+                            'status' => 'WAITING',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+
+                    } catch (Exception $e) {
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $e,
+                            'subjek' => 'gagal membuat transaksi',
+                            'status' => 'FAIL',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+                    }
                 }
             }
 
@@ -662,7 +689,7 @@ class RegistController extends Controller
                     $peserta_seminar->skpk_nilai = 0;
                     $peserta_seminar->save();
 
-                    $no_trans = "P3SM/srtf-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
+                    $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
 
                     $start_pay_date = Carbon::now();
                     $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);
@@ -698,17 +725,44 @@ class RegistController extends Controller
                         // , "enabled_payments" => []
                     ];
                     // dd($detail_snap);
-                    $token = $this->generateSnap($detail_snap);
 
-                    $pembayaran = new Pembayaran;
-                    $pembayaran->no_transaksi = $no_trans;
-                    $pembayaran->id_peserta_seminar = $peserta_seminar->id;
-                    $pembayaran->token = $token;
-                    $pembayaran->jenis = '1';
-                    $pembayaran->status = 0;
-                    $pembayaran->created_by = Auth::id();
-                    $pembayaran->created_at = Carbon::now()->toDateTimeString();
-                    $pembayaran->save();
+                    try {
+                        $token = $this->generateSnap($detail_snap);
+
+                        $pembayaran = new Pembayaran;
+                        $pembayaran->no_transaksi = $no_trans;
+                        $pembayaran->id_peserta_seminar = $data->id;
+                        $pembayaran->token = $token;
+                        $pembayaran->jenis = '1';
+                        $pembayaran->status = 0;
+                        $pembayaran->created_by = Auth::id();
+                        $pembayaran->created_at = Carbon::now()->toDateTimeString();
+                        $pembayaran->save();
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $detail_snap,
+                            'subjek' => 'berhasil membuat transaksi',
+                            'status' => 'WAITING',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+
+                    } catch (Exception $e) {
+
+                        $log_data = [
+                            'no_transaksi' => $no_trans,
+                            'keterangan' => $e,
+                            'subjek' => 'gagal membuat transaksi',
+                            'status' => 'FAIL',
+                            'created_by' => Auth::id(),
+                            'created_at' => Carbon::now()->toDateTimeString()
+                        ];
+
+                        LogTransaksi::create($log_data);
+                    }
 
                 }
             }

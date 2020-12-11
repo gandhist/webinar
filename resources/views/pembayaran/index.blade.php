@@ -138,6 +138,10 @@
                             <button class="btn btn-sm btn-outline-danger">
                                 Pembayaran Kadaluwarsa
                             </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 5)
+                            <button class="btn btn-sm btn-outline-danger">
+                                Pembayaran Dibatalkan
+                            </button>
                         @endif
                     @else
                         <button class="btn btn-sm btn-outline-danger">
