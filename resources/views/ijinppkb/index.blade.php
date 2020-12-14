@@ -856,7 +856,7 @@
                                         <td style="width:20%;">` + data[index]['badan_usaha']['npwp'] + `</td>
                                         <th style="width:15%;text-align:right">Pdf_NPWP :</th>
                                         <td style="width:35%;">
-                                        <a class="fa fa-file-pdf-o" target="_blank" href="uploads/` + data[index][
+                                        <a class="fa fa-file-pdf-o" target="_blank" href="` + data[index][
             'badan_usaha'
         ]['npwp_pdf'] + `"></a>
                                         </td>
@@ -1048,7 +1048,7 @@
         if (data[index]['personal']['npwp_pdf'] == null || data[index]['personal']['npwp_pdf'] == "") {
             npwpPdf = "null";
         } else {
-            npwpPdf = `<a class="fa fa-file-pdf-o" target="_blank" href="uploads/` + data[index]['personal']
+            npwpPdf = `<a class="fa fa-file-pdf-o" target="_blank" href="` + data[index]['personal']
                 ['npwp_pdf'] +
                 `"></a>`;
         }
