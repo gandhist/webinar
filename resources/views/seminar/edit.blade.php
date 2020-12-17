@@ -1453,7 +1453,8 @@
             $('#ttd2').empty();
             $('#ttd1').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
             personal.forEach(function(key) {
-                if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                // if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                if(true) {
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#ttd1').append(new Option(key.nama, key.id));
 
@@ -1479,7 +1480,8 @@
             $('#ttd2').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
 
             personal.forEach(function(key) {
-                if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                // if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                if(true) {
                     if( !($('#ttd1').val() == key.id) ){
                         //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                         $('#ttd2').append(new Option(key.nama, key.id));

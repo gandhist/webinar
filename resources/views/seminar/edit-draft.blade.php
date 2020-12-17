@@ -282,6 +282,7 @@
                             <label for="ttd1" class="label-control required">Penandatangan 1</label>
                             <select name="ttd1" id="ttd1"
                             class="form-control to-ttd">
+                            <option value="" selected disabled>Pilih Penandatangan 1</option>
                             @if(old('ttd1'))
                                 @foreach($personal as $key)
                                     @if(old('ttd2') != $key->id)
@@ -294,6 +295,8 @@
                                     @if(isset($ttd[1]['id_personal']) ? ($ttd[1]['id_personal'] != $key->id) : false)
                                         <option value="{{$key->id}}"
                                         {{$ttd[0]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
+                                    {{-- @else
+                                        <option value="{{$key->id}}">{{$key->nama}}</option> --}}
                                     @endif
                                 @endforeach
                             @endif
@@ -327,6 +330,7 @@
                             <label for="ttd2" class="label-control required">Penandatangan 2</label>
                             <select name="ttd2" id="ttd2"
                             class="form-control to-ttd">
+                            <option value="" selected disabled>Pilih Penandatangan 1</option>
                             @if(old('ttd2'))
                                 @foreach($personal as $key)
                                     @if(old('ttd1') != $key->id)
@@ -340,6 +344,8 @@
                                     @if(isset($ttd[0]['id_personal']) ? ($ttd[0]['id_personal'] != $key->id) : false)
                                         <option value="{{$key->id}}"
                                         {{ $ttd[1]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
+                                    {{-- @else
+                                        <option value="{{$key->id}}">{{$key->nama}}</option> --}}
                                     @endif
                                 @endforeach
                             @endif
@@ -1568,7 +1574,8 @@
             $('#ttd2').empty();
             $('#ttd1').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
             personal.forEach(function(key) {
-                if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                // if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                if(true){
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#ttd1').append(new Option(key.nama, key.id));
 
@@ -1594,7 +1601,8 @@
             $('#ttd2').append(new Option('Pilih Penandatangan', '')).attr('selected',true);
 
             personal.forEach(function(key) {
-                if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                // if(peny.includes(key.instansi) || pend.includes(key.instansi)){
+                if(true) {
                     if( !($('#ttd1').val() == key.id) ){
                         //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                         $('#ttd2').append(new Option(key.nama, key.id));
