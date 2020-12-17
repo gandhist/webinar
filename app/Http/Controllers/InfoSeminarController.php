@@ -177,7 +177,7 @@ class InfoSeminarController extends Controller
         if($cek > 0){
             return redirect('infoseminar')->with('warning', 'Anda Sudah Mendaftar Seminar ini');
         } else{
-            $data = $data->save();
+            $data->save();
 
             if($request->magic_link){
                 $blast->save();
