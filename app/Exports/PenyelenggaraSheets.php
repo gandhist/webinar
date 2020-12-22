@@ -8,6 +8,7 @@ use App\AbsensiModel;
 use App\FeedbackModel;
 use App\FeedbackRatingModel;
 use App\SeminarModel;
+use App\SertInstansiModel;
 use App\Peserta;
 use App\BuModel;
 
@@ -27,16 +28,20 @@ class PenyelenggaraSheets implements FromView, WithTitle
         $this->id = $id;
         $this->id_ins = $id_ins;
         $this->ins = BuModel::find($id_ins);
-        $this->seminar = SeminarModel::find($id);
+        // $this->seminar = SeminarModel::find($id)
     }
 
     public function view(): View
     {
+        $id_seminar = SertInstansiModel::where('id_instansi', $this->id_ins)->whereNull('deleted_at')->whereNull('deleted_by')->pluck('id')->toArray();
+        $seminar = SeminarModel::whereIn('id', $id_seminar)->get();
+
+
         return view('exports.penyelenggara',[
             // 'id' => $this->id,
             'id' => $this->id,
             'ins' => $this->ins ,
-            'seminar' => $this->seminar
+            'seminar' => $seminar
         ]);
     }
 

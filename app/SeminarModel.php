@@ -53,5 +53,15 @@ class SeminarModel extends Model
         return $this->hasOne('App\SubKlasifikasiModel','ID_Sub_Bidang_Keahlian','sub_klasifikasi');
     }
 
+    public function peserta_sem()
+    {
+        return $this->hasMany('App\PesertaSeminar', 'id_seminar', 'id');
+    }
+
+    public function getJumlahPesertaAttribute()
+    {
+        return $this->peserta_sem()->whereNull('deleted_at')->whereNull('deleted_by')->count();
+    }
+
 
 }
