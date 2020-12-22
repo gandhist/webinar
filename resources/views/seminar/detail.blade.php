@@ -84,13 +84,21 @@
 
                 <div class="" id="collapseExample" >
                     @if($seminar->is_mulai == 0)
-                        <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar ({{ $seminar->jam_awal }})</a><br><br>
+                        <a href="{{ url('seminar/mulai',$seminar->id) }}" class="btn btn-info"> Mulai Seminar ({{ $seminar->jam_awal }})</a>
                     @elseif ($seminar->is_mulai == 1)
-                        <a href="{{ url('seminar/selesai',$seminar->id) }}" class="btn btn-warning"> Akhiri Seminar</a><br><br>
+                        <a href="{{ url('seminar/selesai',$seminar->id) }}" class="btn btn-warning"> Akhiri Seminar</a>
                     @else
-                        <a href="{{ url('seminar/feedback',$seminar->id) }}" class="btn btn-success"> Hasil Kuisioner</a><br><br>
+                        <a href="{{ url('seminar/feedback',$seminar->id) }}" class="btn btn-success"> Hasil Kuisioner</a>
                     @endif
 
+                    <a
+                        style="margin-left: 4rem"
+                        href="{{ url('seminar/penyelenggara',$seminar->id) }}"
+                        class="btn btn-info">
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                        Penyelenggara
+                    </a>
+                    <br><br>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -295,7 +303,7 @@
                                 <div class="row">
                                     <div class="{{isset($seminar->materi) ? 'col-md-6' : 'col-md-12'}}">
                                         <div class="form-group {{ $errors->first('instansi_penyelenggara') ? 'has-error' : '' }} ">
-                                            <label>Browsur Seminar</label>
+                                            <label>Brosur Seminar</label>
                                             <div>
                                                 <a data-toggle="modal" data-target="#myModal" id="lihat">
                                                     <label for="lihat">

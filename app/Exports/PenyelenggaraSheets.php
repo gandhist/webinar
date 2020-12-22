@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Exports;
+
+// use App\Invoice;
+use App\PesertaSeminar;
+use App\AbsensiModel;
+use App\FeedbackModel;
+use App\FeedbackRatingModel;
+use App\SeminarModel;
+use App\Peserta;
+use App\BuModel;
+
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithTitle;
+
+class PenyelenggaraSheets implements FromView, WithTitle
+{
+    protected $id;
+    protected $id_ins;
+    protected $ins;
+    protected $seminar;
+
+    public function __construct(int $id, int $id_ins)
+    {
+        $this->id = $id;
+        $this->id_ins = $id_ins;
+        $this->ins = BuModel::find($id_ins);
+        $this->seminar = SeminarModel::find($id);
+    }
+
+    public function view(): View
+    {
+        return view('exports.penyelenggara',[
+            // 'id' => $this->id,
+            'id' => $this->id,
+            'ins' => $this->ins ,
+            'seminar' => $this->seminar
+        ]);
+    }
+
+    public function title(): string
+    {
+        return $this->ins->singkat_bu;
+    }
+}
