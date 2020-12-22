@@ -34,7 +34,7 @@ class PenyelenggaraSheets implements FromView, WithTitle
     public function view(): View
     {
         $id_seminar = SertInstansiModel::where('id_instansi', $this->id_ins)->whereNull('deleted_at')->whereNull('deleted_by')->pluck('id')->toArray();
-        $seminar = SeminarModel::whereIn('id', $id_seminar)->get();
+        $seminar = SeminarModel::whereIn('id', $id_seminar)->whereNot('status', 'draft')->get();
 
 
         return view('exports.penyelenggara',[
