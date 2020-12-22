@@ -15,4 +15,14 @@ class SertInstansiModel extends Model
     public function bu_instansi(){
         return $this->belongsTo('App\BuModel', 'id_instansi');
     }
+
+    public function seminar()
+    {
+        return $this->belongsTo('App\Seminar', 'id_seminar', 'id');
+    }
+
+    public function seminar_ho()
+    {
+        return $this->hasOne('App\Seminar', 'id', 'id_seminar');
+    }
 }

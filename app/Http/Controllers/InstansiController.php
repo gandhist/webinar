@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 // use App\NegaraModel;
 use App\ProvinsiModel;
 use App\KotaModel;
+use App\SertInstansiModel;
 use App\BuModel;
+use App\SeminarModel;
 use App\BentukBuModel;
 use App\StatusBUModel;
 use App\BankModel;
@@ -41,6 +43,25 @@ class InstansiController extends Controller
         $prov_pil = ProvinsiModel::whereIn('id',$idprop)->get();
 
         $kota = KotaModel::all();
+
+        // $instansi2 = BuModel::with(['pendukung.seminar', 'penyelenggara.seminar'])->get();
+
+        foreach ($instansi as $key) {
+            $key->penyelenggara = SertInstansiModel::where('id_instansi', $key->id)->where('status', 1)
+                                    ->whereHas('seminar', function($query) {
+                                        $query->whereNull('deleted_at')->whereNull('deleted_by');
+                                    })->pluck('id_seminar')->toArray();
+
+            $key->seminar_penyelenggara = SeminarModel::whereIn('id', $key->penyelenggara)->get();
+
+            $key->pendukung = SertInstansiModel::where('id_instansi', $key->id)->where('status', 2)
+                                    ->whereHas('seminar', function($query) {
+                                        $query->whereNull('deleted_at')->whereNull('deleted_by');
+                                    })->pluck('id_seminar')->toArray();
+
+            $key->seminar_pendukung = SeminarModel::whereIn('id', $key->penyelenggara)->get();
+
+        }
         return view('instansi.index')->with(compact('instansi', 'prov_pil', 'statusmodel','provinsi','kota', 'reff'));
     }
 

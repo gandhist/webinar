@@ -66,4 +66,14 @@ class BuModel extends Model
     {
         return $this->hasOne('App\User', 'id', 'updated_by');
     }
+
+    public function penyelenggara()
+    {
+        return $this->belongsTo('App\SertInstansiModel', 'id', 'id_instansi')->where('status', 1);
+    }
+
+    public function pendukung()
+    {
+        return $this->belongsTo('App\SertInstansiModel', 'id', 'id_instansi')->where('status', 2);
+    }
 }

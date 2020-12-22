@@ -6,6 +6,10 @@
     span.indent{
         text-indent: 25px;
     }
+    #tableStat .cus-td {
+        border: 2px solid black;
+        text-align: center;
+    }
 </style>
 <section class="content-header">
     <h1>
@@ -171,6 +175,7 @@
                                         <a href="{{ url('instansi/'.$key->id.'/edit')}}" type="button" class="btn btn-xs btn-warning"><span class="fa fa-pencil"></span></a>
                                         <button type="button" class="btn btn-xs btn-danger" onclick='hapusData("{{ $key->id }}")'><span class="fa fa-trash"></span></button>
                                         {{-- <a class="btn btn-xs btn-success"><span class="fa fa-eye"></i></a> --}}
+                                        <button data-id="{{$key->id}}" class="btn btn-xs btn-default statBu"><i class="fa fa-area-chart"></i></button>
                                     </td>
 
                                     <td class="text-center">{{ $loop->iteration }}</td>
@@ -361,6 +366,43 @@
     </div>
 </div>
 <!-- end of modal lampiran -->
+
+<!-- modal stat -->
+<div class="modal fade" id="modalStat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title" id="statTitle"></h3>
+            </div>
+            <div class="modal-body">
+                {{-- <div class="row">
+                    <div class="col-sm-12"> --}}
+                        <table id="tableStat"  class="table table-condensed table-filter">
+                            <thead>
+                                <th class="cus-td" colspan=2>Sebagai Penyelenggara</th>
+                                <th class="cus-td" colspan=2>Sebagai Pendukung</th>
+                                <th class="cus-td">Jumlah Kegiatan</th>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    {{-- </div>
+                </div> --}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- end of modal stat -->
+
+
 @endsection
 @push('script')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -372,6 +414,8 @@
 <script src="{{ asset('AdminLTE-2.3.11/plugins/input-mask/jquery.inputmask.extensions.js')}}"></script>
 <script type="text/javascript">
     var errHapus = '';
+    let instansi = @json($instansi);
+    console.log(instansi);
 	@if(session()->get('errHapus'))
         errHapus = `{{(session()->get('errHapus'))}}`;
 	@endif
@@ -457,6 +501,56 @@
             url = id[0];
             window.location.href = "{{ url('instansi') }}/" + url + "/edit";
         }
+    });
+
+    $('.statBu').on('click', function(){
+        // alert($(this).data('id'));
+        var id = $(this).data('id');
+        var data = instansi.filter((e) => e.id == id)[0];
+        var peny = '';
+        var pend = '';
+
+        var jumlah_peny = data.penyelenggara ? data.penyelenggara.length : 0;
+
+        var jumlah_pend = data.pendukung ? data.pendukung.length : 0;
+
+        var jumlah_tot = parseInt(jumlah_peny) + parseInt(jumlah_pend)
+
+        if(data.penyelenggara) {
+            data.penyelenggara.forEach(e => {
+                peny += `
+                    <tr>
+                        <td>
+                            <a href="{{ url('seminar/detail/') }}${e.id}">
+                            </a>
+                        </td>
+                    </tr>
+                `
+            })
+        }
+
+        // console.log(data[0].nama_bu)
+        $('#modalStat .modal-title').text(data.nama_bu);
+
+        $('#modalStat tbody').empty();
+        $('#modalStat tbody').html(
+            `
+                <td class="cus-td">${jumlah_peny}</td>
+                <td class="cus-td">
+                    <table style="width: 100%;">
+                    </table>
+                </td>
+                <td class="cus-td">${jumlah_pend}</td>
+                <td class="cus-td">
+                    <table style="width: 100%;">
+                    </table>
+                </td>
+                <td class="cus-td">${jumlah_tot}</td>
+            `
+        );
+
+
+        $('#modalStat').modal('show');
     });
 </script>
 @endpush
