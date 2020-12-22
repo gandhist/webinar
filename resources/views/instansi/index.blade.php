@@ -370,7 +370,9 @@
 <!-- modal stat -->
 <div class="modal fade" id="modalStat" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document"
+
+    style="width: 75vw">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -380,7 +382,7 @@
             <div class="modal-body">
                 {{-- <div class="row">
                     <div class="col-sm-12"> --}}
-                        <table id="tableStat"  class="table table-condensed table-filter">
+                        <table id="tableStat"  class="table table-condensed table-filter" style="width: 100%">
                             <thead>
                                 <th class="cus-td" colspan=2>Sebagai Penyelenggara</th>
                                 <th class="cus-td" colspan=2>Sebagai Pendukung</th>
@@ -517,11 +519,12 @@
         var jumlah_tot = parseInt(jumlah_peny) + parseInt(jumlah_pend)
 
         if(data.penyelenggara) {
-            data.penyelenggara.forEach(e => {
+            data.seminar_penyelenggara.forEach(e => {
                 peny += `
                     <tr>
                         <td>
-                            <a href="{{ url('seminar/detail/') }}${e.id}">
+                            <a href="{{ url('seminar/detail') }}/${e.id}">
+                                ${e.tema}
                             </a>
                         </td>
                     </tr>
@@ -529,6 +532,19 @@
             })
         }
 
+        if(data.pendukung) {
+            data.seminar_pendukung.forEach(e => {
+                pend += `
+                    <tr>
+                        <td>
+                            <a href="{{ url('seminar/detail') }}/${e.id}">
+                                ${e.tema}
+                            </a>
+                        </td>
+                    </tr>
+                `
+            })
+        }
         // console.log(data[0].nama_bu)
         $('#modalStat .modal-title').text(data.nama_bu);
 
@@ -538,11 +554,13 @@
                 <td class="cus-td">${jumlah_peny}</td>
                 <td class="cus-td">
                     <table style="width: 100%;">
+                        ${peny}
                     </table>
                 </td>
                 <td class="cus-td">${jumlah_pend}</td>
                 <td class="cus-td">
                     <table style="width: 100%;">
+                        ${pend}
                     </table>
                 </td>
                 <td class="cus-td">${jumlah_tot}</td>
