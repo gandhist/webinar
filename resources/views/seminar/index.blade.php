@@ -57,6 +57,8 @@
                             <i class="fa fa-eye"></i> Detail</button> --}}
                         <div class="pull-right">
 
+                            <a href="{{ url('seminar/penyelenggara-all') }}" class="btn btn-success">
+                                <i class="fa fa-download"></i> Penyelenggara</a>
                             <a href="{{ url('seminar/create') }}" class="btn btn-info">
                                 <i class="fa fa-plus"></i> Tambah</a>
                             {{-- <button class="btn btn-success" id="btnEdit" name="btnEdit">

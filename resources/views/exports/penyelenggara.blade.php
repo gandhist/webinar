@@ -9,7 +9,7 @@
     <table style="font-weight: bold">
         <tr>
             <td colspan=20 rowspan=3 style=" background-color: yellow;" align="center" valign="middle">
-                KEGIATAN WEBINAR PPK K-3
+                KEGIATAN WEBINAR {{$ins->singkat_bu}}
             </td>
         </tr>
     </table>

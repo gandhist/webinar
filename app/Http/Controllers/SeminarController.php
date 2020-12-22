@@ -40,6 +40,7 @@ use App\FeedbackRatingModel;
 use App\Exports\FeedbackExport;
 use App\Exports\KehadiranExport;
 use App\Exports\PenyelenggaraExport;
+use App\Exports\PenyelenggaraAllExport;
 
 use Vinkla\Hashids\Facades\Hashids;
 use Excel;
@@ -1711,6 +1712,13 @@ class SeminarController extends Controller
         $nama = "Penyelenggara_".$seminar->nama_seminar."_".strip_tags($seminar->tema)."_".Carbon::now()->timestamp;
         return Excel::download(new PenyelenggaraExport($id), $nama.".xlsx");
     }
+
+    public function downloadPenyelenggaraAll() {
+        //
+        $nama = "Penyelenggara_Seminar_".Carbon::now()->timestamp;
+        return Excel::download(new PenyelenggaraAllExport(), $nama.".xlsx");
+    }
+
 
     public function blast(Request $request, $id) {
         // dd($request);
