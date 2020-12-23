@@ -96,11 +96,11 @@
                             @foreach ($instansi as $index => $key)
                                 @if($key->is_tampil == 1)
                                     @if ($index == 1)
-                                        <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:auto; height:50px">
+                                        <img src="{{ $key->bu_instansi->logo ? public_path($key->bu_instansi->logo) : '' }}" style="margin-right:13px; width:auto; height:50px">
                                     @elseif ($index == 5)
-                                    <br><img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:auto; height:50px; margin-top:10px">
+                                    <br><img src="{{ $key->bu_instansi->logo ? public_path($key->bu_instansi->logo) : '' }}" style="margin-right:13px; width:auto; height:50px; margin-top:10px">
                                     @else
-                                        <img src="{{ public_path($key->bu_instansi->logo)  }}" alt="Logo Instansi" style="margin-right:13px; width:auto; height:50px">
+                                        <img src="{{ $key->bu_instansi->logo ? public_path($key->bu_instansi->logo) : '' }}" style="margin-right:13px; width:auto; height:50px">
                                     @endif
                                 @else
                                 @endif
