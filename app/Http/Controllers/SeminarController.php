@@ -990,7 +990,7 @@ class SeminarController extends Controller
             'inisiator' => 'required',
             'instansi_penyelenggara' => 'required',
             'instansi_pendukung' => 'required',
-            'tgl_awal' => 'required|date|after:today',
+            'tgl_awal' => 'required|date',
             'tgl_akhir' => 'required|date|after_or_equal:tgl_awal',
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
