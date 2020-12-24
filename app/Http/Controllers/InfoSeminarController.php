@@ -129,6 +129,14 @@ class InfoSeminarController extends Controller
             $bulan = substr($tanggal['tgl_awal'],5,2);
 
             $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+
+            $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+
+            while ($cek_no_srtf) {
+                $data->no_urut_peserta = $data->no_urut_peserta + 1;
+                $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+            }
         }
 
         $data->id_seminar = $id;

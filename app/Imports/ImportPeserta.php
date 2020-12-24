@@ -145,6 +145,15 @@ class ImportPeserta implements ToCollection,WithHeadingRow
                 $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($peserta_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
 
 
+                $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+
+                while ($cek_no_srtf) {
+                    $peserta_seminar->no_urut_peserta = $peserta_seminar->no_urut_peserta + 1;
+                    $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($peserta_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                    // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+                }
+
+
                 $peserta_seminar->no_srtf = $no_sert;
 
                 // generate qr code

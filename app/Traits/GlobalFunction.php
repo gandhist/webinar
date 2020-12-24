@@ -207,6 +207,15 @@ trait GlobalFunction {
         $bulan = substr($detailseminar['tgl_awal'],5,2);
 
         $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($no_urut_peserta, 3, "0", STR_PAD_LEFT);
+
+        $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+
+        while ($cek_no_srtf) {
+            $no_urut_peserta = $no_urut_peserta + 1;
+            $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($no_urut_peserta, 3, "0", STR_PAD_LEFT);
+            // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+        }
+
         return [$no_sert, $no_urut_peserta];
     }
 

@@ -439,6 +439,14 @@ class SeminarController extends Controller
                 $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
 
+                $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+
+                while ($cek_no_srtf) {
+                    $narasumber_seminar->no_urut_peserta = $narasumber_seminar->no_urut_peserta + 1;
+                    $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                    // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+                }
+
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
@@ -478,6 +486,14 @@ class SeminarController extends Controller
                 $bulan = date("m",strtotime($request->tgl_awal)); //substr($request->tgl_awal,5,2);
                 $urutan_seminar = $data->no_urut;
                 $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.(str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT));
+
+                $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_mode)->first();
+
+                while ($cek_no_srtf) {
+                    $moderator_seminar->no_urut_peserta = $moderator_seminar->no_urut_peserta + 1;
+                    $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.(str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT));
+                    // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_mode)->first();
+                }
 
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_mode));
@@ -693,6 +709,14 @@ class SeminarController extends Controller
                 $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
 
+                $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+
+                while ($cek_no_srtf) {
+                    $narasumber_seminar->no_urut_peserta = $narasumber_seminar->no_urut_peserta + 1;
+                    $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($narasumber_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                    // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+                }
+
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
                 $nama = "QR_Sertifikat_".$no_sert_nara.".png";
@@ -746,6 +770,14 @@ class SeminarController extends Controller
 
                 $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
                 // dd($no_sert);
+
+                $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_mode)->first();
+
+                while ($cek_no_srtf) {
+                    $moderator_seminar->no_urut_peserta = $moderator_seminar->no_urut_peserta + 1;
+                    $no_sert_mode = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($moderator_seminar->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                    // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_mode)->first();
+                }
 
                 // generate qr code
                 $url = url("sertifikat/".Crypt::encrypt($no_sert_mode));
@@ -1401,6 +1433,16 @@ class SeminarController extends Controller
 
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
 
+
+            $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+
+            while ($cek_no_srtf) {
+                $key->no_urut_peserta = $key->no_urut_peserta + 1;
+                $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+            }
+
+
             // generate qr code
             $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
             $nama = "QR_Sertifikat_".$no_sert_nara.".png";
@@ -1437,6 +1479,14 @@ class SeminarController extends Controller
             $urutan_seminar = $data->no_urut;
 
             $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+
+            $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+
+            while ($cek_no_srtf) {
+                $key->no_urut_peserta = $key->no_urut_peserta + 1;
+                $no_sert_nara = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar.str_pad($key->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+                // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert_nara)->first();
+            }
 
             // generate qr code
             $url = url("sertifikat/".Crypt::encrypt($no_sert_nara));
@@ -1480,6 +1530,15 @@ class SeminarController extends Controller
         $bulan = substr($tanggal['tgl_awal'],5,2);
 
         $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+
+
+        $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+
+        while ($cek_no_srtf) {
+            $data->no_urut_peserta = $data->no_urut_peserta + 1;
+            $no_sert = $inisiator."-".$status."-".$tahun."-".$bulan."-".$urutan_seminar->no_urut.str_pad($data->no_urut_peserta, 3, "0", STR_PAD_LEFT);
+            // $cek_no_srtf = PesertaSeminar::where('no_srtf', $no_sert)->first();
+        }
 
         $data->is_paid = '1';
         $data->no_srtf = $no_sert;
