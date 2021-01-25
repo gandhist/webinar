@@ -22,6 +22,6 @@ class VerifyCsrfToken extends Middleware
         'trxi/callback',
         'trxi/finish',
         'trxi/unfinish',
-        'trxi/error'
+        'trxi/error',
     ];
 }
