@@ -19,7 +19,9 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'finish',
-        'notification/handler',
+        'trxi/callback',
+        'trxi/finish',
+        'trxi/unfinish',
+        'trxi/error'
     ];
 }

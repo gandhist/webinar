@@ -187,6 +187,8 @@ trait GlobalFunction {
 
         $kode_inisiator = Seminar::select('inisiator')->where('id',$id_seminar)->first();
 
+        $detailseminar = Seminar::find($id_seminar);
+
         $kode_instansi = InstansiModel::select('kode_instansi')->where('id',$kode_inisiator['inisiator'])->first();
 
         $urutan_seminar = Seminar::select('no_urut')->where('id', '=',$id_seminar)->first();
