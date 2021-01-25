@@ -10,7 +10,10 @@ use App\Pembayaran;
 use App\Peserta;
 use App\PesertaSeminar;
 use App\User;
+use App\Seminar;
 use App\Traits\GlobalFunction;
+
+use Carbon\Carbon;
 
 class PembayaranController extends Controller
 {
@@ -89,7 +92,7 @@ class PembayaranController extends Controller
                     $peserta_s->is_paid = 1; // Success
 
                     $gen_no_sert = $this->generateNoSert($peserta_s->id_seminar, $peserta_s->id);
-                    $peserta_s->no_sert = $gen_no_sert[0];
+                    $peserta_s->no_srtf = $gen_no_sert[0];
                     $peserta_s->no_urut_peserta = $gen_no_sert[1];
                     $peserta_s->skpk_nilai = $seminar->skpk_nilai;
                     $peserta_s->qr_code = $this->generateQrSertPeserta($gen_no_sert[0]);
@@ -104,7 +107,7 @@ class PembayaranController extends Controller
             $peserta_s->is_paid = 1; // Success
 
             $gen_no_sert = $this->generateNoSert($peserta_s->id_seminar, $peserta_s->id);
-            $peserta_s->no_sert = $gen_no_sert[0];
+            $peserta_s->no_srtf = $gen_no_sert[0];
             $peserta_s->no_urut_peserta = $gen_no_sert[1];
             $peserta_s->skpk_nilai = $seminar->skpk_nilai;
             $peserta_s->qr_code = $this->generateQrSertPeserta($gen_no_sert[0]);
@@ -133,13 +136,13 @@ class PembayaranController extends Controller
         // get account midtrans
         $usr = User::where('username','midtran_notifications')->first();
         $data->updated_by = $usr->id;
-        $peserta_s->updated_by = $usr->id;
+        $peserta_s->update_by = $usr->id;
         $data->save();
         $peserta_s->save();
 
         $log_data = [
             'no_transaksi' => $order_id,
-            'keterangan' => $notify,
+            'keterangan' => json_encode($notify),
             'subjek' => 'callback dari midtrans',
             'status' => $data->status,
             'created_by' => $usr->id,
