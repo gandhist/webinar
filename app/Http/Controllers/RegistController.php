@@ -447,7 +447,7 @@ class RegistController extends Controller
 
                         $pembayaran = new Pembayaran;
                         $pembayaran->no_transaksi = $no_trans;
-                        $pembayaran->id_peserta_seminar = $data->id;
+                        $pembayaran->id_peserta_seminar = $peserta_seminar->id;
                         $pembayaran->token = $token;
                         $pembayaran->jenis = '1';
                         $pembayaran->status = 0;
@@ -749,7 +749,7 @@ class RegistController extends Controller
 
                         $pembayaran = new Pembayaran;
                         $pembayaran->no_transaksi = $no_trans;
-                        $pembayaran->id_peserta_seminar = $data->id;
+                        $pembayaran->id_peserta_seminar = $peserta_seminar->id;
                         $pembayaran->token = $token;
                         $pembayaran->jenis = '1';
                         $pembayaran->status = 0;
