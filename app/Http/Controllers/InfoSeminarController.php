@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Seminar;
 use App\SeminarModel;
 use App\Peserta;
+use App\Pembayaran;
 use App\PesertaSeminar;
 use App\User;
 use App\LogTransaksi;
@@ -234,10 +235,10 @@ class InfoSeminarController extends Controller
                         ]
                     ],
                     "customer_details" => [
-                        "first_name" => $request->name,
+                        "first_name" => $peserta->nama,
                         "last_name" => '',
-                        "email" => $request->email,
-                        "phone" => $request->no_hp
+                        "email" => $peserta->email,
+                        "phone" => $peserta->no_hp
                     ],
                     "expiry" => [
                         "start_time"=> $start_pay_date->format('Y-m-d H:i:s').' +0700',
@@ -262,7 +263,7 @@ class InfoSeminarController extends Controller
 
                     $log_data = [
                         'no_transaksi' => $no_trans,
-                        'keterangan' => $detail_snap,
+                        'keterangan' => json_encode($detail_snap),
                         'subjek' => 'berhasil membuat transaksi',
                         'status' => 'WAITING',
                         'created_by' => Auth::id(),
@@ -311,9 +312,9 @@ class InfoSeminarController extends Controller
             dispatch(new \App\Jobs\DaftarSeminarSudahLogin($detail));
 
 
-            if($is_free['is_free'] == '0') {
+            if($detailseminar->is_free == '0') {
                 return redirect('infoseminar')->with('success', 'Pendaftaran Seminar berhasil');
-            } else if($is_free['is_free'] == '0') {
+            } else if($is_free->is_free == '1') {
                 return redirect('pembayaran')
                 ->with('success', 'Pendaftaran Seminar berhasil')
                 ->with('warning', 'Selesaikan transaksi untuk mengikuti Seminar');

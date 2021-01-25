@@ -10,4 +10,6 @@ class LogTransaksi extends Model
     //
     // use SoftDeletes;
     protected $table = "srtf_midtrans_log";
+    protected $guarded = ['id'];
+
 }
