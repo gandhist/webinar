@@ -136,7 +136,7 @@
                         <td colspan="6"></td>
                         <td colspan="36" style="text-align: center; vertical-align: middle;">
                             <span style="font-size: 25px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-weight: bold; margin-top: -2px; margin-bottom:-3px; color: crimson;">
-                                {{ $data->seminar_p->nama_seminar }} (Seminar)</span>
+                                {{ $data->seminar_p->nama_seminar }}</span>
                         </td>
                     </tr>
                     <tr>
