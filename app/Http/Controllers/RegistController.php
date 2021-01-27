@@ -422,7 +422,7 @@ class RegistController extends Controller
                                 "id" => $detailseminar->id,
                                 "price" => (int)$detailseminar->biaya ?? 0,
                                 "quantity" => 1,
-                                "name" => "Fee Pendaftaran ".strip_tags($detailseminar->tema),
+                                "name" => "Biaya Investasi ".strip_tags($detailseminar->tema),
                                 "brand" => "P3SM",
                                 "merchant_name" => "P3SM"
                             ]
@@ -724,7 +724,7 @@ class RegistController extends Controller
                                 "id" => $detailseminar->id,
                                 "price" => (int)$detailseminar->biaya ?? 0,
                                 "quantity" => 1,
-                                "name" => "Fee Pendaftaran ".strip_tags($detailseminar->tema),
+                                "name" => "Biaya Investasi  ".strip_tags($detailseminar->tema),
                                 "brand" => "P3SM",
                                 "merchant_name" => "P3SM"
                             ]

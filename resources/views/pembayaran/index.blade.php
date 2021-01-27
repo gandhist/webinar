@@ -113,7 +113,7 @@
                         '' )
                     }}
                 </td>
-                <td>Fee Pendaftaran</td>
+                <td>Biaya Investasi</td>
                 <td style="text-align: center">{{ $key->no_transaksi}}</td>
                 {{-- <td>{{ $key->status }}</td> --}}
                 <td style="text-align: center">
@@ -151,7 +151,7 @@
                 </td>
                 <td style="text-align: center; color: black;">
                     @if ($key->peserta_seminar_r !== null)
-                        @if ( $key->peserta_seminar_r->is_paid == 0 )
+                        @if ( $key->peserta_seminar_r->is_paid != 1 && $key->peserta_seminar_r->is_paid != 3 )
                             <button class="btn btn-sm btn-outline-success button-flash payButton">
                                 Bayar
                             </button>
