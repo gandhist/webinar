@@ -54,8 +54,7 @@ class LoginController extends Controller
 
         // Check Condition Mobile No. Found or Not
         if(!isset($user)) {
-            \Session::put('is_login', 'Username tidak ditemukan !!');
-            return back();
+            return redirect()->back()->with(['is_login' => 'Username tidak ditemukan !!']);
         } else {
 
             if($user->role_id == '1'){
@@ -82,35 +81,46 @@ class LoginController extends Controller
 
                 return $this->sendFailedLoginResponse($request);
 
-            }
-            else if ($user->role_id == 5){
-                $data = User::find($user->id);
-                $data->is_login = 1;
-                $data->save();
+            } else {
 
-                \Auth::login($user);
+                $this->validate($request, [
+                    'username' => 'required|string',
+                    'password' => 'required|string'
+                ]);
 
-                // dd('');
-                return redirect('/dashboard');
-            }
-            else {
-                if($user->is_login == 0) {
+                $login = [
+                    'username' => $request->username,
+                    'password' => $request->password
+                ];
+
+                //LAKUKAN LOGIN
+                if (auth()->attempt($login)) {
+
                     $data = User::find($user->id);
                     $data->is_login = 1;
                     $data->save();
 
-                    \Auth::login($user);
-                    return redirect('infoseminar');
-                } else{
-                    \Session::put('is_login', 'Akun anda sudah login di perangkat lain, silahkan logout dari perangkat sebelumnya.!!');
-                    // Session::flush();
-                    return redirect('');
+                    if ($user->role_id == 5){
+                        return redirect('/dashboard');
+                    } else {
+                        if($user->is_login == 0) {
+                            $data = User::find($user->id);
+                            $data->is_login = 1;
+                            $data->save();
+
+                            \Auth::login($user);
+                            return redirect('infoseminar');
+                        } else{
+                            // Session::flush();
+                            return redirect()->back()->with(['is_login' => 'Akun anda sudah login di perangkat lain, silahkan logout dari perangkat sebelumnya.!!']);
+                        }
+                    }
                 }
 
+                //JIKA SALAH, MAKA KEMBALI KE LOGIN DAN TAMPILKAN NOTIFIKASI
+                return redirect()->back()->with(['is_login' => 'Email/Password salah!']);
             }
-
         }
-
     }
 
     public function logout(Request $request){

@@ -73,17 +73,6 @@
 <body class="hold-transition login-page">
 <div class="login-box">
 
-  @if(session()->get('warning'))
-		<div class="alert alert-warning"> {{ session()->get('warning') }}
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-		</div>
-    @endif
-
-  @if(session()->get('success'))
-  <div class="alert alert-success"> {{ session()->get('success') }}
-      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  </div>
-@endif
   <!-- /.login-logo -->
   <div class="login-box-body">
     <div class="login-logo">
@@ -91,6 +80,23 @@
 
     </div>
     {{-- <p class="login-box-msg">Login to start your session</p> --}}
+
+    @if(session()->get('warning'))
+		<div class="alert alert-warning"> {{ session()->get('warning') }}
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		</div>
+    @endif
+
+    @if(session()->get('is_login'))
+		<div class="alert alert-warning"> {{ session()->get('is_login') }}
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		</div>
+    @endif
+    @if(session()->get('success'))
+    <div class="alert alert-success"> {{ session()->get('success') }}
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    </div>
+    @endif
 
     <form action="{{ url('login') }}" method="post">
       {{ csrf_field() }}

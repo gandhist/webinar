@@ -402,15 +402,15 @@
 					{{ csrf_field() }}
 					<div class="form-group">
 						<input type="text" class="form-control select2" placeholder="User (Email)" name="username" id="username">
-						{{-- <span class="glyphicon glyphicon-user form-control-feedback"></span> --}}
+						<span class="glyphicon glyphicon-user form-control-feedback"></span>
 						<div id="name">
 
 						</div>
 					</div>
-					{{-- <div class="form-group">
+					<div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password">
 						<span class="glyphicon glyphicon-lock"></span>
-					</div> --}}
+					</div>
 					<button type="submit" class="btn btn-sm btn-success btn-border-filled mr-2"><i class="fa fa-sign-in"></i> Login</button>
 					<a href="{{url('login/google')}}" style="color: white" class="btn btn-sm btn-primary m-2">
 						<i class="fa fa-google fa-fw"></i>
@@ -582,22 +582,6 @@
 	$(document).ready(function() {
 		$('#example').DataTable();
 	} );
-	// $('#container-yt').hide();
-	$('#username').keyup(function(){
-        var query = $(this).val();
-        if(query != '') {
-			var _token = $('input[name="_token"]').val();
-			$.ajax({
-			url:"{{ route('autocomplete.fetch') }}",
-			method:"POST",
-			data:{query:query, _token:_token},
-			success:function(data){
-				$('#name').fadeIn();
-							$('#name').html(data);
-				}
-			});
-        }
-    });
 	$(document).on('click', '#name>ul>li', function(){
         $('#username').val($(this).text());
         $('#name').fadeOut();
