@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\BlastingMail;
+use App\Mail\BlastingMailBerbayar;
 use App\Traits\GlobalFunction;
 
 use App\TargetBlasting;
@@ -18,7 +18,7 @@ use App\User;
 use App\Peserta;
 use App\PesertaSeminar;
 
-class Blasting implements ShouldQueue
+class BlastingBerbayar implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, GlobalFunction;
 
@@ -88,7 +88,7 @@ class Blasting implements ShouldQueue
                 break;
             }
             // Fungsi blasting email
-            Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link, $hari));
+            Mail::to($this->detail['target']['email'])->send(new BlastingMailBerbayar($this->detail, $this->link, $hari));
 
             if(empty($report_blasting)){
                 $report_blasting = new ReportBlasting;
@@ -112,8 +112,10 @@ class Blasting implements ShouldQueue
             $link_zoom = $this->link['link_zoom'];
             $website = 'https://srtf.p3sm.or.id';
 
+            $jenis_kegiatan = $this->detail['seminar']['nama_seminar'];
             $tema = strip_tags(html_entity_decode($this->detail['seminar']['tema']));
             $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
+            $biaya = number_format($this->detail['seminar']['biaya'],0,".",",");
             switch($hari){
                 case 'Sunday':
                     $hari = "Minggu";
@@ -152,7 +154,8 @@ class Blasting implements ShouldQueue
             $tgl = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->isoFormat("DD MMMM YYYY");
             $jam = $this->detail['seminar']['jam_awal'];
 
-            $detail_seminar = 'Free Webinar dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai';
+            $detail_seminar = $jenis_kegiatan.' dengan judul *'.$tema.'*. Webinar akan dilaksanakan pada hari '.$hari.', '.$tgl.' jam '.$jam.' WIB sampai selesai.'
+                                .' Dapatkan sertifikat dan modul dengan biaya investasi *Rp. '.$biaya.'*';
 
             $link = $this->detail['magic'];
             $link_seminar = 'https://srtf.p3sm.or.id/blast/'.$link;
