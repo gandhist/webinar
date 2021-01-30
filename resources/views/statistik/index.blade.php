@@ -42,7 +42,7 @@
                             @foreach($blasting as $key)
                                 <tr>
                                     <td style='text-align:center;'>{{ $loop->iteration}}</td>
-                                    <td><a href="{{ url('statistik', $key->id) }}">{{$key->seminar->nama_seminar . " - " . \Carbon\Carbon::parse($key->seminar->tgl_awal)->format('d F Y')}}</a></td>
+                                    <td><a href="{{ url('statistik', $key->id) }}">{{( isset($key->seminar) ? $key->seminar->nama_seminar : '' ) . " - " . \Carbon\Carbon::parse($key->seminar->tgl_awal)->format('d F Y')}}</a></td>
                                     <td>{{\Carbon\Carbon::parse($key->created_at)->format('d F Y H:i')}}</td>
                                     <td>{{$key->jumlah_target}}</td>
                                     <td>{{$key->jumlah_kirim}}</td>
