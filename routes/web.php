@@ -30,6 +30,11 @@ Route::get('tesWA', 'FrontendController@kirimWA');
 Route::get('tesWA2', 'FrontendController@kirimWA2');
 Route::get('tesWA3', 'FrontendController@kirimWA3');
 
+Route::get('reset-password/{token}', 'Auth\LoginController@resetPassword');
+Route::post('reset-password/{token}', 'Auth\LoginController@doReset')->name('doreset');
+Route::get('reset-password', 'Auth\LoginController@forgetPassword');
+Route::post('reset-password', 'Auth\LoginController@postForgetPassword')->name('resetpass');
+
 
 
 Route::get('blast/{id}', 'BlastingController@click');
@@ -136,7 +141,7 @@ Route::namespace('Iso')->group(function(){
 
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth.admin'], function () {
 
     Route::get('pembayaran', 'PembayaranController@index' );
 

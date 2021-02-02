@@ -4,17 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\User;
 use App\Peserta;
+use App\ResetModel;
 use Socialite;
 use File;
 use Carbon\Carbon;
 use Intervention\Image\ImageManagerStatic as Image;
 use Session;
-
 use App\TargetBlasting;
+
+
+use App\Mail\MailResetPassword;
+use App\Mail\MailResetSukses;
+use Mail;
+
 
 class LoginController extends Controller
 {
@@ -261,4 +268,127 @@ class LoginController extends Controller
             return $data;
         }
     }
+
+    public function forgetPassword(){
+        return view('profile.reset-password');
+    }
+
+    public function postForgetPassword(Request $request) {
+        // Validasi email user
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,username'
+        ]);
+
+        $user = User::where('username', $request->email)->first();
+
+        //check if payload is valid before moving on
+        if ($validator->fails() || empty($user)) {
+            return redirect()->back()->withErrors(['email' => 'Email tidak terdaftar di sistem kami']);
+        }
+
+        $reset = ResetModel::where('user_id', $user->id)->first();
+
+        if(empty($reset)) {
+            $reset = new ResetModel();
+            $reset->user_id = $user->id;
+            $reset->token = str_random(60);
+            $reset->created_by = $user->id;
+            $reset->updated_by = $user->id;
+            $reset->created_at = \Carbon\Carbon::now()->toDateTimeString();
+            $reset->save();
+        } else {
+            $reset->token = str_random(60);
+            $reset->created_by = $user->id;
+            $reset->updated_by = $user->id;
+            $reset->created_at = \Carbon\Carbon::now()->toDateTimeString();
+            $reset->save();
+        }
+
+        try {
+            $details = [
+                'reset' => $reset,
+                'user' => $user
+            ];
+            $email = new MailResetPassword($details);
+            Mail::to($user->username)->send($email);
+            $reset->is_sent = 1;
+            $reset->save();
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->back()->withErrors(['email' => 'Sistem error, silahkan hubungi admin.']);
+            $reset->is_sent = 2;
+            $reset->save();
+        }
+
+        return redirect()->back()->with(['done' => "Link untuk mereset password berhasil dikirim silahkan cek email Anda"]);
+
+    }
+
+    public function resetPassword(Request $request, $token) {
+        if (empty($token)) {
+            return view('profile.reset-password')->with(['err_message' => 'Token tidak valid.']);
+        } else if (strlen($token) != 60) {
+            return view('profile.reset-password')->with(['err_message' => 'Token tidak valid.']);
+        } else {
+            $reset = ResetModel::where('token', $token)->first();
+
+            if(empty($reset)) {
+                return view('profile.reset-password')->with(['err_message' => 'Token tidak valid.']);
+            }
+
+            $check_date = \Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($reset->created_at)->addMinutes(30));
+
+            if($check_date) {
+                return view('profile.reset-password')->with(['err_message' => 'Link kadaluwarsa, silahkan ulangi permintaan reset.']);
+            }
+
+            return view('profile.reset-password')->with(['token' => $token]);
+        }
+    }
+
+    public function doReset(Request $request, $token) {
+        if ($token != $request->token) {
+            return view('profile.reset-password')->with(['err_do_reset' => 'Something wrong.']);
+        }
+        //Validate input
+        $validator = $request->validate([
+            'password' => 'required|confirmed|min:8',
+            'token' => 'required'
+        ],[
+            'password.required' => 'Mohon lengkapi form',
+            'password.confirmed' => 'Pastikan password diulang dengan benar',
+            'password.min' => 'Password minimal 8 karakter'
+        ]);
+
+        $password = $request->password;
+        $reset = ResetModel::where('token', $token)->first();
+
+        if (empty($reset)) {
+            return view('profile.reset-password')->with(['err_message' => 'Token tidak valid.']);
+        }
+
+        $user = User::find($reset->user_id);
+
+        if (empty($user)) {
+            return view('profile.reset-password')->with(['err_message' => 'Token tidak valid.']);
+        }
+
+        $user->password = \Hash::make($password);
+        $user->update(); //or $user->save();
+
+        try {
+            $details = [
+                'reset' => $reset,
+                'user' => $user
+            ];
+            $email = new MailResetSukses($details);
+            Mail::to($user->username)->send($email);
+        } catch (\Throwable $th) {
+        }
+
+        return redirect()->back()->with(['done' => "Reset password sukses. Slahkan login dengan password yang baru."]);
+
+    }
+
 }

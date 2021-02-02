@@ -415,7 +415,9 @@
 					<a href="{{url('login/google')}}" style="color: white" class="btn btn-sm btn-primary m-2">
 						<i class="fa fa-google fa-fw"></i>
 						{{-- Login with Google Account --}}
-					</a>
+                    </a>
+                    <br>
+                    <a href="{{url('reset-password')}}">Lupa Password?</a>
 				{{-- <a href="{{ '' }}" class="btn btn-primary">Cancel</a> --}}
 				</form>
 			</div>
