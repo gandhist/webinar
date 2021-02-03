@@ -141,7 +141,7 @@ Route::namespace('Iso')->group(function(){
 
 
 
-Route::group(['middleware' => 'auth.admin'], function () {
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('pembayaran', 'PembayaranController@index' );
 
