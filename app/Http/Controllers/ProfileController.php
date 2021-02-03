@@ -73,6 +73,12 @@ class ProfileController extends Controller
 
         Peserta::select('id')->where('user_id','=',Auth::id())->update($data);
 
+        $user = User::find(Auth::id());
+        $user->username = $request->email;
+        $user->email = $request->email;
+        $user->name = $request->nama;
+        $user->save();
+
         return redirect()->route('profile.edit')->with('success', 'Profile berhasil diubah');
     }
 
