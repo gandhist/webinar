@@ -1591,10 +1591,20 @@ class SeminarController extends Controller
         $seminar->save();
         $peserta_seminar = PesertaSeminar::where('id_seminar',$id)->whereNull('status_wa')->get();
 
-        foreach ($peserta_seminar as $key) {
-            $peserta = Peserta::find($key->id_peserta);
-            dispatch(new \App\Jobs\KirimLinkSeminar($peserta, $key));
-            // \Mail::to($data->email)->send(new MailLink($key));
+        if ($seminar->is_free ==1 ) {
+            foreach ($peserta_seminar as $key) {
+                $peserta = Peserta::find($key->id_peserta);
+                $peserta_seminar_satuan = PesertaSeminar::where('id_seminar',$id)->where('id_peserta', $key->id_peserta)->first();
+                dispatch(new \App\Jobs\KirimLinkSeminarBerbayar($peserta, $key, $peserta_seminar_satuan));
+                // \Mail::to($data->email)->send(new MailLink($key));
+            }
+        } else {
+            foreach ($peserta_seminar as $key) {
+                $peserta = Peserta::find($key->id_peserta);
+                dispatch(new \App\Jobs\KirimLinkSeminar($peserta, $key));
+                // \Mail::to($data->email)->send(new MailLink($key));
+            }
+
         }
 
         return redirect()->back()->with('alert',"Link Berhasil dikirim ke semua peserta");
