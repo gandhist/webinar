@@ -28,7 +28,7 @@ class AbsensiController extends Controller
             $id_decrypt =  Hashids::decode($id);
         }
         $peserta_seminar = PesertaSeminar::where('id',$id_decrypt)->first();
-        if ($peserta_seminar->is_paid == '1') {
+        // if ($peserta_seminar->is_paid == '1') {
             // dd($peserta_seminar);
             $cek_in = $this->cek_in($peserta_seminar->id);
             $cek_out = $this->cek_out($peserta_seminar->id);
@@ -37,9 +37,9 @@ class AbsensiController extends Controller
             $user = User::where('id', $peserta_seminar->peserta->user_id)->first();
             Auth::login($user);
             return view('presensi.index')->with(compact('data', 'cek_in', 'cek_out', 'peserta_seminar', 'id_encrypt'));
-        } else {
-            return redirect('pembayaran')->with('warning', 'Mohon cek status pembayaran anda');
-        }
+        // } else {
+        //     return redirect('pembayaran')->with('warning', 'Mohon cek status pembayaran anda');
+        // }
 
     }
 
