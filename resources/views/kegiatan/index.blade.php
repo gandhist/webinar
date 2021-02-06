@@ -221,6 +221,7 @@
 
                     </td>
                     <td style="text-align:center;">
+                        @if ($key->is_paid == '1')
                         @if(isset($key->presensi->jam_cek_out) == null)
                         @else
                             @if(isset($key->seminar_p->materi))
@@ -228,10 +229,13 @@
 
                             @endif
                         @endif
+                        @endif
                     </td>
                     <td>
+                        @if ($key->is_paid == '1')
                         @if(isset($key->presensi->jam_cek_out) != null)
                             <a href="{{ url('sertifikat', Illuminate\Support\Facades\Crypt::encrypt($key->no_srtf)) }}" target="_blank" type="submit" class="btn btn-sm btn-success"> <i class="fa fa-eye"></i> Sertifikat</a>
+                        @endif
                         @endif
                     </td>
                 </tr>
