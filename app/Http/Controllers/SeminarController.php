@@ -1574,6 +1574,9 @@ class SeminarController extends Controller
     public function scanSertifikat($id){
         $no_sert = Crypt::decrypt($id);
         $data = PesertaSeminar::where('no_srtf',$no_sert)->first();
+        if($data->no_srtf == ""){
+            return redirect('kegiatan')->with('second','lakukan pembayaran untuk mengakses materi dan sertifikat');
+        }
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
 
