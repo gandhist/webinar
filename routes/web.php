@@ -12,6 +12,8 @@
 */
 // Midtrans
 
+Route::post('snap/regenerate/{id_seminar}', 'PembayaranController@regenerate'); // peserta generate
+
 Route::post('trxi/callback', 'PembayaranController@callback'); // callbacks midtrans
 Route::get('trxi/finish', 'PembayaranController@finish');
 Route::get('trxi/unfinish', 'PembayaranController@unfinish');

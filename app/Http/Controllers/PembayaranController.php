@@ -171,6 +171,106 @@ class PembayaranController extends Controller
         return view('pembayaran.error')->with(compact('data'));
     }
 
+    // Buat ulang snap
+    public function regenerate(Request $request, $id_seminar){
+        $detailseminar = Seminar::find($id_seminar);
+        $peserta = Peserta::where('user_id', Auth::id())->first();
+        $peserta_seminar = PesertaSeminar::where('id_seminar', $id_seminar)->where('id_peserta', $peserta->id)->first();
+
+        $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp."-RE";
+
+        $start_pay_date = Carbon::now();
+        $end_pay_date = Carbon::now()->addDays(7);
+        // in minutes
+        $exp_date = $start_pay_date->diffInMinutes($end_pay_date);
+
+        $detail_snap = [
+            "transaction_details" => [
+                "order_id" => $no_trans,
+                "gross_amount" => (int)$detailseminar->biaya ?? 0
+            ],
+            "item_details" => [
+                [
+                    "id" => $detailseminar->id,
+                    "price" => (int)$detailseminar->biaya ?? 0,
+                    "quantity" => 1,
+                    "name" => "Biaya Investasi  ".strip_tags($detailseminar->tema),
+                    "brand" => "P3SM",
+                    "merchant_name" => "P3SM"
+                ]
+            ],
+            "customer_details" => [
+                "first_name" => $peserta->nama,
+                "last_name" => '',
+                "email" => $peserta->email,
+                "phone" => $peserta->no_hp
+            ],
+            "expiry" => [
+                "start_time"=> $start_pay_date->format('Y-m-d H:i:s').' +0700',
+                "unit"=> "minutes",
+                "duration"=> $exp_date
+            ]
+            // , "enabled_payments" => []
+        ];
+        // dd($detail_snap);
+
+        try {
+            $token = $this->generateSnap($detail_snap);
+
+            Pembayaran::where('id_peserta_seminar', $peserta_seminar->id)->delete();
+
+            $pembayaran = new Pembayaran;
+            $pembayaran->no_transaksi = $no_trans;
+            $pembayaran->id_peserta_seminar = $peserta_seminar->id;
+            $pembayaran->token = $token;
+            $pembayaran->jenis = '1';
+            $pembayaran->status = 0;
+            $pembayaran->created_by = Auth::id();
+            $pembayaran->created_at = Carbon::now()->toDateTimeString();
+            $pembayaran->save();
+
+            $log_data = [
+                'no_transaksi' => $no_trans,
+                'keterangan' => json_encode($detail_snap),
+                'subjek' => 'berhasil membuat ulang transaksi',
+                'status' => 'WAITING',
+                'created_by' => Auth::id(),
+                'created_at' => Carbon::now()->toDateTimeString()
+            ];
+
+            // Pembayaran::where('id_peserta_seminar', $peserta_seminar->id)->delete();
+            $peserta_seminar->is_paid = 0;
+            $peserta_seminar->save();
+
+            LogTransaksi::create($log_data);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Pembuatan ulang pembayaran berhasil!',
+            ]);
+        } catch (Exception $e) {
+
+            $log_data = [
+                'no_transaksi' => $no_trans,
+                'keterangan' => $e,
+                'subjek' => 'gagal membuat ulang transaksi',
+                'status' => 'FAIL',
+                'created_by' => Auth::id(),
+                'created_at' => Carbon::now()->toDateTimeString()
+            ];
+
+            $peserta_seminar->is_paid = 3;
+            $peserta_seminar->save();
+
+            LogTransaksi::create($log_data);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Pembuatan ulang pembayaran gagal!',
+            ]);
+        }
+    }
+
 }
 
 

@@ -151,13 +151,17 @@
                 </td>
                 <td style="text-align: center; color: black;">
                     @if ($key->peserta_seminar_r !== null)
-                        @if ( $key->peserta_seminar_r->is_paid != 1 && $key->peserta_seminar_r->is_paid != 3 )
+                        @if ( $key->peserta_seminar_r->is_paid != 1 && $key->peserta_seminar_r->is_paid != 3 && $key->peserta_seminar_r->is_paid != 4 )
                             <button class="btn btn-sm btn-outline-success button-flash payButton">
                                 Bayar
                             </button>
-                        @elseif ($key->peserta_seminar_r->is_paid == 3 )
+                        @elseif ($key->peserta_seminar_r->is_paid == 3)
                             <button class="btn btn-sm btn-outline-success button-flash payButton">
                                 Coba Lagi
+                            </button>
+                        @elseif ($key->peserta_seminar_r->is_paid == 4)
+                            <button class="btn btn-sm btn-outline-danger rePayButton" id_seminar="{{isset($key->peserta_seminar_r )? $key->peserta_seminar_r->id_seminar : ''}}">
+                                Buat Ulang Pembayaran
                             </button>
                         @endif
                     @endif
@@ -176,6 +180,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 {{-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> --}}
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 {{-- <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script> --}}
@@ -220,6 +225,48 @@
             }
         });
 
+    });
+    $('.rePayButton').on('click', function(e) {
+        e.preventDefault();
+        let id_seminar = $(this).attr('id_seminar');
+        let data = {};
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: `{{ url('snap/regenerate') }}/${id_seminar}`,
+            type: "POST",
+            data: data,
+            cache: false,
+            contentType: 'application/json; charset=utf-8',
+            processData: false,
+            success: function (response)
+            {
+                Swal.fire({
+                    title: response.message,
+                    type: 'success',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA',
+                    onClose: () => {
+                        location.reload();
+                    }
+                });
+            },
+            error: function(result){
+                Swal.fire({
+                    title: response.message,
+                    type: 'warning',
+                    confirmButtonText: 'Close',
+                    confirmButtonColor: '#AAA',
+                    onClose: () => {
+                        location.reload();
+                    }
+                });
+            }
+        });
     });
 </script>
 @endpush
