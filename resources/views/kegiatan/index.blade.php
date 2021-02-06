@@ -174,7 +174,27 @@
                     <td style="text-align:center;">
                         @php $dec =  Vinkla\Hashids\Facades\Hashids::encode($key->id) @endphp
 
-                        @if ($key->is_paid == '1')
+                        {{-- @if ($key->is_paid == '1') --}}
+                            @if(isset($key->presensi->jam_cek_out) == null)
+                                @if(isset($key->presensi->jam_cek_in) == null)
+                                    <a class="btn btn-sm btn-success {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? "button-flash" : ''}}  mb-2" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
+                                    data-placement="bottom" title="Klik untuk mengikuti kegiatan"> Ikut Kegiatan ({{$key->seminar_p->jam_awal}} WIB)</a>
+                                @else
+                                <a class="btn btn-sm btn-primary  {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? 'button-flash-biru' : ''}}  mb-2" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a>
+                                @endif
+                            @else
+                            <a class="btn btn-sm btn-primary  mb-2" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>
+                            <button class="btn btn-sm btn-secondary mb-2">{{ isset($key->presensi->jam_cek_out) ? \Carbon\Carbon::parse($key->presensi->jam_cek_out)->isoFormat("DD MMMM YYYY H:m") : '' }}</button>
+                            @endif
+                        {{-- @endif --}}
+                        @if ($key->is_paid == '0')
+                            <button class="btn btn-warning">
+                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
+                                    Menunggu Pembayaran
+                                </a>
+                            </button>
+                        @elseif ($key->is_paid == '2')
+
                             @if(isset($key->presensi->jam_cek_out) == null)
                                 @if(isset($key->presensi->jam_cek_in) == null)
                                     <a class="btn btn-sm btn-success {{ strtotime($key->seminar_p->tgl_awal) == strtotime($hari) ? "button-flash" : ''}}" target="_blank" href="{{ url('presensi', $dec) }}" data-toggle="tooltip"
@@ -186,14 +206,6 @@
                             <a class="btn btn-sm btn-primary" target="_blank" href="{{ url('presensi', $dec) }}"> {{ isset($key->presensi) ? \Carbon\Carbon::parse($key->presensi->jam_cek_in)->isoFormat("DD MMMM YYYY H:m") : '' }} </a><br><br>
                             <button class="btn btn-sm btn-secondary">{{ isset($key->presensi->jam_cek_out) ? \Carbon\Carbon::parse($key->presensi->jam_cek_out)->isoFormat("DD MMMM YYYY H:m") : '' }}</button>
                             @endif
-
-                        @elseif ($key->is_paid == '0')
-                            <button class="btn btn-warning">
-                                <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
-                                    Menunggu Pembayaran
-                                </a>
-                            </button>
-                        @elseif ($key->is_paid == '2')
                             <button class="btn btn-warning">
                                 <a href="{{url('pembayaran')}}" style="text-decoration: none; color: gray">
                                     Sedang Diproses
