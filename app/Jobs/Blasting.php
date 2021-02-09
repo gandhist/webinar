@@ -50,10 +50,12 @@ class Blasting implements ShouldQueue
         // $user = User::where('email', $this->detail['target']['email'])->first();
 
         $report_blasting = ReportBlasting::where('id_target', $this->detail['target']['id'])->where('id_seminar',$this->detail['seminar']['id'])->first();
+        $peserta = Peserta::where('email', $this->detail['target']['email'])->first();
+        if ($peserta) {
+            $peserta_seminar = PesertaSeminar::where('id_peserta', $peserta->id)->where('id_seminar',$this->detail['seminar']['id'])->first();
+        }
 
-        $peserta_seminar = PesertaSeminar::where('email', $this->detail['target']['email'])->where('id_seminar',$this->detail['seminar']['id'])->first();
-
-        if( !($peserta_seminar)  ){
+        if( !(isset($peserta_seminar))  ){
             $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
             switch($hari){
                 case 'Sunday':
@@ -107,7 +109,7 @@ class Blasting implements ShouldQueue
         }
 
         // Fungsi blasting untuk wa
-        if( !($peserta_seminar)  ){
+        if( !(isset($peserta_seminar))  ){
             $no_hp = $this->detail['target']['no_hp'];
             $nama = $this->detail['target']['nama'];
             $link_zoom = $this->link['link_zoom'];
