@@ -1850,7 +1850,7 @@ class SeminarController extends Controller
                 $peserta_seminar = PesertaSeminar::where('id_peserta', $peserta->id)->where('id_seminar', $seminar->id)->first();
             }
 
-            // if( !(isset($peserta_seminar)) ){
+            if( !(isset($peserta_seminar)) ){
                 if($key->is_email_sent != 1 && $key->is_wa_sent != 1){
                     $counter_kirim++;
                 } else if($key->is_email_sent != 1 && $key->is_wa_sent = 1){
@@ -1863,7 +1863,7 @@ class SeminarController extends Controller
                 } else {
                     dispatch(new \App\Jobs\Blasting($detail, $link));
                 }
-            // }
+            }
 
             $counter_target++;
         }
