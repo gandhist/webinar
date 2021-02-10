@@ -212,7 +212,7 @@ class InfoSeminarController extends Controller
                 $data->skpk_nilai = 0;
                 $data->save();
 
-                $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$data->id."/".Carbon::now()->timestamp;
+                $no_trans = "P3SM_SRTF-".$detailseminar->id."_".$data->id."_".Carbon::now()->timestamp;
 
                 $start_pay_date = Carbon::now();
                 $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);
