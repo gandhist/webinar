@@ -240,7 +240,7 @@ a {
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <td class="title" width="300">PPKB P3S Mandiri</td>
+            <td class="title" width="300">PKB P3S Mandiri</td>
             <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id/" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>
@@ -261,7 +261,7 @@ a {
                     <tr>
                         <td class="padded">
                             <h1>Halo {{$pesan['nama']}},</h1>
-                            <p>Selamat, Anda sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data  sebagai berikut.</p>
+                            <p>Selamat, Anda sudah terdaftar sebagai pengguna App PKB ONLINE dari P3S Mandiri. Dengan data  sebagai berikut.</p>
                             <p>Nama : {{$pesan['nama']}}</p>
                             <p>Nomor Hp (WA) : {{$pesan['nope']}}</p>
                             <p>Email : {{$pesan['email']}}</p>
@@ -276,10 +276,10 @@ a {
                             <p>Tanggal : {{$pesan['tanggal']}}</p>
                             <p>Jam : {{$pesan['jam']}}</p>
                             <br>
-                            <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
+                            <p>Kegiatan ini di selengarakan secara Online dengan App PKB Online dari P3S Mandiri</p>
                             <p>Silakan login dengan klik tombol login berikut ini, pada Tanggal “{{$pesan['tanggal']}}” dan satu jam sebelum acara dimulai.</p>
                             <p style="text-align:center;"><a href="{{ url('notif', $pesan['magic_link']) }}" class="btn">Halaman Login</a></p>
-                            <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
+                            <p>Terima kasih sudah mendaftar App PKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>
                     </tbody>

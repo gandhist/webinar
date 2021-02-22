@@ -4,7 +4,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Detail Data Dokumen Personal PPKB P3S Mandiri
+        Detail Data Dokumen Personal PKB P3S Mandiri
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">

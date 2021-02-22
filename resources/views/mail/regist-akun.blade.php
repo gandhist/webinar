@@ -311,7 +311,7 @@
                                 <tr>
                                     <td class="padded">
                                         <h1>Halo {{ $pesan['name'] }}!</h1>
-                                        <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S
+                                        <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PKB ONLINE dari P3S
                                             Mandiri. Dengan data sebagai berikut,</p>
                                         <p>Nama : {{ $pesan['name'] }}</p>
                                         <p>Nomor HP (WA) : {{ $pesan['no_hp'] }}</p>
@@ -355,10 +355,10 @@
                         <br>
                         @endif
 
-                        <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
+                        <p>Kegiatan ini di selengarakan secara Online dengan App PKB Online dari P3S Mandiri</p>
                         <p style="text-align:center;"><a href="{{ url('notif', $pesan['magic_link']) }}"
                                 class="btn">Halaman Login</a></p>
-                        <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
+                        <p>Terima kasih sudah mendaftar App PKB ONLINE dari P3S Mandiri.</p>
                     </td>
                 </tr>
             </tbody>

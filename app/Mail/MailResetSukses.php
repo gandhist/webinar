@@ -31,7 +31,7 @@ class MailResetSukses extends Mailable
      */
     public function build()
     {
-        return $this->from('info@p3sm.or.id','Reset Password P3SM')->subject('Reset Password PPKB P3S Mandiri Berhasil')
+        return $this->from('info@p3sm.or.id','Reset Password P3SM')->subject('Reset Password PKB P3S Mandiri Berhasil')
                     ->view('mail.reset-password-sukses');
     }
 }

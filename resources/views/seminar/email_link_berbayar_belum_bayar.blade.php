@@ -261,7 +261,7 @@ a {
                     <tr>
                         <td class="padded">
                             <h1>Halo, {{ $details->peserta_r->nama }}!</h1>
-                            <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S Mandiri. Dengan data  sebagai berikut.</p>
+                            <p>Selamat, Anda Sudah terdaftar sebagai pengguna App PKB ONLINE dari P3S Mandiri. Dengan data  sebagai berikut.</p>
                             <br>
                             <p>Nama : {{ $details->peserta_r->nama }}</p>
                             <p>Nomor Hp (WA): {{ $details->peserta_r->no_hp }}</p>
@@ -282,10 +282,10 @@ a {
                             </p>
                                 <p style="text-align:center;"><a href="{{ url('pembayaran') }}" class="btn">Selesaikan Pembayaran</a></p>
                             <br>
-                            <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S Mandiri</p>
+                            <p>Kegiatan ini di selengarakan secara Online dengan App PKB Online dari P3S Mandiri</p>
                             <p>Silakan login dengan klik tombol "Ikuti Seminar" berikut ini,</p>
                             <p>Pada Tanggal “{{ \Carbon\Carbon::parse($details->seminar_p->tgl_awal)->isoFormat("DD MMMM YYYY") }}” dan satu jam sebelum acara dimulai.</p>
-                            <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
+                            <p>Terima kasih sudah mendaftar App PKB ONLINE dari P3S Mandiri.</p>
 
                             <p style="text-align:center;"><a href="{{ url('presensi', \Crypt::encrypt($details->id)) }}" style="color:black" class="btn">Ikuti Seminar</a></p>
                         </td>

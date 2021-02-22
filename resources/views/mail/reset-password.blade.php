@@ -268,7 +268,7 @@ a {
                             <p><i>Note: <b>- Jangan berikan link ini kepada siapapun. </b></i></p>
                             <p><i><b>- Link ini hanya berlaku selama 30 menit.</b></i></p>
                             <br>
-                            <p>Terima kasih sudah menggunakan App PPKB ONLINE dari P3S Mandiri.</p>
+                            <p>Terima kasih sudah menggunakan App PKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>
                     </tbody>

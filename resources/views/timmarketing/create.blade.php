@@ -40,7 +40,7 @@
 </style>
 <section class="content-header">
     <h1>
-        Tambah Tim Marketing PPKB P3S Mandiri
+        Tambah Tim Marketing PKB P3S Mandiri
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">

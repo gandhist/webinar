@@ -469,7 +469,7 @@
 						@else
                         <a href="{{ isset($key->slug) ? url('registrasi/daftar',$key->slug) : url('registrasi/daftar',$key->id)}}"
                             class="btn button-flash my-2 my-sm-0" data-toggle="tooltip"
-						data-placement="top" title="Daftar disini bagi yang belum memiliki akun APP PPKB P3S Mandiri"><i class="fa fa-check-circle"> Daftar</i></a>
+						data-placement="top" title="Daftar disini bagi yang belum memiliki akun APP PKB P3S Mandiri"><i class="fa fa-check-circle"> Daftar</i></a>
 						@endif
 					</td>
                 </tr>

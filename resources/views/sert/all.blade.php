@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi PPKB P3S Mandiri</title>
+    <title>Aplikasi PKB P3S Mandiri</title>
 
     <style>
 

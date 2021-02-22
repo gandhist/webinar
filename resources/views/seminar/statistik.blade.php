@@ -144,7 +144,7 @@
 
 <section class="content-header">
     <h1>
-        Statistik Kegiatan PPKB ({{ $seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format("d M Y")}})
+        Statistik Kegiatan PKB ({{ $seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format("d M Y")}})
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -186,7 +186,7 @@
 
                 <div class="row">
                     <div class="col-md-12" style="text-align: center; margin-top:2rem">
-                        <h2>Statistik pendaftaran App PPKB P<sub>3</sub>SM Online</h2>
+                        <h2>Statistik pendaftaran App PKB P<sub>3</sub>SM Online</h2>
                         <p> <b>{{$seminar->nama_seminar}} - {{strip_tags(html_entity_decode($seminar->tema))}}</b> </p>
                     </div>
                     <div class="col-md-6 chart-container" style="height:50vh;">
@@ -438,7 +438,7 @@
         myLineChart2 = new Chart(ctx2, {
             type: 'line',
             data: new LineData2( total_user_keseluruhan, jam), // total_user_baru
-            options: new lineoptions2([ "Grafik Pengguna App PPKB P3S Mandiri Online", "{{\Carbon\Carbon::today()->format('d F Y')}}" ]),
+            options: new lineoptions2([ "Grafik Pengguna App PKB P3S Mandiri Online", "{{\Carbon\Carbon::today()->format('d F Y')}}" ]),
         });
 
     } );
@@ -546,7 +546,7 @@
                     myLineChart2 = new Chart(ctx2, {
                         type: 'line',
                         data: new LineData2( data['total_user'], jam), // total_user_baru
-                        options: new lineoptions2([ "Grafik Pengguna App PPKB P3S Mandiri Online",  data['tgl'] ]),
+                        options: new lineoptions2([ "Grafik Pengguna App PKB P3S Mandiri Online",  data['tgl'] ]),
                     });
 
                     $(function() {
@@ -567,13 +567,13 @@
                     myLineChart = new Chart(ctx, {
                         type: 'line',
                         data: new LineData(data['user_lama'], data['user'], data['peserta'], data['label']),
-                        options: new lineoptions([ "Grafik Pengguna App PPKB P3S Mandiri", data['tgl'][0]+' - '+data['tgl'][1] ]),
+                        options: new lineoptions([ "Grafik Pengguna App PKB P3S Mandiri", data['tgl'][0]+' - '+data['tgl'][1] ]),
                     });
                     var ctx2 = document.getElementById('chart2').getContext('2d');
                     myLineChart2 = new Chart(ctx2, {
                         type: 'line',
                         data: new LineData2( data['user_total'], data['label']), // total_user_baru
-                        options: new lineoptions2([ "Grafik Pengguna App PPKB P3S Mandiri Online",  data['tgl'][0]+' - '+data['tgl'][1] ]),
+                        options: new lineoptions2([ "Grafik Pengguna App PKB P3S Mandiri Online",  data['tgl'][0]+' - '+data['tgl'][1] ]),
                     });
 
                     $(function() {

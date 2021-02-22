@@ -5,12 +5,12 @@
 <section class="content-header">
     <h1>
         <a href="{{ url('/') }}" class="btn btn-md bg-purple"><i class="fa fa-arrow-left"></i></a>
-        Ijin PJS_PPKB Mandiri ({{count($hitungjenisusaha)}} Badan Usaha)
+        Ijin PJS_PKB Mandiri ({{count($hitungjenisusaha)}} Badan Usaha)
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="#">Ijin PJS_PPKB Mandiri</a></li>
+        <li class="active"><a href="#">Ijin PJS_PKB Mandiri</a></li>
     </ol>
 </section>
 

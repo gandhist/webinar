@@ -177,7 +177,7 @@ class PembayaranController extends Controller
         $peserta = Peserta::where('user_id', Auth::id())->first();
         $peserta_seminar = PesertaSeminar::where('id_seminar', $id_seminar)->where('id_peserta', $peserta->id)->first();
 
-        $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp."-RE";
+        $no_trans = "P3SM_SRTF-".$detailseminar->id."_".$peserta_seminar->id."_".Carbon::now()->timestamp."_RE";
 
         $start_pay_date = Carbon::now();
         $end_pay_date = Carbon::now()->addDays(7);

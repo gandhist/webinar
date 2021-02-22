@@ -21,7 +21,7 @@
 <section class="content-header">
     <h1>
     <a href="{{ url('/') }}" class="btn btn-md bg-purple"><i class="fa fa-arrow-left"></i></a>
-        Dokumen Personil PPKB P3S Mandiri (<span class="text-blue">{{ $data->groupBy('id_personal')->count() }} Orang</span>)
+        Dokumen Personil PKB P3S Mandiri (<span class="text-blue">{{ $data->groupBy('id_personal')->count() }} Orang</span>)
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">

@@ -267,7 +267,7 @@ a {
                             jam {{$detail['jam']}} WIB sampai selesai.</p>
                             <br>
                             <p>Silahkan mendaftar melalui link di bawah ini:</p>
-                            <p>Link pendaftaran melalui App PPKB Online P3S Mandiri (untuk mengetahui update kegiatan, download sertifikat, materi dan pengisian kuesioner pada hari H) </p>
+                            <p>Link pendaftaran melalui App PKB Online P3S Mandiri (untuk mengetahui update kegiatan, download sertifikat, materi dan pengisian kuesioner pada hari H) </p>
                             <br>
                             <p style="text-align:center;"><a href="{{ isset($detail['magic']) ? url('blast',$detail['magic']) : url('login') }}" class="btn">Daftar</a></p>
                             <br>
@@ -277,7 +277,7 @@ a {
                             @endif
                             <p>Sertifikat dan materi dapat di download setelah selesai acara dengan mengisi kuesioner pada <a href="{{ url('')}}">{{url('')}}</a></p>
                             <br>
-                            <p>Terima kasih sudah menggunakan App PPKB ONLINE dari P3S Mandiri.</p>
+                            <p>Terima kasih sudah menggunakan App PKB ONLINE dari P3S Mandiri.</p>
                         </td>
                     </tr>
                     </tbody>

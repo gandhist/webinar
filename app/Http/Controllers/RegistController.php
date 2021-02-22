@@ -236,7 +236,7 @@ class RegistController extends Controller
 
         }
 
-        return redirect('')->with('success', 'Selamat bergabung di App PPKB P3S Mandiri! Username dan Password telah dikirim melalui email dan Whatsapp.');
+        return redirect('')->with('success', 'Selamat bergabung di App PKB P3S Mandiri! Username dan Password telah dikirim melalui email dan Whatsapp.');
     }
 
     /**
@@ -405,7 +405,7 @@ class RegistController extends Controller
                     $peserta_seminar->save();
 
                     // dd('paid');
-                    $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
+                    $no_trans = "P3SM_SRTF-".$detailseminar->id."_".$peserta_seminar->id."_".Carbon::now()->timestamp;
 
                     $start_pay_date = Carbon::now();
                     $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);
@@ -707,7 +707,7 @@ class RegistController extends Controller
                     $peserta_seminar->skpk_nilai = 0;
                     $peserta_seminar->save();
 
-                    $no_trans = "P3SM/SRTF-".$detailseminar->id."/".$peserta_seminar->id."/".Carbon::now()->timestamp;
+                    $no_trans = "P3SM_SRTF-".$detailseminar->id."_".$peserta_seminar->id."_".Carbon::now()->timestamp;
 
                     $start_pay_date = Carbon::now();
                     $end_pay_date = Carbon::createFromFormat('Y-m-d H:i', $detailseminar->tgl_awal.' '.$detailseminar->jam_awal);

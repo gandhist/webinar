@@ -240,7 +240,7 @@ a {
     <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <td class="title" width="300">PPKB P3S Mandiri</td>
+            <td class="title" width="300">PKB P3S Mandiri</td>
             <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id//" target="_blank">www.srtf.p3sm.or.id</a></td>
         </tr>
         <tr>

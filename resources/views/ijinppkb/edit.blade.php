@@ -48,12 +48,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Ubah Ijin PJS_PPKB Mandiri
+        Ubah Ijin PJS_PKB Mandiri
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="#">Daftar PJS_PPKB</a></li>
+        <li class="active"><a href="#">Daftar PJS_PKB</a></li>
     </ol>
 
 
@@ -80,7 +80,7 @@
                         <div class="col-sm-12">
                             <div class="input-group">
                                 <div class="input-group-addon">
-                                    <span class="bintang">*</span> Nama PJS_PPKB
+                                    <span class="bintang">*</span> Nama PJS_PKB
                                 </div>
                                 <select disabled class="form-control select2" name="id_kode_pjk3_tmp"
                                     id="id_kode_pjk3_tmp" style="width: 100%;">
