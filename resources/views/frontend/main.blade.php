@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keywords" content="PKB ONLINE, P3SM, Sertifikat, Sertifikasi, Seminar, Jakarta, Indonesia, Webinar">
-    <meta name="description" content="PKB P3S MANDIRI adalah halaman web untuk Program Pengembangan Keprofesian Berkelanjutan yang diselenggarakan oleh P3S Mandiri"/>
+    <meta name="description" content="PKB P3S MANDIRI adalah halaman web untuk Pengembangan Keprofesian Berkelanjutan yang diselenggarakan oleh P3S Mandiri"/>
 
     <title>PKB P3S MANDIRI</title>
 
