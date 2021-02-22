@@ -108,11 +108,15 @@ trait GlobalFunction {
 
     ////////////// BEGIN API QONTAK WHATSASPP /////////////////////////
     public function getToken(){
-        $url = env('URL_TOKEN');
-        $username = env('USER_WA');
-        $password = env('PASS_WA');
-        $client_id = env('CLIENT_ID_WA');
-        $client_secret = env('CLIENT_SECRET_WA');
+        $URL_TOKEN="https://auth.qontak.com/3a5f72a37b5568090a0e676205211e80/oauth/token";
+        $URL_CHAN="https://service.qontak.com/api/open/v1/integrations?target_channel=wa";
+        $URL_TEMP="https://service.qontak.com/api/open/v1/templates/whatsapp";
+        $URL_MESS="https://service.qontak.com/api/open/v1/broadcasts/whatsapp/direct";
+        $url = env('URL_TOKEN') ?? $URL_TOKEN;
+        $username = env('USER_WA') ?? $USER_WA;
+        $password = env('PASS_WA') ?? $PASS_WA;
+        $client_id = env('CLIENT_ID_WA') ?? $CLIENT_ID_WA;
+        $client_secret = env('CLIENT_SECRET_WA') ?? $CLIENT_SECRET_WA;
         $curlHandle = curl_init();
         curl_setopt($curlHandle, CURLOPT_URL, $url);
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
