@@ -48,12 +48,12 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Tambah Ijin PJS_PPKB Mandiri
+        Tambah Ijin PJS_PKB Mandiri
         {{-- <small>it all starts here</small>  --}}
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><a href="#">Daftar Ijin PJS_PPKB Mandiri</a></li>
+        <li class="active"><a href="#">Daftar Ijin PJS_PKB Mandiri</a></li>
     </ol>
 
 
@@ -80,7 +80,7 @@
                             <div
                                 class="input-group {{ $errors->first('id_kode_pjk3') ? 'has-error has-error-select' : '' }}">
                                 <div class="input-group-addon">
-                                    <span class="bintang">*</span> Nama Ijin PJS_PPKB
+                                    <span class="bintang">*</span> Nama Ijin PJS_PPK
                                 </div>
                                 <select class="form-control select2" name="id_kode_pjk3" id="id_kode_pjk3"
                                     style="width: 100%;">

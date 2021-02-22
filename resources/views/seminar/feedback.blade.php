@@ -202,7 +202,7 @@
 </section> --}}
 <section class="content-header">
   <h1>
-      Feedback Kegiatan PPKB ({{$seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format('d F Y')}})
+      Feedback Kegiatan PKB ({{$seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format('d F Y')}})
   </h1>
   <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

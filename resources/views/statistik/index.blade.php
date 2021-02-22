@@ -9,7 +9,7 @@
 
 <section class="content-header">
     <h1>
-        Statistik Kegiatan PPKB
+        Statistik Kegiatan PKB
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -26,7 +26,7 @@
 
             <div class="row" style="margin-top: 1rem">
                 <div class="col-md-12" style="text-align: center">
-                    <h2>Tabel Blasting Kegiatan PPKB P<sub>3</sub>S Mandiri</h2>
+                    <h2>Tabel Blasting Kegiatan PKB P<sub>3</sub>S Mandiri</h2>
                 </div>
                 <div class="col-md-12">
                     <table id="blasting" class="cell-border" style="width:100%; background-color: #BCBCBC; border: 1px solid black;">

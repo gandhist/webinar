@@ -62,7 +62,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Detail Kegiatan PPKB ({{ $seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format("d M Y")}})
+        Detail Kegiatan PKB ({{ $seminar->nama_seminar." - ".\Carbon\Carbon::parse($seminar->tgl_awal)->format("d M Y")}})
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -80,7 +80,7 @@
             <div class="jumbotron"  style='padding-top:10px;overflow-y: scroll !important;position: relative;height: 100%; '>
 
                 <a data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="color: black">
-                    <span style="font-size: 50px;">Aplikasi PPKB Online</span></a>
+                    <span style="font-size: 50px;">Aplikasi PKB Online</span></a>
 
                 <div class="" id="collapseExample" >
                     @if($seminar->is_mulai == 0)

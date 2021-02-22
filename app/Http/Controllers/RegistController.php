@@ -236,7 +236,7 @@ class RegistController extends Controller
 
         }
 
-        return redirect('')->with('success', 'Selamat bergabung di App PPKB P3S Mandiri! Username dan Password telah dikirim melalui email dan Whatsapp.');
+        return redirect('')->with('success', 'Selamat bergabung di App PKB P3S Mandiri! Username dan Password telah dikirim melalui email dan Whatsapp.');
     }
 
     /**

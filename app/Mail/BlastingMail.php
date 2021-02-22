@@ -34,7 +34,7 @@ class BlastingMail extends Mailable
      */
     public function build()
     {
-        return $this->from('info@p3sm.or.id','Sertifikat Seminar P3SM')->subject('Undangan Seminar PPKB P3S Mandiri')
+        return $this->from('info@p3sm.or.id','Sertifikat Seminar P3SM')->subject('Undangan Seminar PKB P3S Mandiri')
                     ->view('mail.blasting');
     }
 }

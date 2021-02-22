@@ -258,7 +258,7 @@
         <table class="top-panel center" width="602" border="0" cellspacing="0" cellpadding="0">
             <tbody>
                 <tr>
-                    <td class="title" width="300">PPKB P3S Mandiri</td>
+                    <td class="title" width="300">PKB P3S Mandiri</td>
                     <td class="subject" width="300"><a class="strong" href="https://srtf.p3sm.or.id/"
                             target="_blank">www.srtf.p3sm.or.id</a></td>
                 </tr>
@@ -280,7 +280,7 @@
                                 <tr>
                                     <td class="padded">
                                         <h1>Halo {{$detail['nama']}},</h1>
-                                        <p>Selamat, Anda sudah terdaftar sebagai pengguna App PPKB ONLINE dari P3S
+                                        <p>Selamat, Anda sudah terdaftar sebagai pengguna App PKB ONLINE dari P3S
                                             Mandiri. Dengan data sebagai berikut.</p>
                                         <p>Nama : {{$detail['nama']}}</p>
                                         <p>Nomor Hp (WA) : {{$detail['nope']}}</p>
@@ -296,14 +296,14 @@
                                         <p>Tanggal : {{$detail['tanggal']}}</p>
                                         <p>Jam : {{$detail['jam']}}</p>
                                         <br>
-                                        <p>Kegiatan ini di selengarakan secara Online dengan App PPKB Online dari P3S
+                                        <p>Kegiatan ini di selengarakan secara Online dengan App PKB Online dari P3S
                                             Mandiri</p>
                                         <p>Silakan login dengan klik tombol login berikut ini, pada Tanggal
                                             “{{$detail['tanggal']}}” dan satu jam sebelum acara dimulai.</p>
                                         <p style="text-align:center;"><a
                                                 href="{{ url('notif', $detail['magic_link']) }}" class="btn">Halaman
                                                 Login</a></p>
-                                        <p>Terima kasih sudah mendaftar App PPKB ONLINE dari P3S Mandiri.</p>
+                                        <p>Terima kasih sudah mendaftar App PKB ONLINE dari P3S Mandiri.</p>
                                     </td>
                                 </tr>
                             </tbody>

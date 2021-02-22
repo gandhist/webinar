@@ -32,6 +32,6 @@ class EmailRegistAkun extends Mailable
      */
     public function build()
     {
-        return $this->from('info@p3sm.or.id','Registrasi Akun App PPKB ONLINE')->subject('Registrasi Akun App PPKB ONLINE')->view('mail.regist-akun');
+        return $this->from('info@p3sm.or.id','Registrasi Akun App PKB ONLINE')->subject('Registrasi Akun App PKB ONLINE')->view('mail.regist-akun');
     }
 }
