@@ -294,7 +294,9 @@
                                 @foreach($personal as $key)
                                     @if(isset($ttd[1]['id_personal']) ? ($ttd[1]['id_personal'] != $key->id) : false)
                                         <option value="{{$key->id}}"
-                                        {{$ttd[0]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
+                                        {{isset($ttd[0]['id_personal']) ?
+                                            ($ttd[0]['id_personal'] == $key->id ? 'selected' : '') :
+                                            "" }}>{{$key->nama}}</option>
                                     {{-- @else
                                         <option value="{{$key->id}}">{{$key->nama}}</option> --}}
                                     @endif
@@ -343,7 +345,9 @@
                                 @foreach($personal as $key)
                                     @if(isset($ttd[0]['id_personal']) ? ($ttd[0]['id_personal'] != $key->id) : false)
                                         <option value="{{$key->id}}"
-                                        {{ $ttd[1]['id_personal'] == $key->id ? 'selected' : ''}}>{{$key->nama}}</option>
+                                        {{ isset($ttd[1]['id_personal']) ?
+                                            ( $ttd[1]['id_personal'] == $key->id ? 'selected' : '' ) :
+                                            "" }}>{{$key->nama}}</option>
                                     {{-- @else
                                         <option value="{{$key->id}}">{{$key->nama}}</option> --}}
                                     @endif
