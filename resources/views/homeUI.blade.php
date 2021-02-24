@@ -364,7 +364,8 @@
 	<div class="jumbotron">
 		<div class="d-flex justify-content-around logo" style="padding-top: 5px;">
 			<div>
-				<img src="{{ url('P3SM_Baru.png') }}" alt="logo" class="img-responsive" height="200px"></a>
+				{{-- <img src="{{ url('P3SM_Baru.png') }}" alt="logo" class="img-responsive" height="200px"></a> --}}
+				<img src="{{ url('HeaderPKB.png') }}" alt="logo" class="img-responsive" height="200px"></a>
 			</div>
 
 			{{-- <div>
