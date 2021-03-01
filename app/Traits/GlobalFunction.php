@@ -93,8 +93,8 @@ trait GlobalFunction {
         \Midtrans\Config::$isSanitized = config('services.midtrans.isSanitized');
         \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
 
-        \Midtrans\Config::$appendNotifUrl = url('trxi/callback');
-        \Midtrans\Config::$overrideNotifUrl = url('trxi/callback');
+        // \Midtrans\Config::$appendNotifUrl = url('trxi/callback');
+        // \Midtrans\Config::$overrideNotifUrl = url('trxi/callback');
 
         // $params = array(
         //     'transaction_details' => $details

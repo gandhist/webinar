@@ -17,14 +17,23 @@ class Seminar extends Model
         return $this->hasMany('App\PesertaSeminar','id_seminar')->where('status',2);
     }
 
-    // relasi table instansi seminar 
+    // relasi table instansi seminar
     public function instansi_1(){
         return $this->belongsTo('App\BuModel','instansi_penyelenggara','id');
     }
 
-    // relasi table instansi seminar 
+    // relasi table instansi seminar
     public function instansi_2(){
         return $this->belongsTo('App\BuModel','instansi_pendukung','id');
     }
 
+    public function prov_r()
+    {
+        return $this->hasOne('App\ProvinsiModel', 'id', 'prov_penyelenggara');
+    }
+
+    public function tuk_r()
+    {
+        return $this->hasOne('App\TUKModel', 'id', 'tuk');
+    }
 }

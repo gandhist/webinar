@@ -358,11 +358,15 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'import'], function () {
 
 
 // Report
-Route::group(['prefix' => 'report'], function () {
-
+Route::group(['prefix' => 'report', 'middleware' => 'auth.admin'], function () {
 });
 // end of Report
 
+// Keuangan
+Route::group(['prefix' => 'keuangan'], function () {
+    Route::get('/', 'KeuanganController@index')->name('keuangan');
+});
+// End of Keuangan
 
 Route::group(['middleware' => 'auth'], function () {
     // Pembayaran

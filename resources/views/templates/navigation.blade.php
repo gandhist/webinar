@@ -382,7 +382,7 @@
         </a>
       </li>
       @endif
-      @if(Auth::user()->role_id==1 )
+      @if(Auth::user()->role_id==1  )
 
       <li class="treeview">
         <a href="{{ url('isos') }}">
@@ -392,6 +392,12 @@
       <li class="treeview">
         <a href="{{ url('laporan') }}">
           <i class="fa fa-bookmark-o"></i> <span>Laporan</span>
+        </a>
+      </li>
+
+      <li class="treeview">
+        <a href="{{ url('keuangan') }}">
+          <i class="fa fa-bookmark-o"></i> <span>Keuangan</span>
         </a>
       </li>
 

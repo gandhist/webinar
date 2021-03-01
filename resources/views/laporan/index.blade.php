@@ -25,7 +25,7 @@
         <div class="box-body">
             @if(session()->get('success'))
             <div class="alert alert-success">
-              {{ session()->get('success') }}  
+              {{ session()->get('success') }}
             </div>
             <br />
             @endif
@@ -36,45 +36,45 @@
               <form action="{{ url('seminar') }}" enctype="multipart/form-data" name="filterData"
                 id="filterData" method="post">
                 @csrf
-                <div class="row">
-                    <div class="col-sm-6">
-                      
-                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
 
-                    <div class="col-sm-4">
+                        </div>
 
-                    </div>
+                        <div class="col-sm-4">
 
-                    <div class="col-sm-2" style='text-align:right'>
-                        <div class="row" style="margin-top:-3px;margin-bottom:3px">
-                            <div class="col-xs-12">
-                                <div class="btn-group">
-                                    <span class="btn btn-primary" id="printIso"><i
-                                        class="fa fa-print"></i>
-                                        Print</span>
-                                    {{-- <span class="btn btn-warning" id="btnTenagaAhli"></i>
-                                        Tenaga Ahli</span> --}}
+                        </div>
+
+                        <div class="col-sm-2" style='text-align:right'>
+                            <div class="row" style="margin-top:-3px;margin-bottom:3px">
+                                <div class="col-xs-12">
+                                    <div class="btn-group">
+                                        <span class="btn btn-primary" id="printIso"><i
+                                            class="fa fa-print"></i>
+                                            Print</span>
+                                        {{-- <span class="btn btn-warning" id="btnTenagaAhli"></i>
+                                            Tenaga Ahli</span> --}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="btn-group">
+                                        <a href="{{ url('laporan/create') }}" class="btn btn-info"> <i
+                                                class="fa fa-plus"></i>
+                                            Tambah</a>
+                                        <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
+                                                class="fa fa-pencil"></i>
+                                            Edit</button>
+                                        <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i
+                                                class="fa fa-trash"></i>
+                                            Hapus</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="btn-group">
-                                    <a href="{{ url('laporan/create') }}" class="btn btn-info"> <i
-                                            class="fa fa-plus"></i>
-                                        Tambah</a>
-                                    <button class="btn btn-success" id="btnEdit" name="btnEdit"> <i
-                                            class="fa fa-pencil"></i>
-                                        Edit</button>
-                                    <button class="btn btn-danger" id="btnHapus" name="btnHapus"> <i
-                                            class="fa fa-trash"></i>
-                                        Hapus</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
               {{-- end of form filter --}}
                 <table id="data-tables" class="table table-striped table-bordered dataTable customTable" cellspacing="0" width="100%">
                     <thead>
@@ -113,37 +113,37 @@
                 </table>
             </div>
             {{--  end of table seminar  --}}
-            
 
-{{-- modal konfirmasi hapus --}}
-<div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <form action="{{ url('laporan/destroy') }}" class="form-horizontal" id="formDelete" name="formDelete"
-        method="post" enctype="multipart/form-data">
-        @method("DELETE")
-        @csrf
-        <input type="hidden" value="" name="idHapusData" id="idHapusData">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span
-                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Konfirmasi</h4>
-                </div>
-                <div class="modal-body" id="konfirmasi-body">
-                    Yakin ingin menghapus data terpilih?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-danger" data-id=""
-                        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting..."
-                        id="confirm-delete">Hapus</button>
-                </div>
+
+            {{-- modal konfirmasi hapus --}}
+            <div class="modal fade" id="modal-konfirmasi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <form action="{{ url('laporan/destroy') }}" class="form-horizontal" id="formDelete" name="formDelete"
+                    method="post" enctype="multipart/form-data">
+                    @method("DELETE")
+                    @csrf
+                    <input type="hidden" value="" name="idHapusData" id="idHapusData">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span
+                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Konfirmasi</h4>
+                            </div>
+                            <div class="modal-body" id="konfirmasi-body">
+                                Yakin ingin menghapus data terpilih?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-danger" data-id=""
+                                    data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Deleting..."
+                                    id="confirm-delete">Hapus</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
-    </form>
-</div>
-{{-- end of modal konfirmasi hapus --}}
+            {{-- end of modal konfirmasi hapus --}}
         </div>
         <!-- /.box-body -->
         <div class="box-footer"></div>

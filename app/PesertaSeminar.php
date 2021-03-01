@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Seminar;
+
 class PesertaSeminar extends Model
 {
     //
@@ -28,6 +30,11 @@ class PesertaSeminar extends Model
     // relasi many to many table peserta
     public function seminar_p(){
         return $this->belongsTo('App\Seminar','id_seminar','id');
+    }
+
+    // relasi many to many table peserta
+    public function seminar_trashed(){
+        return $this->belongsTo('App\Seminar','id_seminar','id')->withTrashed();
     }
 
     public function presensi(){

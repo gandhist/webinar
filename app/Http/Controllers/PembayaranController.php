@@ -65,6 +65,7 @@ class PembayaranController extends Controller
 
         $notify = new \Midtrans\Notification();
         $transaction_time = $notify->transaction_time;
+        $transaction_id = $notify->transaction_id;
         $status = $notify->transaction_status;
         $type = $notify->payment_type;
         $fraud = $notify->fraud_status;
@@ -78,6 +79,8 @@ class PembayaranController extends Controller
         }
         $peserta_s = PesertaSeminar::findOrFail($data->id_peserta_seminar);
         $seminar = Seminar::findOrFail($peserta_s->id_seminar);
+
+        $data->transaction_time = $transaction_time;
 
         if ($status == 'capture') {
             // jika credit card
@@ -130,6 +133,44 @@ class PembayaranController extends Controller
             $data->status = 3; // deny
             $peserta_s->is_paid = 3; // deny
               // TODO Set payment status in merchant's database to 'failure'
+        }
+
+        // Gimme payment type
+        $url = env('MIDTRANS_END_POINT')."/$transaction_id/status";
+        $client = new \GuzzleHttp\Client();
+        $usrm = env('MIDTRANS_SERVERKEY') ? env('MIDTRANS_SERVERKEY') : '';
+        try {
+            $auth = base64_encode($usrm.":");
+            $request = $client->request('GET', $url, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                    'Authorization'     => 'Basic '. $auth
+                ]
+            ]);
+            $respon = json_decode($request->getBody()->getContents(),true);
+            // \Log::debug($request->getBody()->getContents());
+            // \Log::debug($auth);
+            // \Log::debug($usrm);
+            // \Log::debug($url);
+            $data->payment_type = $respon['payment_type'];
+            if($respon['payment_type'] == "qris"){
+                $fee = ($respon['gross_amount'] / 100) * 0.7;
+            }
+            else if($respon['payment_type'] == "gopay"){
+                $fee = 2000;
+            }
+            else {
+                $fee = 4400;
+            }
+            $data->payment_fee = $fee;
+            $data->payment_gross = $respon['gross_amount'];
+        }
+        catch (\GuzzleHttp\Exception\ClientException $error) {
+            $response = $error->getMessage();
+            $respon = json_decode($request->getBody()->getContents(),true);
+            \Log::debug($respon);
+        } catch (\Throwable $th) {
+            \Log::error($th);
         }
         $data->updated_at = Carbon::now()->toDateTimeString();
         $peserta_s->updated_at = Carbon::now()->toDateTimeString();
