@@ -31,7 +31,7 @@
             @endif
 
             {{-- sub menu  --}}
-            <form action="{{ url('keu') }}" enctype="multipart/form-data" name="filterData"
+            <form action="{{ url('keuangan') }}" enctype="multipart/form-data" name="filterData"
                 id="filterData" method="get">
                 @csrf
                 <!-- <input type="hidden" name="key" id="key">
@@ -58,40 +58,13 @@
                                     </td>
                                     <td>
                                         <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_pjk3" id="f_pjk3">
-                                                <option selected value="">PJK3</option>
-                                                {{-- @foreach($pj_srtf as $key)
-                                                <option value="{{ $key->pjk3_r->id_pjk3 }}"
-                                                    {{ request()->get('f_pjk3') == $key->id_pjk3 ? 'selected' : '' }}>
-                                                {{ $key->pjk3_r->singkat_bu }}
-                                                    ({{ $key->pjk3_r->nama_bu }})</option>
-                                                @endforeach --}}
-                                            </select>
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_bidang" id="f_bidang">
-                                                <option selected value="">Bidang</option>
-                                                {{-- @foreach($bidang as $key)
-                                                <option value="{{ $key->bidang_r->id }}"
-                                                    {{ request()->get('f_bidang') == $key->bidang_r->id ? 'selected' : '' }}>
-                                                    {{ $key->bidang_r->kode_bidang }}
-                                                </option>
-                                                @endforeach --}}
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_provinsi" id="f_provinsi">
-                                                <option value="">Provinsi_Kgt</option>
-                                                {{-- @foreach($provinsi as $key)
-                                                <option value="{{ $key->prov_r->id }}"
-                                                    {{ request()->get('f_provinsi') == $key->prov_r->id ? 'selected' : '' }}>
-                                                    {{ $key->prov_r->nama_singkat }} ({{ $key->prov_r->nama }})</option>
-                                                @endforeach --}}
+                                            <select class="form-control select2" name="f_kgt" id="f_kgt">
+                                                <option value="">Kgt</option>
+                                                @foreach($seminar as $key)
+                                                <option value="{{ $key->id }}"
+                                                    {{ request()->get('f_kgt') == $key->id ? 'selected' : '' }}>
+                                                    {{ $key->nama_seminar }} ({{ strip_tags($key->tema) }})</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </td>
@@ -99,7 +72,7 @@
                                     <td style="padding-right: 0px">
                                         <button type="submit" class="btn btn-sm btn-info"> <i class="fa fa-filter"></i>
                                             Filter</button>
-                                            <a href="{{ url('keu')}}" class="btn btn-sm btn-default"> <i
+                                            <a href="{{ url('keuangan')}}" class="btn btn-sm btn-default"> <i
                                                 class="fa fa-refresh"></i>
                                             Reset</a>
                                     </td>
@@ -122,50 +95,17 @@
                                             </div>
                                         </div>
                                     </td>
-
                                     <td>
                                         <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_jenis_usaha"
-                                                id="f_jenis_usaha">
-                                                <option selected value="">Jenis Usaha</option>
-                                                {{-- @foreach($jenis_usaha as $key)
-                                                <option value="{{ $key->jenis_usaha_r->id }}"
-                                                    {{ request()->get('f_jenis_usaha') == $key->id_jenis_usaha ? 'selected' : '' }}>
-                                                    {{ $key->jenis_usaha_r->kode_jns_usaha }} ({{ $key->jenis_usaha_r->nama_jns_usaha }})</option>
-                                                @endforeach --}}
+                                            <select class="form-control select2" name="f_sts" id="f_sts">
+                                                <option value="">Status</option>
+                                                @foreach($status as $key => $value)
+                                                <option value="{{ $key }}"
+                                                    {{ request()->get('f_sts') == $key ? 'selected' : '' }}>
+                                                    {{ $value }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
-
-                                    </td>
-
-                                    <td>
-                                        <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_pembinaan"
-                                                id="f_pembinaan">
-                                                <option selected value="">Pembinaan</option>
-                                                {{-- @foreach($pembinaan as $key)
-                                                <option value="{{ $key->sertifikat_alat_r->id }}"
-                                                    {{ request()->get('f_pembinaan') == $key->id ? 'selected' : '' }}>
-                                                    {{ $key->bidang_r->singkat_bidang }} ({{ $key->sertifikat_alat_r->kode_srtf_alat }})</option>
-                                                @endforeach --}}
-                                            </select>
-                                        </div>
-                                    </td>
-
-                                    <td>
-                                        <div class="input-group customSelect2md">
-                                            <select class="form-control select2" name="f_status"
-                                                id="f_status">
-                                                {{-- @foreach($dt_status as $key => $val)
-                                                <option value="{{ $val }}"
-                                                    {{ request()->get('f_status') == $val ? 'selected' : '' }}>
-                                                    {{ $val }} </option>
-                                                @endforeach --}}
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-
                                     </td>
                                 </tr>
                             </tbody>
