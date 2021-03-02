@@ -244,13 +244,13 @@
                                 @endif
                             </td>
                             <td>
-                                {{$key->payment_gross}}
+                                {{\Rupiah::RupiahNoRp($key->payment_gross)}}
                             </td>
                             <td>
-                                {{$key->payment_fee}}
+                                {{\Rupiah::RupiahNoRp($key->payment_fee)}}
                             </td>
                             <td>
-                                {{ ($key->payment_gross && $key->payment_fee) ? ($key->payment_gross - $key->payment_fee) : ''}}
+                                {{ ($key->payment_gross && $key->payment_fee) ? \Rupiah::RupiahNoRp($key->payment_gross - $key->payment_fee) : ''}}
                             </td>
                             <td>
                                 {{ isset($key->peserta_seminar_trashed) ?

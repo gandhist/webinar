@@ -240,7 +240,8 @@ return [
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'Hasids' => Vinkla\Hashids\Facades\Hashids::class
+        'Hasids' => Vinkla\Hashids\Facades\Hashids::class,
+        'Rupiah' => App\Helpers\Rupiah::class
     ],
 
 ];

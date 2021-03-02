@@ -50,7 +50,8 @@
         },
         "files": [
             "app/Helpers/FormatUang.php",
-            "app/Helpers/AngkaTerbilang.php"
+            "app/Helpers/AngkaTerbilang.php",
+            "app/Helpers/Rupiah.php"
         ],
         "classmap": [
             "database/seeds",
