@@ -27,6 +27,8 @@ class RekapAllExport implements WithMultipleSheets
         // dd($ins_peny);
         $sheets = [];
 
+        $sheets['Rekap Summary'] = new RekapSummaryExport();
+
         foreach ($seminar as $key) {
             // dd($key);
             $sheets[$key['tema']] = new RekapOneExport($key['id']);

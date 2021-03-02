@@ -16,26 +16,23 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class RekapOneExport implements FromView, WithTitle
+class RekapSummaryExport implements FromView, WithTitle
 {
-    protected $seminar;
-
-    public function __construct(int $id_seminar)
+    public function __construct()
     {
-        $this->seminar = SeminarModel::find($id_seminar);
+        //
     }
 
     public function view(): View
     {
-        $instansi = SertInstansiModel::where('id_seminar', $this->seminar->id)->get();
-        return view('exports.seminar',[
-            'seminar' => $this->seminar,
-            'instansi' => $instansi
+        $seminar = SeminarModel::all();
+        return view('exports.seminar-summary',[
+            'seminar' => $seminar,
         ]);
     }
 
     public function title(): string
     {
-        return strip_tags($this->seminar->tema);
+        return "Rekap Summary";
     }
 }

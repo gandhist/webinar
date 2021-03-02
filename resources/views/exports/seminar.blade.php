@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <table>
+    <table border="2">
         <thead>
             <tr>
                 <th colspan="10" rowspan="3" align="center" valign="top">
@@ -20,13 +20,14 @@
             </tr>
         </thead>
     </table>
+
     <br style="mso-data-placement:same-cell;" />
     <br style="mso-data-placement:same-cell;" />
-    <br style="mso-data-placement:same-cell;" />
-    <table>
+
+    <table border="2">
         <tr>
             <td colspan="2">
-                Nama_Kgt:
+                <b>Nama_Kgt:</b>
             </td>
             <td colspan="8">
                 {{ $seminar->nama_seminar }}
@@ -34,7 +35,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Tema :
+                <b>Tema :</b>
             </td>
             <td colspan="8">
                 {{ strip_tags($seminar->tema) }}
@@ -42,7 +43,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Tgl_Awal :
+                <b>Tgl_Awal :</b>
             </td>
             <td colspan="8">
                 {{ \Carbon\Carbon::parse($seminar->tgl_awal)->translatedFormat('l, d M Y') }}
@@ -50,7 +51,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Tgl_Akhir :
+                <b>Tgl_Akhir :</b>
             </td>
             <td colspan="8">
                 {{ \Carbon\Carbon::parse($seminar->tgl_akhir)->translatedFormat('l, d M Y') }}
@@ -58,7 +59,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Jam_Awal :
+                <b>Jam_Awal :</b>
             </td>
             <td colspan="8">
                 {{ $seminar->jam_awal }}
@@ -66,7 +67,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Jam_Akhir :
+                <b>Jam_Akhir :</b>
             </td>
             <td colspan="8">
                 {{ $seminar->jam_akhir }}
@@ -74,7 +75,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                SKPK :
+                <b>SKPK :</b>
             </td>
             <td colspan="8">
                 {{ $seminar->skpk_nilai }}
@@ -82,7 +83,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Kuota :
+                <b>Kuota :</b>
             </td>
             <td colspan="8">
                 {{ $seminar->kuota }}
@@ -90,7 +91,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Peserta Terdaftar :
+                <b>Peserta Terdaftar :</b>
             </td>
             <td colspan="8">
                 {{ $seminar->jumlah_peserta_terdaftar }}
@@ -98,7 +99,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Peserta Membayar :
+                <b>Peserta Membayar :</b>
             </td>
             <td colspan="8">
                 {{ $seminar->jumlah_peserta_membayar }}
@@ -106,15 +107,15 @@
         </tr>
         <tr>
             <td colspan="2">
-                Biaya :
+                <b>Biaya :</b>
             </td>
             <td colspan="8">
-                {{ $seminar->biaya }}
+                {{ \Rupiah::RupiahRp($seminar->biaya) }}
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                Tipe  :
+                <b>Tipe  :</b>
             </td>
             <td colspan="8">
                 {{ isset($seminar->is_online) ? ( $seminar->is_online == 1 ? "Online" : "Offline" ) : "" }}
@@ -122,7 +123,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Provinsi  :
+                <b>Provinsi  :</b>
             </td>
             <td colspan="8">
                 {{ isset($seminar->provinsi_r) ? ( $seminar->provinsi_r->nama_singkat ) : "" }}
@@ -130,7 +131,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                Kota  :
+                <b>Kota  :</b>
             </td>
             <td colspan="8">
                 {{ isset($seminar->kota_r) ? ( $seminar->kota_r->nama ) : "" }}
@@ -138,7 +139,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                TUK  :
+                <b>TUK  :</b>
             </td>
             <td colspan="8">
                 {{ isset($seminar->tuk_r) ? ( $seminar->tuk_r->nama_tuk ) : "" }}
@@ -146,5 +147,54 @@
         </tr>
     </table>
 
+
+    <br style="mso-data-placement:same-cell;" />
+    <br style="mso-data-placement:same-cell;" />
+
+    <table border="2">
+        <thead>
+            <tr>
+                <th colspan="10" valign="middle" align="center">
+                    <b>Instansi Terkait</b>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="1" valign="middle" align="center">
+                    <b>No</b>
+                </th>
+                <th colspan="3" valign="middle" align="center">
+                    <b>Nama Instansi</b>
+                </th>
+                <th colspan="3" valign="middle" align="center">
+                    <b>Peran</b>
+                </th>
+                <th colspan="3" valign="middle" align="center">
+                    <b>Tampil di Sertifikat</b>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($instansi as $key)
+                <tr>
+                    <td align="center">
+                        {{ $loop->iteration }}
+                    </td>
+                    <td colspan="3">
+                        {{ isset($key->bu_instansi) ? $key->bu_instansi->singkat_bu : '' }}
+                    </td>
+                    <td colspan="3">
+                        @if ($key->status == 1)
+                            Penyelenggara
+                        @elseif ($key->status == 2)
+                            Pendukung
+                        @endif
+                    </td>
+                    <td colspan="3">
+                        {{ $key->is_tampil == 1 ? "Ya" : "Tidak"}}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>
