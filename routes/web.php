@@ -214,6 +214,7 @@ Route::group(['middleware' => 'auth.admin','prefix' => 'seminar'], function () {
 	Route::get('download-kehadiran/{id}','SeminarController@downloadKehadiran');
 	Route::get('penyelenggara/{id}','SeminarController@downloadPenyelenggara');
 	Route::get('penyelenggara-all','SeminarController@downloadPenyelenggaraAll');
+	Route::get('rekap-all','SeminarController@downloadRekapAll');
     Route::get('statistik/{id}','StatistikSeminarController@index');
     Route::post('blast/{id}', 'SeminarController@blast');
 

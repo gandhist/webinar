@@ -63,5 +63,28 @@ class SeminarModel extends Model
         return $this->peserta_sem()->whereNull('deleted_at')->whereNull('deleted_by')->count();
     }
 
+    public function getJumlahPesertaTerdaftarAttribute()
+    {
+        return $this->peserta_sem()->whereNull('deleted_at')->whereNull('deleted_by')->count();
+    }
 
+    public function getJumlahPesertaMembayarAttribute()
+    {
+        return $this->peserta_sem()->whereNull('deleted_at')->whereNull('deleted_by')->where('is_paid', 1)->count();
+    }
+
+    public function provinsi_r()
+    {
+        return $this->hasOne('App\ProvinsiModel', 'id', 'prov_penyelenggara');
+    }
+
+    public function kota_r()
+    {
+        return $this->hasOne('App\KotaModel', 'id', 'kota_penyelenggara');
+    }
+
+    public function tuk_r()
+    {
+        return $this->hasOne('App\TUKModel', 'id', 'tuk');
+    }
 }

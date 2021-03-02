@@ -41,6 +41,7 @@ use App\Exports\FeedbackExport;
 use App\Exports\KehadiranExport;
 use App\Exports\PenyelenggaraExport;
 use App\Exports\PenyelenggaraAllExport;
+use App\Exports\RekapAllExport;
 
 use Vinkla\Hashids\Facades\Hashids;
 use Excel;
@@ -1789,6 +1790,13 @@ class SeminarController extends Controller
         //
         $nama = "Penyelenggara_Seminar_".Carbon::now()->timestamp;
         return Excel::download(new PenyelenggaraAllExport(), $nama.".xlsx");
+    }
+
+
+    public function downloadRekapAll() {
+        //
+        $nama = "Penyelenggara_Seminar_".Carbon::now()->timestamp;
+        return Excel::download(new RekapAllExport(), $nama.".xlsx");
     }
 
 
