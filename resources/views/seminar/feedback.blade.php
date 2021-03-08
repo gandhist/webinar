@@ -284,7 +284,9 @@
             @foreach($narasumber as $n)
             <div class="row">
                 <div class="col-lg-12 card">
+                    @if($n->peserta_r)
                     <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$n->peserta_r->nama}} secara keseluruhan?</b></label>
+                    @endif
                 </div>
             </div>
             <div class="row to-padd">
@@ -308,32 +310,7 @@
             <hr>
             @endforeach
 
-            {{-- @foreach($moderator as $m)
-            <div class="row">
-                <div class="col-lg-12 card">
-                    <label for="seminar" class="label-control nomor"><b>Penilaian untuk {{$m->peserta_r->nama}} secara keseluruhan?</b></label>
-                </div>
-            </div>
-            <div class="row to-padd">
-                <div class="col-md-6 chart-container" height="500px">
-                    <canvas id="moderator-{{$m->id_peserta}}"></canvas>
-                </div>
-                <div class="col-md-4">
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(54, 162, 235, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;&starf;(5)</div> <div class="legend-div">Sangat Baik </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_5']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['5']}}</div>   </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(75, 192, 192, 1) "></div>  <div class="start-div">&starf;&starf;&starf;&starf;       (4)</div> <div class="legend-div">Baik        </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_4']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['4']}}</div></div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 206, 86, 1) "></div>  <div class="start-div">&starf;&starf;&starf;              (3)</div> <div class="legend-div">Cukup Baik  </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_3']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['3']}}</div>        </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(153, 102, 255, 1)"></div>  <div class="start-div">&starf;&starf;                     (2)</div> <div class="legend-div">Buruk       </div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_2']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['2']}}</div>       </div>
-                    <div class="custom-label-container"><div class="custom-label" style="background-color:rgba(255, 99, 132, 1) "></div>  <div class="start-div">&starf;                            (1)</div> <div class="legend-div">Sangat Buruk</div>  <div class="persen-div">({{$feedback_personal[$m->id_peserta]['persen_1']}} %)</div> <div class="jumlah-div">{{$feedback_personal[$m->id_peserta]['1']}}</div>               </div>
-                    <div class="custom-label-container">Rata-rata Nilai:
-                        <div class="ratings">
-                            <div class="empty-stars"></div>
-                            <div class="full-stars" style="width:{{ (($feedback_personal[$m->id_peserta]["rata_rata"]/5)*100).'%' }}"></div>
-                        </div>  {{'('.($feedback_personal[$m->id_peserta]["rata_rata"]." / 5").')'}}
-                    </div>
-                </div>
-            </div>
-            <hr>
-            @endforeach --}}
+          
 
             <div class="row">
             <div class="col-lg-12 card">
@@ -344,7 +321,9 @@
                 <ul>
                     @foreach($feedback as $key)
                     <li>
+                        @if($key->peserta_s)
                     {{ $key->peserta_s->peserta_r->nama }} - <b>{{ $key->kesan_pesan }}</b>
+                    @endif
                     </li>
                     @endforeach
                 </ul>
@@ -363,7 +342,9 @@
                 <ul>
                     @foreach($feedback as $key)
                     <li>
+                        @if($key->peserta_s)
                     {{ $key->peserta_s->peserta_r->nama }} - <b>{{ $key->keterangan }}</b>
+                    @endif
                     </li>
                     @endforeach
                 </ul>
