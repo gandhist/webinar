@@ -112,6 +112,11 @@ trait GlobalFunction {
         $URL_CHAN="https://service.qontak.com/api/open/v1/integrations?target_channel=wa";
         $URL_TEMP="https://service.qontak.com/api/open/v1/templates/whatsapp";
         $URL_MESS="https://service.qontak.com/api/open/v1/broadcasts/whatsapp/direct";
+        $USER_WA = "p3s@p3sm.or.id";
+        $PASS_WA = "000646a5a9a8b1edbc7cf0c49e970bc4ac4bdd43";
+        $CLIENT_ID_WA = "RRrn6uIxalR_QaHFlcKOqbjHMG63elEdPTair9B9YdY";
+        $CLIENT_SECRET_WA = "Sa8IGIh_HpVK1ZLAF0iFf7jU760osaUNV659pBIZR00";
+
         $url = env('URL_TOKEN') ?? $URL_TOKEN;
         $username = env('USER_WA') ?? $USER_WA;
         $password = env('PASS_WA') ?? $PASS_WA;
