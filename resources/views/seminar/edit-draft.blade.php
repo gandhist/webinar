@@ -282,7 +282,7 @@
                             <label for="ttd1" class="label-control required">Penandatangan 1</label>
                             <select name="ttd1" id="ttd1"
                             class="form-control to-ttd">
-                            {{-- <option value="" selected>Pilih Penandatangan 1</option> --}}
+                            <option selected disabled></option>
                             @if(old('ttd1'))
                                 @foreach($personal as $key)
                                     @if(old('ttd2') != $key->id)
@@ -297,8 +297,11 @@
                                         {{isset($ttd[0]['id_personal']) ?
                                             ($ttd[0]['id_personal'] == $key->id ? 'selected' : '') :
                                             "" }}>{{$key->nama}}</option>
-                                    {{-- @else
-                                        <option value="{{$key->id}}">{{$key->nama}}</option> --}}
+                                    @else
+                                        <option value="{{$key->id}}"
+                                            {{isset($ttd[0]['id_personal']) ?
+                                                ($ttd[0]['id_personal'] == $key->id ? 'selected' : '') :
+                                                "" }}>{{$key->nama}}</option>
                                     @endif
                                 @endforeach
                             @endif
@@ -333,6 +336,7 @@
                             <select name="ttd2" id="ttd2"
                             class="form-control to-ttd">
                             {{-- <option value="" selected>Pilih Penandatangan 1</option> --}}
+                            <option selected disabled></option>
                             @if(old('ttd2'))
                                 @foreach($personal as $key)
                                     @if(old('ttd1') != $key->id)
@@ -348,8 +352,11 @@
                                         {{ isset($ttd[1]['id_personal']) ?
                                             ( $ttd[1]['id_personal'] == $key->id ? 'selected' : '' ) :
                                             "" }}>{{$key->nama}}</option>
-                                    {{-- @else
-                                        <option value="{{$key->id}}">{{$key->nama}}</option> --}}
+                                    @else
+                                        <option value="{{$key->id}}"
+                                            {{ isset($ttd[1]['id_personal']) ?
+                                                ( $ttd[1]['id_personal'] == $key->id ? 'selected' : '' ) :
+                                                "" }}>{{$key->nama}}</option>
                                     @endif
                                 @endforeach
                             @endif
