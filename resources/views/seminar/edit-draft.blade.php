@@ -282,7 +282,7 @@
                             <label for="ttd1" class="label-control required">Penandatangan 1</label>
                             <select name="ttd1" id="ttd1"
                             class="form-control to-ttd">
-                            <option value="" selected disabled>Pilih Penandatangan 1</option>
+                            {{-- <option value="" selected>Pilih Penandatangan 1</option> --}}
                             @if(old('ttd1'))
                                 @foreach($personal as $key)
                                     @if(old('ttd2') != $key->id)
@@ -332,7 +332,7 @@
                             <label for="ttd2" class="label-control required">Penandatangan 2</label>
                             <select name="ttd2" id="ttd2"
                             class="form-control to-ttd">
-                            <option value="" selected disabled>Pilih Penandatangan 1</option>
+                            {{-- <option value="" selected>Pilih Penandatangan 1</option> --}}
                             @if(old('ttd2'))
                                 @foreach($personal as $key)
                                     @if(old('ttd1') != $key->id)
@@ -1109,9 +1109,11 @@
 
         $('#ttd1').select2({
             placeholder: " Pilih Penandatangan ",
+            allowClear: true
         }); // Select2 Inisiator Penyelenggara
         $('#ttd2').select2({
             placeholder: " Pilih Penandatangan ",
+            allowClear: true
         }); // Select2 Inisiator Penyelenggara
         // $('#ttd_pemangku').select2({
         //     placeholder: " Pilih Tanda Tangan Pemangku",
@@ -1583,7 +1585,10 @@
                     //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                     $('#ttd1').append(new Option(key.nama, key.id));
 
-                    $('#ttd1').select2();
+                    $('#ttd1').select2({
+                        placeholder: " Pilih Penandatangan ",
+                        allowClear: true
+                    });
                 }
             });
         })
@@ -1611,7 +1616,10 @@
                         //$('select[name="instansi_pendukung"]').append('<option value="'+ key +'">'+ key +'</option>');
                         $('#ttd2').append(new Option(key.nama, key.id));
 
-                        $('#ttd2').select2();
+                        $('#ttd2').select2({
+                            placeholder: " Pilih Penandatangan ",
+                            allowClear: true
+                        });
                     }
                 }
             });

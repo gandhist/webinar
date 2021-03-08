@@ -279,9 +279,9 @@
                     {{-- TTD 2 --}}
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('ttd2') ? 'has-error' : '' }} ">
-                            <label for="ttd2" class="label-control required">Penandatangan 2</label>
+                            <label for="ttd2" class="label-control">Penandatangan 2</label>
                             <select name="ttd2" id="ttd2"
-                            class="form-control to-ttd" required>
+                            class="form-control to-ttd">
                             <option value="" selected disabled>Pilih Penandatangan 2</option>
                             @if(old('ttd2'))
                                 @foreach($personal as $key)
@@ -314,9 +314,9 @@
                     {{-- Jabatan TTD 2 --}}
                     <div class="col-md-3">
                         <div class="form-group {{ $errors->first('jab_ttd2') ? 'has-error' : '' }}">
-                            <label for="jab_ttd2" class="label-control required">Jabatan Penandatangan 2</label>
+                            <label for="jab_ttd2" class="label-control">Jabatan Penandatangan 2</label>
                             <input type="text" id="jab_ttd2" class="form-control" name="jab_ttd2"
-                            placeholder="Jabatan Penandatangan 2" required
+                            placeholder="Jabatan Penandatangan 2"
                             value="{{ old('jab_ttd2') ? old('jab_ttd2') : '' }}">
                             <div id="jab_ttd2" class="invalid-feedback text-danger">
                                 {{ $errors->first('jab_ttd2') }}

@@ -93,9 +93,9 @@ class SeminarController extends Controller
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
             'ttd1' => 'required',
-            'ttd2' => 'required',
-            'jab_ttd1' => 'required|min:3|max:100',
-            'jab_ttd2' => 'required|min:3|max:100',
+            // 'ttd2' => 'required',
+            'jab_ttd1' => 'required_with:ttd1|max:100',
+            'jab_ttd2' => 'required_with:ttd2|max:100',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:100',
@@ -146,7 +146,7 @@ class SeminarController extends Controller
             'lokasi_penyelenggara.max' => 'Alamat Lokasi Seminar maksimal 100 karakter',
             'narasumber.required' => 'Mohon isi Narasumber',
             'moderator.required' => 'Mohon isi Moderator',
-            'ttd1.required' => 'Mohon isi Penandatangan',
+            'ttd1.required' => 'Mohon isi Minimal Satu Penandatangan',
             'ttd2.required' => 'Mohon isi Penandatangan',
             // 'moderator.min' => 'Moderator minimal 3 karakter',
             // 'moderator.max' => 'Moderator maksimal 50 karakter',
@@ -240,44 +240,48 @@ class SeminarController extends Controller
                 $pend->save();
             }
 
-            // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
-            $ttd1 = new TtdModel;
-            $ttd1->id_personal = $request->ttd1;
-            $ttd1->jabatan = $request->jab_ttd1;
-            $ttd1->id_seminar = $data->id;
-            $ttd1->created_by = Auth::id();
+            if ($request->ttd1) {
+                // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
+                $ttd1 = new TtdModel;
+                $ttd1->id_personal = $request->ttd1;
+                $ttd1->jabatan = $request->jab_ttd1;
+                $ttd1->id_seminar = $data->id;
+                $ttd1->created_by = Auth::id();
 
-            // generate qr code ttd 1
-            $url = url("approved/".$request->ttd1."/".$data->id);
+                // generate qr code ttd 1
+                $url = url("approved/".$request->ttd1."/".$data->id);
 
-            $nama = "QR_Validity_".$request->ttd1.".png";
-            if (!is_dir(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                $nama = "QR_Validity_".$request->ttd1.".png";
+                if (!is_dir(base_path("public/file_seminar/"))) {
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                }
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+
+                $dir_name = "file_seminar";
+                $ttd1->qr_code = $dir_name."/".$nama;
+                $ttd1->save();
             }
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
-            $dir_name = "file_seminar";
-            $ttd1->qr_code = $dir_name."/".$nama;
-            $ttd1->save();
+            if($request->ttd2){
+                $ttd2 = new TtdModel;
+                $ttd2->id_personal = $request->ttd2;
+                $ttd2->jabatan = $request->jab_ttd2;
+                $ttd2->id_seminar = $data->id;
+                $ttd2->created_by = Auth::id();
 
-            $ttd2 = new TtdModel;
-            $ttd2->id_personal = $request->ttd2;
-            $ttd2->jabatan = $request->jab_ttd2;
-            $ttd2->id_seminar = $data->id;
-            $ttd2->created_by = Auth::id();
+                // generate qr code ttd 2
+                $url = url("approved/".$request->ttd2."/".$data->id);
 
-            // generate qr code ttd 2
-            $url = url("approved/".$request->ttd2."/".$data->id);
+                $nama = "QR_Validity_".$request->ttd2.".png";
+                if (!is_dir(base_path("public/file_seminar/"))) {
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                }
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
-            $nama = "QR_Validity_".$request->ttd2.".png";
-            if (!is_dir(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                $dir_name = "file_seminar";
+                $ttd2->qr_code = $dir_name."/".$nama;
+                $ttd2->save();
             }
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-
-            $dir_name = "file_seminar";
-            $ttd2->qr_code = $dir_name."/".$nama;
-            $ttd2->save();
 
             // $data->narasumber        =   $request->narasumber     ;
             foreach($request->narasumber as $key){
@@ -380,44 +384,48 @@ class SeminarController extends Controller
                 $pend->save();
             }
 
-            // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
-            $ttd1 = new TtdModel;
-            $ttd1->id_personal = $request->ttd1;
-            $ttd1->jabatan = $request->jab_ttd1;
-            $ttd1->id_seminar = $data->id;
-            $ttd1->created_by = Auth::id();
+            if ($request->ttd1){
+                // $data->instansi_pendukung        =   $request->instansi_pendukung     ;
+                $ttd1 = new TtdModel;
+                $ttd1->id_personal = $request->ttd1;
+                $ttd1->jabatan = $request->jab_ttd1;
+                $ttd1->id_seminar = $data->id;
+                $ttd1->created_by = Auth::id();
 
-            // generate qr code ttd 1
-            $url = url("approved/".$request->ttd1."/".$data->id);
+                // generate qr code ttd 1
+                $url = url("approved/".$request->ttd1."/".$data->id);
 
-            $nama = "QR_Validity_".$request->ttd1.".png";
-            if (!is_dir(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                $nama = "QR_Validity_".$request->ttd1.".png";
+                if (!is_dir(base_path("public/file_seminar/"))) {
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                }
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+
+                $dir_name = "file_seminar";
+                $ttd1->qr_code = $dir_name."/".$nama;
+                $ttd1->save();
             }
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
-            $dir_name = "file_seminar";
-            $ttd1->qr_code = $dir_name."/".$nama;
-            $ttd1->save();
+            if ($request->ttd2){
+                $ttd2 = new TtdModel;
+                $ttd2->id_personal = $request->ttd2;
+                $ttd2->jabatan = $request->jab_ttd2;
+                $ttd2->id_seminar = $data->id;
+                $ttd2->created_by = Auth::id();
 
-            $ttd2 = new TtdModel;
-            $ttd2->id_personal = $request->ttd2;
-            $ttd2->jabatan = $request->jab_ttd2;
-            $ttd2->id_seminar = $data->id;
-            $ttd2->created_by = Auth::id();
+                // generate qr code ttd 2
+                $url = url("approved/".$request->ttd2."/".$data->id);
 
-            // generate qr code ttd 2
-            $url = url("approved/".$request->ttd2."/".$data->id);
+                $nama = "QR_Validity_".$request->ttd2.".png";
+                if (!is_dir(base_path("public/file_seminar/"))) {
+                    File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                }
+                $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
 
-            $nama = "QR_Validity_".$request->ttd2.".png";
-            if (!is_dir(base_path("public/file_seminar/"))) {
-                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+                $dir_name = "file_seminar";
+                $ttd2->qr_code = $dir_name."/".$nama;
+                $ttd2->save();
             }
-            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
-
-            $dir_name = "file_seminar";
-            $ttd2->qr_code = $dir_name."/".$nama;
-            $ttd2->save();
 
             foreach($request->narasumber as $key){
                 $narasumber = Peserta::where('id_personal',$key)->first();
@@ -607,7 +615,6 @@ class SeminarController extends Controller
     }
 
     public function update(Request $request, $id) {
-
         $request->validate([
             'nama_seminar' => 'required|min:3|max:200',
             'klasifikasi' => 'required',
@@ -621,7 +628,7 @@ class SeminarController extends Controller
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
             'ttd1' => 'required',
-            'ttd2' => 'required',
+            // 'ttd2' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:100',
@@ -879,27 +886,37 @@ class SeminarController extends Controller
         $ttd1 = TtdModel::where('id',$ttdAwal[0]['id'])->first();
         $ttd2 = TtdModel::where('id',$ttdAwal[1]['id'])->first();
 
-        if($ttd1->id_personal != $request->ttd1){
+        if(! ($request->ttd1) ) {
+            TtdModel::where('id', $ttd1->id)->delete();
+        } else if($ttd1->id_personal != $request->ttd1){
             $ttd1->id_personal = $request->ttd1;
             $ttd1->updated_by = Auth::id();
             $ttd1->updated_at = Carbon::now()->toDateTimeString();
         }
-        if($ttd2->id_personal != $request->ttd2){
+
+
+        if(! ($request->ttd2) ) {
+            TtdModel::where('id', $ttd2->id)->delete();
+        } else if($ttd2->id_personal != $request->ttd2){
             $ttd2->id_personal = $request->ttd2;
             $ttd2->updated_by = Auth::id();
             $ttd2->updated_at = Carbon::now()->toDateTimeString();
         }
 
-
-        if($ttd1->jabatan != $request->jab_ttd1){
-            $ttd1->jabatan = $request->jab_ttd1;
-            $ttd1->updated_by = Auth::id();
-            $ttd1->updated_at = Carbon::now()->toDateTimeString();
+        if( ($request->ttd1) ) {
+            if($ttd1->jabatan != $request->jab_ttd1){
+                $ttd1->jabatan = $request->jab_ttd1;
+                $ttd1->updated_by = Auth::id();
+                $ttd1->updated_at = Carbon::now()->toDateTimeString();
+            }
         }
-        if($ttd2->jabatan != $request->jab_ttd2){
-            $ttd2->jabatan = $request->jab_ttd2;
-            $ttd2->updated_by = Auth::id();
-            $ttd2->updated_at = Carbon::now()->toDateTimeString();
+
+        if( ($request->ttd2) ) {
+            if($ttd2->jabatan != $request->jab_ttd2){
+                $ttd2->jabatan = $request->jab_ttd2;
+                $ttd2->updated_by = Auth::id();
+                $ttd2->updated_at = Carbon::now()->toDateTimeString();
+            }
         }
 
         $ttd1->save();
@@ -1028,7 +1045,7 @@ class SeminarController extends Controller
             'jam_awal' => 'required|date_format:H:i',
             'jam_akhir' => 'required|date_format:H:i|after:jam_awal',
             'ttd1' => 'required',
-            'ttd2' => 'required',
+            // 'ttd2' => 'required',
             'prov_penyelenggara' => 'required',
             'kota_penyelenggara' => 'required',
             'lokasi_penyelenggara' => 'required|min:3|max:100',
@@ -1212,27 +1229,34 @@ class SeminarController extends Controller
         $ttd1 = TtdModel::where('id',$ttdAwal[0]['id'])->first();
         $ttd2 = TtdModel::where('id',$ttdAwal[1]['id'])->first();
 
-        if($ttd1->id_personal != $request->ttd1){
+        if(! ($request->ttd1) ) {
+            TtdModel::where('id', $ttd1->id)->delete();
+        } else if($ttd1->id_personal != $request->ttd1){
             $ttd1->id_personal = $request->ttd1;
             $ttd1->updated_by = Auth::id();
             $ttd1->updated_at = Carbon::now()->toDateTimeString();
         }
-        if($ttd2->id_personal != $request->ttd2){
+        if(! ($request->ttd2) ) {
+            TtdModel::where('id', $ttd2->id)->delete();
+        } else if($ttd2->id_personal != $request->ttd2){
             $ttd2->id_personal = $request->ttd2;
             $ttd2->updated_by = Auth::id();
             $ttd2->updated_at = Carbon::now()->toDateTimeString();
         }
 
-
-        if($ttd1->jabatan != $request->jab_ttd1){
-            $ttd1->jabatan = $request->jab_ttd1;
-            $ttd1->updated_by = Auth::id();
-            $ttd1->updated_at = Carbon::now()->toDateTimeString();
+        if( ($request->ttd1) ) {
+            if($ttd1->jabatan != $request->jab_ttd1){
+                $ttd1->jabatan = $request->jab_ttd1;
+                $ttd1->updated_by = Auth::id();
+                $ttd1->updated_at = Carbon::now()->toDateTimeString();
+            }
         }
-        if($ttd2->jabatan != $request->jab_ttd2){
-            $ttd2->jabatan = $request->jab_ttd2;
-            $ttd2->updated_by = Auth::id();
-            $ttd2->updated_at = Carbon::now()->toDateTimeString();
+        if( ($request->ttd2) ) {
+            if($ttd2->jabatan != $request->jab_ttd2){
+                $ttd2->jabatan = $request->jab_ttd2;
+                $ttd2->updated_by = Auth::id();
+                $ttd2->updated_at = Carbon::now()->toDateTimeString();
+            }
         }
 
         $ttd1->save();
