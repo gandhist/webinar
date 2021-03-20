@@ -104,7 +104,7 @@
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
-      @if(Auth::user()->role_id==1 )
+      @if(Auth::user()->role_id==1 || Auth::user()->role_id==3)
       <li class="treeview">
         <a href="#">
             <i class="fa fa-tasks"></i> <span>P3S Mandiri</span>
@@ -355,7 +355,7 @@
         </ul>
       </li>
     @endif
-    @if(Auth::user()->role_id==1 || Auth::user()->role_id==5 )
+    @if(Auth::user()->role_id==1 || Auth::user()->role_id==3 || Auth::user()->role_id==5 )
 
       <li class="treeview">
         <a href="{{ url('seminar') }}">
@@ -382,7 +382,7 @@
         </a>
       </li>
       @endif
-      @if(Auth::user()->role_id==1  )
+      @if(Auth::user()->role_id==1 || Auth::user()->role_id==3 )
 
       <li class="treeview">
         <a href="{{ url('isos') }}">
@@ -403,7 +403,7 @@
 
       @endif
 
-      @if(Auth::user()->role_id==1)
+      @if(Auth::user()->role_id==1 || Auth::user()->role_id==3)
 
       <li class="treeview {{Request::is('user*') ? 'active' : ''}}">
         <a href="#">

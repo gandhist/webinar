@@ -107,7 +107,7 @@ class LoginController extends Controller
                     $data->is_login = 1;
                     $data->save();
 
-                    if ($user->role_id == 5){
+                    if ($user->role_id == 5 || $user->role_id == 3){
                         return redirect('/dashboard');
                     } else {
                         if($user->is_login == 0) {

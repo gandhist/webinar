@@ -364,7 +364,7 @@ Route::group(['prefix' => 'report', 'middleware' => 'auth.admin'], function () {
 // end of Report
 
 // Keuangan
-Route::group(['prefix' => 'keuangan'], function () {
+Route::group(['middleware' => 'auth.admin','prefix' => 'keuangan'], function () {
     Route::get('/', 'KeuanganController@index')->name('keuangan');
     Route::post('/', 'KeuanganController@index')->name('keuangan');
 });

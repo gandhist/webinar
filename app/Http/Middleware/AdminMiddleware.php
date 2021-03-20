@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $allow = [1,5]; // define allowed role id in this admin middleware
+        $allow = [1,5,3]; // define allowed role id in this admin middleware
         if($request->user() && !in_array($request->user()->role_id, $allow) )
             return Response(view('unauthorized')->with('role', 'Admin IT'));
         return $next($request);
