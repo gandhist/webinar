@@ -325,7 +325,7 @@
             </li>
         </ul>
     </li>
-    @elseif(Auth::user()->role_id==5)
+    @elseif(Auth::user()->role_id==5 || Auth::user()->role_id==3)
     <li class="treeview">
         <a href="#">
             <i class="fa fa-tasks"></i> <span>P3S Mandiri</span>
