@@ -1,7 +1,7 @@
 <?php
 /*
 بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ (Bismillahirrahmanirrahim)
-artinya : Dengan menyebut nama Allah yang Maha Pengasih lagi Maha Penyayang 
+artinya : Dengan menyebut nama Allah yang Maha Pengasih lagi Maha Penyayang
 crafted by Gandhi Tabrani ¯\_(ツ)_/¯
 */
 namespace App\Http\Controllers;
@@ -11,6 +11,7 @@ use App\PesertaSeminar;
 use PDF;
 use Mail;
 use App\Mail\EmailLinkSert;
+use App\SertModel;
 
 class SertController extends Controller
 {
@@ -52,12 +53,12 @@ class SertController extends Controller
                  $dataa['data'] = $data;
                 $pdf = PDF::loadview('sert.all',$dataa);
                 $pdf->setPaper('A4','landscape');
-                return $pdf->stream("Sertifikat.pdf");  
+                return $pdf->stream("Sertifikat.pdf");
              }
              else {
                 return redirect('sertifikat/cari')->with('status','No Sertifikat dan Email tidak ditemukan!');
              }
-                    
+
         }
 
         return view('frontend.main');
@@ -83,7 +84,7 @@ class SertController extends Controller
         $url4 = url('approved/adji_n');
         $nama4 = "QR_adji_n.png";
         $qrcode4 = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url4, base_path("public/".$nama4));
-        
+
 
         $data['data'] = SertModel::take(10)->get();
         $pdf = PDF::loadview('sert.all',$data);
