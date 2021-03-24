@@ -171,7 +171,7 @@ class InstansiController extends Controller
             "nama_pimp_text" => "required_with:isi_manual,on",
             "jab_pimp" => "required_with:isi_manual,on",
             "email_pimp" => "sometimes|nullable|required_with:isi_manual,on|email",
-            // "hp_pimp" => "required",
+            "hp_pimp" => "sometimes|nullable|required_with:isi_manual,on",
             "kontak_p" => "required",
             // "jab_kontak_p" => "required|min:3|max:100",
             // "email_kontak_p" => "required|email|unique:badan_usaha",
