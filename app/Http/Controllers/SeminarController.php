@@ -1835,6 +1835,17 @@ class SeminarController extends Controller
 
         $seminar = SeminarModel::where('id', $id)->first();
 
+        if (Auth::id() == 8449){
+            if($seminar->created_by == 8449) {
+                $jumlah_blasting = LogBlasting::where('id_seminar', $seminar->id)->count();
+                if ($jumlah_blasting >= 2) {
+                    return redirect()->back()->with('fail_alert',"Limit blasting seminar ini sudah tercapai");
+                }
+            } else {
+                return redirect()->back()->with('fail_alert',"Akses ditolak");
+            }
+        }
+
         // $hashids = new Hashids();
         $title = strip_tags(html_entity_decode($seminar->nama_seminar));
         $tema = strip_tags(html_entity_decode($seminar->tema));

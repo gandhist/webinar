@@ -686,23 +686,35 @@
             lengthMenu: [1000, 2000, 5000, 10000]
         } );
     } );
-var msg = '{{Session::get('alert')}}';
-var exist = '{{Session::has('alert')}}';
+    var msg = '{{Session::get('alert')}}';
+    var exist = '{{Session::has('alert')}}';
     if(exist){
         Swal.fire({
             title: msg,
             type: 'success',
             confirmButtonText: 'Close',
             confirmButtonColor: '#AAA'
-            });
-        }
+        });
+    }
 
-// pop up pdf
-function tampilLampiran(url, title) {
+    var fail_msg = '{{Session::get('fail_alert')}}';
+    var fail_exist = '{{Session::has('fail_alert')}}';
+    if(fail_exist){
+        Swal.fire({
+            title: fail_msg,
+            type: 'error',
+            confirmButtonText: 'Close',
+            confirmButtonColor: '#AAA'
+        });
+    }
 
-    $('#modalLampiran').modal('show');
-    $('#iframeLampiran').attr('src', url);
-    $('#lampiranTitle').html(` <a href="` + url + `" target="_blank" > ` + title + ` </a> `);
-}
+
+    // pop up pdf
+    function tampilLampiran(url, title) {
+
+        $('#modalLampiran').modal('show');
+        $('#iframeLampiran').attr('src', url);
+        $('#lampiranTitle').html(` <a href="` + url + `" target="_blank" > ` + title + ` </a> `);
+    }
 </script>
 @endpush
