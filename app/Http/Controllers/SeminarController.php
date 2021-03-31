@@ -1348,17 +1348,26 @@ class SeminarController extends Controller
         $qr->save();
         ///////
 
+        $seminar = SeminarModel::find($data->id_seminar);
+
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
 
-        $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd','qr'));
-        $pdf->setPaper('A4','potrait');
-        // foreach($instansi as $index => $key){
-        //     dump($index . " - " . $key->bu_instansi->logo);
-        // }
-        // dd('');
-        return $pdf->stream("Sertifikat_$data->no_srtf.pdf");
-        // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
+        if($seminar->jenis_sertifikat == 1){
+            $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd','qr'));
+            $pdf->setPaper('A4','potrait');
+            // foreach($instansi as $index => $key){
+            //     dump($index . " - " . $key->bu_instansi->logo);
+            // }
+            // dd('');
+            return $pdf->stream("Sertifikat_$data->no_srtf.pdf");
+            // return view('seminar.sertifikat')->with(compact('data','instansi','ttd'));
+        } elseif($seminar->jenis_sertifikat == 2) {
+            $nama = isset($data->peserta_r) ? $data->peserta_r->nama : '';
+            $pdf = PDF::loadview('seminar.sertifikat_template_2',compact('nama'));
+            $pdf->setPaper('A4','landscape');
+            return $pdf->stream("Sertifikat_$data->no_sert.pdf");
+        }
     }
 
     // kirim email ke semua peserta
@@ -1605,9 +1614,18 @@ class SeminarController extends Controller
         $instansi = SertInstansiModel::where('id_seminar', '=' ,$data->id_seminar)->get();
         $ttd = TtdModel::where('id_seminar', '=' ,$data->id_seminar)->get();
 
-        $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
-        $pdf->setPaper('A4','potrait');
-        return $pdf->stream("Sertifikat_$no_sert.pdf");
+        $seminar = SeminarModel::find($data->id_seminar);
+
+        if($seminar->jenis_sertifikat == 1){
+            $pdf = PDF::loadview('seminar.sertifikat',compact('data','instansi','ttd'));
+            $pdf->setPaper('A4','potrait');
+            return $pdf->stream("Sertifikat_$no_sert.pdf");
+        } elseif($seminar->jenis_sertifikat == 2) {
+            $nama = isset($data->peserta_r) ? $data->peserta_r->nama : "";
+            $pdf = PDF::loadview('seminar.sertifikat_template_2',compact('nama'));
+            $pdf->setPaper('A4','landscape');
+            return $pdf->stream("Sertifikat_$no_sert.pdf");
+        }
 
     }
 
