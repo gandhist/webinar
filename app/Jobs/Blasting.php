@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\BlastingMail;
 use App\Traits\GlobalFunction;
+use Illuminate\Support\Facades\Auth;
 
 use App\TargetBlasting;
 use App\LogBlasting;
@@ -217,6 +218,8 @@ class Blasting implements ShouldQueue
                 $report_blasting->created_at = \Carbon\Carbon::now();
                 $report_blasting->save();
             }
+
+            $report_blasting->created_by = Auth::id();
 
             if($pesan == 'success'){
                 $report_blasting->is_wa_sent = 1;           // Kondisi kalo sukses

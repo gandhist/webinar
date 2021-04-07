@@ -1879,6 +1879,7 @@ class SeminarController extends Controller
 
         $log_blasting = new LogBlasting;
         $log_blasting->id_seminar = $id;
+        $log_blasting->created_by = Auth::id();
         $log_blasting->save();
 
         if($request->link_zoom) {
