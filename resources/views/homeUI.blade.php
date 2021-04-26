@@ -240,8 +240,9 @@
 
     @media only screen and (min-width: 1024px)  {
         footer {
-            position: absolute;
-            bottom: 0;
+            /* position: absolute; */
+            /* bottom: 0; */
+            margin-top: 5px;
             width: 100%
         }
     }
