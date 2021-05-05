@@ -63,6 +63,9 @@ class PembayaranController extends Controller
         \Midtrans\Config::$isSanitized = config('services.midtrans.isSanitized');
         \Midtrans\Config::$is3ds = config('services.midtrans.is3ds');
 
+        \Midtrans\Config::$appendNotifUrl = url('trxi/callback');
+        \Midtrans\Config::$overrideNotifUrl = url('trxi/callback');
+
         $notify = new \Midtrans\Notification();
         $transaction_time = $notify->transaction_time;
         $transaction_id = $notify->transaction_id;
