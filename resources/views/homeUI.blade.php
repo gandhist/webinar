@@ -202,6 +202,8 @@
 			margin-top: 0.6rem !important;
 		}
         footer {
+            position: fixed !important;
+            bottom: 0 !important;
         }
         .wrapper.kiri {
             width:2rem;
@@ -240,8 +242,8 @@
 
     @media only screen and (min-width: 1024px)  {
         footer {
-            /* position: absolute; */
-            /* bottom: 0; */
+            position: fixed;
+            bottom: 0;
             margin-top: 5px;
             width: 100%
         }
