@@ -21,6 +21,7 @@
         "maatwebsite/excel": "^3.1",
         "midtrans/midtrans-php": "^2.3",
         "nesbot/carbon": "2.27.0 as 1.39.0",
+        "sentry/sentry-laravel": "^2.6",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "tymon/jwt-auth": "^1.0.0",
         "vinkla/hashids": "8.0.0",
