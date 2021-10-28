@@ -27,3 +27,4 @@ public/
 
 .composer.lock
 # .gitignore
+storage/fonts

@@ -184,8 +184,8 @@
                         @foreach ($ttd as $key)
                         <td colspan="20" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
                             <img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"><br>
-                            <b>{{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_ttd->nama)) }} </b><br>
-                            {{ $key->jabatan }}
+                            <b><u>{{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_ttd->nama)) }}</u></b><br>
+                            <b>{{ $key->jabatan }}</b>
                         </td>
                         @endforeach
                     </tr>
