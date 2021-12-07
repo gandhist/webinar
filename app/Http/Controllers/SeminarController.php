@@ -1192,8 +1192,7 @@ class SeminarController extends Controller
         }
 
         // Dari sini cek perubahan di instansi pendukung
-        $pendAwal = SertInstansiModel::where('id_seminar',$id)
-                    ->where('status','2')->get();
+        $pendAwal = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
         foreach($request->instansi_pendukung as $key) {
             if(!$pendAwal->contains('id_instansi',$key)){
                 $pendBaru = new SertInstansiModel;
