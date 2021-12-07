@@ -1162,8 +1162,7 @@ class SeminarController extends Controller
         }
 
         // Dari sini cek perubahan di instansi penyelenggara
-        $penyAwal = SertInstansiModel::where('id_seminar',$id)
-                    ->where('status','1')->get();
+        $penyAwal = SertInstansiModel::where('id_seminar',$id)->where('status','1')->get();
         foreach($request->instansi_penyelenggara as $key) {
             if(!$penyAwal->contains('id_instansi',$key)){
                 $penyBaru = new SertInstansiModel;
@@ -1193,8 +1192,7 @@ class SeminarController extends Controller
         }
 
         // Dari sini cek perubahan di instansi pendukung
-        $pendAwal = SertInstansiModel::where('id_seminar',$id)
-                    ->where('status','2')->get();
+        $pendAwal = SertInstansiModel::where('id_seminar',$id)->where('status','2')->get();
         foreach($request->instansi_pendukung as $key) {
             if(!$pendAwal->contains('id_instansi',$key)){
                 $pendBaru = new SertInstansiModel;
@@ -1223,6 +1221,26 @@ class SeminarController extends Controller
             }
         }
 
+        if ($request->ttd2){
+            $ttd2 = new TtdModel;
+            $ttd2->id_personal = $request->ttd2;
+            $ttd2->jabatan = $request->jab_ttd2;
+            $ttd2->id_seminar = $dataAwal->id;
+            $ttd2->created_by = Auth::id();
+
+            // generate qr code ttd 2
+            $url = url("approved/".$request->ttd2."/".$dataAwal->id);
+
+            $nama = "QR_Validity_".$request->ttd2.".png";
+            if (!is_dir(base_path("public/file_seminar/"))) {
+                File::makeDirectory(base_path("public/file_seminar/"), $mode = 0777, true, true);
+            }
+            $qrcode = \QrCode::margin(100)->format('png')->errorCorrection('L')->size(150)->generate($url, base_path("public/file_seminar/".$nama));
+
+            $dir_name = "file_seminar";
+            $ttd2->qr_code = $dir_name."/".$nama;
+            $ttd2->save();
+        }
 
         // Cek apakah penandatangan ada yang tambah
         $ttdAwal = TtdModel::where('id_seminar',$id)->get();
@@ -1250,10 +1268,6 @@ class SeminarController extends Controller
 
                 $ttd2 = TtdModel::where('id',$ttdAwal[1]['id'])->first();
             }
-        }
-        else{
-                $ttd2 = TtdModel::where('id',$ttdAwal[1]['id'])->first();
-            
         }
 
         if(! ($request->ttd1) ) {
