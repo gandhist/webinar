@@ -56,62 +56,62 @@ class Blasting implements ShouldQueue
             $peserta_seminar = PesertaSeminar::where('id_peserta', $peserta->id)->where('id_seminar',$this->detail['seminar']['id'])->first();
         }
 
-        if( !(isset($peserta_seminar))  ){
-            $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
-            switch($hari){
-                case 'Sunday':
-                    $hari = "Minggu";
-                break;
+        // if( !(isset($peserta_seminar))  ){
+        //     $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
+        //     switch($hari){
+        //         case 'Sunday':
+        //             $hari = "Minggu";
+        //         break;
 
-                case 'Monday':
-                    $hari = "Senin";
-                break;
+        //         case 'Monday':
+        //             $hari = "Senin";
+        //         break;
 
-                case 'Tuesday':
-                    $hari = "Selasa";
-                break;
+        //         case 'Tuesday':
+        //             $hari = "Selasa";
+        //         break;
 
-                case 'Wednesday':
-                    $hari = "Rabu";
-                break;
+        //         case 'Wednesday':
+        //             $hari = "Rabu";
+        //         break;
 
-                case 'Thursday':
-                    $hari = "Kamis";
-                break;
+        //         case 'Thursday':
+        //             $hari = "Kamis";
+        //         break;
 
-                case 'Friday':
-                    $hari = "Jumat";
-                break;
+        //         case 'Friday':
+        //             $hari = "Jumat";
+        //         break;
 
-                case 'Saturday':
-                    $hari = "Sabtu";
-                break;
+        //         case 'Saturday':
+        //             $hari = "Sabtu";
+        //         break;
 
-                default:
-                    $hari = "Tidak di ketahui";
-                break;
-            }
-            // Fungsi blasting email
-            Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link, $hari));
+        //         default:
+        //             $hari = "Tidak di ketahui";
+        //         break;
+        //     }
+        //     // Fungsi blasting email
+        //     Mail::to($this->detail['target']['email'])->send(new BlastingMail($this->detail, $this->link, $hari));
 
-            if(empty($report_blasting)){
-                $report_blasting = new ReportBlasting;
-                $report_blasting->id_target = $this->detail['target']['id'];
-                $report_blasting->id_seminar = $this->detail['seminar']['id'];
-                $report_blasting->id_blasting = $this->detail['id_blasting'];
-                $report_blasting->is_email_sent = 1;
-                $report_blasting->magic_link = $this->detail['magic'];
-                $report_blasting->created_at = \Carbon\Carbon::now();
-                $report_blasting->save();
-            } else {
-                $report_blasting->is_email_sent = 1;
-                $report_blasting->save();
-            }
-        }
+        //     if(empty($report_blasting)){
+        //         $report_blasting = new ReportBlasting;
+        //         $report_blasting->id_target = $this->detail['target']['id'];
+        //         $report_blasting->id_seminar = $this->detail['seminar']['id'];
+        //         $report_blasting->id_blasting = $this->detail['id_blasting'];
+        //         $report_blasting->is_email_sent = 1;
+        //         $report_blasting->magic_link = $this->detail['magic'];
+        //         $report_blasting->created_at = \Carbon\Carbon::now();
+        //         $report_blasting->save();
+        //     } else {
+        //         $report_blasting->is_email_sent = 1;
+        //         $report_blasting->save();
+        //     }
+        // }
 
         // Fungsi blasting untuk wa
         if( !(isset($peserta_seminar))  ){
-            $no_hp = $this->detail['target']['no_hp'];
+            $no_hp = $this->indonesianCode($this->detail['target']['no_hp']);
             $nama = $this->detail['target']['nama'];
             $link_zoom = $this->link['link_zoom'];
             $website = 'https://srtf.p3sm.or.id';
@@ -151,7 +151,6 @@ class Blasting implements ShouldQueue
                     $hari = "Tidak di ketahui";
                 break;
             }
-
 
             $tgl = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->isoFormat("DD MMMM YYYY");
             $jam = $this->detail['seminar']['jam_awal'];

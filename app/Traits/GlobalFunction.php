@@ -240,4 +240,67 @@ trait GlobalFunction {
         $dir_name = "file_seminar";
         return $dir_name."/".$nama;
     }
+
+    public function indonesianCode($number){
+        $data = [
+            'status' => false,
+            'nomor' => ''
+        ];
+        $length = strlen($number);
+        $valid_number = $number;
+        if ($length > 6) {
+            $left_5 = substr($number,0,5);
+            $left_4 = substr($number,0,4);
+            $left_3 = substr($number,0,3);
+            $left_2 = substr($number,0,2);
+            $left_1 = substr($number,0,1);
+            // +6208
+            // if($left_5 == '+6208'){
+            //     $pattern = "/^\+6208/i";
+            //     $valid_number = preg_replace($pattern, "08", $number);
+            //     $data = [
+            //         'status' => true,
+            //         'nomor' => $valid_number
+            //     ];
+            // }
+            // // 6208 || +628
+            // if($left_4 == '6208' || $left_4 == '+628'){
+            //     $pattern1 = "/^\+628|^6208/i";
+            //     $valid_number = preg_replace($pattern1, "08", $number);
+            //     $data = [
+            //         'status' => true,
+            //         'nomor' => $valid_number
+            //     ];
+            // }
+            // // 628
+            // if($left_3 == '628'){
+            //     $pattern1 = "/^628/i";
+            //     $valid_number = preg_replace($pattern1, "08", $number);
+            //     $data = [
+            //         'status' => true,
+            //         'nomor' => $valid_number
+            //     ];
+            // }
+            // 08
+            if($left_2 == '08'){
+                $pattern1 = "/^08/i";
+                $valid_number = preg_replace($pattern1, "628", $number);
+                $data = [
+                    'status' => true,
+                    'nomor' => $valid_number
+                ];
+            }
+            // 8
+            if($left_1 == '8'){
+                $valid_number = "628".substr($number,1, $length - 1);
+                $data = [
+                    'status' => true,
+                    'nomor' => $valid_number
+                ];
+            }
+            // $pattern1 = "/^\+628|^6208|^\+6208|^628/i";
+            // $match1 = preg_replace($pattern1, "08", $number);
+        }
+        return $valid_number;
+    }
 }
