@@ -19,7 +19,7 @@ Route::get('trxi/finish', 'PembayaranController@finish');
 Route::get('trxi/unfinish', 'PembayaranController@unfinish');
 Route::get('trxi/error', 'PembayaranController@error');
 
-// End Midtrans
+// End Midtranss
 
 Route::auth();
 Route::get('/notif/{magic}','UserController@notif');
