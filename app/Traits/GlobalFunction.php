@@ -109,9 +109,9 @@ trait GlobalFunction {
     ////////////// BEGIN API QONTAK WHATSASPP /////////////////////////
     public function getToken(){
         $URL_TOKEN="https://auth.qontak.com/3a5f72a37b5568090a0e676205211e80/oauth/token";
-        $URL_CHAN="https://service.qontak.com/api/open/v1/integrations?target_channel=wa";
-        $URL_TEMP="https://service.qontak.com/api/open/v1/templates/whatsapp";
-        $URL_MESS="https://service.qontak.com/api/open/v1/broadcasts/whatsapp/direct";
+        $URL_CHAN="https://chat-service.qontak.com/api/open/v1/integrations?target_channel=wa";
+        $URL_TEMP="https://chat-service.qontak.com/api/open/v1/templates/whatsapp";
+        $URL_MESS="https://chat-service.qontak.com/api/open/v1/broadcasts/whatsapp/direct";
         $USER_WA = "p3s@p3sm.or.id";
         $PASS_WA = "000646a5a9a8b1edbc7cf0c49e970bc4ac4bdd43";
         $CLIENT_ID_WA = "RRrn6uIxalR_QaHFlcKOqbjHMG63elEdPTair9B9YdY";
@@ -170,7 +170,7 @@ trait GlobalFunction {
     }
 
     public function sendMessage($token,$body){
-        $url = env('URL_MESS');
+        $url = "https://chat-service.qontak.com/api/open/v1/broadcasts/whatsapp/direct";
         $headers = array(
             'Authorization: Bearer '.$token,
             'Content-Type: application/json'

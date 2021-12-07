@@ -161,8 +161,8 @@ class Blasting implements ShouldQueue
             $link = $this->detail['magic'];
             $link_seminar = 'https://srtf.p3sm.or.id/blast/'.$link;
 
-            $token = $this->getToken();
-            $channel = $this->setupChannel($token['access_token']);
+            $token = '072tObcXo7qXqN9yBwJId3PYAqXeLP6hwsBqtnxe7lg';
+            // $channel = $this->setupChannel($token['access_token']);
             $template = 'c92e117a-a415-4910-b28a-aa626a078352';
 
             $lang = [
@@ -204,11 +204,11 @@ class Blasting implements ShouldQueue
                 'to_number' => $no_hp,
                 'to_name' => $nama,
                 'message_template_id' => $template,
-                'channel_integration_id' => $channel['data'][0]['id'],
+                'channel_integration_id' => '046309b0-f84d-4054-9cba-b497709b1cb7',
                 'language' => $lang,
                 'parameters' => $param,
             ];
-            $pesan = $this->sendMessage($token['access_token'],$body);
+            $pesan = $this->sendMessage($token,$body);
 
             if(empty($report_blasting)){
                 $report_blasting = new ReportBlasting;
