@@ -76,6 +76,14 @@
             position: fixed;
         }
 
+        .td-wrap {
+            margin-top: 3px; 
+            text-align: center; 
+            vertical-align: top; 
+            margin-bottom: -3px;
+            word-break: break-all;
+        }
+
     </style>
 </head>
 <body>
@@ -178,15 +186,30 @@
                     </tr>
                 </table>
             </div>
-            <div class="body-content" style=" margin-right: 10rem">
+
+            {{-- <td colspan="20" class="td-wrap">
+                <img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"><br>
+                <b><u>{{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_ttd->nama)) }}</u></b><br>
+                <b>{{ $key->jabatan }}</b>
+            </td> --}}
+            <div class="body-content" style=" margin-right: -10rem">
                 <table width=590 cellspacing=0 cellpadding=0>
+                    
                     <tr>
                         @foreach ($ttd as $key)
-                        <td colspan="20" style="margin-top: 3px; text-align: center; vertical-align: top; margin-bottom: -3px;">
-                            <img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"><br>
-                            <b><u>{{ html_entity_decode(str_replace(" ","&nbsp;",$key->bu_ttd->nama)) }}</u></b><br>
-                            <b>{{ $key->jabatan }}</b>
-                        </td>
+                            <td>
+                                <table width='100%'>
+                                    <tr>
+                                        <td colspan="20" class="td-wrap"><img src="{{ public_path($key->qr_code) }}" style="width:80px; height:80px"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="20" class="td-wrap"><b><u>{{ $key->bu_ttd->nama}}</u></b></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="20" class="td-wrap"><b>{{ $key->jabatan }}</b></td>
+                                    </tr>
+                                </table>
+                            </td>
                         @endforeach
                     </tr>
                 </table>
