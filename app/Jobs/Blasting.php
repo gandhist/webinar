@@ -18,6 +18,8 @@ use App\ReportBlasting;
 use App\User;
 use App\Peserta;
 use App\PesertaSeminar;
+use Log;
+
 
 class Blasting implements ShouldQueue
 {
@@ -115,7 +117,6 @@ class Blasting implements ShouldQueue
             $nama = $this->detail['target']['nama'];
             $link_zoom = $this->link['link_zoom'];
             $website = 'https://srtf.p3sm.or.id';
-
             $tema = strip_tags(html_entity_decode($this->detail['seminar']['tema']));
             $hari = \Carbon\Carbon::parse($this->detail['seminar']['tgl_awal'])->format("l");
             switch($hari){
@@ -160,7 +161,7 @@ class Blasting implements ShouldQueue
             $link = $this->detail['magic'];
             $link_seminar = 'https://srtf.p3sm.or.id/blast/'.$link;
 
-            $token = '072tObcXo7qXqN9yBwJId3PYAqXeLP6hwsBqtnxe7lg';
+            $token = 'psSkOGMMPaiPgcLrQ9MkoOp1b9mSSAE97a-T2azd0as';
             // $channel = $this->setupChannel($token['access_token']);
             $template = 'c92e117a-a415-4910-b28a-aa626a078352';
 
@@ -208,6 +209,7 @@ class Blasting implements ShouldQueue
                 'parameters' => $param,
             ];
             $pesan = $this->sendMessage($token,$body);
+            
 
             if(empty($report_blasting)){
                 $report_blasting = new ReportBlasting;
